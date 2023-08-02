@@ -1,15 +1,15 @@
 package com.apriori;
 
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.request.PostComponentRequest;
-import com.apriori.sds.entity.response.ScenarioItemsResponse;
+import com.apriori.sds.enums.SDSAPIEnum;
+import com.apriori.sds.models.request.PostComponentRequest;
+import com.apriori.sds.models.response.ScenarioItemsResponse;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.testrail.TestRail;
 

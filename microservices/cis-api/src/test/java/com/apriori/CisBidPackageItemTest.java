@@ -1,14 +1,14 @@
 package com.apriori;
 
-import com.apriori.cisapi.controller.CisBidPackageItemResources;
-import com.apriori.cisapi.controller.CisBidPackageResources;
-import com.apriori.cisapi.entity.request.bidpackage.BidPackageItemParameters;
-import com.apriori.cisapi.entity.request.bidpackage.BidPackageItemRequest;
-import com.apriori.cisapi.entity.response.bidpackage.BidPackageItemResponse;
-import com.apriori.cisapi.entity.response.bidpackage.BidPackageItemsResponse;
-import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.cisapi.entity.response.bidpackage.CisErrorMessage;
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.cis.controller.CisBidPackageItemResources;
+import com.apriori.cis.controller.CisBidPackageResources;
+import com.apriori.cis.models.request.bidpackage.BidPackageItemParameters;
+import com.apriori.cis.models.request.bidpackage.BidPackageItemRequest;
+import com.apriori.cis.models.response.bidpackage.BidPackageItemResponse;
+import com.apriori.cis.models.response.bidpackage.BidPackageItemsResponse;
+import com.apriori.cis.models.response.bidpackage.BidPackageResponse;
+import com.apriori.cis.models.response.bidpackage.CisErrorMessage;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

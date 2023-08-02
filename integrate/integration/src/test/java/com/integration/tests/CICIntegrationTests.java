@@ -4,6 +4,13 @@ import com.apriori.ExcelService;
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.authorization.response.EmailMessage;
+import com.apriori.cic.models.request.JobDefinition;
+import com.apriori.cic.models.response.AgentWorkflow;
+import com.apriori.cic.models.response.AgentWorkflowJobRun;
+import com.apriori.cic.models.response.AgentWorkflowReportTemplates;
+import com.apriori.cic.models.response.ReportTemplatesRow;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.CicLoginUtil;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.email.GraphEmailService;
 import com.apriori.enums.SortedOrderType;
@@ -23,11 +30,6 @@ import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
-import entity.request.JobDefinition;
-import entity.response.AgentWorkflow;
-import entity.response.AgentWorkflowJobRun;
-import entity.response.AgentWorkflowReportTemplates;
-import entity.response.ReportTemplatesRow;
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -36,14 +38,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.CicApiTestUtil;
-import utils.CicLoginUtil;
 
 @Slf4j
 public class CICIntegrationTests extends TestBaseUI {
 
     private static String loginSession;
-    UserCredentials currentUser = UserUtil.getUser();
     private static AgentWorkflow agentWorkflowResponse;
     private static JobDefinition jobDefinitionData;
     private static AgentWorkflowJobRun agentWorkflowJobRunResponse;
@@ -53,6 +52,7 @@ public class CICIntegrationTests extends TestBaseUI {
     private static SoftAssertions softAssertions;
     private static AgentWorkflowReportTemplates reportTemplateNames;
     private static ReportTemplatesRow reportTemplateName;
+    UserCredentials currentUser = UserUtil.getUser();
 
     public CICIntegrationTests() {
         super();
@@ -107,7 +107,7 @@ public class CICIntegrationTests extends TestBaseUI {
     @TestRail(id = 12046)
     @Description("Create Workflow, Invoke workflow, verify Parts Cost watchpoint report from email and delete workflow")
     public void testVerifyWatchPointReport() {
-        loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
+        loginSession = new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
         workflowData = String.format(CicApiTestUtil.getWorkflowData("WatchPointReportData.json"), CicApiTestUtil.getCustomerName(),
             CicApiTestUtil.getAgent(loginSession), workflowName, scenarioName);
         // Create WorkFlow

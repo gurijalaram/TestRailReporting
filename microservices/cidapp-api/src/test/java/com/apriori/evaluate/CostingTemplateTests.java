@@ -2,9 +2,9 @@ package com.apriori.evaluate;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.CostingTemplate;
-import com.apriori.cidappapi.entity.response.CostingTemplates;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.CostingTemplate;
+import com.apriori.cidappapi.models.response.CostingTemplates;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.ProcessGroupEnum;

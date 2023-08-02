@@ -1,9 +1,9 @@
 package com.apriori.evaluate;
 
 import com.apriori.GenerateStringUtil;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.request.ScenarioAssociationGroupItems;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.request.ScenarioAssociationGroupItems;
+import com.apriori.cidappapi.models.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.AssociationSuccessesFailures;
 import com.apriori.cidappapi.utils.ScenariosUtil;

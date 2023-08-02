@@ -1,12 +1,12 @@
 package com.apriori;
 
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.qds.controller.BidPackageResources;
-import com.apriori.qds.entity.request.bidpackage.BidPackageItemParameters;
-import com.apriori.qds.entity.request.bidpackage.BidPackageItemRequest;
-import com.apriori.qds.entity.response.bidpackage.BidPackageItemResponse;
-import com.apriori.qds.entity.response.bidpackage.BidPackageItemsResponse;
-import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.qds.models.request.bidpackage.BidPackageItemParameters;
+import com.apriori.qds.models.request.bidpackage.BidPackageItemRequest;
+import com.apriori.qds.models.response.bidpackage.BidPackageItemResponse;
+import com.apriori.qds.models.response.bidpackage.BidPackageItemsResponse;
+import com.apriori.qds.models.response.bidpackage.BidPackageResponse;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

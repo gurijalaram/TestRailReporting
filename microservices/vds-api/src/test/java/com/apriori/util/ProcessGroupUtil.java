@@ -1,20 +1,20 @@
 package com.apriori.util;
 
-import com.apriori.bcs.entity.response.ProcessGroup;
-import com.apriori.bcs.entity.response.ProcessGroups;
+import com.apriori.bcs.models.response.ProcessGroup;
+import com.apriori.bcs.models.response.ProcessGroups;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.vds.entity.enums.VDSAPIEnum;
-import com.apriori.vds.entity.response.access.control.AccessControlGroup;
-import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociation;
-import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociationsItems;
-import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
-import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterialsItems;
-import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGroupMaterialStock;
-import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGroupMaterialsStocksItems;
+import com.apriori.vds.enums.VDSAPIEnum;
+import com.apriori.vds.models.response.access.control.AccessControlGroup;
+import com.apriori.vds.models.response.process.group.associations.ProcessGroupAssociation;
+import com.apriori.vds.models.response.process.group.associations.ProcessGroupAssociationsItems;
+import com.apriori.vds.models.response.process.group.materials.ProcessGroupMaterial;
+import com.apriori.vds.models.response.process.group.materials.ProcessGroupMaterialsItems;
+import com.apriori.vds.models.response.process.group.materials.stock.ProcessGroupMaterialStock;
+import com.apriori.vds.models.response.process.group.materials.stock.ProcessGroupMaterialsStocksItems;
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;

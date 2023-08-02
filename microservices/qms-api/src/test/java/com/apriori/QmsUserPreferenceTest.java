@@ -1,9 +1,9 @@
 package com.apriori;
 
 import com.apriori.qms.controller.QmsUserPreferenceResources;
-import com.apriori.qms.entity.request.userpreference.UserPreferenceParameters;
-import com.apriori.qms.entity.request.userpreference.UserPreferenceRequest;
-import com.apriori.qms.entity.response.userpreference.UserPreferenceResponse;
+import com.apriori.qms.models.request.userpreference.UserPreferenceParameters;
+import com.apriori.qms.models.request.userpreference.UserPreferenceRequest;
+import com.apriori.qms.models.response.userpreference.UserPreferenceResponse;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

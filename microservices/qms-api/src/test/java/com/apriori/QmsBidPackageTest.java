@@ -1,20 +1,21 @@
 package com.apriori;
 
 import com.apriori.authorization.response.ApwErrorMessage;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qms.controller.QmsBidPackageResources;
-import com.apriori.qms.entity.request.bidpackage.BidPackageParameters;
-import com.apriori.qms.entity.request.bidpackage.BidPackageRequest;
-import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackagesResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.qms.models.request.bidpackage.BidPackageParameters;
+import com.apriori.qms.models.request.bidpackage.BidPackageRequest;
+import com.apriori.qms.models.response.bidpackage.BidPackageItemResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackageProjectResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackagesResponse;
+import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
@@ -27,7 +28,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.QmsApiTestUtils;
 
 import java.util.HashMap;
 

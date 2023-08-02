@@ -4,12 +4,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
-import com.apriori.cisapi.controller.CisBidPackageResources;
-import com.apriori.cisapi.entity.request.bidpackage.BidPackageParameters;
-import com.apriori.cisapi.entity.request.bidpackage.BidPackageRequest;
-import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.cisapi.entity.response.bidpackage.BidPackagesResponse;
-import com.apriori.cisapi.entity.response.bidpackage.CisErrorMessage;
+import com.apriori.cis.controller.CisBidPackageResources;
+import com.apriori.cis.models.request.bidpackage.BidPackageParameters;
+import com.apriori.cis.models.request.bidpackage.BidPackageRequest;
+import com.apriori.cis.models.response.bidpackage.BidPackageResponse;
+import com.apriori.cis.models.response.bidpackage.BidPackagesResponse;
+import com.apriori.cis.models.response.bidpackage.CisErrorMessage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

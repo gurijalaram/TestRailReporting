@@ -1,6 +1,7 @@
 package agent.tests;
 
 import com.apriori.TestBaseUI;
+import com.apriori.cic.utils.CicLoginUtil;
 import com.apriori.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.AgentService;
-import utils.CicLoginUtil;
 
 public class AgentInstallTest extends TestBaseUI {
 

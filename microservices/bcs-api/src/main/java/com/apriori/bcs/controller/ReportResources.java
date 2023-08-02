@@ -1,16 +1,16 @@
 package com.apriori.bcs.controller;
 
 import com.apriori.FileResourceUtil;
-import com.apriori.bcs.entity.request.reports.ReportRequest;
-import com.apriori.bcs.entity.response.Batch;
-import com.apriori.bcs.entity.response.Part;
-import com.apriori.bcs.entity.response.Report;
-import com.apriori.bcs.entity.response.ReportError;
-import com.apriori.bcs.entity.response.ReportExport;
-import com.apriori.bcs.entity.response.ReportTemplates;
-import com.apriori.bcs.entity.response.Reports;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
+import com.apriori.bcs.models.request.reports.ReportRequest;
+import com.apriori.bcs.models.response.Batch;
+import com.apriori.bcs.models.response.Part;
+import com.apriori.bcs.models.response.Report;
+import com.apriori.bcs.models.response.ReportError;
+import com.apriori.bcs.models.response.ReportExport;
+import com.apriori.bcs.models.response.ReportTemplates;
+import com.apriori.bcs.models.response.Reports;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;

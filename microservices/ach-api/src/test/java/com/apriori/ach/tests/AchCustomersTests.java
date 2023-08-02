@@ -1,7 +1,7 @@
 package com.apriori.ach.tests;
 
-import com.apriori.ach.entity.response.CustomersAch;
 import com.apriori.ach.enums.ACHAPIEnum;
+import com.apriori.ach.models.response.CustomersAch;
 import com.apriori.ach.utils.AchTestUtil;
 import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.http.utils.RequestEntityUtil;

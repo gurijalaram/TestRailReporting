@@ -8,11 +8,11 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.vds.entity.enums.VDSAPIEnum;
-import com.apriori.vds.entity.response.access.control.AccessControlGroup;
-import com.apriori.vds.entity.response.access.control.AccessControlGroupItems;
-import com.apriori.vds.entity.response.digital.factories.DigitalFactoriesItems;
-import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
+import com.apriori.vds.enums.VDSAPIEnum;
+import com.apriori.vds.models.response.access.control.AccessControlGroup;
+import com.apriori.vds.models.response.access.control.AccessControlGroupItems;
+import com.apriori.vds.models.response.digital.factories.DigitalFactoriesItems;
+import com.apriori.vds.models.response.digital.factories.DigitalFactory;
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;

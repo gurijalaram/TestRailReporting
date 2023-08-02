@@ -5,15 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.FileResourceUtil;
-import com.apriori.cidappapi.entity.enums.Direction;
-import com.apriori.cidappapi.entity.request.ScenarioIterationRequest;
-import com.apriori.cidappapi.entity.request.operators.Params;
+import com.apriori.cidappapi.enums.Direction;
+import com.apriori.cidappapi.models.request.ScenarioIterationRequest;
+import com.apriori.cidappapi.models.request.operators.Params;
 import com.apriori.cidappapi.utils.ScenarioIterationService;
-import com.apriori.entity.response.CostingInput;
-import com.apriori.entity.response.CssComponentResponse;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
+import com.apriori.models.response.CostingInput;
+import com.apriori.models.response.CssComponentResponse;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

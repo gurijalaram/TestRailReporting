@@ -5,10 +5,10 @@ import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.properties.PropertiesContext;
-import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.request.ConnectionRequest;
-import com.apriori.sds.entity.response.Connection;
-import com.apriori.sds.entity.response.ConnectionsItemsResponse;
+import com.apriori.sds.enums.SDSAPIEnum;
+import com.apriori.sds.models.request.ConnectionRequest;
+import com.apriori.sds.models.response.Connection;
+import com.apriori.sds.models.response.ConnectionsItemsResponse;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.testrail.TestRail;
 

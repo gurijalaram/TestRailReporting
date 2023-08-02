@@ -1,5 +1,7 @@
 package com.apriori;
 
+import com.apriori.cic.enums.ReportsEnum;
+import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pageobjects.login.CicLoginPage;
@@ -12,13 +14,11 @@ import com.apriori.pageobjects.workflows.schedule.querydefinitions.QueryDefiniti
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
-import enums.ReportsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.WorkflowTestUtil;
 
 import java.util.Arrays;
 import java.util.List;

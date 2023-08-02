@@ -8,19 +8,19 @@ import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.qms.entity.request.scenariodiscussion.Attributes;
-import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentParameters;
-import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentRequest;
-import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
-import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
-import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.qms.models.request.scenariodiscussion.Attributes;
+import com.apriori.qms.models.request.scenariodiscussion.DiscussionCommentParameters;
+import com.apriori.qms.models.request.scenariodiscussion.DiscussionCommentRequest;
+import com.apriori.qms.models.request.scenariodiscussion.ScenarioDiscussionParameters;
+import com.apriori.qms.models.request.scenariodiscussion.ScenarioDiscussionRequest;
+import com.apriori.qms.models.response.scenariodiscussion.DiscussionCommentResponse;
+import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionsResponse;
+import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
-import utils.QmsApiTestUtils;
 
 import java.util.Arrays;
 import java.util.Collections;

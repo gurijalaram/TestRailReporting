@@ -3,9 +3,9 @@ package com.apriori;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.CostingTemplate;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.CostingTemplate;
+import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.DigitalFactoryEnum;

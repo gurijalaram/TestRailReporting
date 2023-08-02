@@ -1,7 +1,7 @@
 package com.apriori;
 
-import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSetting;
-import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSettingsResponse;
+import com.apriori.acs.models.response.acs.unitvariantsettings.UnitVariantSetting;
+import com.apriori.acs.models.response.acs.unitvariantsettings.UnitVariantSettingsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.testrail.TestRail;
 

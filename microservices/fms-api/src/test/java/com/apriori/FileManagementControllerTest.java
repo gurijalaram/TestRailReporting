@@ -7,7 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.controller.FileManagementController;
-import com.apriori.fms.entity.response.FileResponse;
+import com.apriori.fms.models.response.FileResponse;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

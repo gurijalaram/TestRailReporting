@@ -1,25 +1,25 @@
 package com.apriori;
 
+import com.apriori.cic.enums.CICAPIEnum;
+import com.apriori.cic.enums.CICAgentStatus;
+import com.apriori.cic.enums.CICPartSelectionType;
+import com.apriori.cic.models.response.AgentErrorMessage;
+import com.apriori.cic.models.response.AgentWorkflowJobResults;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.PlmPartsUtil;
+import com.apriori.cic.utils.WorkflowDataUtil;
+import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
-import entity.response.AgentErrorMessage;
-import entity.response.AgentWorkflowJobResults;
-import enums.CICAPIEnum;
-import enums.CICAgentStatus;
-import enums.CICPartSelectionType;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.CicApiTestUtil;
-import utils.PlmPartsUtil;
-import utils.WorkflowDataUtil;
-import utils.WorkflowTestUtil;
 
 import java.util.HashMap;
 

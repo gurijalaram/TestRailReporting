@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.FileResourceUtil;
-import com.apriori.cidappapi.entity.request.ScenarioIterationRequest;
-import com.apriori.cidappapi.entity.request.operators.Params;
+import com.apriori.cidappapi.models.request.ScenarioIterationRequest;
+import com.apriori.cidappapi.models.request.operators.Params;
 import com.apriori.cidappapi.utils.ScenarioIterationService;
-import com.apriori.entity.request.ErrorRequestResponse;
-import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
+import com.apriori.models.request.ErrorRequestResponse;
+import com.apriori.models.response.CssComponentResponse;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

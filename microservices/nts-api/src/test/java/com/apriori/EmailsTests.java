@@ -6,9 +6,9 @@ import static org.hamcrest.Matchers.hasSize;
 
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.nts.email.EmailService;
-import com.apriori.nts.entity.response.Email;
-import com.apriori.nts.entity.response.EmailsItems;
-import com.apriori.nts.entity.response.SendEmail;
+import com.apriori.nts.models.response.Email;
+import com.apriori.nts.models.response.EmailsItems;
+import com.apriori.nts.models.response.SendEmail;
 import com.apriori.nts.utils.Constants;
 import com.apriori.testrail.TestRail;
 

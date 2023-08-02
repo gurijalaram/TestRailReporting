@@ -2,8 +2,8 @@ package com.apriori;
 
 import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
+import com.apriori.cas.models.response.User;
 import com.apriori.cas.utils.CasTestUtil;
-import com.apriori.entity.response.User;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;

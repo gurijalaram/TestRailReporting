@@ -1,7 +1,21 @@
 package com.apriori;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
+import com.apriori.cic.enums.CICPartSelectionType;
+import com.apriori.cic.enums.CostingInputFields;
+import com.apriori.cic.enums.MappingRule;
+import com.apriori.cic.enums.PlmPartDataType;
+import com.apriori.cic.enums.PlmPartsSearch;
+import com.apriori.cic.enums.PlmWCType;
+import com.apriori.cic.models.response.AgentWorkflowJobPartsResult;
+import com.apriori.cic.models.response.AgentWorkflowJobResults;
+import com.apriori.cic.models.response.PlmSearchPart;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.PlmPartsUtil;
+import com.apriori.cic.utils.SearchFilter;
+import com.apriori.cic.utils.WorkflowDataUtil;
+import com.apriori.cic.utils.WorkflowTestUtil;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.enums.DigitalFactoryEnum;
@@ -12,15 +26,6 @@ import com.apriori.reader.file.part.PartData;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
-import entity.response.AgentWorkflowJobPartsResult;
-import entity.response.AgentWorkflowJobResults;
-import entity.response.PlmSearchPart;
-import enums.CICPartSelectionType;
-import enums.CostingInputFields;
-import enums.MappingRule;
-import enums.PlmPartDataType;
-import enums.PlmPartsSearch;
-import enums.PlmWCType;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.commons.lang3.StringUtils;
@@ -28,11 +33,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.CicApiTestUtil;
-import utils.PlmPartsUtil;
-import utils.SearchFilter;
-import utils.WorkflowDataUtil;
-import utils.WorkflowTestUtil;
 
 public class PlmUdaTests extends WorkflowTestUtil {
     private static SoftAssertions softAssertions;

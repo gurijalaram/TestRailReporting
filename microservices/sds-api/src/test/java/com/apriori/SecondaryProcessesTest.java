@@ -1,13 +1,13 @@
 package com.apriori;
 
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.response.SecondaryProcessesItems;
+import com.apriori.models.response.ScenarioItem;
+import com.apriori.sds.enums.SDSAPIEnum;
+import com.apriori.sds.models.response.SecondaryProcessesItems;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.testrail.TestRail;
 

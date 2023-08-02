@@ -2,7 +2,7 @@ package com.apriori.cds.objects.response;
 
 import com.apriori.annotations.Schema;
 import com.apriori.authorization.response.Pagination;
-import com.apriori.cds.entity.response.LicenseResponse;
+import com.apriori.cds.models.response.LicenseResponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;

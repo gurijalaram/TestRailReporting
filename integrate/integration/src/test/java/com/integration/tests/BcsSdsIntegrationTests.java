@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
-import com.apriori.bcs.entity.request.parts.NewPartRequest;
-import com.apriori.bcs.entity.response.Batch;
-import com.apriori.bcs.entity.response.Part;
+import com.apriori.bcs.models.request.parts.NewPartRequest;
+import com.apriori.bcs.models.response.Batch;
+import com.apriori.bcs.models.response.Part;
 import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.sds.controller.IterationController;

@@ -7,10 +7,10 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.ProcessGroupUtil;
 import com.apriori.util.VDSTestUtil;
-import com.apriori.vds.entity.enums.VDSAPIEnum;
-import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
-import com.apriori.vds.entity.response.process.group.materials.SustainabilityInfo;
-import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGroupMaterialStock;
+import com.apriori.vds.enums.VDSAPIEnum;
+import com.apriori.vds.models.response.process.group.materials.ProcessGroupMaterial;
+import com.apriori.vds.models.response.process.group.materials.SustainabilityInfo;
+import com.apriori.vds.models.response.process.group.materials.stock.ProcessGroupMaterialStock;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;

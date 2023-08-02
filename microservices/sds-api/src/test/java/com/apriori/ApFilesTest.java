@@ -5,8 +5,8 @@ import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.response.PostComponentResponse;
+import com.apriori.sds.enums.SDSAPIEnum;
+import com.apriori.sds.models.response.PostComponentResponse;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.testrail.TestRail;
 

@@ -3,9 +3,9 @@ package com.apriori;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.response.Component;
-import com.apriori.sds.entity.response.ComponentsItemsResponse;
+import com.apriori.sds.enums.SDSAPIEnum;
+import com.apriori.sds.models.response.Component;
+import com.apriori.sds.models.response.ComponentsItemsResponse;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.testrail.TestRail;
 

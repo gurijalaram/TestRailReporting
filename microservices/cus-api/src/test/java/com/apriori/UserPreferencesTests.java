@@ -1,9 +1,9 @@
 package com.apriori;
 
-import com.apriori.cusapi.entity.request.UpdateUserPrefRequest;
-import com.apriori.cusapi.entity.response.PreferenceItemsResponse;
-import com.apriori.cusapi.entity.response.PreferenceResponse;
-import com.apriori.cusapi.utils.PeopleUtil;
+import com.apriori.cus.models.request.UpdateUserPrefRequest;
+import com.apriori.cus.models.response.PreferenceItemsResponse;
+import com.apriori.cus.models.response.PreferenceResponse;
+import com.apriori.cus.utils.PeopleUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

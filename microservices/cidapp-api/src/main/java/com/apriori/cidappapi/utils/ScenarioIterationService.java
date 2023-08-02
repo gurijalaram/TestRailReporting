@@ -1,18 +1,18 @@
 package com.apriori.cidappapi.utils;
 
 import com.apriori.FileResourceUtil;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.request.ScenarioIterationRequest;
-import com.apriori.entity.enums.CssAPIEnum;
-import com.apriori.entity.request.ErrorRequestResponse;
-import com.apriori.entity.response.CssComponentResponse;
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.request.ScenarioIterationRequest;
+import com.apriori.enums.CssAPIEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.request.ErrorRequestResponse;
+import com.apriori.models.response.CssComponentResponse;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 

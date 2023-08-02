@@ -1,5 +1,7 @@
 package com.apriori;
 
+import com.apriori.cic.models.request.JobDefinition;
+import com.apriori.cic.utils.CicApiTestUtil;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.enums.SortedOrderType;
 import com.apriori.enums.WorkflowListColumns;
@@ -15,14 +17,12 @@ import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
-import entity.request.JobDefinition;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.CicApiTestUtil;
 
 public class WorkflowTests extends TestBaseUI {
     private static WorkFlowData workFlowData;

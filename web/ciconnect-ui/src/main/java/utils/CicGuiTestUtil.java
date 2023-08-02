@@ -1,10 +1,12 @@
 package utils;
 
+import com.apriori.cic.models.response.AgentWorkflowJobResults;
+import com.apriori.cic.models.response.AgentWorkflowJobRun;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.pageobjects.home.CIConnectHome;
 import com.apriori.pageobjects.login.CicLoginPage;
 
-import entity.response.AgentWorkflowJobResults;
-import entity.response.AgentWorkflowJobRun;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;

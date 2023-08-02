@@ -1,16 +1,17 @@
 package com.apriori;
 
-import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
+import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.controller.QmsComponentResources;
-import com.apriori.qms.entity.request.scenariodiscussion.ProjectUserParameters;
-import com.apriori.qms.entity.response.component.ComponentResponse;
-import com.apriori.qms.entity.response.component.ComponentsAssignedResponse;
-import com.apriori.qms.entity.response.scenario.ScenariosResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioProjectUserResponse;
+import com.apriori.qms.models.request.scenariodiscussion.ProjectUserParameters;
+import com.apriori.qms.models.response.component.ComponentResponse;
+import com.apriori.qms.models.response.component.ComponentsAssignedResponse;
+import com.apriori.qms.models.response.scenario.ScenariosResponse;
+import com.apriori.qms.models.response.scenariodiscussion.ScenarioProjectUserResponse;
+import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
@@ -23,7 +24,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.QmsApiTestUtils;
 
 public class QmsComponentTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();

@@ -2,15 +2,15 @@ package com.apriori;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.request.AssociationRequest;
-import com.apriori.sds.entity.response.ScenarioAssociation;
-import com.apriori.sds.entity.response.ScenarioAssociationsItems;
+import com.apriori.models.response.ScenarioItem;
+import com.apriori.sds.enums.SDSAPIEnum;
+import com.apriori.sds.models.request.AssociationRequest;
+import com.apriori.sds.models.response.ScenarioAssociation;
+import com.apriori.sds.models.response.ScenarioAssociationsItems;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.testrail.TestRail;
 

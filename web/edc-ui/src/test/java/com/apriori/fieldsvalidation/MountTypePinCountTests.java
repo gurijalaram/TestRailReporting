@@ -4,7 +4,7 @@ import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.common.EditBomPage;
-import com.apriori.edcapi.utils.BillOfMaterialsUtil;
+import com.apriori.edc.utils.BillOfMaterialsUtil;
 import com.apriori.pageobjects.login.EdcAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;

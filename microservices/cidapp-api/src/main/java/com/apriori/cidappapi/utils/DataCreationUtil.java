@@ -1,13 +1,13 @@
 package com.apriori.cidappapi.utils;
 
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.CostingTemplate;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.CostingTemplate;
+import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;
 

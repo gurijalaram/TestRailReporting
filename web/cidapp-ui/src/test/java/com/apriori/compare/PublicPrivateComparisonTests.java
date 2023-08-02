@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.containsInRelativeOrder;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.compare.ComparePage;

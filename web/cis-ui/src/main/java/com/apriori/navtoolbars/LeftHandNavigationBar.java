@@ -1,13 +1,13 @@
 package com.apriori.navtoolbars;
 
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.apriori.enums.ScenarioStateEnum.COST_COMPLETE;
 import static com.apriori.enums.ScenarioStateEnum.NOT_COSTED;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.CostingTemplate;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;

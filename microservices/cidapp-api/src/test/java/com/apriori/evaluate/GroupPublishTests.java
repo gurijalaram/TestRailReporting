@@ -1,19 +1,19 @@
 package com.apriori.evaluate;
 
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.ITERATION_EQ;
-import static com.apriori.entity.enums.CssSearch.LAST_ACTION_EQ;
-import static com.apriori.entity.enums.CssSearch.LATEST_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.enums.CssSearch.ITERATION_EQ;
+import static com.apriori.enums.CssSearch.LAST_ACTION_EQ;
+import static com.apriori.enums.CssSearch.LATEST_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 
 import com.apriori.GenerateStringUtil;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.request.ForkRequest;
-import com.apriori.cidappapi.entity.request.GroupItems;
-import com.apriori.cidappapi.entity.request.GroupPublishRequest;
-import com.apriori.cidappapi.entity.request.PublishRequest;
-import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
-import com.apriori.cidappapi.entity.response.User;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.request.ForkRequest;
+import com.apriori.cidappapi.models.request.GroupItems;
+import com.apriori.cidappapi.models.request.GroupPublishRequest;
+import com.apriori.cidappapi.models.request.PublishRequest;
+import com.apriori.cidappapi.models.response.ScenarioSuccessesFailures;
+import com.apriori.cidappapi.models.response.User;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;

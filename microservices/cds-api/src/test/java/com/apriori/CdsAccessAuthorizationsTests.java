@@ -1,9 +1,9 @@
 package com.apriori;
 
-import com.apriori.cds.entity.IdentityHolder;
-import com.apriori.cds.entity.response.Customer;
-import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.IdentityHolder;
+import com.apriori.cds.models.response.Customer;
+import com.apriori.cds.models.response.CustomerAssociationResponse;
 import com.apriori.cds.objects.response.AccessAuthorization;
 import com.apriori.cds.objects.response.AccessAuthorizations;
 import com.apriori.cds.objects.response.AssociationUserItems;

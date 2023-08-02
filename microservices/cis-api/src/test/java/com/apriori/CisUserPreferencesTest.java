@@ -7,9 +7,9 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.notNullValue;
 
 import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.cisapi.controller.CisUserPreferencesResources;
-import com.apriori.cisapi.entity.response.userpreferences.CurrentExtendedUserPreferencesResponse;
-import com.apriori.cisapi.entity.response.userpreferences.ExtendedUserPreferencesResponse;
+import com.apriori.cis.controller.CisUserPreferencesResources;
+import com.apriori.cis.models.response.userpreferences.CurrentExtendedUserPreferencesResponse;
+import com.apriori.cis.models.response.userpreferences.ExtendedUserPreferencesResponse;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.testrail.TestRail;
 

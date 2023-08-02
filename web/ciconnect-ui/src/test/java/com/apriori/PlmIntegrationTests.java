@@ -1,5 +1,16 @@
 package com.apriori;
 
+import com.apriori.cic.enums.CICPartSelectionType;
+import com.apriori.cic.enums.CostingInputFields;
+import com.apriori.cic.enums.MappingRule;
+import com.apriori.cic.enums.PlmPartDataType;
+import com.apriori.cic.enums.QueryDefinitionFields;
+import com.apriori.cic.models.response.AgentWorkflowJobPartsResult;
+import com.apriori.cic.models.response.PlmSearchPart;
+import com.apriori.cic.utils.PlmApiTestUtil;
+import com.apriori.cic.utils.PlmPartsUtil;
+import com.apriori.cic.utils.WorkflowDataUtil;
+import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -9,22 +20,11 @@ import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
-import entity.response.AgentWorkflowJobPartsResult;
-import entity.response.PlmSearchPart;
-import enums.CICPartSelectionType;
-import enums.CostingInputFields;
-import enums.MappingRule;
-import enums.PlmPartDataType;
-import enums.QueryDefinitionFields;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.PlmApiTestUtil;
-import utils.PlmPartsUtil;
-import utils.WorkflowDataUtil;
-import utils.WorkflowTestUtil;
 
 public class PlmIntegrationTests extends WorkflowTestUtil {
 

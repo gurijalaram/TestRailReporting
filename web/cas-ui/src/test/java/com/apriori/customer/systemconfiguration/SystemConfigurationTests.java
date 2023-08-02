@@ -5,9 +5,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 import com.apriori.TestBaseUI;
-import com.apriori.cds.entity.response.Customer;
-import com.apriori.cds.entity.response.Sites;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.response.Customer;
+import com.apriori.cds.models.response.Sites;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.pageobjects.customer.systemconfiguration.SystemConfigurationPage;

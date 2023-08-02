@@ -1,7 +1,7 @@
 package com.apriori.gcd.controller;
 
 import com.apriori.AuthUserContextUtil;
-import com.apriori.gcd.entity.enums.GCDAPIEnum;
+import com.apriori.gcd.models.enums.GCDAPIEnum;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;

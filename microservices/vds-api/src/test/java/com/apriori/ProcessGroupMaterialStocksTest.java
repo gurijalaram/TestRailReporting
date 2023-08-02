@@ -2,7 +2,7 @@ package com.apriori;
 
 import com.apriori.testrail.TestRail;
 import com.apriori.util.ProcessGroupUtil;
-import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGroupMaterialStock;
+import com.apriori.vds.models.response.process.group.materials.stock.ProcessGroupMaterialStock;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;

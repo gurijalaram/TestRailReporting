@@ -6,9 +6,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.CostingTemplate;
-import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.CostingTemplate;
+import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;

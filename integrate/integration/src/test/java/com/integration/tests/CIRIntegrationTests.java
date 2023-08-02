@@ -6,6 +6,15 @@ import static org.hamcrest.core.StringContains.containsString;
 import com.apriori.PDFDocument;
 import com.apriori.TestBaseUI;
 import com.apriori.authorization.response.EmailMessage;
+import com.apriori.cic.enums.CICReportType;
+import com.apriori.cic.enums.ReportsEnum;
+import com.apriori.cic.models.request.JobDefinition;
+import com.apriori.cic.models.response.AgentWorkflow;
+import com.apriori.cic.models.response.AgentWorkflowJobRun;
+import com.apriori.cic.models.response.AgentWorkflowReportTemplates;
+import com.apriori.cic.models.response.ReportTemplatesRow;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.CicLoginUtil;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.email.GraphEmailService;
 import com.apriori.nts.reports.componentsummary.MultipleComponentSummary;
@@ -16,13 +25,6 @@ import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
-import entity.request.JobDefinition;
-import entity.response.AgentWorkflow;
-import entity.response.AgentWorkflowJobRun;
-import entity.response.AgentWorkflowReportTemplates;
-import entity.response.ReportTemplatesRow;
-import enums.CICReportType;
-import enums.ReportsEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -32,13 +34,10 @@ import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.CicApiTestUtil;
-import utils.CicLoginUtil;
 
 public class CIRIntegrationTests extends TestBaseUI {
 
     private static String loginSession;
-    UserCredentials currentUser = UserUtil.getUser();
     private static AgentWorkflow agentWorkflowResponse;
     private static JobDefinition jobDefinitionData;
     private static AgentWorkflowJobRun agentWorkflowJobRunResponse;
@@ -48,6 +47,7 @@ public class CIRIntegrationTests extends TestBaseUI {
     private static SoftAssertions softAssertions;
     private static AgentWorkflowReportTemplates reportTemplateNames;
     private static ReportTemplatesRow reportTemplateName;
+    UserCredentials currentUser = UserUtil.getUser();
 
     public CIRIntegrationTests() {
         super();
@@ -78,7 +78,7 @@ public class CIRIntegrationTests extends TestBaseUI {
     @TestRail(id = {12046})
     @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow")
     public void testVerifyCIRReport() {
-        loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
+        loginSession = new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
         reportTemplateNames = CicApiTestUtil.getAgentReportTemplates(CICReportType.EMAIL, loginSession);
         workflowData = String.format(CicApiTestUtil.getWorkflowData("CIRReportData.json"), CicApiTestUtil.getCustomerName(), CicApiTestUtil.getAgent(loginSession),
             workflowName, scenarioName,

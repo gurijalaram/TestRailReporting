@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.PageUtils;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.pageobjects.common.AssembliesComponentsController;

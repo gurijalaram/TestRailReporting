@@ -1,14 +1,14 @@
 package com.apriori;
 
+import com.apriori.dms.models.response.DmsCommentViewResponse;
+import com.apriori.dms.models.response.DmsCommentViewsResponse;
+import com.apriori.dms.utils.DmsApiTestDataUtils;
+import com.apriori.dms.utils.DmsApiTestUtils;
 import com.apriori.testrail.TestRail;
 
-import entity.response.DmsCommentViewResponse;
-import entity.response.DmsCommentViewsResponse;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.DmsApiTestDataUtils;
-import utils.DmsApiTestUtils;
 
 public class DmsCommentViewTest extends DmsApiTestDataUtils {
     private static String userContext;

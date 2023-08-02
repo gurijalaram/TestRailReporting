@@ -2,10 +2,10 @@ package com.apriori.evaluate;
 
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.request.ForkRequest;
-import com.apriori.cidappapi.entity.response.Scenario;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.request.ForkRequest;
+import com.apriori.cidappapi.models.response.Scenario;
+import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;

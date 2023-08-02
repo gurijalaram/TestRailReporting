@@ -1,15 +1,15 @@
 package com.apriori.evaluate;
 
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.LATEST_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
+import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.enums.CssSearch.LATEST_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.authorization.response.ErrorMessage;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.request.ForkRequest;
-import com.apriori.cidappapi.entity.request.GroupItems;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.request.ForkRequest;
+import com.apriori.cidappapi.models.request.GroupItems;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.ProcessGroupEnum;

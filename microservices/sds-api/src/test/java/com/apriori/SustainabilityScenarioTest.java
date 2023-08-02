@@ -1,17 +1,17 @@
 package com.apriori;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.CostingTemplate;
-import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
-import com.apriori.entity.response.ScenarioItem;
-import com.apriori.entity.response.componentiteration.ScenarioProcess;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.CostingTemplate;
+import com.apriori.cidappapi.models.response.componentiteration.AnalysisOfScenario;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.response.ScenarioIteration;
+import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.componentiteration.ScenarioProcess;
+import com.apriori.sds.enums.SDSAPIEnum;
+import com.apriori.sds.models.response.ScenarioIteration;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.testrail.TestRail;
 

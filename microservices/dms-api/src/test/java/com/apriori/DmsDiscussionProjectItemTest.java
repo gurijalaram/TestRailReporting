@@ -1,16 +1,16 @@
 package com.apriori;
 
 import com.apriori.authorization.response.ApwErrorMessage;
+import com.apriori.dms.utils.DmsApiTestDataUtils;
+import com.apriori.dms.utils.DmsApiTestUtils;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
+import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionsResponse;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
-import utils.DmsApiTestDataUtils;
-import utils.DmsApiTestUtils;
 
 public class DmsDiscussionProjectItemTest extends DmsApiTestDataUtils {
     @Test

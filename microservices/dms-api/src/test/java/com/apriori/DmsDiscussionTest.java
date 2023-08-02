@@ -1,20 +1,20 @@
 package com.apriori;
 
 import com.apriori.authorization.response.ApwErrorMessage;
+import com.apriori.dms.models.request.DiscussionsRequest;
+import com.apriori.dms.models.request.DiscussionsRequestParameters;
+import com.apriori.dms.models.response.DmsDiscussionResponse;
+import com.apriori.dms.models.response.DmsDiscussionsResponse;
+import com.apriori.dms.utils.DmsApiTestDataUtils;
+import com.apriori.dms.utils.DmsApiTestUtils;
 import com.apriori.testrail.TestRail;
 
-import entity.request.DiscussionsRequest;
-import entity.request.DiscussionsRequestParameters;
-import entity.response.DmsDiscussionResponse;
-import entity.response.DmsDiscussionsResponse;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.DmsApiTestDataUtils;
-import utils.DmsApiTestUtils;
 
 public class DmsDiscussionTest extends DmsApiTestDataUtils {
     private static String discussionDescription = StringUtils.EMPTY;

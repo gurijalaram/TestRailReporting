@@ -1,7 +1,7 @@
 package com.apriori;
 
-import com.apriori.cds.entity.response.ConfigurationResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.response.ConfigurationResponse;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;

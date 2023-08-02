@@ -1,9 +1,9 @@
 package com.apriori;
 
-import com.apriori.cds.entity.response.Customer;
-import com.apriori.cds.entity.response.Site;
-import com.apriori.cds.entity.response.Sites;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.response.Customer;
+import com.apriori.cds.models.response.Site;
+import com.apriori.cds.models.response.Sites;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.ResponseWrapper;

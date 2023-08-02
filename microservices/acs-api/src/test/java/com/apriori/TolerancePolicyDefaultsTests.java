@@ -6,12 +6,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.acs.entity.enums.acs.AcsApiEnum;
-import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
-import com.apriori.acs.entity.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
-import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
-import com.apriori.acs.entity.response.acs.tolerancepolicydefaults.PropertyValueMap;
-import com.apriori.acs.entity.response.acs.tolerancepolicydefaults.TolerancePolicyDefaultsResponse;
+import com.apriori.acs.enums.acs.AcsApiEnum;
+import com.apriori.acs.models.response.acs.genericclasses.GenericErrorResponse;
+import com.apriori.acs.models.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
+import com.apriori.acs.models.response.acs.genericclasses.GenericResourceCreatedResponse;
+import com.apriori.acs.models.response.acs.tolerancepolicydefaults.PropertyValueMap;
+import com.apriori.acs.models.response.acs.tolerancepolicydefaults.TolerancePolicyDefaultsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.testrail.TestRail;
 

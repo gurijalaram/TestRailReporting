@@ -1,10 +1,10 @@
 package com.apriori.explore;
 
 import static com.apriori.TestSuiteType.TestSuite.SMOKE;
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.LAST_ACTION_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.enums.CssSearch.LAST_ACTION_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.utils.ColumnsEnum.ASSIGNEE;
 import static com.utils.ColumnsEnum.COST_MATURITY;
 import static com.utils.ColumnsEnum.STATUS;
@@ -17,7 +17,7 @@ import static org.hamcrest.core.StringContains.containsString;
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.OperationEnum;

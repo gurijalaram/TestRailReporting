@@ -2,11 +2,11 @@ package com.apriori.ats.utils;
 
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestUtil;
-import com.apriori.ats.entity.request.AuthenticateRequest;
-import com.apriori.ats.entity.request.CreateSamlUserRequest;
-import com.apriori.ats.entity.request.ResetAutoUsers;
-import com.apriori.ats.entity.request.ResetMFA;
-import com.apriori.ats.entity.response.UserByEmail;
+import com.apriori.ats.models.request.AuthenticateRequest;
+import com.apriori.ats.models.request.CreateSamlUserRequest;
+import com.apriori.ats.models.request.ResetAutoUsers;
+import com.apriori.ats.models.request.ResetMFA;
+import com.apriori.ats.models.response.UserByEmail;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;

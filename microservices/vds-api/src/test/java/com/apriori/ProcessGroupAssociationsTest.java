@@ -6,9 +6,9 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.ProcessGroupUtil;
-import com.apriori.vds.entity.enums.VDSAPIEnum;
-import com.apriori.vds.entity.request.process.group.associations.ProcessGroupAssociationRequest;
-import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociation;
+import com.apriori.vds.enums.VDSAPIEnum;
+import com.apriori.vds.models.request.process.group.associations.ProcessGroupAssociationRequest;
+import com.apriori.vds.models.response.process.group.associations.ProcessGroupAssociation;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;

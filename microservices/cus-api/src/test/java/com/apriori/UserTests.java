@@ -1,10 +1,10 @@
 package com.apriori;
 
-import com.apriori.cusapi.entity.request.UpdateUserRequest;
-import com.apriori.cusapi.entity.request.UserProfile;
-import com.apriori.cusapi.entity.response.ErrorResponse;
-import com.apriori.cusapi.entity.response.User;
-import com.apriori.cusapi.utils.PeopleUtil;
+import com.apriori.cus.models.request.UpdateUserRequest;
+import com.apriori.cus.models.request.UserProfile;
+import com.apriori.cus.models.response.ErrorResponse;
+import com.apriori.cus.models.response.User;
+import com.apriori.cus.utils.PeopleUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

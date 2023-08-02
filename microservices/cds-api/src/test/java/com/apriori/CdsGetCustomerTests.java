@@ -1,7 +1,7 @@
 package com.apriori;
 
-import com.apriori.cds.entity.response.Customer;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;

@@ -1,8 +1,7 @@
 package com.apriori;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.CostingTemplate;
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.CostingTemplate;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.ScenarioStateEnum;
@@ -10,14 +9,15 @@ import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.request.PostComponentRequest;
-import com.apriori.sds.entity.request.PostWatchpointReportRequest;
-import com.apriori.sds.entity.response.Scenario;
-import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
-import com.apriori.sds.entity.response.ScenarioHoopsImage;
-import com.apriori.sds.entity.response.ScenarioItemsResponse;
-import com.apriori.sds.entity.response.ScenarioManifest;
+import com.apriori.models.response.ScenarioItem;
+import com.apriori.sds.enums.SDSAPIEnum;
+import com.apriori.sds.models.request.PostComponentRequest;
+import com.apriori.sds.models.request.PostWatchpointReportRequest;
+import com.apriori.sds.models.response.Scenario;
+import com.apriori.sds.models.response.ScenarioCostingDefaultsResponse;
+import com.apriori.sds.models.response.ScenarioHoopsImage;
+import com.apriori.sds.models.response.ScenarioItemsResponse;
+import com.apriori.sds.models.response.ScenarioManifest;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.testrail.TestRail;
 

@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.cidappapi.utils.ScenarioIterationService;
-import com.apriori.entity.response.CssComponentResponse;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.CssComponentResponse;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

@@ -1,7 +1,7 @@
 package com.apriori.cidappapi.utils;
 
-import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
-import com.apriori.cidappapi.entity.response.customizations.Customizations;
+import com.apriori.cidappapi.enums.CidAppAPIEnum;
+import com.apriori.cidappapi.models.response.customizations.Customizations;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;

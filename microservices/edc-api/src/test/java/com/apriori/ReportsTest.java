@@ -1,7 +1,7 @@
 package com.apriori;
 
 import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.edcapi.utils.ReportsUtil;
+import com.apriori.edc.utils.ReportsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.testrail.TestRail;
 

@@ -2,13 +2,13 @@ package com.apriori;
 
 import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
+import com.apriori.cas.models.response.Applications;
+import com.apriori.cas.models.response.CasErrorMessage;
+import com.apriori.cas.models.response.Customer;
+import com.apriori.cas.models.response.Customers;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.entity.response.Applications;
-import com.apriori.entity.response.CasErrorMessage;
-import com.apriori.entity.response.Customer;
-import com.apriori.entity.response.Customers;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;

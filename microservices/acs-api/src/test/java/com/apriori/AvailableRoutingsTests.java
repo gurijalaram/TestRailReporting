@@ -1,13 +1,13 @@
 package com.apriori;
 
-import com.apriori.acs.entity.request.workorders.NewPartRequest;
-import com.apriori.acs.entity.response.acs.availableroutings.AvailableRoutingsFirstLevel;
-import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
-import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
+import com.apriori.acs.models.request.workorders.NewPartRequest;
+import com.apriori.acs.models.response.acs.availableroutings.AvailableRoutingsFirstLevel;
+import com.apriori.acs.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
+import com.apriori.acs.models.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.fms.entity.response.FileResponse;
+import com.apriori.fms.models.response.FileResponse;
 import com.apriori.testrail.TestRail;
 import com.apriori.workorders.WorkorderAPITests;
 

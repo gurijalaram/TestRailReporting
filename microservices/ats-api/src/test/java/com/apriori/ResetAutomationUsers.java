@@ -1,6 +1,6 @@
 package com.apriori;
 
-import com.apriori.ats.entity.request.ResetAutoUsers;
+import com.apriori.ats.models.request.ResetAutoUsers;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;

@@ -1,18 +1,18 @@
 package com.apriori;
 
-import static com.apriori.edcapi.utils.BillOfMaterialsUtil.deleteBillOfMaterialById;
-import static com.apriori.edcapi.utils.BillOfMaterialsUtil.postBillOfMaterials;
+import static com.apriori.edc.utils.BillOfMaterialsUtil.deleteBillOfMaterialById;
+import static com.apriori.edc.utils.BillOfMaterialsUtil.postBillOfMaterials;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.edcapi.entity.response.line.items.LineItemParts;
-import com.apriori.edcapi.entity.response.line.items.LineItemsResponse;
-import com.apriori.edcapi.entity.response.parts.Parts;
-import com.apriori.edcapi.entity.response.parts.PartsResponse;
-import com.apriori.edcapi.utils.LineItemsUtil;
-import com.apriori.edcapi.utils.PartsUtil;
+import com.apriori.edc.models.response.line.items.LineItemParts;
+import com.apriori.edc.models.response.line.items.LineItemsResponse;
+import com.apriori.edc.models.response.parts.Parts;
+import com.apriori.edc.models.response.parts.PartsResponse;
+import com.apriori.edc.utils.LineItemsUtil;
+import com.apriori.edc.utils.PartsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;

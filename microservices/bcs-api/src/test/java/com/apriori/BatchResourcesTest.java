@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.bcs.controller.BatchResources;
-import com.apriori.bcs.entity.response.Batch;
-import com.apriori.bcs.entity.response.Batches;
-import com.apriori.bcs.entity.response.Cancel;
 import com.apriori.bcs.enums.BCSState;
+import com.apriori.bcs.models.response.Batch;
+import com.apriori.bcs.models.response.Batches;
+import com.apriori.bcs.models.response.Cancel;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
 

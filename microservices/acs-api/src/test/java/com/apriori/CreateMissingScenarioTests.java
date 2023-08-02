@@ -6,8 +6,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
-import com.apriori.acs.entity.response.acs.missingscenario.MissingScenarioResponse;
-import com.apriori.acs.entity.response.acs.scenarioinfobyscenarioiterationkey.ScenarioInfoByScenarioIterationKeyResponse;
+import com.apriori.acs.models.response.acs.missingscenario.MissingScenarioResponse;
+import com.apriori.acs.models.response.acs.scenarioinfobyscenarioiterationkey.ScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.utils.Constants;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.testrail.TestRail;

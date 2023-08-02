@@ -1,11 +1,11 @@
 package com.apriori;
 
-import static com.apriori.entity.enums.CssSearch.COMPONENT_IDENTITY_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
+import static com.apriori.enums.CssSearch.COMPONENT_IDENTITY_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_IDENTITY_EQ;
 
-import com.apriori.entity.response.CssComponentResponse;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.CssComponentResponse;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

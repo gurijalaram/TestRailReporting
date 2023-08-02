@@ -1,10 +1,10 @@
 package com.apriori;
 
-import com.apriori.ats.entity.response.UserByEmail;
+import com.apriori.ats.models.response.UserByEmail;
 import com.apriori.ats.utils.AtsTestUtil;
-import com.apriori.cds.entity.response.Customer;
-import com.apriori.cds.entity.response.IdentityProviderResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.response.Customer;
+import com.apriori.cds.models.response.IdentityProviderResponse;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;

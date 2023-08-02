@@ -1,17 +1,18 @@
 package com.apriori;
 
 import com.apriori.authorization.response.ApwErrorMessage;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectParameters;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.qms.models.request.bidpackage.BidPackageProjectParameters;
+import com.apriori.qms.models.request.bidpackage.BidPackageProjectRequest;
+import com.apriori.qms.models.response.bidpackage.BidPackageProjectResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackageProjectsResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
@@ -24,7 +25,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.QmsApiTestUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

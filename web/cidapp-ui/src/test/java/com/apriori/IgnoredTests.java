@@ -1,11 +1,11 @@
 package com.apriori;
 
 import static com.apriori.TestSuiteType.TestSuite.IGNORE;
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_LOCKED_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_LOCKED_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.NewCostingLabelEnum;

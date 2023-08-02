@@ -2,8 +2,8 @@ package com.apriori.evaluate;
 
 import static com.apriori.TestSuiteType.TestSuite.IGNORE;
 
-import com.apriori.cidappapi.entity.response.customizations.Customizations;
-import com.apriori.cidappapi.entity.response.customizations.ProcessGroups;
+import com.apriori.cidappapi.models.response.customizations.Customizations;
+import com.apriori.cidappapi.models.response.customizations.ProcessGroups;
 import com.apriori.cidappapi.utils.CustomizationUtil;
 import com.apriori.enums.AssemblyProcessGroupEnum;
 import com.apriori.enums.ProcessGroupEnum;

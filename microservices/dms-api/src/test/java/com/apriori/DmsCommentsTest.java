@@ -1,20 +1,20 @@
 package com.apriori;
 
+import com.apriori.dms.models.request.CommentsRequestParameters;
+import com.apriori.dms.models.request.DmsCommentsRequest;
+import com.apriori.dms.models.response.DmsCommentResponse;
+import com.apriori.dms.models.response.DmsCommentsResponse;
+import com.apriori.dms.models.response.DmsErrorMessageResponse;
+import com.apriori.dms.utils.DmsApiTestDataUtils;
+import com.apriori.dms.utils.DmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
-import entity.request.CommentsRequestParameters;
-import entity.request.DmsCommentsRequest;
-import entity.response.DmsCommentResponse;
-import entity.response.DmsCommentsResponse;
-import entity.response.DmsErrorMessageResponse;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.DmsApiTestDataUtils;
-import utils.DmsApiTestUtils;
 
 import java.util.Collections;
 

@@ -12,17 +12,17 @@ import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
-import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectNotificationRequest;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectParameters;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectRequest;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.qms.models.request.bidpackage.BidPackageItemRequest;
+import com.apriori.qms.models.request.bidpackage.BidPackageProjectNotificationRequest;
+import com.apriori.qms.models.request.bidpackage.BidPackageProjectParameters;
+import com.apriori.qms.models.request.bidpackage.BidPackageProjectRequest;
+import com.apriori.qms.models.request.bidpackage.BidPackageProjectUserParameters;
+import com.apriori.qms.models.response.bidpackage.BidPackageProjectsResponse;
+import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
-import utils.QmsApiTestUtils;
 
 import java.util.Arrays;
 import java.util.HashMap;

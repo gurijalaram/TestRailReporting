@@ -1,13 +1,13 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.pageobjects.compare.CreateComparePage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.UpdateCadFilePage;

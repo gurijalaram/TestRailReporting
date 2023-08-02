@@ -4,11 +4,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
+import com.apriori.acs.models.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.fms.entity.response.FileResponse;
+import com.apriori.fms.models.response.FileResponse;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

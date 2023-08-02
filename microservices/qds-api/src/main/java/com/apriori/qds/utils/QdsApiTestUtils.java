@@ -1,7 +1,7 @@
 package com.apriori.qds.utils;
 
-import com.apriori.qds.entity.request.bidpackage.BidPackageParameters;
-import com.apriori.qds.entity.request.bidpackage.BidPackageRequest;
+import com.apriori.qds.models.request.bidpackage.BidPackageParameters;
+import com.apriori.qds.models.request.bidpackage.BidPackageRequest;
 
 import java.util.HashMap;
 import java.util.Map;

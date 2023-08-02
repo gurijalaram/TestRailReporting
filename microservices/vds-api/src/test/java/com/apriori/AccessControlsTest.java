@@ -5,8 +5,8 @@ import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.VDSTestUtil;
-import com.apriori.vds.entity.enums.VDSAPIEnum;
-import com.apriori.vds.entity.response.access.control.AccessControlPermissionItems;
+import com.apriori.vds.enums.VDSAPIEnum;
+import com.apriori.vds.models.response.access.control.AccessControlPermissionItems;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;

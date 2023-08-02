@@ -1,7 +1,7 @@
 package com.apriori.ats.utils;
 
-import com.apriori.ats.entity.request.AuthorizeRequest;
-import com.apriori.ats.entity.response.AuthorizationResponse;
+import com.apriori.ats.models.request.AuthorizeRequest;
+import com.apriori.ats.models.response.AuthorizationResponse;
 import com.apriori.ats.utils.enums.AuthorizeUserEnum;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;

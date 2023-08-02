@@ -3,7 +3,7 @@ package com.apriori.nts.utils;
 import com.apriori.FileResourceUtil;
 import com.apriori.http.utils.EncryptionUtil;
 import com.apriori.json.JsonManager;
-import com.apriori.nts.entity.response.Credentials;
+import com.apriori.nts.models.response.Credentials;
 import com.apriori.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;

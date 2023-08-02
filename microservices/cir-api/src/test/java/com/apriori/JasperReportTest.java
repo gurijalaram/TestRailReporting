@@ -1,10 +1,10 @@
 package com.apriori;
 
-import com.apriori.cirapi.entity.JasperReportSummary;
-import com.apriori.cirapi.entity.request.ParametersRequest;
-import com.apriori.cirapi.entity.request.ReportRequest;
-import com.apriori.cirapi.entity.response.ChartDataPoint;
-import com.apriori.cirapi.utils.JasperReportUtil;
+import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.models.request.ParametersRequest;
+import com.apriori.cir.models.request.ReportRequest;
+import com.apriori.cir.models.response.ChartDataPoint;
+import com.apriori.cir.utils.JasperReportUtil;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 
 import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.edcapi.entity.response.accounts.AccountsResponse;
-import com.apriori.edcapi.utils.AccountsUtil;
+import com.apriori.edc.models.response.accounts.AccountsResponse;
+import com.apriori.edc.utils.AccountsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;

@@ -4,7 +4,7 @@ import static com.apriori.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
-import com.apriori.cds.entity.response.Customer;
+import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.CardsViewComponent;
 import com.apriori.components.PaginatorComponent;

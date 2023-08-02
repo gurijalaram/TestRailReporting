@@ -9,10 +9,10 @@ import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.nts.entity.response.Email;
-import com.apriori.nts.entity.response.EmailsItems;
-import com.apriori.nts.entity.response.SendEmail;
 import com.apriori.nts.enums.NTSAPIEnum;
+import com.apriori.nts.models.response.Email;
+import com.apriori.nts.models.response.EmailsItems;
+import com.apriori.nts.models.response.SendEmail;
 import com.apriori.nts.utils.EmailSetup;
 import com.apriori.reader.file.user.UserUtil;
 

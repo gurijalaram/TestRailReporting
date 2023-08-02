@@ -1,6 +1,13 @@
 package com.apriori;
 
 import com.apriori.authorization.response.ErrorMessage;
+import com.apriori.dds.enums.DDSApiEnum;
+import com.apriori.dds.models.request.CommentsRequest;
+import com.apriori.dds.models.request.CommentsRequestParameters;
+import com.apriori.dds.models.response.CommentResponse;
+import com.apriori.dds.models.response.CommentsResponse;
+import com.apriori.dds.models.response.DiscussionResponse;
+import com.apriori.dds.utils.DdsApiTestUtils;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
@@ -10,12 +17,6 @@ import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
-import entity.request.CommentsRequest;
-import entity.request.CommentsRequestParameters;
-import entity.response.CommentResponse;
-import entity.response.CommentsResponse;
-import entity.response.DiscussionResponse;
-import enums.DDSApiEnum;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +25,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.DdsApiTestUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,6 +1,6 @@
 package com.apriori;
 
-import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
+import com.apriori.cidappapi.models.response.preferences.PreferenceResponse;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.enums.UnitsEnum;
 import com.apriori.reader.file.user.UserUtil;

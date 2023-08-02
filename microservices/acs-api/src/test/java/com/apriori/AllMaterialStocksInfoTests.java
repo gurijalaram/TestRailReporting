@@ -1,7 +1,7 @@
 package com.apriori;
 
-import com.apriori.acs.entity.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
-import com.apriori.acs.entity.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
+import com.apriori.acs.models.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
+import com.apriori.acs.models.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.testrail.TestRail;

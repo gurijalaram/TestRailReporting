@@ -6,12 +6,11 @@ import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.qms.entity.request.layout.LayoutConfigurationParameters;
-import com.apriori.qms.entity.request.layout.LayoutConfigurationRequest;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.qms.models.request.layout.LayoutConfigurationParameters;
+import com.apriori.qms.models.request.layout.LayoutConfigurationRequest;
+import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
-
-import utils.QmsApiTestUtils;
 
 /**
  * The type Qms layout resources.

@@ -1,14 +1,14 @@
 package com.apriori.ach.tests;
 
 import com.apriori.GenerateStringUtil;
-import com.apriori.ach.entity.response.FailureUpdatePreferencesResponse;
-import com.apriori.ach.entity.response.SuccessUpdatePreferencesResponse;
-import com.apriori.ach.entity.response.UserPreferences;
 import com.apriori.ach.enums.ACHAPIEnum;
+import com.apriori.ach.models.response.FailureUpdatePreferencesResponse;
+import com.apriori.ach.models.response.SuccessUpdatePreferencesResponse;
+import com.apriori.ach.models.response.UserPreferences;
 import com.apriori.ach.utils.AchTestUtil;
 import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;

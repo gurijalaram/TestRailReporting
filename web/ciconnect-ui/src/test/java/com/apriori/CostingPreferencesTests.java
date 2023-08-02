@@ -1,5 +1,6 @@
 package com.apriori;
 
+import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pagedata.CostingServiceSettingsData;
@@ -14,7 +15,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.WorkflowTestUtil;
 
 public class CostingPreferencesTests extends WorkflowTestUtil {
 

@@ -2,6 +2,11 @@ package utils;
 
 import com.apriori.AwsParameterStoreUtil;
 import com.apriori.FileResourceUtil;
+import com.apriori.cic.models.request.ConnectorRequest;
+import com.apriori.cic.models.response.AgentConnectionInfo;
+import com.apriori.cic.models.response.AgentConnectionOptions;
+import com.apriori.cic.models.response.ConnectorInfo;
+import com.apriori.cic.utils.CicApiTestUtil;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
@@ -16,10 +21,6 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpATTRS;
 import com.jcraft.jsch.SftpException;
-import entity.request.ConnectorRequest;
-import entity.response.AgentConnectionInfo;
-import entity.response.AgentConnectionOptions;
-import entity.response.ConnectorInfo;
 import entity.response.NexusAgentItem;
 import entity.response.NexusAgentResponse;
 import enums.NexusAPIEnum;
@@ -63,9 +64,10 @@ import java.util.zip.ZipInputStream;
 @Data
 @AllArgsConstructor
 public class AgentService {
+    private static final int SESSION_TIMEOUT = 10000;
+    private static final int CHANNEL_TIMEOUT = 5000;
     private static String installExecutableFile;
     private static String webLoginSession;
-
     private Session jSchSession = null;
     private Channel channel = null;
     private ChannelSftp channelSftp = null;
@@ -74,9 +76,6 @@ public class AgentService {
     private AgentConnectionOptions agentConnectionOptions = null;
     private ConnectorInfo connectorInfo = null;
     private AgentData agentData;
-
-    private static final int SESSION_TIMEOUT = 10000;
-    private static final int CHANNEL_TIMEOUT = 5000;
 
     public AgentService() {
         agentCredentials = new AgentCredentials().getAgentCredentials();

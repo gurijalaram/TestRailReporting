@@ -1,5 +1,6 @@
 package com.apriori;
 
+import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pageobjects.login.CicLoginPage;
@@ -14,7 +15,6 @@ import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
-import utils.WorkflowTestUtil;
 
 import java.util.Arrays;
 

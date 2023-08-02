@@ -5,8 +5,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
 import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsResponse;
-import com.apriori.edcapi.utils.BillOfMaterialsUtil;
+import com.apriori.edc.models.response.bill.of.materials.BillOfMaterialsResponse;
+import com.apriori.edc.utils.BillOfMaterialsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.testrail.TestRail;
 

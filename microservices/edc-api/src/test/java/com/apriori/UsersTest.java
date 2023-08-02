@@ -1,8 +1,8 @@
 package com.apriori;
 
 import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.edcapi.entity.response.users.Users;
-import com.apriori.edcapi.utils.UsersUtil;
+import com.apriori.edc.models.response.users.Users;
+import com.apriori.edc.utils.UsersUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.testrail.TestRail;
 

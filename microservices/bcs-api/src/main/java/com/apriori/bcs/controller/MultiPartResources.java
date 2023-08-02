@@ -1,10 +1,10 @@
 package com.apriori.bcs.controller;
 
-import com.apriori.bcs.entity.request.parts.NewPartRequest;
-import com.apriori.bcs.entity.response.Batch;
-import com.apriori.bcs.entity.response.Part;
-import com.apriori.bcs.entity.response.Parts;
 import com.apriori.bcs.enums.BCSState;
+import com.apriori.bcs.models.request.parts.NewPartRequest;
+import com.apriori.bcs.models.response.Batch;
+import com.apriori.bcs.models.response.Part;
+import com.apriori.bcs.models.response.Parts;
 import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.database.dto.BCSPartBenchmarkingDTO;
 import com.apriori.http.utils.ResponseWrapper;

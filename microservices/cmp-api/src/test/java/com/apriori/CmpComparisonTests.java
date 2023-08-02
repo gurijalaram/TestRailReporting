@@ -2,12 +2,12 @@ package com.apriori;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.cmp.entity.builder.ComparisonObjectBuilder;
-import com.apriori.cmp.entity.request.CreateComparison;
-import com.apriori.cmp.entity.response.GetComparisonResponse;
-import com.apriori.cmp.entity.response.PostComparisonResponse;
+import com.apriori.cmp.models.builder.ComparisonObjectBuilder;
+import com.apriori.cmp.models.request.CreateComparison;
+import com.apriori.cmp.models.response.GetComparisonResponse;
+import com.apriori.cmp.models.response.PostComparisonResponse;
 import com.apriori.cmp.utils.ComparisonUtils;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.ResponseWrapper;

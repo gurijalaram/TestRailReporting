@@ -7,8 +7,8 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
+import com.apriori.sds.enums.SDSAPIEnum;
+import com.apriori.sds.models.response.ScenarioCostingDefaultsResponse;
 
 public class IterationController extends RequestEntityUtil {
 

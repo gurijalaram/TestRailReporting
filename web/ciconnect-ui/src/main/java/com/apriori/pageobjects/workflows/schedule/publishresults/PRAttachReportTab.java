@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.workflows.schedule.publishresults;
 
-import enums.ReportsEnum;
+import com.apriori.cic.enums.ReportsEnum;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

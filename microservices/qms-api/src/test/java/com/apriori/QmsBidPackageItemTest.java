@@ -1,13 +1,13 @@
 package com.apriori;
 
 import com.apriori.authorization.response.ApwErrorMessage;
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
-import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
-import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
-import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageItemsResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.models.request.bidpackage.BidPackageItemParameters;
+import com.apriori.qms.models.request.bidpackage.BidPackageItemRequest;
+import com.apriori.qms.models.response.bidpackage.BidPackageItemResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackageItemsResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackageResponse;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

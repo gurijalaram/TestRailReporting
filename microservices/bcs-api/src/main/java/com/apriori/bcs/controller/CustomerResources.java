@@ -1,9 +1,9 @@
 package com.apriori.bcs.controller;
 
 import com.apriori.FileResourceUtil;
-import com.apriori.bcs.entity.request.PatchCostingPreferenceRequest;
-import com.apriori.bcs.entity.response.UserPreferences;
 import com.apriori.bcs.enums.BCSAPIEnum;
+import com.apriori.bcs.models.request.PatchCostingPreferenceRequest;
+import com.apriori.bcs.models.response.UserPreferences;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;

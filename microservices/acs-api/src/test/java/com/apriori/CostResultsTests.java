@@ -1,12 +1,12 @@
 package com.apriori;
 
-import com.apriori.acs.entity.response.acs.costresults.CostResultsRootItem;
-import com.apriori.acs.entity.response.acs.costresults.CostResultsRootResponse;
-import com.apriori.acs.entity.response.acs.costresults.ProcessInstanceKey;
-import com.apriori.acs.entity.response.acs.costresults.PropertyInfoMap;
-import com.apriori.acs.entity.response.acs.costresults.PropertyValueMap;
-import com.apriori.acs.entity.response.acs.costresults.ResultMapBean;
-import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
+import com.apriori.acs.models.response.acs.costresults.CostResultsRootItem;
+import com.apriori.acs.models.response.acs.costresults.CostResultsRootResponse;
+import com.apriori.acs.models.response.acs.costresults.ProcessInstanceKey;
+import com.apriori.acs.models.response.acs.costresults.PropertyInfoMap;
+import com.apriori.acs.models.response.acs.costresults.PropertyValueMap;
+import com.apriori.acs.models.response.acs.costresults.ResultMapBean;
+import com.apriori.acs.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.testrail.TestRail;

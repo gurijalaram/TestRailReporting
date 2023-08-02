@@ -4,7 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.acs.entity.response.acs.partprimaryprocessgroups.PartPrimaryProcessGroupsResponse;
+import com.apriori.acs.models.response.acs.partprimaryprocessgroups.PartPrimaryProcessGroupsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.testrail.TestRail;

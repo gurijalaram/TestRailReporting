@@ -1,12 +1,12 @@
 package com.apriori.bcs.controller;
 
-import com.apriori.bcs.entity.request.batch.BatchProperties;
-import com.apriori.bcs.entity.request.batch.BatchRequest;
-import com.apriori.bcs.entity.response.Batch;
-import com.apriori.bcs.entity.response.Batches;
-import com.apriori.bcs.entity.response.Cancel;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
+import com.apriori.bcs.models.request.batch.BatchProperties;
+import com.apriori.bcs.models.request.batch.BatchRequest;
+import com.apriori.bcs.models.response.Batch;
+import com.apriori.bcs.models.response.Batches;
+import com.apriori.bcs.models.response.Cancel;
 import com.apriori.bcs.utils.BcsBase;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;

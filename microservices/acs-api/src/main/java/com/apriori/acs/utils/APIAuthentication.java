@@ -1,6 +1,6 @@
 package com.apriori.acs.utils;
 
-import com.apriori.acs.entity.enums.acs.AcsApiEnum;
+import com.apriori.acs.enums.acs.AcsApiEnum;
 import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;

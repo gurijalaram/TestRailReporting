@@ -1,8 +1,8 @@
 package com.apriori.util;
 
 import com.apriori.GenerateStringUtil;
-import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
-import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
+import com.apriori.vds.models.request.process.group.site.variable.SiteVariableRequest;
+import com.apriori.vds.models.response.process.group.site.variable.SiteVariable;
 
 import org.assertj.core.api.SoftAssertions;
 

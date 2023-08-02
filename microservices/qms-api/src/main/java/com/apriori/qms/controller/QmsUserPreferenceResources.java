@@ -5,11 +5,10 @@ import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.qms.entity.request.userpreference.UserPreferenceRequest;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.qms.models.request.userpreference.UserPreferenceRequest;
+import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
-
-import utils.QmsApiTestUtils;
 
 /**
  * The type Qms user preference resources.

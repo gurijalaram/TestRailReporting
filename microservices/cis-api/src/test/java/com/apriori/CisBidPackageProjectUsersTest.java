@@ -1,12 +1,12 @@
 package com.apriori;
 
-import com.apriori.cisapi.controller.CisBidPackageProjectResources;
-import com.apriori.cisapi.controller.CisBidPackageResources;
-import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectUserParameters;
-import com.apriori.cisapi.entity.request.bidpackage.BidPackageProjectUserRequest;
-import com.apriori.cisapi.entity.response.bidpackage.BidPackageProjectResponse;
-import com.apriori.cisapi.entity.response.bidpackage.BidPackageProjectUsersPostResponse;
-import com.apriori.cisapi.entity.response.bidpackage.BidPackageResponse;
+import com.apriori.cis.controller.CisBidPackageProjectResources;
+import com.apriori.cis.controller.CisBidPackageResources;
+import com.apriori.cis.models.request.bidpackage.BidPackageProjectUserParameters;
+import com.apriori.cis.models.request.bidpackage.BidPackageProjectUserRequest;
+import com.apriori.cis.models.response.bidpackage.BidPackageProjectResponse;
+import com.apriori.cis.models.response.bidpackage.BidPackageProjectUsersPostResponse;
+import com.apriori.cis.models.response.bidpackage.BidPackageResponse;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

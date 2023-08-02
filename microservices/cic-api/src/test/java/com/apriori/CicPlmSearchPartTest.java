@@ -1,18 +1,19 @@
 package com.apriori;
 
-import entity.request.PlmFieldDefinitions;
-import entity.response.PlmPartResponse;
-import entity.response.PlmSearchPart;
-import entity.response.PlmSearchResponse;
-import enums.PlmPartsSearch;
-import enums.PlmWCType;
+import com.apriori.cic.enums.PlmPartsSearch;
+import com.apriori.cic.enums.PlmWCType;
+import com.apriori.cic.models.request.PlmFieldDefinitions;
+import com.apriori.cic.models.response.PlmPartResponse;
+import com.apriori.cic.models.response.PlmSearchPart;
+import com.apriori.cic.models.response.PlmSearchResponse;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.PlmApiTestUtil;
+import com.apriori.cic.utils.SearchFilter;
+
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.CicApiTestUtil;
-import utils.PlmApiTestUtil;
-import utils.SearchFilter;
 
 public class CicPlmSearchPartTest {
     private static SoftAssertions softAssertions;

@@ -1,13 +1,13 @@
 package com.apriori;
 
-import com.apriori.acs.entity.response.acs.scenariosinfo.ScenariosInfoItem;
-import com.apriori.acs.entity.response.acs.scenariosinfo.ScenariosInfoResponse;
-import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
-import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
+import com.apriori.acs.models.response.acs.scenariosinfo.ScenariosInfoItem;
+import com.apriori.acs.models.response.acs.scenariosinfo.ScenariosInfoResponse;
+import com.apriori.acs.models.response.workorders.genericclasses.ScenarioIterationKey;
+import com.apriori.acs.models.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.fms.entity.response.FileResponse;
+import com.apriori.fms.models.response.FileResponse;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
 

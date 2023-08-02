@@ -1,12 +1,12 @@
 package com.apriori;
 
-import com.apriori.bcs.entity.response.ProcessGroup;
+import com.apriori.bcs.models.response.ProcessGroup;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.ProcessGroupUtil;
-import com.apriori.vds.entity.enums.VDSAPIEnum;
+import com.apriori.vds.enums.VDSAPIEnum;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;

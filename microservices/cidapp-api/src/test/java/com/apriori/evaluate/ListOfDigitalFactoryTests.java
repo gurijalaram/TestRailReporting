@@ -3,8 +3,8 @@ package com.apriori.evaluate;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cidappapi.entity.response.customizations.Customizations;
-import com.apriori.cidappapi.entity.response.customizations.DigitalFactories;
+import com.apriori.cidappapi.models.response.customizations.Customizations;
+import com.apriori.cidappapi.models.response.customizations.DigitalFactories;
 import com.apriori.cidappapi.utils.CustomizationUtil;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.http.utils.ResponseWrapper;

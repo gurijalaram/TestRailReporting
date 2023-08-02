@@ -1,11 +1,11 @@
 package com.apriori;
 
-import static com.apriori.edcapi.utils.BillOfMaterialsUtil.deleteBillOfMaterialById;
-import static com.apriori.edcapi.utils.BillOfMaterialsUtil.postBillOfMaterials;
+import static com.apriori.edc.utils.BillOfMaterialsUtil.deleteBillOfMaterialById;
+import static com.apriori.edc.utils.BillOfMaterialsUtil.postBillOfMaterials;
 
 import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.edcapi.entity.response.line.items.LineItemsResponse;
-import com.apriori.edcapi.utils.LineItemsUtil;
+import com.apriori.edc.models.response.line.items.LineItemsResponse;
+import com.apriori.edc.utils.LineItemsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.testrail.TestRail;
 

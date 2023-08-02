@@ -6,10 +6,10 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 
-import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsInputs;
-import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsResponse;
-import com.apriori.acs.entity.response.acs.displayunits.UnitVariantSettingsInfoInputs;
-import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
+import com.apriori.acs.models.response.acs.displayunits.DisplayUnitsInputs;
+import com.apriori.acs.models.response.acs.displayunits.DisplayUnitsResponse;
+import com.apriori.acs.models.response.acs.displayunits.UnitVariantSettingsInfoInputs;
+import com.apriori.acs.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.testrail.TestRail;

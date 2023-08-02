@@ -1,21 +1,21 @@
 package com.apriori;
 
+import com.apriori.cic.enums.CICPartSelectionType;
+import com.apriori.cic.enums.PlmPartDataType;
+import com.apriori.cic.enums.QueryDefinitionFieldType;
+import com.apriori.cic.enums.QueryDefinitionFields;
+import com.apriori.cic.models.response.AgentWorkflowJobResults;
+import com.apriori.cic.utils.PlmPartsUtil;
+import com.apriori.cic.utils.WorkflowDataUtil;
+import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
-import entity.response.AgentWorkflowJobResults;
-import enums.CICPartSelectionType;
-import enums.PlmPartDataType;
-import enums.QueryDefinitionFieldType;
-import enums.QueryDefinitionFields;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.PlmPartsUtil;
-import utils.WorkflowDataUtil;
-import utils.WorkflowTestUtil;
 
 public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
 

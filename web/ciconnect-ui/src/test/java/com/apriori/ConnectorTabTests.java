@@ -1,5 +1,6 @@
 package com.apriori;
 
+import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.pageobjects.connectors.ConnectorsPage;
 import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.properties.PropertiesContext;
@@ -10,7 +11,6 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
-import utils.WorkflowTestUtil;
 
 public class ConnectorTabTests extends WorkflowTestUtil {
     private UserCredentials currentUser = UserUtil.getUser();

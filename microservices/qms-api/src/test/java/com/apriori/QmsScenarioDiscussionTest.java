@@ -1,24 +1,25 @@
 package com.apriori;
 
 import com.apriori.authorization.response.ApwErrorMessage;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
-import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentParameters;
-import com.apriori.qms.entity.request.scenariodiscussion.DiscussionCommentRequest;
-import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
-import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
-import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentViewResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.DiscussionCommentsResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionsResponse;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.qms.models.request.scenariodiscussion.DiscussionCommentParameters;
+import com.apriori.qms.models.request.scenariodiscussion.DiscussionCommentRequest;
+import com.apriori.qms.models.request.scenariodiscussion.ScenarioDiscussionParameters;
+import com.apriori.qms.models.request.scenariodiscussion.ScenarioDiscussionRequest;
+import com.apriori.qms.models.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.models.response.scenariodiscussion.DiscussionCommentResponse;
+import com.apriori.qms.models.response.scenariodiscussion.DiscussionCommentViewResponse;
+import com.apriori.qms.models.response.scenariodiscussion.DiscussionCommentsResponse;
+import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionsResponse;
+import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
@@ -33,7 +34,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.QmsApiTestUtils;
 
 import java.util.Collections;
 

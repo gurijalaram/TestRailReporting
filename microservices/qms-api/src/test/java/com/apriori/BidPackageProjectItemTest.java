@@ -1,19 +1,20 @@
 package com.apriori;
 
 import com.apriori.authorization.response.ApwErrorMessage;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.qms.controller.QmsBidPackageResources;
-import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
-import com.apriori.qms.entity.request.bidpackage.BidPackageProjectItem;
-import com.apriori.qms.entity.response.bidpackage.BidPackageItemResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsBulkResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectItemsResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
-import com.apriori.qms.entity.response.bidpackage.BidPackageResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.qms.models.request.bidpackage.BidPackageItemParameters;
+import com.apriori.qms.models.request.bidpackage.BidPackageProjectItem;
+import com.apriori.qms.models.response.bidpackage.BidPackageItemResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackageProjectItemResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackageProjectItemsBulkResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackageProjectItemsResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackageProjectResponse;
+import com.apriori.qms.models.response.bidpackage.BidPackageResponse;
+import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionResponse;
+import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
@@ -27,7 +28,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.QmsApiTestUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,13 +1,13 @@
 package com.apriori.pageobjects.explore;
 
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 
 import com.apriori.PageUtils;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;

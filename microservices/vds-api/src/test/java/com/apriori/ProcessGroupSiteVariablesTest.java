@@ -9,10 +9,10 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.ProcessGroupUtil;
 import com.apriori.util.SiteVariableUtil;
-import com.apriori.vds.entity.enums.VDSAPIEnum;
-import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
-import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
-import com.apriori.vds.entity.response.process.group.site.variable.SiteVariablesItems;
+import com.apriori.vds.enums.VDSAPIEnum;
+import com.apriori.vds.models.request.process.group.site.variable.SiteVariableRequest;
+import com.apriori.vds.models.response.process.group.site.variable.SiteVariable;
+import com.apriori.vds.models.response.process.group.site.variable.SiteVariablesItems;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;

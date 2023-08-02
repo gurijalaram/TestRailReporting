@@ -1,11 +1,9 @@
 package com.apriori.utils;
 
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 
-import com.apriori.entity.enums.CssAPIEnum;
-import com.apriori.entity.response.CssComponentResponse;
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.CssAPIEnum;
 import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.exceptions.KeyValueException;
 import com.apriori.http.builder.entity.RequestEntity;
@@ -13,6 +11,8 @@ import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.CssComponentResponse;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;

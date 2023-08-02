@@ -2,7 +2,7 @@ package com.apriori;
 
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.sds.controller.FeatureDecisionController;
-import com.apriori.sds.entity.response.FeatureDecisionsResponse;
+import com.apriori.sds.models.response.FeatureDecisionsResponse;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

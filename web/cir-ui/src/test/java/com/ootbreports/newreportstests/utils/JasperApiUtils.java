@@ -1,9 +1,9 @@
 package com.ootbreports.newreportstests.utils;
 
-import com.apriori.cirapi.entity.JasperReportSummary;
-import com.apriori.cirapi.entity.request.ReportRequest;
-import com.apriori.cirapi.entity.response.InputControl;
-import com.apriori.cirapi.utils.JasperReportUtil;
+import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.models.request.ReportRequest;
+import com.apriori.cir.models.response.InputControl;
+import com.apriori.cir.utils.JasperReportUtil;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ProcessGroupEnum;
 

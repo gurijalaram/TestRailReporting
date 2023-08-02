@@ -4,15 +4,15 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.acs.entity.request.workorders.NewPartRequest;
-import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
-import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
-import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
-import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
+import com.apriori.acs.models.request.workorders.NewPartRequest;
+import com.apriori.acs.models.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
+import com.apriori.acs.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
+import com.apriori.acs.models.response.workorders.genericclasses.ScenarioIterationKey;
+import com.apriori.acs.models.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.fms.entity.response.FileResponse;
+import com.apriori.fms.models.response.FileResponse;
 import com.apriori.json.JsonManager;
 import com.apriori.testrail.TestRail;
 

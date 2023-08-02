@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-import com.apriori.ats.entity.response.AuthorizationResponse;
-import com.apriori.ats.entity.response.CloudContextResponse;
+import com.apriori.ats.models.response.AuthorizationResponse;
+import com.apriori.ats.models.response.CloudContextResponse;
 import com.apriori.ats.utils.AtsTestUtil;
 import com.apriori.ats.utils.AuthorizeUserUtil;
 import com.apriori.ats.utils.enums.ATSAPIEnum;

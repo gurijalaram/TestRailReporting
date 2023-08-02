@@ -3,7 +3,7 @@ package com.apriori.devtest;
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
-import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
+import com.apriori.cidappapi.models.response.ComponentIdentityResponse;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;

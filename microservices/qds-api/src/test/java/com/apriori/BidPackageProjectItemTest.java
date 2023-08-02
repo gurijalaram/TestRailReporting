@@ -1,18 +1,18 @@
 package com.apriori;
 
 import com.apriori.authorization.response.ErrorMessage;
-import com.apriori.entity.response.ScenarioItem;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.qds.controller.BidPackageResources;
-import com.apriori.qds.entity.response.bidpackage.BidPackageItemResponse;
-import com.apriori.qds.entity.response.bidpackage.BidPackageProjectItemResponse;
-import com.apriori.qds.entity.response.bidpackage.BidPackageProjectItemsResponse;
-import com.apriori.qds.entity.response.bidpackage.BidPackageProjectResponse;
-import com.apriori.qds.entity.response.bidpackage.BidPackageResponse;
 import com.apriori.qds.enums.QDSAPIEnum;
+import com.apriori.qds.models.response.bidpackage.BidPackageItemResponse;
+import com.apriori.qds.models.response.bidpackage.BidPackageProjectItemResponse;
+import com.apriori.qds.models.response.bidpackage.BidPackageProjectItemsResponse;
+import com.apriori.qds.models.response.bidpackage.BidPackageProjectResponse;
+import com.apriori.qds.models.response.bidpackage.BidPackageResponse;
 import com.apriori.qds.utils.QdsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;

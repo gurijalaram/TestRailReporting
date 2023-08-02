@@ -1,13 +1,13 @@
 package com.apriori;
 
 import com.apriori.bcs.controller.CustomerResources;
-import com.apriori.bcs.entity.response.CustomAttributes;
-import com.apriori.bcs.entity.response.CustomerVPE;
-import com.apriori.bcs.entity.response.DigitalFactories;
-import com.apriori.bcs.entity.response.ProcessGroups;
-import com.apriori.bcs.entity.response.UserDefinedAttributes;
-import com.apriori.bcs.entity.response.UserPreferences;
 import com.apriori.bcs.enums.BCSAPIEnum;
+import com.apriori.bcs.models.response.CustomAttributes;
+import com.apriori.bcs.models.response.CustomerVPE;
+import com.apriori.bcs.models.response.DigitalFactories;
+import com.apriori.bcs.models.response.ProcessGroups;
+import com.apriori.bcs.models.response.UserDefinedAttributes;
+import com.apriori.bcs.models.response.UserPreferences;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;

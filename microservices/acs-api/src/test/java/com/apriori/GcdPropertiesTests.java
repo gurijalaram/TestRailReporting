@@ -1,8 +1,8 @@
 package com.apriori;
 
-import com.apriori.acs.entity.response.acs.GcdProperties.GcdPropertiesResponse;
-import com.apriori.acs.entity.response.acs.GcdProperties.PropertiesToSet;
-import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
+import com.apriori.acs.models.response.acs.GcdProperties.GcdPropertiesResponse;
+import com.apriori.acs.models.response.acs.GcdProperties.PropertiesToSet;
+import com.apriori.acs.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.testrail.TestRail;

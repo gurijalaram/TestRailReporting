@@ -1,26 +1,26 @@
 package com.apriori;
 
+import com.apriori.cic.enums.CICAPIEnum;
+import com.apriori.cic.enums.CICPartSelectionType;
+import com.apriori.cic.models.request.JobDefinition;
+import com.apriori.cic.models.response.AgentConfiguration;
+import com.apriori.cic.models.response.AgentStatus;
+import com.apriori.cic.models.response.AgentWorkflow;
+import com.apriori.cic.models.response.AgentWorkflowJob;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.PlmPartsUtil;
+import com.apriori.cic.utils.WorkflowDataUtil;
+import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
-import entity.request.JobDefinition;
-import entity.response.AgentConfiguration;
-import entity.response.AgentStatus;
-import entity.response.AgentWorkflow;
-import entity.response.AgentWorkflowJob;
-import enums.CICAPIEnum;
-import enums.CICPartSelectionType;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.CicApiTestUtil;
-import utils.PlmPartsUtil;
-import utils.WorkflowDataUtil;
-import utils.WorkflowTestUtil;
 
 public class CicAgentTest extends WorkflowTestUtil {
 

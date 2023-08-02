@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.hasItems;
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.MaterialNameEnum;

@@ -1,12 +1,12 @@
 package com.apriori.ach.utils;
 
 import com.apriori.TestUtil;
-import com.apriori.ach.entity.request.UserPreferencesRequest;
-import com.apriori.ach.entity.response.CustomerAch;
-import com.apriori.ach.entity.response.CustomersAch;
-import com.apriori.ach.entity.response.SuccessUpdatePreferencesResponse;
-import com.apriori.ach.entity.response.UserPreference;
 import com.apriori.ach.enums.ACHAPIEnum;
+import com.apriori.ach.models.request.UserPreferencesRequest;
+import com.apriori.ach.models.response.CustomerAch;
+import com.apriori.ach.models.response.CustomersAch;
+import com.apriori.ach.models.response.SuccessUpdatePreferencesResponse;
+import com.apriori.ach.models.response.UserPreference;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
@@ -61,7 +61,7 @@ public class AchTestUtil extends TestUtil {
      * Updates user preference
      *
      * @param identity - preference identity
-     * @param value - new value of preference
+     * @param value    - new value of preference
      * @return new object
      */
     public ResponseWrapper<String> updatePreferencesByPatch(String identity, String value) {
@@ -77,7 +77,7 @@ public class AchTestUtil extends TestUtil {
      * Updates user preference
      *
      * @param prefName - name of preference
-     * @param value - value of preference
+     * @param value    - value of preference
      * @return new object
      */
     public ResponseWrapper<SuccessUpdatePreferencesResponse> updatePreferencesByPut(String prefName, String value) {

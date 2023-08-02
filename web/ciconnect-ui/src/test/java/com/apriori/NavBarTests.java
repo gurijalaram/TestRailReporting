@@ -1,5 +1,6 @@
 package com.apriori;
 
+import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.pageobjects.connectors.ConnectorsPage;
 import com.apriori.pageobjects.home.CIConnectHome;
 import com.apriori.pageobjects.home.help.cicuserguide.CicUserGuide;
@@ -14,7 +15,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.WorkflowTestUtil;
 
 public class NavBarTests extends WorkflowTestUtil {
 

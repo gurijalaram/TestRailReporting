@@ -2,9 +2,9 @@ package com.apriori.cidappapi.utils;
 
 import com.apriori.AuthUserContextUtil;
 import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
-import com.apriori.cidappapi.entity.response.preferences.PreferenceItemsResponse;
-import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
+import com.apriori.cidappapi.enums.CidAppAPIEnum;
+import com.apriori.cidappapi.models.response.preferences.PreferenceItemsResponse;
+import com.apriori.cidappapi.models.response.preferences.PreferenceResponse;
 import com.apriori.enums.ColourEnum;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.DecimalPlaceEnum;

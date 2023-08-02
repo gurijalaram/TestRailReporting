@@ -4,25 +4,25 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
+import com.apriori.cic.enums.CICReportType;
+import com.apriori.cic.enums.ReportsEnum;
+import com.apriori.cic.models.request.ConnectorRequest;
+import com.apriori.cic.models.response.AgentConnectionInfo;
+import com.apriori.cic.models.response.AgentConnectionOptions;
+import com.apriori.cic.models.response.AgentWorkflowReportTemplates;
+import com.apriori.cic.models.response.ConnectorInfo;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.CicLoginUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 
-import entity.request.ConnectorRequest;
-import entity.response.AgentConnectionInfo;
-import entity.response.AgentConnectionOptions;
-import entity.response.AgentWorkflowReportTemplates;
-import entity.response.ConnectorInfo;
-import enums.CICReportType;
-import enums.ReportsEnum;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.CicApiTestUtil;
-import utils.CicLoginUtil;
 
 public class CicConnectorTest extends TestBaseUI {
 
