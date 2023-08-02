@@ -13,7 +13,8 @@ import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.components.TableHeaderComponent;
 import com.apriori.http.utils.Obligation;
-import com.apriori.login.CasLoginPage;
+import com.apriori.pageobjects.customer.systemconfiguration.SystemConfigurationGroupsPage;
+import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

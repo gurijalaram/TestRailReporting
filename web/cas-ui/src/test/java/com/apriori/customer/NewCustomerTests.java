@@ -7,10 +7,11 @@ import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.SourceListComponent;
-import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.http.utils.Obligation;
-import com.apriori.login.CasLoginPage;
-import com.apriori.newcustomer.CustomerProfilePage;
+import com.apriori.pageobjects.customer.CustomerWorkspacePage;
+import com.apriori.pageobjects.customeradmin.CustomerAdminPage;
+import com.apriori.pageobjects.login.CasLoginPage;
+import com.apriori.pageobjects.newcustomer.CustomerProfilePage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

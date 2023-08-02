@@ -4,8 +4,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.TestBaseUI;
-import com.apriori.login.CasLoginPage;
-import com.apriori.newcustomer.CustomerProfilePage;
+import com.apriori.pageobjects.login.CasLoginPage;
+import com.apriori.pageobjects.newcustomer.CustomerProfilePage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

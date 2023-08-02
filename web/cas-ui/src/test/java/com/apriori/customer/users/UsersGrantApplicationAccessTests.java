@@ -18,10 +18,10 @@ import com.apriori.cds.utils.Constants;
 import com.apriori.components.CardsViewComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
-import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.http.utils.Obligation;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.login.CasLoginPage;
+import com.apriori.pageobjects.customer.users.profile.UserProfilePage;
+import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

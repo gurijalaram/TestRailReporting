@@ -1,6 +1,6 @@
-package com.apriori.security;
+package com.apriori.pageobjects.security;
 
-import com.apriori.customer.CustomerWorkspacePage;
+import com.apriori.pageobjects.customer.CustomerWorkspacePage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

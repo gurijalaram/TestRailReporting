@@ -1,4 +1,4 @@
-package com.apriori.customer.systemconfiguration;
+package com.apriori.pageobjects.customer.systemconfiguration;
 
 import com.apriori.EagerPageComponent;
 import com.apriori.components.RoutingComponent;

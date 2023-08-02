@@ -1,4 +1,4 @@
-package com.apriori.customer.users;
+package com.apriori.pageobjects.customer.users;
 
 import com.apriori.common.UsersTableController;
 import com.apriori.components.SourceListComponent;

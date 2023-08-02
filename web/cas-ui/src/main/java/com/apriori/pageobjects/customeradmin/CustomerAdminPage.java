@@ -1,4 +1,4 @@
-package com.apriori.customeradmin;
+package com.apriori.pageobjects.customeradmin;
 
 import com.apriori.PageUtils;
 import com.apriori.common.UsersTableController;
@@ -6,8 +6,8 @@ import com.apriori.components.SearchFieldComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.components.TableHeaderComponent;
-import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.http.utils.Obligation;
+import com.apriori.pageobjects.customer.CustomerWorkspacePage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;

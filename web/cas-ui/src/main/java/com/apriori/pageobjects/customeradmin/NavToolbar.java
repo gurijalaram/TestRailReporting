@@ -1,7 +1,7 @@
-package com.apriori.customeradmin;
+package com.apriori.pageobjects.customeradmin;
 
 import com.apriori.EagerPageComponent;
-import com.apriori.login.CasLoginPage;
+import com.apriori.pageobjects.login.CasLoginPage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

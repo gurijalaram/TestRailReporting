@@ -1,9 +1,10 @@
-package com.apriori.login;
+package com.apriori.pageobjects.login;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
-import com.apriori.customeradmin.CustomerAdminPage;
+import com.apriori.login.LoginService;
+import com.apriori.pageobjects.customeradmin.CustomerAdminPage;
 import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;

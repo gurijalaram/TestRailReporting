@@ -9,10 +9,11 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
-import com.apriori.customer.users.profile.NewUserPage;
-import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.http.utils.Obligation;
-import com.apriori.login.CasLoginPage;
+import com.apriori.pageobjects.customer.users.UsersListPage;
+import com.apriori.pageobjects.customer.users.profile.NewUserPage;
+import com.apriori.pageobjects.customer.users.profile.UserProfilePage;
+import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

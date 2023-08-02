@@ -1,12 +1,12 @@
-package com.apriori.customer.users;
+package com.apriori.pageobjects.customer.users;
 
 import com.apriori.PageUtils;
 import com.apriori.common.UsersTableController;
 import com.apriori.components.SearchFieldComponent;
 import com.apriori.components.SourceListComponent;
-import com.apriori.customer.users.profile.NewUserPage;
-import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.http.utils.Obligation;
+import com.apriori.pageobjects.customer.users.profile.NewUserPage;
+import com.apriori.pageobjects.customer.users.profile.UserProfilePage;
 import com.apriori.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;

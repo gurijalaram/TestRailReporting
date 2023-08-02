@@ -1,7 +1,7 @@
-package com.apriori.customer.users;
+package com.apriori.pageobjects.customer.users;
 
 import com.apriori.components.RoutingComponent;
-import com.apriori.customer.CustomerWorkspacePage;
+import com.apriori.pageobjects.customer.CustomerWorkspacePage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

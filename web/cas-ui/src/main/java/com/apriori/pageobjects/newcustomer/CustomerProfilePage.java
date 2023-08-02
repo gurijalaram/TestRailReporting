@@ -1,7 +1,7 @@
-package com.apriori.newcustomer;
+package com.apriori.pageobjects.newcustomer;
 
 import com.apriori.components.SelectFieldComponent;
-import com.apriori.customer.CustomerWorkspacePage;
+import com.apriori.pageobjects.customer.CustomerWorkspacePage;
 import com.apriori.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;

@@ -17,7 +17,9 @@ import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.components.TableRowComponent;
 import com.apriori.http.utils.Obligation;
-import com.apriori.login.CasLoginPage;
+import com.apriori.pageobjects.customer.users.ImportPage;
+import com.apriori.pageobjects.customer.users.UsersListPage;
+import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

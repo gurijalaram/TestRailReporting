@@ -1,16 +1,16 @@
-package com.apriori.customer;
+package com.apriori.pageobjects.customer;
 
 import com.apriori.PageUtils;
 import com.apriori.components.RoutingComponent;
 import com.apriori.components.SelectComponent;
-import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
-import com.apriori.customer.users.UsersPage;
-import com.apriori.customeradmin.CustomerAdminPage;
-import com.apriori.customeradmin.NavToolbar;
-import com.apriori.newcustomer.CustomerProfilePage;
-import com.apriori.newcustomer.InfrastructurePage;
+import com.apriori.pageobjects.customer.systemconfiguration.SystemConfigurationPage;
+import com.apriori.pageobjects.customer.users.UsersPage;
+import com.apriori.pageobjects.customeradmin.CustomerAdminPage;
+import com.apriori.pageobjects.customeradmin.NavToolbar;
+import com.apriori.pageobjects.newcustomer.CustomerProfilePage;
+import com.apriori.pageobjects.newcustomer.InfrastructurePage;
+import com.apriori.pageobjects.security.SecurityPage;
 import com.apriori.properties.PropertiesContext;
-import com.apriori.security.SecurityPage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
