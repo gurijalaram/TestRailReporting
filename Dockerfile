@@ -1,5 +1,5 @@
 # Prepare build workspace.
-FROM gradle:7.4-jdk8 AS sdk
+FROM gradle:8.2-jdk11 AS sdk
 
 USER root
 COPY apriori-https-cert.cer .
