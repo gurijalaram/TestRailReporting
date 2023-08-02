@@ -1,8 +1,8 @@
 package com.apriori.explore;
 
 import com.apriori.TestBaseUI;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.CisLoginPage;
+import com.apriori.pageobjects.explore.ExplorePage;
+import com.apriori.pageobjects.login.CisLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

@@ -6,11 +6,11 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
 import com.apriori.TestBaseUI;
-import com.apriori.pageobjects.navtoolbars.CompareTabToolbar;
-import com.apriori.pageobjects.navtoolbars.ExploreTabToolbar;
-import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.CisLoginPage;
+import com.apriori.navtoolbars.CompareTabToolbar;
+import com.apriori.navtoolbars.ExploreTabToolbar;
+import com.apriori.pageobjects.compare.ModifyComparisonPage;
+import com.apriori.pageobjects.explore.ExplorePage;
+import com.apriori.pageobjects.login.CisLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
