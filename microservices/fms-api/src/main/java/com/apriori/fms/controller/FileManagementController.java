@@ -108,9 +108,9 @@ public class FileManagementController {
      */
     private static Map<String, String> initHeaders(UserCredentials userCredentials, boolean addMultiPartFile) {
         Map<String, String> headers = new HashMap<String, String>() {{
-            put("ap-cloud-context", new AuthorizationUtil().getAuthTargetCloudContext(userCredentials));
-            put("ap-user-context", new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
-        }};
+                put("ap-cloud-context", new AuthorizationUtil().getAuthTargetCloudContext(userCredentials));
+                put("ap-user-context", new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
+            }};
 
         if (addMultiPartFile) {
             headers.put("Content-Type", "multipart/form-data");
