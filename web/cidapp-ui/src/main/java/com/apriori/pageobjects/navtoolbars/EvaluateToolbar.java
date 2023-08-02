@@ -2,7 +2,7 @@ package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
 import com.apriori.enums.NewCostingLabelEnum;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

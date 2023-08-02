@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.common.ConfigurePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.pageobjects.explore.ExplorePage;
+import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

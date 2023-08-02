@@ -6,7 +6,7 @@ import com.apriori.PageUtils;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.ScenarioStateEnum;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;
 

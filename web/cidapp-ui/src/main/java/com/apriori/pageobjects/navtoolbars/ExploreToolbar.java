@@ -8,12 +8,12 @@ import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.pageobjects.pages.compare.CreateComparePage;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
+import com.apriori.pageobjects.compare.CreateComparePage;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
+import com.apriori.pageobjects.evaluate.UpdateCadFilePage;
+import com.apriori.pageobjects.evaluate.components.ComponentsTreePage;
+import com.apriori.pageobjects.explore.ExplorePage;
+import com.apriori.pageobjects.explore.ImportCadFilePage;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 

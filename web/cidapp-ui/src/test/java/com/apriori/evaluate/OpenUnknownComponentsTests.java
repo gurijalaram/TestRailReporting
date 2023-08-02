@@ -7,9 +7,9 @@ import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
+import com.apriori.pageobjects.explore.ExplorePage;
+import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

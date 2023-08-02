@@ -13,9 +13,9 @@ import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.OperationEnum;
 import com.apriori.enums.PropertyEnum;
 import com.apriori.enums.ReportNamesEnum;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
+import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.view.reports.CycleTimeValueTrackingPage;
 import com.apriori.testrail.TestRail;
 

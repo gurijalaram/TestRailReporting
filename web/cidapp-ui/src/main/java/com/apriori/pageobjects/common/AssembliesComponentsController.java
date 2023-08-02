@@ -9,13 +9,13 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
+import com.apriori.pageobjects.evaluate.UpdateCadFilePage;
+import com.apriori.pageobjects.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.evaluate.components.ComponentsTreePage;
+import com.apriori.pageobjects.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
-import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;
 

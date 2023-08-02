@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
-import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
-import com.apriori.pageobjects.pages.compare.SaveComparisonPage;
-import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
+import com.apriori.pageobjects.compare.ModifyComparisonPage;
+import com.apriori.pageobjects.compare.SaveComparisonPage;
+import com.apriori.pageobjects.explore.ImportCadFilePage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
