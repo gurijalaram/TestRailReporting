@@ -2,9 +2,11 @@ package com.ootbreports.newreportstests.recommendedtestparts;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
+import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 
@@ -36,7 +38,7 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
     @TestRail(testCaseId = {"14000"})
     @Description("Input controls - Test Process Groups")
     public void testProcessGroupSheetMetal() {
-        JasperReportSummary jasperReportSummary = genericProcessGroupTest("Process Group", ProcessGroupEnum.SHEET_METAL.getProcessGroup());
+        JasperReportSummary jasperReportSummary = genericProcessGroupTest("Process Group", ProcessGroupEnum.ASSEMBLY);
         String processGroupValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "6").get(0).child(0).text();
         String partNumberValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "2").get(8).child(0).text();
 
@@ -45,13 +47,16 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
         softAssertions.assertThat(partNumberValue).isEqualTo(JasperCirApiPartsEnum.SM_CLEVIS_2207240161.getPartName());
     }
 
-    private JasperReportSummary genericProcessGroupTest(String keyToSet, String valueToSet) {
+    private JasperReportSummary genericProcessGroupTest(String keyToSet, ProcessGroupEnum valueToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        JasperApiUtils jasperApiUtils1 = new JasperApiUtils(jSessionId, exportSetName, valueToSet, reportsJsonFileName);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
-        ReportRequest reportRequest = jasperApiUtils.getReportRequest();
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, "latestExportDate", currentDateTime);
-        reportRequest = jasperApiUtils.setReportParameterByName(reportRequest, Constants.INPUT_CONTROL_NAMES.get(keyToSet), "7");
+        ReportRequest reportRequest = jasperApiUtils1.getReportRequest();
+        jasperApiUtils1.setReportParameterByName("latestExportDate", currentDateTime);
+        InputControl inputControls = jasperReportUtil.getInputControls();
+        //String currentProcessGroup = inputControls.getProcessGroup().getOption(keyToSet).getValue();
+        //jasperApiUtils1.setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), currentProcessGroup);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
