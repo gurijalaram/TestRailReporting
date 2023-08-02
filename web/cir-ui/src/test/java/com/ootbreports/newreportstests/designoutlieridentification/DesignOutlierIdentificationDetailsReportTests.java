@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.designoutlieridentification;
 
+import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;
 
@@ -8,6 +9,8 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import enums.JasperCirApiPartsEnum;
 import enums.MassMetricEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;

@@ -1,6 +1,6 @@
 package com.ootbreports.newreportstests.potentialsavingsvaluetracking;
 
-import com.apriori.utils.TestRail;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
@@ -21,7 +21,7 @@ public class PotentialSavingsValueTrackingDetailsReportTests extends JasperApiAu
     }
 
     @Test
-    @TestRail(testCaseId = {"26906"})
+    @TestRail(id = 26906)
     @Description("Input Controls - Currency Code - Details Report")
     public void testCurrencyCode() {
         jasperApiUtils.targetQuotedCostTrendAndPotentialSavingsGenericCurrencyTest(22, 71, 95);
