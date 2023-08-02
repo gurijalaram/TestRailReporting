@@ -4,8 +4,8 @@ import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.pagedata.CostingServiceSettingsData;
-import com.apriori.pages.home.CIConnectHome;
-import com.apriori.pages.login.CicLoginPage;
+import com.apriori.pageobjects.home.CIConnectHome;
+import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

@@ -2,10 +2,10 @@ package com.apriori;
 
 import com.apriori.dataservice.TestDataService;
 import com.apriori.pagedata.WorkFlowData;
-import com.apriori.pages.login.CicLoginPage;
-import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
-import com.apriori.pages.workflows.schedule.details.DetailsPart;
-import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
+import com.apriori.pageobjects.login.CicLoginPage;
+import com.apriori.pageobjects.workflows.schedule.costinginputs.CostingInputsPart;
+import com.apriori.pageobjects.workflows.schedule.details.DetailsPart;
+import com.apriori.pageobjects.workflows.schedule.querydefinitions.QueryDefinitions;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

@@ -1,12 +1,12 @@
 package com.apriori;
 
-import com.apriori.pages.connectors.ConnectorsPage;
-import com.apriori.pages.home.CIConnectHome;
-import com.apriori.pages.home.help.cicuserguide.CicUserGuide;
-import com.apriori.pages.home.settings.CostingServiceSettings;
-import com.apriori.pages.login.CicLoginPage;
-import com.apriori.pages.users.UsersPage;
-import com.apriori.pages.workflows.WorkflowHome;
+import com.apriori.pageobjects.connectors.ConnectorsPage;
+import com.apriori.pageobjects.home.CIConnectHome;
+import com.apriori.pageobjects.home.help.cicuserguide.CicUserGuide;
+import com.apriori.pageobjects.home.settings.CostingServiceSettings;
+import com.apriori.pageobjects.login.CicLoginPage;
+import com.apriori.pageobjects.users.UsersPage;
+import com.apriori.pageobjects.workflows.WorkflowHome;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

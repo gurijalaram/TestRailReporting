@@ -1,7 +1,7 @@
 package com.apriori;
 
-import com.apriori.pages.login.CicLoginPage;
-import com.apriori.pages.users.UsersPage;
+import com.apriori.pageobjects.login.CicLoginPage;
+import com.apriori.pageobjects.users.UsersPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

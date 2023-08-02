@@ -2,9 +2,9 @@ package com.apriori;
 
 import com.apriori.enums.CheckboxState;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.pages.home.CIConnectHome;
-import com.apriori.pages.login.CicLoginPage;
-import com.apriori.pages.workflows.WorkflowHome;
+import com.apriori.pageobjects.home.CIConnectHome;
+import com.apriori.pageobjects.login.CicLoginPage;
+import com.apriori.pageobjects.workflows.WorkflowHome;
 import com.apriori.reader.file.part.PartData;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

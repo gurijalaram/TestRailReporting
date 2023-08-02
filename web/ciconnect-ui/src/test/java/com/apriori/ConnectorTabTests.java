@@ -1,7 +1,7 @@
 package com.apriori;
 
-import com.apriori.pages.connectors.ConnectorsPage;
-import com.apriori.pages.login.CicLoginPage;
+import com.apriori.pageobjects.connectors.ConnectorsPage;
+import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;

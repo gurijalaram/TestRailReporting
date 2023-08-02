@@ -1,7 +1,7 @@
 package com.apriori;
 
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.pages.home.CIConnectHome;
+import com.apriori.pageobjects.home.CIConnectHome;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 

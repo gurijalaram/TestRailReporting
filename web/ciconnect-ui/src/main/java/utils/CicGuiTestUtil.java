@@ -1,7 +1,7 @@
 package utils;
 
-import com.apriori.pages.home.CIConnectHome;
-import com.apriori.pages.login.CicLoginPage;
+import com.apriori.pageobjects.home.CIConnectHome;
+import com.apriori.pageobjects.login.CicLoginPage;
 
 import entity.response.AgentWorkflowJobResults;
 import entity.response.AgentWorkflowJobRun;

@@ -2,8 +2,8 @@ package com.apriori;
 
 import com.apriori.dataservice.TestDataService;
 import com.apriori.pagedata.WorkFlowData;
-import com.apriori.pages.login.CicLoginPage;
-import com.apriori.pages.workflows.WorkflowHome;
+import com.apriori.pageobjects.login.CicLoginPage;
+import com.apriori.pageobjects.workflows.WorkflowHome;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
