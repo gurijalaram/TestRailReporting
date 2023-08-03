@@ -34,6 +34,12 @@
             },
             "familyName": {
               "type": "string"
+            },
+            "officePhoneCountryCode": {
+              "type": "string"
+            },
+            "officePhoneNumber": {
+              "type": "string"
             }
           },
           "required": [
