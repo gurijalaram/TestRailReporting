@@ -14,6 +14,7 @@ def addlJavaOpts
 def number_of_parts
 def parts_csv_file
 def agent_type
+def agent_port
 def nexus_repository
 def nexus_version
 def custom_install
@@ -107,7 +108,7 @@ Those marked with a * are required or the job will not run
 
                     users_csv_file = params.CSV_FILE
                     if (users_csv_file && users_csv_file != "none") {
-                        javaOpts = javaOpts + " -Dusers_csv_file=${params.CSV_FILE}"
+                        javaOpts = javaOpts + " -Ddefault_users_csv_file=${params.CSV_FILE}"
                     }
 
                     customer = params.CUSTOMER
@@ -133,6 +134,11 @@ Those marked with a * are required or the job will not run
                     agent_type = params.AGENT_TYPE
                     if (agent_type && agent_type != "none") {
                        javaOpts = javaOpts + " -Dci-connect_agent_type=${params.AGENT_TYPE}"
+                    }
+
+                    agent_port = params.AGENT_PORT
+                    if (agent_port && agent_port != "none") {
+                       javaOpts = javaOpts + " -Dci-connect_agent_port=${params.AGENT_PORT}"
                     }
 
                     nexus_repository = params.NEXUS_REPOSITORY
