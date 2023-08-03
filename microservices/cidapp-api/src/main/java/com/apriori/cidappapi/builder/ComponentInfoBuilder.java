@@ -16,19 +16,19 @@ import java.util.List;
 @Builder
 @Data
 public class ComponentInfoBuilder implements Serializable {
-    private final UserCredentials user;
-    private final String componentName;
-    private final String extension;
+    private UserCredentials user;
+    private String componentName;
+    private String extension;
     private String scenarioName;
     private File resourceFile;
     private List<File> resourceFiles;
     private String componentIdentity;
     private String scenarioIdentity;
-    private final ProcessGroupEnum processGroup;
+    private ProcessGroupEnum processGroup;
     private List<ComponentInfoBuilder> subComponents;
     private PostComponentResponse component;
     private PublishRequest publishRequest;
     @Builder.Default
-    private final boolean overrideScenario = false;
+    private Boolean overrideScenario = false;
     private CostingTemplate costingTemplate;
 }

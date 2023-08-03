@@ -15,6 +15,7 @@ import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.request.AssemblyRequest;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -346,36 +347,19 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = {11888, 5618})
     @Description("Validate override existing scenario is successful through multiple uploads when checked")
     public void testOverrideExistingScenarioSuccess() {
-        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String sldprt = ".SLDPRT";
 
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final String BIG_RING = "big ring";
-        final String PIN = "Pin";
-        final String SMALL_RING = "small ring";
+        componentAssembly = new AssemblyRequest().getAssemblySubcomponents("Hinge assembly", "Pin", "big ring", "small ring");
 
-        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-        final String subComponentExtension = ".SLDPRT";
-
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
         List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring" + sldprt), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin" + sldprt), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring" + sldprt), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly" + ".SLDASM"), scenarioName));
 
         new CidAppLoginPage(driver)
             .login(currentUser)

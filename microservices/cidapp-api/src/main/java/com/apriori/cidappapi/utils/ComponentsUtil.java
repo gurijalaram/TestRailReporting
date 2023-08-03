@@ -105,7 +105,7 @@ public class ComponentsUtil {
                 .body("groupItems",
                     Collections.singletonList(ComponentRequest.builder()
                         .filename(componentInfo.getResourceFile().getName())
-                        .override(componentInfo.isOverrideScenario())
+                        .override(componentInfo.getOverrideScenario())
                         .resourceName(resourceName)
                         .scenarioName(componentInfo.getScenarioName())
                         .build()))
