@@ -27,8 +27,11 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class ReportResourcesTest extends TestUtil {
 
     private static Part part;
