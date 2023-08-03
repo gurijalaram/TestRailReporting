@@ -1,4 +1,4 @@
-package testsuite;
+package testsuites;
 
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 

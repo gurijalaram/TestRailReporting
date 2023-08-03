@@ -1,4 +1,4 @@
-package testsuite;
+package testsuites;
 
 import com.apriori.CisBidPackageItemTest;
 import com.apriori.CisBidPackageProjectUsersTest;
