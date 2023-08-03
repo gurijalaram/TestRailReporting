@@ -40,6 +40,7 @@ public class DriverFactory {
         }
 
         switch (mode.toUpperCase()) {
+            case "GRID":
             case "HOSTED_GRID":
                 testMode = HOSTED_GRID;
                 remoteWebDriverService("conqsldocker01");
