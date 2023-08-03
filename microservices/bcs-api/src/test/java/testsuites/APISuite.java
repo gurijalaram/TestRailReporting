@@ -9,11 +9,9 @@ import com.apriori.CustomerResourcesTest;
 import com.apriori.ReportResourcesTest;
 
 import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectPackages("com.apriori")
 @SelectClasses({
     BatchResourcesTest.class,
     BatchPartTest.class,
