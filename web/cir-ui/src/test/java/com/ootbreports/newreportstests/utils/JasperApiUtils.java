@@ -71,7 +71,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }
@@ -83,10 +83,10 @@ public class JasperApiUtils {
      * @param currencyToSet - currency that is to be set
      * @return JasperReportSummary instance
      */
-    public JasperReportSummary genericTestCoreCurrencyOnly(String currencyKey, String currencyToSet) {
+    public JasperReportSummary genericTestCoreCurrencyOnly(String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
-        setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(currencyKey), currencyToSet);
+        setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get("Currency"), currencyToSet);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
         setReportParameterByName("exportDate", currentDateTime);
 
@@ -94,7 +94,30 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
+     * Generic test for reports that require project rollup and currency only to be specified
+     *
+     * @param projectRollupName - String of project rollup to use
+     * @return JasperReportSummary instance
+     */
+    public JasperReportSummary genericTestCoreProjectRollupAndCurrencyOnly(String currencyString, String projectRollupName) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls();
+
+        setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get("Currency"), currencyString);
+        String projectRollupValue = inputControls.getProjectRollup().getOption(projectRollupName).getValue();
+        setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get("Project Rollup"), projectRollupValue);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }
@@ -103,8 +126,6 @@ public class JasperApiUtils {
      * Generic test for currency in Assembly Cost Reports (both A4 and Letter)
      */
     public void genericAssemblyCostCurrencyTest() {
-        JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
-
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
@@ -115,7 +136,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummaryGBP = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
         String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
@@ -585,7 +606,7 @@ public class JasperApiUtils {
     }
 
     private JasperReportSummary generateAndReturnReportCurrencyOnly(String currency) {
-        return genericTestCoreCurrencyOnly("Currency", currency);
+        return genericTestCoreCurrencyOnly(currency);
     }
 
     private String getCurrentCurrencyFromAboveChart(JasperReportSummary jasperReportSummary, boolean areBubblesPresent) {

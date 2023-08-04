@@ -56,6 +56,7 @@ public class Constants {
             put("DTC Score", "dtcScore");
             put("Minimum Annual Spend", "annualSpendMin");
             put("Sort Order", "sortOrder");
+            put("Project Rollup", "projectRollup");
         }};
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String API_REPORTS_PATH = "schemas/api-test-reports-schemas";

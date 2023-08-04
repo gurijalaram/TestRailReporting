@@ -40,7 +40,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
     }
 
     private String getCycleTimeTotalValue(String currencyToUse, int indexToUse) {
-        return jasperApiUtils.genericTestCoreCurrencyOnly("Currency", currencyToUse)
+        return jasperApiUtils.genericTestCoreCurrencyOnly(currencyToUse)
             .getReportHtmlPart().getElementsByAttributeValue("colspan", "6").get(indexToUse).child(0).text();
     }
 }

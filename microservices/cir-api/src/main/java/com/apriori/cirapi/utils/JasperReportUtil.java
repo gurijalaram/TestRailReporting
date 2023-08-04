@@ -47,7 +47,7 @@ public class JasperReportUtil {
     }
 
     public InputControl getInputControls() {
-        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.DTC_METRICS, InputControl.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.SPEND_ANALYSIS_VALUE_TRACKING, InputControl.class)
             .headers(initHeadersWithJSession())
             .inlineVariables("%20")
             .expectedResponseCode(HttpStatus.SC_OK)
