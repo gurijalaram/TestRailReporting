@@ -1,11 +1,30 @@
-package com.apriori.cic.tests;
+package com.apriori;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.cic.enums.CICPartSelectionType;
+import com.apriori.cic.enums.CostingInputFields;
+import com.apriori.cic.enums.MappingRule;
+import com.apriori.cic.enums.PlmPartsSearch;
+import com.apriori.cic.enums.PlmWCType;
+import com.apriori.cic.models.request.CostingInputs;
+import com.apriori.cic.models.request.WorkflowPart;
+import com.apriori.cic.models.request.WorkflowParts;
+import com.apriori.cic.models.response.AgentErrorMessage;
+import com.apriori.cic.models.response.AgentWorkflow;
+import com.apriori.cic.models.response.AgentWorkflowJob;
+import com.apriori.cic.models.response.AgentWorkflowJobResults;
+import com.apriori.cic.models.response.AgentWorkflowJobRun;
+import com.apriori.cic.models.response.PlmSearchResponse;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.PlmPartsUtil;
+import com.apriori.cic.utils.SearchFilter;
+import com.apriori.cic.utils.WorkflowDataUtil;
+import com.apriori.cic.utils.WorkflowTestUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;

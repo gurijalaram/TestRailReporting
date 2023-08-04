@@ -1,40 +1,38 @@
-package com.apriori.cic.tests;
+package com.apriori;
 
-import com.apriori.DateFormattingUtils;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
+import com.apriori.cic.enums.CICPartSelectionType;
+import com.apriori.cic.enums.CostingInputFields;
+import com.apriori.cic.enums.MappingRule;
+import com.apriori.cic.enums.PlmPartDataType;
+import com.apriori.cic.models.request.CostingInputs;
+import com.apriori.cic.models.request.WorkflowPart;
+import com.apriori.cic.models.request.WorkflowParts;
+import com.apriori.cic.models.response.AgentWorkflowJobPartsResult;
+import com.apriori.cic.models.response.AgentWorkflowJobResults;
+import com.apriori.cic.models.response.PlmSearchPart;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.PlmApiTestUtil;
+import com.apriori.cic.utils.PlmPartsUtil;
+import com.apriori.cic.utils.WorkflowDataUtil;
+import com.apriori.cic.utils.WorkflowTestUtil;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
-import com.apriori.utils.DateUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MaterialNameEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.enums.DigitalFactoryEnum;
+import com.apriori.enums.MaterialNameEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.part.PartData;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
-import entity.request.CostingInputs;
-import entity.request.WorkflowPart;
-import entity.request.WorkflowParts;
-import entity.response.AgentWorkflowJobPartsResult;
-import entity.response.AgentWorkflowJobResults;
-import entity.response.PlmSearchPart;
-import enums.CICPartSelectionType;
-import enums.CostingInputFields;
-import enums.MappingRule;
-import enums.PlmPartDataType;
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.CicApiTestUtil;
-import utils.PlmApiTestUtil;
-import utils.PlmPartsUtil;
-import utils.WorkflowDataUtil;
-import utils.WorkflowTestUtil;
 
 import java.util.Collections;
 
@@ -50,7 +48,7 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16699"})
+    @TestRail(id = 16699)
     @Description("RunPartList - all standard costing inputs overridden by runPartList request when all costing inputs are set in workflow to be read from PLM")
     public void testWorkflowRunPartsOverriddenWithMapped() {
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
@@ -72,7 +70,7 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16703", "16712"})
+    @TestRail(id = {16703, 16712})
     @Description("RunPartList - UDA of all supported data types can be overridden by runPartList request when they are set in workflow with constant value, " +
         " Searchable UDA set in runPartList")
     public void testWorkflowRunPartsOverriddenWithUdaConstant() {
@@ -117,7 +115,7 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16705"})
+    @TestRail(id = 16705)
     @Description("RunPartList- a subset of UDAs overridden by runPartList request when UDAs of all data types are set in workflow with constant value constant")
     public void testWorkflowRunPartsSubOverriddenWithUda() {
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
@@ -160,7 +158,7 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16704"})
+    @TestRail(id = 16704)
     @Description("RunPartList - UDAs of all supported data types overridden by runPartList request when they set in workflow to be read from PLM")
     public void testWorkflowRunPartsOverriddenUdaMapped() {
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
@@ -205,7 +203,7 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16709"})
+    @TestRail(id = 16709)
     @Description("RunPartList - Multiselect UDA can be set with runPartList request")
     public void testWorkflowRunPartsWithMultiSelectUDA() {
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
@@ -248,7 +246,7 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16949"})
+    @TestRail(id = 16949)
     @Description("RunPartList - invalid file path")
     public void testRunPartsListWithInvalidCadFilePath() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
@@ -290,7 +288,7 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"16710"})
+    @TestRail(id = 16710)
     @Description("RunPartList - Override UDA with default value")
     public void testWorkflowRunPartsOverrideMultiSelectUDA() {
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
@@ -327,9 +325,8 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
         softAssertions.assertThat(new ComponentsUtil().checkScenarioCustomAttribute(componentIterationResponse.getResponseEntity(), "[Value 1, Value 3]")).isTrue();
     }
 
-
     @Test
-    @TestRail(testCaseId = {"16713"})
+    @TestRail(id = 16713)
     @Description("RunPartList - Non-searchable UDA set in runPartList")
     public void testWorkflowRunPartsWithNonSearchUda() {
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
