@@ -3,6 +3,7 @@ package com.ootbreports.newreportstests.utils;
 import static com.apriori.utils.TestHelper.logger;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
@@ -74,7 +75,7 @@ public class JasperApiUtils {
      */
     public JasperReportSummary genericTestCore(String keyToSet, String valueToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
-        InputControl inputControls = jasperReportUtil.getInputControls();
+        InputControl inputControls = jasperReportUtil.getInputControls(CirApiEnum.DTC_METRICS);
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
 
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());

@@ -1,6 +1,7 @@
 package com.ootbreports.newreportstests.recommendedtestparts;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
@@ -54,9 +55,12 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
 
         ReportRequest reportRequest = jasperApiUtils1.getReportRequest();
         jasperApiUtils1.setReportParameterByName("latestExportDate", currentDateTime);
-        InputControl inputControls = jasperReportUtil.getInputControls();
+        InputControl inputControls = jasperReportUtil.getInputControls(CirApiEnum.RECOMMENDED_TEST_PARTS);
+        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+        jasperApiUtils1.setReportParameterByName("exportSetName", currentExportSet);
         //String currentProcessGroup = inputControls.getProcessGroup().getOption(keyToSet).getValue();
         //jasperApiUtils1.setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), currentProcessGroup);
+        jasperApiUtils1.setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), "455662");
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
