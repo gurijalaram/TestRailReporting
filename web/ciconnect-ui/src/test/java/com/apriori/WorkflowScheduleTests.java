@@ -1,8 +1,10 @@
 package com.apriori;
 
+import com.apriori.cic.utils.CicApiTestUtil;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.features.WorkFlowFeatures;
 import com.apriori.pagedata.WorkFlowData;
+import com.apriori.pageobjects.home.CIConnectHome;
 import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.pageobjects.workflows.WorkflowHome;
 import com.apriori.pageobjects.workflows.schedule.details.DetailsPart;
@@ -23,8 +25,9 @@ public class WorkflowScheduleTests extends TestBaseUI {
     private static WorkFlowData workFlowData;
     private WorkflowSchedule workflowSchedule;
     private WorkFlowFeatures workFlowFeatures;
-    WorkflowHome workflowHome;
-    SoftAssertions softAssertions;
+    private CIConnectHome ciConnectHome;
+    private WorkflowHome workflowHome;
+    private SoftAssertions softAssertions;
 
     public WorkflowScheduleTests() {
         super();
