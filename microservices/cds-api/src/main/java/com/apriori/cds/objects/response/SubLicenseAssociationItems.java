@@ -22,6 +22,7 @@ public class SubLicenseAssociationItems {
     private CustomAttributes customAttributes;
     private String userType;
     private Boolean mfaRequired;
+    private Boolean hasCompleteProfile;
     private String customerIdentity;
     private List<String> roles;
 }
