@@ -6,6 +6,8 @@ import entity.request.DefaultValues;
 import entity.request.Query;
 import entity.request.QueryFilter;
 import entity.request.QueryFilters;
+import entity.request.WorkflowPart;
+import entity.request.WorkflowParts;
 import entity.request.WorkflowRequest;
 import entity.request.WorkflowRow;
 import enums.CICPartSelectionType;
@@ -15,6 +17,7 @@ import enums.PlmTypeAttributes;
 import enums.PublishResultsWriteRule;
 import enums.QueryDefinitionFieldType;
 import enums.QueryDefinitionFields;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -145,9 +148,9 @@ public class WorkflowDataUtil {
     /**
      * Add publish results write field rows during workflow creation request
      *
-     * @param queryDefinitionFields - CostingInputFields enum
-     * @param writingRule           - MappingRule enum
-     * @param connectFieldValue     - value
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     * @param writingRule       - PublishResultsWriteRule enum
+     * @param connectFieldValue - value
      * @return current class object
      */
     public WorkflowDataUtil addPublishResultsWriteFieldsRow(PlmTypeAttributes plmTypeAttributes, PublishResultsWriteRule writingRule, String connectFieldValue) {
@@ -165,7 +168,6 @@ public class WorkflowDataUtil {
         workflowRequestData.setPlmWriteConfiguration(publishResultsWriteFieldRows);
         return this;
     }
-
 
     /**
      * Set the boolean flag to use latest revision

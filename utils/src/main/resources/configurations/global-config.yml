@@ -106,20 +106,26 @@ default:
     custom_install: false
     maximum_parts: 5
     agent_type: windchill
+    agent_port: 8811
     windchill:
       host_name: https://consvwc02.fbc.com/Windchill
       username: wcadmin
       password: test123#
       host_token: d2NhZG1pbjp0ZXN0MTIzIw==
+      connector: WC-consvwc02
     teamcenter:
       host_name: https://consvtc12-01.apriori.com:8443/tc
       fsc_url: https://consvtc12-01.apriori.com:4545
       username: teamcenter
       password: FarIce88ForestryZen
+      connector: TC-consvtc12
     enovia:
       host_name: https://3dx-2019x.apriori.com:447/internal
       username: admin_platform
       password: 3Dpassport
+      connector: EN-consvwc02
+    filesystem:
+      connector: FS-conqcic01
 
   css:
     api_url: https://css.${deployment_url_template}

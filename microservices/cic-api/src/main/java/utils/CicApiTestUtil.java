@@ -247,7 +247,6 @@ public class CicApiTestUtil {
 
     /**
      * Submit request to get all CIC agent workflows
-     *
      */
     public static void cancelWorkflow(String workFlowID, String workflowJobID) {
         RequestEntity requestEntity = RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_CANCEL, null)
@@ -530,6 +529,31 @@ public class CicApiTestUtil {
                     .build())
                 .build());
         }
+        return WorkflowParts.builder()
+            .parts(part)
+            .build();
+    }
+
+    /**
+     * Get Workflow run parts list request data
+     *
+     * @param plmPartDataType PlmPartDataType
+     * @return WorkflowParts
+     */
+    public static WorkflowParts getWorkflowPartsDataBuilder(PlmPartDataType plmPartDataType) {
+        PartData partData = new PlmPartsUtil().getPlmPartData(plmPartDataType);
+        ArrayList<WorkflowPart> part = new ArrayList<>();
+        part.add(WorkflowPart.builder()
+            .id(new PlmApiTestUtil().getPlmPartByPartNumber(partData.getPlmPartNumber()).getId())
+            .costingInputs(CostingInputs.builder()
+                .processGroupName(partData.getProcessGroup())
+                .materialName(partData.getMaterial())
+                .vpeName(partData.getDigitalFactory())
+                .scenarioName("SN" + System.currentTimeMillis())
+                .annualVolume(partData.getAnnualVolume())
+                .batchSize(partData.getBatchSize())
+                .build())
+            .build());
         return WorkflowParts.builder()
             .parts(part)
             .build();
