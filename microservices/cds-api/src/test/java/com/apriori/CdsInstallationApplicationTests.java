@@ -4,7 +4,7 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.models.response.Deployment;
-import com.apriori.cds.models.response.LicensedApplication;
+import com.apriori.cds.models.response.LicensedApplications;
 import com.apriori.cds.models.response.Site;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -86,7 +86,7 @@ public class CdsInstallationApplicationTests {
         String realmKey = generateStringUtil.generateRealmKey();
         String appIdentity = Constants.getApProApplicationIdentity();
 
-        ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 
         licensedAppIdentityHolder = IdentityHolder.builder()
