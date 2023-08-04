@@ -2,6 +2,7 @@ package com.cic.tests;
 
 import com.apriori.features.WorkFlowFeatures;
 import com.apriori.pagedata.WorkFlowData;
+import com.apriori.pages.home.CIConnectHome;
 import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
@@ -19,12 +20,15 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import utils.CicApiTestUtil;
+import utils.WorkflowTestUtil;
 
-public class WorkflowScheduleTests extends TestBase {
+public class WorkflowScheduleTests extends WorkflowTestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static WorkFlowData workFlowData;
     private WorkflowSchedule workflowSchedule;
     private WorkFlowFeatures workFlowFeatures;
+    private CIConnectHome ciConnectHome;
     WorkflowHome workflowHome;
     SoftAssertions softAssertions;
 
@@ -36,9 +40,8 @@ public class WorkflowScheduleTests extends TestBase {
     public void setup() {
         softAssertions = new SoftAssertions();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
-        workFlowFeatures = new CicLoginPage(driver)
-            .login(currentUser)
-            .clickWorkflowMenu()
+        ciConnectHome = new CicLoginPage(driver).login(currentUser);
+        workFlowFeatures = ciConnectHome.clickWorkflowMenu()
             .setTestData(workFlowData)
             .selectScheduleTab()
             .clickNewWorkflowBtn();
@@ -309,8 +312,7 @@ public class WorkflowScheduleTests extends TestBase {
 
     @After
     public void cleanup() {
-        workflowHome.selectScheduleTab().selectWorkflow(workFlowData.getWorkflowName())
-            .clickDeleteButton().clickConfirmAlertBoxDelete();
+        CicApiTestUtil.deleteWorkFlow(ciConnectHome.getSession(), CicApiTestUtil.getMatchedWorkflowId(workFlowData.getWorkflowName()));
         softAssertions.assertAll();
     }
 }
