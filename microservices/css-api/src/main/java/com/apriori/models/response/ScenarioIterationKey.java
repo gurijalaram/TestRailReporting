@@ -17,5 +17,5 @@ public class ScenarioIterationKey {
     private String stateName;
     private Integer workspaceId;
     private String masterName;
-    private String scenarioKey;
+    private ScenarioKey scenarioKey;
 }
