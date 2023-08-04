@@ -18,21 +18,6 @@ ap-int:
   ci-connect:
     customer_identity: 6C1F8C1D4D75
     customer_name: aPrioriInternal_Customer
-    agent_type: windchill
-    windchill:
-      port: 8811
-      connector: WC-consvwc02
-    teamcenter:
-      port: 8810
-      connector: TC-consvtc12
-    filesystem:
-      port: 8809
-      connector: FS-conqcic01
-    enovia:
-      port: 8808
-      connector: EN-consvwc02
-
-
 ######################################################## GADGETS #######################################################
 gadgets:
   cloud_reference_name: gadgets
@@ -46,12 +31,6 @@ widgets:
   ci-connect:
     customer_identity: 52IC4D3J98GN
     customer_name: 130cf4de-82aa-460c-9991-014a63b7dc20_Customer
-    agent_type: windchill
-    windchill:
-      port: 8807
-      connector: WC-consvwc02
-      agent_name: 59cf01bd-b45c-4252-a94c-e433fbc342fa_Agent
-
 ########################################################################################################################
 
 
