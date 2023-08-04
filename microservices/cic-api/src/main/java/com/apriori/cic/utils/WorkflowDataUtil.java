@@ -144,9 +144,9 @@ public class WorkflowDataUtil {
     /**
      * Add publish results write field rows during workflow creation request
      *
-     * @param queryDefinitionFields - CostingInputFields enum
-     * @param writingRule           - MappingRule enum
-     * @param connectFieldValue     - value
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     * @param writingRule       - PublishResultsWriteRule enum
+     * @param connectFieldValue - value
      * @return current class object
      */
     public WorkflowDataUtil addPublishResultsWriteFieldsRow(PlmTypeAttributes plmTypeAttributes, PublishResultsWriteRule writingRule, String connectFieldValue) {
@@ -164,7 +164,6 @@ public class WorkflowDataUtil {
         workflowRequestData.setPlmWriteConfiguration(publishResultsWriteFieldRows);
         return this;
     }
-
 
     /**
      * Set the boolean flag to use latest revision

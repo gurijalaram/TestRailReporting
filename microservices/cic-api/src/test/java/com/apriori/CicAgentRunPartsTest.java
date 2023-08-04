@@ -1,31 +1,11 @@
-package com.apriori;
+package com.apriori.cic.tests;
 
-import com.apriori.cic.enums.CICPartSelectionType;
-import com.apriori.cic.enums.CostingInputFields;
-import com.apriori.cic.enums.MappingRule;
-import com.apriori.cic.enums.PlmPartsSearch;
-import com.apriori.cic.enums.PlmWCType;
-import com.apriori.cic.models.request.CostingInputs;
-import com.apriori.cic.models.request.WorkflowPart;
-import com.apriori.cic.models.request.WorkflowParts;
-import com.apriori.cic.models.response.AgentErrorMessage;
-import com.apriori.cic.models.response.AgentWorkflow;
-import com.apriori.cic.models.response.AgentWorkflowJob;
-import com.apriori.cic.models.response.AgentWorkflowJobPartsResult;
-import com.apriori.cic.models.response.AgentWorkflowJobResults;
-import com.apriori.cic.models.response.AgentWorkflowJobRun;
-import com.apriori.cic.models.response.PlmSearchResponse;
-import com.apriori.cic.utils.CicApiTestUtil;
-import com.apriori.cic.utils.PlmPartsUtil;
-import com.apriori.cic.utils.SearchFilter;
-import com.apriori.cic.utils.WorkflowDataUtil;
-import com.apriori.cic.utils.WorkflowTestUtil;
-import com.apriori.enums.DigitalFactoryEnum;
-import com.apriori.enums.MaterialNameEnum;
-import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.reader.file.user.UserUtil;
-import com.apriori.testrail.TestRail;
+import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.MaterialNameEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -75,23 +55,31 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(id = {16698})
-    @Description("RunPartList - all standard costing inputs overridden by runPartList request when all costing inputs are set in workflow with constant value constant")
+    @TestRail(id = {16698, 16700})
+    @Description("RunPartList - all standard costing inputs overridden by runPartList request when all costing inputs are set in workflow with constant value constant, " +
+        "A subset of all standard costing inputs overridden by runPartList request when all costing inputs are set in workflow with constant value constant")
     public void testGetWorkflowRunPartsOverriddenWithConstant() {
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
-            .addCostingInputRow(CostingInputFields.SCENARIO_NAME, MappingRule.CONSTANT, "testScenario123")
-            .addCostingInputRow(CostingInputFields.DIGITAL_FACTORY, MappingRule.CONSTANT, DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
-            .addCostingInputRow(CostingInputFields.MATERIAL, MappingRule.CONSTANT, MaterialNameEnum.STAINLESS_STEEL_AISI_316.getMaterialName())
-            .addCostingInputRow(CostingInputFields.ANNUAL_VOLUME, MappingRule.CONSTANT, "3100")
-            .addCostingInputRow(CostingInputFields.BATCH_SIZE, MappingRule.CONSTANT, "2100")
-            .addCostingInputRow(CostingInputFields.PRODUCTION_LIFE, MappingRule.CONSTANT, "1")
+            .addCostingInputRow(CostingInputFields.DIGITAL_FACTORY, MappingRule.CONSTANT, DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
+            .addCostingInputRow(CostingInputFields.MATERIAL, MappingRule.CONSTANT, MaterialNameEnum.ABS.getMaterialName())
             .build();
 
-        AgentWorkflowJobPartsResult agentWorkflowJobPartResult = this.createRestWorkflowAndGetJobPartResult();
+        this.cicLogin()
+            .create()
+            .getWorkflowId();
 
-        softAssertions.assertThat(agentWorkflowJobPartResult.getInput().getMaterialName()).isEqualTo(this.workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getMaterialName());
-        softAssertions.assertThat(agentWorkflowJobPartResult.getInput().getProcessGroupName()).isEqualTo(this.workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getProcessGroupName());
+        softAssertions.assertThat(this.agentWorkflowResponse.getId()).isNotNull();
+
+        AgentWorkflowJobResults agentWorkflowJobResult = this.invokeRestWorkflow().track().getJobResult();
+
+        softAssertions.assertThat(agentWorkflowJobResult.size()).isGreaterThan(0);
+        softAssertions.assertThat(agentWorkflowJobResult.get(0).getInput().getMaterialName()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getMaterialName());
+        softAssertions.assertThat(agentWorkflowJobResult.get(0).getInput().getProcessGroupName()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getProcessGroupName());
+        softAssertions.assertThat(agentWorkflowJobResult.get(0).getInput().getVpeName()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getVpeName());
+        softAssertions.assertThat(agentWorkflowJobResult.get(0).getInput().getAnnualVolume()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getAnnualVolume());
+        softAssertions.assertThat(agentWorkflowJobResult.get(0).getInput().getBatchSize()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getCostingInputs().getBatchSize());
+        softAssertions.assertThat(agentWorkflowJobResult.get(0).getPartId()).isEqualTo(workflowPartsRequestDataBuilder.getParts().get(0).getId());
     }
 
     @Test

@@ -15,6 +15,7 @@ import org.junit.platform.suite.api.Suite;
     CicAgentJobResultsTest.class,
     CicAgentJobPartResultTest.class,
     CicAgentRunPartsTest.class,
+    CicAgentRunUdaPartsTest.class,
     CicAgentTest.class
 })
 public class CicAgentAPISuite {

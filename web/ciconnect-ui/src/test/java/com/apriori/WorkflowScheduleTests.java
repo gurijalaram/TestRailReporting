@@ -34,9 +34,8 @@ public class WorkflowScheduleTests extends TestBaseUI {
     public void setup() {
         softAssertions = new SoftAssertions();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
-        workFlowFeatures = new CicLoginPage(driver)
-            .login(currentUser)
-            .clickWorkflowMenu()
+        ciConnectHome = new CicLoginPage(driver).login(currentUser);
+        workFlowFeatures = ciConnectHome.clickWorkflowMenu()
             .setTestData(workFlowData)
             .selectScheduleTab()
             .clickNewWorkflowBtn();
@@ -307,8 +306,7 @@ public class WorkflowScheduleTests extends TestBaseUI {
 
     @AfterEach
     public void cleanup() {
-        workflowHome.selectScheduleTab().selectWorkflow(workFlowData.getWorkflowName())
-            .clickDeleteButton().clickConfirmAlertBoxDelete();
+        CicApiTestUtil.deleteWorkFlow(ciConnectHome.getSession(), CicApiTestUtil.getMatchedWorkflowId(workFlowData.getWorkflowName()));
         softAssertions.assertAll();
     }
 }
