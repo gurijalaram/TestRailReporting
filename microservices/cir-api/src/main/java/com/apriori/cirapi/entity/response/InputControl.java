@@ -39,6 +39,9 @@ public class InputControl {
 
     public InputControlState getProjectRollup() {
         return getPropertyValueIfExist("projectRollup");
+
+    public InputControlState getProcessGroup() {
+        return getPropertyValueIfExist("processGroup");
     }
 
     private InputControlState getPropertyValueIfExist(final String propertyName) {
