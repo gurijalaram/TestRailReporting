@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "common/AtsAuthorizeSchema.json")
+@Schema(location = "AtsAuthorizeSchema.json")
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonRootName("response")
@@ -40,4 +40,6 @@ public class AuthorizationResponse {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private UserEnablements userEnablements;
+    private Boolean hasCompleteProfile;
 }
