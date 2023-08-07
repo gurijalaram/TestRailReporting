@@ -3,7 +3,6 @@ package com.ootbreports.newreportstests.utils;
 import static com.apriori.utils.TestHelper.logger;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
-import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
@@ -41,6 +40,20 @@ public class JasperApiUtils {
      *
      * @param jSessionId - String for authentication/session
      * @param exportSetName - String of the export set which should be set
+     * @param reportsJsonFileName - String of the right json file to use to be sent to the api
+     */
+    public JasperApiUtils(String jSessionId, String exportSetName, String reportsJsonFileName) {
+        this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
+        this.jSessionId = jSessionId;
+        this.exportSetName = exportSetName;
+        this.reportsJsonFileName = reportsJsonFileName;
+    }
+
+    /**
+     * Second constructor for this class (not default)
+     *
+     * @param jSessionId - String for authentication/session
+     * @param exportSetName - String of the export set which should be set
      * @param processGroup - String of process group which should be set
      * @param reportsJsonFileName - String of the right json file to use to be sent to the api
      */
@@ -49,20 +62,6 @@ public class JasperApiUtils {
         this.jSessionId = jSessionId;
         this.exportSetName = exportSetName;
         this.processGroupName = processGroup.getProcessGroup();
-        this.reportsJsonFileName = reportsJsonFileName;
-    }
-
-    /**
-     * Default constructor for this class
-     *
-     * @param jSessionId - String for authentication/session
-     * @param exportSetName - String of the export set which should be set
-     * @param reportsJsonFileName - String of the right json file to use to be sent to the api
-     */
-    public JasperApiUtils(String jSessionId, String exportSetName, String reportsJsonFileName) {
-        this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
-        this.jSessionId = jSessionId;
-        this.exportSetName = exportSetName;
         this.reportsJsonFileName = reportsJsonFileName;
     }
 
