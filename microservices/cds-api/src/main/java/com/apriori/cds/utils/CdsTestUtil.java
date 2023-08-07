@@ -16,7 +16,7 @@ import com.apriori.cds.models.response.ErrorResponse;
 import com.apriori.cds.models.response.IdentityProviderRequest;
 import com.apriori.cds.models.response.IdentityProviderResponse;
 import com.apriori.cds.models.response.LicenseResponse;
-import com.apriori.cds.models.response.LicensedApplication;
+import com.apriori.cds.models.response.LicensedApplications;
 import com.apriori.cds.models.response.Site;
 import com.apriori.cds.objects.request.AccessAuthorizationRequest;
 import com.apriori.cds.objects.request.AccessControlRequest;
@@ -301,8 +301,8 @@ public class CdsTestUtil extends TestUtil {
      * @param siteIdentity     - the site id
      * @return new object
      */
-    public ResponseWrapper<LicensedApplication> addApplicationToSite(String customerIdentity, String siteIdentity, String appIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS, LicensedApplication.class)
+    public ResponseWrapper<LicensedApplications> addApplicationToSite(String customerIdentity, String siteIdentity, String appIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS, LicensedApplications.class)
             .inlineVariables(customerIdentity, siteIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .headers(new HashMap<String, String>() {
@@ -311,7 +311,7 @@ public class CdsTestUtil extends TestUtil {
                 }
             })
             .body("licensedApplication",
-                LicensedApplication.builder()
+                LicensedApplications.builder()
                     .applicationIdentity(appIdentity)
                     .createdBy("#SYSTEM00000")
                     .build());

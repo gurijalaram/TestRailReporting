@@ -8,7 +8,7 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.models.response.Deployment;
-import com.apriori.cds.models.response.LicensedApplication;
+import com.apriori.cds.models.response.LicensedApplications;
 import com.apriori.cds.models.response.Site;
 import com.apriori.cds.objects.response.AccessControls;
 import com.apriori.cds.objects.response.InstallationItems;
@@ -70,7 +70,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
         String realmKey = generateStringUtil.generateRealmKey();
         appIdentity = Constants.getApProApplicationIdentity();
-        ResponseWrapper<LicensedApplication> newApplication = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> newApplication = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();
 
         licensedAppIdentityHolder = IdentityHolder.builder()

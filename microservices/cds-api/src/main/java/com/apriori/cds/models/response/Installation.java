@@ -1,6 +1,7 @@
 package com.apriori.cds.models.response;
 
 import com.apriori.annotations.Schema;
+import com.apriori.cds.objects.request.Features;
 import com.apriori.cds.objects.response.Application;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
 
@@ -51,4 +52,5 @@ public class Installation {
     private String cidApiSecret;
     private List<Application> applications = null;
     private String region;
+    private Features features;
 }

@@ -3,8 +3,8 @@ package com.apriori;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.models.response.Customer;
-import com.apriori.cds.models.response.LicensedApplication;
 import com.apriori.cds.models.response.LicensedApplications;
+import com.apriori.cds.models.response.LicensedSiteApplications;
 import com.apriori.cds.models.response.Site;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
@@ -72,7 +72,7 @@ public class CdsSitesApplicationsTests {
     public void addApplicationSite() {
         String appIdentity = Constants.getApProApplicationIdentity();
 
-        ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
 
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityHolder = IdentityHolder.builder()
@@ -90,7 +90,7 @@ public class CdsSitesApplicationsTests {
     public void getApplicationSite() {
         String appIdentity = Constants.getCiaApplicationIdentity();
 
-        ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityHolder = IdentityHolder.builder()
              .customerIdentity(customerIdentity)
@@ -98,17 +98,17 @@ public class CdsSitesApplicationsTests {
              .licenseIdentity(licensedApplicationIdentity)
              .build();
 
-        ResponseWrapper<LicensedApplications> licensedApplications = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS,
-            LicensedApplications.class,
+        ResponseWrapper<LicensedSiteApplications> licensedApplications = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS,
+            LicensedSiteApplications.class,
             HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity
         );
 
-        soft.assertThat(licensedApplications.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertThat(licensedApplications.getResponseEntity().getLicensedApplications().size()).isGreaterThanOrEqualTo(1);
 
-        ResponseWrapper<LicensedApplication> licensedApplicationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
-            LicensedApplication.class,
+        ResponseWrapper<LicensedApplications> licensedApplicationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
+            LicensedApplications.class,
             HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity,
