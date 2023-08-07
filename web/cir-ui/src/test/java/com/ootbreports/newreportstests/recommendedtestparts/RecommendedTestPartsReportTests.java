@@ -1,17 +1,18 @@
 package com.ootbreports.newreportstests.recommendedtestparts;
 
-import com.apriori.cirapi.entity.JasperReportSummary;
-import com.apriori.cirapi.entity.request.ReportRequest;
-import com.apriori.cirapi.utils.JasperReportUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
+import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.models.request.ReportRequest;
+import com.apriori.cir.utils.JasperReportUtil;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.testrail.TestRail;
 
 import com.google.common.base.Stopwatch;
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
+import enums.JasperCirApiPartsEnum;
 import io.qameta.allure.Description;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.RECOMMENDED_TEST_PARTS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
@@ -33,7 +35,7 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TestRail(testCaseId = {"14000"})
+    @TestRail(id = 14000)
     @Description("Input controls - Test Process Groups")
     public void testProcessGroupSheetMetal() {
         JasperReportSummary jasperReportSummary = genericProcessGroupTest(ProcessGroupEnum.SHEET_METAL.getProcessGroup());
@@ -62,7 +64,7 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }

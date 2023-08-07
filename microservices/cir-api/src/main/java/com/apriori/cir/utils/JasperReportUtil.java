@@ -3,6 +3,7 @@ package com.apriori.cir.utils;
 import com.apriori.cir.JasperReportSummary;
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.cir.enums.ReportChartType;
+import com.apriori.cir.models.request.ParametersRequest;
 import com.apriori.cir.models.request.ReportExportRequest;
 import com.apriori.cir.models.request.ReportRequest;
 import com.apriori.cir.models.response.ChartData;
