@@ -75,7 +75,7 @@ public class JasperApiUtils {
      */
     public JasperReportSummary genericTestCore(String keyToSet, String valueToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
-        InputControl inputControls = jasperReportUtil.getInputControls(CirApiEnum.DTC_METRICS);
+        InputControl inputControls = jasperReportUtil.getInputControls();
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
 
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
@@ -84,8 +84,9 @@ public class JasperApiUtils {
             setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), valueToSet);
         }
 
-        if(processGroupName != null) {
-            String processGroupId = inputControls.getProcessGroup().getOption(processGroupName).getValue();
+        if (processGroupName != null) {
+            InputControl inputControlsUpdatedNew = jasperReportUtil.updateInputControls(reportRequest.getParameters());
+            String processGroupId = inputControlsUpdatedNew.getProcessGroup().getOption(processGroupName).getValue();
             setReportParameterByName("processGroup", processGroupId);
         }
 
@@ -96,7 +97,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }
@@ -119,7 +120,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }
@@ -140,7 +141,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummaryGBP = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
         String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
