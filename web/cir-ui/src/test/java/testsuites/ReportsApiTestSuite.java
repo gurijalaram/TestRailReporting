@@ -27,6 +27,7 @@ import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostLetterRe
 import com.ootbreports.newreportstests.general.assemblydetails.AssemblyDetailsReportTests;
 import com.ootbreports.newreportstests.potentialsavingsvaluetracking.PotentialSavingsValueTrackingDetailsReportTests;
 import com.ootbreports.newreportstests.potentialsavingsvaluetracking.PotentialSavingsValueTrackingReportTests;
+import com.ootbreports.newreportstests.recommendedtestparts.RecommendedTestPartsReportTests;
 import com.ootbreports.newreportstests.scenariocomparison.ScenarioComparisonReportTests;
 import com.ootbreports.newreportstests.targetcosttrend.TargetCostTrendReportTests;
 import com.ootbreports.newreportstests.targetcosttrend.TargetCostValueTrackingDetailsReportTests;
@@ -61,6 +62,7 @@ import org.junit.runners.Suite;
     PlasticDtcReportTests.class,
     PotentialSavingsValueTrackingReportTests.class,
     PotentialSavingsValueTrackingDetailsReportTests.class,
+    RecommendedTestPartsReportTests.class,
     ScenarioComparisonReportTests.class,
     SheetMetalDtcComparisonReportTests.class,
     SheetMetalDtcDetailsTests.class,

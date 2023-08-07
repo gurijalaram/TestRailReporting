@@ -3,6 +3,7 @@ package com.apriori.cirapi.utils;
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.cirapi.entity.enums.ReportChartType;
+import com.apriori.cirapi.entity.request.ParametersRequest;
 import com.apriori.cirapi.entity.request.ReportExportRequest;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartData;
@@ -50,6 +51,19 @@ public class JasperReportUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.DTC_METRICS, InputControl.class)
             .headers(initHeadersWithJSession())
             .inlineVariables("%20")
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .urlEncodingEnabled(false);
+
+        ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
+
+        return responseResponseWrapper.getResponseEntity();
+    }
+
+    public InputControl updateInputControls(ParametersRequest parametersRequest) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.RECOMMENDED_TEST_PARTS, InputControl.class)
+            .headers(initHeadersWithJSession())
+            .inlineVariables("%20")
+            .body(parametersRequest)
             .expectedResponseCode(HttpStatus.SC_OK)
             .urlEncodingEnabled(false);
 
