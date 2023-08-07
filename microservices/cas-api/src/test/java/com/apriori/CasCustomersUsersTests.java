@@ -162,11 +162,11 @@ public class CasCustomersUsersTests {
         InputStream usersResponse = new ByteArrayInputStream(users.getBody().getBytes(StandardCharsets.UTF_8));
         ConcurrentLinkedQueue<UsersData> usersData = new InitFileData().initRows(UsersData.class, FileResourceUtil.copyIntoTempFile(usersResponse, null, "users.csv"));
 
-        soft.assertThat(usersData.poll().getLoginID().equals(cloudRef + ".service-account.1"));
-        soft.assertThat(usersData.poll().getLoginID().equals(cloudRef + ".service-account.2"));
-        soft.assertThat(usersData.poll().getLoginID().equals(cloudRef + ".service-account.3"));
-        soft.assertThat(usersData.poll().getLoginID().equals(cloudRef + ".service-account.4"));
-        soft.assertThat(usersData.poll().getLoginID().equals(userName));
+        soft.assertThat(usersData.poll().getLoginID()).isEqualTo(cloudRef + ".service-account.1");
+        soft.assertThat(usersData.poll().getLoginID()).isEqualTo(cloudRef + ".service-account.2");
+        soft.assertThat(usersData.poll().getLoginID()).isEqualTo(cloudRef + ".service-account.3");
+        soft.assertThat(usersData.poll().getLoginID()).isEqualTo(cloudRef + ".service-account.4");
+        soft.assertThat(usersData.poll().getLoginID()).isEqualTo(userName);
         soft.assertAll();
     }
 }

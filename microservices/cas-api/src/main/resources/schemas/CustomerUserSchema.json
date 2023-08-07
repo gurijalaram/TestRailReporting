@@ -13,6 +13,7 @@
         "createdBy",
         "customerIdentity",
         "userProfile",
+        "userEnablements",
         "email",
         "username",
         "active",
@@ -93,6 +94,33 @@
             }
           }
         },
+        "userEnablements": {
+          "type": "object",
+          "required": [
+            "connectAdminEnabled",
+            "highMemEnabled",
+            "previewEnabled",
+            "sandboxEnabled",
+            "userAdminEnabled"
+          ],
+          "properties": {
+            "connectAdminEnabled": {
+              "type": "boolean"
+            },
+            "highMemEnabled": {
+              "type": "boolean"
+            },
+            "previewEnabled": {
+              "type": "boolean"
+            },
+            "sandboxEnabled": {
+              "type": "boolean"
+            },
+            "userAdminEnabled": {
+              "type": "boolean"
+            }
+          }
+        },
         "email": {
           "type": "string"
         },
@@ -121,6 +149,9 @@
         },
         "userType": {
           "type": "string"
+        },
+        "hasCompleteProfile": {
+          "type": "boolean"
         }
       }
     }

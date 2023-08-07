@@ -4,6 +4,8 @@ import com.apriori.annotations.Schema;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Schema(location = "LineItemsPart.json")
 @Data
 public class LineItemParts {
@@ -27,4 +29,5 @@ public class LineItemParts {
     private String rohsVersion;
     private String status;
     private String type;
+    private List<Attributes> attributes;
 }

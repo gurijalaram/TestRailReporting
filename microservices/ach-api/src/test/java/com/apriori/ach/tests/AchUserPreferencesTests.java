@@ -3,6 +3,7 @@ package com.apriori.ach.tests;
 import com.apriori.GenerateStringUtil;
 import com.apriori.ach.enums.ACHAPIEnum;
 import com.apriori.ach.models.response.FailureUpdatePreferencesResponse;
+import com.apriori.ach.models.response.Success;
 import com.apriori.ach.models.response.SuccessUpdatePreferencesResponse;
 import com.apriori.ach.models.response.UserPreferences;
 import com.apriori.ach.utils.AchTestUtil;
@@ -111,17 +112,18 @@ public class AchUserPreferencesTests {
     public void failureUpdatePreference() {
         String prefName = generateStringUtil.getRandomString();
         String value = generateStringUtil.getRandomNumbersSpecLength(4);
-        ResponseWrapper<SuccessUpdatePreferencesResponse> newPreference = achTestUtil.putUserPreference(prefName, value, SuccessUpdatePreferencesResponse.class);
-        String prefIdentity = newPreference.getResponseEntity().getSuccesses().get(0).getIdentity();
+        Success successResponse = achTestUtil.putUserPreference(prefName, value, SuccessUpdatePreferencesResponse.class)
+            .getResponseEntity().getSuccesses().stream().findFirst().get();
 
         ResponseWrapper<FailureUpdatePreferencesResponse> failureUpdate = achTestUtil.putUserPreference(prefName, value, FailureUpdatePreferencesResponse.class);
-        soft.assertThat(failureUpdate.getResponseEntity().getFailures().get(0).getErrorMessage()).isEqualTo("'updatedBy' should not be null.");
+
+        failureUpdate.getResponseEntity().getFailures().forEach(failure -> soft.assertThat(failure.getErrorMessage()).isEqualTo("'updatedBy' should not be null."));
         soft.assertAll();
 
         userPreferenceIdentityHolder = IdentityHolder.builder()
             .customerIdentity(achTestUtil.getAprioriInternal().getIdentity())
-            .userIdentity(newPreference.getResponseEntity().getSuccesses().get(0).getCreatedBy())
-            .userPreferenceIdentity(prefIdentity)
+            .userIdentity(successResponse.getCreatedBy())
+            .userPreferenceIdentity(successResponse.getIdentity())
             .build();
     }
 }

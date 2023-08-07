@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "common/PostComponentResponse.json")
+@Schema(location = "PostComponentResponse.json")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

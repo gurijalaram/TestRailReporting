@@ -36,4 +36,6 @@ public class CurrentUser {
     private CustomAttributes customAttributes;
     private List<Object> resourcesAllowedToCreate = null;
     private String userType;
+    private UserEnablements userEnablements;
+    private Boolean hasCompleteProfile;
 }
