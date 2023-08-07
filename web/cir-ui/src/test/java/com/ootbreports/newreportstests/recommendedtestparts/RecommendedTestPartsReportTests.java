@@ -52,10 +52,10 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
         jasperApiUtils.setReportParameterByName("latestExportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT)
             .format(LocalDateTime.now()));
 
-        jasperApiUtils.setReportParameterByName("exportSetName", jasperReportUtil.getInputControls()
+        jasperApiUtils.setReportParameterByName("exportSetName", jasperReportUtil.updateInputControls(reportRequest.getParameters())
             .getExportSetName().getOption(exportSetName).getValue());
 
-        jasperApiUtils.setReportParameterByName("processGroup", jasperReportUtil.updateInputControls(reportRequest.getParameters())
+        jasperApiUtils.setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get("Process Group"), jasperReportUtil.updateInputControls(reportRequest.getParameters())
             .getProcessGroup().getOption(processGroupToSet).getValue());
 
         Stopwatch timer = Stopwatch.createUnstarted();
