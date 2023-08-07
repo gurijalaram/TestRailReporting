@@ -58,9 +58,9 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
         InputControl inputControls = jasperReportUtil.getInputControls(CirApiEnum.RECOMMENDED_TEST_PARTS);
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
         jasperApiUtils1.setReportParameterByName("exportSetName", currentExportSet);
-        //String currentProcessGroup = inputControls.getProcessGroup().getOption(keyToSet).getValue();
-        //jasperApiUtils1.setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), currentProcessGroup);
-        jasperApiUtils1.setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), "455662");
+        String currentProcessGroup = inputControls.getProcessGroup().getOption(keyToSet).getValue();
+        jasperApiUtils1.setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), currentProcessGroup);
+        //jasperApiUtils1.setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), "455662");
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
