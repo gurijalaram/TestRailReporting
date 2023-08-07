@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.apriori.cic.models.request.JobDefinition;
 import com.apriori.cic.utils.CicApiTestUtil;
 import com.apriori.dataservice.TestDataService;
@@ -19,7 +21,6 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -178,10 +179,10 @@ public class WorkflowTests extends TestBaseUI {
             .selectScheduleTab()
             .clickNewButton();
         detailsPart.enterWorkflowNameField("!@#$!@#$");
-        Assert.assertEquals("verify Workflow name field with special characters", "Name should only contain spaces and the following characters: a-zA-Z0-9-_", detailsPart.getWorkflowNameErrorLbl().getText());
+        assertEquals("verify Workflow name field with special characters", "Name should only contain spaces and the following characters: a-zA-Z0-9-_", detailsPart.getWorkflowNameErrorLbl().getText());
 
         detailsPart.enterWorkflowNameField("w12345678901234567890123456789012345678901234567890123456789012345678901234567890");
-        Assert.assertEquals("verify Workflow name field with special characters", "Name must be less than or equal to 64 characters.", detailsPart.getWorkflowNameErrorLbl().getText());
+        assertEquals("verify Workflow name field with special characters", "Name must be less than or equal to 64 characters.", detailsPart.getWorkflowNameErrorLbl().getText());
     }
 
     @Test

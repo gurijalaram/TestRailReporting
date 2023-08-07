@@ -1,5 +1,8 @@
 package com.apriori;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.apriori.bcs.models.response.ProcessGroup;
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
@@ -10,7 +13,6 @@ import com.apriori.vds.enums.VDSAPIEnum;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -28,9 +30,7 @@ public class ProcessGroupsTest extends ProcessGroupUtil {
 
         final String failedProcessGroups = this.validateProcessGroups(processGroups);
 
-        Assert.assertTrue("Process groups are not appropriate to supported types : " + failedProcessGroups,
-            failedProcessGroups.isEmpty()
-        );
+        assertTrue(failedProcessGroups.isEmpty(), "Process groups are not appropriate to supported types");
     }
 
     private String validateProcessGroups(List<ProcessGroup> processGroups) {
@@ -54,7 +54,7 @@ public class ProcessGroupsTest extends ProcessGroupUtil {
     @Description("Get a ProcessGroup for a customer identified by its identity.")
     public void getProcessGroupsByIdentity() {
         List<ProcessGroup> processGroups = ProcessGroupUtil.getProcessGroupsResponse();
-        Assert.assertNotEquals("To get Process Group, response should contain it.", 0, processGroups.size());
+        assertNotEquals(0, processGroups.size(), "To get Process Group, response should contain it.");
 
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_BY_IDENTITY, ProcessGroup.class)
             .inlineVariables(processGroups.get(0).getIdentity())

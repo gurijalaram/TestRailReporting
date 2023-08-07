@@ -1,5 +1,7 @@
 package com.apriori.util;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import com.apriori.bcs.models.response.ProcessGroup;
 import com.apriori.bcs.models.response.ProcessGroups;
 import com.apriori.enums.ProcessGroupEnum;
@@ -18,7 +20,6 @@ import com.apriori.vds.models.response.process.group.materials.stock.ProcessGrou
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Assert;
 
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
             }
         }
 
-        Assert.fail("Materials don't contain materials stocks");
+        fail("Materials don't contain materials stocks");
 
         return null;
     }

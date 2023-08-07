@@ -1,7 +1,7 @@
 package com.apriori.evaluate;
 
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.cidappapi.models.response.customizations.Customizations;
 import com.apriori.cidappapi.models.response.customizations.DigitalFactories;

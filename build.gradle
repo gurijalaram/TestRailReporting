@@ -11,8 +11,8 @@ allprojects {
     group = 'com.apriori.qa'
     version = '0.0.1-SNAPSHOT'
     apply plugin: 'java'
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 subprojects {

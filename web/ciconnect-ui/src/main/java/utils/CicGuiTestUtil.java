@@ -35,8 +35,6 @@ public class CicGuiTestUtil extends WorkflowTestUtil {
     /**
      * Create workflow
      *
-     * @param workflowRequestData WorkflowRequest
-     * @param sessionID           JSessionID
      * @return current class object
      */
     public CicGuiTestUtil createWorkflow() {
@@ -55,7 +53,6 @@ public class CicGuiTestUtil extends WorkflowTestUtil {
     /**
      * Get matching workflow from list of returned workflows
      *
-     * @param workflowName Workflow name
      * @return Current class object
      */
     public CicGuiTestUtil getWorkflow() {

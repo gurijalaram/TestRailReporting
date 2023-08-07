@@ -3,8 +3,8 @@ package com.apriori;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.bcs.controller.BatchPartResources;
@@ -82,7 +82,7 @@ public class BatchPartTest {
     @TestRail(id = {7954})
     @Description("Create Batch, Add Part to a batch, wait until part is costed and get results")
     public void createBatchPartAndGetResults() {
-        assertTrue("Track and verify Batch Part Costing is completed", BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), part.getIdentity(), BCSState.COMPLETED));
+        assertTrue(BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), part.getIdentity(), BCSState.COMPLETED), "Track and verify Batch Part Costing is completed");
         ResponseWrapper<Results> resultsResponse = HTTPRequest.build(
             BatchPartResources.getBatchPartRequestEntity(
                 BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS,

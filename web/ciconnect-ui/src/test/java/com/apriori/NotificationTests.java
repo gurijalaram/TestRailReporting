@@ -1,5 +1,9 @@
 package com.apriori;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.apriori.cic.enums.ReportsEnum;
 import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.dataservice.TestDataService;
@@ -16,7 +20,6 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -53,13 +56,13 @@ public class NotificationTests extends WorkflowTestUtil {
 
         NotificationsPart notificationsPart = costingInputsPart.clickCINextBtn();
 
-        Assert.assertTrue("Verify next button is enabled",notificationsPart.getNotificationNextButton().isEnabled());
+        assertTrue(notificationsPart.getNotificationNextButton().isEnabled(),"Verify next button is enabled");
         notificationsPart.selectEmailTab().selectEmailTemplate();
-        Assert.assertFalse("Verify next button is disabled",notificationsPart.getNotificationNextButton().isEnabled());
+        assertFalse(notificationsPart.getNotificationNextButton().isEnabled(),"Verify next button is disabled");
         notificationsPart.selectEmailTab().selectRecipient();
-        Assert.assertTrue("Verify next button is enabled Tab",notificationsPart.getNotificationNextButton().isEnabled());
-        Assert.assertEquals("Verify Costing round drop down defaulted to Yes", "Yes", notificationsPart.selectEmailTab().getEmailConfigCostRoundingElement().getText());
-        Assert.assertEquals("Verify aPriori Costing round drop down defaulted to Fully Burdened Cost", "Fully Burdened Cost", notificationsPart.selectEmailTab().getEmailConfigAprioriCostElement().getText());
+        assertTrue(notificationsPart.getNotificationNextButton().isEnabled(),"Verify next button is enabled Tab");
+        assertEquals("Verify Costing round drop down defaulted to Yes", "Yes", notificationsPart.selectEmailTab().getEmailConfigCostRoundingElement().getText());
+        assertEquals("Verify aPriori Costing round drop down defaulted to Fully Burdened Cost", "Fully Burdened Cost", notificationsPart.selectEmailTab().getEmailConfigAprioriCostElement().getText());
     }
 
     @Test
@@ -180,6 +183,6 @@ public class NotificationTests extends WorkflowTestUtil {
         NotificationsPart notificationsPart = costingInputsPart.clickCINextBtn();
         FilterTab filterTab = notificationsPart.selectEmailTab().selectEmailTemplate().selectFilterTab();
 
-        Assert.assertTrue("verify filter rule drop down values",filterTab.getFilterRuleList().containsAll(rulesExpectedList));
+        assertTrue(filterTab.getFilterRuleList().containsAll(rulesExpectedList),"verify filter rule drop down values");
     }
 }

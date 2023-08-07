@@ -1,5 +1,7 @@
 package com.apriori.bcs.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.apriori.bcs.enums.BCSState;
 import com.apriori.bcs.models.request.parts.NewPartRequest;
 import com.apriori.bcs.models.response.Batch;
@@ -12,7 +14,6 @@ import com.apriori.reader.file.part.PartData;
 import com.apriori.reader.file.part.PartUtil;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -284,7 +285,7 @@ public class MultiPartResources {
         log.info(logInfoBuilder.toString());
 
         for (PartData partDTO : partsReport) {
-            Assert.assertEquals("Verify Part State", BCSState.COMPLETED.toString(), partDTO.getState());
+            assertEquals("Verify Part State", BCSState.COMPLETED.toString(), partDTO.getState());
         }
     }
 }

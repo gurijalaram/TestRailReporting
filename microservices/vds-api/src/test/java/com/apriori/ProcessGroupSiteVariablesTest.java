@@ -1,6 +1,6 @@
 package com.apriori;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.apriori.http.builder.entity.RequestEntity;
 import com.apriori.http.builder.request.HTTPRequest;
@@ -114,7 +114,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
 
     private SiteVariable getFirstProcessGroupSiteVariable() {
         List<SiteVariable> siteVariables = this.getProcessGroupSiteVariablesResponse();
-        assertNotEquals("To get Site Variable, response should contain it.", 0, siteVariables.size());
+        assertNotEquals(0, siteVariables.size(), "To get Site Variable, response should contain it.");
 
         return siteVariables.get(0);
     }

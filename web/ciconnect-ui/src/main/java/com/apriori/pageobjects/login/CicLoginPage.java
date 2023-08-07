@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.login;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.login.LoginService;
 import com.apriori.pageobjects.CICBasePage;
@@ -30,7 +30,7 @@ public class CicLoginPage extends CICBasePage {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIC login page was not displayed", aprioriLoginService.getLoginTitle().contains("Cost Insight Connect"));
+        assertTrue(aprioriLoginService.getLoginTitle().contains("Cost Insight Connect"), "CIC login page was not displayed");
     }
 
     /**

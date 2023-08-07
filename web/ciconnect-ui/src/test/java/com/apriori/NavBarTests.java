@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.pageobjects.connectors.ConnectorsPage;
 import com.apriori.pageobjects.home.CIConnectHome;
@@ -12,7 +14,6 @@ import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,7 +36,7 @@ public class NavBarTests extends WorkflowTestUtil {
         UsersPage usersPage = new CicLoginPage(driver)
             .login(currentUser)
             .clickUsersMenu();
-        Assert.assertEquals("Verify users menu", "Users", usersPage.getUsersText());
+        assertEquals("Verify users menu", "Users", usersPage.getUsersText());
     }
 
     @Test
@@ -45,7 +46,7 @@ public class NavBarTests extends WorkflowTestUtil {
             .login(currentUser)
             .clickConnectorsMenu();
 
-        Assert.assertEquals("Verify Connectors menu", "Connectors", connectorsPage.getConnectorText());
+        assertEquals("Verify Connectors menu", "Connectors", connectorsPage.getConnectorText());
 
     }
 
@@ -56,7 +57,7 @@ public class NavBarTests extends WorkflowTestUtil {
             .login(currentUser)
             .clickWorkflowMenu();
 
-        Assert.assertEquals("Verify Workflows menu", "Workflows", workflowHome.getWorkflowText());
+        assertEquals("Verify Workflows menu", "Workflows", workflowHome.getWorkflowText());
     }
 
     @Test
@@ -66,8 +67,8 @@ public class NavBarTests extends WorkflowTestUtil {
             .login(currentUser)
             .expandUserInfoDropdown();
 
-        Assert.assertEquals("Verify Login ID", currentUser.getEmail(), workflowHome.getLoginID());
-        Assert.assertEquals("Verify Company Name", "aPriori Internal", workflowHome.getCurrentCompany());
+        assertEquals("Verify Login ID", currentUser.getEmail(), workflowHome.getLoginID());
+        assertEquals("Verify Company Name", "aPriori Internal", workflowHome.getCurrentCompany());
     }
 
     @Test
@@ -78,7 +79,7 @@ public class NavBarTests extends WorkflowTestUtil {
             .navigateToCicUserGuide()
             .switchTab();
 
-        Assert.assertEquals("Verify Online help documentation guide", "https://www.apriori.com/Collateral/Documents/English-US/online_help/CIC/",
+        assertEquals("Verify Online help documentation guide", "https://www.apriori.com/Collateral/Documents/English-US/online_help/CIC/",
             cicUserGuide.getURL().split("2022")[0]);
     }
 
@@ -89,7 +90,7 @@ public class NavBarTests extends WorkflowTestUtil {
             .login(currentUser)
             .clickCostingServiceSettings();
 
-        Assert.assertEquals("Verify Settings model page", "Costing Service Settings", costingServiceSettings.getCostingServiceSettingsText());
+        assertEquals("Verify Settings model page", "Costing Service Settings", costingServiceSettings.getCostingServiceSettingsText());
     }
 }
 
