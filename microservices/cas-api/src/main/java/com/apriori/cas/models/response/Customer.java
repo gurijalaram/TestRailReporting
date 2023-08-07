@@ -52,4 +52,5 @@ public class Customer {
     private List<Object> identityProviders = null;
     private List<String> emailDomains = null;
     private String authenticationType;
+    private List<String> emailRegexPatterns;
 }
