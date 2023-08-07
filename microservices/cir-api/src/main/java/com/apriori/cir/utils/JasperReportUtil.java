@@ -58,6 +58,19 @@ public class JasperReportUtil {
         return responseResponseWrapper.getResponseEntity();
     }
 
+    public InputControl updateInputControls(ParametersRequest parametersRequest) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.RECOMMENDED_TEST_PARTS, InputControl.class)
+            .headers(initHeadersWithJSession())
+            .inlineVariables("%20")
+            .body(parametersRequest)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .urlEncodingEnabled(false);
+
+        ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
+
+        return responseResponseWrapper.getResponseEntity();
+    }
+
     public JasperReportSummary generateJasperReportSummary(ReportRequest reportRequest) {
         ReportStatusResponse response = this.generateReport(reportRequest);
         ReportStatusResponse exportedReport = this.doReportExport(response);
