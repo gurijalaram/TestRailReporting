@@ -4,10 +4,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
-import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.edc.models.response.bill.of.materials.BillOfMaterialsResponse;
 import com.apriori.edc.utils.BillOfMaterialsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.models.AuthorizationUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

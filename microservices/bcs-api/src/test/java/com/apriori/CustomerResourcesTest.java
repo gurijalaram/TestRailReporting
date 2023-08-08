@@ -8,7 +8,7 @@ import com.apriori.bcs.models.response.DigitalFactories;
 import com.apriori.bcs.models.response.ProcessGroups;
 import com.apriori.bcs.models.response.UserDefinedAttributes;
 import com.apriori.bcs.models.response.UserPreferences;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
 

@@ -1,12 +1,12 @@
 package com.apriori;
 
-import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.dms.models.request.DiscussionsRequest;
 import com.apriori.dms.models.request.DiscussionsRequestParameters;
 import com.apriori.dms.models.response.DmsDiscussionResponse;
 import com.apriori.dms.models.response.DmsDiscussionsResponse;
 import com.apriori.dms.utils.DmsApiTestDataUtils;
 import com.apriori.dms.utils.DmsApiTestUtils;
+import com.apriori.models.response.ApwErrorMessage;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

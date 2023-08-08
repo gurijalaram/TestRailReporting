@@ -1,6 +1,6 @@
 package com.apriori;
 
-import com.apriori.authorization.response.ApwErrorMessage;
+import com.apriori.models.response.ApwErrorMessage;
 import com.apriori.qds.controller.LayoutResources;
 import com.apriori.qds.models.response.layout.LayoutResponse;
 import com.apriori.qds.models.response.layout.ViewElementResponse;

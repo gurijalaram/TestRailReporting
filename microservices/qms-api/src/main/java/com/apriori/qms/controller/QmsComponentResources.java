@@ -1,6 +1,5 @@
 package com.apriori.qms.controller;
 
-import com.apriori.AuthUserContextUtil;
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
@@ -9,8 +8,9 @@ import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.enums.CssSearch;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.ScenarioItem;

@@ -2,8 +2,8 @@ package com.apriori.acs.utils;
 
 import com.apriori.acs.OldTokenRequest;
 import com.apriori.acs.enums.OldTokenEnum;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;

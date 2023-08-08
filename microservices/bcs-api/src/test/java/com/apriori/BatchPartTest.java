@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.controller.MultiPartResources;
@@ -18,8 +17,9 @@ import com.apriori.bcs.models.response.Part;
 import com.apriori.bcs.models.response.Parts;
 import com.apriori.bcs.models.response.Results;
 import com.apriori.dataservice.TestDataService;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ErrorMessage;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.part.PartData;
 import com.apriori.testrail.TestRail;

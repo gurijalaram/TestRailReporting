@@ -1,8 +1,7 @@
 package com.apriori.http.utils;
 
-import com.apriori.AuthUserContextUtil;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.entity.UserAuthenticationEntity;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.entity.UserAuthenticationEntity;
 import com.apriori.interfaces.EndpointEnum;
 import com.apriori.reader.file.user.UserCredentials;
 

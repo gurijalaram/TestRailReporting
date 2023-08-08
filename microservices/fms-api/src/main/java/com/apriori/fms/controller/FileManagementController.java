@@ -1,18 +1,18 @@
 package com.apriori.fms.controller;
 
-import com.apriori.AuthUserContextUtil;
 import com.apriori.FileResourceUtil;
-import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.enums.FMSAPIEnum;
 import com.apriori.fms.models.response.FileResponse;
 import com.apriori.fms.models.response.FilesResponse;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
 import com.apriori.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;

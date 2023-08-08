@@ -1,6 +1,5 @@
 package com.apriori;
 
-import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.dds.enums.DDSApiEnum;
 import com.apriori.dds.models.request.CommentsRequest;
 import com.apriori.dds.models.request.CommentsRequestParameters;
@@ -8,10 +7,12 @@ import com.apriori.dds.models.response.CommentResponse;
 import com.apriori.dds.models.response.CommentsResponse;
 import com.apriori.dds.models.response.DiscussionResponse;
 import com.apriori.dds.utils.DdsApiTestUtils;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ErrorMessage;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;

@@ -1,6 +1,5 @@
 package com.apriori;
 
-import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.models.response.AccessControl;
 import com.apriori.cas.models.response.AccessControls;
@@ -13,6 +12,7 @@ import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

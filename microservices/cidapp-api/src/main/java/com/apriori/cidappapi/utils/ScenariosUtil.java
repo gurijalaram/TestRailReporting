@@ -3,7 +3,6 @@ package com.apriori.cidappapi.utils;
 import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 
-import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.models.request.ForkRequest;
@@ -24,10 +23,11 @@ import com.apriori.cidappapi.models.response.scenarios.ScenarioManifestSubcompon
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.enums.CssSearch;
 import com.apriori.enums.ScenarioStateEnum;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ErrorMessage;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;

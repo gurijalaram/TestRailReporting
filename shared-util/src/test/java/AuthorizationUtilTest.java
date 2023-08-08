@@ -3,9 +3,9 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.authorization.response.Token;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
+import com.apriori.models.response.Token;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;

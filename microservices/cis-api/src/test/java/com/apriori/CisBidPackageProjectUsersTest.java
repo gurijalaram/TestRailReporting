@@ -7,6 +7,7 @@ import com.apriori.cis.models.request.bidpackage.BidPackageProjectUserRequest;
 import com.apriori.cis.models.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.cis.models.response.bidpackage.BidPackageProjectUsersPostResponse;
 import com.apriori.cis.models.response.bidpackage.BidPackageResponse;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

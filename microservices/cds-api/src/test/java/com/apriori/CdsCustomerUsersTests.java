@@ -1,6 +1,5 @@
 package com.apriori;
 
-import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.objects.response.User;
@@ -9,10 +8,11 @@ import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.objects.response.credentials.CredentialsItems;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ErrorMessage;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

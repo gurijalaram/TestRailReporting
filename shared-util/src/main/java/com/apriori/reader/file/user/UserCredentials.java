@@ -1,6 +1,6 @@
 package com.apriori.reader.file.user;
 
-import com.apriori.authorization.AuthorizationUtil;
+import com.apriori.models.AuthorizationUtil;
 
 import com.auth0.jwt.JWT;
 

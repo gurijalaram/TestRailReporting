@@ -1,11 +1,12 @@
 package com.apriori;
 
-import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ApwErrorMessage;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.enums.QMSAPIEnum;

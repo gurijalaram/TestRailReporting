@@ -1,13 +1,13 @@
 package com.apriori.email;
 
 import com.apriori.FileResourceUtil;
-import com.apriori.authorization.response.EmailTokenResponse;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.EncryptionUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
+import com.apriori.models.response.EmailTokenResponse;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;

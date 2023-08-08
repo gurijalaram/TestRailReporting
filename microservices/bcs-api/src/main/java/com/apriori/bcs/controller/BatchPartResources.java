@@ -1,7 +1,6 @@
 package com.apriori.bcs.controller;
 
 import com.apriori.FileResourceUtil;
-import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
 import com.apriori.bcs.enums.FileType;
@@ -11,13 +10,14 @@ import com.apriori.bcs.models.response.PartReport;
 import com.apriori.bcs.models.response.Parts;
 import com.apriori.bcs.models.response.Results;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
+import com.apriori.models.response.ErrorMessage;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.part.PartData;
 

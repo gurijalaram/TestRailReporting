@@ -1,14 +1,14 @@
 package com.apriori.nts.email;
 
 import com.apriori.FileResourceUtil;
-import com.apriori.authorization.AuthorizationUtil;
-import com.apriori.authorization.response.EmailMessage;
 import com.apriori.email.GraphEmailService;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
+import com.apriori.models.response.EmailMessage;
 import com.apriori.nts.enums.NTSAPIEnum;
 import com.apriori.nts.models.response.Email;
 import com.apriori.nts.models.response.EmailsItems;

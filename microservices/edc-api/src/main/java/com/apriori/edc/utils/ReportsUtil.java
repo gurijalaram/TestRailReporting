@@ -5,8 +5,8 @@ import com.apriori.edc.enums.EDCAPIReportsEnum;
 import com.apriori.edc.models.request.ReportData;
 import com.apriori.edc.models.request.ReportsRequest;
 import com.apriori.edc.models.response.reports.ReportsResponse;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 

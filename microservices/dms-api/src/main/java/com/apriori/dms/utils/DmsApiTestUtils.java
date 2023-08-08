@@ -1,6 +1,5 @@
 package com.apriori.dms.utils;
 
-import com.apriori.AuthUserContextUtil;
 import com.apriori.dms.enums.DMSApiEnum;
 import com.apriori.dms.models.request.CommentViewParameters;
 import com.apriori.dms.models.request.CommentsRequestParameters;
@@ -17,8 +16,9 @@ import com.apriori.dms.models.response.DmsCommentsResponse;
 import com.apriori.dms.models.response.DmsDiscussionParticipantResponse;
 import com.apriori.dms.models.response.DmsDiscussionParticipantsResponse;
 import com.apriori.dms.models.response.DmsDiscussionResponse;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;

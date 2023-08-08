@@ -3,8 +3,8 @@ package com.apriori;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.annotations.CreatableModel;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.interfaces.EndpointEnum;

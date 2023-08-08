@@ -1,7 +1,7 @@
 package com.apriori.edc.models.response.accounts;
 
 import com.apriori.annotations.Schema;
-import com.apriori.authorization.response.Pagination;
+import com.apriori.models.response.Pagination;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;

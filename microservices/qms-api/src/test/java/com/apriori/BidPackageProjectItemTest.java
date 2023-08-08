@@ -1,7 +1,7 @@
 package com.apriori;
 
-import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.models.response.ApwErrorMessage;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.qms.controller.QmsBidPackageResources;

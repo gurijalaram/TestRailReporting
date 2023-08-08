@@ -1,12 +1,12 @@
 package com.apriori.qms.controller;
 
-import com.apriori.AuthUserContextUtil;
 import com.apriori.DateFormattingUtils;
-import com.apriori.DateUtil;
 import com.apriori.FileResourceUtil;
 import com.apriori.GenerateStringUtil;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
+import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;

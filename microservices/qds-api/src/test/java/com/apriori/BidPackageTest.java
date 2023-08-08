@@ -1,10 +1,11 @@
 package com.apriori;
 
-import com.apriori.authorization.response.ErrorMessage;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ErrorMessage;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.enums.QDSAPIEnum;
 import com.apriori.qds.models.request.bidpackage.BidPackageParameters;

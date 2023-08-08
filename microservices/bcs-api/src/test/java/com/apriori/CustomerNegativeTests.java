@@ -1,9 +1,9 @@
 package com.apriori;
 
-import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.bcs.enums.BCSAPIEnum;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.models.response.ErrorMessage;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

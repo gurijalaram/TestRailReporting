@@ -2,15 +2,15 @@ package com.apriori.cus.utils;
 
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 
-import com.apriori.AuthUserContextUtil;
 import com.apriori.cus.enums.CusAppAPIEnum;
 import com.apriori.cus.models.request.UpdateUserPrefRequest;
 import com.apriori.cus.models.request.UpdateUserRequest;
 import com.apriori.cus.models.response.ErrorResponse;
 import com.apriori.cus.models.response.PreferenceItemsResponse;
 import com.apriori.cus.models.response.User;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;

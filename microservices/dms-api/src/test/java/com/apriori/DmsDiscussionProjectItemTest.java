@@ -1,8 +1,8 @@
 package com.apriori;
 
-import com.apriori.authorization.response.ApwErrorMessage;
 import com.apriori.dms.utils.DmsApiTestDataUtils;
 import com.apriori.dms.utils.DmsApiTestUtils;
+import com.apriori.models.response.ApwErrorMessage;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionsResponse;

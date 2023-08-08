@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.edc.models.response.line.items.LineItemParts;
 import com.apriori.edc.models.response.line.items.LineItemsResponse;
 import com.apriori.edc.models.response.parts.Parts;
@@ -15,6 +14,7 @@ import com.apriori.edc.utils.LineItemsUtil;
 import com.apriori.edc.utils.PartsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

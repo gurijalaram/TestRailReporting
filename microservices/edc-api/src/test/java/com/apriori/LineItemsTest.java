@@ -3,10 +3,10 @@ package com.apriori;
 import static com.apriori.edc.utils.BillOfMaterialsUtil.deleteBillOfMaterialById;
 import static com.apriori.edc.utils.BillOfMaterialsUtil.postBillOfMaterials;
 
-import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.edc.models.response.line.items.LineItemsResponse;
 import com.apriori.edc.utils.LineItemsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.models.AuthorizationUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

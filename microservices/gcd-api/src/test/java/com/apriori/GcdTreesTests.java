@@ -1,10 +1,10 @@
 package com.apriori;
 
-import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.gcd.controller.GcdTreeController;
 import com.apriori.gcd.models.response.GcdTree;
 import com.apriori.gcd.models.response.GcdsAdded;
 import com.apriori.gcd.models.response.GcdsRemoved;
+import com.apriori.models.response.ErrorMessage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

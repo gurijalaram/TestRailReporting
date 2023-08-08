@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.apriori.authorization.response.ErrorMessage;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.enums.BCSAPIEnum;
@@ -17,10 +16,11 @@ import com.apriori.bcs.models.request.parts.NewPartRequest;
 import com.apriori.bcs.models.response.Batch;
 import com.apriori.bcs.models.response.Part;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ErrorMessage;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

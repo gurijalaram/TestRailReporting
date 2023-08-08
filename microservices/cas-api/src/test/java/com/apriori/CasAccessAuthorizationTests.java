@@ -1,6 +1,5 @@
 package com.apriori;
 
-import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.models.response.AccessAuthorization;
 import com.apriori.cas.models.response.AccessAuthorizations;
@@ -15,6 +14,7 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.testrail.TestRail;
 

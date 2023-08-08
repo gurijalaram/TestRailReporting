@@ -3,9 +3,9 @@ package com.apriori.ach.tests;
 import com.apriori.ach.enums.ACHAPIEnum;
 import com.apriori.ach.models.response.CurrentUser;
 import com.apriori.ach.utils.AchTestUtil;
-import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

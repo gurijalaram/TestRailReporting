@@ -1,7 +1,7 @@
 package com.apriori.vds.models.response.user.group.associations;
 
 import com.apriori.annotations.Schema;
-import com.apriori.authorization.response.Pagination;
+import com.apriori.models.response.Pagination;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;

@@ -1,6 +1,5 @@
 package com.apriori;
 
-import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.models.response.CasErrorMessage;
 import com.apriori.cas.models.response.CustomerAssociation;
@@ -8,6 +7,7 @@ import com.apriori.cas.models.response.CustomerAssociations;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

@@ -1,8 +1,8 @@
 package com.apriori;
 
-import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.edc.utils.ReportsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.models.AuthorizationUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

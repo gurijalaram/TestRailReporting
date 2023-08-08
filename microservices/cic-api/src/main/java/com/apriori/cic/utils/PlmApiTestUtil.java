@@ -8,8 +8,8 @@ import com.apriori.cic.models.response.PlmCsrfToken;
 import com.apriori.cic.models.response.PlmPartResponse;
 import com.apriori.cic.models.response.PlmSearchPart;
 import com.apriori.cic.models.response.PlmSearchResponse;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.properties.PropertiesContext;
 

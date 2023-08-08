@@ -1,6 +1,7 @@
 package com.apriori;
 
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.controller.QmsComponentResources;

@@ -11,7 +11,7 @@ import com.apriori.cic.utils.CicApiTestUtil;
 import com.apriori.cic.utils.PlmPartsUtil;
 import com.apriori.cic.utils.WorkflowDataUtil;
 import com.apriori.cic.utils.WorkflowTestUtil;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

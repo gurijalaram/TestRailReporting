@@ -7,12 +7,12 @@ import com.apriori.ach.models.response.Success;
 import com.apriori.ach.models.response.SuccessUpdatePreferencesResponse;
 import com.apriori.ach.models.response.UserPreferences;
 import com.apriori.ach.utils.AchTestUtil;
-import com.apriori.authorization.AuthorizationUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

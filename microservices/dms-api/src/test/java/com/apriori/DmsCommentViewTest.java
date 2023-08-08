@@ -4,6 +4,7 @@ import com.apriori.dms.models.response.DmsCommentViewResponse;
 import com.apriori.dms.models.response.DmsCommentViewsResponse;
 import com.apriori.dms.utils.DmsApiTestDataUtils;
 import com.apriori.dms.utils.DmsApiTestUtils;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

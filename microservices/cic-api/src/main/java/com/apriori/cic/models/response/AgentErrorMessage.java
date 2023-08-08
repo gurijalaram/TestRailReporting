@@ -1,8 +1,8 @@
 package com.apriori.cic.models.response;
 
 import com.apriori.annotations.Schema;
-import com.apriori.authorization.response.ErrorResponse;
 import com.apriori.deserializers.DateTimeDeserializer_Epoch;
+import com.apriori.models.response.ErrorResponse;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

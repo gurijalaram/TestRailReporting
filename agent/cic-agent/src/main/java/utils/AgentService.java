@@ -1,14 +1,14 @@
 package utils;
 
-import com.apriori.AwsParameterStoreUtil;
 import com.apriori.FileResourceUtil;
 import com.apriori.cic.models.request.ConnectorRequest;
 import com.apriori.cic.models.response.AgentConnectionInfo;
 import com.apriori.cic.models.response.AgentConnectionOptions;
 import com.apriori.cic.models.response.ConnectorInfo;
 import com.apriori.cic.utils.CicApiTestUtil;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AwsParameterStoreUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.properties.PropertiesContext;

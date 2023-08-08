@@ -1,6 +1,5 @@
 package com.apriori.cmp.utils;
 
-import com.apriori.AuthUserContextUtil;
 import com.apriori.cidappapi.models.response.PersonResponse;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cmp.models.enums.CMPAPIEnum;
@@ -8,8 +7,9 @@ import com.apriori.cmp.models.request.CreateComparison;
 import com.apriori.cmp.models.request.UpdateComparison;
 import com.apriori.cmp.models.response.GetComparisonResponse;
 import com.apriori.cmp.models.response.GetComparisonsResponse;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.user.UserCredentials;

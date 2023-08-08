@@ -1,8 +1,8 @@
 package com.apriori.cds.objects.response;
 
 import com.apriori.annotations.Schema;
-import com.apriori.authorization.response.Pagination;
 import com.apriori.cds.models.response.LicensedModule;
+import com.apriori.models.response.Pagination;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;

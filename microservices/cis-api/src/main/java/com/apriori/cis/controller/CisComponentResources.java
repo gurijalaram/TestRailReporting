@@ -1,8 +1,8 @@
 package com.apriori.cis.controller;
 
 import com.apriori.cis.enums.CisAPIEnum;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.reader.file.user.UserCredentials;
 

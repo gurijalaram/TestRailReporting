@@ -1,13 +1,13 @@
 package com.apriori.dds.utils;
 
-import com.apriori.AuthUserContextUtil;
 import com.apriori.dds.enums.DDSApiEnum;
 import com.apriori.dds.models.request.CommentsRequest;
 import com.apriori.dds.models.request.DiscussionsRequest;
 import com.apriori.dds.models.request.DiscussionsRequestParameters;
 import com.apriori.dds.models.response.DiscussionResponse;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.properties.PropertiesContext;

@@ -1,6 +1,6 @@
 package com.apriori.interfaces;
 
-import com.apriori.AwsParameterStoreUtil;
+import com.apriori.http.utils.AwsParameterStoreUtil;
 import com.apriori.properties.PropertiesContext;
 
 /**

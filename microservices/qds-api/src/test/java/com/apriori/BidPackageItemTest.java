@@ -1,5 +1,6 @@
 package com.apriori;
 
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.models.request.bidpackage.BidPackageItemParameters;

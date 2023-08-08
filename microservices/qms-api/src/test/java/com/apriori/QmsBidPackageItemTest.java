@@ -1,6 +1,6 @@
 package com.apriori;
 
-import com.apriori.authorization.response.ApwErrorMessage;
+import com.apriori.models.response.ApwErrorMessage;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.models.request.bidpackage.BidPackageItemParameters;

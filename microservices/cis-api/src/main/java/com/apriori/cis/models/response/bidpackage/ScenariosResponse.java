@@ -1,8 +1,8 @@
 package com.apriori.cis.models.response.bidpackage;
 
 import com.apriori.annotations.Schema;
-import com.apriori.authorization.response.Pagination;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
+import com.apriori.models.response.Pagination;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;

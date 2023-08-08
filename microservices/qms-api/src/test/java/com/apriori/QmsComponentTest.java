@@ -3,6 +3,7 @@ package com.apriori;
 import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.controller.QmsComponentResources;

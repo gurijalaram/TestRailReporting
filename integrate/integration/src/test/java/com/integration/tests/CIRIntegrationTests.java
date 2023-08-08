@@ -5,7 +5,6 @@ import static org.hamcrest.core.StringContains.containsString;
 
 import com.apriori.PDFDocument;
 import com.apriori.TestBaseUI;
-import com.apriori.authorization.response.EmailMessage;
 import com.apriori.cic.enums.CICReportType;
 import com.apriori.cic.enums.ReportsEnum;
 import com.apriori.cic.models.request.JobDefinition;
@@ -17,6 +16,7 @@ import com.apriori.cic.utils.CicApiTestUtil;
 import com.apriori.cic.utils.CicLoginUtil;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.email.GraphEmailService;
+import com.apriori.models.response.EmailMessage;
 import com.apriori.nts.reports.componentsummary.MultipleComponentSummary;
 import com.apriori.pageobjects.header.ReportsHeader;
 import com.apriori.pageobjects.login.ReportsLoginPage;

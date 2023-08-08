@@ -1,12 +1,12 @@
 package com.apriori.email;
 
-import com.apriori.authorization.response.EmailMessage;
-import com.apriori.authorization.response.EmailResponse;
 import com.apriori.exceptions.KeyValueException;
-import com.apriori.http.builder.entity.RequestEntity;
-import com.apriori.http.builder.request.HTTPRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.models.response.EmailMessage;
+import com.apriori.models.response.EmailResponse;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
