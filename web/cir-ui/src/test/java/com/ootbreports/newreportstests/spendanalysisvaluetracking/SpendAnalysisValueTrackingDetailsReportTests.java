@@ -3,6 +3,7 @@ package com.ootbreports.newreportstests.spendanalysisvaluetracking;
 import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 
@@ -17,11 +18,12 @@ public class SpendAnalysisValueTrackingDetailsReportTests extends JasperApiAuthe
     private static final String reportsJsonFileName = JasperApiEnum.SPEND_ANALYSIS_VALUE_TRACKING_DETAILS.getEndpoint();
     // Export set is irrelevant for this report
     private static final String exportSetName = "";
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SPEND_ANALYSIS_VALUE_TRACKING_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
@@ -34,7 +36,7 @@ public class SpendAnalysisValueTrackingDetailsReportTests extends JasperApiAuthe
         );
 
         String gbpCurrencySettingAboveChart = gbpJasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "7").get(2).child(0).text();
-        String gbpInitialApCost = gbpJasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "2").get(19).child(0).text();
+        String gbpInitialApCost = gbpJasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "2").get(20).child(0).text();
 
         JasperReportSummary usdJasperReportSummary = jasperApiUtils.genericTestCoreProjectRollupAndCurrencyOnly(
             CurrencyEnum.USD.getCurrency(),
@@ -42,7 +44,7 @@ public class SpendAnalysisValueTrackingDetailsReportTests extends JasperApiAuthe
         );
 
         String usdCurrencySettingAboveChart = usdJasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "7").get(2).child(0).text();
-        String usdInitialApCost = usdJasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "2").get(19).child(0).text();
+        String usdInitialApCost = usdJasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "2").get(20).child(0).text();
 
         assertNotEquals(gbpCurrencySettingAboveChart, usdCurrencySettingAboveChart);
         assertNotEquals(gbpInitialApCost, usdInitialApCost);

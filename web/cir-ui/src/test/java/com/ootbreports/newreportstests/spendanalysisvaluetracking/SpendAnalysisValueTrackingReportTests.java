@@ -3,6 +3,7 @@ package com.ootbreports.newreportstests.spendanalysisvaluetracking;
 import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 
@@ -17,11 +18,12 @@ public class SpendAnalysisValueTrackingReportTests extends JasperApiAuthenticati
     private static final String reportsJsonFileName = JasperApiEnum.SPEND_ANALYSIS_VALUE_TRACKING.getEndpoint();
     // Export set is irrelevant for this report
     private static final String exportSetName = "";
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SPEND_ANALYSIS_VALUE_TRACKING;
     private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

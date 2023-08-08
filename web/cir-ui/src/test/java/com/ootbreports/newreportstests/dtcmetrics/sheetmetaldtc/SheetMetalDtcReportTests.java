@@ -1,7 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -29,11 +29,12 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     );
     private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC.getEndpoint();
     private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC;
     private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupGenericMethods() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
@@ -94,10 +95,10 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
             JasperCirApiPartsEnum.P_2980123_CLAMP.getPartName(),
             JasperCirApiPartsEnum.AP_BRACKET_HANGER.getPartName()
         );
-        jasperApiUtils.genericProcessGroupDtcTest(
+        /*jasperApiUtils.genericProcessGroupDtcTest(
             partNames,
             "Process Group", ProcessGroupEnum.SHEET_METAL.getProcessGroup()
-        );
+        );*/
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.potentialsavingsvaluetracking;
 
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.utils.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
@@ -13,11 +14,12 @@ public class PotentialSavingsValueTrackingDetailsReportTests extends JasperApiAu
     private static final String reportsJsonFileName = JasperApiEnum.POTENTIAL_SAVINGS_VALUE_TRACKING_DETAILS.getEndpoint();
     // Export set is not relevant for this report
     private static final String exportSetName = "";
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.POTENTIAL_SAVINGS_VALUE_TRACKING_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

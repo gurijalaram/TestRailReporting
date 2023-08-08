@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.costoutlieridentification;
 
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -22,11 +23,12 @@ public class CostOutlierIdentificationDetailsTests extends JasperApiAuthenticati
     );
     private static final String reportsJsonFileName = JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.dtcmetrics.machiningdtc;
 
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -26,11 +27,12 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     );
     private static final String reportsJsonFileName = JasperApiEnum.MACHINING_DTC.getEndpoint();
     private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC;
     private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupGenericMethods() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

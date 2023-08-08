@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -22,11 +23,12 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     private final List<String> partNames = Collections.singletonList(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName());
     private static final String reportsJsonFileName = JasperApiEnum.PLASTIC_DTC_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.PLASTIC_DTC_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupGenericMethods() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

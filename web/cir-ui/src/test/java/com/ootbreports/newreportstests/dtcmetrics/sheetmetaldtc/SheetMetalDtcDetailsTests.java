@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -29,11 +30,12 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     );
     private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupGenericMethods() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
