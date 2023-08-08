@@ -11,6 +11,8 @@ import com.apriori.qms.models.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.models.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.models.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.qms.models.request.bidpackage.BidPackageProjectUserRequest;
+import com.apriori.qms.models.request.scenariodiscussion.ProjectUserParameters;
+import com.apriori.qms.models.request.scenariodiscussion.ProjectUserRequest;
 import com.apriori.qms.models.request.scenariodiscussion.ScenarioDiscussionParameters;
 import com.apriori.qms.models.request.scenariodiscussion.ScenarioDiscussionRequest;
 import com.apriori.qms.models.response.bidpackage.BidPackageProjectResponse;
@@ -604,12 +606,11 @@ public class BidPackageProjectUserTest extends TestUtil {
                             p.getUserIdentity().equals(secondUserIdentity) &&
                             p.getUserIdentity().equals(thirdUserIdentity))))
                 .isTrue();
-
         }
     }
 
     @Test
-    @TestRail(testCaseId = {"26934","15476"})
+    @TestRail(id = {26934, 15476})
     @Description("Verify that using un-sharing mechanism API, user can remove himself as Project User")
     public void unSharingSelfProjectUserWithDiscussions() {
         UserCredentials assigneeUser = UserUtil.getUser();
