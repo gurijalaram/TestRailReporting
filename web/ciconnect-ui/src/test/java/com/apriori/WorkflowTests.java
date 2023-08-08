@@ -8,6 +8,7 @@ import com.apriori.dataservice.TestDataService;
 import com.apriori.enums.SortedOrderType;
 import com.apriori.enums.WorkflowListColumns;
 import com.apriori.features.WorkFlowFeatures;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.pageobjects.workflows.WorkflowHome;

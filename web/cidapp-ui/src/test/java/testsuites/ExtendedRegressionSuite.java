@@ -1,6 +1,6 @@
 package testsuites;
 
-import static com.apriori.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 
 import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectPackages;

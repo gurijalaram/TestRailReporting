@@ -1,6 +1,5 @@
 package com.apriori.evaluate;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.request.ScenarioAssociationGroupItems;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioManifestSubcomponents;
@@ -8,6 +7,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.AssociationSuccessesFailures;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;

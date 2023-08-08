@@ -6,6 +6,7 @@ import com.apriori.dms.models.response.DmsDiscussionResponse;
 import com.apriori.dms.models.response.DmsDiscussionsResponse;
 import com.apriori.dms.utils.DmsApiTestDataUtils;
 import com.apriori.dms.utils.DmsApiTestUtils;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.models.response.ApwErrorMessage;
 import com.apriori.testrail.TestRail;
 

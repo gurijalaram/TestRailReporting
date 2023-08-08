@@ -10,6 +10,7 @@ import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 

@@ -1,9 +1,9 @@
 package testsuites;
 
-import static com.apriori.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
-import static com.apriori.TestSuiteType.TestSuite.IGNORE;
-import static com.apriori.TestSuiteType.TestSuite.SANITY;
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.IGNORE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SANITY;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.compare.ComparisonTests;
 import com.apriori.compare.QuickComparisonTests;

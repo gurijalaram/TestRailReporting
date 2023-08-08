@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.acs.models.response.acs.partprimaryprocessgroups.PartPrimaryProcessGroupsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

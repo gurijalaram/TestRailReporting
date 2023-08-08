@@ -3,7 +3,6 @@ package com.apriori.cidappapi.utils;
 import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.models.request.ComponentRequest;
@@ -17,6 +16,7 @@ import com.apriori.cidappapi.models.response.componentiteration.ComponentIterati
 import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;

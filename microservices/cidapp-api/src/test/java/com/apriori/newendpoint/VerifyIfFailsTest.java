@@ -2,7 +2,6 @@ package com.apriori.newendpoint;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.cidappapi.enums.Direction;
 import com.apriori.cidappapi.models.request.ScenarioIterationRequest;
 import com.apriori.cidappapi.models.request.operators.LogicalOperator;
@@ -10,6 +9,7 @@ import com.apriori.cidappapi.models.request.operators.Operator;
 import com.apriori.cidappapi.models.request.operators.Params;
 import com.apriori.cidappapi.models.request.operators.Query;
 import com.apriori.cidappapi.utils.ScenarioIterationService;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
 import com.apriori.models.request.ErrorRequestResponse;

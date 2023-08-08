@@ -1,8 +1,5 @@
 package com.apriori.cas.utils;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.models.requests.BulkAccessControlRequest;
 import com.apriori.cas.models.response.AccessAuthorization;
@@ -30,9 +27,12 @@ import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;

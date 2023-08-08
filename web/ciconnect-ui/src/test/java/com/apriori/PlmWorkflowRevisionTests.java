@@ -12,6 +12,7 @@ import com.apriori.cic.utils.PlmPartsUtil;
 import com.apriori.cic.utils.WorkflowDataUtil;
 import com.apriori.enums.CheckboxState;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.home.CIConnectHome;
 import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.pageobjects.workflows.WorkflowHome;

@@ -1,18 +1,16 @@
 package com.apriori.explore;
 
-import static com.apriori.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
-import static com.apriori.TestSuiteType.TestSuite.SANITY;
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
 import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SANITY;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.request.AssemblyRequest;
@@ -20,6 +18,8 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.components.ComponentsTreePage;

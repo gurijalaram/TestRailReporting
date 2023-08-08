@@ -1,6 +1,5 @@
 package com.apriori.cis.controller;
 
-import com.apriori.TestUtil;
 import com.apriori.cis.enums.CisAPIEnum;
 import com.apriori.cis.models.request.userpreferences.CurrentUserPreferenceParameters;
 import com.apriori.cis.models.request.userpreferences.CurrentUserPreferenceRequest;
@@ -10,6 +9,7 @@ import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 
 import org.apache.http.HttpStatus;
 

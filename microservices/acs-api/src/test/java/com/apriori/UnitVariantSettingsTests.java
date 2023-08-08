@@ -3,6 +3,7 @@ package com.apriori;
 import com.apriori.acs.models.response.acs.unitvariantsettings.UnitVariantSetting;
 import com.apriori.acs.models.response.acs.unitvariantsettings.UnitVariantSettingsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

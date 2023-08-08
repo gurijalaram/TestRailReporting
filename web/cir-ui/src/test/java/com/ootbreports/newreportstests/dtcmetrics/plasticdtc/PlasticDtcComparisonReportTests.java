@@ -1,6 +1,6 @@
 package com.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
-import static com.apriori.TestSuiteType.TestSuite.REPORTS;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;

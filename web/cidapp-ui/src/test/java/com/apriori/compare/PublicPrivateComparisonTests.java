@@ -1,14 +1,14 @@
 package com.apriori.compare;
 
-import static com.apriori.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInRelativeOrder;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.compare.ComparePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;

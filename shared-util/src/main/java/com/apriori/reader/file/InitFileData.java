@@ -1,6 +1,6 @@
 package com.apriori.reader.file;
 
-import com.apriori.FileResourceUtil;
+import com.apriori.http.utils.FileResourceUtil;
 
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;

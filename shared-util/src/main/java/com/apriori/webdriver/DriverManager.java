@@ -1,4 +1,4 @@
-package com.apriori;
+package com.apriori.webdriver;
 
 import org.openqa.selenium.WebDriver;
 

@@ -1,12 +1,12 @@
-package com.apriori;
+package com.apriori.rules;
 
-import static com.apriori.DriverFactory.testMode;
-import static com.apriori.LoadProperties.loadProperties;
-import static com.apriori.TestMode.QA_LOCAL;
+import static com.apriori.properties.LoadProperties.loadProperties;
+import static com.apriori.testconfig.TestMode.QA_LOCAL;
 import static com.apriori.testrail.TestRailStatus.FAILED;
 import static com.apriori.testrail.TestRailStatus.PASSED;
 import static com.apriori.testrail.TestRailStatus.RETEST;
 import static com.apriori.testrail.TestRailStatus.UNTESTED;
+import static com.apriori.webdriver.DriverFactory.testMode;
 
 import com.apriori.testrail.TestRail;
 import com.apriori.testrail.TestRailReport;

@@ -1,7 +1,7 @@
 package com.apriori.cus.utils;
 
-import com.apriori.TestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 

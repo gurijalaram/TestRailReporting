@@ -1,4 +1,4 @@
-package com.apriori;
+package com.apriori.webdriver;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;

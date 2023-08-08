@@ -1,6 +1,6 @@
 package com.apriori.evaluate.assemblies;
 
-import static com.apriori.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.utils.PartNamesEnum.CENTRE_BOLT;
 import static com.utils.PartNamesEnum.CENTRE_WASHER;
 import static com.utils.PartNamesEnum.DISPLAY;
@@ -18,11 +18,11 @@ import static com.utils.PartNamesEnum.SEAT_LOCK;
 import static com.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
 import static com.utils.PartNamesEnum.WASHER;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;

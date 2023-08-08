@@ -1,11 +1,11 @@
 package com.apriori.customer;
 
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.customer.CustomerWorkspacePage;
 import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.pageobjects.newcustomer.CustomerProfilePage;

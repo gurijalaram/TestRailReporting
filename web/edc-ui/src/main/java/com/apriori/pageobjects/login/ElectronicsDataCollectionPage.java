@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.login;
 
-import com.apriori.FileResourceUtil;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.pageobjects.navtoolbars.NavigationBar;
 
 import com.utils.RightClickOptionEnum;

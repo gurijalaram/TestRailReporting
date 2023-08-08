@@ -4,9 +4,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.edc.utils.BillOfMaterialsUtil;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.pageobjects.login.EdcAppLoginPage;
 import com.apriori.pageobjects.login.UploadedFilePage;
 import com.apriori.reader.file.user.UserCredentials;

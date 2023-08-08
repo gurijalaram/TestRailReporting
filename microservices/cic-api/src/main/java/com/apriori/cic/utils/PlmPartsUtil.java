@@ -1,8 +1,8 @@
 package com.apriori.cic.utils;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.cic.enums.PlmPartDataType;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.reader.file.InitFileData;
 import com.apriori.reader.file.part.PartData;
 

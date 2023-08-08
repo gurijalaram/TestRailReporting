@@ -1,4 +1,4 @@
-package com.apriori;
+package com.apriori.webdriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.SessionNotCreatedException;

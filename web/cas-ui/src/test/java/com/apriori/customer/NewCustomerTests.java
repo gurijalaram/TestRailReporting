@@ -1,6 +1,6 @@
 package com.apriori.customer;
 
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;

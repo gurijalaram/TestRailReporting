@@ -1,13 +1,13 @@
 package com.apriori.evaluate;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.response.CostingTemplate;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.DataCreationUtil;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 

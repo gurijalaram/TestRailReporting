@@ -1,7 +1,7 @@
 package com.ootbreports.assemblycost;
 
-import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
-import static com.apriori.TestSuiteType.TestSuite.REPORTS;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 
 import com.apriori.TestBaseUI;
 import com.apriori.enums.ExportSetEnum;

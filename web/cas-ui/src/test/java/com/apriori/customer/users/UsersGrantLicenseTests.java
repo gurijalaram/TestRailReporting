@@ -1,6 +1,5 @@
 package com.apriori.customer.users;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -11,6 +10,7 @@ import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.CardsViewComponent;
 import com.apriori.components.SourceListComponent;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.Obligation;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.pageobjects.customer.users.UsersListPage;

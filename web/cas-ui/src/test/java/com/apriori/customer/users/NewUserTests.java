@@ -1,14 +1,14 @@
 package com.apriori.customer.users;
 
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.Obligation;
 import com.apriori.pageobjects.customer.users.UsersListPage;
 import com.apriori.pageobjects.customer.users.profile.NewUserPage;

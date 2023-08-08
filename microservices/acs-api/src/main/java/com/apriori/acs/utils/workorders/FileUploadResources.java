@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.acs.enums.workorders.CidWorkorderApiEnum;
 import com.apriori.acs.enums.workorders.WorkorderStatusEnum;
 import com.apriori.acs.models.request.workorders.NewPartRequest;
@@ -58,6 +57,7 @@ import com.apriori.fms.controller.FileManagementController;
 import com.apriori.fms.models.response.FileResponse;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.reader.file.user.UserUtil;
 

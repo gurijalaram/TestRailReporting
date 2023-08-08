@@ -1,12 +1,12 @@
 package com.apriori.cidappapi.utils;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.request.ScenarioIterationRequest;
 import com.apriori.enums.CssAPIEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;

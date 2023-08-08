@@ -2,8 +2,6 @@ package com.apriori.evaluate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.response.CostingTemplate;
 import com.apriori.cidappapi.models.response.RoutingNodeOptions;
@@ -17,6 +15,8 @@ import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.request.ErrorRequestResponse;
 import com.apriori.reader.file.user.UserCredentials;

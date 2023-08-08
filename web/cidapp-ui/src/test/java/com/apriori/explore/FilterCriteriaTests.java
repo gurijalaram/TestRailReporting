@@ -1,13 +1,11 @@
 package com.apriori.explore;
 
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -16,6 +14,8 @@ import com.apriori.enums.OperationEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.PropertyEnum;
 import com.apriori.enums.UnitsEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;

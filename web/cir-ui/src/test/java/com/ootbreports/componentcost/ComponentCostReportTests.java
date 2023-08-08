@@ -1,7 +1,7 @@
 package com.ootbreports.componentcost;
 
-import static com.apriori.TestSuiteType.TestSuite.ON_PREM;
-import static com.apriori.TestSuiteType.TestSuite.REPORTS;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;

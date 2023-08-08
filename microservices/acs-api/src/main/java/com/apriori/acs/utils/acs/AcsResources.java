@@ -1,6 +1,5 @@
 package com.apriori.acs.utils.acs;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.acs.enums.acs.AcsApiEnum;
 import com.apriori.acs.models.request.workorders.NewPartRequest;
 import com.apriori.acs.models.response.acs.GcdProperties.GcdPropertiesGroupItemsInputs;
@@ -45,6 +44,7 @@ import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.fms.models.response.FileResponse;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;

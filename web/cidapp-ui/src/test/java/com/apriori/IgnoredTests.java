@@ -1,15 +1,17 @@
 package com.apriori;
 
-import static com.apriori.TestSuiteType.TestSuite.IGNORE;
 import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_LOCKED_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.IGNORE;
 
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.explore.EditScenarioStatusPage;

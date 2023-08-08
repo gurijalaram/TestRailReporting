@@ -8,6 +8,8 @@ import com.apriori.cis.models.response.bidpackage.BidPackageItemResponse;
 import com.apriori.cis.models.response.bidpackage.BidPackageItemsResponse;
 import com.apriori.cis.models.response.bidpackage.BidPackageResponse;
 import com.apriori.cis.models.response.bidpackage.CisErrorMessage;
+import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;

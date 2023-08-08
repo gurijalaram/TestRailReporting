@@ -10,6 +10,7 @@ import com.apriori.bcs.models.response.UserDefinedAttributes;
 import com.apriori.bcs.models.response.UserPreferences;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

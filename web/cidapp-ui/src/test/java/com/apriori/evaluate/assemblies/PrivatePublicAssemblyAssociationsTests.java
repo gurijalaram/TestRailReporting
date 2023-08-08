@@ -1,9 +1,7 @@
 package com.apriori.evaluate.assemblies;
 
-import static com.apriori.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -11,6 +9,8 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.enums.PreferencesEnum;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;

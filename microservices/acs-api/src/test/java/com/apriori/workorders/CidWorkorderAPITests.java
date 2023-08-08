@@ -1,12 +1,12 @@
 package com.apriori.workorders;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.TestUtil;
 import com.apriori.acs.models.request.workorders.NewPartRequest;
 import com.apriori.acs.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.models.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.fms.models.response.FileResponse;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.json.JsonManager;
 
 import io.qameta.allure.Description;

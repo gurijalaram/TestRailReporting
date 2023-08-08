@@ -1,6 +1,6 @@
 package com.apriori.util;
 
-import com.apriori.GenerateStringUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.vds.models.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.models.response.process.group.site.variable.SiteVariable;
 

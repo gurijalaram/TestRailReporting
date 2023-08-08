@@ -2,9 +2,6 @@ package com.apriori.cds.utils;
 
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestUtil;
 import com.apriori.cds.enums.CASCustomerEnum;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.AttributeMappings;
@@ -46,10 +43,13 @@ import com.apriori.cds.objects.response.UserRole;
 import com.apriori.cds.objects.response.credentials.CredentialsItems;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.json.JsonManager;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.properties.PropertiesContext;

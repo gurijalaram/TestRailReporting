@@ -1,15 +1,15 @@
 package com.apriori.edc.utils;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.TestUtil;
 import com.apriori.edc.enums.EDCAPIEnum;
 import com.apriori.edc.models.request.PartsRequest;
 import com.apriori.edc.models.response.parts.Parts;
 import com.apriori.edc.models.response.parts.PartsResponse;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.json.JsonManager;
 
 import org.apache.http.HttpStatus;
@@ -17,6 +17,15 @@ import org.apache.http.HttpStatus;
 import java.util.List;
 
 public class PartsUtil extends TestUtil {
+
+    /**
+     * This method has a json file to input info for the parts body
+     *
+     * @return response object
+     */
+    private static PartsRequest partsInfoBody() {
+        return JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), PartsRequest.class);
+    }
 
     /**
      * List the parts in a line item matching a specified query
@@ -104,14 +113,5 @@ public class PartsUtil extends TestUtil {
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * This method has a json file to input info for the parts body
-     *
-     * @return response object
-     */
-    private static PartsRequest partsInfoBody() {
-        return JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), PartsRequest.class);
     }
 }

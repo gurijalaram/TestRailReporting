@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.workflows.schedule.costinginputs;
 
-import com.apriori.GenerateStringUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.CICBasePage;
 import com.apriori.pageobjects.workflows.schedule.details.DetailsPart;
 import com.apriori.pageobjects.workflows.schedule.notifications.NotificationsPart;

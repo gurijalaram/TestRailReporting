@@ -13,6 +13,7 @@ import com.apriori.ats.utils.AuthorizeUserUtil;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Token;
 import com.apriori.reader.file.user.UserCredentials;

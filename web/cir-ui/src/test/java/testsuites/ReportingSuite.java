@@ -1,6 +1,6 @@
 package testsuites;
 
-import static com.apriori.TestSuiteType.TestSuite.REPORTS;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 
 import org.junit.platform.suite.api.IncludePackages;
 import org.junit.platform.suite.api.IncludeTags;

@@ -1,6 +1,7 @@
-package com.apriori;
+package com.apriori.webdriver;
 
 import com.apriori.exceptions.BrowserNotSupportedException;
+import com.apriori.testconfig.Browser;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.MutableCapabilities;

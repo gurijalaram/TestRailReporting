@@ -1,12 +1,10 @@
-package com.apriori;
+package com.apriori.http.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.annotations.CreatableModel;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
-import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.interfaces.EndpointEnum;
 import com.apriori.interfaces.Paged;
 

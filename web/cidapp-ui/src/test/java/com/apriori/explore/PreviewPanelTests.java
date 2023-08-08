@@ -1,18 +1,18 @@
 package com.apriori.explore;
 
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
 import static com.apriori.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.enums.ProcessGroupEnum.PLASTIC_MOLDING;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.OperationEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.PropertyEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.explore.PreviewPage;

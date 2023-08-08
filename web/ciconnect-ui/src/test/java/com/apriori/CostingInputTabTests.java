@@ -2,6 +2,7 @@ package com.apriori;
 
 import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.dataservice.TestDataService;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.pageobjects.workflows.schedule.costinginputs.CostingInputsPart;

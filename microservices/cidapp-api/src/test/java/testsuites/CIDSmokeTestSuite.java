@@ -1,6 +1,6 @@
 package testsuites;
 
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.evaluate.CostAllCadTests;
 

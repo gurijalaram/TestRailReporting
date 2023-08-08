@@ -4,12 +4,12 @@ import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.components.EditComponentsPage;

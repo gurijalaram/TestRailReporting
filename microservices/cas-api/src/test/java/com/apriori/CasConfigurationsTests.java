@@ -5,6 +5,7 @@ import com.apriori.cas.models.response.Configurations;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.testrail.TestRail;
 

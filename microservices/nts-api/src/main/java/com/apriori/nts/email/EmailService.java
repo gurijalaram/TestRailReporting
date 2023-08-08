@@ -1,9 +1,9 @@
 package com.apriori.nts.email;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.email.GraphEmailService;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
@@ -21,7 +21,6 @@ import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 @Slf4j
 public class EmailService {

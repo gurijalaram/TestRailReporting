@@ -1,7 +1,7 @@
 package com.apriori.features;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.enums.ConnectorComponentEnum;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.CICBasePage;
 import com.apriori.pageobjects.workflows.WorkflowHome;
 import com.apriori.pageobjects.workflows.schedule.costinginputs.CostingInputsPart;

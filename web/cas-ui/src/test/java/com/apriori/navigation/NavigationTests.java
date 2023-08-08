@@ -1,6 +1,6 @@
 package com.apriori.navigation;
 
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.customer.CustomerWorkspacePage;

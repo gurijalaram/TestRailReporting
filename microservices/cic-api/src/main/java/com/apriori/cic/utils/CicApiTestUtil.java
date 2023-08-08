@@ -1,6 +1,5 @@
 package com.apriori.cic.utils;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.cic.enums.CICAPIEnum;
 import com.apriori.cic.enums.CICAgentStatus;
 import com.apriori.cic.enums.CICReportType;
@@ -29,6 +28,7 @@ import com.apriori.dataservice.TestDataService;
 import com.apriori.exceptions.KeyValueException;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;

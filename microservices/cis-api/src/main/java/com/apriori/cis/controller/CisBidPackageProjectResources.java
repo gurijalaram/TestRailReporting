@@ -1,6 +1,5 @@
 package com.apriori.cis.controller;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.cis.enums.CisAPIEnum;
 import com.apriori.cis.models.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.cis.models.request.bidpackage.BidPackageProjectUserParameters;
@@ -8,6 +7,7 @@ import com.apriori.cis.models.request.bidpackage.BidPackageProjectUserRequest;
 import com.apriori.cis.models.response.bidpackage.BidPackageProjectUsersDeleteResponse;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;

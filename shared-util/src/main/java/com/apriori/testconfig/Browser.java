@@ -1,4 +1,4 @@
-package com.apriori;
+package com.apriori.testconfig;
 
 /**
  * @author cfrith

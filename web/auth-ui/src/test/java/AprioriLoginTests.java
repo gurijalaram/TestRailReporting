@@ -3,8 +3,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.login.ForgottenPasswordPage;
 import com.apriori.login.LoginService;
 import com.apriori.login.PrivacyPolicyPage;

@@ -7,6 +7,7 @@ import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.AssociationUserResponse;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.testrail.TestRail;

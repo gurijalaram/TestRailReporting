@@ -1,6 +1,5 @@
 package com.apriori.fms.controller;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.enums.FMSAPIEnum;
 import com.apriori.fms.models.response.FileResponse;
@@ -8,6 +7,7 @@ import com.apriori.fms.models.response.FilesResponse;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.AuthUserContextUtil;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;

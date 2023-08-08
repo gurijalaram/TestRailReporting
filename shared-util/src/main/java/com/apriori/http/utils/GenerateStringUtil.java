@@ -1,4 +1,4 @@
-package com.apriori;
+package com.apriori.http.utils;
 
 import io.qameta.allure.Attachment;
 import org.apache.commons.lang.RandomStringUtils;

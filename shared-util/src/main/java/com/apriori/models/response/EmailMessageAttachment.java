@@ -1,9 +1,9 @@
 package com.apriori.models.response;
 
 import com.apriori.ExcelService;
-import com.apriori.FileResourceUtil;
 import com.apriori.PDFDocument;
 import com.apriori.annotations.Schema;
+import com.apriori.http.utils.FileResourceUtil;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

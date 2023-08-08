@@ -10,6 +10,7 @@ import com.apriori.acs.models.response.acs.missingscenario.MissingScenarioRespon
 import com.apriori.acs.models.response.acs.scenarioinfobyscenarioiterationkey.ScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.utils.Constants;
 import com.apriori.acs.utils.acs.AcsResources;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

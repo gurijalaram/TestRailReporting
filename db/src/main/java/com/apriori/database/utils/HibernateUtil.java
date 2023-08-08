@@ -1,6 +1,6 @@
 package com.apriori.database.utils;
 
-import com.apriori.TestMode;
+import com.apriori.testconfig.TestMode;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

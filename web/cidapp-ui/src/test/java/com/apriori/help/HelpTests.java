@@ -1,17 +1,17 @@
 package com.apriori.help;
 
-import static com.apriori.TestSuiteType.TestSuite.IGNORE;
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
 import static com.apriori.enums.ProcessGroupEnum.PLASTIC_MOLDING;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.IGNORE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.help.HelpDocPage;
 import com.apriori.pageobjects.help.HelpPage;
 import com.apriori.pageobjects.login.CidAppLoginPage;

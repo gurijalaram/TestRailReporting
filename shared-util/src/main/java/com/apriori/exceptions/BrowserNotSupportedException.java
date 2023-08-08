@@ -1,6 +1,6 @@
 package com.apriori.exceptions;
 
-import com.apriori.Browser;
+import com.apriori.testconfig.Browser;
 
 public class BrowserNotSupportedException extends IllegalStateException {
     public BrowserNotSupportedException(Browser browser) {

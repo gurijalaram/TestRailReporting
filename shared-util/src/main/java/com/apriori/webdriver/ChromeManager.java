@@ -1,8 +1,10 @@
-package com.apriori;
+package com.apriori.webdriver;
 
-import static com.apriori.DriverFactory.mode;
-import static com.apriori.DriverFactory.os;
+import static com.apriori.webdriver.DriverFactory.mode;
+import static com.apriori.webdriver.DriverFactory.os;
 import static io.github.bonigarcia.wdm.config.OperatingSystem.LINUX;
+
+import com.apriori.testconfig.TestMode;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.extern.slf4j.Slf4j;

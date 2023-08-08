@@ -1,10 +1,10 @@
 package com.apriori.pcba;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.common.EditBomPage;
 import com.apriori.edc.utils.BillOfMaterialsUtil;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.login.EdcAppLoginPage;
 import com.apriori.pageobjects.login.ElectronicsDataCollectionPage;
 import com.apriori.pageobjects.login.MatchedPartPage;

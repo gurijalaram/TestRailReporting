@@ -1,7 +1,7 @@
 package com.apriori.reader.file.part.service;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.InitFileData;
 import com.apriori.reader.file.part.PartData;

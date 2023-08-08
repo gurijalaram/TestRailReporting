@@ -1,6 +1,6 @@
 package com.apriori.nts.reports.data;
 
-import com.apriori.FileResourceUtil;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.json.JsonManager;
 
 import lombok.extern.slf4j.Slf4j;

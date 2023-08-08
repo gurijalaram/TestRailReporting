@@ -1,13 +1,11 @@
 package com.apriori.evaluate.assemblies;
 
-import static com.apriori.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
 import static com.apriori.enums.ProcessGroupEnum.ASSEMBLY;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.response.CostingTemplate;
@@ -17,6 +15,8 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.UnitsEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;

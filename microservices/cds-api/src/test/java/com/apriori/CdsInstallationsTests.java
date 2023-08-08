@@ -10,6 +10,7 @@ import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.InstallationResponse;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.testrail.TestRail;
 

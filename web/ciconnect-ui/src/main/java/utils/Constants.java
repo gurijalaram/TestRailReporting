@@ -1,6 +1,6 @@
 package utils;
 
-import com.apriori.FileResourceUtil;
+import com.apriori.http.utils.FileResourceUtil;
 
 import lombok.extern.slf4j.Slf4j;
 

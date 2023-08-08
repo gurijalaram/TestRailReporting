@@ -1,6 +1,6 @@
 package com.apriori.evaluate;
 
-import static com.apriori.TestSuiteType.TestSuite.IGNORE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.IGNORE;
 
 import com.apriori.cidappapi.models.response.customizations.Customizations;
 import com.apriori.cidappapi.models.response.customizations.ProcessGroups;

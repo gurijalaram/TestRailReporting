@@ -1,8 +1,8 @@
 package testsuites;
 
-import static com.apriori.TestSuiteType.TestSuite.IGNORE;
-import static com.apriori.TestSuiteType.TestSuite.SANITY;
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.IGNORE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SANITY;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.SettingsTests;
 import com.apriori.evaluate.ComponentRedirectTests;

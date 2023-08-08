@@ -1,6 +1,6 @@
 package com.apriori.testrail;
 
-import com.apriori.LoadProperties;
+import com.apriori.properties.LoadProperties;
 
 import com.codepine.api.testrail.TestRail;
 import com.codepine.api.testrail.model.Result;

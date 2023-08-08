@@ -2,8 +2,6 @@ package com.apriori.evaluate.assemblies;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -12,6 +10,8 @@ import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.OperationEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.PropertyEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.SetInputStatusPage;

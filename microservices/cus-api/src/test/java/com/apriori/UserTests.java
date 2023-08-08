@@ -5,6 +5,7 @@ import com.apriori.cus.models.request.UserProfile;
 import com.apriori.cus.models.response.ErrorResponse;
 import com.apriori.cus.models.response.User;
 import com.apriori.cus.utils.PeopleUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;

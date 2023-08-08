@@ -1,12 +1,12 @@
 package com.apriori.projects;
 
 import com.apriori.DateFormattingUtils;
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.DateUtil;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.createnewproject.CreateNewProjectsPage;
 import com.apriori.pageobjects.login.CisLoginPage;

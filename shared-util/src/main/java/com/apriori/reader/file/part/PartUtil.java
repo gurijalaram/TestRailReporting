@@ -1,7 +1,7 @@
 package com.apriori.reader.file.part;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.reader.file.part.service.PartCommonService;
 
 import lombok.extern.slf4j.Slf4j;

@@ -21,6 +21,7 @@ import com.apriori.bcs.models.response.ReportExport;
 import com.apriori.bcs.models.response.ReportTemplates;
 import com.apriori.bcs.models.response.Reports;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

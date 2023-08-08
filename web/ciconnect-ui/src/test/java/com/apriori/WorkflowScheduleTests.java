@@ -3,6 +3,7 @@ package com.apriori;
 import com.apriori.cic.utils.CicApiTestUtil;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.features.WorkFlowFeatures;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pageobjects.home.CIConnectHome;
 import com.apriori.pageobjects.login.CicLoginPage;

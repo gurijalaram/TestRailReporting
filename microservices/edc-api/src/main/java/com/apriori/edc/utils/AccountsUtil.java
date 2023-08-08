@@ -1,14 +1,14 @@
 package com.apriori.edc.utils;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.TestUtil;
 import com.apriori.edc.enums.EDCAPIEnum;
 import com.apriori.edc.models.response.accounts.AccountsItemsResponse;
 import com.apriori.edc.models.response.accounts.AccountsResponse;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.json.JsonManager;
 
 import org.apache.http.HttpStatus;

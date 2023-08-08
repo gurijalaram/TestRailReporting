@@ -12,6 +12,7 @@ import com.apriori.acs.models.response.acs.displayunits.UnitVariantSettingsInfoI
 import com.apriori.acs.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.CurrencyEnum;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

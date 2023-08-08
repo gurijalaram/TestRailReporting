@@ -1,4 +1,4 @@
-package com.apriori;
+package com.apriori.testconfig;
 
 public enum TestMode {
     LOCAL_GRID("LOCAL_GRID"), // test against env that QA uses like cid

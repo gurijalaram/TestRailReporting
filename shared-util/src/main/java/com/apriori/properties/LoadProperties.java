@@ -1,4 +1,6 @@
-package com.apriori;
+package com.apriori.properties;
+
+import com.apriori.http.utils.FileResourceUtil;
 
 import lombok.SneakyThrows;
 

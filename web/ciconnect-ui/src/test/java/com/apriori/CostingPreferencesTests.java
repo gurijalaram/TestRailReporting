@@ -3,6 +3,7 @@ package com.apriori;
 import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pagedata.CostingServiceSettingsData;
 import com.apriori.pageobjects.home.CIConnectHome;
 import com.apriori.pageobjects.home.settings.CostingServiceSettings;

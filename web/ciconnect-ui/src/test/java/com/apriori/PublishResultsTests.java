@@ -20,6 +20,7 @@ import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.DateUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.pageobjects.workflows.schedule.costinginputs.CostingInputsPart;

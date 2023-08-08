@@ -1,4 +1,4 @@
-package com.apriori;
+package com.apriori.http.utils;
 
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.exceptions.ResourceLoadException;

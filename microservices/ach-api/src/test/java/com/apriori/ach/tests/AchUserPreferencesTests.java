@@ -1,6 +1,5 @@
 package com.apriori.ach.tests;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.ach.enums.ACHAPIEnum;
 import com.apriori.ach.models.response.FailureUpdatePreferencesResponse;
 import com.apriori.ach.models.response.Success;
@@ -10,6 +9,7 @@ import com.apriori.ach.utils.AchTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.AuthorizationUtil;

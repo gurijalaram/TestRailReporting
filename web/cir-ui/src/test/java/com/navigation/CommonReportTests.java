@@ -6,13 +6,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.OperationEnum;
 import com.apriori.enums.PropertyEnum;
 import com.apriori.enums.ReportNamesEnum;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.designguidance.GuidanceIssuesPage;

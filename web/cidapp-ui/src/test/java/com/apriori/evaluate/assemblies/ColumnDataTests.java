@@ -1,6 +1,5 @@
 package com.apriori.evaluate.assemblies;
 
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.response.PersonResponse;
@@ -8,6 +7,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;

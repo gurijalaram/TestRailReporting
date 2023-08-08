@@ -1,6 +1,5 @@
 package com.apriori.edc.utils;
 
-import com.apriori.TestUtil;
 import com.apriori.edc.enums.EDCAPIReportsEnum;
 import com.apriori.edc.models.request.ReportData;
 import com.apriori.edc.models.request.ReportsRequest;
@@ -9,6 +8,7 @@ import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 
 import org.apache.http.HttpStatus;
 

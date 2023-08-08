@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.workflows.schedule.details;
 
-import com.apriori.GenerateStringUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

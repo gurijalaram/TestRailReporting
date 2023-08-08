@@ -1,4 +1,6 @@
-package com.apriori;
+package com.apriori.webdriver;
+
+import com.apriori.testconfig.TestMode;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;

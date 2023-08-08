@@ -1,6 +1,6 @@
 package com.apriori.cds.utils;
 
-import com.apriori.GenerateStringUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 
 import lombok.Getter;
 

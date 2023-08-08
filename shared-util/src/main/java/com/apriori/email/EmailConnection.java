@@ -1,9 +1,9 @@
 package com.apriori.email;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.EncryptionUtil;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;

@@ -1,7 +1,6 @@
 package com.integration.tests;
 
 import com.apriori.ExcelService;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cic.models.request.JobDefinition;
 import com.apriori.cic.models.response.AgentWorkflow;
@@ -14,6 +13,7 @@ import com.apriori.dataservice.TestDataService;
 import com.apriori.email.GraphEmailService;
 import com.apriori.enums.SortedOrderType;
 import com.apriori.enums.WorkflowListColumns;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.EmailMessage;
 import com.apriori.nts.reports.partscost.PartsCost;

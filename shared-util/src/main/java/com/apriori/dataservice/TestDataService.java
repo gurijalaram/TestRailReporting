@@ -1,6 +1,6 @@
 package com.apriori.dataservice;
 
-import com.apriori.FileResourceUtil;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.json.JsonManager;
 import com.apriori.reader.file.part.PartData;
 import com.apriori.reader.file.part.PartUtil;

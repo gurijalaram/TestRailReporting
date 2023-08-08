@@ -8,9 +8,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestUtil;
 import com.apriori.acs.models.request.workorders.NewPartRequest;
 import com.apriori.acs.models.request.workorders.assemblyobjects.AssemblyInfo;
 import com.apriori.acs.models.request.workorders.assemblyobjects.AssemblyInfoComponent;
@@ -36,6 +33,9 @@ import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.models.response.FileResponse;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.json.JsonManager;
 import com.apriori.testrail.TestRail;
 

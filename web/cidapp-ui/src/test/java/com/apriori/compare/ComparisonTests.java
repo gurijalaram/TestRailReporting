@@ -1,7 +1,7 @@
 package com.apriori.compare;
 
-import static com.apriori.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
-import static com.apriori.TestSuiteType.TestSuite.SMOKE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static com.utils.ColumnsEnum.COMPONENT_NAME;
 import static com.utils.ColumnsEnum.COST_MATURITY;
 import static com.utils.ColumnsEnum.SCENARIO_NAME;
@@ -12,8 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInRelativeOrder;
 import static org.hamcrest.Matchers.hasItems;
 
-import com.apriori.FileResourceUtil;
-import com.apriori.GenerateStringUtil;
 import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -22,6 +20,8 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.OperationEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.PropertyEnum;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.compare.ComparePage;
 import com.apriori.pageobjects.compare.CreateComparePage;
 import com.apriori.pageobjects.compare.ModifyComparisonPage;

@@ -1,6 +1,5 @@
 package com.apriori.bcs.controller;
 
-import com.apriori.FileResourceUtil;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
 import com.apriori.bcs.models.request.reports.ReportRequest;
@@ -13,6 +12,7 @@ import com.apriori.bcs.models.response.ReportTemplates;
 import com.apriori.bcs.models.response.Reports;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;

@@ -1,7 +1,5 @@
 package com.apriori.ats.utils;
 
-import com.apriori.GenerateStringUtil;
-import com.apriori.TestUtil;
 import com.apriori.ats.models.request.AuthenticateRequest;
 import com.apriori.ats.models.request.CreateSamlUserRequest;
 import com.apriori.ats.models.request.ResetAutoUsers;
@@ -10,8 +8,10 @@ import com.apriori.ats.models.response.UserByEmail;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 import com.apriori.interfaces.EndpointEnum;
 
 import org.apache.http.HttpStatus;

@@ -1,6 +1,5 @@
 package com.apriori.ach.utils;
 
-import com.apriori.TestUtil;
 import com.apriori.ach.enums.ACHAPIEnum;
 import com.apriori.ach.models.request.UserPreferencesRequest;
 import com.apriori.ach.models.response.CustomerAch;
@@ -11,6 +10,7 @@ import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
 
 import org.apache.http.HttpStatus;
 
