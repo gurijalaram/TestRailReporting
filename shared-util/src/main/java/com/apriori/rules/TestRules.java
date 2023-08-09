@@ -2,10 +2,10 @@ package com.apriori.rules;
 
 import static com.apriori.properties.LoadProperties.loadProperties;
 import static com.apriori.testconfig.TestMode.QA_LOCAL;
+import static com.apriori.testrail.TestRailStatus.DISABLED;
 import static com.apriori.testrail.TestRailStatus.FAILED;
 import static com.apriori.testrail.TestRailStatus.PASSED;
 import static com.apriori.testrail.TestRailStatus.RETEST;
-import static com.apriori.testrail.TestRailStatus.UNTESTED;
 import static com.apriori.webdriver.DriverFactory.testMode;
 
 import com.apriori.testrail.TestRail;
@@ -66,7 +66,7 @@ public class TestRules implements TestWatcher, BeforeAllCallback {
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
         log.info("TEST DISABLED:- {}: REASON:- {}", context.getDisplayName(), reason.orElse("Reason not supplied"));
 
-        addResult(UNTESTED, context);
+        addResult(DISABLED, context);
 
         getDeclaredDriver(context).quit();
     }

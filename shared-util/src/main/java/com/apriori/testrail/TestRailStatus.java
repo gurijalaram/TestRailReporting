@@ -3,7 +3,7 @@ package com.apriori.testrail;
 public enum TestRailStatus {
     PASSED(1),
     BLOCKED(2),
-    UNTESTED(3),
+    DISABLED(3),
     RETEST(4),
     FAILED(5);
 
