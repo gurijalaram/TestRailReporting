@@ -3,6 +3,7 @@ package agent.tests;
 import com.apriori.TestBaseUI;
 import com.apriori.cic.utils.CicLoginUtil;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -25,7 +26,7 @@ public class AgentInstallTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(testCaseId = {"4736", "4738", "4739", "4737"})
+    @TestRail(id = {4736, 4738, 4739, 4737})
     @Description("1. Search Nexus Repository for cic agent and for latest version" +
         "2. Download the latest agent in zip format" +
         "3. Extract the zip file to a folder with agent version name " +
