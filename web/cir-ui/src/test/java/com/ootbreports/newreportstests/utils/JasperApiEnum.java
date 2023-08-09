@@ -16,6 +16,8 @@ public enum JasperApiEnum {
     CYCLE_TIME_VALUE_TRACKING_DETAILS("/cycletimevaluetracking/CycleTimeValueTrackingDetailsReportRequest"),
     DESIGN_OUTLIER_IDENTIFICATION("/designoutlieridentification/DesignOutlierIdentificationReportRequest"),
     DESIGN_OUTLIER_IDENTIFICATION_DETAILS("/designoutlieridentification/DesignOutlierIdentificationDetailsReportRequest"),
+    DIGITAL_FACTORY_PERFORMANCE("/digitalfactoryperformance/DigitalFactoryPerformanceReportRequest"),
+    DIGITAL_FACTORY_PERFORMANCE_DETAILS("/digitalfactoryperformance/DigitalFactoryPerformanceDetailsReportRequest"),
     MACHINING_DTC_COMPARISON("/dtcmetrics/machiningdtc/MachiningDtcComparisonReportRequest"),
     MACHINING_DTC_DETAILS("/dtcmetrics/machiningdtc/MachiningDtcDetailsReportRequest"),
     MACHINING_DTC("/dtcmetrics/machiningdtc/MachiningDtcReportRequest"),
