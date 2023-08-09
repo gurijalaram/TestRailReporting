@@ -110,7 +110,7 @@ public class InputsController {
      * @return list of string
      */
     public List<String> getSecondaryProcesses(WebElement secondaryProcesses) {
-        return Arrays.stream(secondaryProcesses.getText().split("")).collect(Collectors.toList());
+        return Arrays.stream(secondaryProcesses.getText().split("\n")).collect(Collectors.toList());
     }
 
     /**
