@@ -23,6 +23,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportsLoginPage.class);
     private static final String loginPageURL = PropertiesContext.get("${env}.reports.ui_url");
+    private static final Boolean isEnvOnPrem = PropertiesContext.get("${env}").equals("onprem");
 
     @FindBy(css = "input[name='j_username']")
     private WebElement email;
@@ -96,15 +97,17 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @return instance of ReportsLoginPage
      */
     public ReportsLoginPage failedLogin(UserCredentials user, String password) {
-        String username = PropertiesContext.get("${env}").equals("onprem") ? user.getUsername() : user.getEmail();
-        return loginService.loginUsernamePassword(username, password, ReportsLoginPage.class);
+        String username = isEnvOnPrem ? user.getUsername() : user.getEmail();
+        loginService.loginNoReturn(username, password);
+        return this;
     }
 
     public ReportsLoginPage invalidEmailFailedLogin(String email, String password) {
+        String locator = isEnvOnPrem ? "//p[@class='errorMessage']" : "//div[@class='auth0-lock-error-invalid-hint']";
         loginService.loginNoReturn(email, password);
-        pageUtils.waitForElementToAppear(By.xpath("//div[@class='auth0-lock-error-invalid-hint']"));
-        pageUtils.waitForElementToBeClickable(By.xpath("//div[@class='auth0-lock-error-invalid-hint']"));
-        return new ReportsLoginPage(driver);
+        pageUtils.waitForElementToAppear(By.xpath(locator));
+        pageUtils.waitForElementToBeClickable(By.xpath(locator));
+        return this;
     }
 
     /**
@@ -122,27 +125,31 @@ public class ReportsLoginPage extends ReportsPageHeader {
      *
      * @return String
      */
-    public String getLoginMessage() {
-        By loginMessageLocator = By.xpath("//*[contains(@class, 'error')]");
-        pageUtils.waitForElementToAppear(loginMessageLocator);
-        pageUtils.waitForElementToBeClickable(loginMessageLocator);
-        List<WebElement> errorElements = driver.findElements(loginMessageLocator);
-        String errorText = "";
-        if (PropertiesContext.get("${env}").equals("onprem") && errorElements.size() > 1) {
-            for (WebElement element : errorElements) {
-                errorText = errorText.concat(element.getText());
-            }
-        } else {
-            errorText = errorElements.get(0).getText();
-        }
-        return errorText;
+    public String getBlankFieldsErrorMessage(String emailOrPassword) {
+        By locatorToUse = isEnvOnPrem
+            ? By.xpath("//p[@class='errorMessage']/..")
+            : By.xpath(String.format("//div[@id='auth0-lock-error-msg-%s']", emailOrPassword));
+        pageUtils.waitForElementToAppear(locatorToUse);
+        return driver.findElement(locatorToUse).getText();
     }
 
     public String getInvalidEmailMessage() {
-        By invalidEmailLocator = By.xpath("//div[@class='auth0-lock-error-invalid-hint']");
-        pageUtils.waitForElementToAppear(invalidEmailLocator);
-        pageUtils.waitForElementToBeClickable(invalidEmailLocator);
-        return driver.findElement(invalidEmailLocator).getText();
+        String locator = isEnvOnPrem
+            ? "//p[@class='errorMessage']/.."
+            : "//div[@class='auth0-lock-error-invalid-hint']";
+        pageUtils.waitForElementsToAppear(By.xpath(locator));
+        return driver.findElement(By.xpath(locator)).getText();
+    }
+
+    /**
+     * Gets invalid password message (cloud only)
+     *
+     * @return String invalid password error message
+     */
+    public String getInvalidPasswordMessage() {
+        By locator = By.xpath("//div[@class='auth0-global-message auth0-global-message-error']");
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator).getText();
     }
 
     /**

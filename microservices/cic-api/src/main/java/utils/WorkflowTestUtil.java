@@ -131,16 +131,11 @@ public class WorkflowTestUtil extends TestBase {
      * @return Current class object
      */
     public AgentWorkflowJobPartsResult getJobPartResult(String partId) {
-        AgentWorkflowJobPartsResult agentWorkflowJobPartsResult = CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
+        return CicApiTestUtil.getCicAgentWorkflowJobPartsResult(agentWorkflowResponse.getId(),
             agentWorkflowJobRunResponse.getJobId(),
             partId,
             AgentWorkflowJobPartsResult.class,
             HttpStatus.SC_OK);
-
-        if (agentWorkflowJobPartsResult.getInput() == null) {
-            throw new RuntimeException(agentWorkflowJobPartsResult.getErrorMessage());
-        }
-        return agentWorkflowJobPartsResult;
     }
 
     /**

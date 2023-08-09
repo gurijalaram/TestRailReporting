@@ -1,5 +1,6 @@
 package com.login;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,6 +20,7 @@ import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
 public class LoginTests extends TestBase {
+    private Boolean isEnvOnPrem = PropertiesContext.get("${env}").equals("onprem");
 
     private ReportsPageHeader reportsPageHeader;
     private ReportsLoginPage loginPage;
@@ -46,7 +48,9 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin(UserUtil.getUserOnPrem(), "fakePassword");
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
+        String assertValueToUse = isEnvOnPrem ? Constants.FAILED_LOGIN_MESSAGE_ONPREM : Constants.FAILED_LOGIN_MESSAGE_CLOUD;
+        String actualErrorMessage = isEnvOnPrem ? loginPage.getInvalidEmailMessage() : loginPage.getInvalidPasswordMessage();
+        assertThat(actualErrorMessage, is(containsString(assertValueToUse)));
     }
 
     @Test
@@ -58,7 +62,7 @@ public class LoginTests extends TestBase {
             .clickForgotPassword()
             .submitEmail("fakeEmail@apriori.comg");
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FORGOT_PWD_MSG.toUpperCase())));
+        assertThat(loginPage.getBlankFieldsErrorMessage("email"), is(equalTo(Constants.FORGOT_PWD_MSG.toUpperCase())));
     }
 
     @Test
@@ -69,7 +73,22 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .failedLoginEmptyFields();
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
+        String emailKeyword = "Email";
+        String passwordKeyword = "Password";
+
+        String assertValueToUse = isEnvOnPrem
+            ? Constants.FAILED_LOGIN_MESSAGE_ONPREM
+            : String.format(Constants.FAILED_LOGIN_EMPTY_FIELDS_CLOUD, emailKeyword);
+        assertThat(loginPage.getBlankFieldsErrorMessage(emailKeyword.replace("E", "e")),
+            is(containsString(assertValueToUse)));
+
+        if (!isEnvOnPrem) {
+            assertValueToUse = assertValueToUse.contains("Email")
+                ? String.format(Constants.FAILED_LOGIN_EMPTY_FIELDS_CLOUD, passwordKeyword)
+                : assertValueToUse;
+            assertThat(loginPage.getBlankFieldsErrorMessage(passwordKeyword.replace("P", "p")),
+                is(containsString(assertValueToUse)));
+        }
     }
 
     @Test
@@ -80,6 +99,9 @@ public class LoginTests extends TestBase {
         loginPage = new ReportsLoginPage(driver)
             .invalidEmailFailedLogin("a@b", "fakePassword");
 
-        assertThat(loginPage.getInvalidEmailMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
+        String assertValueToUse = isEnvOnPrem
+            ? Constants.FAILED_LOGIN_MESSAGE_ONPREM
+            : Constants.FAILED_LOGIN_INVALID_EMAIL_CLOUD;
+        assertThat(loginPage.getInvalidEmailMessage(), is(containsString(assertValueToUse)));
     }
 }

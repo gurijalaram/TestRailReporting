@@ -106,17 +106,17 @@ staging:
 ######################################################## On Prem #######################################################
 onprem:
   name: onprem
-  base_url: https://walqbaci01/
+  base_url: walqbaci01/
   deployment_url_template: ${base_url}
   users_csv_file: onprem-users.csv
 
   reports:
-    ui_url: ${base_url}jasperserver-pro/
+    ui_url: https://${base_url}jasperserver-pro/
     welcome_page_text: aP Analytics
     failed_login_messsage: Invalid credentials supplied.Could not login to JasperReports Server.
 
   admin:
-    welcome_page_text: Cost Insight | Admin
+    welcome_page_text: Log in to aP Admin
 
 ########################################################################################################################
 

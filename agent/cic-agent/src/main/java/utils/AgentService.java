@@ -406,7 +406,8 @@ public class AgentService {
     public AgentService getConnector(String loginSession) {
         webLoginSession = loginSession;
         ConnectorRequest connectorRequestDataBuilder = null;
-        String connectorName = PropertiesContext.get(String.format("${customer}.ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
+        String connectorName = PropertiesContext.get(String.format("ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
+        connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
         try {
             connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
         } catch (Exception e) {
@@ -441,15 +442,15 @@ public class AgentService {
             case "windchill":
                 agentConnectionOptions.setReconnectionInterval(3);
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
-                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get(String.format("${customer}.ci-connect.%s.port", PropertiesContext.get("ci-connect.agent_type")))));
-                agentConnectionOptions.setInstallDirectory("C:" + String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer")));
+                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get("ci-connect.agent_port")));
+                agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
                 agentConnectionOptions.setPlmUser(agentCredentials.getPlmUser());
                 agentConnectionOptions.setPlmPassword(agentCredentials.getPlmPassword());
                 agentConnectionOptions.setHostName(PropertiesContext.get("ci-connect.windchill.host_name"));
                 break;
             case "teamcenter":
-                agentConnectionOptions.setInstallDirectory("C:" + String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer")));
-                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get(String.format("${customer}.ci-connect.%s.port", PropertiesContext.get("ci-connect.agent_type")))));
+                agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
+                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get("ci-connect.agent_port")));
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
                 agentConnectionOptions.setHostName(PropertiesContext.get("ci-connect.teamcenter.host_name"));
                 agentConnectionOptions.setPlmUser(PropertiesContext.get("ci-connect.teamcenter.username"));
@@ -458,10 +459,10 @@ public class AgentService {
                 agentConnectionOptions.setMaxPartsToReturn(PropertiesContext.get("ci-connect.maximum_parts"));
                 break;
             case "filesystem":
-                agentConnectionOptions.setInstallDirectory("C:" + String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer")));
-                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get(String.format("${customer}.ci-connect.%s.port", PropertiesContext.get("ci-connect.agent_type")))));
+                agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
+                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get("ci-connect.agent_port")));
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
-                agentConnectionOptions.setRootFolderPath(("C:" + String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("customer"))));
+                agentConnectionOptions.setRootFolderPath(("C:" + String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"))));
                 break;
         }
         return this;
@@ -474,16 +475,7 @@ public class AgentService {
      */
     public AgentService installCertificates() {
         String jreBinDirectory = StringUtils.EMPTY;
-        switch (PropertiesContext.get("ci-connect.agent_type")) {
-            case "teamcenter":
-                jreBinDirectory = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer")) + File.separator + "jre/bin/";
-                break;
-            case "filesystem":
-                jreBinDirectory = String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer")) + File.separator + "jre/bin/";
-                break;
-            default:
-                jreBinDirectory = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer")) + File.separator + "jre/bin/";
-        }
+        jreBinDirectory = this.getInstallFolder() + File.separator + "jre/bin/";
         try {
             channelSftp.cd(jreBinDirectory);
             execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc-consvdc02-CA-2026.cer -alias fbc-consvdc02-2026 -keystore \"" + this.getInstallFolder() + "/jre/jre/lib/security/cacerts\" -storepass changeit -noprompt");
@@ -501,21 +493,12 @@ public class AgentService {
      * @return current class object
      */
     public AgentService executeAgentService() {
-        String agentService = StringUtils.EMPTY;
-        switch (PropertiesContext.get("ci-connect.agent_type")) {
-            case "teamcenter":
-                agentService = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer"));
-                break;
-            case "filesystem":
-                agentService = String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer"));
-                break;
-            default:
-                agentService = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer"));
-        }
+        String agentService = this.getInstallFolder();
         runService(agentService, "stop");
         runService(agentService, "start");
         return this;
     }
+
 
     /**
      * Get connector status information to verify its connected to PLM
@@ -524,7 +507,7 @@ public class AgentService {
      */
     public ConnectorInfo getConnectorStatusInfo() {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(5);
-        String connectorName = PropertiesContext.get(String.format("${customer}.ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
+        String connectorName = PropertiesContext.get(String.format("ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
         ConnectorInfo connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, webLoginSession);
         try {
             while (!(connectorInfo.getConnectionStatus().equals("Connected to PLM"))) {
@@ -722,8 +705,8 @@ public class AgentService {
             channelSftp.rmdir(path); // delete the parent directory after empty
             isDeleted = true;
         } catch (Exception e) {
-            throw new IllegalArgumentException(String.format(
-                "Could not able to connect SFTP connection and not able to find directory with name '%s'",
+            log.warn(String.format(
+                "Either directory >> %s << not exists or already deleted from remote agent VM",
                 path
             ));
         }
@@ -786,13 +769,13 @@ public class AgentService {
         String installFolder = StringUtils.EMPTY;
         switch (PropertiesContext.get("ci-connect.agent_type")) {
             case "windchill":
-                installFolder = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                installFolder = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), PropertiesContext.get("env"));
                 break;
             case "teamcenter":
-                installFolder = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                installFolder = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), PropertiesContext.get("env"));
                 break;
             case "filesystem":
-                installFolder = String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("customer"));
+                installFolder = String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), PropertiesContext.get("env"));
                 break;
         }
         return installFolder;

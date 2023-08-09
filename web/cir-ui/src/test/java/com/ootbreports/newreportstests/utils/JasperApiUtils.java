@@ -32,6 +32,7 @@ public class JasperApiUtils {
     private ReportRequest reportRequest;
     private String reportsJsonFileName;
     private String exportSetName;
+    private String processGroupName;
     private String jSessionId;
 
     /**
@@ -49,6 +50,22 @@ public class JasperApiUtils {
     }
 
     /**
+     * Second constructor for this class (not default)
+     *
+     * @param jSessionId - String for authentication/session
+     * @param exportSetName - String of the export set which should be set
+     * @param processGroup - String of process group which should be set
+     * @param reportsJsonFileName - String of the right json file to use to be sent to the api
+     */
+    public JasperApiUtils(String jSessionId, String exportSetName, ProcessGroupEnum processGroup, String reportsJsonFileName) {
+        this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
+        this.jSessionId = jSessionId;
+        this.exportSetName = exportSetName;
+        this.processGroupName = processGroup.getProcessGroup();
+        this.reportsJsonFileName = reportsJsonFileName;
+    }
+
+    /**
      * Generic method that sets one particular value in the input controls
      *
      * @param keyToSet String - key of the value to set
@@ -59,11 +76,19 @@ public class JasperApiUtils {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls();
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
             setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), valueToSet);
         }
+
+        if (processGroupName != null) {
+            InputControl inputControlsUpdatedNew = jasperReportUtil.updateInputControls(reportRequest.getParameters());
+            String processGroupId = inputControlsUpdatedNew.getProcessGroup().getOption(processGroupName).getValue();
+            setReportParameterByName("processGroup", processGroupId);
+        }
+
         setReportParameterByName("exportSetName", currentExportSet);
         setReportParameterByName("latestExportDate", currentDateTime);
 
@@ -71,7 +96,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }
@@ -94,7 +119,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }
@@ -115,7 +140,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummaryGBP = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
         String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();

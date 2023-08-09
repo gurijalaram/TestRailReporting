@@ -3,12 +3,15 @@ package com.apriori.qms.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
+import com.apriori.qms.controller.QmsComponentResources;
 import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.qms.entity.request.bidpackage.BidPackageProjectUserRequest;
+import com.apriori.qms.entity.request.scenariodiscussion.ProjectUserParameters;
+import com.apriori.qms.entity.request.scenariodiscussion.ProjectUserRequest;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionParameters;
 import com.apriori.qms.entity.request.scenariodiscussion.ScenarioDiscussionRequest;
 import com.apriori.qms.entity.response.bidpackage.BidPackageProjectResponse;
@@ -607,5 +610,42 @@ public class BidPackageProjectUserTest extends TestUtil {
                 .isTrue();
 
         }
+    }
+
+    @Test
+    @TestRail(testCaseId = {"26934","15476"})
+    @Description("Verify that using un-sharing mechanism API, user can remove himself as Project User")
+    public void unSharingSelfProjectUserWithDiscussions() {
+        UserCredentials assigneeUser = UserUtil.getUser();
+        String assigneeUserEmail = assigneeUser.getEmail();
+        String assigneeUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(assigneeUserEmail);
+
+        ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        softAssertions.assertThat(csdResponse.getStatus()).isEqualTo("ACTIVE");
+        ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
+            .scenarioDiscussion(ScenarioDiscussionParameters.builder()
+                .assigneeEmail(assigneeUserEmail).build()).build();
+        ScenarioDiscussionResponse updateDiscussionResponse = QmsScenarioDiscussionResources.updateScenarioDiscussion(csdResponse.getIdentity(),
+            scenarioDiscussionRequest,
+            ScenarioDiscussionResponse.class,
+            HttpStatus.SC_OK,
+            currentUser);
+        softAssertions.assertThat(updateDiscussionResponse.getStatus()).isEqualTo("ACTIVE");
+        softAssertions.assertThat(updateDiscussionResponse.getAssigneeUserIdentity()).isEqualTo(assigneeUserIdentity);
+        softAssertions.assertThat(updateDiscussionResponse.getParticipants().stream()
+            .anyMatch(p -> p.getUserIdentity().equals(assigneeUserIdentity))).isTrue();
+
+        ProjectUserRequest deleteProjectUserRequest = ProjectUserRequest.builder()
+            .users(Collections.singletonList(ProjectUserParameters.builder()
+                .email(assigneeUserEmail)
+                .build()))
+            .build();
+        QmsComponentResources.deleteComponentScenarioUser(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), deleteProjectUserRequest, assigneeUser);
+
+        ScenarioDiscussionResponse getScenarioDiscussionResponse = QmsScenarioDiscussionResources.getScenarioDiscussion(csdResponse.getIdentity(), ScenarioDiscussionResponse.class,
+            HttpStatus.SC_OK, currentUser);
+        softAssertions.assertThat(getScenarioDiscussionResponse.getIdentity()).isEqualTo(csdResponse.getIdentity());
+        softAssertions.assertThat(updateDiscussionResponse.getParticipants().stream()
+            .noneMatch(p -> p.getUserIdentity().equals(assigneeUserIdentity))).isTrue();
     }
 }
