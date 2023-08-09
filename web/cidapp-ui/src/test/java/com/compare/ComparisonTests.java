@@ -1097,8 +1097,12 @@ public class ComparisonTests extends TestBase {
         comparePage = loginPage.login(currentUser)
             .multiSelectScenarios(bracketBasic.getComponentName() + "," + bracketBasic.getScenarioName(), panel.getComponentName() + "," + panel.getScenarioName())
             .createComparison()
-            .selectManualComparison()
-            .saveNew()
+            .selectManualComparison();
+
+        softAssertions.assertThat(comparePage.getComparisonName())
+            .as("Verify Unsaved Comparison Default Name in Nav Bar").isEqualTo("Untitled Comparison");
+
+        comparePage.saveNew()
             .inputName(comparisonName)
             .save(ComparePage.class);
 
@@ -1110,6 +1114,8 @@ public class ComparisonTests extends TestBase {
         comparePage = comparePage.saveChanges()
             .waitForSavingSpinner();
         softAssertions.assertThat(comparePage.saveButtonEnabled()).as("Verify that Save button is disabled after changes saved").isFalse();
+        softAssertions.assertThat(comparePage.getComparisonName())
+            .as("Verify Comparison Name in Nav Bar").isEqualTo(comparisonName);
 
         softAssertions.assertAll();
     }
