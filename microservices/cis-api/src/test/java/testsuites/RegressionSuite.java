@@ -8,11 +8,9 @@ import com.apriori.CisComponentTest;
 import com.apriori.CisUserPreferencesTest;
 
 import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectPackages("com.apriori")
 @SelectClasses({
     CisUserPreferencesTest.class,
     CisBidPackageTest.class,
