@@ -7,11 +7,9 @@ import com.apriori.customer.EditCustomerTests;
 import com.apriori.customer.NewCustomerTests;
 
 import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectPackages("com.apriori")
 @SelectClasses({
     NewCustomerTests.class,
     EditCustomerTests.class,
