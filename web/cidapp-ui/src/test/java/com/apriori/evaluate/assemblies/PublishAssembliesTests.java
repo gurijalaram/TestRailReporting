@@ -296,7 +296,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".CATPart";
 
-        String publishingMessage = "All scenarios are publishing..Close";
+        String publishingMessage = "All scenarios are publishing...Close";
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,

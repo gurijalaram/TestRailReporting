@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AutomationUsersTests {
+
     @Test
     @Description("Resets automation users preferences")
     public void resetAutomationsUsersPreferences() {
