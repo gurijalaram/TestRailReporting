@@ -13,8 +13,6 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 
-import com.apriori.utils.enums.reports.DtcScoreEnum;
-import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 import com.google.common.base.Stopwatch;
 import lombok.Data;
 import org.assertj.core.api.SoftAssertions;
@@ -112,12 +110,31 @@ public class JasperApiUtils {
      * @param currencyToSet - currency that is to be set
      * @return JasperReportSummary instance
      */
+    public JasperReportSummary genericTestCoreCurrencyAndDateOnly(String currencyToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+        setReportParameterByName("exportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
+     * Generic method for testing currency only, excluding date
+     *
+     * @param currencyToSet - currency that is to be set
+     * @return JasperReportSummary instance
+     */
     public JasperReportSummary genericTestCoreCurrencyOnly(String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
-        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
-        setReportParameterByName("exportDate", currentDateTime);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -596,12 +613,12 @@ public class JasperApiUtils {
         String attributeNameId = "id";
         String tagName = "span";
 
-        List<Element> gbpSpanElements = generateAndReturnReportCurrencyOnly(
+        List<Element> gbpSpanElements = genericTestCoreCurrencyAndDateOnly(
             CurrencyEnum.GBP.getCurrency()).getReportHtmlPart()
             .getElementsByAttributeValue(attributeNameId, tableId).get(0)
             .getElementsByTag(tagName);
 
-        List<Element> usdSpanElements = generateAndReturnReportCurrencyOnly(
+        List<Element> usdSpanElements = genericTestCoreCurrencyAndDateOnly(
             CurrencyEnum.USD.getCurrency()).getReportHtmlPart()
             .getElementsByAttributeValue(attributeNameId, tableId).get(0)
             .getElementsByTag(tagName);
@@ -627,15 +644,11 @@ public class JasperApiUtils {
     }
 
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
-        return generateAndReturnReportCurrencyOnly(currencyToGet)
+        return genericTestCoreCurrencyAndDateOnly(currencyToGet)
             .getFirstChartData().getChartDataPoints()
             .stream().map(e -> e.getPropertyByName("Scenario Cycle Time (s)").getValue().toString())
             .collect(Collectors.toCollection(ArrayList::new)
             );
-    }
-
-    private JasperReportSummary generateAndReturnReportCurrencyOnly(String currency) {
-        return genericTestCoreCurrencyOnly(currency);
     }
 
     private String getCurrentCurrencyFromAboveChart(JasperReportSummary jasperReportSummary, boolean areBubblesPresent) {

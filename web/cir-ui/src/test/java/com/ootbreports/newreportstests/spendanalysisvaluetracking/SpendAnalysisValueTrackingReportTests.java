@@ -1,6 +1,9 @@
 package com.ootbreports.newreportstests.spendanalysisvaluetracking;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.enums.CirApiEnum;
@@ -46,7 +49,7 @@ public class SpendAnalysisValueTrackingReportTests extends JasperApiAuthenticati
         String usdCurrencySettingAboveChart = usdJasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5").get(4).child(0).text();
         String usdInitialApCost = usdJasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("style", "height:25px").get(6).child(5).child(0).text();
 
-        assertNotEquals(gbpCurrencySettingAboveChart, usdCurrencySettingAboveChart);
-        assertNotEquals(gbpInitialApCost, usdInitialApCost);
+        assertThat(gbpCurrencySettingAboveChart, is(not(equalTo(usdCurrencySettingAboveChart))));
+        assertThat(gbpInitialApCost, is(not(equalTo(usdInitialApCost))));
     }
 }

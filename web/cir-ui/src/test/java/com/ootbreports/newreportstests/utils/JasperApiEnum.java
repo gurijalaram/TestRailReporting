@@ -6,6 +6,7 @@ public enum JasperApiEnum {
     ASSEMBLY_COST_A4("/general/assemblycost/AssemblyCostA4ReportRequest"),
     ASSEMBLY_COST_LETTER("/general/assemblycost/AssemblyCostLetterReportRequest"),
     ASSEMBLY_DETAILS("/general/assemblydetails/AssemblyDetailsReportRequest"),
+    BASIC_COST_AVOIDANCE("/basiccostavoidance/BasicCostAvoidanceReportRequest"),
     CASTING_DTC_COMPARISON("/dtcmetrics/castingdtc/CastingDtcComparisonReportRequest"),
     CASTING_DTC_DETAILS("/dtcmetrics/castingdtc/CastingDtcDetailsReportRequest"),
     CASTING_DTC("/dtcmetrics/castingdtc/CastingDtcReportRequest"),

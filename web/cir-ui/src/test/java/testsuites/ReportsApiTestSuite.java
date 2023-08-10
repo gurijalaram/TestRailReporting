@@ -10,6 +10,8 @@ import com.ootbreports.newreportstests.cycletimevaluetracking.CycleTimeValueTrac
 import com.ootbreports.newreportstests.cycletimevaluetracking.CycleTimeValueTrackingReportTests;
 import com.ootbreports.newreportstests.designoutlieridentification.DesignOutlierIdentificationDetailsReportTests;
 import com.ootbreports.newreportstests.designoutlieridentification.DesignOutlierIdentificationReportTests;
+import com.ootbreports.newreportstests.digitalfactoryperformance.DigitalFactoryPerformanceDetailsReportTests;
+import com.ootbreports.newreportstests.digitalfactoryperformance.DigitalFactoryPerformanceReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcComparisonReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcDetailsReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcReportTests;
@@ -25,6 +27,7 @@ import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcRep
 import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostA4ReportTests;
 import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostLetterReportTests;
 import com.ootbreports.newreportstests.general.assemblydetails.AssemblyDetailsReportTests;
+import com.ootbreports.newreportstests.general.basiccostavoidance.BasicCostAvoidanceReportTests;
 import com.ootbreports.newreportstests.potentialsavingsvaluetracking.PotentialSavingsValueTrackingDetailsReportTests;
 import com.ootbreports.newreportstests.potentialsavingsvaluetracking.PotentialSavingsValueTrackingReportTests;
 import com.ootbreports.newreportstests.recommendedtestparts.RecommendedTestPartsReportTests;
@@ -48,6 +51,7 @@ import org.junit.runners.Suite;
     AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
     AssemblyDetailsReportTests.class,
+    BasicCostAvoidanceReportTests.class,
     CastingDtcComparisonReportTests.class,
     CastingDtcDetailsReportTests.class,
     CastingDtcReportTests.class,
@@ -58,6 +62,8 @@ import org.junit.runners.Suite;
     CycleTimeValueTrackingDetailsReportTests.class,
     DesignOutlierIdentificationReportTests.class,
     DesignOutlierIdentificationDetailsReportTests.class,
+    DigitalFactoryPerformanceReportTests.class,
+    DigitalFactoryPerformanceDetailsReportTests.class,
     MachiningDtcComparisonReportTests.class,
     MachiningDtcDetailsTests.class,
     MachiningDtcReportTests.class,

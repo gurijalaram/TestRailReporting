@@ -8,6 +8,7 @@ public enum CirApiEnum implements ExternalEndpointEnum {
     ASSEMBLY_COST_LETTER("reports/aPriori/reports/general/assemblyCost.letter/inputControls/exportSetName;partNumber;scenarioName;exportDate;currencyCode/values?freshData=false&selectedOnly=true"),
     ASSEMBLY_DETAILS("reports/aPriori/reports/general/assemblyDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;allExportIds;createdBy;lastModifiedBy;assemblyNumber;".concat(
         "scenarioName;assemblySelect;currencyCode/values?freshData=false&selectedOnly=true")),
+    BASIC_COST_AVOIDANCE("reports/aPriori/reports/general/basicAvoidanceReport/inputControls/earliestCostDate;latestCostDate;costMetric;currencyCode;sortOrder;componentsCriteria/values?freshData=false&includeTotalCount=true"),
     CASTING_DTC("reports/aPriori/reports/DTC%sMetrics/casting/castingDTC/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;massMetric;sortOrder;currencyCode;".concat(
         "annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;outlierDistance;partsSelect/values")),
     CASTING_DTC_COMPARISON("reports/aPriori/reports/DTC%Metrics/casting/castingDTCComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;".concat(
@@ -27,7 +28,7 @@ public enum CirApiEnum implements ExternalEndpointEnum {
     DESIGN_OUTLIER_IDENTIFICATION_DETAILS("reports/aPriori/reports/solutions/sourcing/designOutlierIdentificationDetails/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;".concat(
         "massMetric;aPrioriCostMin;aPrioriCostMax;aPrioriMassMin;aPrioriMassMax;currencyCode/values")),
     DIGITAL_FACTORY_PERFORMANCE("reports/aPriori/reports/solutions/quoting/vpePerformance/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;performanceMetric;annualVolumeMin;".concat(
-        "annualVolumeMax;processGroup;processName;materialName;vpeName;currencyCode/values?freshData=false&selectedOnly=true")),
+        "annualVolumeMax;processGroup;processName;materialName;vpeName;currencyCode/values?freshData=false")),
     DIGITAL_FACTORY_PERFORMANCE_DETAILS("reports/aPriori/reports/solutions/quoting/vpePerformanceDetailsInternal/inputControls/currencyCode;annualVolumeMax;annualVolumeMin;performanceMetric;costMetric;".concat(
         "latestExportDate;earliestExportDate;rollup;exportDate;exportSetName/values?freshData=false&selectedOnly=true")),
     MACHINING_DTC("reports/DTC%Metrics/machining/machiningDTC/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;massMetric;sortOrder;currencyCode;annualSpendMin;".concat(

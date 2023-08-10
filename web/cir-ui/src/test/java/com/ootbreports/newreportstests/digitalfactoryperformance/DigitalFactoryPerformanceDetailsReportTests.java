@@ -14,16 +14,18 @@ import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
+import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class DigitalFactoryPerformanceReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.DIGITAL_FACTORY_PERFORMANCE.getEndpoint();
+public class DigitalFactoryPerformanceDetailsReportTests extends JasperApiAuthenticationUtil {
+    private static final String reportsJsonFileName = JasperApiEnum.DIGITAL_FACTORY_PERFORMANCE_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.DIGITAL_FACTORY_PERFORMANCE;
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.DIGITAL_FACTORY_PERFORMANCE_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
     @Before
@@ -32,34 +34,28 @@ public class DigitalFactoryPerformanceReportTests extends JasperApiAuthenticatio
     }
 
     @Test
-    @TestRail(testCaseId = {"13915"})
-    @Description("Input Controls - Currency Code - Main Report")
+    @TestRail(testCaseId = {"26941"})
+    @Description("Input Controls - Currency Code - Details Report")
     public void testCurrencyCode() {
-        String gbpCurrency = CurrencyEnum.GBP.getCurrency();
-        String usdCurrency = CurrencyEnum.USD.getCurrency();
-
-        JasperReportSummary gbpJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnly(gbpCurrency);
+        JasperReportSummary gbpJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnly(CurrencyEnum.GBP.getCurrency());
         ArrayList<String> gbpAssertValues = getAssertValues(gbpJasperReportSummary);
 
-        JasperReportSummary usdJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnly(usdCurrency);
+        JasperReportSummary usdJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnly(CurrencyEnum.USD.getCurrency());
         ArrayList<String> usdAssertValues = getAssertValues(usdJasperReportSummary);
 
-        assertThat(gbpAssertValues.get(0), is(equalTo(gbpCurrency)));
-        assertThat(usdAssertValues.get(0), is(equalTo(usdCurrency)));
+        assertThat(gbpAssertValues.get(0), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+        assertThat(usdAssertValues.get(0), is(equalTo(CurrencyEnum.USD.getCurrency())));
         assertThat(gbpAssertValues.get(0), is(not(usdAssertValues.get(0))));
-        assertThat(gbpAssertValues.get(1), is(equalTo(usdAssertValues.get(1))));
-        assertThat(gbpAssertValues.get(2), is(equalTo(usdAssertValues.get(2))));
-        assertThat(gbpAssertValues.get(3), is(equalTo(usdAssertValues.get(3))));
+        assertThat(gbpAssertValues.get(1), is(not(equalTo(gbpAssertValues.get(1)))));
+        assertThat(gbpAssertValues.get(2), is(not(equalTo(gbpAssertValues.get(2)))));
     }
 
     private ArrayList<String> getAssertValues(JasperReportSummary jasperReportSummary) {
         ArrayList<String> assertValues = new ArrayList<>();
-        assertValues.add(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(10).child(0).text());
-        int j = 5;
-        for (int i = 0; i < 3; i++) {
-            assertValues.add(jasperReportSummary.getFirstChartData().getChartDataPoints().get(i).getProperties().get(j).getValue().toString());
-            j = j == 5 ? 9 : 11;
-        }
+        assertValues.add(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "6").get(5).child(0).text());
+        List<Element> gbpApCostValues = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3");
+        assertValues.add(gbpApCostValues.get(7).text());
+        assertValues.add(gbpApCostValues.get(27).text());
         return assertValues;
     }
 }
