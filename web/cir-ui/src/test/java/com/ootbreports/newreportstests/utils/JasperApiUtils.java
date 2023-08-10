@@ -10,6 +10,8 @@ import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.reports.DtcScoreEnum;
+import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
 
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
