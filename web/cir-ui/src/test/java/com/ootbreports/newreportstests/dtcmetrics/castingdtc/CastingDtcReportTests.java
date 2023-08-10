@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
+import com.apriori.cirapi.entity.enums.CirApiEnum;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.CostMetricEnum;
@@ -27,11 +28,12 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
 
     private static final String reportsJsonFileName = JasperApiEnum.CASTING_DTC.getEndpoint();
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CASTING_DTC;
     private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

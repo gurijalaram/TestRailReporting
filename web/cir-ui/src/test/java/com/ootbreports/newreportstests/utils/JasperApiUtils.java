@@ -3,6 +3,8 @@ package com.ootbreports.newreportstests.utils;
 import static com.apriori.utils.TestHelper.logger;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
+import com.apriori.cirapi.entity.enums.CirApiEnum;
+import com.apriori.cirapi.entity.enums.InputControlsEnum;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
@@ -29,6 +31,7 @@ import java.util.stream.Collectors;
 @Data
 public class JasperApiUtils {
     private static final SoftAssertions softAssertions = new SoftAssertions();
+    private CirApiEnum reportValueForInputControls;
     private ReportRequest reportRequest;
     private String reportsJsonFileName;
     private String exportSetName;
@@ -42,8 +45,9 @@ public class JasperApiUtils {
      * @param exportSetName - String of the export set which should be set
      * @param reportsJsonFileName - String of the right json file to use to be sent to the api
      */
-    public JasperApiUtils(String jSessionId, String exportSetName, String reportsJsonFileName) {
+    public JasperApiUtils(String jSessionId, String exportSetName, String reportsJsonFileName, CirApiEnum reportNameForInputControls) {
         this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
+        this.reportValueForInputControls = reportNameForInputControls;
         this.jSessionId = jSessionId;
         this.exportSetName = exportSetName;
         this.reportsJsonFileName = reportsJsonFileName;
@@ -74,18 +78,17 @@ public class JasperApiUtils {
      */
     public JasperReportSummary genericTestCore(String keyToSet, String valueToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
-        InputControl inputControls = jasperReportUtil.getInputControls();
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
 
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
-            setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(keyToSet), valueToSet);
+            setReportParameterByName(InputControlsEnum.valueOf(keyToSet.toUpperCase().replace(" ", "_")).getInputControlId(), valueToSet);
         }
 
         if (processGroupName != null) {
-            InputControl inputControlsUpdatedNew = jasperReportUtil.updateInputControls(reportRequest.getParameters());
-            String processGroupId = inputControlsUpdatedNew.getProcessGroup().getOption(processGroupName).getValue();
+            String processGroupId = inputControls.getProcessGroup().getOption(processGroupName).getValue();
             setReportParameterByName("processGroup", processGroupId);
         }
 
@@ -104,16 +107,38 @@ public class JasperApiUtils {
     /**
      * Generic method for testing currency where export set is not relevant
      *
-     * @param currencyKey - currency key to use
      * @param currencyToSet - currency that is to be set
      * @return JasperReportSummary instance
      */
-    public JasperReportSummary genericTestCoreCurrencyOnly(String currencyKey, String currencyToSet) {
+    public JasperReportSummary genericTestCoreCurrencyOnly(String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
-        setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get(currencyKey), currencyToSet);
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
         setReportParameterByName("exportDate", currentDateTime);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
+     * Generic test for reports that require project rollup and currency only to be specified
+     *
+     * @param projectRollupName - String of project rollup to use
+     * @return JasperReportSummary instance
+     */
+    public JasperReportSummary genericTestCoreProjectRollupAndCurrencyOnly(String currencyString, String projectRollupName) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyString);
+        String projectRollupValue = inputControls.getProjectRollup().getOption(projectRollupName).getValue();
+        setReportParameterByName(InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), projectRollupValue);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -128,8 +153,6 @@ public class JasperApiUtils {
      * Generic test for currency in Assembly Cost Reports (both A4 and Letter)
      */
     public void genericAssemblyCostCurrencyTest() {
-        JasperApiUtils jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
-
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
@@ -145,7 +168,7 @@ public class JasperApiUtils {
         String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
         String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
 
-        setReportParameterByName(Constants.INPUT_CONTROL_NAMES.get("Currency"), CurrencyEnum.USD.getCurrency());
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
         JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(reportRequest);
 
         String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
@@ -610,7 +633,7 @@ public class JasperApiUtils {
     }
 
     private JasperReportSummary generateAndReturnReportCurrencyOnly(String currency) {
-        return genericTestCoreCurrencyOnly("Currency", currency);
+        return genericTestCoreCurrencyOnly(currency);
     }
 
     private String getCurrentCurrencyFromAboveChart(JasperReportSummary jasperReportSummary, boolean areBubblesPresent) {
