@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.general.assemblycost;
 
+import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;
 

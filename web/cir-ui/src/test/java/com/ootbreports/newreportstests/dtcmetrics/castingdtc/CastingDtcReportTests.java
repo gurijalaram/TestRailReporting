@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
+import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.testrail.TestRail;
@@ -19,16 +20,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
+    private static final String reportsJsonFileName = JasperApiEnum.CASTING_DTC.getEndpoint();
+    private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CASTING_DTC;
+    private static JasperApiUtils jasperApiUtils;
     private final List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.B2315.getPartName(),
         JasperCirApiPartsEnum.P_40090936_MLDES_0004.getPartName(),
         JasperCirApiPartsEnum.CASE_08.getPartName()
     );
-
-    private static final String reportsJsonFileName = JasperApiEnum.CASTING_DTC.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CASTING_DTC;
-    private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {

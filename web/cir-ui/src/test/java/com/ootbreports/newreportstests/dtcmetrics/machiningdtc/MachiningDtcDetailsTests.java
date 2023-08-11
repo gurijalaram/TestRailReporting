@@ -2,6 +2,7 @@ package com.ootbreports.newreportstests.dtcmetrics.machiningdtc;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 
+import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;
 
@@ -22,16 +23,13 @@ import java.util.List;
 public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.MACHINING_DTC_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC_DETAILS;
     private static JasperApiUtils jasperApiUtils;
     private final List<String> partNames = Arrays.asList(
         JasperCirApiPartsEnum.DTCMACHINING_001.getPartName(),
         JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
         JasperCirApiPartsEnum.PUNCH_INITIAL.getPartName()
     );
-    private static final String reportsJsonFileName = JasperApiEnum.MACHINING_DTC_DETAILS.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC_DETAILS;
-    private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupGenericMethods() {

@@ -2,6 +2,7 @@ package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 
+import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.testrail.TestRail;
@@ -25,16 +26,13 @@ import java.util.List;
 public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC_DETAILS;
     private static JasperApiUtils jasperApiUtils;
     private final List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.P_1271576.getPartName(),
         JasperCirApiPartsEnum.BRACKET_V1.getPartName(),
         JasperCirApiPartsEnum.BRACKET_V2.getPartName()
     );
-    private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC_DETAILS.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC_DETAILS;
-    private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupGenericMethods() {

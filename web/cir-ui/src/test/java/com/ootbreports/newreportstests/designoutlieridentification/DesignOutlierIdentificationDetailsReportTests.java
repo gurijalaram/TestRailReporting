@@ -1,6 +1,7 @@
 package com.ootbreports.newreportstests.designoutlieridentification;
 
 import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;
 

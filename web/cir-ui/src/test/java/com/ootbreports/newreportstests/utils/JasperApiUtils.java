@@ -1,6 +1,7 @@
 package com.ootbreports.newreportstests.utils;
 
 import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.cir.models.request.ReportRequest;
 import com.apriori.cir.models.response.InputControl;
 import com.apriori.cir.utils.JasperReportUtil;
@@ -82,7 +83,7 @@ public class JasperApiUtils {
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
-            setReportParameterByName(InputControlsEnum.valueOf(keyToSet.toUpperCase().replace(" ", "_")).getInputControlId(), valueToSet);
+            setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.valueOf(keyToSet.toUpperCase().replace(" ", "_")).getInputControlId(), valueToSet);
         }
 
         if (processGroupName != null) {
@@ -111,7 +112,7 @@ public class JasperApiUtils {
     public JasperReportSummary genericTestCoreCurrencyOnly(String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
-        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+        setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
         setReportParameterByName("exportDate", currentDateTime);
 
@@ -119,7 +120,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }
@@ -134,9 +135,9 @@ public class JasperApiUtils {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
 
-        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyString);
+        setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.CURRENCY.getInputControlId(), currencyString);
         String projectRollupValue = inputControls.getProjectRollup().getOption(projectRollupName).getValue();
-        setReportParameterByName(InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), projectRollupValue);
+        setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), projectRollupValue);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -166,7 +167,7 @@ public class JasperApiUtils {
         String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
         String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
 
-        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+        setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
         JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(reportRequest);
 
         String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();

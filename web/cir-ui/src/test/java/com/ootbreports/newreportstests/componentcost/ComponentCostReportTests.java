@@ -2,6 +2,7 @@ package com.ootbreports.newreportstests.componentcost;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 
+import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;
 

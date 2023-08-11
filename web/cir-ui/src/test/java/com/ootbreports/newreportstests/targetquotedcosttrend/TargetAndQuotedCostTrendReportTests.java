@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.targetquotedcosttrend;
 
+import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;

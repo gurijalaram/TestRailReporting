@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.cycletimevaluetracking;
 
+import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.testrail.TestRail;
 

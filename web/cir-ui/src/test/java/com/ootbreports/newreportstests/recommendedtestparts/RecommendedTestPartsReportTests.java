@@ -1,7 +1,9 @@
 package com.ootbreports.newreportstests.recommendedtestparts;
 
 import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.cir.models.request.ReportRequest;
+import com.apriori.cir.models.response.InputControl;
 import com.apriori.cir.utils.JasperReportUtil;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -58,7 +60,7 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
 
         jasperApiUtils.setReportParameterByName("exportSetName", inputControls.getExportSetName().getOption(exportSetName).getValue());
 
-        jasperApiUtils.setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(),
+        jasperApiUtils.setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.PROCESS_GROUP.getInputControlId(),
             inputControls.getProcessGroup().getOption(processGroupToSet).getValue()
         );
 
