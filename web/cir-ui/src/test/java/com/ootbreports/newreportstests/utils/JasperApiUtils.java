@@ -127,6 +127,21 @@ public class JasperApiUtils {
     }
 
     /**
+     * Generic currency test for Upgrade Comparison and Upgrade Part Comparison Reports
+     *
+     * @param currencyToUse - String
+     * @return ArrayList of values to assert on
+     */
+    public ArrayList<String> generateReportAndGetAssertValues(String currencyToUse) {
+        JasperReportSummary jasperReportSummaryUSD = genericTestCoreCurrencyOnly(currencyToUse);
+
+        ArrayList<String> assertValues = new ArrayList<>();
+        assertValues.add(jasperReportSummaryUSD.getReportHtmlPart().getElementsByAttributeValue("colspan", "12").get(3).child(0).text());
+        assertValues.add(jasperReportSummaryUSD.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(7).child(0).text());
+        return assertValues;
+    }
+
+    /**
      * Generic test for reports that require project rollup and currency only to be specified
      *
      * @param projectRollupName - String of project rollup to use

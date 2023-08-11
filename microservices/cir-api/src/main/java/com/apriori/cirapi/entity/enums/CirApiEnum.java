@@ -10,9 +10,9 @@ public enum CirApiEnum implements ExternalEndpointEnum {
         "scenarioName;assemblySelect;currencyCode/values?freshData=false&selectedOnly=true")),
     CASTING_DTC("reports/aPriori/reports/DTC%sMetrics/casting/castingDTC/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;massMetric;sortOrder;currencyCode;".concat(
         "annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;outlierDistance;partsSelect/values")),
-    CASTING_DTC_COMPARISON("reports/aPriori/reports/DTC%Metrics/casting/castingDTCComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;".concat(
+    CASTING_DTC_COMPARISON("reports/aPriori/reports/DTC%sMetrics/casting/castingDTCComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;".concat(
         "massMetric;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;partsSelect/values?freshData=false&selectedOnly=true")),
-    CASTING_DTC_DETAILS("reports/aPriori/reports/DTC%Metrics/casting/castingDTCDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;".concat(
+    CASTING_DTC_DETAILS("reports/aPriori/reports/DTC%sMetrics/casting/castingDTCDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;".concat(
         "massMetric;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;partsSelect/values?freshData=false&selectedOnly=true")),
     COMPONENT_COST("reports/aPriori/reports/general/componentCost/inputControls/exportSetName;componentType;latestExportDate;createdBy;lastModifiedBy;componentNumber;scenarioName;".concat(
         "componentSelect;componentCostCurrencyCode/values?freshData=false&selectedOnly=true")),
@@ -26,17 +26,17 @@ public enum CirApiEnum implements ExternalEndpointEnum {
         "aPrioriCostMax;aPrioriMassMin;aPrioriMassMax;outlierLines;currencyCode/values?freshData=false&selectedOnly=true")),
     DESIGN_OUTLIER_IDENTIFICATION_DETAILS("reports/aPriori/reports/solutions/sourcing/designOutlierIdentificationDetails/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;".concat(
         "massMetric;aPrioriCostMin;aPrioriCostMax;aPrioriMassMin;aPrioriMassMax;currencyCode/values")),
-    MACHINING_DTC("reports/DTC%Metrics/machining/machiningDTC/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;massMetric;sortOrder;currencyCode;annualSpendMin;".concat(
+    MACHINING_DTC("reports/DTC%sMetrics/machining/machiningDTC/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;massMetric;sortOrder;currencyCode;annualSpendMin;".concat(
         "processGroup;exportEventId;metricStatistic;dtcScore;outlierDistance;partsSelect/values?freshData=false&selectedOnly=true")),
-    MACHINING_DTC_COMPARISON("reports/aPriori/reports/DTC%Metrics/machining/machiningDTCComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;".concat(
+    MACHINING_DTC_COMPARISON("reports/aPriori/reports/DTC%sMetrics/machining/machiningDTCComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;".concat(
         "massMetric;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;partsSelect/values?freshData=false&selectedOnly=true")),
-    MACHINING_DTC_DETAILS("reports/aPriori/reports/DTC%Metrics/machining/machiningDTCDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;".concat(
+    MACHINING_DTC_DETAILS("reports/aPriori/reports/DTC%sMetrics/machining/machiningDTCDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;".concat(
         "exportSetName;rollup;costMetric;massMetric;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;partsSelect/values?freshData=false&selectedOnly=true")),
-    PLASTIC_DTC("reports/aPriori/reports/DTC%Metrics/plastic/plasticDTC/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;massMetric;".concat(
+    PLASTIC_DTC("reports/aPriori/reports/DTC%sMetrics/plastic/plasticDTC/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;massMetric;".concat(
         "includeDraftIssues;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;outlierDistance;partsSelect/values?freshData=false&selectedOnly=true")),
-    PLASTIC_DTC_COMPARISON("reports/aPriori/reports/DTC%Metrics/plastic/plasticDTCComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;".concat(
+    PLASTIC_DTC_COMPARISON("reports/aPriori/reports/DTC%sMetrics/plastic/plasticDTCComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;".concat(
         "rollup;costMetric;massMetric;includeDraftIssues;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;partsSelect/values?freshData=false&selectedOnly=true")),
-    PLASTIC_DTC_DETAILS("reports/aPriori/reports/DTC%Metrics/plastic/plasticDTCDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;massMetric;".concat(
+    PLASTIC_DTC_DETAILS("reports/aPriori/reports/DTC%sMetrics/plastic/plasticDTCDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;massMetric;".concat(
         "includeDraftIssues;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;partsSelect/values?freshData=false&selectedOnly=true")),
     POTENTIAL_SAVINGS_VALUE_TRACKING("reports/aPriori/reports/solutions/designToCost/potentialSavings/potentialSavingsValueTracking/inputControls/projectRollup;exportDate;costMetric;currencyCode/values?freshData=false&includeTotalCount=true"),
     POTENTIAL_SAVINGS_VALUE_TRACKING_DETAILS("reports/aPriori/reports/solutions/designToCost/potentialSavings/potentialSavingsValueTrackingDetails/inputControls/projectRollup;projectName;exportDate;costMetric;currencyCode/values?freshData=false&selectedOnly=true"),
@@ -53,18 +53,20 @@ public enum CirApiEnum implements ExternalEndpointEnum {
     SPEND_ANALYSIS_VALUE_TRACKING_DETAILS("reports/aPriori/reports/solutions/sourcing/spendAnalysisValueTrackingDetails/inputControls/projectRollup;projectName;exportDate;costMetric;currencyCode/values?freshData=false&selectedOnly=true"),
     SPEND_ANALYSIS_VALUE_TRACKING_DETAILS_SIMPLIFIED("reports/aPriori/reports/solutions/sourcing/spendAnalysisValueTrackingSimplifiedDetails/inputControls/projectRollup;projectName;exportDate;costMetric;currencyCode/values?freshData=false&includeTotalCount=true"),
     SPEND_ANALYSIS_VALUE_TRACKING_SIMPLIFIED("reports/aPriori/reports/solutions/sourcing/spendAnalysisValueTrackingSimplified/inputControls/projectRollup;exportDate;costMetric;currencyCode/values?freshData=false&includeTotalCount=true"),
-    SHEET_METAL_DTC("reports/aPriori/reports/DTC%Metrics/sheet%Metal/sheetMetalDTC/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;".concat(
+    SHEET_METAL_DTC("reports/aPriori/reports/DTC%sMetrics/sheet%Metal/sheetMetalDTC/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;".concat(
         "rollup;costMetric;massMetric;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;outlierDistance;partsSelect/values?freshData=false&selectedOnly=true")),
-    SHEET_METAL_DTC_COMPARISON("reports/aPriori/reports/DTC%Metrics/sheet%Metal/sheetMetalDTCComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;".concat(
+    SHEET_METAL_DTC_COMPARISON("reports/aPriori/reports/DTC%sMetrics/sheet%Metal/sheetMetalDTCComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;".concat(
         "rollup;costMetric;massMetric;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;partsSelect/values?freshData=false&selectedOnly=true")),
-    SHEET_METAL_DTC_DETAILS("reports/aPriori/reports/DTC%Metrics/sheet%Metal/sheetMetalDTCDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;".concat(
+    SHEET_METAL_DTC_DETAILS("reports/aPriori/reports/DTC%sMetrics/sheet%Metal/sheetMetalDTCDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;".concat(
         "rollup;costMetric;massMetric;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;partsSelect/values?freshData=false&selectedOnly=true")),
     TARGET_COST_TREND("reports/aPriori/reports/solutions/designToCost/targetCost/targetCostTrend/inputControls/projectRollup;projectName;exportDate;costMetric;currencyCode/values?freshData=false&includeTotalCount=true"),
     TARGET_COST_VALUE_TRACKING("reports/aPriori/reports/solutions/designToCost/targetCost/targetCostValueTracking/inputControls/projectRollup;exportDate;costMetric;currencyCode/values?freshData=false&includeTotalCount=true"),
     TARGET_COST_VALUE_TRACKING_DETAILS("reports/aPriori/reports/solutions/designToCost/targetCost/targetCostValueTrackingDetails/inputControls/projectRollup;projectName;exportDate;costMetric;currencyCode;currentProjectId;currentProjectName/values?freshData=false&includeTotalCount=true"),
     TARGET_AND_QUOTED_COST_TREND("reports/aPriori/reports/solutions/designToCost/targetAndQuotedCost/targetAndQuotedCostTrend/inputControls/projectRollup;projectName;exportDate;costMetric;sortOrder;currencyCode/values?freshData=false&includeTotalCount=true"),
     TARGET_AND_QUOTED_COST_VALUE_TRACKING("reports/aPriori/reports/solutions/designToCost/targetAndQuotedCost/targetAndQuotedCostValueTracking/inputControls/projectRollup;exportDate;costMetric;sortOrder;currencyCode/values?freshData=false&includeTotalCount=true"),
-    TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS("reports/aPriori/reports/solutions/designToCost/targetAndQuotedCost/targetAndQuotedCostValueTrackingDetailsInternal/inputControls/currentProjectName;currentProjectId;currencyCode;sortOrder;costMetric;projectRollup;projectName;exportDate/values?freshData=false&selectedOnly=true");
+    TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS("reports/aPriori/reports/solutions/designToCost/targetAndQuotedCost/targetAndQuotedCostValueTrackingDetailsInternal/inputControls/currentProjectName;currentProjectId;currencyCode;sortOrder;costMetric;projectRollup;projectName;exportDate/values?freshData=false&selectedOnly=true"),
+    UPGRADE_COMPARISON("reports/aPriori/reports/Upgrade%sProcess/upgradeComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;changeLevel;costMetricsLowThreshold;costMetricsHighThreshold;timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false&selectedOnly=true"),
+    UPGRADE_PART_COMPARISON("reports/aPriori/reports/Upgrade%20Process/upgradePartComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;partNumber;partNumberNew;changeLevel;costMetricsLowThreshold;costMetricsHighThreshold;timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false&selectedOnly=true");
 
     private final String endpoint;
 

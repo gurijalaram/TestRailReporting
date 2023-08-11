@@ -38,7 +38,9 @@ public enum JasperApiEnum {
     TARGET_COST_VALUE_TRACKING_DETAILS("/targetcosttrend/TargetCostValueTrackingDetailsReportRequest"),
     TARGET_QUOTED_COST_TREND("/targetquotedcosttrend/TargetAndQuotedCostTrendReportRequest"),
     TARGET_QUOTED_COST_VALUE_TRACKING("/targetquotedcosttrend/TargetAndQuotedCostValueTrackingReportRequest"),
-    TARGET_QUOTED_COST_VALUE_TRACKING_DETAILS("/targetquotedcosttrend/TargetAndQuotedCostValueTrackingDetailsReportRequest");
+    TARGET_QUOTED_COST_VALUE_TRACKING_DETAILS("/targetquotedcosttrend/TargetAndQuotedCostValueTrackingDetailsReportRequest"),
+    UPGRADE_COMPARISON("/upgradecomparison/UpgradeComparisonReportRequest"),
+    UPGRADE_PART_COMPARISON("/upgradecomparison/UpgradePartComparisonReportRequest");
 
     private final String endpoint;
 
