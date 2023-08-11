@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Slf4j
 public class TableUtils {
@@ -279,6 +280,15 @@ public class TableUtils {
         return columns.stream().filter(column -> column.getText().equalsIgnoreCase(columnHeader)).findFirst().orElse(null);
     }
 
+    public Integer getColumnIndx(WebElement tableHeaders, String columnHeader) {
+        List<WebElement> columns = tableHeaders.findElements(By.tagName("td"));
+        return IntStream.range(0, columns.size())
+            .filter(userInd -> columns.get(userInd).getText().equalsIgnoreCase(columnHeader))
+            .findFirst()
+            .getAsInt();
+    }
+
+
     public WebElement getRowByCellText(WebElement table, String cellText) {
         WebElement dataElement = null;
         try {
@@ -311,6 +321,7 @@ public class TableUtils {
 
     /**
      * Wait until Table element value is available and handle stale element exception
+     *
      * @param
      * @return webelement
      */

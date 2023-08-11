@@ -94,7 +94,7 @@ public class WorkflowScheduleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3601", "4324", "4325", "4331"})
+    @TestRail(testCaseId = {"3601", "4324", "4325", "4331", "4869"})
     @Description("1. Create minutes schedule workflow to invoke in 1 minute " +
         "2. Edit workflow to disable the schedule and verify job is not invoked" +
         "3. Edit workflow to enable the schedule and verify job is invoked")
@@ -308,6 +308,72 @@ public class WorkflowScheduleTests extends WorkflowTestUtil {
         workflowHome.closeMessageAlertBox();
 
         softAssertions.assertThat(workflowHome.selectScheduleTab().isWorkflowExists(workFlowData.getWorkflowName())).isEqualTo(true);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"4084"})
+    @Description("Test Workflow Schedule UI Options")
+    public void testALLScheduleTypesWorkflow() {
+        DetailsPart detailsPart = new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName())
+            .selectWorkflowConnector(workFlowData.getConnectorName())
+            .selectEnabledCheckbox("on");
+
+        detailsPart = detailsPart.setSchedule(WorkflowSchedule.builder()
+            .schedule(WorkflowSchedule.Schedule.MINUTES)
+            .numberOfMinutes(1)
+            .build());
+
+        softAssertions.assertThat(detailsPart.getMinutesInput().isDisplayed()).isTrue();
+
+        detailsPart = detailsPart.setSchedule(WorkflowSchedule.builder()
+            .schedule(WorkflowSchedule.Schedule.HOUR)
+            .selectEveryHour(false)
+            .startHour("10")
+            .startMinutes("10")
+            .build());
+
+        softAssertions.assertThat(detailsPart.getEveryHour().isDisplayed()).isTrue();
+
+        detailsPart = detailsPart.setSchedule(WorkflowSchedule.builder()
+            .schedule(WorkflowSchedule.Schedule.DAILY)
+            .selectEveryDay(true)
+            .numberOfDays(1)
+            .startHour("11")
+            .startMinutes("15")
+            .build());
+
+        softAssertions.assertThat(detailsPart.getDaysInput().isDisplayed()).isTrue();
+
+        detailsPart = detailsPart.setSchedule(WorkflowSchedule.builder()
+            .schedule(WorkflowSchedule.Schedule.WEEKLY)
+            .weekDay(WorkflowSchedule.WeekDay.FRIDAY)
+            .startHour("10")
+            .startMinutes("30")
+            .build());
+
+        softAssertions.assertThat(detailsPart.getWeeklyMinutes().isDisplayed()).isTrue();
+
+        detailsPart = detailsPart.setSchedule(WorkflowSchedule.builder()
+            .schedule(WorkflowSchedule.Schedule.MONTHLY)
+            .selectDayInEveryMonth(true)
+            .dayOfMonth(9)
+            .numberOfMonths(2)
+            .startHour("12")
+            .startMinutes("20")
+            .build());
+
+        softAssertions.assertThat(detailsPart.getEveryMonth().isDisplayed()).isTrue();
+
+        detailsPart = detailsPart.setSchedule(WorkflowSchedule.builder()
+            .schedule(WorkflowSchedule.Schedule.YEARLY)
+            .selectEveryYear(true)
+            .month(WorkflowSchedule.Month.AUGUST)
+            .dayOfMonth(9)
+            .startHour("12")
+            .startMinutes("15")
+            .build());
+
+        softAssertions.assertThat(detailsPart.getYearInput().isDisplayed()).isTrue();
     }
 
     @After

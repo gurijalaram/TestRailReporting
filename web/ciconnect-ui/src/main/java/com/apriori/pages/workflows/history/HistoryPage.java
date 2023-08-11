@@ -13,7 +13,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import utils.Constants;
 
 import java.time.LocalTime;
 import java.util.Arrays;
@@ -36,9 +35,6 @@ public class HistoryPage extends CICBasePage {
     @FindBy(css = "div#root_pagemashupcontainer-1_dataexport-99 button")
     private WebElement exportBtn;
 
-    @FindBy(css = "div#root_pagemashupcontainer-1_button-92 button")
-    private WebElement viewDetailsBtn;
-
     @FindBy(css = "div#root_pagemashupcontainer-1_button-62 button")
     private WebElement refreshButton;
 
@@ -47,6 +43,12 @@ public class HistoryPage extends CICBasePage {
 
     @FindBy(css = "div[id='root_pagemashupcontainer-1_gridadvanced-85-grid-advanced'] > div.xhdr > table")
     private WebElement historyJobListHeader;
+
+    @FindBy(xpath = "//button[.='View Details']")
+    private WebElement viewDetailsButton;
+
+    @FindBy(xpath = "//div/span[.='Job Details']")
+    private WebElement jobDetailsPopTitle;
 
     public HistoryPage(WebDriver driver) {
         super(driver);
@@ -194,5 +196,28 @@ public class HistoryPage extends CICBasePage {
      */
     private WebElement getCancelButtonElement() {
         return driver.findElement(with(By.xpath("//button[.='Cancel']")).toRightOf(By.xpath("//button/span[text()='Export']")));
+    }
+
+    /**
+     * Get worflow started at date from history
+     *
+     * @param workflowName workflowName
+     * @return String
+     */
+    public String getWorkflowStartedAt(String workflowName) {
+        WebElement tableRow = tableUtils.findTableItemByName(historyJobListTable, workflowName, 1);
+        return tableUtils.getItemNameFromTable(tableRow, 4).getText();
+    }
+
+    /**
+     * Click the View Details button
+     *
+     * @return JobDetails
+     */
+    public JobDetails clickViewDetailsButton() {
+        pageUtils.waitForElementAndClick(viewDetailsButton);
+        pageUtils.waitForElementAppear(jobDetailsPopTitle);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return new JobDetails(driver);
     }
 }

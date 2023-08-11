@@ -6,6 +6,7 @@ import com.apriori.pages.workflows.history.HistoryPage;
 import com.apriori.pages.workflows.schedule.SchedulePage;
 
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -89,6 +90,7 @@ public class WorkflowHome extends CICBasePage {
         if (!pageUtils.isElementEnabled(selectedScheduleTab)) {
             pageUtils.waitForElementAndClick(scheduleTab);
         }
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return new SchedulePage(driver);
     }
 
