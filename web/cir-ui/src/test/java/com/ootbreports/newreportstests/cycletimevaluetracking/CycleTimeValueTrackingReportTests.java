@@ -13,11 +13,12 @@ public class CycleTimeValueTrackingReportTests extends JasperApiAuthenticationUt
     private static final String reportsJsonFileName = JasperApiEnum.CYCLE_TIME_VALUE_TRACKING.getEndpoint();
     // Export Set is not relevant for this report
     private static final String exportSetName = "";
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CYCLE_TIME_VALUE_TRACKING;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

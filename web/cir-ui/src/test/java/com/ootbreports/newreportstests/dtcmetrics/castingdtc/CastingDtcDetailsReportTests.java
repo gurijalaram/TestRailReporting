@@ -28,9 +28,14 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
     );
 
+    private static final String reportsJsonFileName = JasperApiEnum.CASTING_DTC_DETAILS.getEndpoint();
+    private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CASTING_DTC_DETAILS;
+    private static JasperApiUtils jasperApiUtils;
+
     @BeforeEach
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

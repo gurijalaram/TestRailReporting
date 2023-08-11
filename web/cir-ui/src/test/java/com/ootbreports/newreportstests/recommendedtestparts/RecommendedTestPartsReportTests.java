@@ -27,11 +27,12 @@ import java.util.concurrent.TimeUnit;
 public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.RECOMMENDED_TEST_PARTS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.RECOMMENDED_TEST_PARTS;
     private static JasperApiUtils jasperApiUtils;
 
     @Before
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
@@ -50,15 +51,16 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
     private JasperReportSummary genericProcessGroupTest(String processGroupToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         ReportRequest reportRequest = jasperApiUtils.getReportRequest();
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
 
         jasperApiUtils.setReportParameterByName("latestExportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT)
             .format(LocalDateTime.now()));
 
-        jasperApiUtils.setReportParameterByName("exportSetName", jasperReportUtil.getInputControls()
-            .getExportSetName().getOption(exportSetName).getValue());
+        jasperApiUtils.setReportParameterByName("exportSetName", inputControls.getExportSetName().getOption(exportSetName).getValue());
 
-        jasperApiUtils.setReportParameterByName("processGroup", jasperReportUtil.updateInputControls(reportRequest.getParameters())
-            .getProcessGroup().getOption(processGroupToSet).getValue());
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(),
+            inputControls.getProcessGroup().getOption(processGroupToSet).getValue()
+        );
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();

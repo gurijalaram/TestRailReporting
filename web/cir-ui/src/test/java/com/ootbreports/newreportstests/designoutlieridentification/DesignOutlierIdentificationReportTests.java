@@ -18,6 +18,7 @@ import java.util.List;
 public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.DESIGN_OUTLIER_IDENTIFICATION.getEndpoint();
     private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.DESIGN_OUTLIER_IDENTIFICATION;
     private static JasperApiUtils jasperApiUtils;
     private final List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.P_257280C.getPartName(),
@@ -26,7 +27,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
 
     @BeforeEach
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

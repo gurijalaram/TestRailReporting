@@ -13,11 +13,12 @@ import utils.JasperApiAuthenticationUtil;
 public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.ASSEMBLY_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.ASSEMBLY_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

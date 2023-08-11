@@ -15,11 +15,12 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
     private static final String reportsJsonFileName = JasperApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getEndpoint();
     // Export Set is not relevant for this report
     private static final String exportSetName = "";
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
@@ -40,7 +41,8 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
     }
 
     private String getCycleTimeTotalValue(String currencyToUse, int indexToUse) {
-        return jasperApiUtils.genericTestCoreCurrencyOnly("Currency", currencyToUse)
-            .getReportHtmlPart().getElementsByAttributeValue("colspan", "6").get(indexToUse).child(0).text();
+        return jasperApiUtils.genericTestCoreCurrencyOnly(currencyToUse)
+            .getReportHtmlPart().getElementsByAttributeValue("colspan", "6")
+            .get(indexToUse).child(0).text();
     }
 }

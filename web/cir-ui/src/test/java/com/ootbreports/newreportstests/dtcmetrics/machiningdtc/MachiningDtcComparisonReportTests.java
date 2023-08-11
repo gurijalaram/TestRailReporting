@@ -28,10 +28,14 @@ public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUt
         JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
         JasperCirApiPartsEnum.PUNCH_INITIAL.getPartName()
     );
+    private static final String reportsJsonFileName = JasperApiEnum.MACHINING_DTC_COMPARISON.getEndpoint();
+    private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC_COMPARISON;
+    private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupGenericMethods() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

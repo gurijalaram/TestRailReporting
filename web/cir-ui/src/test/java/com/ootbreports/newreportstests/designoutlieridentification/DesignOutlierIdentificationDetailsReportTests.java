@@ -26,12 +26,13 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     );
     private static final String reportsJsonFileName = JasperApiEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint();
     private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS;
     private static JasperApiUtils jasperApiUtils;
     private static SoftAssertions softAssertions = new SoftAssertions();
 
     @BeforeEach
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

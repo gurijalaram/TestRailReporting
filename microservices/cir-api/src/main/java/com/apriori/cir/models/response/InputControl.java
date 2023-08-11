@@ -37,6 +37,10 @@ public class InputControl {
         return getPropertyValueIfExist("metricStatistic");
     }
 
+    public InputControlState getProjectRollup() {
+        return getPropertyValueIfExist("projectRollup");
+    }
+
     public InputControlState getProcessGroup() {
         return getPropertyValueIfExist("processGroup");
     }

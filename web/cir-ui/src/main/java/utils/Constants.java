@@ -4,9 +4,6 @@ import com.apriori.enums.ProcessGroupEnum;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Slf4j
 public class Constants {
     public static final String REPORTS_URL_SUFFIX = "jasperserver-pro/";
@@ -47,16 +44,6 @@ public class Constants {
     public static final String PERCENT_VALUE = "Percent";
     public static final String NAME_TO_SELECT = "bhegan";
     public static final String WARNING_TEXT = "This field is mandatory so you must enter data.";
-    public static Map<String, String> INPUT_CONTROL_NAMES = new HashMap<String, String>() {{
-            put("Currency", "currencyCode");
-            put("Component Cost Currency", "componentCostCurrencyCode");
-            put("Cost Metric", "costMetric");
-            put("Mass Metric", "massMetric");
-            put("Process Group", "processGroup");
-            put("DTC Score", "dtcScore");
-            put("Minimum Annual Spend", "annualSpendMin");
-            put("Sort Order", "sortOrder");
-        }};
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     public static final String API_REPORTS_PATH = "schemas/api-test-reports-schemas";
     public static final String FAILED_LOGIN_MESSAGE_ONPREM = "Invalid credentials supplied.\nCould not login to JasperReports Server.";

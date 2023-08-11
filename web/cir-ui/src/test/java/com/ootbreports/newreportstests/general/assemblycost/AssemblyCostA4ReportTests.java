@@ -13,16 +13,17 @@ import utils.JasperApiAuthenticationUtil;
 public class AssemblyCostA4ReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.ASSEMBLY_COST_A4.getEndpoint();
     private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.ASSEMBLY_COST_A4;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
     @TestRail(id = 26907)
-    @Description("Input controls - Currency code")
+    @Description("Input controls - Currency code - A4 Report")
     public void testCurrency() {
         jasperApiUtils.genericAssemblyCostCurrencyTest();
     }

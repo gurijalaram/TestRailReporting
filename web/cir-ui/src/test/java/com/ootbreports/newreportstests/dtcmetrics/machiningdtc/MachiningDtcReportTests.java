@@ -27,11 +27,12 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     );
     private static final String reportsJsonFileName = JasperApiEnum.MACHINING_DTC.getEndpoint();
     private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupGenericMethods() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

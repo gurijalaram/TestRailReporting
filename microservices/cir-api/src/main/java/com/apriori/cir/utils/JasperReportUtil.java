@@ -47,8 +47,8 @@ public class JasperReportUtil {
         this.jasperSessionValue = String.format(jasperSessionValue, jasperSessionId);
     }
 
-    public InputControl getInputControls() {
-        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.DTC_METRICS, InputControl.class)
+    public InputControl getInputControls(CirApiEnum value) {
+        RequestEntity requestEntity = RequestEntityUtil.init(value, InputControl.class)
             .headers(initHeadersWithJSession())
             .inlineVariables("%20")
             .expectedResponseCode(HttpStatus.SC_OK)
@@ -59,7 +59,7 @@ public class JasperReportUtil {
         return responseResponseWrapper.getResponseEntity();
     }
 
-    public InputControl updateInputControls(ParametersRequest parametersRequest) {
+    public InputControl updateInputControls(CirApiEnum value, ParametersRequest parametersRequest) {
         RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.RECOMMENDED_TEST_PARTS, InputControl.class)
             .headers(initHeadersWithJSession())
             .inlineVariables("%20")

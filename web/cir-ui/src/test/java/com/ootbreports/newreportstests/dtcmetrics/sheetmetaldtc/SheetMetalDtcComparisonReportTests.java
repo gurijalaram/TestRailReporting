@@ -28,10 +28,14 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         JasperCirApiPartsEnum.BRACKET_V1_REV_1.getPartName(),
         JasperCirApiPartsEnum.BRACKET_V2_REV_1.getPartName()
     );
+    private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC_COMPARISON.getEndpoint();
+    private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC_COMPARISON;
+    private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupGenericMethods() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test

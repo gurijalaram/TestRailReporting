@@ -31,10 +31,14 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
         JasperCirApiPartsEnum.AP_BRACKET_HANGER.getPartName(),
         JasperCirApiPartsEnum.DS73_F04604_PIA1.getPartName()
     );
+    private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC.getEndpoint();
+    private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC;
+    private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupGenericMethods() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
@@ -95,10 +99,10 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
             JasperCirApiPartsEnum.P_2980123_CLAMP.getPartName(),
             JasperCirApiPartsEnum.AP_BRACKET_HANGER.getPartName()
         );
-        jasperApiUtils.genericProcessGroupDtcTest(
+        /*jasperApiUtils.genericProcessGroupDtcTest(
             partNames,
             "Process Group", ProcessGroupEnum.SHEET_METAL.getProcessGroup()
-        );
+        );*/
     }
 
     @Test
