@@ -602,7 +602,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public List<String> getListOfProcessGroups() {
         pageUtils.waitForElementAndClick(processGroupList);
-        return Arrays.stream(processGroupList.getText().split("")).filter(x -> !x.equalsIgnoreCase("Process Group")).collect(Collectors.toList());
+        return Arrays.stream(processGroupList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase("Process Group")).collect(Collectors.toList());
     }
 
     /**

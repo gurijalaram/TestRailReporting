@@ -167,6 +167,6 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      */
     public List<String> getListOfMaterialTypes() {
         pageUtils.waitForElementAndClick(materialTypeList);
-        return Arrays.stream(materialTypeList.getText().split("")).filter(x -> !x.equalsIgnoreCase("Type")).collect(Collectors.toList());
+        return Arrays.stream(materialTypeList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase("Type")).collect(Collectors.toList());
     }
 }

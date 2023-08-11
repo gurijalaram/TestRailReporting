@@ -64,7 +64,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(xpath = "//button[.='Close']")
     private WebElement closeButton;
 
-    @FindBy(css = ".scenario-group-operations-success-message")
+    @FindBy(css = ".scenario-group-operations-success-message h5")
     private WebElement publishingMessage;
 
     private PageUtils pageUtils;

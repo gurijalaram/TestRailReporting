@@ -20,11 +20,9 @@ import com.apriori.evaluate.ScenariosTests;
 
 import org.junit.platform.suite.api.ExcludeTags;
 import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectPackages("com.apriori")
 @ExcludeTags({SMOKE, SANITY, IGNORE})
 @SelectClasses({
     ComponentRedirectTests.class,

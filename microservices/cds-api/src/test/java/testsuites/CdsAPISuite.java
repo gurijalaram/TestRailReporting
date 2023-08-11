@@ -25,11 +25,9 @@ import com.apriori.CdsUserPreferencesTests;
 import com.apriori.CdsUsersTests;
 
 import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectPackages("com.apriori")
 @SelectClasses({
     ApVersionsTests.class,
     CdsAccessAuthorizationsTests.class,

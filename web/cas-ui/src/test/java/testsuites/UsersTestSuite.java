@@ -8,12 +8,10 @@ import com.apriori.customer.users.UsersGrantApplicationAccessTests;
 import com.apriori.customer.users.UsersGrantLicenseTests;
 import com.apriori.customer.users.UsersStaffAssociationTests;
 
-import org.junit.platform.suite.api.IncludePackages;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@IncludePackages("com.apriori")
 @SelectClasses({
     UsersStaffAssociationTests.class,
     CustomerStaffTests.class,

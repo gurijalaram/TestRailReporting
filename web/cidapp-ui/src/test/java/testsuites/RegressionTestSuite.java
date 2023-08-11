@@ -61,11 +61,9 @@ import com.apriori.settings.SettingsTests;
 
 import org.junit.platform.suite.api.ExcludeTags;
 import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectPackages("com.apriori")
 @ExcludeTags({SMOKE, SANITY, IGNORE, EXTENDED_REGRESSION})
 @SelectClasses({
     EditAssembliesTest.class,

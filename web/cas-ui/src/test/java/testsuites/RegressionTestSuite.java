@@ -10,11 +10,9 @@ import com.apriori.navigation.NavigationTests;
 import com.apriori.security.MfaEnabledTests;
 
 import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectPackages("com.apriori")
 @SelectClasses({
     NewCustomerTests.class,
     EditCustomerTests.class,

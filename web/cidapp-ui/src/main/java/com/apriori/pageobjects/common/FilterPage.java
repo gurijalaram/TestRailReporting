@@ -367,7 +367,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
             pageUtils.waitForElementToAppear(By.xpath("//div[@class = 'apriori-select-menu-list css-1ew0esf']"));
         String operations = elementsOperations.getText();
 
-        return Arrays.asList(operations.split(""));
+        return Arrays.asList(operations.split("\n"));
     }
 
     /**
