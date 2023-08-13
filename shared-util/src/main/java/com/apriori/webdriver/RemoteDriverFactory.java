@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
@@ -33,6 +34,7 @@ public class RemoteDriverFactory {
                     throw new BrowserNotSupportedException(browser);
             }
             result = new RemoteWebDriver(new URL(server), capabilities);
+            result.setFileDetector(new LocalFileDetector());
 
             log.info("Full list of Capabilities:-{} ", capabilities);
 
