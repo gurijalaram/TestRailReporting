@@ -309,7 +309,7 @@ public class WorkflowScheduleTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(testCaseId = {"4084"})
+    @TestRail(id = {4084})
     @Description("Test Workflow Schedule UI Options")
     public void testALLScheduleTypesWorkflow() {
         DetailsPart detailsPart = new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName())
@@ -374,7 +374,7 @@ public class WorkflowScheduleTests extends TestBaseUI {
         softAssertions.assertThat(detailsPart.getYearInput().isDisplayed()).isTrue();
     }
 
-      @AfterEach
+    @AfterEach
     public void cleanup() {
         CicApiTestUtil.deleteWorkFlow(ciConnectHome.getSession(), CicApiTestUtil.getMatchedWorkflowId(workFlowData.getWorkflowName()));
         softAssertions.assertAll();
