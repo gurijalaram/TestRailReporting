@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.workflows.schedule;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import com.apriori.enums.SortedOrderType;
 import com.apriori.enums.WorkflowListColumns;
 import com.apriori.features.WorkFlowFeatures;
@@ -24,19 +26,17 @@ import java.time.Duration;
 public class SchedulePage extends CICBasePage {
     private static final Logger logger = LoggerFactory.getLogger(SchedulePage.class);
 
-    @FindBy(css = "#root_pagemashupcontainer-1_button-35 > button")
+    @FindBy(xpath = "//button//span[.='New']")
     private WebElement newWorkflowBtn;
-    @FindBy(css = "#root_pagemashupcontainer-1_button-36 > button")
+    @FindBy(xpath = "//button//span[.='Edit']")
     private WebElement editWorkflowButton;
-    @FindBy(css = "#root_pagemashupcontainer-1_button-37 > button")
+    @FindBy(xpath = "//button//span[.='Delete']")
     private WebElement deleteWorkflowButton;
-    @FindBy(css = "#root_pagemashupcontainer-1_button-38 > button")
-    private WebElement refreshScheduleBtn;
-    @FindBy(css = "#root_pagemashupcontainer-1_button-97 > button")
+    @FindBy(xpath = "//button//span[.='Invoke']")
     private WebElement invokeWorkflowBtn;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced > div.objbox > table > tbody")
     private WebElement workflowList;
-    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced > div.xhdr > table > tbody > tr:nth-child(2)")
+    @FindBy(css = "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] div[class='xhdr'] table[class='hdr']")
     private WebElement workflowHeaders;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced > div.xhdr > table > tbody > tr:nth-child(2) > td:nth-child(1)")
     private WebElement firstColumn;
@@ -206,6 +206,17 @@ public class SchedulePage extends CICBasePage {
     }
 
     /**
+     * Get workflow locked status element from list of workflow in schedule tab
+     *
+     * @param workflowName     - workflow name to be selected from the table
+     * @param targetColumnIndx - enum value of targetted column name
+     * @return WebElement
+     */
+    public WebElement getWorkflowLockedStatus(String workflowName, WorkflowListColumns targetColumnIndx) {
+        return getItemFromWorkflowList(workflowName, targetColumnIndx).findElement(By.cssSelector("input[type='CHECKBOX']"));
+    }
+
+    /**
      * Check if a workflow exists in the Schedule Workflow list. The search is by workflow name
      *
      * @param name Workflow name to check for
@@ -249,11 +260,6 @@ public class SchedulePage extends CICBasePage {
     private Boolean sortedBy(WebElement webElement, SortedOrderType sortType, String columnValue) {
         Boolean isInSortedOrder = false;
         switch (sortType.toString()) {
-            case "ASCENDING":
-                pageUtils.waitForElementAndClick(webElement);
-                pageUtils.waitForElementToBeClickable(workflowList);
-                isInSortedOrder = webElement.getAttribute("class").equals("dhxgrid_sort_asc_col") ? isWorkflowExists(columnValue) : false;
-                break;
             case "DESCENDING":
                 pageUtils.waitForElementAndClick(webElement);
                 pageUtils.waitForElementToBeClickable(workflowList);
@@ -263,7 +269,10 @@ public class SchedulePage extends CICBasePage {
                 }
                 isInSortedOrder = isWorkflowExists(columnValue);
                 break;
-                //TODO: 11/05/2022 developer, are you missing a default clause?
+            default:
+                pageUtils.waitForElementAndClick(webElement);
+                pageUtils.waitForElementToBeClickable(workflowList);
+                isInSortedOrder = webElement.getAttribute("class").equals("dhxgrid_sort_asc_col") ? isWorkflowExists(columnValue) : false;
         }
         return isInSortedOrder;
     }
@@ -317,7 +326,7 @@ public class SchedulePage extends CICBasePage {
      * @return new Schedule page object
      */
     public SchedulePage clickRefreshBtn() {
-        pageUtils.waitForElementAndClick(refreshScheduleBtn);
+        pageUtils.waitForElementAndClick(getScheduleTabRefreshElement());
         return new SchedulePage(driver);
     }
 
@@ -368,7 +377,7 @@ public class SchedulePage extends CICBasePage {
      * @return WebElement
      */
     public WebElement getEditWorkflowButton() {
-        return editWorkflowButton;
+        return editWorkflowButton.findElement(By.xpath(".."));
     }
 
     /**
@@ -378,5 +387,9 @@ public class SchedulePage extends CICBasePage {
      */
     public WebElement getDeleteWorkflowButton() {
         return deleteWorkflowButton;
+    }
+
+    private WebElement getScheduleTabRefreshElement() {
+        return driver.findElement(with(By.xpath("//span[@class='widget-button-text']")).toLeftOf(invokeWorkflowBtn));
     }
 }

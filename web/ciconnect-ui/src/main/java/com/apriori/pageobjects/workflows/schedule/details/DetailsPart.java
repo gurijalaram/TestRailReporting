@@ -34,7 +34,7 @@ public class DetailsPart extends CICBasePage {
     @FindBy(css = "div.ss-content.ss-open> div.ss-search > input")
     private WebElement searchConnectorTxtElement;
 
-    @FindBy(xpath = "//div[@class='rules-group-container']")
+    @FindBy(xpath = "//div[@sub-widget-container-id='tabsv2-79' and @tab-number='2']//button[@data-add='group']")
     private WebElement addRuleGroupElement;
 
     @FindBy(css = "#msMinutesTab")
@@ -127,6 +127,8 @@ public class DetailsPart extends CICBasePage {
     private WebElement yearlyHours;
     @FindBy(id = "YearlyMinutes")
     private WebElement yearlyMinutes;
+    @FindBy(css = "#msCronTabs")
+    private WebElement scheduleTabs;
 
     private String dayOfWeekCss = "input[value='[DAY]']";
     private String connectFieldDDCss = "div[class^='ss-content ss-'][class$='ss-open'] div[class='ss-list']";
@@ -235,8 +237,8 @@ public class DetailsPart extends CICBasePage {
         pageUtils.waitForElementAndClick(this.getNextButtonElement());
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         pageUtils.waitForElementToAppear(workflowPopUpActiveTabElement);
-        pageUtils.waitForElementToBeClickable(this.getNextButtonElement());
         if (pageUtils.isElementDisplayed(revisionLatestCheckBoxLblElement)) {
+            pageUtils.waitForElementAppear(addRuleGroupElement);
             queryDefinitions = new QueryDefinitions(driver);
         }
         return queryDefinitions;
@@ -335,6 +337,60 @@ public class DetailsPart extends CICBasePage {
      */
     public WebElement getWorkflowNameErrorLbl() {
         return workflowNameErrorLbl;
+    }
+
+    /**
+     * get minutes input fro minutes tab
+     *
+     * @return WebElement
+     */
+    public WebElement getMinutesInput() {
+        return minutesInput;
+    }
+
+    /**
+     * get every hour input from hourly tab
+     *
+     * @return WebElement
+     */
+    public WebElement getEveryHour() {
+        return everyHour;
+    }
+
+    /**
+     * get days input text element
+     *
+     * @return WebElement
+     */
+    public WebElement getDaysInput() {
+        return daysInput;
+    }
+
+    /**
+     * get day from weekly minutes tab
+     *
+     * @return WebElement
+     */
+    public WebElement getWeeklyMinutes() {
+        return weeklyMinutes;
+    }
+
+    /**
+     * get every month from monthkly tab
+     *
+     * @return WebElement
+     */
+    public WebElement getEveryMonth() {
+        return everyMonth;
+    }
+
+    /**
+     * get every year from yearly tab
+     *
+     * @return WebElement
+     */
+    public WebElement getYearInput() {
+        return yearInput;
     }
 
 
@@ -503,4 +559,6 @@ public class DetailsPart extends CICBasePage {
     private WebElement getCostingInputAddRowButton() {
         return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//button[.='Add Row']", workflowPopUpActiveTabElement.getText())));
     }
+
+
 }
