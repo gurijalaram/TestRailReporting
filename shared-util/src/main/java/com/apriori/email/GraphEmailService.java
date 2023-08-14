@@ -33,10 +33,10 @@ public class GraphEmailService {
         RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class)
             .queryParams(new KeyValueUtil().keyValue(emailParamValues, ","))
             .headers(new HashMap<String, String>() {
-            {
-                put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
-            }
-        }).expectedResponseCode(HttpStatus.SC_OK);
+                {
+                    put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
+                }
+            }).expectedResponseCode(HttpStatus.SC_OK);
 
         return trackEmailMessage(requestEntity, searchText);
     }
@@ -54,10 +54,10 @@ public class GraphEmailService {
         RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class)
             .queryParams(emailParamValue)
             .headers(new HashMap<String, String>() {
-            {
-                put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
-            }
-        }).expectedResponseCode(HttpStatus.SC_OK);
+                {
+                    put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
+                }
+            }).expectedResponseCode(HttpStatus.SC_OK);
 
         return trackEmailMessage(requestEntity, emailParamValue.get("$search"));
     }

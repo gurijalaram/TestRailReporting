@@ -155,7 +155,7 @@ public class CssComponent {
      * Creates search request by component type
      *
      * @param userCredentials - the user credentials
-     * @param componentType - the component type
+     * @param componentType   - the component type
      * @return the response wrapper that contains the response data
      */
     public ResponseWrapper<CssComponentResponse> postSearchRequest(UserCredentials userCredentials, String componentType) {

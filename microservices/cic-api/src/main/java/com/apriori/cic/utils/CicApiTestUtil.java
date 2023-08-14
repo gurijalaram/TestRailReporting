@@ -224,7 +224,6 @@ public class CicApiTestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-
     /**
      * Submit CIC GUI Thingworx API to delete workflow
      *
@@ -266,7 +265,6 @@ public class CicApiTestUtil {
         header.put("Authorization", PropertiesContext.get("ci-connect.authorization_key"));
         return header;
     }
-
 
     /**
      * Submit request to get list of workflows and then get the matched workflow
@@ -314,7 +312,7 @@ public class CicApiTestUtil {
     @SneakyThrows
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
-        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
+        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
         while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
@@ -338,7 +336,7 @@ public class CicApiTestUtil {
     @SneakyThrows
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID, CicLoginUtil cicLoginUtil) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
-        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
+        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
         while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
@@ -464,10 +462,10 @@ public class CicApiTestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(PlmApiEnum.PLM_WC_SEARCH, PlmSearchResponse.class)
             .queryParams(new KeyValueUtil().keyValue(searchFilter.getQueryParams(), ":"))
             .headers(new HashMap<String, String>() {
-            {
-                put("Authorization", "Basic " + PropertiesContext.get("ci-connect.${ci-connect.agent_type}.host_token"));
-            }
-        }).expectedResponseCode(HttpStatus.SC_OK);
+                {
+                    put("Authorization", "Basic " + PropertiesContext.get("ci-connect.${ci-connect.agent_type}.host_token"));
+                }
+            }).expectedResponseCode(HttpStatus.SC_OK);
 
         return (PlmSearchResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
 

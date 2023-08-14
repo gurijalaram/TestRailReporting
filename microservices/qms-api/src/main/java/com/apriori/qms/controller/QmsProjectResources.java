@@ -105,7 +105,6 @@ public class QmsProjectResources {
         return responseWrapper.getResponseEntity();
     }
 
-
     /**
      * Gets project.
      *
