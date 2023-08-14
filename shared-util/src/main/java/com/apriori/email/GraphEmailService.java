@@ -1,23 +1,19 @@
 package com.apriori.email;
 
-import com.apriori.exceptions.KeyValueException;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.models.response.EmailMessage;
 import com.apriori.models.response.EmailResponse;
+import com.apriori.utils.KeyValueUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 import java.time.LocalTime;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class GraphEmailService {
@@ -32,18 +28,11 @@ public class GraphEmailService {
      * @return EmailMessage
      */
     public static EmailMessage searchEmailMessageWithAttachments(String searchText) {
-        QueryParams queryParams = new QueryParams();
         String[] emailParamValues = {"$search, \"" + searchText + "\"", "hasAttachments[eq], true"};
-        List<String[]> paramKeyValue = Arrays.stream(emailParamValues).map(o -> o.split(",")).collect(Collectors.toList());
-        Map<String, String> paramMap = new HashMap<>();
 
-        try {
-            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
-        } catch (ArrayIndexOutOfBoundsException ae) {
-            throw new KeyValueException(ae.getMessage(), paramKeyValue);
-        }
-
-        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class).queryParams(queryParams.use(paramMap)).headers(new HashMap<String, String>() {
+        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class)
+            .queryParams(new KeyValueUtil().keyValue(emailParamValues, ","))
+            .headers(new HashMap<String, String>() {
             {
                 put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
             }
@@ -60,24 +49,17 @@ public class GraphEmailService {
      * @return EmailMessage
      */
     public static EmailMessage searchEmailMessage(String... emailParamValues) {
-        QueryParams queryParams = new QueryParams();
+        QueryParams emailParamValue = new KeyValueUtil().keyValue(emailParamValues, ",");
 
-        List<String[]> paramKeyValue = Arrays.stream(emailParamValues).map(o -> o.split(",")).collect(Collectors.toList());
-        Map<String, String> paramMap = new HashMap<>();
-
-        try {
-            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
-        } catch (ArrayIndexOutOfBoundsException ae) {
-            throw new KeyValueException(ae.getMessage(), paramKeyValue);
-        }
-
-        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class).queryParams(queryParams.use(paramMap)).headers(new HashMap<String, String>() {
+        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class)
+            .queryParams(emailParamValue)
+            .headers(new HashMap<String, String>() {
             {
                 put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
             }
         }).expectedResponseCode(HttpStatus.SC_OK);
 
-        return trackEmailMessage(requestEntity, paramMap.get("$search"));
+        return trackEmailMessage(requestEntity, emailParamValue.get("$search"));
     }
 
     private static EmailMessage trackEmailMessage(RequestEntity requestEntity, String searchEmailText) {
