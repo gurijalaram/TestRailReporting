@@ -1,8 +1,7 @@
 package com.apriori.cds.models.response;
 
 import com.apriori.annotations.Schema;
-import com.apriori.cds.objects.request.Features;
-import com.apriori.cds.objects.response.Application;
+import com.apriori.cds.models.request.Features;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

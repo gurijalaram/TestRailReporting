@@ -7,7 +7,7 @@ sourceSets {
     main {
         resources {
             srcDirs += [
-                    project('::shared-util').sourceSets.main.resources
+                    project(':shared-util').sourceSets.main.resources
             ]
         }
     }
