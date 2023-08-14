@@ -6,7 +6,7 @@ import com.apriori.ats.utils.AtsTestUtil;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.Customer;
-import com.apriori.cds.objects.response.User;
+import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;

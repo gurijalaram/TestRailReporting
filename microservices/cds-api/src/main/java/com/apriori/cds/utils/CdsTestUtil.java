@@ -4,43 +4,43 @@ import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
 import com.apriori.cds.enums.CASCustomerEnum;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.request.AccessAuthorizationRequest;
+import com.apriori.cds.models.request.AccessControlRequest;
+import com.apriori.cds.models.request.ActivateLicense;
+import com.apriori.cds.models.request.ActivateLicenseRequest;
+import com.apriori.cds.models.request.AddDeployment;
+import com.apriori.cds.models.request.ApplicationInstallationRequest;
+import com.apriori.cds.models.request.CASCustomerRequest;
+import com.apriori.cds.models.request.CustomAttributeRequest;
+import com.apriori.cds.models.request.FeatureRequest;
+import com.apriori.cds.models.request.Features;
+import com.apriori.cds.models.request.License;
+import com.apriori.cds.models.request.LicenseRequest;
+import com.apriori.cds.models.request.PostBatch;
+import com.apriori.cds.models.request.UpdateCredentials;
+import com.apriori.cds.models.response.AccessAuthorization;
+import com.apriori.cds.models.response.AccessControlResponse;
+import com.apriori.cds.models.response.AssociationUserItems;
 import com.apriori.cds.models.response.AttributeMappings;
+import com.apriori.cds.models.response.CredentialsItems;
+import com.apriori.cds.models.response.CustomAttribute;
 import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.models.response.Customers;
 import com.apriori.cds.models.response.Deployment;
 import com.apriori.cds.models.response.ErrorResponse;
+import com.apriori.cds.models.response.FeatureResponse;
 import com.apriori.cds.models.response.IdentityProviderRequest;
 import com.apriori.cds.models.response.IdentityProviderResponse;
+import com.apriori.cds.models.response.InstallationItems;
 import com.apriori.cds.models.response.LicenseResponse;
 import com.apriori.cds.models.response.LicensedApplications;
+import com.apriori.cds.models.response.Roles;
 import com.apriori.cds.models.response.Site;
-import com.apriori.cds.objects.request.AccessAuthorizationRequest;
-import com.apriori.cds.objects.request.AccessControlRequest;
-import com.apriori.cds.objects.request.ActivateLicense;
-import com.apriori.cds.objects.request.ActivateLicenseRequest;
-import com.apriori.cds.objects.request.AddDeployment;
-import com.apriori.cds.objects.request.ApplicationInstallationRequest;
-import com.apriori.cds.objects.request.CASCustomerRequest;
-import com.apriori.cds.objects.request.CustomAttributeRequest;
-import com.apriori.cds.objects.request.FeatureRequest;
-import com.apriori.cds.objects.request.Features;
-import com.apriori.cds.objects.request.License;
-import com.apriori.cds.objects.request.LicenseRequest;
-import com.apriori.cds.objects.request.PostBatch;
-import com.apriori.cds.objects.request.UpdateCredentials;
-import com.apriori.cds.objects.response.AccessAuthorization;
-import com.apriori.cds.objects.response.AccessControlResponse;
-import com.apriori.cds.objects.response.AssociationUserItems;
-import com.apriori.cds.objects.response.CustomAttribute;
-import com.apriori.cds.objects.response.FeatureResponse;
-import com.apriori.cds.objects.response.InstallationItems;
-import com.apriori.cds.objects.response.Roles;
-import com.apriori.cds.objects.response.SubLicenseAssociationUser;
-import com.apriori.cds.objects.response.User;
-import com.apriori.cds.objects.response.UserPreference;
-import com.apriori.cds.objects.response.UserProfile;
-import com.apriori.cds.objects.response.UserRole;
-import com.apriori.cds.objects.response.credentials.CredentialsItems;
+import com.apriori.cds.models.response.SubLicenseAssociationUser;
+import com.apriori.cds.models.response.User;
+import com.apriori.cds.models.response.UserPreference;
+import com.apriori.cds.models.response.UserProfile;
+import com.apriori.cds.models.response.UserRole;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.FileResourceUtil;
@@ -359,11 +359,11 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation with feature to a customer
      *
-     * @param customerIdentity   - the customer id
-     * @param deploymentIdentity - the deployment id
-     * @param siteIdentity       - the site Identity
-     * @param realmKey           - the realm key
-     * @param cloudReference     - the cloud reference
+     * @param customerIdentity              - the customer id
+     * @param deploymentIdentity            - the deployment id
+     * @param siteIdentity                  - the site Identity
+     * @param realmKey                      - the realm key
+     * @param cloudReference                - the cloud reference
      * @param workOrderStatusUpdatesEnabled - boolean for feature
      * @return new object
      */
@@ -393,10 +393,10 @@ public class CdsTestUtil extends TestUtil {
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(FeatureRequest.builder()
-                    .features(Features.builder()
-                        .workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled)
-                        .build())
-                    .build());
+                .features(Features.builder()
+                    .workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled)
+                    .build())
+                .build());
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -479,7 +479,6 @@ public class CdsTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).patch();
 
     }
-
 
     /**
      * POST call to add an apriori staff user association to a customer
@@ -626,9 +625,9 @@ public class CdsTestUtil extends TestUtil {
      * Post request to activate license
      *
      * @param customerIdentity - the customer id
-     * @param siteIdentity - the site id
-     * @param licenseIdentity - the license identity
-     * @param userIdentity - the user identity
+     * @param siteIdentity     - the site id
+     * @param licenseIdentity  - the license identity
+     * @param userIdentity     - the user identity
      */
     public void activateLicense(String customerIdentity, String siteIdentity, String licenseIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.LICENSE_ACTIVATE, LicenseResponse.class)
@@ -842,8 +841,8 @@ public class CdsTestUtil extends TestUtil {
     /**
      * Uploads batch users file via CAS API
      *
-     * @param users - string of users file
-     * @param email - email
+     * @param users            - string of users file
+     * @param email            - email
      * @param customerIdentity - customerIdentity
      * @return new object
      */
@@ -928,8 +927,9 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     *  call the endpoint /roles with param pageSize=20 - to get all roles
-     * @param  inlineVariables
+     * call the endpoint /roles with param pageSize=20 - to get all roles
+     *
+     * @param inlineVariables
      * @return object ResponseWrapper
      */
     public Roles getRoles(String... inlineVariables) {
@@ -938,6 +938,6 @@ public class CdsTestUtil extends TestUtil {
             .inlineVariables(inlineVariables)
             .queryParams(new QueryParams().use("pageSize", "20"))
             .expectedResponseCode(HttpStatus.SC_OK);
-        return (Roles)HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (Roles) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 }

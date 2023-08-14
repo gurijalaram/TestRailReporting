@@ -6,7 +6,7 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.models.response.LicenseResponse;
 import com.apriori.cds.models.response.Site;
-import com.apriori.cds.objects.response.User;
+import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.CardsViewComponent;
 import com.apriori.components.SourceListComponent;

@@ -2,10 +2,10 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
+import com.apriori.cds.models.response.AccessControlResponse;
+import com.apriori.cds.models.response.AccessControls;
 import com.apriori.cds.models.response.Customer;
-import com.apriori.cds.objects.response.AccessControlResponse;
-import com.apriori.cds.objects.response.AccessControls;
-import com.apriori.cds.objects.response.User;
+import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -19,7 +19,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CdsAccessControlsTests  {
+public class CdsAccessControlsTests {
     private IdentityHolder accessControlIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
@@ -74,7 +74,7 @@ public class CdsAccessControlsTests  {
         ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getIdentity();
 
-        accessControlIdentityHolder =  IdentityHolder.builder()
+        accessControlIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .userIdentity(userIdentity)
             .accessControlIdentity(accessControlIdentity)
@@ -96,11 +96,11 @@ public class CdsAccessControlsTests  {
         ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getIdentity();
 
-        accessControlIdentityHolder =  IdentityHolder.builder()
-                .customerIdentity(customerIdentity)
-                .userIdentity(userIdentity)
-                .accessControlIdentity(accessControlIdentity)
-                .build();
+        accessControlIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .userIdentity(userIdentity)
+            .accessControlIdentity(accessControlIdentity)
+            .build();
 
         ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
@@ -120,11 +120,11 @@ public class CdsAccessControlsTests  {
         ResponseWrapper<AccessControlResponse> accessControl = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControl.getResponseEntity().getIdentity();
 
-        accessControlIdentityHolder =  IdentityHolder.builder()
-                .customerIdentity(customerIdentity)
-                .userIdentity(userIdentity)
-                .accessControlIdentity(accessControlIdentity)
-                .build();
+        accessControlIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .userIdentity(userIdentity)
+            .accessControlIdentity(accessControlIdentity)
+            .build();
 
         ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROL_BY_ID, AccessControlResponse.class, HttpStatus.SC_OK, customerIdentity, userIdentity, accessControlIdentity);
 
