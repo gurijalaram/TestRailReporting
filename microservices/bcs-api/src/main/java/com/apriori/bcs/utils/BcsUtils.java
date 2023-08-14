@@ -1,10 +1,9 @@
 package com.apriori.bcs.utils;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.apriori.bcs.controller.BatchPartResources;
-import com.apriori.bcs.entity.response.Part;
-import com.apriori.utils.ApiUtil;
+import com.apriori.bcs.models.response.Part;
 
 import lombok.extern.slf4j.Slf4j;
 

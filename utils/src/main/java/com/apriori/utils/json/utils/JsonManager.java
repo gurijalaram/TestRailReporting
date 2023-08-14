@@ -1,6 +1,6 @@
 package com.apriori.utils.json.utils;
 
-import com.apriori.utils.http.utils.ResponseWrapper;
+
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;

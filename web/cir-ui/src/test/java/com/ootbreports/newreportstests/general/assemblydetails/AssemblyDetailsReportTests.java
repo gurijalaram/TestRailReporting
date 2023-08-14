@@ -1,14 +1,14 @@
 package com.ootbreports.newreportstests.general.assemblydetails;
 
-import com.apriori.cirapi.entity.enums.CirApiEnum;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.cir.enums.CirApiEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
@@ -17,14 +17,14 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.ASSEMBLY_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
-    @Before
+    @BeforeEach
     public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
-    @TestRail(testCaseId = {"1922"})
-    @Description("Currency Code works")
+    @TestRail(id = {1922})
+    @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
         jasperApiUtils.genericDtcCurrencyTest(
             ExportSetEnum.TOP_LEVEL.getExportSetName(),

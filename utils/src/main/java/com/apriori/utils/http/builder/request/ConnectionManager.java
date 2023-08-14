@@ -3,11 +3,11 @@ package com.apriori.utils.http.builder.request;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 
 import com.apriori.utils.constants.CommonConstants;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.http.utils.MultiPartFiles;
-import com.apriori.utils.http.utils.QueryParams;
-import com.apriori.utils.http.utils.ResponseWrapper;
+
+
+
+
+
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;

@@ -1,8 +1,8 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.PageUtils;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.help.HelpDocPage;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
+import com.apriori.pageobjects.help.HelpDocPage;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

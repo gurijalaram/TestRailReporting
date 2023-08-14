@@ -1,7 +1,7 @@
 package utils;
 
 import com.apriori.PageUtils;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.properties.PropertiesContext;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

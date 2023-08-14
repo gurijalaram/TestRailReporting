@@ -1,10 +1,10 @@
 package com.apriori.nts.utils;
 
-import com.apriori.nts.entity.response.Credentials;
-import com.apriori.utils.EncryptionUtil;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.json.utils.JsonManager;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.http.utils.EncryptionUtil;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.json.JsonManager;
+import com.apriori.nts.models.response.Credentials;
+import com.apriori.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,7 +18,7 @@ public class EmailSetup {
     /**
      * Retrieve credentials and host url for the email account.
      */
-    public  void getCredentials() {
+    public void getCredentials() {
         String key = "lygtvxdsesdfhind";
         InputStream credentialFile = FileResourceUtil.getResourceFileStream("crd");
 
@@ -31,15 +31,15 @@ public class EmailSetup {
         }
     }
 
-    public  String getHost() {
+    public String getHost() {
         return credentials.getHost();
     }
 
-    public  String getUsername() {
+    public String getUsername() {
         return credentials.getUsername();
     }
 
-    public  String getPassword() {
+    public String getPassword() {
         return credentials.getPassword();
     }
 

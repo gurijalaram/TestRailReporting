@@ -1,7 +1,7 @@
 package com.apriori.utils.email;
 
-import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
-import com.apriori.utils.properties.PropertiesContext;
+
+
 
 public enum EmailEnum implements ExternalEndpointEnum {
     //USER

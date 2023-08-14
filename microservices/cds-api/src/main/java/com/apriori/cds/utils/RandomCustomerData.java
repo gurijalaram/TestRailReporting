@@ -1,7 +1,6 @@
 package com.apriori.cds.utils;
 
-import com.apriori.cds.entity.IdentityHolder;
-import com.apriori.utils.GenerateStringUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 
 import lombok.Getter;
 

@@ -1,11 +1,11 @@
 package com.ootbreports.newreportstests.spendanalysisvaluetracking;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import com.apriori.cirapi.entity.JasperReportSummary;
-import com.apriori.cirapi.entity.enums.CirApiEnum;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.enums.CirApiEnum;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
@@ -27,7 +27,7 @@ public class SpendAnalysisValueTrackingReportTests extends JasperApiAuthenticati
     }
 
     @Test
-    @TestRail(testCaseId = {"13955"})
+    @TestRail(id = 13955)
     @Description("Input controls - Currency code - Main Report")
     public void testCurrencyCode() {
         JasperReportSummary gbpJasperReportSummary = jasperApiUtils.genericTestCoreProjectRollupAndCurrencyOnly(

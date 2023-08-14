@@ -1,17 +1,13 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.workorders.WorkorderAPITests;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import tests.workorders.WorkorderAPITests;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("1348")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     WorkorderAPITests.class
 })
-
 public class WorkorderSuite {
 }

@@ -1,8 +1,8 @@
 package com.apriori.utils.http.builder.request;
 
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
+
 import com.apriori.utils.http.builder.interfaces.Request;
-import com.apriori.utils.http.utils.ResponseWrapper;
+
 
 class BaseRequestImpl implements Request {
 

@@ -1,8 +1,8 @@
 package com.apriori.utils.http.enums.common;
 
 import com.apriori.utils.AwsParameterStoreUtil;
-import com.apriori.utils.http.enums.EndpointEnum;
-import com.apriori.utils.properties.PropertiesContext;
+
+
 
 /**
  * @author kpatel

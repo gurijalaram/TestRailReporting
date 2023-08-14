@@ -6,19 +6,15 @@ sourceSets {
     main {
         resources {
             srcDirs += [
-                    project(':apibase').sourceSets.main.resources
+                    project('::shared-util').sourceSets.main.resources
             ]
         }
     }
 }
 
 dependencies {
-    implementation project(':apibase')
-    implementation project(':utils')
-
+    implementation project(':shared-util')
     implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.2'
     implementation group: 'net.sf.cssbox', name: 'pdf2dom', version: '2.0.1'
     implementation group: 'org.apache.pdfbox', name: 'pdfbox-tools', version: '2.0.25'
-
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }

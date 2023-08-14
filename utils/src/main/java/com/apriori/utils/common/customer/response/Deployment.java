@@ -1,6 +1,6 @@
 package com.apriori.utils.common.customer.response;
 
-import com.apriori.utils.http.enums.Schema;
+
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;

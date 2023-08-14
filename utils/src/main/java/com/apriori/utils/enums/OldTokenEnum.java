@@ -1,7 +1,7 @@
 package com.apriori.utils.enums;
 
-import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
-import com.apriori.utils.properties.PropertiesContext;
+
+
 
 public enum OldTokenEnum implements ExternalEndpointEnum {
     POST_TOKEN("ws/auth/token");

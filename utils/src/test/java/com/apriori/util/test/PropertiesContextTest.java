@@ -1,10 +1,10 @@
 package com.apriori.util.test;
 
-import com.apriori.utils.properties.PropertiesContext;
+
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 
 /**

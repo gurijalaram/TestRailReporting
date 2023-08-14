@@ -1,10 +1,10 @@
 package com.apriori.util.test.reader.users;
 
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+
+
 
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class UserUtilTest {
 

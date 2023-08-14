@@ -1,6 +1,6 @@
 package com.apriori.utils.http.enums.common;
 
-import com.apriori.utils.properties.PropertiesContext;
+
 
 public interface EdcQaAPI extends ExternalEndpointEnum {
 

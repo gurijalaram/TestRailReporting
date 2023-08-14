@@ -11,8 +11,8 @@ allprojects {
     group = 'com.apriori.qa'
     version = '0.0.1-SNAPSHOT'
     apply plugin: 'java'
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 subprojects {
@@ -34,7 +34,7 @@ subprojects {
 
     // Copy allure properties into each module test resources
     processTestResources {
-        from project(":utils").projectDir.path + "/src/test/resources/allure.properties"
+        from project(":shared-util").projectDir.path + "/src/test/resources/allure.properties"
     }
 
     repositories {
@@ -120,57 +120,90 @@ subprojects {
 
     //get all system properties
     test {
+        useJUnitPlatform()
         systemProperties(System.getProperties())
         ignoreFailures(true)
     }
 
-    //declare all dependencies
     dependencies {
-        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-        testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.8.2'
-        implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.0.0'
-        implementation 'io.github.bonigarcia:webdrivermanager:5.3.0'
-        implementation 'software.amazon.awssdk:ssm:2.20.19'
-        implementation 'software.amazon.awssdk:sso:2.20.19'
-        implementation 'software.amazon.awssdk:auth:2.20.19'
-        implementation 'software.amazon.awssdk:s3:2.20.19'
-        implementation 'org.apache.httpcomponents:httpclient:4.5.13'
-        implementation 'junit:junit:4.13.2'
-        implementation 'ch.qos.logback:logback-classic:1.2.6'
-        implementation 'ch.qos.logback:logback-core:1.2.6'
-        implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
-        implementation 'org.skyscreamer:jsonassert:1.5.1'
-        implementation 'com.googlecode.json-simple:json-simple:1.1.1'
-        implementation 'io.rest-assured:json-schema-validator:4.5.1'
-        implementation 'io.rest-assured:rest-assured:4.5.1'
-        implementation 'commons-io:commons-io:2.11.0'
+        implementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+        implementation 'org.junit.platform:junit-platform-suite-engine:1.9.2'
+        testImplementation 'org.junit.platform:junit-platform-launcher:1.9.3'
+        implementation 'io.github.bonigarcia:webdrivermanager:5.3.3'
+        implementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+        testImplementation 'io.qameta.allure:allure-junit5:2.22.0'
+        implementation 'org.projectlombok:lombok:1.18.24'
+        annotationProcessor 'org.projectlombok:lombok:1.18.24'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
         implementation 'commons-lang:commons-lang:2.6'
-        implementation 'commons-cli:commons-cli:1.5.0'
-        implementation 'org.apache.commons:commons-collections4:4.3'
-        implementation 'org.aeonbits.owner:owner:1.0.11'
-        implementation 'org.apache.commons:commons-lang3:3.11'
-        implementation 'io.qameta.allure:allure-junit4:2.20.0'
-        implementation 'org.jsoup:jsoup:1.15.2'
-        implementation 'com.google.code.gson:gson:2.10'
-        implementation 'com.thomasjensen.checkstyle.addons:checkstyle-addons:7.0.0'
-        implementation 'com.puppycrawl.tools:checkstyle:9.3'
-        implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.2.0'
-        implementation 'commons-validator:commons-validator:1.7'
-        implementation 'com.sun.mail:javax.mail:1.6.2'
-        implementation 'com.sun.mail:smtp:2.0.0'
-        implementation 'pl.pragmatists:JUnitParams:1.1.1'
-        implementation 'org.assertj:assertj-core:3.24.0'
+        implementation 'ch.qos.logback:logback-classic:1.4.6'
+        implementation 'ch.qos.logback:logback-core:1.4.6'
+        implementation 'org.slf4j:slf4j-api:2.0.6'
+        implementation 'software.amazon.awssdk:s3:2.20.19'
+        implementation 'com.opencsv:opencsv:5.7.0'
+        implementation 'software.amazon.awssdk:ssm:2.20.19'
         implementation 'com.auth0:java-jwt:4.2.0'
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.14.0'
+        implementation 'io.rest-assured:json-schema-validator:4.5.1'
+        implementation 'io.rest-assured:rest-assured:4.5.1'
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.14.0'
-        implementation group: 'software.amazon.awssdk', name: 'sso', version: '2.17.129'
-        implementation 'com.hierynomus:smbj:0.11.5'
+        implementation 'org.assertj:assertj-core:3.24.0'
+        implementation 'software.amazon.awssdk:sso:2.20.19'
+        implementation 'software.amazon.awssdk:auth:2.20.19'
         implementation 'software.amazon.awssdk:sts:2.15.20'
-        implementation 'com.azure:azure-identity:1.7.2'
-        implementation 'org.projectlombok:lombok:1.18.24'
-        implementation 'com.opencsv:opencsv:5.7.0'
-        annotationProcessor 'org.projectlombok:lombok:1.18.24'
-        testImplementation 'org.projectlombok:lombok:1.18.24'
-        testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+        implementation 'com.codepine.api:testrail-api-java-client:2.0.0'
+        implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+        implementation 'javax.xml.bind:jaxb-api:2.3.1'
+        implementation 'commons-cli:commons-cli:1.5.0'
+        implementation 'org.jsoup:jsoup:1.15.4'
+        testImplementation 'org.hamcrest:hamcrest:2.2'
+
+
+
+
+
+//        implementation 'io.github.bonigarcia:webdrivermanager:5.3.2'
+//        implementation 'com.codepine.api:testrail-api-java-client:2.0.0'
+//        implementation 'software.amazon.awssdk:ssm:2.20.19'
+//        implementation 'software.amazon.awssdk:sso:2.20.19'
+//        implementation 'software.amazon.awssdk:auth:2.20.19'
+//        implementation 'software.amazon.awssdk:s3:2.20.19'
+//        implementation 'org.apache.httpcomponents:httpclient:4.5.13'
+//        implementation 'junit:junit:4.13.2'
+//        implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+//        implementation 'org.skyscreamer:jsonassert:1.5.1'
+//        implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+//        implementation 'io.rest-assured:json-schema-validator:4.5.1'
+//        implementation 'io.rest-assured:rest-assured:4.5.1'
+//        implementation 'commons-io:commons-io:2.11.0'
+//        implementation 'commons-lang:commons-lang:2.6'
+//
+//        implementation 'org.apache.commons:commons-collections4:4.3'
+//        implementation 'org.aeonbits.owner:owner:1.0.11'
+//        implementation 'org.apache.commons:commons-lang3:3.11'
+//        implementation 'io.qameta.allure:allure-junit4:2.20.0'
+//        implementation 'org.jsoup:jsoup:1.15.4'
+//        implementation 'com.google.code.gson:gson:2.10'
+//        implementation 'com.thomasjensen.checkstyle.addons:checkstyle-addons:7.0.0'
+//        implementation 'com.puppycrawl.tools:checkstyle:9.3'
+//        implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.2.0'
+//        implementation 'commons-validator:commons-validator:1.7'
+//        implementation 'com.sun.mail:javax.mail:1.6.2'
+//        implementation 'com.sun.mail:smtp:2.0.0'
+//        implementation 'pl.pragmatists:JUnitParams:1.1.1'
+//        implementation 'org.assertj:assertj-core:3.24.0'
+//        implementation 'com.auth0:java-jwt:4.2.0'
+//        implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.14.0'
+//        implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.14.0'
+//        implementation group: 'software.amazon.awssdk', name: 'sso', version: '2.17.129'
+//        implementation 'com.hierynomus:smbj:0.11.5'
+//        implementation 'software.amazon.awssdk:sts:2.15.20'
+//        implementation 'com.azure:azure-identity:1.7.2'
+//        implementation 'org.projectlombok:lombok:1.18.24'
+//        implementation 'com.opencsv:opencsv:5.7.0'
+//        annotationProcessor 'org.projectlombok:lombok:1.18.24'
+//        testImplementation 'org.projectlombok:lombok:1.18.24'
+//        testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
     }
+    //declare all dependencies
 }

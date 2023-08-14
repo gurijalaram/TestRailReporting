@@ -1,8 +1,8 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.utils.enums.NewCostingLabelEnum;
+import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 public class EvaluateToolbar extends ExploreToolbar {
 
-    @FindBy(xpath = "//div[@id='qa-sub-header-cost-button']/..")
+    @FindBy(css = "div[data-testid='scenario-state-preview']")
     private WebElement costLabel;
 
     @FindBy(css = "[id='qa-sub-header-cost-button'] button")

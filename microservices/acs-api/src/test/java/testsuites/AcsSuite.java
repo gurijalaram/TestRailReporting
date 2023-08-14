@@ -1,38 +1,35 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.ActiveAxesByScenarioIterationKeyTests;
+import com.apriori.ActiveDimensionsByScenarioIterationKeyTests;
+import com.apriori.AllMaterialStocksInfoTests;
+import com.apriori.ArtifactPropertiesTests;
+import com.apriori.ArtifactTableInfoTests;
+import com.apriori.AvailableRoutingsTests;
+import com.apriori.CostResultsTests;
+import com.apriori.CreateMissingScenarioTests;
+import com.apriori.DisplayUnitsTests;
+import com.apriori.EnabledCurrencyRateVersionsTests;
+import com.apriori.GcdPropertiesTests;
+import com.apriori.GcdTypesTests;
+import com.apriori.LoadCadFileTests;
+import com.apriori.MaterialsInfoTests;
+import com.apriori.PartPrimaryProcessGroupsTests;
+import com.apriori.ProductionDefaultsTests;
+import com.apriori.ProductionInfoTests;
+import com.apriori.RoutingSelectionTests;
+import com.apriori.ScenariosInfoTests;
+import com.apriori.TolerancePolicyDefaultsTests;
+import com.apriori.TwoDImageByScenarioIterationKeyTests;
+import com.apriori.UnitVariantSettingsTests;
+import com.apriori.UserPreferenceByNameTests;
+import com.apriori.UserPreferencesTests;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import tests.acs.ActiveAxesByScenarioIterationKeyTests;
-import tests.acs.ActiveDimensionsByScenarioIterationKeyTests;
-import tests.acs.AllMaterialStocksInfoTests;
-import tests.acs.ArtifactPropertiesTests;
-import tests.acs.ArtifactTableInfoTests;
-import tests.acs.AvailableRoutingsTests;
-import tests.acs.CostResultsTests;
-import tests.acs.CreateMissingScenarioTests;
-import tests.acs.DisplayUnitsTests;
-import tests.acs.EnabledCurrencyRateVersionsTests;
-import tests.acs.GcdPropertiesTests;
-import tests.acs.GcdTypesTests;
-import tests.acs.LoadCadFileTests;
-import tests.acs.MaterialsInfoTests;
-import tests.acs.PartPrimaryProcessGroupsTests;
-import tests.acs.ProductionDefaultsTests;
-import tests.acs.ProductionInfoTests;
-import tests.acs.RoutingSelectionTests;
-import tests.acs.ScenariosInfoTests;
-import tests.acs.TolerancePolicyDefaultsTests;
-import tests.acs.TwoDImageByScenarioIterationKeyTests;
-import tests.acs.UnitVariantSettingsTests;
-import tests.acs.UserPreferenceByNameTests;
-import tests.acs.UserPreferencesTests;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("1347")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     AvailableRoutingsTests.class,
     ActiveAxesByScenarioIterationKeyTests.class,
     ActiveDimensionsByScenarioIterationKeyTests.class,
@@ -58,6 +55,5 @@ import tests.acs.UserPreferencesTests;
     UserPreferenceByNameTests.class,
     UserPreferencesTests.class
 })
-
 public class AcsSuite {
 }

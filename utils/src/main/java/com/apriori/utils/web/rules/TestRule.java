@@ -134,7 +134,7 @@ public class TestRule implements MethodRule {
                 originalException = t;
                 int retryNo = i + 1;
                 if (retryNo < repeat + 1) {
-                    logger.debug("Original issue with test " + fm.getMethod().getDeclaringClass().getCanonicalName() + "." + fm.getName() + ": \n");
+                    logger.debug("Original issue with test " + fm.getMethod().getDeclaringClass().getCanonicalName() + "." + fm.getName() + ": ");
                     logger.debug("Exception: ", t);
                     originalScreenshot = captureScreenshot(testBaseNew.getClass().getCanonicalName(), fm.getName(), testBaseNew, i + 1);
                     logger.debug("RETRY NO. " + retryNo);

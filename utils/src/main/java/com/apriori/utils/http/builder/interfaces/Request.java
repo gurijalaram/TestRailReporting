@@ -1,6 +1,6 @@
 package com.apriori.utils.http.builder.interfaces;
 
-import com.apriori.utils.http.utils.ResponseWrapper;
+
 
 public interface Request {
 

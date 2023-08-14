@@ -1,28 +1,26 @@
 package com.apriori.nts.email;
 
-import com.apriori.nts.entity.response.Email;
-import com.apriori.nts.entity.response.EmailsItems;
-import com.apriori.nts.entity.response.SendEmail;
+import com.apriori.email.GraphEmailService;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.MultiPartFiles;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
+import com.apriori.models.response.EmailMessage;
 import com.apriori.nts.enums.NTSAPIEnum;
+import com.apriori.nts.models.response.Email;
+import com.apriori.nts.models.response.EmailsItems;
+import com.apriori.nts.models.response.SendEmail;
 import com.apriori.nts.utils.EmailSetup;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.email.GraphEmailService;
-import com.apriori.utils.email.response.EmailMessage;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.MultiPartFiles;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.pdf.PDFDocument;
-import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 import java.util.HashMap;
 import java.util.Map;
-
 
 @Slf4j
 public class EmailService {

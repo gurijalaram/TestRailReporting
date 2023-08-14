@@ -1,5 +1,5 @@
 dependencies {
-    implementation project(':utils')
+    implementation project(':shared-util')
     implementation project(':web:cidapp-ui')
     implementation project(':microservices:cir-api')
     implementation project(':web:ciconnect-ui')

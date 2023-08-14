@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "@odata.type": {
+      "type": "string"
+    },
+    "@odata.mediaContentType": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "lastModifiedDateTime": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "contentType": {
+      "type": "string"
+    },
+    "size": {
+      "type": "integer"
+    },
+    "isInline": {
+      "type": "boolean"
+    },
+    "contentId": {
+      "type": "string"
+    },
+    "contentLocation": {
+      "type": "null"
+    },
+    "contentBytes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "contentBytes"
+  ],
+  "optional": [
+    "@odata.type",
+    "@odata.mediaContentType",
+    "id",
+    "lastModifiedDateTime",
+    "contentType",
+    "size",
+    "isInline",
+    "contentId",
+    "contentLocation"
+  ]
+}

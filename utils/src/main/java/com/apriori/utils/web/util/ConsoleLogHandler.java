@@ -60,12 +60,12 @@ public class ConsoleLogHandler implements WebDriverEventListener {
         List<LogEntry> filteredErrorEntries = filterBlacklistedURLs(logEntries.getAll());
         if (!filteredErrorEntries.isEmpty() && levelOfThrowingAssertion.equals(Level.SEVERE)) {
             filteredErrorEntries.forEach(logEntry -> {
-                throw new ConsoleLogError("Browser console ERROR: \n" + logEntry.getMessage());
+                throw new ConsoleLogError("Browser console ERROR: " + logEntry.getMessage());
             });
         }
         if (!filteredErrorEntries.isEmpty() && !levelOfThrowingAssertion.equals(Level.SEVERE) && !levelOfThrowingAssertion.equals(Level.OFF)) {
             filteredErrorEntries.forEach(logEntry -> {
-                logger.debug("Browser console ERROR: \n" + logEntry.getMessage());
+                logger.debug("Browser console ERROR: " + logEntry.getMessage());
             });
         }
     }

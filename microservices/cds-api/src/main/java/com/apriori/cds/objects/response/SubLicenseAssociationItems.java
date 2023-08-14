@@ -1,6 +1,6 @@
 package com.apriori.cds.objects.response;
 
-import com.apriori.utils.http.enums.Schema;
+import com.apriori.annotations.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -22,6 +22,7 @@ public class SubLicenseAssociationItems {
     private CustomAttributes customAttributes;
     private String userType;
     private Boolean mfaRequired;
+    private Boolean hasCompleteProfile;
     private String customerIdentity;
     private List<String> roles;
 }

@@ -150,11 +150,11 @@ public class APIClient {
                     BufferedWriter bodyWriter = new BufferedWriter(
                         new OutputStreamWriter(ostreamBody));
 
-                    bodyWriter.write("\n\n--" + boundary + "\r\n");
+                    bodyWriter.write("--" + boundary + "\r");
                     bodyWriter
                         .write("Content-Disposition: form-data; name=\"attachment\"; filename=\""
                             + uploadFile.getName() + "\"");
-                    bodyWriter.write("\r\n\r\n");
+                    bodyWriter.write("\r\r");
                     bodyWriter.flush();
 
                     // Read file into request
@@ -168,7 +168,7 @@ public class APIClient {
                     ostreamBody.flush();
 
                     // end of attachment, add boundary
-                    bodyWriter.write("\r\n--" + boundary + "--\r\n");
+                    bodyWriter.write("\r--" + boundary + "--\r");
                     bodyWriter.flush();
 
                     // Close streams

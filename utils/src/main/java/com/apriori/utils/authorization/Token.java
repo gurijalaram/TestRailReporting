@@ -1,6 +1,6 @@
 package com.apriori.utils.authorization;
 
-import com.apriori.utils.http.enums.Schema;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

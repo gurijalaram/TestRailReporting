@@ -1,9 +1,9 @@
 package com.apriori.utils.http.builder.common.entity;
 
-import com.apriori.utils.http.enums.EndpointEnum;
+
 import com.apriori.utils.http.enums.EndpointType;
-import com.apriori.utils.http.utils.MultiPartFiles;
-import com.apriori.utils.http.utils.QueryParams;
+
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

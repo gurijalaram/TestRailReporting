@@ -1,6 +1,6 @@
 package com.apriori.utils.http.builder.request;
 
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
+
 import com.apriori.utils.http.builder.interfaces.Request;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HTTPRequest {
 
     public static Request build(RequestEntity requestEntity) {
-        log.debug("Request data:\n{}", requestEntity);
+        log.debug("Request data:{}", requestEntity);
 
         return BaseRequestImpl.init(requestEntity);
     }

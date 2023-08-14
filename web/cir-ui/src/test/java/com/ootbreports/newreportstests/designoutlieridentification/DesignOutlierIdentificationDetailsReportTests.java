@@ -1,19 +1,19 @@
 package com.ootbreports.newreportstests.designoutlieridentification;
 
-import com.apriori.cirapi.entity.JasperReportSummary;
-import com.apriori.cirapi.entity.enums.CirApiEnum;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
+import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.enums.CirApiEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
+import enums.JasperCirApiPartsEnum;
+import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -31,20 +31,20 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     private static JasperApiUtils jasperApiUtils;
     private static SoftAssertions softAssertions = new SoftAssertions();
 
-    @Before
+    @BeforeEach
     public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
-    @TestRail(testCaseId = {"7387"})
+    @TestRail(id = {7387})
     @Description("Verify mass metric - finish mass - Design Outlier Identification Details Report")
     public void testMassMetricFinishMass() {
         genericMassMetricTest(MassMetricEnum.FINISH_MASS.getMassMetricName());
     }
 
     @Test
-    @TestRail(testCaseId = {"7386"})
+    @TestRail(id = {7386})
     @Description("Verify mass metric - rough mass - Design Outlier Identification Details Report")
     public void testMassMetricRoughMass() {
         genericMassMetricTest(MassMetricEnum.ROUGH_MASS.getMassMetricName());

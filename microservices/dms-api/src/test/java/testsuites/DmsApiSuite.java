@@ -1,19 +1,16 @@
 package testsuites;
 
-import com.apriori.dms.tests.DmsCommentViewTest;
-import com.apriori.dms.tests.DmsCommentsTest;
-import com.apriori.dms.tests.DmsDiscussionParticipantTest;
-import com.apriori.dms.tests.DmsDiscussionProjectItemTest;
-import com.apriori.dms.tests.DmsDiscussionTest;
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.DmsCommentViewTest;
+import com.apriori.DmsCommentsTest;
+import com.apriori.DmsDiscussionParticipantTest;
+import com.apriori.DmsDiscussionProjectItemTest;
+import com.apriori.DmsDiscussionTest;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("1714")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     DmsDiscussionTest.class,
     DmsCommentsTest.class,
     DmsCommentViewTest.class,

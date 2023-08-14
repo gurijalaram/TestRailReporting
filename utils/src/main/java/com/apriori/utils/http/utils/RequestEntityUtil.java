@@ -1,11 +1,11 @@
 package com.apriori.utils.http.utils;
 
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
+
+
 import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
-import com.apriori.utils.http.enums.EndpointEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
+
+
+
 
 import java.util.HashMap;
 import java.util.Map;

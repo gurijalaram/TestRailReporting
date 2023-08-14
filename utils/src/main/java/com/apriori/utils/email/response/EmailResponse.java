@@ -1,6 +1,6 @@
 package com.apriori.utils.email.response;
 
-import com.apriori.utils.http.enums.Schema;
+
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

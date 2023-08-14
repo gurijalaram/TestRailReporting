@@ -1,6 +1,6 @@
 package com.apriori.utils.http.enums.common.api;
 
-import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
+
 
 /**
  * @author kpatel

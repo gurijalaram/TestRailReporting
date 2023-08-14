@@ -1,18 +1,13 @@
 package testsuites;
 
-import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.CategorySuiteRunner;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import org.junit.experimental.categories.Categories;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.IncludeTags;
+import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("874")
-@RunWith(CategorySuiteRunner.class)
-@Categories.IncludeCategory({SmokeTest.class})
-@Suite.SuiteClasses({
-    RegressionTestSuite.class
-})
+@Suite
+@SelectPackages("com.apriori")
+@IncludeTags(SMOKE)
 public final class SmokeTestSuite {
 }

@@ -1,47 +1,47 @@
 package com.apriori.sds.util;
 
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
-import static org.junit.Assert.assertFalse;
+import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.response.Customer;
+import com.apriori.cds.models.response.Customers;
 import com.apriori.cds.objects.response.Application;
 import com.apriori.cds.objects.response.Applications;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
-import com.apriori.cidappapi.entity.request.CostRequest;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.enums.CidAppAPIEnum;
+import com.apriori.cidappapi.models.request.CostRequest;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.PeopleUtil;
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.fms.controller.FileManagementController;
-import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.request.PostComponentRequest;
-import com.apriori.sds.entity.request.PublishRequest;
-import com.apriori.sds.entity.response.CostingTemplate;
-import com.apriori.sds.entity.response.CostingTemplatesItems;
-import com.apriori.sds.entity.response.PostComponentResponse;
-import com.apriori.sds.entity.response.Scenario;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
+import com.apriori.models.response.ErrorMessage;
+import com.apriori.models.response.ScenarioItem;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.sds.enums.SDSAPIEnum;
+import com.apriori.sds.models.request.PostComponentRequest;
+import com.apriori.sds.models.request.PublishRequest;
+import com.apriori.sds.models.response.CostingTemplate;
+import com.apriori.sds.models.response.CostingTemplatesItems;
+import com.apriori.sds.models.response.PostComponentResponse;
+import com.apriori.sds.models.response.Scenario;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.ErrorMessage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.common.customer.response.Customer;
-import com.apriori.utils.common.customer.response.Customers;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
 import java.util.Collections;
@@ -60,14 +60,13 @@ public abstract class SDSTestUtil extends TestUtil {
     protected static Set<ScenarioItem> scenariosToDelete = new HashSet<>();
     private static ScenarioItem testingComponent;
 
-
-    @BeforeClass
+    @BeforeAll
     public static void init() {
         RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser("admin"));
         RequestEntityUtil.useTokenForRequests(testingUser.getToken());
     }
 
-    @AfterClass
+    @AfterAll
     public static void clearTestingData() {
         if (!scenariosToDelete.isEmpty()) {
             scenariosToDelete.forEach(component -> {
@@ -315,31 +314,6 @@ public abstract class SDSTestUtil extends TestUtil {
         return scenarioRepresentation;
     }
 
-    protected CostingTemplate getFirstCostingTemplate() {
-        List<CostingTemplate> costingTemplates = getCostingTemplates();
-        assertFalse("To get CostingTemplate it should present in response", costingTemplates.isEmpty());
-        return costingTemplates.get(0);
-    }
-
-
-    protected List<CostingTemplate> getCostingTemplates() {
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<CostingTemplatesItems> response = HTTPRequest.build(requestEntity).get();
-
-        return response.getResponseEntity().getItems();
-    }
-
-    protected void addScenarioToDelete(final String identity) {
-        scenariosToDelete.add(ScenarioItem.builder()
-            .componentIdentity(getComponentId())
-            .scenarioIdentity(identity)
-            .build()
-        );
-    }
-
     /**
      * POST to cost a scenario
      *
@@ -401,6 +375,30 @@ public abstract class SDSTestUtil extends TestUtil {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
+    }
+
+    protected CostingTemplate getFirstCostingTemplate() {
+        List<CostingTemplate> costingTemplates = getCostingTemplates();
+        assertFalse(costingTemplates.isEmpty(), "To get CostingTemplate it should present in response");
+        return costingTemplates.get(0);
+    }
+
+    protected List<CostingTemplate> getCostingTemplates() {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<CostingTemplatesItems> response = HTTPRequest.build(requestEntity).get();
+
+        return response.getResponseEntity().getItems();
+    }
+
+    protected void addScenarioToDelete(final String identity) {
+        scenariosToDelete.add(ScenarioItem.builder()
+            .componentIdentity(getComponentId())
+            .scenarioIdentity(identity)
+            .build()
+        );
     }
 
     /**
