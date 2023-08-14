@@ -33,7 +33,6 @@ public class LocalDriverFactory {
                 default:
                     throw new BrowserNotSupportedException(browser);
             }
-            // TODO: 15/06/2023 maybe retry after exception caught here
         } catch (SessionNotCreatedException | NullPointerException e) {
             e.getCause();
         }
