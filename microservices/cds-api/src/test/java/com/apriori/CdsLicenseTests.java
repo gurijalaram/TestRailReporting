@@ -2,18 +2,18 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
+import com.apriori.cds.models.response.ActiveLicenseModules;
+import com.apriori.cds.models.response.CdsErrorResponse;
 import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.models.response.LicenseResponse;
+import com.apriori.cds.models.response.Licenses;
 import com.apriori.cds.models.response.Site;
 import com.apriori.cds.models.response.SubLicense;
+import com.apriori.cds.models.response.SubLicenseAssociation;
+import com.apriori.cds.models.response.SubLicenseAssociationUser;
 import com.apriori.cds.models.response.SubLicenses;
-import com.apriori.cds.objects.response.ActiveLicenseModules;
-import com.apriori.cds.objects.response.CdsErrorResponse;
-import com.apriori.cds.objects.response.Licenses;
-import com.apriori.cds.objects.response.SubLicenseAssociation;
-import com.apriori.cds.objects.response.SubLicenseAssociationUser;
-import com.apriori.cds.objects.response.User;
-import com.apriori.cds.objects.response.UsersLicensing;
+import com.apriori.cds.models.response.User;
+import com.apriori.cds.models.response.UsersLicensing;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -398,7 +398,6 @@ public class CdsLicenseTests {
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().stream()
             .filter(x -> !x.getName().contains("master"))
             .collect(Collectors.toList()).get(0).getIdentity();
-
 
         cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
 

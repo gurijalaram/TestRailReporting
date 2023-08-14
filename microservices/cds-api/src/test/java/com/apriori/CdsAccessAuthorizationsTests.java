@@ -2,12 +2,12 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
+import com.apriori.cds.models.response.AccessAuthorization;
+import com.apriori.cds.models.response.AccessAuthorizations;
+import com.apriori.cds.models.response.AssociationUserItems;
 import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.models.response.CustomerAssociationResponse;
-import com.apriori.cds.objects.response.AccessAuthorization;
-import com.apriori.cds.objects.response.AccessAuthorizations;
-import com.apriori.cds.objects.response.AssociationUserItems;
-import com.apriori.cds.objects.response.StatusAccessAuthorizations;
+import com.apriori.cds.models.response.StatusAccessAuthorizations;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;

@@ -9,7 +9,7 @@ import com.apriori.cas.models.response.CustomerAssociation;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
-import com.apriori.cds.objects.response.AssociationUserItems;
+import com.apriori.cds.models.response.AssociationUserItems;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.RequestEntityUtil;

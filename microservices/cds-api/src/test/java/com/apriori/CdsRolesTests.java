@@ -1,7 +1,7 @@
 package com.apriori;
 
-import com.apriori.cds.objects.response.Role;
-import com.apriori.cds.objects.response.Roles;
+import com.apriori.cds.models.response.Role;
+import com.apriori.cds.models.response.Roles;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.testrail.TestRail;
 
