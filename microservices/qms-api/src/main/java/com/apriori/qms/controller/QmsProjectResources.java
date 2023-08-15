@@ -1,14 +1,12 @@
 package com.apriori.qms.controller;
 
 import com.apriori.DateFormattingUtils;
-import com.apriori.exceptions.KeyValueException;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
-import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
@@ -21,14 +19,12 @@ import com.apriori.qms.models.request.bidpackage.BidPackageProjectUserParameters
 import com.apriori.qms.models.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.utils.KeyValueUtil;
 
 import org.apache.http.HttpStatus;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * The type Qms project resources.
@@ -109,7 +105,6 @@ public class QmsProjectResources {
         return responseWrapper.getResponseEntity();
     }
 
-
     /**
      * Gets project.
      *
@@ -179,20 +174,8 @@ public class QmsProjectResources {
      * @return the filtered projects
      */
     public static BidPackageProjectsResponse getFilteredProjects(UserCredentials currentUser, String... paramKeysValues) {
-        QueryParams queryParams = new QueryParams();
-
-        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(","))
-            .collect(Collectors.toList());
-        Map<String, String> paramMap = new HashMap<>();
-
-        try {
-            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
-        } catch (ArrayIndexOutOfBoundsException ae) {
-            throw new KeyValueException(ae.getMessage(), paramKeyValue);
-        }
-
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.PROJECTS, BidPackageProjectsResponse.class)
-            .queryParams(queryParams.use(paramMap))
+            .queryParams(new KeyValueUtil().keyValue(paramKeysValues, ","))
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);

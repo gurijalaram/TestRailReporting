@@ -5,7 +5,6 @@ import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 
 import com.apriori.enums.CssAPIEnum;
 import com.apriori.enums.ScenarioStateEnum;
-import com.apriori.exceptions.KeyValueException;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.QueryParams;
@@ -18,13 +17,10 @@ import com.apriori.reader.file.user.UserCredentials;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -99,18 +95,10 @@ public class CssComponent {
      * @throws ArrayIndexOutOfBoundsException if only one of the key/value is supplied eg. "scenarioState" rather than "scenarioState[EQ], not_costed"
      */
     public List<ScenarioItem> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
-        QueryParams queryParams = new QueryParams();
-
-        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
-        Map<String, String> paramMap = new HashMap<>();
-
-        try {
-            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
-        } catch (ArrayIndexOutOfBoundsException ae) {
-            throw new KeyValueException(ae.getMessage(), paramKeyValue);
-        }
-
-        return getBaseCssComponents(userCredentials, queryParams.use(paramMap)).getResponseEntity().getItems();
+        return getBaseCssComponents(userCredentials,
+            new KeyValueUtil().keyValue(paramKeysValues, ","))
+            .getResponseEntity()
+            .getItems();
     }
 
     /**
@@ -167,7 +155,7 @@ public class CssComponent {
      * Creates search request by component type
      *
      * @param userCredentials - the user credentials
-     * @param componentType - the component type
+     * @param componentType   - the component type
      * @return the response wrapper that contains the response data
      */
     public ResponseWrapper<CssComponentResponse> postSearchRequest(UserCredentials userCredentials, String componentType) {
