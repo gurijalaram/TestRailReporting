@@ -2,10 +2,10 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
+import com.apriori.cds.models.response.CustomAttribute;
+import com.apriori.cds.models.response.CustomAttributesResponse;
 import com.apriori.cds.models.response.Customer;
-import com.apriori.cds.objects.response.CustomAttribute;
-import com.apriori.cds.objects.response.CustomAttributesResponse;
-import com.apriori.cds.objects.response.User;
+import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -54,9 +54,9 @@ public class CdsCustomAttributesTests {
     public void cleanUp() {
         if (customAttributesIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID,
-                    customAttributesIdentityHolder.customerIdentity(),
-                    customAttributesIdentityHolder.userIdentity(),
-                    customAttributesIdentityHolder.customAttributeIdentity()
+                customAttributesIdentityHolder.customerIdentity(),
+                customAttributesIdentityHolder.userIdentity(),
+                customAttributesIdentityHolder.customAttributeIdentity()
             );
         }
         if (customerIdentity != null && userIdentity != null) {

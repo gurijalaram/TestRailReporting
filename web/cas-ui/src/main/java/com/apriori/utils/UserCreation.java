@@ -1,6 +1,6 @@
 package com.apriori.utils;
 
-import com.apriori.cds.objects.response.User;
+import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.TestUtil;
 

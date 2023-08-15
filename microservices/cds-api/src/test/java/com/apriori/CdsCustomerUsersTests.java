@@ -1,11 +1,11 @@
 package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.response.CredentialsItems;
 import com.apriori.cds.models.response.Customer;
-import com.apriori.cds.objects.response.User;
-import com.apriori.cds.objects.response.UserProperties;
-import com.apriori.cds.objects.response.Users;
-import com.apriori.cds.objects.response.credentials.CredentialsItems;
+import com.apriori.cds.models.response.User;
+import com.apriori.cds.models.response.UserProperties;
+import com.apriori.cds.models.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.models.entity.RequestEntity;

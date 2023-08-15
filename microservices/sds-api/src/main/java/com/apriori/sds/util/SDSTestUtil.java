@@ -6,10 +6,10 @@ import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.response.Application;
+import com.apriori.cds.models.response.Applications;
 import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.models.response.Customers;
-import com.apriori.cds.objects.response.Application;
-import com.apriori.cds.objects.response.Applications;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.models.request.CostRequest;
