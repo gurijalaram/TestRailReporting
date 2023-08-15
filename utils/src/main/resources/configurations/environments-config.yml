@@ -32,6 +32,9 @@ qa-test:
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
     welcome_page_text: CI-Admin aPriori Internal
     failed_login_message: WE'RE SORRY, SOMETHING WENT WRONG WHEN ATTEMPTING TO LOG IN.
+    username_locator: //input[@type='email']
+    login_locator: //button[@id='1-submit']
+    login_title_locator: //*[@class='auth0-lock-name']
 
 ########################################################################################################################
 
@@ -105,18 +108,22 @@ staging:
 
 ######################################################## On Prem #######################################################
 onprem:
-  name: onprem
   base_url: walqbaci01/
+  name: onprem
   deployment_url_template: ${base_url}
   users_csv_file: onprem-users.csv
 
   reports:
-    ui_url: https://${base_url}jasperserver-pro/
-    welcome_page_text: aP Analytics
+    username_locator: //input[contains(@name, 'username')]
+    login_locator: //button[@id='submitButton']
+    welcome_page_text: Cost Insight Report
+    login_title_locator: //h2[@class='textAccent']
     failed_login_messsage: Invalid credentials supplied.Could not login to JasperReports Server.
 
   admin:
-    welcome_page_text: Log in to aP Admin
+    login_locator: //button[@id='login']
+    welcome_page_text: Cost Insight | Admin
+    login_title_locator: //p[@class='password-inputs-header']
 
 ########################################################################################################################
 

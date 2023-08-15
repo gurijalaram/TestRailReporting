@@ -54,6 +54,10 @@ public class JasperReportUtil {
             .expectedResponseCode(HttpStatus.SC_OK)
             .urlEncodingEnabled(false);
 
+        if (value.toString().startsWith("SHEET")) {
+            requestEntity.inlineVariables("%20", "%20");
+        }
+
         ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
 
         return responseResponseWrapper.getResponseEntity();

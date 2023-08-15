@@ -32,7 +32,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
-    @TestRail(id = {1997})
+    @TestRail(id = 1997)
     @Description("Verify mass metric - finish mass - Design Outlier Identification Report")
     public void testMassMetricFinishMass() {
         jasperApiUtils.genericDtcTest(
@@ -42,7 +42,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
-    @TestRail(id = {7385})
+    @TestRail(id = 7385)
     @Description("Verify mass metric - rough mass - Design Outlier Identification Report")
     public void testMassMetricRoughMass() {
         jasperApiUtils.genericDtcTest(
