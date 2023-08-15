@@ -1,10 +1,12 @@
 package utils;
 
-import com.apriori.pages.home.CIConnectHome;
-import com.apriori.pages.login.CicLoginPage;
+import com.apriori.cic.models.response.AgentWorkflowJobResults;
+import com.apriori.cic.models.response.AgentWorkflowJobRun;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.WorkflowTestUtil;
+import com.apriori.pageobjects.home.CIConnectHome;
+import com.apriori.pageobjects.login.CicLoginPage;
 
-import entity.response.AgentWorkflowJobResults;
-import entity.response.AgentWorkflowJobRun;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -33,8 +35,6 @@ public class CicGuiTestUtil extends WorkflowTestUtil {
     /**
      * Create workflow
      *
-     * @param workflowRequestData WorkflowRequest
-     * @param sessionID           JSessionID
      * @return current class object
      */
     public CicGuiTestUtil createWorkflow() {
@@ -53,7 +53,6 @@ public class CicGuiTestUtil extends WorkflowTestUtil {
     /**
      * Get matching workflow from list of returned workflows
      *
-     * @param workflowName Workflow name
      * @return Current class object
      */
     public CicGuiTestUtil getWorkflow() {

@@ -1,0 +1,48 @@
+{
+  "assemblies": [
+    {
+      "componentName": "Hinge assembly",
+      "extension": ".SLDASM",
+      "processGroup": "ASSEMBLY",
+      "subComponents": [
+        {
+          "componentName": "big ring",
+          "extension": ".SLDPRT",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "Pin",
+          "extension": ".SLDPRT",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "small ring",
+          "extension": ".SLDPRT",
+          "processGroup": "FORGING"
+        }
+      ]
+    },
+    {
+      "componentName": "flange c",
+      "extension": ".CATProduct",
+      "processGroup": "ASSEMBLY",
+      "subComponents": [
+        {
+          "componentName": "flange",
+          "extension": ".CATPart",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "nut",
+          "extension": ".CATPart",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "bolt",
+          "extension": ".CATPart",
+          "processGroup": "PLASTIC_MOLDING"
+        }
+      ]
+    }
+  ]
+}

@@ -1,16 +1,13 @@
 package testsuites;
 
-import com.apriori.tests.UserPreferencesTests;
-import com.apriori.tests.UserTests;
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.CategorySuiteRunner;
+import com.apriori.UserPreferencesTests;
+import com.apriori.UserTests;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("768")
-@RunWith(CategorySuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     UserTests.class,
     UserPreferencesTests.class
 })

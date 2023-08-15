@@ -1,0 +1,66 @@
+########################################################################################################################
+# Customers variables file
+# Contains variables
+#  - related to specific customer
+############################################# Customer properties ######################################################
+
+# Define the customer
+# We can add customer_identity and other information related to customer, so remove from environment properties
+########################################################################################################################
+
+######################################################## AP-INT ########################################################
+ap-int:
+  token_subject: 4127
+  ci-connect:
+    customer_identity: 6C1F8C1D4D75
+    customer_name: aPrioriInternal_Customer
+    agent_type: windchill
+    windchill:
+      port: 8811
+      connector: WC-consvwc02
+      agent_name: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
+    teamcenter:
+      port: 8810
+      connector: TC-consvtc12
+      agent_name: c3101e82-4cfc-4a3b-a341-ee53c3f05f55_Agent
+    filesystem:
+      port: 8809
+      connector: FS-conqcic01
+    enovia:
+      port: 8808
+      connector: EN-consvwc02
+
+
+
+#################################################### AP-INT-STAGING ####################################################
+ap-int-staging:
+  token_subject: 2b68
+
+######################################################## GADGETS #######################################################
+gadgets:
+  token_subject: 247f
+
+########################################################################################################################
+
+
+######################################################## WIDGETS #######################################################
+widgets:
+  token_subject: 739e
+  ci-connect:
+    customer_identity: 52IC4D3J98GN
+    customer_name: 130cf4de-82aa-460c-9991-014a63b7dc20_Customer
+    agent_type: windchill
+    windchill:
+      port: 8807
+      connector: WC-consvwc02
+      agent_name: 59cf01bd-b45c-4252-a94c-e433fbc342fa_Agent
+
+########################################################################################################################
+
+
+####################################################### SPROCKETS ######################################################
+sprockets:
+  token_subject: c8fc
+
+########################################################################################################################
+

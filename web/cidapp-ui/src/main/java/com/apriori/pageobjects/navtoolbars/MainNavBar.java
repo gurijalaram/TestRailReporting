@@ -1,13 +1,12 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
-import com.apriori.pageobjects.pages.compare.CompareExplorePage;
-import com.apriori.pageobjects.pages.compare.ComparePage;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.help.HelpPage;
-import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
+import com.apriori.pageobjects.compare.ComparePage;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
+import com.apriori.pageobjects.explore.ExplorePage;
+import com.apriori.pageobjects.help.HelpPage;
+import com.apriori.pageobjects.login.CidAppLoginPage;
+import com.apriori.pageobjects.settings.DisplayPreferencesPage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

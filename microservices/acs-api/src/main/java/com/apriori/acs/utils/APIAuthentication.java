@@ -1,13 +1,11 @@
 package com.apriori.acs.utils;
 
-import com.apriori.acs.entity.enums.acs.AcsApiEnum;
-import com.apriori.apibase.services.response.objects.AuthenticateJSON;
-import com.apriori.utils.AuthorizationFormUtil;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.acs.enums.acs.AcsApiEnum;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
 
 import org.apache.commons.collections4.map.PassiveExpiringMap;
 

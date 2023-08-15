@@ -3,14 +3,14 @@ package com.apriori.tests;
 import com.apriori.cnh.entity.apicalls.CnhService;
 import com.apriori.cnh.entity.request.ExecuteRequest;
 import com.apriori.cnh.entity.response.ExecuteResponse;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
+
+
+
+
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CnhNegativeTests {
 
@@ -18,7 +18,7 @@ public class CnhNegativeTests {
     private  String invalidCustomerId = "TEST3KED5H5BKN85";
 
     @Test
-    @TestRail(testCaseId = {"14062"})
+    @TestRail(id = {14062})
     @Description("Verify wrong report id provided in /status call")
     public void shouldNotProcessWrongReportId() {
         SoftAssertions soft = new SoftAssertions();
@@ -42,7 +42,7 @@ public class CnhNegativeTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"14066"})
+    @TestRail(id = {14066})
     @Description("Verify both endpoints with wrong client id")
     public void shouldNotProcessWithWrongClientId() {
         SoftAssertions soft = new SoftAssertions();
@@ -65,7 +65,7 @@ public class CnhNegativeTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"14064"})
+    @TestRail(id = {14064})
     @Description("Verify missing parameters in the /execute body for report-1")
     public void shouldNotProcessWithMissedParameter() {
         SoftAssertions soft = new SoftAssertions();

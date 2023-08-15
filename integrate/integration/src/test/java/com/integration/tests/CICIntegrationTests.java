@@ -1,49 +1,48 @@
 package com.integration.tests;
 
+import com.apriori.ExcelService;
+import com.apriori.TestBaseUI;
+import com.apriori.cic.models.request.JobDefinition;
+import com.apriori.cic.models.response.AgentWorkflow;
+import com.apriori.cic.models.response.AgentWorkflowJobRun;
+import com.apriori.cic.models.response.AgentWorkflowReportTemplates;
+import com.apriori.cic.models.response.ReportTemplatesRow;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.cic.utils.CicLoginUtil;
+import com.apriori.dataservice.TestDataService;
+import com.apriori.email.GraphEmailService;
 import com.apriori.enums.SortedOrderType;
 import com.apriori.enums.WorkflowListColumns;
+import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.EmailMessage;
 import com.apriori.nts.reports.partscost.PartsCost;
 import com.apriori.pagedata.WorkFlowData;
-import com.apriori.pages.login.CicLoginPage;
-import com.apriori.pages.workflows.WorkflowHome;
-import com.apriori.pages.workflows.schedule.SchedulePage;
-import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
-import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
-import com.apriori.pages.workflows.schedule.publishresults.PublishResultsPart;
-import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.email.GraphEmailService;
-import com.apriori.utils.email.response.EmailMessage;
-import com.apriori.utils.excel.ExcelService;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.pageobjects.login.CicLoginPage;
+import com.apriori.pageobjects.workflows.WorkflowHome;
+import com.apriori.pageobjects.workflows.schedule.SchedulePage;
+import com.apriori.pageobjects.workflows.schedule.costinginputs.CostingInputsPart;
+import com.apriori.pageobjects.workflows.schedule.notifications.NotificationsPart;
+import com.apriori.pageobjects.workflows.schedule.publishresults.PublishResultsPart;
+import com.apriori.pageobjects.workflows.schedule.querydefinitions.QueryDefinitions;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
-import entity.request.JobDefinition;
-import entity.response.AgentWorkflow;
-import entity.response.AgentWorkflowJobRun;
-import entity.response.AgentWorkflowReportTemplates;
-import entity.response.ReportTemplatesRow;
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import utils.CicApiTestUtil;
-import utils.CicLoginUtil;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class CICIntegrationTests extends TestBase {
+public class CICIntegrationTests extends TestBaseUI {
 
     private static String loginSession;
-    UserCredentials currentUser = UserUtil.getUser();
     private static AgentWorkflow agentWorkflowResponse;
     private static JobDefinition jobDefinitionData;
     private static AgentWorkflowJobRun agentWorkflowJobRunResponse;
@@ -53,12 +52,13 @@ public class CICIntegrationTests extends TestBase {
     private static SoftAssertions softAssertions;
     private static AgentWorkflowReportTemplates reportTemplateNames;
     private static ReportTemplatesRow reportTemplateName;
+    UserCredentials currentUser = UserUtil.getUser();
 
     public CICIntegrationTests() {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         softAssertions = new SoftAssertions();
         jobDefinitionData = new TestDataService().getTestData("CicGuiDeleteJobDefData.json", JobDefinition.class);
@@ -68,7 +68,7 @@ public class CICIntegrationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12045"})
+    @TestRail(id = 12045)
     @Description("Test creating, invoking, tracking and deletion of a workflow")
     public void testCreateAndDeleteWorkflow() {
         WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowData.json", WorkFlowData.class);
@@ -104,10 +104,10 @@ public class CICIntegrationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12046"})
+    @TestRail(id = 12046)
     @Description("Create Workflow, Invoke workflow, verify Parts Cost watchpoint report from email and delete workflow")
     public void testVerifyWatchPointReport() {
-        loginSession =  new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
+        loginSession = new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
         workflowData = String.format(CicApiTestUtil.getWorkflowData("WatchPointReportData.json"), CicApiTestUtil.getCustomerName(),
             CicApiTestUtil.getAgent(loginSession), workflowName, scenarioName);
         // Create WorkFlow
@@ -136,7 +136,7 @@ public class CICIntegrationTests extends TestBase {
         emailMessage.deleteEmailMessage();
     }
 
-    @After
+    @AfterEach
     public void cleanup() {
         CicApiTestUtil.deleteWorkFlow(loginSession, CicApiTestUtil.getMatchedWorkflowId(workflowName));
         softAssertions.assertAll();

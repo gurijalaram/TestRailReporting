@@ -1,8 +1,8 @@
 package testsuites;
 
-import com.apriori.qds.tests.suite.QdsApiSuite;
+import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
-import io.qameta.allure.junit4.AllureJunit4;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -10,17 +10,18 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.junit.runner.Description;
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
-import org.junit.runner.notification.Failure;
-import org.junit.runner.notification.RunListener;
+import org.junit.platform.launcher.Launcher;
+import org.junit.platform.launcher.LauncherDiscoveryRequest;
+import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
+import org.junit.platform.launcher.core.LauncherFactory;
+import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
+import org.junit.platform.launcher.listeners.TestExecutionSummary;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+@Slf4j
 public class TestMain {
     public static Class defaultTest = QdsApiSuite.class;
 
@@ -78,61 +79,28 @@ public class TestMain {
 
     private static void run(Class testClass) {
 
-        JUnitCore runner = new JUnitCore();
-        runner.addListener(new ExecutionListener());
-        runner.addListener(new AllureJunit4());
-        Result result = runner.run(testClass);
+        final LauncherDiscoveryRequest request =
+            LauncherDiscoveryRequestBuilder.request()
+                .selectors(selectClass(TestMain.class))
+                .build();
 
-        // Report failures that occurred during testing.
-        for (Failure failure : result.getFailures()) {
-            System.out.println(failure.getMessage());
-            System.out.println(failure.getTestHeader());
-            System.out.println(failure.getTrace());
-        }
-    }
+        final Launcher launcher = LauncherFactory.create();
+        final SummaryGeneratingListener listener = new SummaryGeneratingListener();
 
-    static class ExecutionListener extends RunListener {
+        launcher.registerTestExecutionListeners(listener);
+        launcher.execute(request);
 
-        /**
-         * Called before any tests have been run.
-         */
-        public void testRunStarted(Description description) {
-            System.out.println("Number of tests to execute : " + description.testCount());
-        }
+        TestExecutionSummary summary = listener.getSummary();
 
-        /**
-         * Called when all tests have finished.
-         */
-        public void testRunFinished(Result result) {
-            System.out.println("Number of tests executed : " + result.getRunCount());
-        }
+        log.info("Number of tests to execute :- {}", summary.getTestsFoundCount());
 
-        /**
-         * Called when an atomic test is about to be started.
-         */
-        public void testStarted(Description description) {
-            System.out.println("Starting execution of test case : " + description.getMethodName());
-        }
+        log.info("Number of tests succeeded :- {}", summary.getTestsSucceededCount());
 
-        /**
-         * Called when an atomic test has finished, whether the test succeeds or fails.
-         */
-        public void testFinished(Description description) {
-            System.out.println("Finished execution of test case : " + description.getMethodName());
-        }
+        log.info("Number of tests skipped :- {}", summary.getTestsSkippedCount());
 
-        /**
-         * Called when an atomic test fails.
-         */
-        public void testFailure(Failure failure) {
-            System.out.println("Execution of test case failed : " + failure.getMessage());
-        }
+        log.info("Number of tests aborted :- {}", summary.getTestsAbortedCount());
 
-        /**
-         * Called when a test will not be run, generally because a test method is annotated with Ignore.
-         */
-        public void testIgnored(Description description) {
-            System.out.println("Execution of test case ignored : " + description.getMethodName());
-        }
+        log.info("Number of tests failed :- {}", summary.getTestsFailedCount());
+        summary.getFailures().forEach(failure -> log.info("Failure :- " + failure.getException()));
     }
 }

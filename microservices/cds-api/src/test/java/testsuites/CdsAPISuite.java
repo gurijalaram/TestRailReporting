@@ -1,37 +1,34 @@
 package testsuites;
 
-import com.apriori.cds.tests.ApVersionsTests;
-import com.apriori.cds.tests.CdsAccessAuthorizationsTests;
-import com.apriori.cds.tests.CdsAccessControlsTests;
-import com.apriori.cds.tests.CdsApplicationsTests;
-import com.apriori.cds.tests.CdsAssociationUserTests;
-import com.apriori.cds.tests.CdsConfigurationsTests;
-import com.apriori.cds.tests.CdsCustomAttributesTests;
-import com.apriori.cds.tests.CdsCustomerAssociationTests;
-import com.apriori.cds.tests.CdsCustomerUserRolesTests;
-import com.apriori.cds.tests.CdsCustomerUsersTests;
-import com.apriori.cds.tests.CdsCustomersTests;
-import com.apriori.cds.tests.CdsDeploymentsTests;
-import com.apriori.cds.tests.CdsFeatureTests;
-import com.apriori.cds.tests.CdsGetCustomerTests;
-import com.apriori.cds.tests.CdsIdentityProvidersTests;
-import com.apriori.cds.tests.CdsInstallationApplicationTests;
-import com.apriori.cds.tests.CdsInstallationsTests;
-import com.apriori.cds.tests.CdsLicenseTests;
-import com.apriori.cds.tests.CdsRolesTests;
-import com.apriori.cds.tests.CdsSitesApplicationsTests;
-import com.apriori.cds.tests.CdsSitesTests;
-import com.apriori.cds.tests.CdsUserPreferencesTests;
-import com.apriori.cds.tests.CdsUsersTests;
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.ApVersionsTests;
+import com.apriori.CdsAccessAuthorizationsTests;
+import com.apriori.CdsAccessControlsTests;
+import com.apriori.CdsApplicationsTests;
+import com.apriori.CdsAssociationUserTests;
+import com.apriori.CdsConfigurationsTests;
+import com.apriori.CdsCustomAttributesTests;
+import com.apriori.CdsCustomerAssociationTests;
+import com.apriori.CdsCustomerUserRolesTests;
+import com.apriori.CdsCustomerUsersTests;
+import com.apriori.CdsCustomersTests;
+import com.apriori.CdsDeploymentsTests;
+import com.apriori.CdsFeatureTests;
+import com.apriori.CdsGetCustomerTests;
+import com.apriori.CdsIdentityProvidersTests;
+import com.apriori.CdsInstallationApplicationTests;
+import com.apriori.CdsInstallationsTests;
+import com.apriori.CdsLicenseTests;
+import com.apriori.CdsRolesTests;
+import com.apriori.CdsSitesApplicationsTests;
+import com.apriori.CdsSitesTests;
+import com.apriori.CdsUserPreferencesTests;
+import com.apriori.CdsUsersTests;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("641")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     ApVersionsTests.class,
     CdsAccessAuthorizationsTests.class,
     CdsAccessControlsTests.class,
@@ -57,5 +54,4 @@ import org.junit.runners.Suite;
     CdsFeatureTests.class
 })
 public class CdsAPISuite {
-
 }

@@ -1,9 +1,5 @@
 package utils;
 
-import com.apriori.utils.properties.PropertiesContext;
-
-import java.util.logging.Level;
-
 public class AgentConstants {
     public static final String REMOTE_DOWNLOAD_FOLDER = "/cic-agents/download";
     public static final String REMOTE_WC_INSTALL_FOLDER = "/cic-agents/%s/%s/%s-agent-wc";

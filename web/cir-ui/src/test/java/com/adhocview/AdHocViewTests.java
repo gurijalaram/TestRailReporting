@@ -1,24 +1,24 @@
 package com.adhocview;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.TestBaseUI;
+import com.apriori.pageobjects.create.CreateAdHocViewPage;
+import com.apriori.pageobjects.login.ReportsLoginPage;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 
-public class AdHocViewTests extends TestBase {
+public class AdHocViewTests extends TestBaseUI {
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = "12517")
+    @Tag(REPORTS)
+    @TestRail(id = 12517)
     @Description("Verify Create Simple Ad Hoc View Report")
     public void testAdHocViewCreation() {
         CreateAdHocViewPage createAdHocViewPage = new ReportsLoginPage(driver)

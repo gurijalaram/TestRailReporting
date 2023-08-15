@@ -4,7 +4,7 @@ import com.apriori.database.actions.local.DBBackupHandler;
 import com.apriori.database.actions.local.DBDataImporter;
 import com.apriori.database.utils.PropertiesHandler;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 

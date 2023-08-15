@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.PageUtils;
-import com.apriori.pageobjects.pages.explore.PreviewPage;
+import com.apriori.pageobjects.explore.PreviewPage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

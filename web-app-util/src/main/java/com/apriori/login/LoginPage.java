@@ -1,6 +1,6 @@
 package com.apriori.login;
 
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserCredentials;
 
 public interface LoginPage {
     /**

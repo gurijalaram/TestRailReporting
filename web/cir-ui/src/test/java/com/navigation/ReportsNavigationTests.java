@@ -1,38 +1,39 @@
 package com.navigation;
 
-import static org.hamcrest.CoreMatchers.containsString;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringContains.containsString;
 
+import com.apriori.TestBaseUI;
+import com.apriori.pageobjects.create.CreateAdHocViewPage;
+import com.apriori.pageobjects.create.CreateDashboardPage;
+import com.apriori.pageobjects.create.CreateDataSourcePage;
+import com.apriori.pageobjects.create.CreateDomainPage;
+import com.apriori.pageobjects.create.CreateReportPage;
 import com.apriori.pageobjects.header.ReportsPageHeader;
-import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
-import com.apriori.pageobjects.pages.create.CreateDashboardPage;
-import com.apriori.pageobjects.pages.create.CreateDataSourcePage;
-import com.apriori.pageobjects.pages.create.CreateDomainPage;
-import com.apriori.pageobjects.pages.create.CreateReportPage;
-import com.apriori.pageobjects.pages.library.LibraryPage;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.logout.ReportsLogoutPage;
-import com.apriori.pageobjects.pages.manage.ManageRolesPage;
-import com.apriori.pageobjects.pages.manage.ManageUsersPage;
-import com.apriori.pageobjects.pages.userguides.CirUserGuidePage;
-import com.apriori.pageobjects.pages.view.ViewMessagesPage;
-import com.apriori.pageobjects.pages.view.ViewRepositoryPage;
-import com.apriori.pageobjects.pages.view.ViewSchedulesPage;
-import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.pageobjects.library.LibraryPage;
+import com.apriori.pageobjects.login.ReportsLoginPage;
+import com.apriori.pageobjects.logout.ReportsLogoutPage;
+import com.apriori.pageobjects.manage.ManageRolesPage;
+import com.apriori.pageobjects.manage.ManageUsersPage;
+import com.apriori.pageobjects.userguides.CirUserGuidePage;
+import com.apriori.pageobjects.view.ViewMessagesPage;
+import com.apriori.pageobjects.view.ViewRepositoryPage;
+import com.apriori.pageobjects.view.ViewSchedulesPage;
+import com.apriori.pageobjects.view.ViewSearchResultsPage;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
-public class ReportsNavigationTests extends TestBase {
+public class ReportsNavigationTests extends TestBaseUI {
 
     private ViewSearchResultsPage searchResults;
     private ReportsPageHeader reportsPageHeader;
@@ -55,8 +56,9 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2987"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2987})
     @Description("Ensure that the CI Reports User Guide Link works")
     public void testCIReportsUserGuideNavigation() {
         cirUserGuide = new ReportsLoginPage(driver)
@@ -71,8 +73,9 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2986"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2986})
     @Description("Ensure that the CI Reports Logout Link works")
     public void testCIReportsLogoutNavigation() {
         logout = new ReportsLoginPage(driver)
@@ -85,8 +88,9 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2967"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2967})
     @Description("Ensure that the link to Home works (doesn't navigate elsewhere - negative test)")
     public void testHomeNavigation() {
         reportsPageHeader = new ReportsLoginPage(driver)
@@ -97,8 +101,9 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2968"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2968})
     @Description("Ensure that the link to Library works")
     public void testLibraryNavigation() {
         library = new ReportsLoginPage(driver)
@@ -109,8 +114,9 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2969"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2969})
     @Description("Ensure that the link to View Search Results works")
     public void testViewSearchResultsNavigation() {
         searchResults = new ReportsLoginPage(driver)
@@ -121,8 +127,9 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2970"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2970})
     @Description("Ensure that the link to View Repository works")
     public void testViewRepositoryNavigation() {
         repository = new ReportsLoginPage(driver)
@@ -133,8 +140,9 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2971"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2971})
     @Description("Ensure that the link to View Schedules works")
     public void testViewSchedulesNavigation() {
         schedules = new ReportsLoginPage(driver)
@@ -145,8 +153,9 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2972"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2972})
     @Description("Ensure that the link to View Messages works")
     public void testViewMessagesNavigation() {
         messages = new ReportsLoginPage(driver)
@@ -157,8 +166,8 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Ignore("Not valid in QA env due to permissions")
-    @TestRail(testCaseId = {"2973"})
+    @Disabled("Not valid in QA env due to permissions")
+    @TestRail(id = {2973})
     @Description("Ensure that the link to Manage Users works")
     public void testManageUsersNavigation() {
         users = new ReportsLoginPage(driver)
@@ -169,8 +178,8 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Ignore("Not valid in QA env due to permissions")
-    @TestRail(testCaseId = {"2974"})
+    @Disabled("Not valid in QA env due to permissions")
+    @TestRail(id = {2974})
     @Description("Ensure that the link to Manage Roles works")
     public void testManageRolesNavigation() {
         roles = new ReportsLoginPage(driver)
@@ -181,8 +190,9 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2975"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2975})
     @Description("Ensure that the link to Create Ad Hoc View works")
     public void testCreateAdHocViewNavigation() {
         adHocView = new ReportsLoginPage(driver)
@@ -195,8 +205,9 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2976"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2976})
     @Description("Ensure that the link to Create Report works")
     public void testCreateReportNavigation() {
         report = new ReportsLoginPage(driver)
@@ -208,8 +219,9 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2977"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2977})
     @Description("Ensure that the link to Create Dashboard works")
     public void testCreateDashboardNavigation() {
         dashboard = new ReportsLoginPage(driver)
@@ -220,8 +232,8 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Ignore("Not valid in QA env due to permissions")
-    @TestRail(testCaseId = {"2978"})
+    @Disabled("Not valid in QA env due to permissions")
+    @TestRail(id = {2978})
     @Description("Ensure that the link to Create Domain works")
     public void testCreateDomainNavigation() {
         domain = new ReportsLoginPage(driver)
@@ -231,22 +243,22 @@ public class ReportsNavigationTests extends TestBase {
         String urlToCheck = domain.getUrlToCheck();
 
         assertThat(
-                domain.getCurrentUrl(),
-                equalTo(String.format("%s%s", urlToCheck, Constants.DOMAIN_DESIGNER_URL_SUFFIX))
+            domain.getCurrentUrl(),
+            equalTo(String.format("%s%s", urlToCheck, Constants.DOMAIN_DESIGNER_URL_SUFFIX))
         );
         assertThat(
-                domain.isDialogDisplayed(),
-                is(equalTo(true))
+            domain.isDialogDisplayed(),
+            is(equalTo(true))
         );
         assertThat(
-                domain.isDialogEnabled(),
-                is(equalTo(true))
+            domain.isDialogEnabled(),
+            is(equalTo(true))
         );
     }
 
     @Test
-    @Ignore("Not valid in QA env due to permissions")
-    @TestRail(testCaseId = {"2979"})
+    @Disabled("Not valid in QA env due to permissions")
+    @TestRail(id = {2979})
     @Description("Ensure that the link to Create Data Source works")
     public void testCreateDataSourceNavigation() {
         dataSource = new ReportsLoginPage(driver)

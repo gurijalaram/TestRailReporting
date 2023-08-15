@@ -1,7 +1,7 @@
 package com.apriori.cnh.entity.enums;
 
-import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
-import com.apriori.utils.properties.PropertiesContext;
+
+
 
 public enum CNHAPIEnum implements ExternalEndpointEnum {
 

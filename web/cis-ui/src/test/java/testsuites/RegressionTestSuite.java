@@ -1,21 +1,18 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.messages.MessagesTest;
+import com.apriori.navigation.NavigationPanelTest;
+import com.apriori.partsandassemblies.PartsAndAssemblyTest;
+import com.apriori.partsandassembliesdetails.PartsAndAssembliesDetailsTest;
+import com.apriori.projectdetails.ProjectsDetailsTest;
+import com.apriori.projects.ProjectsTest;
+import com.apriori.userpreference.UserPreferenceTest;
 
-import com.messages.MessagesTest;
-import com.navigation.NavigationPanelTest;
-import com.partsandassemblies.PartsAndAssemblyTest;
-import com.partsandassembliesdetails.PartsAndAssembliesDetailsTest;
-import com.projectdetails.ProjectsDetailsTest;
-import com.projects.ProjectsTest;
-import com.userpreference.UserPreferenceTest;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("2123")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     NavigationPanelTest.class,
     MessagesTest.class,
     UserPreferenceTest.class,

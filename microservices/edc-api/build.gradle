@@ -10,16 +10,13 @@ sourceSets {
     main {
         resources {
             srcDirs += [
-                    project(':apibase').sourceSets.main.resources
+                    project('::shared-util').sourceSets.main.resources
             ]
         }
     }
 }
 
 dependencies {
-    implementation project(':apibase')
-    implementation project(':utils')
+    implementation project(':shared-util')
     implementation project(':serialization-util')
-
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }

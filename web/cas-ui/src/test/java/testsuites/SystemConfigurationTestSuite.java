@@ -1,17 +1,14 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.CategorySuiteRunner;
+import com.apriori.customer.systemconfiguration.SystemConfigurationGroupsTests;
+import com.apriori.customer.systemconfiguration.SystemConfigurationPermissionsTests;
+import com.apriori.customer.systemconfiguration.SystemConfigurationTests;
 
-import com.customer.systemconfiguration.SystemConfigurationGroupsTests;
-import com.customer.systemconfiguration.SystemConfigurationPermissionsTests;
-import com.customer.systemconfiguration.SystemConfigurationTests;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("874")
-@RunWith(CategorySuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     SystemConfigurationGroupsTests.class,
     SystemConfigurationPermissionsTests.class,
     SystemConfigurationTests.class
