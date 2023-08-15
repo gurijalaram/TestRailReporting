@@ -16,8 +16,8 @@ import enums.JasperCirApiPartsEnum;
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
 
@@ -32,7 +32,7 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.RECOMMENDED_TEST_PARTS;
     private static JasperApiUtils jasperApiUtils;
 
-    @Before
+    @BeforeEach
     public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
