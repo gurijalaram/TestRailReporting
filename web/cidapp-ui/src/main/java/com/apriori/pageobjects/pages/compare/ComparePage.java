@@ -57,7 +57,7 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = "div[data-testid='comparison-nav-bar'] h3")
     private WebElement comparisonName;
 
-    @FindBy(css = "div[data-testid='comparison-nav-bar'] button")
+    @FindBy(css = "a[class='back-link']")
     private WebElement backButton;
 
     private PageUtils pageUtils;
@@ -84,15 +84,15 @@ public class ComparePage extends CompareToolbar {
         return backButton.isEnabled();
     }
 
-//    /**
-//     * Click the Back to Comparison Explorer button
-//     *
-//     * @return Comparison Explorer PO
-//     */
-//    public ComparisonExplorer back() {
-//        pageUtils.waitForElementAndClick(backButton);
-//        return new ComparisonExplorer(driver);
-//    }
+    /**
+     * Click the Back to Comparison Explorer button
+     *
+     * @return Comparison Explorer PO
+     */
+    public CompareExplorePage clickAllComparisons() {
+        pageUtils.waitForElementAndClick(backButton);
+        return new CompareExplorePage(driver);
+    }
 
     /**
      * Get Currently displayed Comparisons name

@@ -15,6 +15,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
+import com.apriori.pageobjects.pages.compare.CompareExplorePage;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.CreateComparePage;
 import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
@@ -57,6 +58,7 @@ public class ComparisonTests extends TestBase {
     private final String notFoundMessage = "Oops! Looks like the component or scenario you were looking for could not be found.";
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
+    private CompareExplorePage compareExplorePage;
     private ComparePage comparePage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
@@ -74,6 +76,7 @@ public class ComparisonTests extends TestBase {
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
+
 
     public ComparisonTests() {
         super();
@@ -140,7 +143,7 @@ public class ComparisonTests extends TestBase {
 
         softAssertions.assertThat(explorePage.getTableHeaders()).contains(COMPONENT_NAME.getColumns(), SCENARIO_NAME.getColumns());
 
-        comparePage = explorePage.clickCompare();
+        comparePage = explorePage.clickCompare(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getBasis()).isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
 
@@ -603,7 +606,7 @@ public class ComparisonTests extends TestBase {
             .highlightScenario(componentName2, scenarioName2)
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
-            .clickCompare()
+            .clickCompare(ComparePage.class)
             .openScenario(componentName2, scenarioName2);
 
         softAssertions.assertThat(evaluatePage.getNotFoundMessage()).isEqualTo(notFoundMessage);
@@ -656,7 +659,7 @@ public class ComparisonTests extends TestBase {
             .highlightScenario(componentName, scenarioName)
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
-            .clickCompare()
+            .clickCompare(ComparePage.class)
             .openScenario(componentName, scenarioName);
 
         softAssertions.assertThat(evaluatePage.getNotFoundMessage()).isEqualTo(notFoundMessage);
@@ -706,13 +709,13 @@ public class ComparisonTests extends TestBase {
             .highlightScenario(componentName2, scenarioName2)
             .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, ExplorePage.class)
-            .clickCompare()
+            .clickCompare(ComparePage.class)
             .openScenario(componentName2, scenarioName2);
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
 
-        comparePage = evaluatePage.clickCompare();
+        comparePage = evaluatePage.clickCompare(ComparePage.class);
 
         softAssertions.assertThat(comparePage.isIconDisplayed(componentName2, scenarioName2, StatusIconEnum.PUBLIC)).isEqualTo(true);
 
@@ -722,13 +725,13 @@ public class ComparisonTests extends TestBase {
             .highlightScenario(componentName, scenarioName)
             .publishScenario(PublishPage.class)
             .publish(cidComponentItemC, ExplorePage.class)
-            .clickCompare()
+            .clickCompare(ComparePage.class)
             .openBasisScenario();
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
-        comparePage = evaluatePage.clickCompare();
+        comparePage = evaluatePage.clickCompare(ComparePage.class);
 
         softAssertions.assertThat(comparePage.isIconDisplayed(componentName, scenarioName, StatusIconEnum.PUBLIC)).isEqualTo(true);
 
@@ -938,7 +941,7 @@ public class ComparisonTests extends TestBase {
         evaluatePage = comparePage.openScenario(assemblyName, assemblyScenarioName);
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(assemblyScenarioName)).isEqualTo(true);
 
-        comparePage = evaluatePage.clickCompare()
+        comparePage = evaluatePage.clickCompare(ComparePage.class)
             .dragDropToBasis(assemblyName, assemblyScenarioName);
 
         softAssertions.assertThat(comparePage.getBasis()).isEqualTo(assemblyName.toUpperCase() + "  / " + assemblyScenarioName);
@@ -1283,7 +1286,7 @@ public class ComparisonTests extends TestBase {
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .checkComponentDelete(panel)
-            .clickCompare();
+            .clickCompare(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getListOfComparisons()).isEqualTo(0);
 
@@ -1337,7 +1340,7 @@ public class ComparisonTests extends TestBase {
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .checkComponentDelete(panel)
-            .clickCompare();
+            .clickCompare(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getListOfComparisons()).isEqualTo(0);
 
@@ -1391,10 +1394,80 @@ public class ComparisonTests extends TestBase {
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .checkComponentDelete(part)
-            .clickCompare();
+            .clickCompare(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
             .isEqualTo(componentName2.toUpperCase() + "  / " + scenarioName2);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"26175"})
+    @Description("Verify Comparison Explorer displayed when tab clicked and no active comparisons")
+    public void testComparisonExplorer() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        String componentName = "Part0004";
+        String componentName2 = "700-33770-01_A0";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".ipt");
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String comparisonName = new GenerateStringUtil().generateComparisonName();
+
+        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
+
+        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName2)
+            .scenarioName(scenarioName2)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile2)
+            .user(currentUser)
+            .build());
+
+        loginPage = new CidAppLoginPage(driver);
+        compareExplorePage = loginPage.login(currentUser)
+            .clickCompare(CompareExplorePage.class);
+
+        // ToDo: Fill this in once the Comparison Explorer has something substantial to verify against
+//        softAssertions.assertThat().as("Verify Comparison Explorer was Loaded").
+
+        compareExplorePage = compareExplorePage.clickExplore()
+            .multiHighlightScenarios(
+                part1.getComponentName() + "," + part1.getScenarioName(),
+                part2.getComponentName() + "," + part2.getScenarioName())
+            .createComparison()
+            .selectManualComparison()
+            .clickAllComparisons();
+
+        // ToDo: Fill this in once the Comparison Explorer has something substantial to verify against
+//        softAssertions.assertThat().as("Verify Comparison Explorer was Loaded").
+
+        comparePage = compareExplorePage.clickExplore()
+            .multiHighlightScenarios(
+                part1.getComponentName() + "," + part1.getScenarioName(),
+                part2.getComponentName() + "," + part2.getScenarioName())
+            .createComparison()
+            .selectManualComparison()
+            .saveNew()
+            .inputName(comparisonName)
+            .save(ComparePage.class)
+            .clickAllComparisons()
+            .openComparison(comparisonName);
+
+        softAssertions.assertThat(comparePage.getComparisonName()).as("Verify that correct Comparison Name displayed").isEqualTo(comparisonName);
+        softAssertions.assertThat(comparePage.getBasis()).as("Verify correct Basis in Comparison")
+            .isEqualTo(part1.getComponentName() + " / " + part1.getScenarioName());
+        softAssertions.assertThat(comparePage.getBasis()).as("Verify correct Compared Scenario in Comparison")
+            .isEqualTo(part2.getComponentName() + " / " + part2.getScenarioName());
 
         softAssertions.assertAll();
     }

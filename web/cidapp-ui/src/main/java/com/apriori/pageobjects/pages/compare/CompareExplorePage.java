@@ -6,8 +6,10 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.navtoolbars.CompareToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * @author cfrith
  */
 
-public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
+public class CompareExplorePage extends CompareToolbar {
 
     private static final Logger logger = LoggerFactory.getLogger(CompareExplorePage.class);
 
@@ -51,6 +53,7 @@ public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
     @FindBy(css = "placeholder...")
     private WebElement submitButton;
 
+    private String scenarioLocator = "div[aria-label='%s']";
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -58,23 +61,14 @@ public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
     private ModalDialogController modalDialogController;
 
     public CompareExplorePage(WebDriver driver) {
+        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.scenarioTableController = new ScenarioTableController(driver);
+        //this.scenarioTableController = new ScenarioTableController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
         this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(componentHeader);
     }
 
     /**
@@ -91,13 +85,14 @@ public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
     /**
      * Opens the scenario
      *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
+     * @param comparisonName - name of the part
      * @return a new page object
      */
-    public EvaluatePage openScenario(String componentName, String scenarioName) {
-        scenarioTableController.openScenario(componentName, scenarioName);
-        return new EvaluatePage(driver);
+    public ComparePage openComparison(String comparisonName) {
+        By comparisonSelector = By.cssSelector(String.format(scenarioLocator, comparisonName));
+        moveToComparison(comparisonName);
+        pageUtils.waitForElementAndClick(comparisonSelector);
+        return new ComparePage(driver);
     }
 
     /**
@@ -191,5 +186,16 @@ public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
      */
     public <T> T cancel(Class<T> klass) {
         return modalDialogController.cancel(klass);
+    }
+
+    /**
+     * Hovers over the Comparison
+     *
+     * @param comparisonName - component name
+     */
+    private void moveToComparison(String comparisonName) {
+        WebElement comparison = driver.findElement(By.cssSelector(String.format(scenarioLocator, comparisonName)));            ;
+        pageUtils.scrollWithJavaScript(comparison, true);
+        pageUtils.mouseMove(comparison);
     }
 }
