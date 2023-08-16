@@ -2,7 +2,7 @@ package com.apriori.security;
 
 import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.models.response.Customer;
+import com.apriori.models.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.login.CasLoginPage;

@@ -1,4 +1,4 @@
-package com.apriori.cds.models.response;
+package com.apriori.models.response;
 
 import com.apriori.annotations.CreatableModel;
 import com.apriori.annotations.Schema;

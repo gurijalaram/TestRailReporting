@@ -1,7 +1,7 @@
 package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.models.response.Customer;
+import com.apriori.models.response.Customer;
 import com.apriori.cds.models.response.ErrorResponse;
 import com.apriori.cds.models.response.User;
 import com.apriori.cds.models.response.UserRole;

@@ -1,10 +1,10 @@
 package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.models.response.Customer;
-import com.apriori.cds.models.response.Deployment;
-import com.apriori.cds.models.response.Deployments;
-import com.apriori.cds.models.response.Site;
+import com.apriori.models.response.Customer;
+import com.apriori.models.response.Deployment;
+import com.apriori.models.response.Deployments;
+import com.apriori.models.response.Site;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;

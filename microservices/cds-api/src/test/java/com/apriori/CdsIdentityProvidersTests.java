@@ -1,7 +1,7 @@
 package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.models.response.Customer;
+import com.apriori.models.response.Customer;
 import com.apriori.cds.models.response.IdentityProviderPagination;
 import com.apriori.cds.models.response.IdentityProviderResponse;
 import com.apriori.cds.models.response.User;

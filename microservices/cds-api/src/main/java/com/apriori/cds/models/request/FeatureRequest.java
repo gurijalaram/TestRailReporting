@@ -2,6 +2,7 @@ package com.apriori.cds.models.request;
 
 import com.apriori.annotations.Schema;
 
+import com.apriori.models.response.Features;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

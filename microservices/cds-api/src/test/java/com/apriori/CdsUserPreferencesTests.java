@@ -2,7 +2,7 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
-import com.apriori.cds.models.response.Customer;
+import com.apriori.models.response.Customer;
 import com.apriori.cds.models.response.User;
 import com.apriori.cds.models.response.UserPreference;
 import com.apriori.cds.models.response.UserPreferences;

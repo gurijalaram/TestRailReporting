@@ -3,7 +3,7 @@ package com.apriori;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.AssociationUserItems;
 import com.apriori.cds.models.response.AssociationUserResponse;
-import com.apriori.cds.models.response.Customer;
+import com.apriori.models.response.Customer;
 import com.apriori.cds.models.response.CustomerAssociationResponse;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;

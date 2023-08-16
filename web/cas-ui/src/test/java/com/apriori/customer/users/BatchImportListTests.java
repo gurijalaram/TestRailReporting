@@ -5,7 +5,7 @@ import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.models.response.Customer;
+import com.apriori.models.response.Customer;
 import com.apriori.cds.models.response.User;
 import com.apriori.cds.models.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;

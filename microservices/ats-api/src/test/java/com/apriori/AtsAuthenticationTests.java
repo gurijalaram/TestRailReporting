@@ -3,7 +3,7 @@ package com.apriori;
 import com.apriori.ats.models.response.UserByEmail;
 import com.apriori.ats.utils.AtsTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.models.response.Customer;
+import com.apriori.models.response.Customer;
 import com.apriori.cds.models.response.IdentityProviderResponse;
 import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
