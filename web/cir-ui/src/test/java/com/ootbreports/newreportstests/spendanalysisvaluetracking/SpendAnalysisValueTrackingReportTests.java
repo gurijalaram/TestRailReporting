@@ -5,16 +5,16 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cirapi.entity.JasperReportSummary;
-import com.apriori.cirapi.entity.enums.CirApiEnum;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.enums.CirApiEnum;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 public class SpendAnalysisValueTrackingReportTests extends JasperApiAuthenticationUtil {
@@ -24,13 +24,13 @@ public class SpendAnalysisValueTrackingReportTests extends JasperApiAuthenticati
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SPEND_ANALYSIS_VALUE_TRACKING;
     private static JasperApiUtils jasperApiUtils;
 
-    @Before
+    @BeforeEach
     public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
-    @TestRail(testCaseId = {"13955"})
+    @TestRail(id = 13955)
     @Description("Input controls - Currency code - Main Report")
     public void testCurrencyCode() {
         JasperReportSummary gbpJasperReportSummary = jasperApiUtils.genericTestCoreProjectRollupAndCurrencyOnly(

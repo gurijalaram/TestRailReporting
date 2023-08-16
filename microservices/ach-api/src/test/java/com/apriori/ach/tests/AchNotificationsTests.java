@@ -1,32 +1,32 @@
 package com.apriori.ach.tests;
 
-import com.apriori.ach.entity.response.CustomerAch;
-import com.apriori.ach.entity.response.Notifications;
 import com.apriori.ach.enums.ACHAPIEnum;
+import com.apriori.ach.models.response.CustomerAch;
+import com.apriori.ach.models.response.Notifications;
 import com.apriori.ach.utils.AchTestUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class AchNotificationsTests {
     private AchTestUtil achTestUtil = new AchTestUtil();
     private CustomerAch apInternal;
 
-    @Before
+    @BeforeEach
     public void getToken() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         apInternal = achTestUtil.getAprioriInternal();
     }
 
     @Test
-    @TestRail(testCaseId = {"21958"})
+    @TestRail(id = {21958})
     @Description("Returns the list of the notifications")
     public void getNotifications() {
         SoftAssertions soft = new SoftAssertions();

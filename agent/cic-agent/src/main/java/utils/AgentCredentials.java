@@ -1,8 +1,8 @@
 package utils;
 
-import com.apriori.utils.EncryptionUtil;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.http.utils.EncryptionUtil;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.json.JsonManager;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +24,6 @@ public class AgentCredentials {
     private String privateKey;
     private String plmUser;
     private String plmPassword;
-
 
     /**
      * Retrieve credentials and host url for the email account.

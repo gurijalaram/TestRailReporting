@@ -5,15 +5,15 @@ package com.apriori.database.test.dao;
 //import com.apriori.database.actions.cloud.DbMigration;
 //import com.apriori.database.entity.MigrationEntity;
 //import com.apriori.utils.constants.Constants;
-//import com.apriori.utils.http.utils.ResponseWrapper;
+//
 //
 //import com.fbc.datamodel.shared.ScenarioType;
 //import io.restassured.http.Header;
 //
 //import org.apache.http.HttpStatus;
 //import org.junit.Assert;
-//import org.junit.Before;
-//import org.junit.Test;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
 
 public class DataBaseActions {//TestUtil {
 
@@ -21,7 +21,7 @@ public class DataBaseActions {//TestUtil {
 
 //    private DbMigration dbMigration;
 //
-//    @Before
+//    @BeforeEach
 //    public void createNewDbMigrationInstance() {
 //        dbMigration = new DbMigration();
 //    }

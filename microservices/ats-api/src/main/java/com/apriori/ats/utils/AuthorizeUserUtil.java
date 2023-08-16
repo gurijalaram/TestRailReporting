@@ -1,12 +1,12 @@
 package com.apriori.ats.utils;
 
-import com.apriori.ats.entity.request.AuthorizeRequest;
-import com.apriori.ats.entity.response.AuthorizationResponse;
+import com.apriori.ats.models.request.AuthorizeRequest;
+import com.apriori.ats.models.response.AuthorizationResponse;
 import com.apriori.ats.utils.enums.AuthorizeUserEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 
 public class AuthorizeUserUtil {
 

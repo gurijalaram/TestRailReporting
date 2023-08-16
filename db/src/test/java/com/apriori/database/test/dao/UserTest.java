@@ -5,7 +5,7 @@ import com.apriori.database.entity.User;
 import com.apriori.database.utils.PropertiesHandler;
 import com.apriori.database.utils.SessionFactoryClass;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;

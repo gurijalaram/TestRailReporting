@@ -1,6 +1,6 @@
 package utils;
 
-import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.enums.ProcessGroupEnum;
 
 import lombok.extern.slf4j.Slf4j;
 

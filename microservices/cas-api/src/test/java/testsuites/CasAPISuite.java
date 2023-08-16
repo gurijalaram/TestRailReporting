@@ -1,33 +1,30 @@
 package testsuites;
 
-import com.apriori.tests.ApplicationsTests;
-import com.apriori.tests.CasAccessAuthorizationTests;
-import com.apriori.tests.CasBatchItemTests;
-import com.apriori.tests.CasBulkGrantDenyAccessTests;
-import com.apriori.tests.CasConfigurationsTests;
-import com.apriori.tests.CasCustomerAssociationTests;
-import com.apriori.tests.CasCustomerBatchTests;
-import com.apriori.tests.CasCustomerServiceAccountsTests;
-import com.apriori.tests.CasCustomerUserAccessControlsTests;
-import com.apriori.tests.CasCustomerUserAssociationTests;
-import com.apriori.tests.CasCustomersTests;
-import com.apriori.tests.CasCustomersUsersTests;
-import com.apriori.tests.CasDeploymentsTests;
-import com.apriori.tests.CasIdentityProvidersTests;
-import com.apriori.tests.CasSiteLicenseSublicenseTests;
-import com.apriori.tests.CasSiteLicenseTests;
-import com.apriori.tests.CasSitesTests;
-import com.apriori.tests.CasUserSubLicensesTests;
-import com.apriori.tests.CasUsersTests;
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.ApplicationsTests;
+import com.apriori.CasAccessAuthorizationTests;
+import com.apriori.CasBatchItemTests;
+import com.apriori.CasBulkGrantDenyAccessTests;
+import com.apriori.CasConfigurationsTests;
+import com.apriori.CasCustomerAssociationTests;
+import com.apriori.CasCustomerBatchTests;
+import com.apriori.CasCustomerServiceAccountsTests;
+import com.apriori.CasCustomerUserAccessControlsTests;
+import com.apriori.CasCustomerUserAssociationTests;
+import com.apriori.CasCustomersTests;
+import com.apriori.CasCustomersUsersTests;
+import com.apriori.CasDeploymentsTests;
+import com.apriori.CasIdentityProvidersTests;
+import com.apriori.CasSiteLicenseSublicenseTests;
+import com.apriori.CasSiteLicenseTests;
+import com.apriori.CasSitesTests;
+import com.apriori.CasUserSubLicensesTests;
+import com.apriori.CasUsersTests;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("644")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     ApplicationsTests.class,
     CasConfigurationsTests.class,
     CasCustomersTests.class,

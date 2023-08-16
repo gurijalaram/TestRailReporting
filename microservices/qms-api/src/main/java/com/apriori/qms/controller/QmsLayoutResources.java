@@ -1,17 +1,16 @@
 package com.apriori.qms.controller;
 
-import com.apriori.qms.entity.request.layout.LayoutConfigurationParameters;
-import com.apriori.qms.entity.request.layout.LayoutConfigurationRequest;
+import com.apriori.dataservice.TestDataService;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.qms.enums.QMSAPIEnum;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-
-import utils.QmsApiTestUtils;
+import com.apriori.qms.models.request.layout.LayoutConfigurationParameters;
+import com.apriori.qms.models.request.layout.LayoutConfigurationRequest;
+import com.apriori.qms.utils.QmsApiTestUtils;
+import com.apriori.reader.file.user.UserCredentials;
 
 /**
  * The type Qms layout resources.

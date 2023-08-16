@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "$schema": "PaginationSchema.json",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "AuthUserSchema.json"
+          }
+        }
+      }
+    }
+  }
+}

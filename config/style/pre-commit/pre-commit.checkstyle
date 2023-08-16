@@ -16,7 +16,7 @@
 # until you pass your checkstyle checks.
 
 $command = "git-diff-index --cached HEAD 2>&1 | sed 's/^:.*     //' | uniq";
-open (FILES,$command . "|") || die "Cannot run '$command': $!\n";
+open (FILES,$command . "|") || die "Cannot run '$command': $!";
 
 $CONFIG_CHECK_FILE = "checkstyle.checkfile";
 $CONFIG_JAR = "checkstyle.jar";
@@ -31,10 +31,10 @@ $checkstyle_jar = "style/pre-commit/checkstyle-8.0-all.jar" if (!$checkstyle_jar
 
 if (!$check_file || !$checkstyle_jar)
 {
-   die "You must configure checkstyle in your git config:\n"
-   . "\t$CONFIG_CHECK_FILE - path to your checkstyle.xml file\n"
-   . "\t$CONFIG_JAR - path to your checkstyle jar file\n"
-   . "\t$CONFIG_JAVA - path to your java executable (optional)\n"
+   die "You must configure checkstyle in your git config:"
+   . "\t$CONFIG_CHECK_FILE - path to your checkstyle.xml file"
+   . "\t$CONFIG_JAR - path to your checkstyle jar file"
+   . "\t$CONFIG_JAVA - path to your java executable (optional)"
    ;
 }
 
@@ -60,7 +60,7 @@ if ($#java_files >= 0)
 {
    if (&run_and_log_system ($command))
    {
-       print STDERR "Commit aborted.\n";
+       print STDERR "Commit aborted.";
        exit -1;
    }
 }

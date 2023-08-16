@@ -1,18 +1,18 @@
 package com.apriori.bcs.controller;
 
-import com.apriori.bcs.entity.request.batch.BatchProperties;
-import com.apriori.bcs.entity.request.batch.BatchRequest;
-import com.apriori.bcs.entity.response.Batch;
-import com.apriori.bcs.entity.response.Batches;
-import com.apriori.bcs.entity.response.Cancel;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
+import com.apriori.bcs.models.request.batch.BatchProperties;
+import com.apriori.bcs.models.request.batch.BatchRequest;
+import com.apriori.bcs.models.response.Batch;
+import com.apriori.bcs.models.response.Batches;
+import com.apriori.bcs.models.response.Cancel;
 import com.apriori.bcs.utils.BcsBase;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;

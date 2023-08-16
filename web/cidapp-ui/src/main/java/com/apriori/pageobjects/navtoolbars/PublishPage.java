@@ -1,12 +1,12 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.PersonResponse;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.PersonResponse;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -64,7 +64,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(xpath = "//button[.='Close']")
     private WebElement closeButton;
 
-    @FindBy(css = ".scenario-group-operations-success-message")
+    @FindBy(css = ".scenario-group-operations-success-message h5")
     private WebElement publishingMessage;
 
     private PageUtils pageUtils;

@@ -3,12 +3,12 @@ package com.apriori.pageobjects.common;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.PageUtils;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.pageobjects.explore.ExplorePage;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;

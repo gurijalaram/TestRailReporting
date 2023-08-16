@@ -1,39 +1,37 @@
 package com.apriori.cas.utils;
 
-import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
-import com.apriori.cds.objects.request.License;
-import com.apriori.cds.objects.request.LicenseRequest;
-import com.apriori.entity.requests.BulkAccessControlRequest;
-import com.apriori.entity.response.AccessAuthorization;
-import com.apriori.entity.response.AccessControl;
-import com.apriori.entity.response.AssociationUser;
-import com.apriori.entity.response.BatchItem;
-import com.apriori.entity.response.BatchItemsPost;
-import com.apriori.entity.response.CustomProperties;
-import com.apriori.entity.response.Customer;
-import com.apriori.entity.response.CustomerAssociation;
-import com.apriori.entity.response.CustomerAssociationUser;
-import com.apriori.entity.response.CustomerAssociationUsers;
-import com.apriori.entity.response.CustomerAssociations;
-import com.apriori.entity.response.CustomerUser;
-import com.apriori.entity.response.CustomerUserProfile;
-import com.apriori.entity.response.CustomerUsers;
-import com.apriori.entity.response.Customers;
-import com.apriori.entity.response.LicenseResponse;
-import com.apriori.entity.response.PostBatch;
-import com.apriori.entity.response.Site;
-import com.apriori.entity.response.UpdateUser;
-import com.apriori.entity.response.UpdatedProfile;
-import com.apriori.entity.response.ValidateSite;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.MultiPartFiles;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.cas.models.requests.BulkAccessControlRequest;
+import com.apriori.cas.models.response.AccessAuthorization;
+import com.apriori.cas.models.response.AccessControl;
+import com.apriori.cas.models.response.AssociationUser;
+import com.apriori.cas.models.response.BatchItem;
+import com.apriori.cas.models.response.BatchItemsPost;
+import com.apriori.cas.models.response.CustomProperties;
+import com.apriori.cas.models.response.Customer;
+import com.apriori.cas.models.response.CustomerAssociation;
+import com.apriori.cas.models.response.CustomerAssociationUser;
+import com.apriori.cas.models.response.CustomerAssociationUsers;
+import com.apriori.cas.models.response.CustomerAssociations;
+import com.apriori.cas.models.response.CustomerUser;
+import com.apriori.cas.models.response.CustomerUserProfile;
+import com.apriori.cas.models.response.CustomerUsers;
+import com.apriori.cas.models.response.Customers;
+import com.apriori.cas.models.response.LicenseResponse;
+import com.apriori.cas.models.response.PostBatch;
+import com.apriori.cas.models.response.Site;
+import com.apriori.cas.models.response.ValidateSite;
+import com.apriori.cds.models.request.License;
+import com.apriori.cds.models.request.LicenseRequest;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.http.utils.MultiPartFiles;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
+import com.apriori.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
 
@@ -169,46 +167,24 @@ public class CasTestUtil extends TestUtil {
         return util.createUser(identity, userName, domain);
     }
 
-    /**
-     * @param userName         - username
-     * @param identity         - user identity
-     * @param customerIdentity - customer identity
-     * @param profileIdentity  - user profile identity
-     * @return ResponseWrapper <UpdateUser>
-     */
-    public static ResponseWrapper<UpdateUser> updateUser(String userName, String customerName, String identity, String customerIdentity, String profileIdentity) {
-        LocalDateTime createdAt = LocalDateTime.parse("2020-11-23T10:15:30");
-        LocalDateTime updatedAt = LocalDateTime.parse("2021-02-19T10:25");
-        LocalDateTime profileCreatedAt = LocalDateTime.parse("2020-11-23T13:34");
+    public static ResponseWrapper<CustomerUser> updateUser(CustomerUser user) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.USER, UpdateUser.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.USER, CustomerUser.class)
             .body("user",
-                UpdateUser.builder().userType("AP_CLOUD_USER")
-                    .email(userName.toLowerCase() + "@" + customerName.toLowerCase() + ".co.uk")
-                    .username(userName)
-                    .active(true)
-                    .identity(identity)
-                    .createdAt(createdAt)
-                    .createdBy("#SYSTEM00000")
-                    .updatedAt(updatedAt)
-                    .customerIdentity(customerIdentity)
-                    .mfaRequired(true)
-                    .customProperties(new CustomProperties())
-                    .createdByName("SYSTEM")
-                    .licenseAssignments(Collections.singletonList(""))
-                    .userType("AP_CLOUD_USER")
-                    .userProfile(UpdatedProfile.builder()
-                        .identity(profileIdentity)
-                        .createdAt(profileCreatedAt)
-                        .createdBy("#SYSTEM00000")
-                        .givenName(userName)
-                        .familyName("Automater")
-                        .jobTitle("Automation Engineer")
+                CustomerUser.builder()
+                    .identity(user.getIdentity())
+                    .email(user.getEmail())
+                    .username(user.getUsername())
+                    .active(user.getActive())
+                    .createdBy(user.getCreatedBy())
+                    .userProfile(CustomerUserProfile.builder()
+                        .createdBy(user.getUserProfile().getCreatedBy())
+                        .givenName(user.getUserProfile().getGivenName())
+                        .familyName(user.getUserProfile().getFamilyName())
                         .department("QA")
-                        .supervisor("Ciene Frith")
                         .build())
                     .build())
-            .inlineVariables(customerIdentity, identity)
+            .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).patch();

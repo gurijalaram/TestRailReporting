@@ -1,12 +1,17 @@
 package utils;
 
-import com.apriori.utils.AwsParameterStoreUtil;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.cic.models.request.ConnectorRequest;
+import com.apriori.cic.models.response.AgentConnectionInfo;
+import com.apriori.cic.models.response.AgentConnectionOptions;
+import com.apriori.cic.models.response.ConnectorInfo;
+import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AwsParameterStoreUtil;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.properties.PropertiesContext;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
@@ -16,10 +21,7 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpATTRS;
 import com.jcraft.jsch.SftpException;
-import entity.request.ConnectorRequest;
-import entity.response.AgentConnectionInfo;
-import entity.response.AgentConnectionOptions;
-import entity.response.ConnectorInfo;
+import entity.request.AgentPort;
 import entity.response.NexusAgentItem;
 import entity.response.NexusAgentResponse;
 import enums.NexusAPIEnum;
@@ -74,6 +76,7 @@ public class AgentService {
     private AgentConnectionOptions agentConnectionOptions = null;
     private ConnectorInfo connectorInfo = null;
     private AgentData agentData;
+    private AgentPort agentPort;
 
     private static final int SESSION_TIMEOUT = 10000;
     private static final int CHANNEL_TIMEOUT = 5000;
@@ -81,6 +84,7 @@ public class AgentService {
     public AgentService() {
         agentCredentials = new AgentCredentials().getAgentCredentials();
         agentData = new AgentData();
+        agentPort = CicApiTestUtil.getAgentPortData();
     }
 
     /**
@@ -406,27 +410,26 @@ public class AgentService {
     public AgentService getConnector(String loginSession) {
         webLoginSession = loginSession;
         ConnectorRequest connectorRequestDataBuilder = null;
-        String connectorName = PropertiesContext.get(String.format("ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
-        connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
+        connectorInfo = CicApiTestUtil.getMatchedConnector(agentPort.getConnector(), loginSession);
         try {
-            connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
+            connectorInfo = CicApiTestUtil.getMatchedConnector(agentPort.getConnector(), loginSession);
         } catch (Exception e) {
-            log.info("CONNECTOR NOT FOUND WITH NAME - " + connectorName);
+            log.info("CONNECTOR NOT FOUND WITH NAME - " + agentPort.getConnector());
             throw new IllegalArgumentException(e);
         }
         if (null == connectorInfo) {
             switch (PropertiesContext.get("ci-connect.agent_type")) {
                 case "windchill":
                     connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData();
-                    connectorRequestDataBuilder.setDisplayName(connectorName);
+                    connectorRequestDataBuilder.setDisplayName(agentPort.getConnector());
                     ResponseWrapper<String> responseWrapper = CicApiTestUtil.CreateConnector(connectorRequestDataBuilder, loginSession);
                     if (responseWrapper.getBody().contains("true")) {
-                        log.info("CREATED CONNECTOR WITH NAME - " + connectorName);
+                        log.info("CREATED CONNECTOR WITH NAME - " + agentPort.getConnector());
                     }
             }
-            connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
+            connectorInfo = CicApiTestUtil.getMatchedConnector(agentPort.getConnector(), loginSession);
         } else {
-            log.info("FOUND CONNECTOR WITH NAME - " + connectorName);
+            log.info("FOUND CONNECTOR WITH NAME - " + agentPort.getConnector());
         }
         return this;
     }
@@ -442,7 +445,7 @@ public class AgentService {
             case "windchill":
                 agentConnectionOptions.setReconnectionInterval(3);
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
-                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get("ci-connect.agent_port")));
+                agentConnectionOptions.setPort(agentPort.getPort());
                 agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
                 agentConnectionOptions.setPlmUser(agentCredentials.getPlmUser());
                 agentConnectionOptions.setPlmPassword(agentCredentials.getPlmPassword());
@@ -450,7 +453,7 @@ public class AgentService {
                 break;
             case "teamcenter":
                 agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
-                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get("ci-connect.agent_port")));
+                agentConnectionOptions.setPort(agentPort.getPort());
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
                 agentConnectionOptions.setHostName(PropertiesContext.get("ci-connect.teamcenter.host_name"));
                 agentConnectionOptions.setPlmUser(PropertiesContext.get("ci-connect.teamcenter.username"));
@@ -460,7 +463,7 @@ public class AgentService {
                 break;
             case "filesystem":
                 agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
-                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get("ci-connect.agent_port")));
+                agentConnectionOptions.setPort(agentPort.getPort());
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
                 agentConnectionOptions.setRootFolderPath(("C:" + String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"))));
                 break;
@@ -507,15 +510,14 @@ public class AgentService {
      */
     public ConnectorInfo getConnectorStatusInfo() {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(5);
-        String connectorName = PropertiesContext.get(String.format("ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
-        ConnectorInfo connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, webLoginSession);
+        ConnectorInfo connectorInfo = CicApiTestUtil.getMatchedConnector(agentPort.getConnector(), webLoginSession);
         try {
             while (!(connectorInfo.getConnectionStatus().equals("Connected to PLM"))) {
                 if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
                     break;
                 }
                 TimeUnit.SECONDS.sleep(30);
-                connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, webLoginSession);
+                connectorInfo = CicApiTestUtil.getMatchedConnector(agentPort.getConnector(), webLoginSession);
             }
             String isConnected = (connectorInfo.getConnectionStatus().equals("Connected to PLM")) ? "CONNECTED" : "NOT CONNECTED";
             log.info(String.format("CONNECTOR (%s) TO PLM ---%s", isConnected, connectorInfo.getDisplayName()));

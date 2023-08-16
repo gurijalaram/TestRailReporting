@@ -1,21 +1,21 @@
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringContains.containsString;
 
+import com.apriori.TestBaseUI;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.login.ForgottenPasswordPage;
 import com.apriori.login.LoginService;
 import com.apriori.login.PrivacyPolicyPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class AprioriLoginTests extends TestBase {
+public class AprioriLoginTests extends TestBaseUI {
 
     private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
 
@@ -28,13 +28,13 @@ public class AprioriLoginTests extends TestBase {
         super();
     }
 
-    @Before
+    @BeforeEach
     public void setup() {
         aprioriLoginService = new LoginService(driver, "");
     }
 
     /*@Test
-    @TestRail(testCaseId = {"6645"})
+    @TestRail(id = {6645})
     @Description("Test successful login")
     public void testLogin() {
 
@@ -44,7 +44,7 @@ public class AprioriLoginTests extends TestBase {
     }*/
 
     @Test
-    @TestRail(testCaseId = {"6646"})
+    @TestRail(id = {6646})
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
         aprioriLoginService.failedLoginEmptyFields();
@@ -54,7 +54,7 @@ public class AprioriLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6647"})
+    @TestRail(id = {6647})
     @Description("Test unsuccessful login with incorrect email, correct password")
     public void testIncorrectEmail() {
 
@@ -64,7 +64,7 @@ public class AprioriLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6648"})
+    @TestRail(id = {6648})
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
     public void testIncorrectEmailPassword() {
 
@@ -74,7 +74,7 @@ public class AprioriLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6649"})
+    @TestRail(id = {6649})
     @Description("Validate Login Dialog")
     public void loginDialog() {
 
@@ -82,7 +82,7 @@ public class AprioriLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6650"})
+    @TestRail(id = {6650})
     @Description("Validate forgotten password link")
     public void forgotPassword() {
 
@@ -92,7 +92,7 @@ public class AprioriLoginTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6651"})
+    @TestRail(id = {6651})
     @Description("Validate Welcome Message")
     public void welcomeMessage() {
 

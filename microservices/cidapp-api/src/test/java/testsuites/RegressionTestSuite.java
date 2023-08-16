@@ -1,32 +1,30 @@
 package testsuites;
 
-import com.apriori.tests.MaterialSelectionTests;
-import com.apriori.tests.SettingsTests;
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.CategorySuiteRunner;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.IGNORE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SANITY;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import com.evaluate.ComponentRedirectTests;
-import com.evaluate.CostAllCadTests;
-import com.evaluate.GroupCostingTests;
-import com.evaluate.GroupEditTests;
-import com.evaluate.GroupPublishTests;
-import com.evaluate.IncludeAndExcludeTests;
-import com.evaluate.ListOfDigitalFactoryTests;
-import com.evaluate.ListProcessGroupTests;
-import com.evaluate.ReCostScenarioTests;
-import com.evaluate.RoutingsTests;
-import com.evaluate.ScenariosTests;
-import org.junit.experimental.categories.Categories;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import testsuites.suiteinterfaces.IgnoreTests;
-import testsuites.suiteinterfaces.SanityTests;
-import testsuites.suiteinterfaces.SmokeTests;
+import com.apriori.SettingsTests;
+import com.apriori.evaluate.ComponentRedirectTests;
+import com.apriori.evaluate.CostAllCadTests;
+import com.apriori.evaluate.GroupCostingTests;
+import com.apriori.evaluate.GroupEditTests;
+import com.apriori.evaluate.GroupPublishTests;
+import com.apriori.evaluate.IncludeAndExcludeTests;
+import com.apriori.evaluate.ListOfDigitalFactoryTests;
+import com.apriori.evaluate.ListProcessGroupTests;
+import com.apriori.evaluate.MaterialSelectionTests;
+import com.apriori.evaluate.ReCostScenarioTests;
+import com.apriori.evaluate.RoutingsTests;
+import com.apriori.evaluate.ScenariosTests;
 
-@ProjectRunID("768")
-@RunWith(CategorySuiteRunner.class)
-@Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class})
-@Suite.SuiteClasses({
+import org.junit.platform.suite.api.ExcludeTags;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
+
+@Suite
+@ExcludeTags({SMOKE, SANITY, IGNORE})
+@SelectClasses({
     ComponentRedirectTests.class,
     CostAllCadTests.class,
     ListOfDigitalFactoryTests.class,

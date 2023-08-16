@@ -4,10 +4,11 @@
 
 //Utils
 //Default modules initialization
-include(':utils')
-include(':apibase')
-include(':web-app-util')
+//include(':utils')
+//include('::shared-util')
 include(':serialization-util')
+include(':shared-util')
+include(':web-app-util')
 include(':db')
 
 final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cidapp-api", "cir-api", "css-api",

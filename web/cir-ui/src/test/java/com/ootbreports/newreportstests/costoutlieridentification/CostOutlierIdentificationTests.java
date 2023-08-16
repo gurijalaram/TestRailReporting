@@ -1,15 +1,15 @@
 package com.ootbreports.newreportstests.costoutlieridentification;
 
-import com.apriori.cirapi.entity.enums.CirApiEnum;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.cir.enums.CirApiEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
+import enums.CostMetricEnum;
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -20,14 +20,14 @@ public class CostOutlierIdentificationTests extends JasperApiAuthenticationUtil 
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.COST_OUTLIER_IDENTIFICATION;
     private static JasperApiUtils jasperApiUtils;
 
-    @Before
+    @BeforeEach
     public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
-    @TestRail(testCaseId = {"26909"})
-    @Description("Cost metric options available & selected cost metric used in report generated (incl. report header) - Main Report - Fully Burdened Cost")
+    @TestRail(id = {26909})
+    @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricFbcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierTest(
             Arrays.asList("Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName())
@@ -35,8 +35,8 @@ public class CostOutlierIdentificationTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @TestRail(testCaseId = {"26910"})
-    @Description("Cost metric options available & selected cost metric used in report generated (incl. report header) - Main Report - Piece Part Cost")
+    @TestRail(id = {26910})
+    @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricPpcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierTest(
             Arrays.asList("Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName())

@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "isDefault",
+        "identity",
+        "createdBy",
+        "createdAt",
+        "name",
+        "description",
+        "apVersion",
+        "active",
+        "customerIdentity",
+        "deploymentType"
+      ],
+      "optional": [
+        "installations"
+      ],
+      "properties": {
+        "isDefault": {
+          "type": "boolean"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "apVersion": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "installations": {
+          "type": "array",
+          "items": {
+          }
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "deploymentType": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
