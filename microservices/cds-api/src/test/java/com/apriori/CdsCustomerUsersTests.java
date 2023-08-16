@@ -2,7 +2,6 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.CredentialsItems;
-import com.apriori.models.response.Customer;
 import com.apriori.cds.models.response.User;
 import com.apriori.cds.models.response.UserProperties;
 import com.apriori.cds.models.response.Users;
@@ -13,6 +12,7 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.Customer;
 import com.apriori.models.response.ErrorMessage;
 import com.apriori.testrail.TestRail;
 

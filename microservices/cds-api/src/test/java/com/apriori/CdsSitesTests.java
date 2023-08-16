@@ -1,13 +1,13 @@
 package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.models.response.Customer;
-import com.apriori.models.response.Site;
-import com.apriori.models.response.Sites;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.Customer;
+import com.apriori.models.response.Site;
+import com.apriori.models.response.Sites;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
