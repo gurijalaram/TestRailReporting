@@ -9,4 +9,6 @@ import lombok.Data;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomAttributes {
     private Integer workspaceId;
+    private String location;
+    private String department;
 }
