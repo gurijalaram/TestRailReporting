@@ -16,6 +16,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.Constants;
 
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertThat("CIR login page was not displayed", loginService.getLoginTitle().contains(PropertiesContext.get("${env}.reports.welcome_page_text")));
+        assertThat("CIR login page was not displayed", loginService.getLoginTitle().contains(Constants.WELCOME_PAGE_TEXT));
     }
 
     /**

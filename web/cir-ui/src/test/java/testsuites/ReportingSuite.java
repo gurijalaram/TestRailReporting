@@ -13,7 +13,6 @@ import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@IncludePackages("com.ootbreports")
 @ExcludeTags(REPORTS)
 @SelectClasses({
     AssemblyDetailsReportTests.class
