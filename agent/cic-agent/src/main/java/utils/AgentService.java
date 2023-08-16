@@ -21,6 +21,7 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpATTRS;
 import com.jcraft.jsch.SftpException;
+import entity.request.AgentPort;
 import entity.response.NexusAgentItem;
 import entity.response.NexusAgentResponse;
 import enums.NexusAPIEnum;
@@ -64,10 +65,9 @@ import java.util.zip.ZipInputStream;
 @Data
 @AllArgsConstructor
 public class AgentService {
-    private static final int SESSION_TIMEOUT = 10000;
-    private static final int CHANNEL_TIMEOUT = 5000;
     private static String installExecutableFile;
     private static String webLoginSession;
+
     private Session jSchSession = null;
     private Channel channel = null;
     private ChannelSftp channelSftp = null;
@@ -76,10 +76,15 @@ public class AgentService {
     private AgentConnectionOptions agentConnectionOptions = null;
     private ConnectorInfo connectorInfo = null;
     private AgentData agentData;
+    private AgentPort agentPort;
+
+    private static final int SESSION_TIMEOUT = 10000;
+    private static final int CHANNEL_TIMEOUT = 5000;
 
     public AgentService() {
         agentCredentials = new AgentCredentials().getAgentCredentials();
         agentData = new AgentData();
+        agentPort = CicApiTestUtil.getAgentPortData();
     }
 
     /**
@@ -330,56 +335,56 @@ public class AgentService {
                 for (String line : optionFileContent) {
                     switch (line) {
                         case "installDirectory=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getInstallDirectory()).append("");
+                            stringBuilder.append(line).append(agentConnectionOptions.getInstallDirectory()).append("\n");
                             break;
                         case "url=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getWssUrl()).append("");
+                            stringBuilder.append(line).append(agentConnectionOptions.getWssUrl()).append("\n");
                             break;
                         case "appKey=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getAppKey()).append("");
+                            stringBuilder.append(line).append(agentConnectionOptions.getAppKey()).append("\n");
                             break;
                         case "scanRate=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getScanRate().toString()).append("");
+                            stringBuilder.append(line).append(agentConnectionOptions.getScanRate().toString()).append("\n");
                             break;
                         case "agentId=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getAgentId()).append("");
+                            stringBuilder.append(line).append(agentConnectionOptions.getAgentId()).append("\n");
                             break;
                         case "port=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getPort().toString()).append("");
+                            stringBuilder.append(line).append(agentConnectionOptions.getPort().toString()).append("\n");
                             break;
                         case "plmType=":
-                            stringBuilder.append(line).append(agentConnectionOptions.getPlmType()).append("");
+                            stringBuilder.append(line).append(agentConnectionOptions.getPlmType()).append("\n");
                             break;
                         case "auth-token=":
-                            stringBuilder = (null == agentConnectionOptions.getAuthToken()) ? stringBuilder.append(line).append("") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getAuthToken()).append("");
+                            stringBuilder = (null == agentConnectionOptions.getAuthToken()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getAuthToken()).append("\n");
                             break;
                         case "reconnectionInterval=":
-                            stringBuilder = (null == agentConnectionOptions.getReconnectionInterval()) ? stringBuilder.append(line).append("") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getReconnectionInterval().toString()).append("");
+                            stringBuilder = (null == agentConnectionOptions.getReconnectionInterval()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getReconnectionInterval().toString()).append("\n");
                             break;
                         case "hostName=":
-                            stringBuilder = (null == agentConnectionOptions.getHostName()) ? stringBuilder.append(line).append("") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getHostName()).append("");
+                            stringBuilder = (null == agentConnectionOptions.getHostName()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getHostName()).append("\n");
                             break;
                         case "user=":
-                            stringBuilder = (null == agentConnectionOptions.getPlmUser()) ? stringBuilder.append(line).append("") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getPlmUser()).append("");
+                            stringBuilder = (null == agentConnectionOptions.getPlmUser()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getPlmUser()).append("\n");
                             break;
                         case "password=":
-                            stringBuilder = (null == agentConnectionOptions.getPlmPassword()) ? stringBuilder.append(line).append("") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getPlmPassword()).append("");
+                            stringBuilder = (null == agentConnectionOptions.getPlmPassword()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getPlmPassword()).append("\n");
                             break;
                         case "fscUrl=":
-                            stringBuilder = (null == agentConnectionOptions.getFscUrl()) ? stringBuilder.append(line).append("") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getFscUrl()).append("");
+                            stringBuilder = (null == agentConnectionOptions.getFscUrl()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getFscUrl()).append("\n");
                             break;
                         case "rootFolderPath=":
-                            stringBuilder = (null == agentConnectionOptions.getRootFolderPath()) ? stringBuilder.append(line).append("") :
-                                stringBuilder.append(line).append(agentConnectionOptions.getRootFolderPath()).append("");
+                            stringBuilder = (null == agentConnectionOptions.getRootFolderPath()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getRootFolderPath()).append("\n");
                             break;
                         default:
-                            stringBuilder.append(line).append("");
+                            stringBuilder.append(line).append("\n");
                     }
                 }
                 if (optionsFile.exists()) {
@@ -405,27 +410,26 @@ public class AgentService {
     public AgentService getConnector(String loginSession) {
         webLoginSession = loginSession;
         ConnectorRequest connectorRequestDataBuilder = null;
-        String connectorName = PropertiesContext.get(String.format("ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
-        connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
+        connectorInfo = CicApiTestUtil.getMatchedConnector(agentPort.getConnector(), loginSession);
         try {
-            connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
+            connectorInfo = CicApiTestUtil.getMatchedConnector(agentPort.getConnector(), loginSession);
         } catch (Exception e) {
-            log.info("CONNECTOR NOT FOUND WITH NAME - " + connectorName);
+            log.info("CONNECTOR NOT FOUND WITH NAME - " + agentPort.getConnector());
             throw new IllegalArgumentException(e);
         }
         if (null == connectorInfo) {
             switch (PropertiesContext.get("ci-connect.agent_type")) {
                 case "windchill":
                     connectorRequestDataBuilder = CicApiTestUtil.getConnectorBaseData();
-                    connectorRequestDataBuilder.setDisplayName(connectorName);
+                    connectorRequestDataBuilder.setDisplayName(agentPort.getConnector());
                     ResponseWrapper<String> responseWrapper = CicApiTestUtil.CreateConnector(connectorRequestDataBuilder, loginSession);
                     if (responseWrapper.getBody().contains("true")) {
-                        log.info("CREATED CONNECTOR WITH NAME - " + connectorName);
+                        log.info("CREATED CONNECTOR WITH NAME - " + agentPort.getConnector());
                     }
             }
-            connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, loginSession);
+            connectorInfo = CicApiTestUtil.getMatchedConnector(agentPort.getConnector(), loginSession);
         } else {
-            log.info("FOUND CONNECTOR WITH NAME - " + connectorName);
+            log.info("FOUND CONNECTOR WITH NAME - " + agentPort.getConnector());
         }
         return this;
     }
@@ -441,7 +445,7 @@ public class AgentService {
             case "windchill":
                 agentConnectionOptions.setReconnectionInterval(3);
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
-                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get("ci-connect.agent_port")));
+                agentConnectionOptions.setPort(agentPort.getPort());
                 agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
                 agentConnectionOptions.setPlmUser(agentCredentials.getPlmUser());
                 agentConnectionOptions.setPlmPassword(agentCredentials.getPlmPassword());
@@ -449,7 +453,7 @@ public class AgentService {
                 break;
             case "teamcenter":
                 agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
-                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get("ci-connect.agent_port")));
+                agentConnectionOptions.setPort(agentPort.getPort());
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
                 agentConnectionOptions.setHostName(PropertiesContext.get("ci-connect.teamcenter.host_name"));
                 agentConnectionOptions.setPlmUser(PropertiesContext.get("ci-connect.teamcenter.username"));
@@ -459,7 +463,7 @@ public class AgentService {
                 break;
             case "filesystem":
                 agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
-                agentConnectionOptions.setPort(Integer.valueOf(PropertiesContext.get("ci-connect.agent_port")));
+                agentConnectionOptions.setPort(agentPort.getPort());
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
                 agentConnectionOptions.setRootFolderPath(("C:" + String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"))));
                 break;
@@ -506,15 +510,14 @@ public class AgentService {
      */
     public ConnectorInfo getConnectorStatusInfo() {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(5);
-        String connectorName = PropertiesContext.get(String.format("ci-connect.%s.connector", PropertiesContext.get("ci-connect.agent_type")));
-        ConnectorInfo connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, webLoginSession);
+        ConnectorInfo connectorInfo = CicApiTestUtil.getMatchedConnector(agentPort.getConnector(), webLoginSession);
         try {
             while (!(connectorInfo.getConnectionStatus().equals("Connected to PLM"))) {
                 if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
                     break;
                 }
                 TimeUnit.SECONDS.sleep(30);
-                connectorInfo = CicApiTestUtil.getMatchedConnector(connectorName, webLoginSession);
+                connectorInfo = CicApiTestUtil.getMatchedConnector(agentPort.getConnector(), webLoginSession);
             }
             String isConnected = (connectorInfo.getConnectionStatus().equals("Connected to PLM")) ? "CONNECTED" : "NOT CONNECTED";
             log.info(String.format("CONNECTOR (%s) TO PLM ---%s", isConnected, connectorInfo.getDisplayName()));
@@ -790,10 +793,10 @@ public class AgentService {
         return AgentConnectionOptions.builder()
             .agentName(connectorInfo.getName())
             .appKey(agentConnectionInfo.getAppKey())
-            .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "url=", "#"))
-            .scanRate(Integer.valueOf(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "scanRate=", "#")))
+            .wssUrl(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "url=", "\n\n#"))
+            .scanRate(Integer.valueOf(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "scanRate=", "\n\n#")))
             .plmType(StringUtils.substringAfter(agentConnectionInfo.getConnectionInfo(), "plmType=").replace(")", ""))
-            .agentId(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "agentId=", "#"))
+            .agentId(StringUtils.substringBetween(agentConnectionInfo.getConnectionInfo(), "agentId=", "\n\n#"))
             .build();
     }
 }
