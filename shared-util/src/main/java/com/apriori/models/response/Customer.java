@@ -1,7 +1,8 @@
-package com.apriori.cds.models.response;
+package com.apriori.models.response;
 
+import com.apriori.annotations.CreatableModel;
 import com.apriori.annotations.Schema;
-import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -17,40 +18,39 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "DeploymentSchema.json")
-@Data
-@Builder
-@AllArgsConstructor
+@Schema(location = "CustomerSchema.json")
 @NoArgsConstructor
+@AllArgsConstructor
 @JsonRootName("response")
-public class Deployment {
-    private Boolean isDefault;
+@Data
+@CreatableModel("customer")
+@Builder
+public class Customer {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-    private String customerIdentity;
+    private String updatedBy;
     private String name;
     private String cloudReference;
     private String description;
     private String customerType;
     private String salesforceId;
     private Boolean active;
-    private String apVersion;
-    private List<Installation> installations = null;
-    private List<Object> siteIdentities = null;
-    private String deploymentType;
     private Integer maxCadFileRetentionDays;
     private Integer maxCadFileSize;
+    private String mfaAuthenticator = null;
     private Boolean useExternalIdentityProvider;
     private Boolean mfaRequired;
-    private List<String> oneTimePasswordApplications;
+    private List<Object> oneTimePasswordApplications = null;
     private String createdByName;
-    private List<String> identityProviders;
+    private String updatedByName;
+    private List<Object> identityProviders = null;
+    private List<String> emailDomains = null;
     private String authenticationType;
-    private List<String> emailDomains;
+    private List<String> emailRegexPatterns;
 }

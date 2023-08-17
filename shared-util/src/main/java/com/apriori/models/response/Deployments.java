@@ -1,6 +1,7 @@
-package com.apriori.cds.models.response;
+package com.apriori.models.response;
 
 import com.apriori.annotations.Schema;
+import com.apriori.models.response.Deployment;
 import com.apriori.models.response.Pagination;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
