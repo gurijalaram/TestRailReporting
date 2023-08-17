@@ -8,7 +8,6 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.json.JsonManager;
 import com.apriori.models.request.TokenRequest;
 import com.apriori.models.response.Application;
 import com.apriori.models.response.Claims;
@@ -89,7 +88,7 @@ public class AuthorizationUtil {
      */
     private List<Deployment> getDeploymentItems(UserCredentials userCredentials, QueryParams queryParams) {
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(DeploymentsAPIEnum.DEPLOYMENTS, null)
+            .init(DeploymentsAPIEnum.DEPLOYMENTS, Deployments.class)
             .token(userCredentials.getToken())
             .inlineVariables(
                 PropertiesContext.get("customer_identity")
@@ -97,7 +96,11 @@ public class AuthorizationUtil {
             .queryParams(queryParams)
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        return JsonManager.convertBodyToJson(HTTPRequest.build(requestEntity).get(), Deployments.class).getItems();
+//        return JsonManager.convertBodyToJson(HTTPRequest.build(requestEntity).get(), GetDeploymentsResponse.class).getItems();
+        return ((Deployments) HTTPRequest.build(requestEntity)
+            .get()
+            .getResponseEntity()
+        ).getItems();
     }
 
     /**
