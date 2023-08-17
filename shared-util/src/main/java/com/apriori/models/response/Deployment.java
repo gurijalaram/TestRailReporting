@@ -1,6 +1,5 @@
-package com.apriori.cds.models.response;
+package com.apriori.models.response;
 
-import com.apriori.annotations.CreatableModel;
 import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
@@ -18,14 +17,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "CustomerSchema.json")
-@NoArgsConstructor
-@AllArgsConstructor
-@JsonRootName("response")
+@Schema(location = "DeploymentSchema.json")
 @Data
-@CreatableModel("customer")
 @Builder
-public class Customer {
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonRootName("response")
+public class Deployment {
+    private Boolean isDefault;
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
@@ -34,23 +33,24 @@ public class Customer {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-    private String updatedBy;
+    private String customerIdentity;
     private String name;
     private String cloudReference;
     private String description;
     private String customerType;
     private String salesforceId;
     private Boolean active;
+    private String apVersion;
+    private List<Installation> installations = null;
+    private List<Object> siteIdentities = null;
+    private String deploymentType;
     private Integer maxCadFileRetentionDays;
     private Integer maxCadFileSize;
-    private String mfaAuthenticator = null;
     private Boolean useExternalIdentityProvider;
     private Boolean mfaRequired;
-    private List<Object> oneTimePasswordApplications = null;
+    private List<String> oneTimePasswordApplications;
     private String createdByName;
-    private String updatedByName;
-    private List<Object> identityProviders = null;
-    private List<String> emailDomains = null;
+    private List<String> identityProviders;
     private String authenticationType;
-    private List<String> emailRegexPatterns;
+    private List<String> emailDomains;
 }
