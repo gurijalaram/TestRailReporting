@@ -96,7 +96,6 @@ public class AuthorizationUtil {
             .queryParams(queryParams)
             .expectedResponseCode(HttpStatus.SC_OK);
 
-//        return JsonManager.convertBodyToJson(HTTPRequest.build(requestEntity).get(), GetDeploymentsResponse.class).getItems();
         return ((Deployments) HTTPRequest.build(requestEntity)
             .get()
             .getResponseEntity()
