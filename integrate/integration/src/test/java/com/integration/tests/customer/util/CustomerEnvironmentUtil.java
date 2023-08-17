@@ -17,12 +17,10 @@ import com.apriori.models.response.Deployment;
 import com.apriori.models.response.Deployments;
 import com.apriori.reader.file.user.UserCredentials;
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.SoftAssertions;
 
 import java.util.List;
 
 public class CustomerEnvironmentUtil {
-    protected static SoftAssertions softAssertions;
 
     protected UserCredentials getAwsCustomerUserCredentials() {
         final String username = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGenerateUser");

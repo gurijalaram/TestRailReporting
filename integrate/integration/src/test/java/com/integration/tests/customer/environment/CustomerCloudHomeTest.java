@@ -7,10 +7,8 @@ import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
 import com.apriori.reader.file.user.UserCredentials;
 import com.integration.tests.customer.util.CustomerEnvironmentUtil;
-import org.assertj.core.api.SoftAssertions;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -18,16 +16,6 @@ import java.util.List;
 
 public class CustomerCloudHomeTest extends CustomerEnvironmentUtil {
     private final UserCredentials userCredentials = getAwsCustomerUserCredentials();
-
-    @BeforeEach
-    public void setup() {
-        softAssertions = new SoftAssertions();
-    }
-
-    @AfterEach
-    public void cleanup() {
-        softAssertions.assertAll();
-    }
 
     @Test
     public void validateCustomerApplicationsByAPI() {
@@ -44,7 +32,7 @@ public class CustomerCloudHomeTest extends CustomerEnvironmentUtil {
 
         userReferences.removeAll(customerReferences);
 
-        softAssertions.assertThat(userReferences.size()).isZero();
+        Assertions.assertEquals(0, userReferences.size(), "User list should be empty, else user has an access not related to the customers environment.");
     }
 
     private List<String> concatUserIdentitiesToStringList(List<AccessControlResponse> userAccessControls, String delimiter) {
