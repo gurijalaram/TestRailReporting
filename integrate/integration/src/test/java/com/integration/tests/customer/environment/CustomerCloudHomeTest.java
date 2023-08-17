@@ -6,8 +6,8 @@ import com.apriori.cds.models.response.User;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
 import com.apriori.reader.file.user.UserCredentials;
-import com.integration.tests.customer.util.CustomerEnvironmentUtil;
 
+import com.integration.tests.customer.util.CustomerEnvironmentUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

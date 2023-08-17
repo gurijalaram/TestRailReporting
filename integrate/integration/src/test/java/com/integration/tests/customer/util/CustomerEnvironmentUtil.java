@@ -1,8 +1,6 @@
 package com.integration.tests.customer.util;
 
 import com.apriori.cds.enums.CDSAPIEnum;
-
-
 import com.apriori.cds.models.response.AccessControlResponse;
 import com.apriori.cds.models.response.AccessControls;
 import com.apriori.cds.models.response.User;
@@ -16,6 +14,7 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.Deployment;
 import com.apriori.models.response.Deployments;
 import com.apriori.reader.file.user.UserCredentials;
+
 import org.apache.http.HttpStatus;
 
 import java.util.List;
