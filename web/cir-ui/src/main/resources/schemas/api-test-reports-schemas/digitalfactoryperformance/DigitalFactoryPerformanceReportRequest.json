@@ -1,0 +1,101 @@
+{
+  "reportUnitUri": "/aPriori/reports/solutions/quoting/vpePerformance",
+  "async": true,
+  "allowInlineScripts": false,
+  "markupType": "embeddable",
+  "interactive": true,
+  "freshData": false,
+  "saveDataSnapshot": false,
+  "transformerKey": null,
+  "pages": 1,
+  "attachmentsPrefix": "/jasperserver-pro/rest_v2/reportExecutions/{reportExecutionId}/exports/{exportExecutionId}/attachments/",
+  "baseUrl": "/jasperserver-pro",
+  "parameters": {
+    "reportParameter": [
+      {
+        "name": "earliestExportDate",
+        "value": [
+          "2023-04-11T06:28:03"
+        ]
+      },
+      {
+        "name": "latestExportDate",
+        "value": [
+          "2023-08-09T06:28:03"
+        ]
+      },
+      {
+        "name": "exportSetName",
+        "value": [
+          "137461"
+        ]
+      },
+      {
+        "name": "rollup",
+        "value": [
+          "137465"
+        ]
+      },
+      {
+        "name": "exportDate",
+        "value": [
+          "2023-07-25T02:17:03"
+        ]
+      },
+      {
+        "name": "costMetric",
+        "value": [
+          "Fully Burdened Cost"
+        ]
+      },
+      {
+        "name": "performanceMetric",
+        "value": [
+          "Process Name"
+        ]
+      },
+      {
+        "name": "annualVolumeMin",
+        "value": [
+          "1000"
+        ]
+      },
+      {
+        "name": "annualVolumeMax",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "name": "processGroup",
+        "value": [
+          "~NOTHING~"
+        ]
+      },
+      {
+        "name": "processName",
+        "value": [
+          "~NOTHING~"
+        ]
+      },
+      {
+        "name": "materialName",
+        "value": [
+          "~NOTHING~"
+        ]
+      },
+      {
+        "name": "vpeName",
+        "value": [
+          "~NOTHING~"
+        ]
+      },
+      {
+        "name": "currencyCode",
+        "value": [
+          "GBP"
+        ]
+      }
+    ]
+  }
+}

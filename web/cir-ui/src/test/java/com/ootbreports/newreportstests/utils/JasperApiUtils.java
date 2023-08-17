@@ -3,8 +3,10 @@ package com.ootbreports.newreportstests.utils;
 import com.apriori.cir.JasperReportSummary;
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.cir.models.request.ReportRequest;
+import com.apriori.cir.models.response.ChartDataPoint;
 import com.apriori.cir.models.response.InputControl;
 import com.apriori.cir.utils.JasperReportUtil;
+import com.apriori.cirapi.entity.enums.InputControlsEnum;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ProcessGroupEnum;
 
@@ -15,6 +17,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utils.Constants;
 
 import java.time.LocalDateTime;
@@ -29,6 +33,7 @@ import java.util.stream.Collectors;
 @Data
 @Slf4j
 public class JasperApiUtils {
+    private static final Logger logger = LoggerFactory.getLogger(JasperApiUtils.class);
     private static final SoftAssertions softAssertions = new SoftAssertions();
     private CirApiEnum reportValueForInputControls;
     private ReportRequest reportRequest;
@@ -109,12 +114,31 @@ public class JasperApiUtils {
      * @param currencyToSet - currency that is to be set
      * @return JasperReportSummary instance
      */
+    public JasperReportSummary genericTestCoreCurrencyAndDateOnly(String currencyToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+        setReportParameterByName("exportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
+     * Generic method for testing currency only, excluding date
+     *
+     * @param currencyToSet - currency that is to be set
+     * @return JasperReportSummary instance
+     */
     public JasperReportSummary genericTestCoreCurrencyOnly(String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
-        setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
-        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
-        setReportParameterByName("exportDate", currentDateTime);
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -589,7 +613,6 @@ public class JasperApiUtils {
      *
      * @param valueToGet String the key of the value to set
      * @param valueToSet String the value which to set
-     * @return ReportRequest instance with specified parameter set
      */
     public void setReportParameterByName(String valueToGet, String valueToSet) {
         this.reportRequest.getParameters().getReportParameterByName(valueToGet)
@@ -608,12 +631,12 @@ public class JasperApiUtils {
         String attributeNameId = "id";
         String tagName = "span";
 
-        List<Element> gbpSpanElements = generateAndReturnReportCurrencyOnly(
+        List<Element> gbpSpanElements = genericTestCoreCurrencyAndDateOnly(
             CurrencyEnum.GBP.getCurrency()).getReportHtmlPart()
             .getElementsByAttributeValue(attributeNameId, tableId).get(0)
             .getElementsByTag(tagName);
 
-        List<Element> usdSpanElements = generateAndReturnReportCurrencyOnly(
+        List<Element> usdSpanElements = genericTestCoreCurrencyAndDateOnly(
             CurrencyEnum.USD.getCurrency()).getReportHtmlPart()
             .getElementsByAttributeValue(attributeNameId, tableId).get(0)
             .getElementsByTag(tagName);
@@ -638,16 +661,36 @@ public class JasperApiUtils {
         softAssertions.assertAll();
     }
 
+    /**
+     * Get chart data point property value by name
+     *
+     * @param jasperReportSummary - Jasper Report Summary instance
+     * @param partName - String
+     * @param propertyName - String
+     * @return String of property value
+     */
+    public String getPartPropertyValueByName(JasperReportSummary jasperReportSummary, String partName, String propertyName) {
+        ChartDataPoint chartDataPoint = jasperReportSummary.getFirstChartData().getChartDataPointByPartName(partName);
+
+        if (chartDataPoint == null) {
+            throw new IllegalArgumentException(String.format("Part with name %s does not exist", partName));
+        }
+
+        Object propertyValue = chartDataPoint.getPropertyByName(propertyName).getValue();
+
+        if (propertyValue == null) {
+            throw new IllegalArgumentException(String.format("Property with name %s for part name %s does not exist", propertyName, partName));
+        }
+
+        return propertyValue.toString();
+    }
+
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
-        return generateAndReturnReportCurrencyOnly(currencyToGet)
+        return genericTestCoreCurrencyAndDateOnly(currencyToGet)
             .getFirstChartData().getChartDataPoints()
             .stream().map(e -> e.getPropertyByName("Scenario Cycle Time (s)").getValue().toString())
             .collect(Collectors.toCollection(ArrayList::new)
             );
-    }
-
-    private JasperReportSummary generateAndReturnReportCurrencyOnly(String currency) {
-        return genericTestCoreCurrencyOnly(currency);
     }
 
     private String getCurrentCurrencyFromAboveChart(JasperReportSummary jasperReportSummary, boolean areBubblesPresent) {
