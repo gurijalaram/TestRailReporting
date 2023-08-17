@@ -20,8 +20,6 @@ import com.apriori.cas.models.response.Customers;
 import com.apriori.cas.models.response.LicenseResponse;
 import com.apriori.cas.models.response.PostBatch;
 import com.apriori.cas.models.response.Site;
-import com.apriori.cas.models.response.UpdateUser;
-import com.apriori.cas.models.response.UpdatedProfile;
 import com.apriori.cas.models.response.ValidateSite;
 import com.apriori.cds.models.request.License;
 import com.apriori.cds.models.request.LicenseRequest;
@@ -169,46 +167,24 @@ public class CasTestUtil extends TestUtil {
         return util.createUser(identity, userName, domain);
     }
 
-    /**
-     * @param userName         - username
-     * @param identity         - user identity
-     * @param customerIdentity - customer identity
-     * @param profileIdentity  - user profile identity
-     * @return ResponseWrapper <UpdateUser>
-     */
-    public static ResponseWrapper<UpdateUser> updateUser(String userName, String customerName, String identity, String customerIdentity, String profileIdentity) {
-        LocalDateTime createdAt = LocalDateTime.parse("2020-11-23T10:15:30");
-        LocalDateTime updatedAt = LocalDateTime.parse("2021-02-19T10:25");
-        LocalDateTime profileCreatedAt = LocalDateTime.parse("2020-11-23T13:34");
+    public static ResponseWrapper<CustomerUser> updateUser(CustomerUser user) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.USER, UpdateUser.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.USER, CustomerUser.class)
             .body("user",
-                UpdateUser.builder().userType("AP_CLOUD_USER")
-                    .email(userName.toLowerCase() + "@" + customerName.toLowerCase() + ".co.uk")
-                    .username(userName)
-                    .active(true)
-                    .identity(identity)
-                    .createdAt(createdAt)
-                    .createdBy("#SYSTEM00000")
-                    .updatedAt(updatedAt)
-                    .customerIdentity(customerIdentity)
-                    .mfaRequired(true)
-                    .customProperties(new CustomProperties())
-                    .createdByName("SYSTEM")
-                    .licenseAssignments(Collections.singletonList(""))
-                    .userType("AP_CLOUD_USER")
-                    .userProfile(UpdatedProfile.builder()
-                        .identity(profileIdentity)
-                        .createdAt(profileCreatedAt)
-                        .createdBy("#SYSTEM00000")
-                        .givenName(userName)
-                        .familyName("Automater")
-                        .jobTitle("Automation Engineer")
+                CustomerUser.builder()
+                    .identity(user.getIdentity())
+                    .email(user.getEmail())
+                    .username(user.getUsername())
+                    .active(user.getActive())
+                    .createdBy(user.getCreatedBy())
+                    .userProfile(CustomerUserProfile.builder()
+                        .createdBy(user.getUserProfile().getCreatedBy())
+                        .givenName(user.getUserProfile().getGivenName())
+                        .familyName(user.getUserProfile().getFamilyName())
                         .department("QA")
-                        .supervisor("Ciene Frith")
                         .build())
                     .build())
-            .inlineVariables(customerIdentity, identity)
+            .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).patch();

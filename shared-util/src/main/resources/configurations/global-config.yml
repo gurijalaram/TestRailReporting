@@ -38,7 +38,7 @@ global:
 default:
   aws_region: na-1
   users_csv_file: common-users.csv
-
+  customer_aws_account_type: dev
 ###########################
 #  Core services
   core_service_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
