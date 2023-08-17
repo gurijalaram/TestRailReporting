@@ -6,6 +6,7 @@ import com.apriori.cds.models.response.User;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
 import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.testrail.TestRail;
 
 import com.integration.tests.customer.util.CustomerEnvironmentUtil;
 import org.junit.jupiter.api.Assertions;
@@ -18,6 +19,7 @@ public class CustomerCloudHomeTest extends CustomerEnvironmentUtil {
     private final UserCredentials userCredentials = getAwsCustomerUserCredentials();
 
     @Test
+    @TestRail(id = {27011})
     public void validateCustomerApplicationsByAPI() {
         final String delimiter = "_";
 
