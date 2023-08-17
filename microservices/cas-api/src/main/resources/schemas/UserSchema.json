@@ -20,7 +20,8 @@
         "mfaRequired",
         "customAttributes",
         "resourcesAllowedToCreate",
-        "userType"
+        "userType",
+        "hasCompleteProfile"
       ],
       "optional": [
         "customProperties",
@@ -97,7 +98,9 @@
           "type": "object",
           "optional": [
             "function",
-            "workspaceId"
+            "workspaceId",
+            "location",
+            "department"
           ]
         },
         "resourcesAllowedToCreate": {
@@ -108,6 +111,9 @@
         },
         "updatedBy": {
           "type": "string"
+        },
+        "hasCompleteProfile": {
+          "type": "boolean"
         }
       }
     }

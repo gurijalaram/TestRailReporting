@@ -25,7 +25,8 @@
         "createdByName",
         "signRequestAlgorithm",
         "signRequestAlgorithmDigest",
-        "protocolBinding"
+        "protocolBinding",
+        "authenticationType"
       ],
       "properties": {
         "identity": {
@@ -142,6 +143,9 @@
           "type": "string"
         },
         "protocolBinding": {
+          "type": "string"
+        },
+        "authenticationType": {
           "type": "string"
         }
       }

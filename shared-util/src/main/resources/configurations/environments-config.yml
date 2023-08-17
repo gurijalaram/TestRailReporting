@@ -20,7 +20,7 @@ qa-test:
     login_title_locator: //*[@class='auth0-lock-name']
 
   cds:
-    apriori_core_services_installation_identity: 7GFDL6LCI5N4
+    apriori_core_services_installation_identity: 7CAIEIB9J1NI
     apriori_cloud_home_identity: 1J8M416FBJBK
     appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity: 7FLINC95H3A3

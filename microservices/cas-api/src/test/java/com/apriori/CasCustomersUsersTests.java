@@ -4,7 +4,6 @@ import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.models.response.Customer;
 import com.apriori.cas.models.response.CustomerUser;
 import com.apriori.cas.models.response.CustomerUsers;
-import com.apriori.cas.models.response.UpdateUser;
 import com.apriori.cas.models.response.UsersData;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -92,14 +91,11 @@ public class CasCustomersUsersTests {
     @TestRail(id = {5664})
     @Description("Update the User.")
     public void updateCustomerUsers() {
-        String customerName = newCustomer.getName();
+        ResponseWrapper<CustomerUser> userResponse = casTestUtil.createUser(newCustomer);
+        CustomerUser user = userResponse.getResponseEntity();
+        userIdentity = user.getIdentity();
 
-        ResponseWrapper<CustomerUser> user = casTestUtil.createUser(newCustomer);
-        userIdentity = user.getResponseEntity().getIdentity();
-        String profileIdentity = user.getResponseEntity().getUserProfile().getIdentity();
-        String userName = user.getResponseEntity().getUsername();
-
-        ResponseWrapper<UpdateUser> updatedUser = CasTestUtil.updateUser(userName, customerName, userIdentity, customerIdentity, profileIdentity);
+        ResponseWrapper<CustomerUser> updatedUser = CasTestUtil.updateUser(user);
 
         soft.assertThat(updatedUser.getResponseEntity().getUserProfile().getDepartment())
             .isEqualTo("QA");

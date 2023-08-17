@@ -4,9 +4,10 @@ repositories {
 
 dependencies {
     implementation project(':shared-util')
-    implementation project(':web-app-util')
+    implementation project(':serialization-util')
     implementation project(':db')
     implementation project(':microservices:cic-api')
     implementation project(':web:ciconnect-ui')
+    implementation project(':web-app-util')
     implementation 'com.jcraft:jsch:0.1.55'
 }
