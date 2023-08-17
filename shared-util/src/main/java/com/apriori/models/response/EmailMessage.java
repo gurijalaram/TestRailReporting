@@ -1,0 +1,105 @@
+package com.apriori.models.response;
+
+import com.apriori.email.EmailConnection;
+import com.apriori.email.EmailEnum;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpStatus;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
+
+@Slf4j
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class EmailMessage {
+    @JsonProperty("@odata.etag")
+    public String etag;
+    public String id;
+    public String createdDateTime;
+    public String lastModifiedDateTime;
+    public String changeKey;
+    public ArrayList<Object> categories;
+    public String receivedDateTime;
+    public String sentDateTime;
+    public boolean hasAttachments;
+    public String internetMessageId;
+    public String subject;
+    public String bodyPreview;
+    public String importance;
+    public String parentFolderId;
+    public String conversationId;
+    public String conversationIndex;
+    public Object isDeliveryReceiptRequested;
+    public boolean isReadReceiptRequested;
+    public boolean isRead;
+    public boolean isDraft;
+    public String webLink;
+    public String inferenceClassification;
+    public EmailMessageBody body;
+    public Object sender;
+    public Object from;
+    public ArrayList<Object> toRecipients;
+    public ArrayList<Object> ccRecipients;
+    public ArrayList<Object> bccRecipients;
+    public ArrayList<Object> replyTo;
+    public Object flag;
+
+    /**
+     * Get Email Message Attachment using Message I
+     *
+     * @return EmailMessageAttachment
+     */
+    public EmailMessageAttachment emailMessageAttachment() {
+        EmailMessageAttachment emailMessageAttachment = emailMessageAttachments().value.get(0);
+        if (Objects.isNull(emailMessageAttachment)) {
+            throw new RuntimeException("ATTACHMENT NOT FOUND IN THE EMAIL !!!");
+        }
+        return emailMessageAttachment;
+    }
+
+    /**
+     * Delete email using email message id
+     */
+    public void deleteEmailMessage() {
+        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGE, null)
+            .inlineVariables(this.id)
+            .headers(new HashMap<String, String>() {
+                {
+                    put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
+                }
+            }).expectedResponseCode(HttpStatus.SC_NO_CONTENT);
+
+        HTTPRequest.build(requestEntity).delete();
+    }
+
+    /**
+     * Get Email Message Attachments using Message
+     *
+     * @return EmailMessageAttachments
+     */
+    public EmailMessageAttachments emailMessageAttachments() {
+        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGE_ATTACHMENTS, EmailMessageAttachments.class)
+            .inlineVariables(this.id)
+            .headers(new HashMap<String, String>() {
+                {
+                    put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
+                }
+            }).expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<EmailMessageAttachments> emailMessageAttachmentsResponse = HTTPRequest.build(requestEntity).get();
+        return emailMessageAttachmentsResponse.getResponseEntity();
+    }
+}

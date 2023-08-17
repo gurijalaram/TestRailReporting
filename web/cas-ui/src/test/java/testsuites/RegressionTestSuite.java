@@ -1,18 +1,24 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.CategorySuiteRunner;
+import com.apriori.customer.AprioriInternalProfileTests;
+import com.apriori.customer.CustomerAccessTests;
+import com.apriori.customer.CustomersTests;
+import com.apriori.customer.EditCustomerTests;
+import com.apriori.customer.NewCustomerTests;
+import com.apriori.infrastructure.AccessControlsApplicationTests;
+import com.apriori.navigation.NavigationTests;
+import com.apriori.security.MfaEnabledTests;
 
-import com.infrastructure.AccessControlsApplicationTests;
-import com.navigation.NavigationTests;
-import com.security.MfaEnabledTests;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("874")
-@RunWith(CategorySuiteRunner.class)
-@Suite.SuiteClasses({
-    CustomerTestSuite.class,
+@Suite
+@SelectClasses({
+    NewCustomerTests.class,
+    EditCustomerTests.class,
+    AprioriInternalProfileTests.class,
+    CustomersTests.class,
+    CustomerAccessTests.class,
     NavigationTests.class,
     UsersTestSuite.class,
     SystemConfigurationTestSuite.class,

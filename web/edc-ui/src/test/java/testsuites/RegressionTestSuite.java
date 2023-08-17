@@ -1,20 +1,17 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.fieldsvalidation.MountTypePinCountTests;
+import com.apriori.help.HelpTests;
+import com.apriori.myuser.MyProfileTests;
+import com.apriori.myuser.TermsOfUseTests;
+import com.apriori.pcba.FilterPartsTests;
+import com.apriori.pcba.UploadTests;
 
-import com.fieldsvalidation.MountTypePinCountTests;
-import com.help.HelpTests;
-import com.myuser.MyProfileTests;
-import com.myuser.TermsOfUseTests;
-import com.upload.pcba.FilterPartsTests;
-import com.upload.pcba.UploadTests;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("262")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     MyProfileTests.class,
     TermsOfUseTests.class,
     HelpTests.class,

@@ -11,7 +11,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllE
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElementsLocatedBy;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
-import com.apriori.utils.Obligation;
+import com.apriori.http.utils.Obligation;
 
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
@@ -85,6 +85,29 @@ public class PageUtils {
 
     public PageUtils(WebDriver driver) {
         this.driver = driver;
+    }
+
+    /**
+     * highlights given element. This would be mainly used for debugging
+     *
+     * @param driver
+     * @param element
+     */
+    public static void highlightElement(WebDriver driver, WebElement element) {
+
+        // Original in Python: https://gist.github.com/3086536
+        String originalStyle = element.getAttribute("style");
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.debug("Failed to highlight element");
+        }
+        js.executeScript("arguments[0].setAttribute('style', '" + originalStyle + "');", element);
     }
 
     public String currentlyOnPage(String pageName) {
@@ -341,7 +364,7 @@ public class PageUtils {
      *                         You can set this to null to not send anything.
      */
     public void setValueOfElement(WebElement elementWithValue, String value, CharSequence endOfInput) {
-        setValueOfElement(elementWithValue, value, new CharSequence[]{endOfInput});
+        setValueOfElement(elementWithValue, value, new CharSequence[] {endOfInput});
     }
 
     /**
@@ -1025,7 +1048,7 @@ public class PageUtils {
         try {
 
             textPresent = new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
-                .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + waitForElementToAppear(locator).getText())
+                .withMessage("Expected: " + text.replace("", " ") + "Found: " + waitForElementToAppear(locator).getText())
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text));
 
@@ -1048,7 +1071,7 @@ public class PageUtils {
         try {
 
             textPresent = new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
-                .withMessage("\nNot expecting: " + text + "\nFound: " + waitForElementToAppear(locator).getText())
+                .withMessage("Not expecting: " + text + "Found: " + waitForElementToAppear(locator).getText())
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(not((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text)));
 
@@ -1068,7 +1091,7 @@ public class PageUtils {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
         return new WebDriverWait(driver, Duration.ofSeconds(timeoutInMinutes))
-            .withMessage("\nExpected attribute: " + attribute + "\t" + "\nFound: " + locator.getAttribute(attribute))
+            .withMessage("Expected attribute: " + attribute + "\t" + "Found: " + locator.getAttribute(attribute))
             .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
     }
 
@@ -1082,7 +1105,7 @@ public class PageUtils {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 2;
 
         return new WebDriverWait(driver, Duration.ofSeconds(timeoutInMinutes))
-            .withMessage("\nElement not visible using locator: " + locator)
+            .withMessage("Element not visible using locator: " + locator)
             .until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
     }
 
@@ -1098,7 +1121,7 @@ public class PageUtils {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
         return new WebDriverWait(driver, Duration.ofSeconds(timeoutInMinutes))
-            .withMessage("\nExpected: " + text + "\t" + "\nFound: " + locator.getAttribute(attribute))
+            .withMessage("Expected: " + text + "\t" + "Found: " + locator.getAttribute(attribute))
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
     }
@@ -1111,7 +1134,7 @@ public class PageUtils {
      */
     public boolean checkElementFirstOption(WebElement locator, String text) {
         return new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS / 2))
-            .withMessage("\nExpected option not in dropdown: " + text + "\nLocator: " + locator)
+            .withMessage("Expected option not in dropdown: " + text + "Locator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (new Select(locator)).getFirstSelectedOption().getText().equalsIgnoreCase(text));
     }
@@ -1124,7 +1147,7 @@ public class PageUtils {
      */
     public void checkDropdownOptions(WebElement locator, String option) {
         new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS / 2))
-            .withMessage("\nExpected option not in dropdown: " + option + "\nLocator: " + locator)
+            .withMessage("Expected option not in dropdown: " + option + "Locator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().stream().anyMatch(dropdownOptions -> dropdownOptions.getText().contains(option))));
     }
@@ -1282,29 +1305,6 @@ public class PageUtils {
             .release()
             .pause(Duration.ofSeconds(1))
             .perform();
-    }
-
-    /**
-     * highlights given element. This would be mainly used for debugging
-     *
-     * @param driver
-     * @param element
-     */
-    public static void highlightElement(WebDriver driver, WebElement element) {
-
-        // Original in Python: https://gist.github.com/3086536
-        String originalStyle = element.getAttribute("style");
-
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
-
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            logger.debug("Failed to highlight element");
-        }
-        js.executeScript("arguments[0].setAttribute('style', '" + originalStyle + "');", element);
     }
 
     /**

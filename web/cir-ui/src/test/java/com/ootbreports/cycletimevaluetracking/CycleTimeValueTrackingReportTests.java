@@ -1,25 +1,26 @@
 package com.ootbreports.cycletimevaluetracking;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
-import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.TestBaseUI;
+import com.apriori.enums.ReportNamesEnum;
+import com.apriori.pageobjects.login.ReportsLoginPage;
+import com.apriori.pageobjects.view.reports.ComponentCostReportPage;
+import com.apriori.pageobjects.view.reports.CycleTimeValueTrackingPage;
+import com.apriori.testrail.TestRail;
 
 import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 
-public class CycleTimeValueTrackingReportTests extends TestBase {
+public class CycleTimeValueTrackingReportTests extends TestBaseUI {
 
     private CycleTimeValueTrackingPage cycleTimeValueTrackingPage;
     private ComponentCostReportPage componentCostReportPage;
@@ -30,19 +31,19 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"2325"})
+    @Tag(REPORTS)
+    @TestRail(id = {2325})
     @Description("Validate report is available by navigation - Cycle Time Value Tracking Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testReportAvailabilityByNavigation(
-                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName()
+            ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName()
         );
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7236"})
+    @Tag(REPORTS)
+    @TestRail(id = {7236})
     @Description("Verify report availability by library - Cycle Time Value Tracking Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -50,8 +51,8 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7238"})
+    @Tag(REPORTS)
+    @TestRail(id = {7238})
     @Description("Verify report availability by search - Cycle Time Value Tracking Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -59,17 +60,17 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"2331"})
+    @Tag(REPORTS)
+    @TestRail(id = {2331})
     @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Report")
     public void testProjectRollupDropdownList() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(
-                        ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
-                        CycleTimeValueTrackingPage.class
-                );
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(
+                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
+                CycleTimeValueTrackingPage.class
+            );
 
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("1")));
         String expectedProjectRollup = "AC CYCLE TIME VT 1";
@@ -82,17 +83,18 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2332"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2332})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Report")
     public void testExportDateFilterFunctionality() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(
-                        ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
-                        CycleTimeValueTrackingPage.class
-                ).selectCycleTimeRollup();
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(
+                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
+                CycleTimeValueTrackingPage.class
+            ).selectCycleTimeRollup();
 
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("10")));
         assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("4")));
@@ -103,17 +105,18 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
 
     @Test
     @Issue("AP-66960")
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2335"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2335})
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
     public void testReportHyperlinks() {
         cycleTimeValueTrackingPage = new ReportsLoginPage(driver)
-                .login()
-                .navigateToLibraryPage()
-                .navigateToReport(
-                        ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
-                        CycleTimeValueTrackingPage.class
-                );
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(
+                ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING.getReportName(),
+                CycleTimeValueTrackingPage.class
+            );
 
         cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
         cycleTimeValueTrackingPage.clickHyperlink("PROJECT 2", CycleTimeValueTrackingPage.class);
@@ -121,7 +124,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
         cycleTimeValueTrackingPage.waitForNewTabSwitchCycleTimeToDetailsOrComponentCost();
 
         assertThat(cycleTimeValueTrackingPage.getCycleTimeReportTitle(),
-                is(equalTo(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName())));
+            is(equalTo(ReportNamesEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getReportName())));
 
         String partNumber = "IROBOT_18874";
         componentCostReportPage = cycleTimeValueTrackingPage.clickHyperlink(partNumber, ComponentCostReportPage.class);
@@ -129,12 +132,12 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
         cycleTimeValueTrackingPage.waitForNewTabSwitchCycleTimeToDetailsOrComponentCost();
 
         assertThat(
-                componentCostReportPage.getComponentCostReportTitle(),
-                is(equalTo(ReportNamesEnum.COMPONENT_COST.getReportName()))
+            componentCostReportPage.getComponentCostReportTitle(),
+            is(equalTo(ReportNamesEnum.COMPONENT_COST.getReportName()))
         );
         assertThat(
-                componentCostReportPage.getPartNumber(),
-                is(equalTo(partNumber))
+            componentCostReportPage.getPartNumber(),
+            is(equalTo(partNumber))
         );
     }
 }

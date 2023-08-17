@@ -1,15 +1,15 @@
 package com.apriori.bcs.controller;
 
-import com.apriori.bcs.entity.request.PatchCostingPreferenceRequest;
-import com.apriori.bcs.entity.response.UserPreferences;
 import com.apriori.bcs.enums.BCSAPIEnum;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.bcs.models.request.PatchCostingPreferenceRequest;
+import com.apriori.bcs.models.response.UserPreferences;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.json.JsonManager;
+import com.apriori.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
 

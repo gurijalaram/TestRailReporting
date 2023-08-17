@@ -1,16 +1,17 @@
 package com.ootbreports.newreportstests.componentcost;
 
-import com.apriori.cirapi.entity.enums.CirApiEnum;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.ExportSetEnum;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
+
+import com.apriori.cir.enums.CirApiEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
@@ -19,14 +20,14 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.COMPONENT_COST;
     private static JasperApiUtils jasperApiUtils;
 
-    @Before
+    @BeforeEach
     public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3329"})
+    @Tag(REPORTS)
+    @TestRail(id = {3329})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         jasperApiUtils.genericComponentCostCurrencyTest();

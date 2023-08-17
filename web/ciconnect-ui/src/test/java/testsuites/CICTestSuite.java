@@ -1,22 +1,19 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.CostingInputTabTests;
+import com.apriori.NavBarTests;
+import com.apriori.NotificationTests;
+import com.apriori.PublishResultsTests;
+import com.apriori.QueryDefinitionTests;
+import com.apriori.UsersTests;
+import com.apriori.WorkflowHistoryTests;
+import com.apriori.WorkflowTests;
 
-import com.cic.tests.CostingInputTabTests;
-import com.cic.tests.NavBarTests;
-import com.cic.tests.NotificationTests;
-import com.cic.tests.PublishResultsTests;
-import com.cic.tests.QueryDefinitionTests;
-import com.cic.tests.UsersTests;
-import com.cic.tests.WorkflowHistoryTests;
-import com.cic.tests.WorkflowTests;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("561")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     NavBarTests.class,
     NotificationTests.class,
     QueryDefinitionTests.class,
@@ -26,6 +23,5 @@ import org.junit.runners.Suite;
     PublishResultsTests.class,
     CostingInputTabTests.class
 })
-
 public class CICTestSuite {
 }

@@ -3,10 +3,10 @@ package com.apriori.cnh.entity.apicalls;
 import com.apriori.cnh.entity.enums.CNHAPIEnum;
 import com.apriori.cnh.entity.request.ExecuteRequest;
 import com.apriori.cnh.entity.response.ExecuteResponse;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+
+
+
+
 
 import java.util.HashMap;
 import java.util.Map;

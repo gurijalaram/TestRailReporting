@@ -1,6 +1,6 @@
 package com.apriori.cidappapi.utils;
 
-import com.apriori.cidappapi.entity.request.GroupItems;
+import com.apriori.cidappapi.models.request.GroupItems;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

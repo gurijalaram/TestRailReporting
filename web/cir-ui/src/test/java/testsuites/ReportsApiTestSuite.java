@@ -1,8 +1,5 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
-
 import com.ootbreports.newreportstests.componentcost.ComponentCostReportTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationDetailsTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationTests;
@@ -41,12 +38,11 @@ import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCost
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
 import com.ootbreports.newreportstests.upgradecomparison.UpgradeComparisonReportTests;
 import com.ootbreports.newreportstests.upgradecomparison.UpgradePartComparisonTests;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.Suite;
+import org.junit.platform.suite.api.SelectClasses;
 
-@ProjectRunID("261")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
     AssemblyDetailsReportTests.class,

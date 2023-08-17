@@ -1,44 +1,45 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
-import com.apriori.cirapi.entity.enums.CirApiEnum;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.DtcScoreEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
-import com.apriori.utils.enums.reports.SortOrderEnum;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
+
+import com.apriori.cir.enums.CirApiEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
+import enums.CostMetricEnum;
+import enums.DtcScoreEnum;
+import enums.JasperCirApiPartsEnum;
+import enums.MassMetricEnum;
+import enums.SortOrderEnum;
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
+    private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC.getEndpoint();
+    private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC;
+    private static JasperApiUtils jasperApiUtils;
     private final List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.P_2980123_CLAMP.getPartName(),
         JasperCirApiPartsEnum.AP_BRACKET_HANGER.getPartName(),
         JasperCirApiPartsEnum.DS73_F04604_PIA1.getPartName()
     );
-    private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC;
-    private static JasperApiUtils jasperApiUtils;
 
-    @Before
+    @BeforeEach
     public void setupGenericMethods() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
-    @TestRail(testCaseId = {"3046"})
+    @TestRail(id = {3046})
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Report")
     public void testCurrencyCode() {
         jasperApiUtils.genericDtcCurrencyTest(
@@ -48,7 +49,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3043"})
+    @TestRail(id = {3043})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcTest(
@@ -58,7 +59,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"7418"})
+    @TestRail(id = {7418})
     @Description("Verify cost metric input control functions correctly - FBC - Sheet Metal DTC Report")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcTest(
@@ -68,7 +69,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"3044"})
+    @TestRail(id = {3044})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
@@ -78,7 +79,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"7398"})
+    @TestRail(id = {7398})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcTest(
@@ -88,7 +89,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"7448"})
+    @TestRail(id = {7448})
     @Description("Verify process group input control functionality - Single Selection - Sheet Metal DTC Report")
     public void testSingleProcessGroup() {
         List<String> partNames = Arrays.asList(
@@ -102,8 +103,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7532"})
+    @Tag(REPORTS)
+    @TestRail(id = {7532})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
         List<String> partNames = Arrays.asList(
@@ -119,8 +120,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7535"})
+    @Tag(REPORTS)
+    @TestRail(id = {7535})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Report")
     public void testDtcScoreMedium() {
         List<String> partNames = Arrays.asList(
@@ -136,8 +137,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7538"})
+    @Tag(REPORTS)
+    @TestRail(id = {7538})
     @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Report")
     public void testDtcScoreHigh() {
         List<String> partNames = Arrays.asList(
@@ -153,8 +154,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3045"})
+    @Tag(REPORTS)
+    @TestRail(id = {3045})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Report")
     public void testSortOrderAnnualSpend() {
         List<String> partNames = Arrays.asList(

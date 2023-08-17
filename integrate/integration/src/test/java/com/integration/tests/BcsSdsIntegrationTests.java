@@ -1,21 +1,22 @@
 package com.integration.tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
-import com.apriori.bcs.entity.request.parts.NewPartRequest;
-import com.apriori.bcs.entity.response.Batch;
-import com.apriori.bcs.entity.response.Part;
+import com.apriori.bcs.models.request.parts.NewPartRequest;
+import com.apriori.bcs.models.response.Batch;
+import com.apriori.bcs.models.response.Part;
 import com.apriori.bcs.utils.BcsUtils;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.sds.controller.IterationController;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
@@ -23,17 +24,17 @@ import java.util.Map;
 public class BcsSdsIntegrationTests {
     private static Batch batch;
 
-    @BeforeClass
+    @BeforeAll
     public static void testSetup() {
         batch = (Batch) BatchResources.createBatch().getResponseEntity();
     }
 
-    @AfterClass
+    @AfterAll
     public static void testCleanup() {
     }
 
     @Test
-    @TestRail(testCaseId = {"9127"})
+    @TestRail(id = 9127)
     @Description("BCS: Set material mode when the material name is not blank")
     public void testMaterialMode() {
         Map<String, String> identities;
@@ -49,11 +50,11 @@ public class BcsSdsIntegrationTests {
         materialMode = IterationController.getMaterialMode(
             identities.get("scenario"),
             identities.get("component"));
-        Assert.assertEquals(materialMode.toLowerCase(), "manual");
+        assertEquals(materialMode.toLowerCase(), "manual");
     }
 
     @Test
-    @TestRail(testCaseId = {"9112"})
+    @TestRail(id = 9112)
     @Description("BCS: Set material mode when the material name is null")
     public void testMaterialModeIsNull() {
         Map<String, String> identities;
@@ -72,6 +73,6 @@ public class BcsSdsIntegrationTests {
         materialMode = IterationController.getMaterialMode(
             identities.get("scenario"),
             identities.get("component"));
-        Assert.assertEquals(materialMode.toLowerCase(), "cad");
+        assertEquals(materialMode.toLowerCase(), "cad");
     }
 }

@@ -1,7 +1,7 @@
 package com.apriori.login;
 
 import com.apriori.PageUtils;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.properties.PropertiesContext;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

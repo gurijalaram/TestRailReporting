@@ -1,28 +1,28 @@
 package com.apriori.pageobjects.common;
 
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 
 import com.apriori.PageUtils;
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.entity.response.ScenarioItem;
+import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.models.response.ScenarioItem;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
+import com.apriori.pageobjects.evaluate.UpdateCadFilePage;
+import com.apriori.pageobjects.evaluate.components.ComponentsTablePage;
+import com.apriori.pageobjects.evaluate.components.ComponentsTreePage;
+import com.apriori.pageobjects.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTablePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
-import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
+import com.utils.StatusIconEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

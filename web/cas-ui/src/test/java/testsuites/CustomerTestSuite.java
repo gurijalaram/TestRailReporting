@@ -1,19 +1,16 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.CategorySuiteRunner;
+import com.apriori.customer.AprioriInternalProfileTests;
+import com.apriori.customer.CustomerAccessTests;
+import com.apriori.customer.CustomersTests;
+import com.apriori.customer.EditCustomerTests;
+import com.apriori.customer.NewCustomerTests;
 
-import com.customer.AprioriInternalProfileTests;
-import com.customer.CustomerAccessTests;
-import com.customer.CustomersTests;
-import com.customer.EditCustomerTests;
-import com.customer.NewCustomerTests;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("874")
-@RunWith(CategorySuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     NewCustomerTests.class,
     EditCustomerTests.class,
     AprioriInternalProfileTests.class,

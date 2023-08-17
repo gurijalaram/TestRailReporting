@@ -55,7 +55,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return list of strings - names of fields
      */
     private List<String> cutOffStringsAfterNewLineChar(List<String> list) {
-        return list.stream().map(w -> w.split("\n")[0])
+        return list.stream().map(w -> w.split("")[0])
             .collect(Collectors.toList());
     }
 }

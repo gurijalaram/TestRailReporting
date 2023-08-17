@@ -1,28 +1,24 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.CategorySuiteRunner;
+import com.apriori.customer.users.BatchImportListTests;
+import com.apriori.customer.users.CustomerStaffTests;
+import com.apriori.customer.users.EditUserTests;
+import com.apriori.customer.users.NewUserTests;
+import com.apriori.customer.users.UsersGrantApplicationAccessTests;
+import com.apriori.customer.users.UsersGrantLicenseTests;
+import com.apriori.customer.users.UsersStaffAssociationTests;
 
-import com.customer.users.BatchImportListTests;
-import com.customer.users.CustomerStaffTests;
-import com.customer.users.EditUserTests;
-import com.customer.users.NewUserTests;
-import com.customer.users.UsersGrantApplicationAccessTests;
-import com.customer.users.UsersGrantLicenseTests;
-import com.customer.users.UsersStaffAssociationTests;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("874")
-@RunWith(CategorySuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     UsersStaffAssociationTests.class,
     CustomerStaffTests.class,
     NewUserTests.class,
     EditUserTests.class,
     BatchImportListTests.class,
     UsersGrantApplicationAccessTests.class,
-    UsersGrantLicenseTests.class
-})
+    UsersGrantLicenseTests.class})
 public class UsersTestSuite {
 }

@@ -1,14 +1,11 @@
 package utils;
 
-import com.apriori.utils.FileResourceUtil;
+import com.apriori.http.utils.FileResourceUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class Constants {

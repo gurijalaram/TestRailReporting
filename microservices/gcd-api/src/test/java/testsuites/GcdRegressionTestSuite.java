@@ -1,17 +1,13 @@
 package testsuites;
 
-import com.apriori.gcd.tests.GcdTreesTests;
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.CategorySuiteRunner;
+import com.apriori.GcdTreesTests;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("2766")
-@RunWith(CategorySuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     GcdTreesTests.class
 })
-
 public class GcdRegressionTestSuite {
 }
