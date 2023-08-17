@@ -1,22 +1,21 @@
 package com.ootbreports.newreportstests.digitalfactoryperformance;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import com.apriori.cirapi.entity.JasperReportSummary;
-import com.apriori.cirapi.entity.enums.CirApiEnum;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.enums.CirApiEnum;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.testrail.TestRail;
 
 import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.jsoup.nodes.Element;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.ArrayList;
@@ -28,13 +27,13 @@ public class DigitalFactoryPerformanceDetailsReportTests extends JasperApiAuthen
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.DIGITAL_FACTORY_PERFORMANCE_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
-    @Before
+    @BeforeEach
     public void setupJasperApiUtils() {
         jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
-    @TestRail(testCaseId = {"26941"})
+    @TestRail(id = 26941)
     @Description("Input Controls - Currency Code - Details Report")
     public void testCurrencyCode() {
         JasperReportSummary gbpJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnly(CurrencyEnum.GBP.getCurrency());
@@ -43,11 +42,13 @@ public class DigitalFactoryPerformanceDetailsReportTests extends JasperApiAuthen
         JasperReportSummary usdJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnly(CurrencyEnum.USD.getCurrency());
         ArrayList<String> usdAssertValues = getAssertValues(usdJasperReportSummary);
 
-        assertThat(gbpAssertValues.get(0), is(equalTo(CurrencyEnum.GBP.getCurrency())));
-        assertThat(usdAssertValues.get(0), is(equalTo(CurrencyEnum.USD.getCurrency())));
-        assertThat(gbpAssertValues.get(0), is(not(usdAssertValues.get(0))));
-        assertThat(gbpAssertValues.get(1), is(not(equalTo(gbpAssertValues.get(1)))));
-        assertThat(gbpAssertValues.get(2), is(not(equalTo(gbpAssertValues.get(2)))));
+        assertAll("Grouped Currency Assertions",
+            () -> assertEquals(gbpAssertValues.get(0), CurrencyEnum.GBP.getCurrency()),
+            () -> assertEquals(usdAssertValues.get(0), CurrencyEnum.USD.getCurrency()),
+            () -> assertNotEquals(gbpAssertValues.get(0), usdAssertValues.get(0)),
+            () -> assertNotEquals(gbpAssertValues.get(1), usdAssertValues.get(1)),
+            () -> assertNotEquals(gbpAssertValues.get(2), usdAssertValues.get(2))
+        );
     }
 
     private ArrayList<String> getAssertValues(JasperReportSummary jasperReportSummary) {
