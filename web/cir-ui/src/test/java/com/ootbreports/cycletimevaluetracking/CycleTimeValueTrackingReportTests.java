@@ -6,11 +6,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.TestBaseUI;
 import com.apriori.enums.ReportNamesEnum;
 import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.pageobjects.view.reports.ComponentCostReportPage;
 import com.apriori.pageobjects.view.reports.CycleTimeValueTrackingPage;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.navigation.CommonReportTests;

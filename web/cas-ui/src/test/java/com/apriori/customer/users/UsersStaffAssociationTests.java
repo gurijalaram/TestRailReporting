@@ -3,7 +3,6 @@ package com.apriori.customer.users;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.PageUtils;
-import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.models.response.Customers;
@@ -20,6 +19,7 @@ import com.apriori.http.utils.Obligation;
 import com.apriori.pageobjects.customer.users.StaffPage;
 import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
