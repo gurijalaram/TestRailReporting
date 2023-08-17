@@ -5,13 +5,13 @@ import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.models.response.AccessAuthorization;
 import com.apriori.cds.models.response.AccessAuthorizations;
 import com.apriori.cds.models.response.AssociationUserItems;
-import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.models.response.CustomerAssociationResponse;
 import com.apriori.cds.models.response.StatusAccessAuthorizations;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.Customer;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.testrail.TestRail;
 

@@ -4,13 +4,13 @@ import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.PageUtils;
 import com.apriori.TestBaseUI;
-import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.CardsViewComponent;
 import com.apriori.components.PaginatorComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
 import com.apriori.http.utils.Obligation;
+import com.apriori.models.response.Customer;
 import com.apriori.pageobjects.customeradmin.CustomerAdminPage;
 import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;

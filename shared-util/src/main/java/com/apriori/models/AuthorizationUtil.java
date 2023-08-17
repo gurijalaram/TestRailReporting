@@ -1,5 +1,6 @@
 package com.apriori.models;
 
+import com.apriori.enums.CustomersApiEnum;
 import com.apriori.enums.DeploymentsAPIEnum;
 import com.apriori.enums.TokenEnum;
 import com.apriori.http.models.entity.RequestEntity;
@@ -7,19 +8,22 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.json.JsonManager;
 import com.apriori.models.request.TokenRequest;
-import com.apriori.models.response.ApplicationItem;
+import com.apriori.models.response.Application;
 import com.apriori.models.response.Claims;
-import com.apriori.models.response.DeploymentItem;
-import com.apriori.models.response.GetDeploymentsResponse;
-import com.apriori.models.response.InstallationItem;
+import com.apriori.models.response.Customer;
+import com.apriori.models.response.Customers;
+import com.apriori.models.response.Deployment;
+import com.apriori.models.response.Deployments;
+import com.apriori.models.response.Installation;
+import com.apriori.models.response.Sites;
 import com.apriori.models.response.Token;
 import com.apriori.models.response.TokenInformation;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.core5.http.HttpStatus;
 
 import java.util.List;
@@ -30,7 +34,9 @@ public class AuthorizationUtil {
     private String username = PropertiesContext.get("ats.token_username");
     private String email = PropertiesContext.get("ats.token_email");
     private String issuer = PropertiesContext.get("ats.token_issuer");
-    private String subject = PropertiesContext.get("${customer}.token_subject");
+
+    private static String tokenSubject;
+    private static Customer currentCustomer;
 
     public AuthorizationUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername();
@@ -52,7 +58,7 @@ public class AuthorizationUtil {
             .body(TokenRequest.builder()
                 .token(TokenInformation.builder()
                     .issuer(issuer)
-                    .subject(subject)
+                    .subject(getTokenSubjectForCustomer())
                     .claims(Claims.builder()
                         .name(username)
                         .email(email)
@@ -80,18 +86,20 @@ public class AuthorizationUtil {
      * @param queryParams     - Map of key value pairs to add to url
      * @return List of Deployment Items
      */
-    private List<DeploymentItem> getDeploymentItems(UserCredentials userCredentials, QueryParams queryParams) {
+    private List<Deployment> getDeploymentItems(UserCredentials userCredentials, QueryParams queryParams) {
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(DeploymentsAPIEnum.DEPLOYMENTS, null)
+            .init(DeploymentsAPIEnum.DEPLOYMENTS, Deployments.class)
             .token(userCredentials.getToken())
             .inlineVariables(
-                PropertiesContext.get("customer_identity"),
-                PropertiesContext.get("secret_key")
+                PropertiesContext.get("customer_identity")
             )
             .queryParams(queryParams)
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        return JsonManager.convertBodyToJson(HTTPRequest.build(requestEntity).get(), GetDeploymentsResponse.class).getItems();
+        return ((Deployments) HTTPRequest.build(requestEntity)
+            .get()
+            .getResponseEntity()
+        ).getItems();
     }
 
     /**
@@ -100,10 +108,10 @@ public class AuthorizationUtil {
      * @param userCredentials UserCredentials instance containing user details to use in api call
      * @return GetDeploymentsResponse instance
      */
-    private DeploymentItem getDeploymentByName(UserCredentials userCredentials, String deploymentName) {
+    private Deployment getDeploymentByName(UserCredentials userCredentials, String deploymentName) {
         QueryParams filterMap = new QueryParams();
         filterMap.put("name[EQ]", deploymentName);
-        List<DeploymentItem> deploymentItems = getDeploymentItems(userCredentials, filterMap);
+        List<Deployment> deploymentItems = getDeploymentItems(userCredentials, filterMap);
         return deploymentItems.stream().findFirst().orElseThrow(() -> new RuntimeException("Deployment not found"));
     }
 
@@ -118,20 +126,82 @@ public class AuthorizationUtil {
 
         String applicationNameFromConfig = PropertiesContext.get("application_name");
 
-        DeploymentItem deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
+        Deployment deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
 
-        InstallationItem installationItem = deploymentItem.getInstallations()
+        Installation installationItem = deploymentItem.getInstallations()
             .stream()
             .filter(element -> element.getName().equals(PropertiesContext.get("installation_name")))
             .limit(1)
             .collect(Collectors.toList()).get(0);
 
-        ApplicationItem applicationItem = installationItem.getApplications()
+        Application applicationItem = installationItem.getApplications()
             .stream()
             .filter(element -> element.getServiceName().equalsIgnoreCase(applicationNameFromConfig))
             .limit(1)
             .collect(Collectors.toList()).get(0);
 
         return cloudContext.concat(deploymentItem.getIdentity()).concat(installationItem.getIdentity()).concat(applicationItem.getIdentity());
+    }
+
+    private static synchronized String getTokenSubjectForCustomer() {
+        if (tokenSubject != null) {
+            return tokenSubject;
+        }
+
+        try {
+            // TODO z: should be removed when AWS data will be avaliable for staging too
+            tokenSubject = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
+        } catch (IllegalArgumentException e) {
+            tokenSubject = generateTokenSubject();
+        }
+
+        return tokenSubject;
+    }
+
+    private static String generateTokenSubject() {
+        final Customer customerToProcess = getCurrentCustomerData();
+        final String customerSiteId = getCustomerSiteIdByCustomer(customerToProcess);
+
+        if (StringUtils.isBlank(customerSiteId)) {
+            log.error("Customer site id is empty. Customer: {}", customerToProcess.getCloudReference());
+        }
+
+        return customerSiteId.substring(customerSiteId.length() - 4);
+    }
+
+    /**
+     * Get current customer data
+     * By a cloud reference name filter all customers to find a user used for the environment
+     * @return filtered customer
+     */
+    public static Customer getCurrentCustomerData() {
+        if (currentCustomer != null) {
+            return currentCustomer;
+        }
+
+        RequestEntity customerRequest = RequestEntityUtil.init(CustomersApiEnum.CUSTOMERS, Customers.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
+        ResponseWrapper<Customers> customersResponseWrapper =  HTTPRequest.build(customerRequest).get();
+
+        return currentCustomer = customersResponseWrapper.getResponseEntity().getItems()
+            .stream()
+            .filter(customer -> customer.getCloudReference()
+                .equals(PropertiesContext.get("${customer}.cloud_reference_name")
+                )
+            )
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
+    private static String getCustomerSiteIdByCustomer(Customer customerToProcess) {
+        RequestEntity sitesRequest = RequestEntityUtil.init(CustomersApiEnum.SITES_BY_CUSTOMER_ID, Sites.class)
+            .inlineVariables(customerToProcess.getIdentity())
+            .expectedResponseCode(HttpStatus.SC_OK);
+        ResponseWrapper<Sites> sitesResponseWrapper =  HTTPRequest.build(sitesRequest).get();
+
+        return sitesResponseWrapper.getResponseEntity()
+            .getItems()
+            .get(0)
+            .getSiteId();
     }
 }

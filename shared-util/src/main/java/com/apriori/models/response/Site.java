@@ -1,8 +1,10 @@
-package com.apriori.cds.models.request;
+package com.apriori.models.response;
 
+import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -12,21 +14,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(location = "LicensedSiteSchema.json")
 @Data
 @Builder
-public class Features {
-    private Boolean workOrderStatusUpdatesEnabled;
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonRootName("response")
+public class Site {
     private String identity;
-    private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
     private LocalDateTime createdAt;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
-    private LocalDateTime updatedAt;
-    private Boolean bulkCostingEnabled;
+    private String createdBy;
+    private String customerIdentity;
+    private String name;
+    private String description;
+    private String siteId;
+    private Boolean active;
+    private List<Deployment> deployments;
+    private List<LicensedApplications> licensedApplications;
+    private String createdByName;
 }
