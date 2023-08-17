@@ -1,0 +1,53 @@
+{
+  "reportUnitUri": "/aPriori/reports/general/basicAvoidanceReport",
+  "async": true,
+  "allowInlineScripts": false,
+  "markupType": "embeddable",
+  "interactive": true,
+  "freshData": false,
+  "saveDataSnapshot": false,
+  "transformerKey": null,
+  "pages": 1,
+  "attachmentsPrefix": "/jasperserver -pro/rest_v2/reportExecutions/{reportExecutionId}/exports/{exportExecutionId}/attachments/",
+  "baseUrl": "/jasperserver-pro",
+  "parameters": {
+    "reportParameter": [
+      {
+        "name": "earliestCostDate",
+        "value": [
+          "2019-08-12T07:37:11"
+        ]
+      },
+      {
+        "name": "latestCostDate",
+        "value": [
+          "2023-08-10T07:37:11"
+        ]
+      },
+      {
+        "name": "costMetric",
+        "value": [
+          "aggr_fbc"
+        ]
+      },
+      {
+        "name": "currencyCode",
+        "value": [
+          "GBP"
+        ]
+      },
+      {
+        "name": "sortOrder",
+        "value": [
+          "annualizedCostAvoidance desc"
+        ]
+      },
+      {
+        "name": "componentsCriteria",
+        "value": [
+          ""
+        ]
+      }
+    ]
+  }
+}
