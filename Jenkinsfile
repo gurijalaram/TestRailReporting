@@ -46,6 +46,15 @@ Those marked with a * are required or the job will not run
     }
 
     stages {
+        stage("Java") {
+            tools {
+                jdk "OpenJDK 11.0.18_10"
+            }
+            steps {
+                sh 'java -version'
+            }
+        }
+
         stage("Initialize") {
             steps {
                 echo "Initializing.."
