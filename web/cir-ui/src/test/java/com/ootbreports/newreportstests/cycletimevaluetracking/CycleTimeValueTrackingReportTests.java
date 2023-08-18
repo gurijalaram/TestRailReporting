@@ -23,7 +23,7 @@ public class CycleTimeValueTrackingReportTests extends JasperApiAuthenticationUt
     }
 
     @Test
-    @TestRail(id = {25987})
+    @TestRail(id = 25987)
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         jasperApiUtils.cycleTimeValueTrackingCurrencyTest();

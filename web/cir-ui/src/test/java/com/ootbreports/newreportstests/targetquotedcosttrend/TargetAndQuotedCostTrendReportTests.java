@@ -23,7 +23,7 @@ public class TargetAndQuotedCostTrendReportTests extends JasperApiAuthentication
     }
 
     @Test
-    @TestRail(id = {25838})
+    @TestRail(id = 25838)
     @Description("Input controls - Currency code")
     public void testCurrencyCodeInputControl() {
         jasperApiUtils.targetQuotedCostTrendAndPotentialSavingsGenericCurrencyTest(8, 23, 33);
