@@ -1,24 +1,26 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
-import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
-import com.apriori.utils.PageUtils;
+import com.apriori.PageUtils;
+import com.apriori.pageobjects.compare.ModifyComparisonPage;
+import com.apriori.pageobjects.compare.SaveComparisonPage;
+import com.apriori.pageobjects.explore.ImportCadFilePage;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
+@Slf4j
 public class CompareToolbar extends MainNavBar {
-
-    private static final Logger logger = LoggerFactory.getLogger(CompareToolbar.class);
 
     @FindBy(id = "qa-sub-header-modify-button")
     private WebElement modifyButton;
+
+    @FindBy(css = "div[id='qa-sub-header-save-as-button'] button")
+    private WebElement saveButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -27,7 +29,7 @@ public class CompareToolbar extends MainNavBar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(modifyButton);
     }
@@ -61,5 +63,36 @@ public class CompareToolbar extends MainNavBar {
     public ModifyComparisonPage modify() {
         pageUtils.waitForElementAndClick(modifyButton);
         return new ModifyComparisonPage(driver);
+    }
+
+    /**
+     * Save new Comparison
+     * To be used when the comparison is new and will require input of a unique name
+     *
+     * @return Save Comparison Page Object
+     */
+    public SaveComparisonPage saveNew() {
+        pageUtils.waitForElementAndClick(saveButton);
+        return new SaveComparisonPage(driver);
+    }
+
+    /**
+     * Save changes to Comparison
+     * To be used when the comparison already exists
+     *
+     * @return Compare Page Object
+     */
+    public SaveComparisonPage saveChanges() {
+        pageUtils.waitForElementAndClick(saveButton);
+        return new SaveComparisonPage(driver);
+    }
+
+    /**
+     * Check enabled state of Save button
+     *
+     * @return Boolean
+     */
+    public Boolean saveButtonEnabled() {
+        return pageUtils.isElementEnabled(saveButton);
     }
 }

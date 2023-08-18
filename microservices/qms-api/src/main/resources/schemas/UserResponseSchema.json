@@ -14,6 +14,12 @@
     "createdBy": {
       "type": "string"
     },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
     "customerIdentity": {
       "type": "string"
     },
@@ -61,6 +67,15 @@
         },
         "timeZone": {
           "type": "string"
+        },
+        "county": {
+          "type": "string"
+        },
+        "officePhoneCountryCode": {
+          "type": "string"
+        },
+        "officePhoneNumber": {
+          "type": "string"
         }
       },
       "required": [
@@ -79,7 +94,10 @@
         "townCity",
         "stateProvince",
         "countryCode",
-        "timeZone"
+        "timeZone",
+        "county",
+        "officePhoneCountryCode",
+        "officePhoneNumber"
       ]
     },
     "email": {
@@ -110,6 +128,36 @@
     },
     "avatarColor": {
       "type": "string"
+    },
+    "hasCompleteProfile": {
+      "type": "boolean"
+    },
+    "userEnablements": {
+      "type": "object",
+      "properties": {
+        "connectAdminEnabled": {
+          "type": "boolean"
+        },
+        "highMemEnabled": {
+          "type": "boolean"
+        },
+        "previewEnabled": {
+          "type": "boolean"
+        },
+        "sandboxEnabled": {
+          "type": "boolean"
+        },
+        "userAdminEnabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "connectAdminEnabled",
+        "highMemEnabled",
+        "previewEnabled",
+        "sandboxEnabled",
+        "userAdminEnabled"
+      ]
     }
   },
   "required": [
@@ -125,6 +173,12 @@
     "mfaRequired",
     "customAttributes",
     "userType",
-    "avatarColor"
+    "avatarColor",
+    "hasCompleteProfile",
+    "userEnablements"
+  ],
+  "optional": [
+    "updatedAt",
+    "updatedBy"
   ]
 }

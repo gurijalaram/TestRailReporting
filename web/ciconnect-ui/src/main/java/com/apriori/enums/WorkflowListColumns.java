@@ -5,7 +5,8 @@ public enum WorkflowListColumns {
     Description(1),
     Last_Modified_By(4),
     Schedule(3),
-    Connector(5);
+    Connector(5),
+    Locked(9);
 
     private final int columnID;
 

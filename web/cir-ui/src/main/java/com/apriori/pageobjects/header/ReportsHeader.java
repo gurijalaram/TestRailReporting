@@ -1,20 +1,20 @@
 package com.apriori.pageobjects.header;
 
-import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
-import com.apriori.pageobjects.pages.create.CreateDashboardPage;
-import com.apriori.pageobjects.pages.create.CreateDataSourcePage;
-import com.apriori.pageobjects.pages.create.CreateDomainPage;
-import com.apriori.pageobjects.pages.create.CreateReportPage;
-import com.apriori.pageobjects.pages.library.LibraryPage;
-import com.apriori.pageobjects.pages.logout.ReportsLogoutPage;
-import com.apriori.pageobjects.pages.manage.ManageRolesPage;
-import com.apriori.pageobjects.pages.manage.ManageUsersPage;
-import com.apriori.pageobjects.pages.userguides.CirUserGuidePage;
-import com.apriori.pageobjects.pages.view.ViewMessagesPage;
-import com.apriori.pageobjects.pages.view.ViewRepositoryPage;
-import com.apriori.pageobjects.pages.view.ViewSchedulesPage;
-import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
-import com.apriori.utils.PageUtils;
+import com.apriori.PageUtils;
+import com.apriori.pageobjects.create.CreateAdHocViewPage;
+import com.apriori.pageobjects.create.CreateDashboardPage;
+import com.apriori.pageobjects.create.CreateDataSourcePage;
+import com.apriori.pageobjects.create.CreateDomainPage;
+import com.apriori.pageobjects.create.CreateReportPage;
+import com.apriori.pageobjects.library.LibraryPage;
+import com.apriori.pageobjects.logout.ReportsLogoutPage;
+import com.apriori.pageobjects.manage.ManageRolesPage;
+import com.apriori.pageobjects.manage.ManageUsersPage;
+import com.apriori.pageobjects.userguides.CirUserGuidePage;
+import com.apriori.pageobjects.view.ViewMessagesPage;
+import com.apriori.pageobjects.view.ViewRepositoryPage;
+import com.apriori.pageobjects.view.ViewSchedulesPage;
+import com.apriori.pageobjects.view.ViewSearchResultsPage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

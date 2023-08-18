@@ -1,28 +1,29 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.ConnectorTabTests;
+import com.apriori.CostingInputTabTests;
+import com.apriori.CostingPreferencesTests;
+import com.apriori.NavBarTests;
+import com.apriori.NotificationTests;
+import com.apriori.PlmIntegrationTests;
+import com.apriori.PlmQueryDefDateRuleTests;
+import com.apriori.PlmQueryDefIntRuleTests;
+import com.apriori.PlmQueryDefRealRuleTests;
+import com.apriori.PlmQueryDefStrEmailRuleTests;
+import com.apriori.PlmUdaTests;
+import com.apriori.PlmWorkflowRevisionTests;
+import com.apriori.PublishResultsTests;
+import com.apriori.QueryDefinitionTests;
+import com.apriori.UsersTests;
+import com.apriori.WorkflowHistoryTests;
+import com.apriori.WorkflowScheduleTests;
+import com.apriori.WorkflowTests;
 
-import com.cic.tests.ConnectorTabTests;
-import com.cic.tests.CostingInputTabTests;
-import com.cic.tests.CostingPreferencesTests;
-import com.cic.tests.NavBarTests;
-import com.cic.tests.NotificationTests;
-import com.cic.tests.PlmIntegrationTests;
-import com.cic.tests.PlmUdaTests;
-import com.cic.tests.PlmWorkflowRevisionTests;
-import com.cic.tests.PublishResultsTests;
-import com.cic.tests.QueryDefinitionTests;
-import com.cic.tests.UsersTests;
-import com.cic.tests.WorkflowHistoryTests;
-import com.cic.tests.WorkflowScheduleTests;
-import com.cic.tests.WorkflowTests;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("1176")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectClasses({
     NavBarTests.class,
     NotificationTests.class,
     QueryDefinitionTests.class,
@@ -36,8 +37,11 @@ import org.junit.runners.Suite;
     PlmIntegrationTests.class,
     CostingPreferencesTests.class,
     PlmUdaTests.class,
-    PlmWorkflowRevisionTests.class
+    PlmWorkflowRevisionTests.class,
+    PlmQueryDefDateRuleTests.class,
+    PlmQueryDefIntRuleTests.class,
+    PlmQueryDefRealRuleTests.class,
+    PlmQueryDefStrEmailRuleTests.class
 })
-
 public class CICRegressionTestSuite {
 }

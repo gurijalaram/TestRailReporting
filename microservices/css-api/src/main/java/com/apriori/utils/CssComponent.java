@@ -1,29 +1,26 @@
 package com.apriori.utils;
 
-import static com.apriori.entity.enums.CssSearch.COMPONENT_NAME_EQ;
-import static com.apriori.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 
-import com.apriori.entity.enums.CssAPIEnum;
-import com.apriori.entity.response.CssComponentResponse;
-import com.apriori.entity.response.ScenarioItem;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.QueryParams;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.enums.CssAPIEnum;
+import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.QueryParams;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.CssComponentResponse;
+import com.apriori.models.response.ScenarioItem;
+import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -98,18 +95,10 @@ public class CssComponent {
      * @throws ArrayIndexOutOfBoundsException if only one of the key/value is supplied eg. "scenarioState" rather than "scenarioState[EQ], not_costed"
      */
     public List<ScenarioItem> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
-        QueryParams queryParams = new QueryParams();
-
-        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
-        Map<String, String> paramMap = new HashMap<>();
-
-        try {
-            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
-        } catch (ArrayIndexOutOfBoundsException ae) {
-            throw new KeyValueException(ae.getMessage(), paramKeyValue);
-        }
-
-        return getBaseCssComponents(userCredentials, queryParams.use(paramMap)).getResponseEntity().getItems();
+        return getBaseCssComponents(userCredentials,
+            new KeyValueUtil().keyValue(paramKeysValues, ","))
+            .getResponseEntity()
+            .getItems();
     }
 
     /**
@@ -166,7 +155,7 @@ public class CssComponent {
      * Creates search request by component type
      *
      * @param userCredentials - the user credentials
-     * @param componentType - the component type
+     * @param componentType   - the component type
      * @return the response wrapper that contains the response data
      */
     public ResponseWrapper<CssComponentResponse> postSearchRequest(UserCredentials userCredentials, String componentType) {

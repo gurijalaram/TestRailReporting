@@ -2,13 +2,13 @@ package com.apriori.pageobjects.common;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.PageUtils;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.enums.ScenarioStateEnum;
+import com.apriori.pageobjects.explore.ExplorePage;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.ScenarioStateEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
@@ -503,7 +503,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public ScenarioTableController sortColumn(ColumnsEnum column, SortOrderEnum order) {
         while (!getSortOrder(column).equals(order.getOrder())) {
-            pageUtils.waitForElementAndClick(By.xpath(String.format("//div[.='%s']//span", column.getColumns())));
+            pageUtils.clickOnOffScreenElement(driver.findElement(By.xpath(String.format("//div[.='%s']//span", column.getColumns()))));
         }
         return this;
     }

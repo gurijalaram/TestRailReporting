@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.header;
 
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.utils.PageUtils;
+import com.apriori.PageUtils;
+import com.apriori.pageobjects.view.reports.GenericReportPage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

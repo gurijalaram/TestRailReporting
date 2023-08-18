@@ -1,13 +1,14 @@
 package com.apriori.qms.enums;
 
-import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.interfaces.ExternalEndpointEnum;
+import com.apriori.properties.PropertiesContext;
 
 public enum QMSAPIEnum implements ExternalEndpointEnum {
 
     // PROJECTS
     PROJECTS("projects"),
     PROJECT("projects/%s"),
+    PROJECT_NOTIFICATION_COUNT("projects/notifications-count"),
 
     // PROJECTS
     PROJECT_ITEMS("projects/%s/project-items"),
@@ -32,6 +33,7 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
 
     //COMPONENTS
     COMPONENT("components/%s"),
+    COMPONENTS_ASSIGNED("components/assigned"),
 
     //SCENARIOS
     COMPONENT_SCENARIOS("components/%s/scenarios"),
@@ -77,16 +79,7 @@ public enum QMSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("qms.api_url") + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
-    }
-
-    private String addQuery(String endpointString) {
-        String querySymbol = "?";
-
-        if (endpointString.contains("?")) {
-            querySymbol = "&";
-        }
-
-        return querySymbol + "key=" + PropertiesContext.get("secret_key");
+        return PropertiesContext.get("qms.api_url")
+            + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 }

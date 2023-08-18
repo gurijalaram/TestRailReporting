@@ -1,23 +1,20 @@
 package utils;
 
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.PageUtils;
+import com.apriori.properties.PropertiesContext;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Slf4j
 public class TableUtils {
@@ -283,6 +280,15 @@ public class TableUtils {
         return columns.stream().filter(column -> column.getText().equalsIgnoreCase(columnHeader)).findFirst().orElse(null);
     }
 
+    public Integer getColumnIndx(WebElement tableHeaders, String columnHeader) {
+        List<WebElement> columns = tableHeaders.findElements(By.tagName("td"));
+        return IntStream.range(0, columns.size())
+            .filter(userInd -> columns.get(userInd).getText().equalsIgnoreCase(columnHeader))
+            .findFirst()
+            .getAsInt();
+    }
+
+
     public WebElement getRowByCellText(WebElement table, String cellText) {
         WebElement dataElement = null;
         try {
@@ -315,6 +321,7 @@ public class TableUtils {
 
     /**
      * Wait until Table element value is available and handle stale element exception
+     *
      * @param
      * @return webelement
      */

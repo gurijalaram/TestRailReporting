@@ -3,29 +3,29 @@ package com.integration.tests;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.AdminLoginPage;
-import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.manage.ScenarioExport;
-import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.dataservice.TestDataService;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.ListNameEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.dataservice.TestDataService;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.enums.ListNameEnum;
+import com.apriori.enums.ReportNamesEnum;
+import com.apriori.pageobjects.create.CreateAdHocViewPage;
+import com.apriori.pageobjects.explore.ExplorePage;
+import com.apriori.pageobjects.login.AdminLoginPage;
+import com.apriori.pageobjects.login.CidAppLoginPage;
+import com.apriori.pageobjects.login.ReportsLoginPage;
+import com.apriori.pageobjects.manage.ScenarioExport;
+import com.apriori.pageobjects.view.reports.ComponentCostReportPage;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class CIAIntegrationTests extends TestBase {
+public class CIAIntegrationTests extends TestBaseUI {
 
     private UserCredentials currentUser = UserUtil.getUser();
     private CidAppLoginPage loginPage;
@@ -39,7 +39,7 @@ public class CIAIntegrationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"2695"})
+    @TestRail(id = {2695})
     @Description("Verify User can login CIA")
     public void testUserLoginCIA() {
         scenarioExport = new AdminLoginPage(driver)
@@ -51,7 +51,7 @@ public class CIAIntegrationTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "12517")
+    @TestRail(id = 12517)
     @Description("Verify Create Simple Ad Hoc View Report")
     public void testCreateAdHocViewReport() {
         SoftAssertions softAssertions = new SoftAssertions();
@@ -78,7 +78,7 @@ public class CIAIntegrationTests extends TestBase {
 
     @Test
     @Issue("DEVTOOLS-145")
-    @TestRail(testCaseId = {"12046"})
+    @TestRail(id = 12046)
     @Description("Create and verify component cost OOTB report ")
     public void testCreateComponentCostOOTBReport() {
         componentCostReportPage = new ReportsLoginPage(driver)

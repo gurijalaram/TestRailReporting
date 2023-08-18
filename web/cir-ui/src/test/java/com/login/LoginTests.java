@@ -1,24 +1,27 @@
 package com.login;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.core.StringContains.containsString;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.pageobjects.login.ReportsLoginPage;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
+import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
-public class LoginTests extends TestBase {
+public class LoginTests extends TestBaseUI {
+    private Boolean isEnvOnPrem = PropertiesContext.get("${env}").equals("onprem");
 
     private ReportsPageHeader reportsPageHeader;
     private ReportsLoginPage loginPage;
@@ -28,8 +31,9 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2695"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2695})
     @Description("Successful login to CI Report")
     public void testLogin() {
         reportsPageHeader = new ReportsLoginPage(driver)
@@ -39,48 +43,70 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2696"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2696})
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
         loginPage = new ReportsLoginPage(driver)
             .failedLogin(UserUtil.getUserOnPrem(), "fakePassword");
 
-        String assertValue = PropertiesContext.get("${env}.reports.failed_login_message");
-        assertThat(loginPage.getLoginMessage(), is(equalTo(assertValue)));
+        String assertValueToUse = isEnvOnPrem ? Constants.FAILED_LOGIN_MESSAGE_ONPREM : Constants.FAILED_LOGIN_MESSAGE_CLOUD;
+        String actualErrorMessage = isEnvOnPrem ? loginPage.getInvalidEmailMessage() : loginPage.getInvalidPasswordMessage();
+        assertThat(actualErrorMessage, is(containsString(assertValueToUse)));
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"2697"})
+    @Tag(REPORTS)
+    @TestRail(id = {2697})
     @Description("Forgotten password functionality")
     public void testForgotPassword() {
         loginPage = new ReportsLoginPage(driver)
             .clickForgotPassword()
             .submitEmail("fakeEmail@apriori.comg");
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FORGOT_PWD_MSG.toUpperCase())));
+        assertThat(loginPage.getBlankFieldsErrorMessage("email"), is(equalTo(Constants.FORGOT_PWD_MSG.toUpperCase())));
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2698"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2698})
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
         loginPage = new ReportsLoginPage(driver)
             .failedLoginEmptyFields();
 
-        assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_EMPTY_FIELDS)));
+        String emailKeyword = "Email";
+        String passwordKeyword = "Password";
+
+        String assertValueToUse = isEnvOnPrem
+            ? Constants.FAILED_LOGIN_MESSAGE_ONPREM
+            : String.format(Constants.FAILED_LOGIN_EMPTY_FIELDS_CLOUD, emailKeyword);
+        assertThat(loginPage.getBlankFieldsErrorMessage(emailKeyword.replace("E", "e")),
+            is(containsString(assertValueToUse)));
+
+        if (!isEnvOnPrem) {
+            assertValueToUse = assertValueToUse.contains("Email")
+                ? String.format(Constants.FAILED_LOGIN_EMPTY_FIELDS_CLOUD, passwordKeyword)
+                : assertValueToUse;
+            assertThat(loginPage.getBlankFieldsErrorMessage(passwordKeyword.replace("P", "p")),
+                is(containsString(assertValueToUse)));
+        }
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2699"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2699})
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {
         loginPage = new ReportsLoginPage(driver)
             .invalidEmailFailedLogin("a@b", "fakePassword");
 
-        assertThat(loginPage.getInvalidEmailMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE_ONPREM)));
+        String assertValueToUse = isEnvOnPrem
+            ? Constants.FAILED_LOGIN_MESSAGE_ONPREM
+            : Constants.FAILED_LOGIN_INVALID_EMAIL_CLOUD;
+        assertThat(loginPage.getInvalidEmailMessage(), is(containsString(assertValueToUse)));
     }
 }

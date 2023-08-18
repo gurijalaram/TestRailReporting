@@ -1,21 +1,21 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
+import com.apriori.PageUtils;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.entity.response.ScenarioItem;
-import com.apriori.pageobjects.pages.compare.CreateComparePage;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsTreePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.models.response.ScenarioItem;
+import com.apriori.pageobjects.compare.CreateComparePage;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
+import com.apriori.pageobjects.evaluate.UpdateCadFilePage;
+import com.apriori.pageobjects.evaluate.components.ComponentsTreePage;
+import com.apriori.pageobjects.explore.ExplorePage;
+import com.apriori.pageobjects.explore.ImportCadFilePage;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserCredentials;
 
 import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;

@@ -1,37 +1,40 @@
 package com.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.JasperCirApiPartsEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 
+import com.apriori.cir.enums.CirApiEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.testrail.TestRail;
+
+import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
+import enums.CostMetricEnum;
+import enums.JasperCirApiPartsEnum;
+import enums.MassMetricEnum;
 import io.qameta.allure.Description;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsTest;
-import utils.Constants;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Collections;
 import java.util.List;
 
 public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
-    private final List<String> partNames = Collections.singletonList(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName());
-    private static final String reportsJsonFileName = Constants.API_REPORTS_PATH.concat("/plasticdtc/PlasticDtcReportRequest");
+    private static final String reportsJsonFileName = JasperApiEnum.PLASTIC_DTC.getEndpoint();
     private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.PLASTIC_DTC;
     private static JasperApiUtils jasperApiUtils;
+    private final List<String> partNames = Collections.singletonList(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName());
 
-    @Before
+    @BeforeEach
     public void setupGenericMethods() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1366"})
+    @Tag(REPORTS)
+    @TestRail(id = {1366})
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcTest(
@@ -41,8 +44,8 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7403"})
+    @Tag(REPORTS)
+    @TestRail(id = {7403})
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Report")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcTest(
@@ -52,8 +55,8 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7380"})
+    @Tag(REPORTS)
+    @TestRail(id = {7380})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
@@ -63,8 +66,8 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1368"})
+    @Tag(REPORTS)
+    @TestRail(id = {1368})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcTest(

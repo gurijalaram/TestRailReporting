@@ -1,18 +1,19 @@
 package com.apriori.bcs.controller;
 
-import com.apriori.bcs.entity.request.parts.NewPartRequest;
-import com.apriori.bcs.entity.response.Batch;
-import com.apriori.bcs.entity.response.Part;
-import com.apriori.bcs.entity.response.Parts;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.apriori.bcs.enums.BCSState;
+import com.apriori.bcs.models.request.parts.NewPartRequest;
+import com.apriori.bcs.models.response.Batch;
+import com.apriori.bcs.models.response.Part;
+import com.apriori.bcs.models.response.Parts;
 import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.database.dto.BCSPartBenchmarkingDTO;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.part.PartUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.reader.file.part.PartData;
+import com.apriori.reader.file.part.PartUtil;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ public class MultiPartResources {
 
     private static Map<String, PartData> partsCollector;
     private static final long WAIT_TIME = 1800;
-    private static String line = "--------------------------------------------------------------------------------------------------------------------------------------\n";
+    private static String line = "--------------------------------------------------------------------------------------------------------------------------------------";
 
 
     /**
@@ -270,7 +271,7 @@ public class MultiPartResources {
             .collect(Collectors.toList());
 
         String formattedString = getFormattedString(partsReport);
-        logInfoBuilder.append("================== Batch Parts Benchmarking Data ==================\n");
+        logInfoBuilder.append("================== Batch Parts Benchmarking Data ==================");
         logInfoBuilder.append(line);
         logInfoBuilder.append(String.format(formattedString, "PART_ID", "PART_NAME", "PROCESS_GROUP", "PART_STATE", "COSTING_RESULT", "PROCESSING_TIME", "ERRORS"));
         logInfoBuilder.append(line);
@@ -284,7 +285,7 @@ public class MultiPartResources {
         log.info(logInfoBuilder.toString());
 
         for (PartData partDTO : partsReport) {
-            Assert.assertEquals("Verify Part State", BCSState.COMPLETED.toString(), partDTO.getState());
+            assertEquals("Verify Part State", BCSState.COMPLETED.toString(), partDTO.getState());
         }
     }
 }

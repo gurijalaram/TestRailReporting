@@ -1,7 +1,7 @@
 package com.apriori.cds.enums;
 
-import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.interfaces.ExternalEndpointEnum;
+import com.apriori.properties.PropertiesContext;
 
 public enum CDSAPIEnum implements ExternalEndpointEnum {
 
@@ -65,6 +65,7 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     DELETE_USER_WRONG_ID("customers/%s/users/L2H992829CFB"),
     USER_BY_CUSTOMER_USER_IDS("customers/%s/users/%s"),
     USERS_LICENSES("customers/%s/users/%s/licensing"),
+    REQUIRED_USER_PROPERTIES("customers/%s/users/%s/required-properties"),
 
     //DEPLOYMENTS
     DEPLOYMENTS_BY_CUSTOMER_ID("customers/%s/deployments"),
@@ -112,16 +113,7 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("cds.api_url") + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
-    }
-
-    private String addQuery(String endpointString) {
-        String querySymbol = "?";
-
-        if (endpointString.contains("?")) {
-            querySymbol = "&";
-        }
-
-        return querySymbol + "key=" + PropertiesContext.get("secret_key");
+        return PropertiesContext.get("cds.api_url")
+            + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 }

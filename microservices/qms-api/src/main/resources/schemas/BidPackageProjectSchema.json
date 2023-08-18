@@ -35,6 +35,9 @@
     "ownerFullName": {
       "type": "string"
     },
+    "ownerUserIdentity": {
+      "type": "string"
+    },
     "projectProfile": {
       "type": "object",
       "properties": {
@@ -61,7 +64,9 @@
             }
           },
           "required": [
-            "active",
+            "active"
+          ],
+          "optional": [
             "startDuration",
             "frequencyValue"
           ]
@@ -80,7 +85,9 @@
             }
           },
           "required": [
-            "active",
+            "active"
+          ],
+          "optional": [
             "startDuration",
             "frequencyValue"
           ]
@@ -302,7 +309,6 @@
     "bidPackageIdentity",
     "status",
     "type",
-    "description",
     "projectProfile",
     "items",
     "users",
@@ -310,7 +316,11 @@
     "organizationName",
     "owner",
     "displayName",
+    "ownerFullName",
+    "ownerUserIdentity"
+  ],
+  "optional": [
     "dueAt",
-    "ownerFullName"
+    "description"
   ]
 }

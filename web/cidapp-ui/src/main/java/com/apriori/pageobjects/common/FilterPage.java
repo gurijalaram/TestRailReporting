@@ -1,8 +1,8 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.PropertyEnum;
+import com.apriori.PageUtils;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.PropertyEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

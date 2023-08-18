@@ -6,15 +6,14 @@ import com.apriori.ach.tests.AchCustomersTests;
 import com.apriori.ach.tests.AchNotificationsTests;
 import com.apriori.ach.tests.AchPeopleTests;
 import com.apriori.ach.tests.AchUserPreferencesTests;
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.SelectPackages;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("2353")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
+@Suite
+@SelectPackages("com.apriori")
+@SelectClasses({
     AchApplicationDataTests.class,
     AchCurrentUserTests.class,
     AchCustomersTests.class,

@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
     "response"
@@ -55,60 +54,57 @@
                 "type": "object",
                 "required": [
                   "identity",
-                  "createdBy",
-                  "deletedBy",
-                  "deletedAt",
-                  "updatedBy",
                   "createdAt",
+                  "createdBy",
                   "updatedAt",
+                  "updatedBy",
                   "name",
+                  "cloudReference",
                   "description",
-                  "emailRegexPatterns",
+                  "customerType",
+                  "salesforceId",
                   "active",
                   "maxCadFileRetentionDays",
                   "maxCadFileSize",
                   "useExternalIdentityProvider",
                   "mfaRequired",
                   "oneTimePasswordApplications",
-                  "customerType"
+                  "createdByName",
+                  "updatedByName",
+                  "identityProviders",
+                  "emailDomains",
+                  "authenticationType"
                 ],
                 "properties": {
                   "identity": {
                     "type": "string"
                   },
-                  "createdBy": {
-                    "type": "string"
-                  },
-                  "deletedBy": {
-                    "type": "string"
-                  },
-                  "updatedBy": {
-                    "type": "string"
-                  },
-                  "deletedAt": {
-                    "type": "string"
-                  },
                   "createdAt": {
+                    "type": "string"
+                  },
+                  "createdBy": {
                     "type": "string"
                   },
                   "updatedAt": {
                     "type": "string"
                   },
+                  "updatedBy": {
+                    "type": "string"
+                  },
                   "name": {
+                    "type": "string"
+                  },
+                  "cloudReference": {
                     "type": "string"
                   },
                   "description": {
                     "type": "string"
                   },
-                  "emailRegexPatterns": {
-                    "type": "array",
-                    "items": {
-                      "anyOf": [
-                        {
-                          "type": "string"
-                        }
-                      ]
-                    }
+                  "customerType": {
+                    "type": "string"
+                  },
+                  "salesforceId": {
+                    "type": "string"
                   },
                   "active": {
                     "type": "boolean"
@@ -130,50 +126,26 @@
                     "items": {
                     }
                   },
-                  "customerType": {
-                    "type": "string"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "required": [
-                  "identity",
-                  "createdBy",
-                  "deletedBy",
-                  "deletedAt",
-                  "createdAt",
-                  "name",
-                  "description",
-                  "emailRegexPatterns",
-                  "active",
-                  "maxCadFileRetentionDays",
-                  "useExternalIdentityProvider",
-                  "mfaRequired",
-                  "oneTimePasswordApplications",
-                  "customerType"
-                ],
-                "properties": {
-                  "identity": {
+                  "createdByName": {
                     "type": "string"
                   },
-                  "createdBy": {
+                  "updatedByName": {
                     "type": "string"
                   },
-                  "deletedBy": {
-                    "type": "string"
+                  "identityProviders": {
+                    "type": "array",
+                    "items": {
+                    }
                   },
-                  "deletedAt": {
-                    "type": "string"
-                  },
-                  "createdAt": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
+                  "emailDomains": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
                   },
                   "emailRegexPatterns": {
                     "type": "array",
@@ -184,6 +156,58 @@
                         }
                       ]
                     }
+                  },
+                  "authenticationType": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "createdAt",
+                  "createdBy",
+                  "updatedAt",
+                  "updatedBy",
+                  "name",
+                  "description",
+                  "customerType",
+                  "active",
+                  "maxCadFileRetentionDays",
+                  "useExternalIdentityProvider",
+                  "mfaRequired",
+                  "oneTimePasswordApplications",
+                  "createdByName",
+                  "updatedByName",
+                  "identityProviders",
+                  "emailDomains",
+                  "authenticationType"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "updatedBy": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "customerType": {
+                    "type": "string"
                   },
                   "active": {
                     "type": "boolean"
@@ -202,60 +226,18 @@
                     "items": {
                     }
                   },
-                  "customerType": {
-                    "type": "string"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "required": [
-                  "identity",
-                  "createdBy",
-                  "deletedBy",
-                  "deletedAt",
-                  "createdAt",
-                  "name",
-                  "cloudReference",
-                  "description",
-                  "salesforceId",
-                  "emailRegexPatterns",
-                  "active",
-                  "maxCadFileRetentionDays",
-                  "useExternalIdentityProvider",
-                  "mfaRequired",
-                  "oneTimePasswordApplications",
-                  "customerType"
-                ],
-                "properties": {
-                  "identity": {
+                  "createdByName": {
                     "type": "string"
                   },
-                  "createdBy": {
+                  "updatedByName": {
                     "type": "string"
                   },
-                  "deletedBy": {
-                    "type": "string"
+                  "identityProviders": {
+                    "type": "array",
+                    "items": {
+                    }
                   },
-                  "deletedAt": {
-                    "type": "string"
-                  },
-                  "createdAt": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "cloudReference": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "salesforceId": {
-                    "type": "string"
-                  },
-                  "emailRegexPatterns": {
+                  "emailDomains": {
                     "type": "array",
                     "items": {
                       "anyOf": [
@@ -265,24 +247,7 @@
                       ]
                     }
                   },
-                  "active": {
-                    "type": "boolean"
-                  },
-                  "maxCadFileRetentionDays": {
-                    "type": "integer"
-                  },
-                  "useExternalIdentityProvider": {
-                    "type": "boolean"
-                  },
-                  "mfaRequired": {
-                    "type": "boolean"
-                  },
-                  "oneTimePasswordApplications": {
-                    "type": "array",
-                    "items": {
-                    }
-                  },
-                  "customerType": {
+                  "authenticationType": {
                     "type": "string"
                   }
                 }

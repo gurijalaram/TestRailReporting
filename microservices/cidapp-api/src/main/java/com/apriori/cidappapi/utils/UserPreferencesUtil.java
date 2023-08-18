@@ -1,23 +1,24 @@
 package com.apriori.cidappapi.utils;
 
-import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
-import com.apriori.cidappapi.entity.response.preferences.PreferenceItemsResponse;
-import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
-import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.enums.ColourEnum;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.DecimalPlaceEnum;
-import com.apriori.utils.enums.LengthEnum;
-import com.apriori.utils.enums.MassEnum;
-import com.apriori.utils.enums.PreferencesEnum;
-import com.apriori.utils.enums.TimeEnum;
-import com.apriori.utils.enums.UnitsEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.cidappapi.enums.CidAppAPIEnum;
+import com.apriori.cidappapi.models.response.preferences.PreferenceItemsResponse;
+import com.apriori.cidappapi.models.response.preferences.PreferenceResponse;
+import com.apriori.enums.ColourEnum;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.enums.DecimalPlaceEnum;
+import com.apriori.enums.LengthEnum;
+import com.apriori.enums.MassEnum;
+import com.apriori.enums.PreferencesEnum;
+import com.apriori.enums.TimeEnum;
+import com.apriori.enums.UnitsEnum;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
+import com.apriori.http.utils.QueryParams;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserCredentials;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +36,8 @@ public class UserPreferencesUtil {
      * @return response object
      */
     public ResponseWrapper<String> patchPreference(UserCredentials userCredentials, PreferencesEnum preference, String value) {
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
+            .queryParams(new QueryParams().use("pageSize", "500"))
             .token(userCredentials.getToken());
 
         ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
@@ -107,7 +109,8 @@ public class UserPreferencesUtil {
      * @return List of preferences
      */
     public List<PreferenceResponse> getPreferences(UserCredentials userCredentials) {
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
+            .queryParams(new QueryParams().use("pageSize", "500"))
             .token(userCredentials.getToken());
 
         ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
@@ -226,7 +229,8 @@ public class UserPreferencesUtil {
      * @return Hashmap of preference names and associated identities
      */
     private Map<String, String> getPreferenceIdentities(String token) {
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
+            .queryParams(new QueryParams().use("pageSize", "500"))
             .token(token);
 
         ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();

@@ -1,35 +1,36 @@
 package com.ootbreports.dtcmetrics.machiningdtc;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringStartsWith.startsWith;
 
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
-import com.apriori.pageobjects.pages.view.reports.MachiningDtcReportPage;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.DtcScoreEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.ListNameEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.enums.reports.RollupEnum;
-import com.apriori.utils.enums.reports.SortOrderEnum;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.enums.ListNameEnum;
+import com.apriori.enums.ReportNamesEnum;
+import com.apriori.pageobjects.login.ReportsLoginPage;
+import com.apriori.pageobjects.view.reports.GenericReportPage;
+import com.apriori.pageobjects.view.reports.MachiningDtcReportPage;
+import com.apriori.testconfig.TestBaseUI;
+import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
+import enums.CostMetricEnum;
+import enums.DtcScoreEnum;
+import enums.MassMetricEnum;
+import enums.RollupEnum;
+import enums.SortOrderEnum;
 import io.qameta.allure.Description;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 
-public class MachiningDtcDetailsReportTests extends TestBase {
+public class MachiningDtcDetailsReportTests extends TestBaseUI {
 
     private MachiningDtcReportPage machiningDtcReportPage;
     private InputControlsTests inputControlsTests;
@@ -41,8 +42,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7254"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7254})
     @Description("Validate report is available by navigation - Machining DTC Details Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -52,8 +54,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7255"})
+    @Tag(REPORTS)
+    @TestRail(id = {7255})
     @Description("Validate report is available by library - Machining DTC Details Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -61,8 +63,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7256"})
+    @Tag(REPORTS)
+    @TestRail(id = {7256})
     @Description("Validate report is available by search - Machining DTC Details Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -70,8 +72,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3020"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {3020})
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControlFunctionality() {
         inputControlsTests = new InputControlsTests(driver);
@@ -79,8 +82,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7338"})
+    @Tag(REPORTS)
+    @TestRail(id = {7338})
     @Description("Verify reset button functionality - Machining DTC Details Report")
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -92,8 +95,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7335"})
+    @Tag(REPORTS)
+    @TestRail(id = {7335})
     @Description("Verify cancel button functionality - Machining DTC Details Report")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -101,8 +104,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7338"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7338})
     @Description("Verify reset button functionality - Machining DTC Details Report")
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -113,8 +117,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Ignore("not applicable due to reports configuration")
-    @TestRail(testCaseId = {"7341"})
+    @Disabled("not applicable due to reports configuration")
+    @TestRail(id = {7341})
     @Description("Verify save button functionality - Machining DTC Details Report")
     public void testSaveButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -125,8 +129,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3567"})
+    @Tag(REPORTS)
+    @TestRail(id = {3567})
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {
         inputControlsTests = new InputControlsTests(driver);
@@ -134,8 +138,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7435"})
+    @Tag(REPORTS)
+    @TestRail(id = {7435})
     @Description("Verify that earliest and latest export date fields function correctly using date picker")
     public void testBothExportDatesUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
@@ -143,19 +147,20 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7434"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7434})
     @Description("Verify export date filters correctly filters export sets - Input - Machining DTC Details Report")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testExportSetFilterUsingInputField(
-                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName()
+            ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName()
         );
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7416"})
+    @Tag(REPORTS)
+    @TestRail(id = {7416})
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Details Report")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -167,8 +172,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7417"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7417})
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Details Report")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -180,8 +186,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7396"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7396})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -193,8 +200,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7397"})
+    @Tag(REPORTS)
+    @TestRail(id = {7397})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -206,20 +213,21 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7459"})
+    @Tag(REPORTS)
+    @TestRail(id = {7459})
     @Description("Verify DTC Score Input Control - No Selection - Machining DTC Details Report")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testDtcScoreInputControlNoSelection(
-                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
-                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+            ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+            ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7497"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7497})
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Details Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
@@ -231,8 +239,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7500"})
+    @Tag(REPORTS)
+    @TestRail(id = {7500})
     @Description("Verify DTC Score Input Control - Medium Selection - Machining DTC Details Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
@@ -244,8 +252,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7502"})
+    @Tag(REPORTS)
+    @TestRail(id = {7502})
     @Description("Verify DTC Score Input Control - High Selection - Machining DTC Details Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
@@ -257,8 +265,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"2039"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {2039})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
         machiningDtcReportPage = new ReportsLoginPage(driver)
@@ -269,21 +278,21 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), MachiningDtcReportPage.class);
 
-        String partName = machiningDtcReportPage.clickMachiningDtcDetailsPartName().replace("\n", "");
+        String partName = machiningDtcReportPage.clickMachiningDtcDetailsPartName().replace("", "");
 
         assertThat(
             machiningDtcReportPage.getUpperTitleText(),
             is(equalTo(ReportNamesEnum.DTC_PART_SUMMARY.getReportName()))
         );
         assertThat(
-                partName,
-                is(startsWith(machiningDtcReportPage.getDtcPartSummaryPartNameValue()))
+            partName,
+            is(startsWith(machiningDtcReportPage.getDtcPartSummaryPartNameValue()))
         );
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3031"})
+    @Tag(REPORTS)
+    @TestRail(id = {3031})
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
         inputControlsTests = new InputControlsTests(driver);
@@ -295,8 +304,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3027"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {3027})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
@@ -307,8 +317,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3025"})
+    @Tag(REPORTS)
+    @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
         String exportSet = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
@@ -329,8 +339,9 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"3025"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDesignStandards() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -348,8 +359,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3025"})
+    @Tag(REPORTS)
+    @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlTolerances() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -367,8 +378,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3025"})
+    @Tag(REPORTS)
+    @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlSlowOperations() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -386,8 +397,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3025"})
+    @Tag(REPORTS)
+    @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlAnnualSpend() {
         genericReportPage = new ReportsLoginPage(driver)
@@ -405,8 +416,8 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"3025"})
+    @Tag(REPORTS)
+    @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDtcRank() {
         genericReportPage = new ReportsLoginPage(driver)

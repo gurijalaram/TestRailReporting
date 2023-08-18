@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -47,7 +47,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Delete modal is not displayed", pageUtils.waitForElementToAppear(deleteHeader).getAttribute("textContent").equalsIgnoreCase("Delete"));
+        assertTrue(pageUtils.waitForElementToAppear(deleteHeader).getAttribute("textContent").equalsIgnoreCase("Delete"), "Delete modal is not displayed");
     }
 
     /**

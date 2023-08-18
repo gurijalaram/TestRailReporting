@@ -1,73 +1,71 @@
 package testsuites;
 
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.CategorySuiteRunner;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.IGNORE;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SANITY;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import com.compare.ComparisonTests;
-import com.compare.QuickComparisonTests;
-import com.evaluate.CostAllCadTests;
-import com.evaluate.CostScenarioTests;
-import com.evaluate.DeleteTests;
-import com.evaluate.MachiningStrategyTests;
-import com.evaluate.NewScenarioNameTests;
-import com.evaluate.OpenUnknownComponentsTests;
-import com.evaluate.ProcessGroupsTests;
-import com.evaluate.ProcessRoutingTests;
-import com.evaluate.PsoEditTests;
-import com.evaluate.PublishExistingCostedTests;
-import com.evaluate.PublishTests;
-import com.evaluate.SecondaryProcessTests;
-import com.evaluate.Sustainability;
-import com.evaluate.TwoModelMachiningTests;
-import com.evaluate.assemblies.AssemblyGroupDeleteTests;
-import com.evaluate.assemblies.EditAssembliesTest;
-import com.evaluate.assemblies.FiltersTests;
-import com.evaluate.assemblies.GroupCostingTests;
-import com.evaluate.assemblies.GroupEditAssemblies;
-import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
-import com.evaluate.assemblies.IncludeAndExcludeTests;
-import com.evaluate.assemblies.LargeGroupAssemblyTests;
-import com.evaluate.assemblies.MaturityAssemblyAssociationsTests;
-import com.evaluate.assemblies.MissingAssemblyAssociationsTests;
-import com.evaluate.assemblies.UpdateCADFileTests;
-import com.evaluate.assemblies.UploadAssembliesTests;
-import com.evaluate.dtc.DFMRiskTests;
-import com.evaluate.dtc.DTCCastingTests;
-import com.evaluate.dtc.DTCMachiningTests;
-import com.evaluate.dtc.DTCPlasticMouldingTests;
-import com.evaluate.dtc.SheetMetalDTCTests;
-import com.evaluate.dtc.ThreadTests;
-import com.evaluate.dtc.ToleranceTests;
-import com.evaluate.materialutilization.ChangeMaterialSelectionTests;
-import com.evaluate.materialutilization.MaterialPMITests;
-import com.evaluate.materialutilization.MaterialStockTests;
-import com.evaluate.materialutilization.PartNestingTests;
-import com.explore.ActionsTests;
-import com.explore.FilterCriteriaTests;
-import com.explore.GroupCostTests;
-import com.explore.GroupDeleteTests;
-import com.explore.GroupEditTests;
-import com.explore.GroupMachineStrategyApplyTests;
-import com.explore.GroupPublishTests;
-import com.explore.PreviewPanelTests;
-import com.explore.TableHeadersTests;
-import com.explore.UploadComponentTests;
-import com.explore.UploadTests;
-import com.help.HelpTests;
-import com.settings.DecimalPlaceTests;
-import com.settings.SettingsTests;
-import org.junit.experimental.categories.Categories;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import testsuites.suiteinterface.ExtendedRegression;
-import testsuites.suiteinterface.IgnoreTests;
-import testsuites.suiteinterface.SanityTests;
-import testsuites.suiteinterface.SmokeTests;
+import com.apriori.compare.ComparisonTests;
+import com.apriori.compare.QuickComparisonTests;
+import com.apriori.evaluate.CostAllCadTests;
+import com.apriori.evaluate.CostScenarioTests;
+import com.apriori.evaluate.DeleteTests;
+import com.apriori.evaluate.MachiningStrategyTests;
+import com.apriori.evaluate.NewScenarioNameTests;
+import com.apriori.evaluate.OpenUnknownComponentsTests;
+import com.apriori.evaluate.ProcessGroupsTests;
+import com.apriori.evaluate.ProcessRoutingTests;
+import com.apriori.evaluate.PsoEditTests;
+import com.apriori.evaluate.PublishExistingCostedTests;
+import com.apriori.evaluate.PublishTests;
+import com.apriori.evaluate.SecondaryProcessTests;
+import com.apriori.evaluate.SustainabilityTests;
+import com.apriori.evaluate.TwoModelMachiningTests;
+import com.apriori.evaluate.assemblies.AssemblyGroupDeleteTests;
+import com.apriori.evaluate.assemblies.EditAssembliesTest;
+import com.apriori.evaluate.assemblies.FiltersTests;
+import com.apriori.evaluate.assemblies.GroupCostingTests;
+import com.apriori.evaluate.assemblies.GroupEditAssemblies;
+import com.apriori.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
+import com.apriori.evaluate.assemblies.IncludeAndExcludeTests;
+import com.apriori.evaluate.assemblies.LargeGroupAssemblyTests;
+import com.apriori.evaluate.assemblies.MaturityAssemblyAssociationsTests;
+import com.apriori.evaluate.assemblies.MissingAssemblyAssociationsTests;
+import com.apriori.evaluate.assemblies.UpdateCADFileTests;
+import com.apriori.evaluate.assemblies.UploadAssembliesTests;
+import com.apriori.evaluate.dtc.DFMRiskTests;
+import com.apriori.evaluate.dtc.DTCCastingTests;
+import com.apriori.evaluate.dtc.DTCMachiningTests;
+import com.apriori.evaluate.dtc.DTCPlasticMouldingTests;
+import com.apriori.evaluate.dtc.SheetMetalDTCTests;
+import com.apriori.evaluate.dtc.ThreadTests;
+import com.apriori.evaluate.dtc.ToleranceTests;
+import com.apriori.evaluate.materialutilization.ChangeMaterialSelectionTests;
+import com.apriori.evaluate.materialutilization.MaterialPMITests;
+import com.apriori.evaluate.materialutilization.MaterialStockTests;
+import com.apriori.evaluate.materialutilization.PartNestingTests;
+import com.apriori.explore.ActionsTests;
+import com.apriori.explore.FilterCriteriaTests;
+import com.apriori.explore.GroupCostTests;
+import com.apriori.explore.GroupDeleteTests;
+import com.apriori.explore.GroupEditTests;
+import com.apriori.explore.GroupMachineStrategyApplyTests;
+import com.apriori.explore.GroupPublishTests;
+import com.apriori.explore.PreviewPanelTests;
+import com.apriori.explore.TableHeadersTests;
+import com.apriori.explore.UploadComponentTests;
+import com.apriori.explore.UploadTests;
+import com.apriori.help.HelpTests;
+import com.apriori.settings.DecimalPlaceTests;
+import com.apriori.settings.SettingsTests;
 
-@ProjectRunID("768")
-@RunWith(CategorySuiteRunner.class)
-@Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class, ExtendedRegression.class})
-@Suite.SuiteClasses({
+import org.junit.platform.suite.api.ExcludeTags;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
+
+@Suite
+@ExcludeTags({SMOKE, SANITY, IGNORE, EXTENDED_REGRESSION})
+@SelectClasses({
     EditAssembliesTest.class,
     GroupCostingTests.class,
     CostAllCadTests.class,
@@ -120,7 +118,7 @@ import testsuites.suiteinterface.SmokeTests;
     AssemblyGroupDeleteTests.class,
     MaturityAssemblyAssociationsTests.class,
     MissingAssemblyAssociationsTests.class,
-    Sustainability.class
+    SustainabilityTests.class
 })
 public class RegressionTestSuite {
 }

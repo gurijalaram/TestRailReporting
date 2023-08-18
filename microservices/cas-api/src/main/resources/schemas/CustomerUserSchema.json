@@ -19,7 +19,8 @@
         "mfaRequired",
         "customAttributes",
         "createdByName",
-        "userType"
+        "userType",
+        "hasCompleteProfile"
       ],
       "optional": [
         "customProperties",
@@ -54,13 +55,14 @@
             "createdAt",
             "createdBy",
             "givenName",
-            "familyName",
-            "jobTitle",
-            "townCity"
+            "familyName"
           ],
           "optional": [
             "department",
             "supervisor",
+            "updatedAt",
+            "jobTitle",
+            "townCity",
             "updatedAt"
           ],
           "properties": {
@@ -121,6 +123,9 @@
         },
         "userType": {
           "type": "string"
+        },
+        "hasCompleteProfile": {
+          "type": "boolean"
         }
       }
     }

@@ -1,7 +1,7 @@
 package com.apriori.fms.enums;
 
-import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.interfaces.ExternalEndpointEnum;
+import com.apriori.properties.PropertiesContext;
 
 public enum FMSAPIEnum implements ExternalEndpointEnum {
 
@@ -22,7 +22,6 @@ public enum FMSAPIEnum implements ExternalEndpointEnum {
     @Override
     public String getEndpoint(Object... variables) {
         return PropertiesContext.get("fms.api_url")
-            .concat(String.format(getEndpointString(), variables))
-            .concat("?key=" + PropertiesContext.get("secret_key"));
+            + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 }

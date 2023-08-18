@@ -4,12 +4,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.pageobjects.login.ReportsLoginPage;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -20,11 +20,11 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 
-public class JasperApiAuthenticationUtil extends TestBase {
+public class JasperApiAuthenticationUtil extends TestBaseUI {
 
     public static String jSessionId;
 
-    @Before
+    @BeforeEach
     public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
         if (PropertiesContext.get("env").equals("onprem")) {
             authenticateOnPrem();

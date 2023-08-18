@@ -1,18 +1,18 @@
 package com.apriori.ats.utils;
 
-import com.apriori.apibase.utils.TestUtil;
-import com.apriori.ats.entity.request.AuthenticateRequest;
-import com.apriori.ats.entity.request.CreateSamlUserRequest;
-import com.apriori.ats.entity.request.ResetAutoUsers;
-import com.apriori.ats.entity.request.ResetMFA;
-import com.apriori.ats.entity.response.UserByEmail;
+import com.apriori.ats.models.request.AuthenticateRequest;
+import com.apriori.ats.models.request.CreateSamlUserRequest;
+import com.apriori.ats.models.request.ResetAutoUsers;
+import com.apriori.ats.models.request.ResetMFA;
+import com.apriori.ats.models.response.UserByEmail;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.enums.EndpointEnum;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.http.utils.TestUtil;
+import com.apriori.interfaces.EndpointEnum;
 
 import org.apache.http.HttpStatus;
 

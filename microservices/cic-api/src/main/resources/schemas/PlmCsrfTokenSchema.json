@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "@odata.context": {
+      "type": "string"
+    },
+    "NonceKey": {
+      "type": "string"
+    },
+    "NonceValue": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "@odata.context",
+    "NonceKey",
+    "NonceValue"
+  ]
+}

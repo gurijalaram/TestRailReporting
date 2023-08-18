@@ -23,6 +23,9 @@
     "organizationName": {
       "type": "string"
     },
+    "ownerFullName": {
+      "type": "string"
+    },
     "owner": {
       "type": "string"
     },
@@ -30,6 +33,9 @@
       "type": "string"
     },
     "dueAt": {
+      "type": "string"
+    },
+    "ownerUserIdentity": {
       "type": "string"
     },
     "projectProfile": {
@@ -155,6 +161,12 @@
                     "createdBy": {
                       "type": "string"
                     },
+                    "updatedAt": {
+                      "type": "string"
+                    },
+                    "updatedBy": {
+                      "type": "string"
+                    },
                     "givenName": {
                       "type": "string"
                     },
@@ -168,6 +180,10 @@
                     "createdBy",
                     "givenName",
                     "familyName"
+                  ],
+                  "optional": [
+                    "updatedAt",
+                    "updatedBy"
                   ]
                 },
                 "email": {
@@ -246,12 +262,14 @@
     "name",
     "projectProfile",
     "items",
-    "users"
+    "users",
+    "ownerUserIdentity"
   ],
   "optional": [
     "organizationName",
     "owner",
     "displayName",
-    "dueAt"
+    "dueAt",
+    "ownerFullName"
   ]
 }

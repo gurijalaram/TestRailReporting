@@ -1,22 +1,21 @@
 package testsuites;
 
-import com.apriori.cic.tests.CicAgentJobPartResultTest;
-import com.apriori.cic.tests.CicAgentJobResultsTest;
-import com.apriori.cic.tests.CicAgentRunPartsTest;
-import com.apriori.cic.tests.CicAgentTest;
-import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.ConcurrentSuiteRunner;
+import com.apriori.CicAgentJobPartResultTest;
+import com.apriori.CicAgentJobResultsTest;
+import com.apriori.CicAgentRunPartsTest;
+import com.apriori.CicAgentRunUdaPartsTest;
+import com.apriori.CicAgentTest;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@ProjectRunID("1283")
-@RunWith(ConcurrentSuiteRunner.class)
-@Suite.SuiteClasses({
-    CicAgentTest.class,
-    CicAgentRunPartsTest.class,
+@Suite
+@SelectClasses({
     CicAgentJobResultsTest.class,
-    CicAgentJobPartResultTest.class
+    CicAgentJobPartResultTest.class,
+    CicAgentRunPartsTest.class,
+    CicAgentRunUdaPartsTest.class,
+    CicAgentTest.class
 })
 public class CicAgentAPISuite {
 }

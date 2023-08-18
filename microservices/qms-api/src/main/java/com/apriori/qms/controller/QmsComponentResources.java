@@ -1,31 +1,31 @@
 package com.apriori.qms.controller;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
+import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.entity.enums.CssSearch;
-import com.apriori.entity.response.ScenarioItem;
-import com.apriori.qms.entity.request.scenariodiscussion.ProjectUserParameters;
-import com.apriori.qms.entity.request.scenariodiscussion.ProjectUserRequest;
-import com.apriori.qms.entity.response.bidpackage.ComponentResponse;
-import com.apriori.qms.entity.response.bidpackage.ScenariosResponse;
-import com.apriori.qms.entity.response.scenariodiscussion.ScenarioProjectUserResponse;
+import com.apriori.enums.CssSearch;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
+import com.apriori.http.utils.FileResourceUtil;
+import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.qms.models.request.scenariodiscussion.ProjectUserParameters;
+import com.apriori.qms.models.request.scenariodiscussion.ProjectUserRequest;
+import com.apriori.qms.models.response.component.ComponentResponse;
+import com.apriori.qms.models.response.scenario.ScenariosResponse;
+import com.apriori.qms.models.response.scenariodiscussion.ScenarioProjectUserResponse;
+import com.apriori.qms.utils.QmsApiTestUtils;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.authusercontext.AuthUserContextUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import org.apache.http.HttpStatus;
-import utils.QmsApiTestUtils;
 
 import java.io.File;
 import java.util.Collections;
@@ -150,6 +150,33 @@ public class QmsComponentResources {
     }
 
     /**
+     * Add component scenario user.
+     *
+     * @param <T>               the type parameter
+     * @param componentIdentity the component identity
+     * @param scenarioIdentity  the scenario identity
+     * @param projectUsers      the project users
+     * @param responseClass     the response class
+     * @param httpStatus        the http status
+     * @param currentUser       the current user
+     * @return the response wrapper entity
+     */
+    public static <T> T addComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserParameters projectUsers, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        ProjectUserRequest projectUserRequest = ProjectUserRequest.builder()
+            .users(Collections.singletonList(projectUsers)).build();
+
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, responseClass)
+            .inlineVariables(componentIdentity, scenarioIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(projectUserRequest)
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
      * Add component scenario user scenario project user response.
      *
      * @param componentIdentity        the component identity
@@ -187,5 +214,48 @@ public class QmsComponentResources {
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         HTTPRequest.build(requestEntity).delete();
+    }
+
+    /**
+     * Delete component scenario user.
+     *
+     * @param <T>                      the type parameter
+     * @param componentIdentity        the component identity
+     * @param scenarioIdentity         the scenario identity
+     * @param deleteProjectUserRequest the delete project user request
+     * @param responseClass            the response class
+     * @param httpStatus               the http status
+     * @param currentUser              the current user
+     * @return the response wrapper entity
+     */
+    public static <T> T deleteComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest deleteProjectUserRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, responseClass)
+            .inlineVariables(componentIdentity, scenarioIdentity)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .body(deleteProjectUserRequest)
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).delete();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
+     * Gets components assigned.
+     *
+     * @param <T>           the type parameter
+     * @param responseClass the response class
+     * @param httpStatus    the http status
+     * @param currentUser   the current user
+     * @return the components assigned
+     */
+    public static <T> T getComponentsAssigned(Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENTS_ASSIGNED, responseClass)
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        return responseWrapper.getResponseEntity();
     }
 }

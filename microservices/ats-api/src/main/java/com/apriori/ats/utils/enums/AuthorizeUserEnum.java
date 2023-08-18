@@ -1,7 +1,7 @@
 package com.apriori.ats.utils.enums;
 
-import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.interfaces.ExternalEndpointEnum;
+import com.apriori.properties.PropertiesContext;
 
 public enum AuthorizeUserEnum implements ExternalEndpointEnum {
     //AUTHORIZE_USER
@@ -20,6 +20,7 @@ public enum AuthorizeUserEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("ats.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("secret_key");
+        return PropertiesContext.get("ats.api_url")
+            + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 }

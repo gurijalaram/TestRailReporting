@@ -1,39 +1,40 @@
 package com.ootbreports.dtcmetrics.castingdtc;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
-import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.enums.reports.CostMetricEnum;
-import com.apriori.utils.enums.reports.DtcScoreEnum;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.enums.reports.MassMetricEnum;
-import com.apriori.utils.enums.reports.ReportNamesEnum;
-import com.apriori.utils.enums.reports.RollupEnum;
-import com.apriori.utils.enums.reports.SortOrderEnum;
-import com.apriori.utils.enums.reports.SortOrderItemsEnum;
-import com.apriori.utils.web.driver.TestBase;
+import com.apriori.enums.CurrencyEnum;
+import com.apriori.enums.ExportSetEnum;
+import com.apriori.enums.OperationEnum;
+import com.apriori.enums.PropertyEnum;
+import com.apriori.enums.ReportNamesEnum;
+import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.pageobjects.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.pageobjects.explore.ExplorePage;
+import com.apriori.pageobjects.login.ReportsLoginPage;
+import com.apriori.pageobjects.view.reports.CastingDtcReportPage;
+import com.apriori.testconfig.TestBaseUI;
+import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
+import enums.CostMetricEnum;
+import enums.DtcScoreEnum;
+import enums.MassMetricEnum;
+import enums.RollupEnum;
+import enums.SortOrderEnum;
+import enums.SortOrderItemsEnum;
 import io.qameta.allure.Description;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.OnPremTest;
-import testsuites.suiteinterface.ReportsTest;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
+import org.junit.jupiter.api.Test;
 import utils.Constants;
 
-public class CastingDtcComparisonReportTests extends TestBase {
+public class CastingDtcComparisonReportTests extends TestBaseUI {
 
     private CastingDtcReportPage castingDtcReportPage;
     private InputControlsTests inputControlsTests;
@@ -44,8 +45,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7242"})
+    @Tag(REPORTS)
+    @TestRail(id = {7242})
     @Description("Validate report available by navigation - Casting DTC Comparison Report")
     public void testReportAvailabilityByNavigation() {
         commonReportTests = new CommonReportTests(driver);
@@ -55,8 +56,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7245"})
+    @Tag(REPORTS)
+    @TestRail(id = {7245})
     @Description("Verify report is available by library - Casting DTC Comparison Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
@@ -64,8 +65,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7250"})
+    @Tag(REPORTS)
+    @TestRail(id = {7250})
     @Description("Verify report is available by search - Casting DTC Comparison Report")
     public void testReportAvailabilityBySearch() {
         commonReportTests = new CommonReportTests(driver);
@@ -73,8 +74,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7652"})
+    @Tag(REPORTS)
+    @TestRail(id = {7652})
     @Description("Verify Export Set list controls function correctly - Casting DTC Comparison Report")
     public void testCastingDtcComparisonExportSetInputControls() {
         inputControlsTests = new InputControlsTests(driver);
@@ -82,8 +83,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7654"})
+    @Tag(REPORTS)
+    @TestRail(id = {7654})
     @Description("Verify Roll-up input control functions correctly - Casting DTC Comparison Report")
     public void testRollupDropdown() {
         inputControlsTests = new InputControlsTests(driver);
@@ -94,8 +95,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7343"})
+    @Tag(REPORTS)
+    @TestRail(id = {7343})
     @Description("Verify apply button functionality - Casting DTC Comparison Report")
     public void testApplyButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -107,8 +108,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7348"})
+    @Tag(REPORTS)
+    @TestRail(id = {7348})
     @Description("Verify cancel button functionality - Casting DTC Comparison Report ")
     public void testCancelButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -116,8 +117,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7350"})
+    @Tag(REPORTS)
+    @TestRail(id = {7350})
     @Description("Verify reset button functionality - Casting DTC Comparison Report ")
     public void testResetButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -128,8 +129,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Ignore("not applicable due to reports configuration")
-    @TestRail(testCaseId = {"7352"})
+    @Disabled("not applicable due to reports configuration")
+    @TestRail(id = {7352})
     @Description("Verify save button functionality - Casting DTC Comparison Report")
     public void testSaveButton() {
         inputControlsTests = new InputControlsTests(driver);
@@ -140,8 +141,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7430"})
+    @Tag(REPORTS)
+    @TestRail(id = {7430})
     @Description("Verify export date filters correctly filters export sets - Picker - Casting DTC Comparison Report")
     public void testBothExportDatesUsingDatePicker() {
         inputControlsTests = new InputControlsTests(driver);
@@ -149,8 +150,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7431"})
+    @Tag(REPORTS)
+    @TestRail(id = {7431})
     @Description("Verify export date filters correctly filters export sets - Input - Casting DTC Comparison Report")
     public void testBothExportDatesUsingInputField() {
         inputControlsTests = new InputControlsTests(driver);
@@ -160,8 +161,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7619"})
+    @Tag(REPORTS)
+    @TestRail(id = {7619})
     @Description("Verify that aPriori costed scenarios are represented correctly - Casting DTC Comparison Report")
     public void testVerifyComparisonReportAvailableAndCorrectData() {
         castingDtcReportPage = new ReportsLoginPage(driver)
@@ -198,8 +199,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7409"})
+    @Tag(REPORTS)
+    @TestRail(id = {7409})
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Comparison Report")
     public void testCostMetricInputControlPpc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -211,8 +212,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7410"})
+    @Tag(REPORTS)
+    @TestRail(id = {7410})
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Comparison Report")
     public void testCostMetricInputControlFbc() {
         inputControlsTests = new InputControlsTests(driver);
@@ -224,8 +225,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7389"})
+    @Tag(REPORTS)
+    @TestRail(id = {7389})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Comparison Report ")
     public void testMassMetricInputControlFinishMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -237,8 +238,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7390"})
+    @Tag(REPORTS)
+    @TestRail(id = {7390})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {
         inputControlsTests = new InputControlsTests(driver);
@@ -250,8 +251,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7506"})
+    @Tag(REPORTS)
+    @TestRail(id = {7506})
     @Description("Verify DTC Score Input Control - No Selection - Casting DTC Comparison Report ")
     public void testDtcScoreNoSelection() {
         inputControlsTests = new InputControlsTests(driver);
@@ -262,8 +263,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7509"})
+    @Tag(REPORTS)
+    @TestRail(id = {7509})
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Comparison Report")
     public void testDtcScoreLow() {
         inputControlsTests = new InputControlsTests(driver);
@@ -275,8 +276,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7512"})
+    @Tag(REPORTS)
+    @TestRail(id = {7512})
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Comparison Report")
     public void testDtcScoreMedium() {
         inputControlsTests = new InputControlsTests(driver);
@@ -288,8 +289,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7515"})
+    @Tag(REPORTS)
+    @TestRail(id = {7515})
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Comparison Report")
     public void testDtcScoreHigh() {
         inputControlsTests = new InputControlsTests(driver);
@@ -301,8 +302,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7544"})
+    @Tag(REPORTS)
+    @TestRail(id = {7544})
     @Description("Verify DTC Score Input Control - All Selection - Casting DTC Comparison Report")
     public void testDtcScoreAll() {
         inputControlsTests = new InputControlsTests(driver);
@@ -314,8 +315,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"7656"})
+    @Tag(REPORTS)
+    @TestRail(id = {7656})
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Comparison Report")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
@@ -326,8 +327,9 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7643"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7643})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderManufacturingCastingIssues() {
         commonReportTests = new CommonReportTests(driver);
@@ -339,8 +341,9 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7637"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7637})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderManufacturingMachiningIssues() {
         commonReportTests = new CommonReportTests(driver);
@@ -352,8 +355,9 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7638"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7638})
     @Description("Verify Sort Order input control functions correctly - Material Scrap - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderMaterialScrap() {
         commonReportTests = new CommonReportTests(driver);
@@ -365,8 +369,9 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7639"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7639})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderTolerances() {
         commonReportTests = new CommonReportTests(driver);
@@ -378,8 +383,9 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7640"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7640})
     @Description("Verify Sort Order input control functions correctly - Slow Operations - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderSlowOperations() {
         commonReportTests = new CommonReportTests(driver);
@@ -391,8 +397,9 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7641"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7641})
     @Description("Verify Sort Order input control functions correctly - Special Tooling - Casting DTC Comparison Report ")
     public void testCastingDtcComparisonSortOrderSpecialTooling() {
         commonReportTests = new CommonReportTests(driver);
@@ -404,8 +411,9 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, OnPremTest.class})
-    @TestRail(testCaseId = {"7642"})
+    @Tags({@Tag(REPORTS),
+        @Tag(ON_PREM)})
+    @TestRail(id = {7642})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderAnnualSpend() {
         commonReportTests = new CommonReportTests(driver);
@@ -417,8 +425,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
-    @TestRail(testCaseId = {"1708"})
+    @Tag(REPORTS)
+    @TestRail(id = {1708})
     @Description("Verify DTC issue counts are correct - Casting DTC Comparison Report")
     public void testDtcIssueCountsAreCorrect() {
         commonReportTests = new CommonReportTests(driver);

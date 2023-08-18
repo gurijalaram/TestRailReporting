@@ -197,7 +197,7 @@ Annotate tests.suite class that needs RunWith using following format (_class_ sh
 
 ## Add TestRail testCaseIDs to test methods
 Annotate method that needs testRailID using following format. Tags is optional so if you don't add, its ok
-`@TestRail(testCaseId = {"717"})`
+`@TestRail(id = {717})`
 
 ## How to run tests against local dev env
 

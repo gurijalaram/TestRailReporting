@@ -1,0 +1,97 @@
+{
+  "reportUnitUri": "/aPriori/reports/general/scenarioComparison",
+  "async": true,
+  "allowInlineScripts": false,
+  "markupType": "embeddable",
+  "interactive": true,
+  "freshData": false,
+  "saveDataSnapshot": false,
+  "transformerKey": null,
+  "pages": 1,
+  "attachmentsPrefix": "/jasperserver-pro/rest_v2/reportExecutions/{reportExecutionId}/exports/{exportExecutionId}/attachments/",
+  "baseUrl": "/jasperserver-pro",
+  "parameters": {
+    "reportParameter": [
+      {
+        "name": "useLatestExport",
+        "value": [
+          "Scenario"
+        ]
+      },
+      {
+        "name": "earliestExportDate",
+        "value": [
+          "2023-03-02T05:05:18"
+        ]
+      },
+      {
+        "name": "latestExportDate",
+        "value": [
+          "2023-06-30T06:05:18"
+        ]
+      },
+      {
+        "name": "exportSetName",
+        "value": [
+          "1"
+        ]
+      },
+      {
+        "name": "allExportIds",
+        "value": [
+          "3"
+        ]
+      },
+      {
+        "name": "componentType",
+        "value": [
+          "~NOTHING~"
+        ]
+      },
+      {
+        "name": "createdBy",
+        "value": [
+          "~NOTHING~"
+        ]
+      },
+      {
+        "name": "lastModifiedBy",
+        "value": [
+          "~NOTHING~"
+        ]
+      },
+      {
+        "name": "partNumber",
+        "value": [
+          "%"
+        ]
+      },
+      {
+        "name": "scenarioName",
+        "value": [
+          "~NOTHING~"
+        ]
+      },
+      {
+        "name": "scenarioToCompareIDs",
+        "value": [
+          "176",
+          "195",
+          "250"
+        ]
+      },
+      {
+        "name": "scenarioIDs",
+        "value": [
+          "176,195,250"
+        ]
+      },
+      {
+        "name": "currencyCode",
+        "value": [
+          "GBP"
+        ]
+      }
+    ]
+  }
+}

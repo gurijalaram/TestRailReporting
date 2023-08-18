@@ -2,15 +2,13 @@ repositories {
     mavenCentral()
 }
 
-
 dependencies {
-    implementation project(':utils')
-    implementation project(':apibase')
+    implementation project(':shared-util')
     implementation project(':db')
+    implementation project(':web-app-util')
+    implementation project(':microservices:cidapp-api')
+    implementation project(':serialization-util')
     implementation 'com.massisframework:j-text-utils:0.3.4'
     implementation project(':microservices:nts-api')
     implementation 'org.jetbrains:annotations:20.1.0'
-
-
-    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
