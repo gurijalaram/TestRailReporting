@@ -1,9 +1,9 @@
 package com.apriori.cic.utils;
 
 import com.apriori.PageUtils;
-import com.apriori.TestBaseUI;
 import com.apriori.login.LoginService;
 import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.testconfig.TestBaseUI;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

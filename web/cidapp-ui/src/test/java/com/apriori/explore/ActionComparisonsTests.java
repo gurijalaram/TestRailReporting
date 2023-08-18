@@ -1,6 +1,6 @@
 package com.apriori.explore;
 
-import com.apriori.TestBaseUI;
+import com.apriori.testconfig.TestBaseUI;
 
 public class ActionComparisonsTests extends TestBaseUI {
 

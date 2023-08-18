@@ -8,7 +8,6 @@ import static org.hamcrest.collection.ArrayMatching.arrayContainingInAnyOrder;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
-import com.apriori.TestBaseUI;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ExportSetEnum;
@@ -25,6 +24,7 @@ import com.apriori.pageobjects.view.reports.GenericReportPage;
 import com.apriori.pageobjects.view.reports.SheetMetalDtcReportPage;
 import com.apriori.pageobjects.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.pageobjects.view.reports.TargetQuotedCostTrendReportPage;
+import com.apriori.testconfig.TestBaseUI;
 
 import enums.DateElementsEnum;
 import enums.DtcScoreEnum;

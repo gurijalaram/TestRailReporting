@@ -8,6 +8,7 @@ import static com.apriori.testrail.TestRailStatus.PASSED;
 import static com.apriori.testrail.TestRailStatus.RETEST;
 import static com.apriori.webdriver.DriverFactory.testMode;
 
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 import com.apriori.testrail.TestRailReport;
 import com.apriori.testrail.TestRailStatus;
@@ -104,10 +105,9 @@ public class TestRules implements TestWatcher, BeforeAllCallback {
 
     @SneakyThrows
     private WebDriver getDeclaredDriver(ExtensionContext context) {
-        Object test = context.getRequiredTestInstance();
-        Field field = test.getClass().getSuperclass().getDeclaredField(DRIVER);
+        Field field = TestBaseUI.class.getDeclaredField(DRIVER);
         field.setAccessible(true);
-        return (WebDriver) field.get(test);
+        return (WebDriver) field.get(context.getRequiredTestInstance());
     }
 
     // TODO: 06/06/2023 revise this method and make sure naming is correct

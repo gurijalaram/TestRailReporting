@@ -3,7 +3,6 @@ package com.apriori.customer.users;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.PageUtils;
-import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.models.response.LicenseResponse;
@@ -23,6 +22,7 @@ import com.apriori.pageobjects.customer.users.UsersListPage;
 import com.apriori.pageobjects.customer.users.profile.UserProfilePage;
 import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.UserCreation;
 

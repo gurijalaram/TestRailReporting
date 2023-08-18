@@ -7,7 +7,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.TestBaseUI;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.OperationEnum;
 import com.apriori.enums.PropertyEnum;
@@ -19,6 +18,7 @@ import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.pageobjects.view.reports.GenericReportPage;
 import com.apriori.pageobjects.view.reports.TargetAndQuotedCostValueTrackingPage;
 import com.apriori.pageobjects.view.reports.TargetQuotedCostTrendReportPage;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;
