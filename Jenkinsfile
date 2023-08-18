@@ -50,6 +50,9 @@ Those marked with a * are required or the job will not run
             tools {
                 jdk "jdk-11.0.16"
             }
+            steps {
+                sh 'java -version'
+            }
         }
 
         stage("Initialize") {
