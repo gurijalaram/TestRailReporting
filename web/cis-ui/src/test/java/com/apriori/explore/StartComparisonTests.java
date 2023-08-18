@@ -5,13 +5,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
-import com.apriori.TestBaseUI;
 import com.apriori.navtoolbars.CompareTabToolbar;
 import com.apriori.navtoolbars.ExploreTabToolbar;
 import com.apriori.pageobjects.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.CisLoginPage;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

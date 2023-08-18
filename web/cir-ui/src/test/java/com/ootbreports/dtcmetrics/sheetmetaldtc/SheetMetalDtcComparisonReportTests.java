@@ -6,7 +6,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.TestBaseUI;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ListNameEnum;
@@ -14,6 +13,7 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.ReportNamesEnum;
 import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.pageobjects.view.reports.SheetMetalDtcReportPage;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;

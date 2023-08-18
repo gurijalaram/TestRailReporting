@@ -1,6 +1,5 @@
 package com.navigation;
 
-import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.cirpages.CirUserGuidePage;
 import com.apriori.pageobjects.homepage.AdminHomePage;
 import com.apriori.pageobjects.login.AdminLoginPage;
@@ -9,6 +8,7 @@ import com.apriori.pageobjects.manage.ScenarioExport;
 import com.apriori.pageobjects.manage.SystemDataExport;
 import com.apriori.pageobjects.userguides.CiaUserGuide;
 import com.apriori.properties.PropertiesContext;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

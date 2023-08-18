@@ -1,12 +1,12 @@
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.TestBaseUI;
 import com.apriori.login.CloudHomePage;
 import com.apriori.login.LoginService;
 import com.apriori.login.UserProfilePage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

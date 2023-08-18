@@ -7,7 +7,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 
-import com.apriori.TestBaseUI;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.OperationEnum;
 import com.apriori.enums.PropertyEnum;
@@ -17,6 +16,7 @@ import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.pageobjects.view.reports.CycleTimeValueTrackingPage;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.navigation.CommonReportTests;
