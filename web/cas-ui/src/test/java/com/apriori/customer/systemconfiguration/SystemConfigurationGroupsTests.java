@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 import com.apriori.PageUtils;
-import com.apriori.TestBaseUI;
 import com.apriori.components.SelectionTreeItemComponent;
 import com.apriori.components.SourceListComponent;
 import com.apriori.components.TableComponent;
@@ -16,6 +15,7 @@ import com.apriori.http.utils.Obligation;
 import com.apriori.pageobjects.customer.systemconfiguration.SystemConfigurationGroupsPage;
 import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

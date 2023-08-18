@@ -1,6 +1,5 @@
 package com.apriori.navigation;
 
-import com.apriori.TestBaseUI;
 import com.apriori.navtoolbars.CisHeaderBar;
 import com.apriori.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.help.ZendeskSignInPage;
@@ -8,6 +7,7 @@ import com.apriori.pageobjects.login.CisLoginPage;
 import com.apriori.pageobjects.myuser.MyUserPage;
 import com.apriori.pageobjects.myuser.TermsOfUsePage;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.utils.CisNavBarItemsEnum;

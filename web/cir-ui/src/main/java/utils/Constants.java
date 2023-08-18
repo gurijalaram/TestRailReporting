@@ -40,6 +40,7 @@ public class Constants {
     public static final String DEFAULT_SCENARIO_NAME = "Initial";
     public static final String OTHER_SCENARIO_NAME = "sand casting";
     public static final String COST_NAME = "Cost";
+    public static final String WELCOME_PAGE_TEXT = "aP Analytics";
     public static final String ANNUALISED_VALUE = "Annualized";
     public static final String PERCENT_VALUE = "Percent";
     public static final String NAME_TO_SELECT = "bhegan";

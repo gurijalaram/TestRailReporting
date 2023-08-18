@@ -114,18 +114,6 @@ onprem:
   deployment_url_template: ${base_url}
   users_csv_file: onprem-users.csv
 
-  reports:
-    username_locator: //input[contains(@name, 'username')]
-    login_locator: //button[@id='submitButton']
-    welcome_page_text: Cost Insight Report
-    login_title_locator: //h2[@class='textAccent']
-    failed_login_messsage: Invalid credentials supplied.Could not login to JasperReports Server.
-
-  admin:
-    login_locator: //button[@id='login']
-    welcome_page_text: Cost Insight | Admin
-    login_title_locator: //p[@class='password-inputs-header']
-
 ########################################################################################################################
 
 

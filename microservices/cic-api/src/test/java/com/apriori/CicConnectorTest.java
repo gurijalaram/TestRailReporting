@@ -16,6 +16,7 @@ import com.apriori.cic.utils.CicLoginUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 
 import io.qameta.allure.Description;
 import org.apache.commons.lang3.StringUtils;

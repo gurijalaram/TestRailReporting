@@ -3,7 +3,6 @@ package com.apriori.evaluate.dtc;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -17,6 +16,7 @@ import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.utils.EvaluateDfmIconEnum;

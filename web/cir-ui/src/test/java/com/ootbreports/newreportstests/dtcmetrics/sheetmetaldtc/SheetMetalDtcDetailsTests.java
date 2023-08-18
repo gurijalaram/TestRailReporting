@@ -1,7 +1,5 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
-
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -16,7 +14,6 @@ import enums.MassMetricEnum;
 import enums.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -40,8 +37,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7421})
+    @TestRail(id = 7421)
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricPpc() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -51,8 +47,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7422})
+    @TestRail(id = 7422)
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricFbc() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -62,8 +57,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7401})
+    @TestRail(id = 7401)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -73,8 +67,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7402})
+    @TestRail(id = 7402)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -84,8 +77,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7682})
+    @TestRail(id = 7682)
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Sheet Metal DTC Details Report")
     public void testSortOrderManufacturingIssues() {
         List<String> assertFigures = Arrays.asList(
@@ -100,8 +92,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7681})
+    @TestRail(id = 7681)
     @Description("Verify Sort Order input control functions correctly - Bends- Sheet Metal DTC Details Report")
     public void testSortOrderBends() {
         List<String> partNames = Arrays.asList(
@@ -121,8 +112,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7677})
+    @TestRail(id = 7677)
     @Description("Verify Sort Order input control functions correctly - Tolerances - Sheet Metal DTC Details Report")
     public void testSortOrderTolerances() {
         List<String> partNames = Arrays.asList(
@@ -142,8 +132,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7678})
+    @TestRail(id = 7678)
     @Description("Verify Sort Order input control functions correctly - Machining Time - Sheet Metal DTC Details Report")
     public void testSortOrderMachiningTime() {
         List<String> partNames = Arrays.asList(
@@ -163,8 +152,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7679})
+    @TestRail(id = 7679)
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Details Report")
     public void testSortOrderAnnualSpend() {
         List<String> partNames = Arrays.asList(
@@ -184,8 +172,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7680})
+    @TestRail(id = 7680)
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Sheet Metal DTC Details Report")
     public void testSortOrderDtcRank() {
         List<String> partNames = Arrays.asList(
@@ -205,8 +192,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7379})
+    @TestRail(id = 7379)
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Details Report")
     public void testCurrencyCodeInputControl() {
         jasperApiUtils.genericDtcCurrencyTest(
@@ -216,8 +202,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {3048})
+    @TestRail(id = 3048)
     @Description("Verify Process Group input control functions correctly - Single Selection")
     public void testSingleProcessGroup() {
         jasperApiUtils.genericProcessGroupDtcDetailsTest(
@@ -228,8 +213,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7534})
+    @TestRail(id = 7534)
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreLow() {
         List<String> partNames = Arrays.asList(
@@ -244,8 +228,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7537})
+    @TestRail(id = 7537)
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreMedium() {
         List<String> partNames = Arrays.asList(
@@ -260,8 +243,7 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7540})
+    @TestRail(id = 7540)
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreHigh() {
         jasperApiUtils.genericDtcDetailsTest(

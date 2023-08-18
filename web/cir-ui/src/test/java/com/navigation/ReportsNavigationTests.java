@@ -7,7 +7,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 
-import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.create.CreateDashboardPage;
 import com.apriori.pageobjects.create.CreateDataSourcePage;
@@ -24,6 +23,7 @@ import com.apriori.pageobjects.view.ViewMessagesPage;
 import com.apriori.pageobjects.view.ViewRepositoryPage;
 import com.apriori.pageobjects.view.ViewSchedulesPage;
 import com.apriori.pageobjects.view.ViewSearchResultsPage;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

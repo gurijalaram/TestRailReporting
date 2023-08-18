@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
@@ -24,6 +23,7 @@ import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
 
