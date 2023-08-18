@@ -48,7 +48,7 @@ Those marked with a * are required or the job will not run
     stages {
         stage("Java") {
             tools {
-                jdk "jdk-11.0.16"
+                jdk "OpenJDK 11.0.18_10"
             }
             steps {
                 sh 'java -version'
