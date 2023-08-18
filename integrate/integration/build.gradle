@@ -12,6 +12,7 @@ dependencies {
     implementation project(':microservices:sds-api')
     implementation project(':microservices:bcs-api')
     implementation project(':microservices:cidapp-api')
+    implementation project(':microservices:cds-api')
     implementation project(':microservices:css-api')
     implementation project(':microservices:nts-api')
     implementation project(':microservices:cic-api')
