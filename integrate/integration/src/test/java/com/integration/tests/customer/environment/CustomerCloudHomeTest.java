@@ -89,8 +89,4 @@ public class CustomerCloudHomeTest extends CustomerEnvironmentUtil {
 
         return customerReferences;
     }
-
-    @Test
-    public void validateCustomerApplicationsByUI() {
-    }
 }

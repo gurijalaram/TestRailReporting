@@ -19,6 +19,10 @@ import org.apache.http.HttpStatus;
 
 import java.util.List;
 
+/**
+ * Customer environment util class
+ * Contains methods with base functionality for customer environments tests
+ */
 public class CustomerEnvironmentUtil {
 
     protected UserCredentials getAwsCustomerUserCredentials() {
@@ -28,6 +32,12 @@ public class CustomerEnvironmentUtil {
         return new UserCredentials(username, password);
     }
 
+    /**
+     * Find information about customer user
+     * @param email
+     * @param customerIdentity
+     * @return filtered customer user and all related information
+     */
     protected static User getCustomerUserDataByEmail(final String email, final String customerIdentity) {
         RequestEntity customerUsersRequest = RequestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, Users.class)
             .inlineVariables(customerIdentity)
@@ -41,6 +51,12 @@ public class CustomerEnvironmentUtil {
             .getItems().stream().findFirst().orElseThrow(IllegalArgumentException::new);
     }
 
+    /**
+     * Get user access information for a specific customer
+     * @param userIdentity
+     * @param customerIdentity
+     * @return user access information
+     */
     protected List<AccessControlResponse> getUserAccessControls(final String userIdentity, final String customerIdentity) {
         RequestEntity userAccessControlRequest = RequestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
             .inlineVariables(customerIdentity, userIdentity)
@@ -53,6 +69,11 @@ public class CustomerEnvironmentUtil {
             .getItems();
     }
 
+    /**
+     * Get customer deployments and all related objects information
+     * @param customerIdentity
+     * @return customer deployments
+     */
     protected List<Deployment> getCustomerDeployments(final String customerIdentity) {
         RequestEntity customerApplicationsRequest = RequestEntityUtil.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployments.class)
             .inlineVariables(customerIdentity)
