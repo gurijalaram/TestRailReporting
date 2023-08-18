@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
-import com.apriori.TestBaseUI;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.OperationEnum;
@@ -25,6 +24,7 @@ import com.apriori.pageobjects.view.ViewSearchResultsPage;
 import com.apriori.pageobjects.view.reports.AssemblyCostReportPage;
 import com.apriori.pageobjects.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.view.reports.GenericReportPage;
+import com.apriori.testconfig.TestBaseUI;
 
 import enums.AssemblySetEnum;
 import enums.SortOrderEnum;

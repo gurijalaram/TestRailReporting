@@ -1,7 +1,6 @@
 package com.integration.tests;
 
 import com.apriori.ExcelService;
-import com.apriori.TestBaseUI;
 import com.apriori.cic.models.request.JobDefinition;
 import com.apriori.cic.models.response.AgentWorkflow;
 import com.apriori.cic.models.response.AgentWorkflowJobRun;
@@ -28,6 +27,7 @@ import com.apriori.pageobjects.workflows.schedule.querydefinitions.QueryDefiniti
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

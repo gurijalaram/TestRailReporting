@@ -1,6 +1,5 @@
 package com.apriori.userpreference;
 
-import com.apriori.TestBaseUI;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
@@ -13,6 +12,7 @@ import com.apriori.pageobjects.partsandassembliesdetails.PartsAndAssembliesDetai
 import com.apriori.pageobjects.settings.UserPreferencePage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.utils.CisDisplayPreferenceEnum;

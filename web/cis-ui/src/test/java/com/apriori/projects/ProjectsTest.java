@@ -1,7 +1,6 @@
 package com.apriori.projects;
 
 import com.apriori.DateFormattingUtils;
-import com.apriori.TestBaseUI;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.DateUtil;
@@ -14,6 +13,7 @@ import com.apriori.pageobjects.partsandassembliesdetails.PartsAndAssembliesDetai
 import com.apriori.pageobjects.projects.ProjectsPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.utils.CisScenarioResultsEnum;

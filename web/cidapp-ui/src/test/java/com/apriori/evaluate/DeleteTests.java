@@ -4,7 +4,6 @@ import static com.apriori.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 
-import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.OperationEnum;
@@ -19,6 +18,7 @@ import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
