@@ -23,7 +23,6 @@ import java.util.List;
 public class ReportsLoginPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportsLoginPage.class);
-    private static final String loginPageURL = PropertiesContext.get("${env}.reports.ui_url");
     private static final Boolean isEnvOnPrem = PropertiesContext.get("${env}").equals("onprem");
 
     @FindBy(css = "input[name='j_username']")

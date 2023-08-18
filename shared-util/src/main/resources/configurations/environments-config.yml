@@ -109,7 +109,7 @@ staging:
 
 ######################################################## On Prem #######################################################
 onprem:
-  base_url: conqsbel10-03/
+  base_url: walqbaci01/
   name: onprem
   deployment_url_template: ${base_url}
   users_csv_file: onprem-users.csv

@@ -6,7 +6,6 @@ import com.apriori.PageUtils;
 import com.apriori.login.LoginService;
 import com.apriori.pageobjects.header.AdminHeader;
 import com.apriori.pageobjects.homepage.AdminHomePage;
-import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 
