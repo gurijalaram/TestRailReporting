@@ -26,7 +26,7 @@ public class CostOutlierIdentificationTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @TestRail(id = {26909})
+    @TestRail(id = 26909)
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricFbcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierTest(
@@ -35,7 +35,7 @@ public class CostOutlierIdentificationTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @TestRail(id = {26910})
+    @TestRail(id = 26910)
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricPpcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierTest(

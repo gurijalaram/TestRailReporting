@@ -25,7 +25,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
     }
 
     @Test
-    @TestRail(id = {26911})
+    @TestRail(id = 26911)
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         SoftAssertions softAssertions = new SoftAssertions();

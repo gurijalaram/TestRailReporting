@@ -1,7 +1,5 @@
 package com.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
-
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;
@@ -13,7 +11,6 @@ import enums.JasperCirApiPartsEnum;
 import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -33,8 +30,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7406})
+    @TestRail(id = 7406)
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Details Report ")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -44,8 +40,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7407})
+    @TestRail(id = 7407)
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Details Report ")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -55,8 +50,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7381})
+    @TestRail(id = 7381)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
@@ -66,8 +60,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7382})
+    @TestRail(id = 7382)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Details Report ")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(

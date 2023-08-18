@@ -1,7 +1,5 @@
 package com.ootbreports.newreportstests.dtcmetrics.machiningdtc;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
-
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;
@@ -13,7 +11,6 @@ import enums.JasperCirApiPartsEnum;
 import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -37,8 +34,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {3023})
+    @TestRail(id = 3023)
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcTest(
@@ -48,8 +44,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7413})
+    @TestRail(id = 7413)
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Report")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcTest(
@@ -59,8 +54,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {3024})
+    @TestRail(id = 3024)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
@@ -70,8 +64,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS)
-    @TestRail(id = {7393})
+    @TestRail(id = 7393)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcTest(
