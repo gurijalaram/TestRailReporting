@@ -40,4 +40,5 @@ public class IdentityProvider {
     private String signRequestAlgorithm;
     private String signRequestAlgorithmDigest;
     private String protocolBinding;
+    private String authenticationType;
 }

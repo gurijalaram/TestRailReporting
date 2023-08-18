@@ -16,6 +16,13 @@ import java.util.concurrent.TimeUnit;
 public class AuthorizationUtilTest {
 
     @Test
+    public void getToken() {
+        ResponseWrapper<Token> response = new AuthorizationUtil().getToken();
+
+        assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));
+    }
+
+    @Test
     @SneakyThrows
     public void getTokenInThreads() {
         final Integer threadsCount = 10;

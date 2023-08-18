@@ -66,7 +66,8 @@
                   "deploymentType",
                   "applications",
                   "customerIdentity",
-                  "siteIdentities"
+                  "siteIdentities",
+                  "updatedAt"
                 ],
                 "properties": {
                   "isDefault": {
@@ -115,6 +116,10 @@
                             "description",
                             "iconUrl"
                           ],
+                          "optional": [
+                            "updatedAt",
+                            "updatedBy"
+                          ],
                           "properties": {
                             "isSingleTenant": {
                               "type": "boolean"
@@ -132,6 +137,12 @@
                               "type": "string"
                             },
                             "createdBy": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            },
+                            "updatedBy": {
                               "type": "string"
                             },
                             "name": {
@@ -168,6 +179,7 @@
                             "cloudReference",
                             "description",
                             "active",
+                            "apVersion",
                             "url",
                             "realm",
                             "s3Bucket",
@@ -176,12 +188,16 @@
                             "clientId",
                             "clientSecret",
                             "cidGlobalKey",
-                            "region"
+                            "region",
+                            "applications"
                           ],
                           "optional": [
                             "deploymentIdentity",
                             "customerIdentity",
-                            "applications"
+                            "updatedAt",
+                            "updatedBy",
+                            "cidApiId",
+                            "cidApiSecret"
                           ],
                           "properties": {
                             "identity": {
@@ -210,6 +226,9 @@
                             },
                             "active": {
                               "type": "boolean"
+                            },
+                            "apVersion": {
+                              "type": "string"
                             },
                             "url": {
                               "type": "string"
@@ -256,8 +275,38 @@
             ]
           }
         },
-        "createdByName": {
-          "type": "string"
+        "licensedApplications": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "createdAt",
+                  "createdBy",
+                  "applicationIdentity"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "applicationIdentity": {
+                    "type": "string"
+                  }
+                }
+              }
+            ]
+          },
+          "createdByName": {
+            "type": "string"
+          }
         }
       }
     }

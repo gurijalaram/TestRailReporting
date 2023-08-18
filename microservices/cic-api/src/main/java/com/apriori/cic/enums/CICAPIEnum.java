@@ -1,5 +1,6 @@
 package com.apriori.cic.enums;
 
+import com.apriori.cic.utils.CicApiTestUtil;
 import com.apriori.interfaces.ExternalEndpointEnum;
 import com.apriori.properties.PropertiesContext;
 
@@ -48,7 +49,7 @@ public enum CICAPIEnum implements ExternalEndpointEnum {
         if (this.endpoint.contains("Thingworx")) {
             apiUrl = PropertiesContext.get("ci-connect.ui_url");
         } else {
-            apiUrl = PropertiesContext.get("ci-connect.agent_api_url") + ":" + PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.port") + "/";
+            apiUrl = PropertiesContext.get("ci-connect.agent_api_url") + ":" + CicApiTestUtil.getAgentPortData().getPort() + "/";
         }
         return apiUrl;
     }

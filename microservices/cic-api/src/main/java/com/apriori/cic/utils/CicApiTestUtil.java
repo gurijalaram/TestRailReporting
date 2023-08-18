@@ -25,17 +25,18 @@ import com.apriori.cic.models.response.PlmSearchPart;
 import com.apriori.cic.models.response.PlmSearchResponse;
 import com.apriori.cic.models.response.ReportTemplatesRow;
 import com.apriori.dataservice.TestDataService;
-import com.apriori.exceptions.KeyValueException;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.FileResourceUtil;
-import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
 import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.InitFileData;
 import com.apriori.reader.file.part.PartData;
+import com.apriori.utils.KeyValueUtil;
 
+import entity.request.AgentPort;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -49,8 +50,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class CicApiTestUtil {
@@ -226,7 +227,6 @@ public class CicApiTestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-
     /**
      * Submit CIC GUI Thingworx API to delete workflow
      *
@@ -269,7 +269,6 @@ public class CicApiTestUtil {
         return header;
     }
 
-
     /**
      * Submit request to get list of workflows and then get the matched workflow
      *
@@ -299,7 +298,7 @@ public class CicApiTestUtil {
      * @return customer
      */
     public static String getAgent(String sessionId) {
-        ConnectorInfo connectorInfo = getMatchedConnector(PropertiesContext.get("${customer}.ci-connect.${${customer}.ci-connect.agent_type}.connector"), sessionId);
+        ConnectorInfo connectorInfo = getMatchedConnector(getAgentPortData().getConnector(), sessionId);
         if (connectorInfo == null) {
             throw new IllegalArgumentException("Connector not found!!");
         }
@@ -316,7 +315,7 @@ public class CicApiTestUtil {
     @SneakyThrows
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
-        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
+        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
         while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
@@ -340,7 +339,7 @@ public class CicApiTestUtil {
     @SneakyThrows
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID, CicLoginUtil cicLoginUtil) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
-        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
+        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
         while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
@@ -463,20 +462,13 @@ public class CicApiTestUtil {
      * @return PlmParts Response object
      */
     public static PlmSearchResponse searchPlmWindChillParts(SearchFilter searchFilter) {
-        PlmSearchPart plmPart = null;
-        QueryParams queryParams = new QueryParams();
-        List<String[]> paramKeyValue = Arrays.stream(searchFilter.getQueryParams()).map(o -> o.split(":")).collect(Collectors.toList());
-        Map<String, String> paramMap = new HashMap<>();
-        try {
-            paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
-        } catch (ArrayIndexOutOfBoundsException ae) {
-            throw new KeyValueException(ae.getMessage(), paramKeyValue);
-        }
-        RequestEntity requestEntity = RequestEntityUtil.init(PlmApiEnum.PLM_WC_SEARCH, PlmSearchResponse.class).queryParams(queryParams.use(paramMap)).headers(new HashMap<String, String>() {
-            {
-                put("Authorization", "Basic " + PropertiesContext.get("ci-connect.${ci-connect.agent_type}.host_token"));
-            }
-        }).expectedResponseCode(HttpStatus.SC_OK);
+        RequestEntity requestEntity = RequestEntityUtil.init(PlmApiEnum.PLM_WC_SEARCH, PlmSearchResponse.class)
+            .queryParams(new KeyValueUtil().keyValue(searchFilter.getQueryParams(), ":"))
+            .headers(new HashMap<String, String>() {
+                {
+                    put("Authorization", "Basic " + PropertiesContext.get("ci-connect.${ci-connect.agent_type}.host_token"));
+                }
+            }).expectedResponseCode(HttpStatus.SC_OK);
 
         return (PlmSearchResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
 
@@ -738,6 +730,28 @@ public class CicApiTestUtil {
             .filter(a -> a.getPartNumber().equals(plmPartNumber))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with Plm Part Number " + plmPartNumber));
+    }
+
+    public static AgentPort getAgentPortData() {
+        ConcurrentLinkedQueue<AgentPort> cicAgentPortsQueue = new InitFileData().initRows(AgentPort.class,
+            FileResourceUtil.getResourceAsFile("cic_agent_ports.csv"));
+        AgentPort cicAgentPorts = cicAgentPortsQueue.poll();
+        try {
+            while (true) {
+                if (cicAgentPorts.getEnvironment().equals(PropertiesContext.get("env")) &&
+                    cicAgentPorts.getCustomer().equals(PropertiesContext.get("customer")) &&
+                    cicAgentPorts.getAgentType().equals(PropertiesContext.get("ci-connect.agent_type"))) {
+                    log.info(String.format("PORT for Environment >>%s<< - Customer >>%s<< - Agent Type >>%s<< is >>%s<<", PropertiesContext.get("env"),
+                        PropertiesContext.get("customer"),
+                        PropertiesContext.get("ci-connect.agent_type"),
+                        cicAgentPorts.getPort()));
+                    return cicAgentPorts;
+                }
+                cicAgentPorts = cicAgentPortsQueue.poll();
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("MATCHED CIC AGENT PORT NOT FOUND IN DATA FILE!!");
+        }
     }
 
     /**
