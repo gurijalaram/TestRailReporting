@@ -15,6 +15,7 @@ import com.apriori.models.response.Deployment;
 import com.apriori.models.response.Deployments;
 import com.apriori.reader.file.user.UserCredentials;
 
+import com.apriori.testconfig.TestBaseUI;
 import org.apache.http.HttpStatus;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.List;
  * Customer environment util class
  * Contains methods with base functionality for customer environments tests
  */
-public class CustomerEnvironmentUtil {
+public class CustomerEnvironmentUtil extends TestBaseUI {
 
     protected UserCredentials getAwsCustomerUserCredentials() {
         final String username = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGenerateUser");
