@@ -10,6 +10,7 @@ public enum InputControlsEnum {
     DTC_SCORE("dtcScore"),
     MINIMUM_ANNUAL_SPEND("annualSpendMin"),
     SORT_ORDER("sortOrder"),
+    TRENDING_PERIOD("trendingPeriod"),
     PROJECT_ROLLUP("projectRollup");
 
     private final String inputControlId;

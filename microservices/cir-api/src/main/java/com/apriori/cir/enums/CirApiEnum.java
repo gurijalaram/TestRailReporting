@@ -52,6 +52,7 @@ public enum CirApiEnum implements ExternalEndpointEnum {
     REPORT_OUTPUT_STATUS_BY_REQUEST_EXPORT_IDs("reportExecutions/%s/exports/%s/status"),
     REPORT_OUTPUT_RESOURCE_BY_REQUEST_EXPORT_IDs("reportExecutions/%s/exports/%s/outputResource"),
     REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs("reportExecutions/%s/exports/%s/attachments/reportComponents.json"),
+    SCENARIO_ACTIVITY("reports/aPriori/reports/deploymentLeader/scenarioActivity/inputControls/exportSetName;startDate;endDate;trendingPeriod;department;location;costSource/values/pagination?freshData=false&includeTotalCount=true"),
     SCENARIO_COMPARISON("reports/aPriori/reports/general/scenarioComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;allExportIds;componentType;createdBy;lastModifiedBy;partNumber;scenarioName;scenarioToCompareIDs;scenarioIDs;".concat(
         "currencyCode/values?freshData=false")),
     SPEND_ANALYSIS_VALUE_TRACKING("reports/aPriori/reports/solutions/sourcing/spendAnalysisValueTracking/inputControls/projectRollup;exportDate;costMetric;currencyCode/values"),
