@@ -3,12 +3,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 
-import com.apriori.TestBaseUI;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.login.ForgottenPasswordPage;
 import com.apriori.login.LoginService;
 import com.apriori.login.PrivacyPolicyPage;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

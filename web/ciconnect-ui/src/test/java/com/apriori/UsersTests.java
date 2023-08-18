@@ -4,6 +4,7 @@ import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.pageobjects.users.UsersPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

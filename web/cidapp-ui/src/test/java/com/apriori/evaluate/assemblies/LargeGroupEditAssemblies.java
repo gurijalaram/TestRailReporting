@@ -18,7 +18,6 @@ import static com.utils.PartNamesEnum.SEAT_LOCK;
 import static com.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
 import static com.utils.PartNamesEnum.WASHER;
 
-import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.ProcessGroupEnum;
@@ -29,6 +28,7 @@ import com.apriori.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.utils.StatusIconEnum;

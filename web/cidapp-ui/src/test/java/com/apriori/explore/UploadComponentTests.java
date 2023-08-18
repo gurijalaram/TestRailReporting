@@ -11,7 +11,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
-import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.request.AssemblyRequest;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -29,6 +28,7 @@ import com.apriori.pageobjects.explore.ImportCadFilePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
 

@@ -1,6 +1,5 @@
 package com.apriori.cic.utils;
 
-import com.apriori.TestBaseUI;
 import com.apriori.cic.models.request.WorkflowParts;
 import com.apriori.cic.models.request.WorkflowRequest;
 import com.apriori.cic.models.response.AgentWorkflow;
@@ -10,6 +9,7 @@ import com.apriori.cic.models.response.AgentWorkflowJobRun;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.part.PartData;
 import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.testconfig.TestBaseUI;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
