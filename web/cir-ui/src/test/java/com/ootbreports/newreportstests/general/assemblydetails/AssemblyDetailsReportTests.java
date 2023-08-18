@@ -23,7 +23,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {1922})
+    @TestRail(id = 1922)
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
         jasperApiUtils.genericDtcCurrencyTest(
