@@ -3,7 +3,6 @@ package com.integration.tests;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.TestBaseUI;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ListNameEnum;
@@ -17,6 +16,7 @@ import com.apriori.pageobjects.manage.ScenarioExport;
 import com.apriori.pageobjects.view.reports.ComponentCostReportPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

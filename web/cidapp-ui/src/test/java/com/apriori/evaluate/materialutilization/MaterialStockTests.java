@@ -4,7 +4,6 @@ import static com.apriori.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import com.apriori.TestBaseUI;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
@@ -15,6 +14,7 @@ import com.apriori.pageobjects.evaluate.materialprocess.StockPage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
