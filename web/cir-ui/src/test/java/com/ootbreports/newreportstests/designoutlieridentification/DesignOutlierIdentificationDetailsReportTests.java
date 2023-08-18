@@ -37,14 +37,14 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     }
 
     @Test
-    @TestRail(id = {7387})
+    @TestRail(id = 7387)
     @Description("Verify mass metric - finish mass - Design Outlier Identification Details Report")
     public void testMassMetricFinishMass() {
         genericMassMetricTest(MassMetricEnum.FINISH_MASS.getMassMetricName());
     }
 
     @Test
-    @TestRail(id = {7386})
+    @TestRail(id = 7386)
     @Description("Verify mass metric - rough mass - Design Outlier Identification Details Report")
     public void testMassMetricRoughMass() {
         genericMassMetricTest(MassMetricEnum.ROUGH_MASS.getMassMetricName());

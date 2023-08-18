@@ -23,7 +23,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {3305})
+    @TestRail(id = 3305)
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         jasperApiUtils.scenarioComparisonCurrencyTest();

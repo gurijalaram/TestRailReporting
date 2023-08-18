@@ -6,5 +6,5 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses(AdminNavigationTests.class)
-public class RegressionSuite {
+public class AdminSuite {
 }
