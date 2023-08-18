@@ -3,8 +3,8 @@ package com.ootbreports.targetquotedcosttrend;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 
-import com.apriori.TestBaseUI;
 import com.apriori.enums.ReportNamesEnum;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;

@@ -2,7 +2,6 @@ package com.apriori.infrastructure;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import com.apriori.TestBaseUI;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.models.response.AccessControls;
@@ -20,6 +19,7 @@ import com.apriori.models.response.Site;
 import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.pageobjects.newcustomer.InfrastructurePage;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.UserCreation;
 
