@@ -22,6 +22,7 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.PropertyEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.pageobjects.compare.CompareExplorePage;
 import com.apriori.pageobjects.compare.ComparePage;
 import com.apriori.pageobjects.compare.CreateComparePage;
 import com.apriori.pageobjects.compare.ModifyComparisonPage;
@@ -1400,7 +1401,7 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(testCaseId = {"26175"})
+    @TestRail(id = {26175})
     @Description("Verify Comparison Explorer displayed when tab clicked and no active comparisons")
     public void testComparisonExplorer() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -1434,19 +1435,23 @@ public class ComparisonTests extends TestBaseUI {
         compareExplorePage = loginPage.login(currentUser)
             .clickCompare(CompareExplorePage.class);
 
-        // ToDo: Fill this in once the Comparison Explorer has something substantial to verify against
-//        softAssertions.assertThat().as("Verify Comparison Explorer was Loaded").
+        softAssertions.assertThat(compareExplorePage.isComparisonNameFilterDisplayed()).as("Verify Comparison Explorer was Loaded")
+            .isTrue();
 
-        compareExplorePage = compareExplorePage.clickExplore()
+        comparePage = compareExplorePage.clickExplore()
             .multiHighlightScenarios(
                 part1.getComponentName() + "," + part1.getScenarioName(),
                 part2.getComponentName() + "," + part2.getScenarioName())
             .createComparison()
-            .selectManualComparison()
-            .clickAllComparisons();
+            .selectManualComparison();
 
-        // ToDo: Fill this in once the Comparison Explorer has something substantial to verify against
-//        softAssertions.assertThat().as("Verify Comparison Explorer was Loaded").
+        softAssertions.assertThat(comparePage.getBasis()).as("Verify comparison loaded as expected")
+            .isEqualTo(part1.getComponentName().toUpperCase() + "  / " + part1.getScenarioName());
+
+        compareExplorePage = comparePage.clickAllComparisons();
+
+        softAssertions.assertThat(compareExplorePage.isComparisonNameFilterDisplayed()).as("Verify Comparison Explorer was Loaded from Comparison")
+            .isTrue();
 
         comparePage = compareExplorePage.clickExplore()
             .multiHighlightScenarios(
@@ -1462,9 +1467,9 @@ public class ComparisonTests extends TestBaseUI {
 
         softAssertions.assertThat(comparePage.getComparisonName()).as("Verify that correct Comparison Name displayed").isEqualTo(comparisonName);
         softAssertions.assertThat(comparePage.getBasis()).as("Verify correct Basis in Comparison")
-            .isEqualTo(part1.getComponentName() + " / " + part1.getScenarioName());
-        softAssertions.assertThat(comparePage.getBasis()).as("Verify correct Compared Scenario in Comparison")
-            .isEqualTo(part2.getComponentName() + " / " + part2.getScenarioName());
+            .isEqualTo(part1.getComponentName().toUpperCase() + "  / " + part1.getScenarioName());
+        softAssertions.assertThat(part2.getComponentName() + "  / " + part2.getScenarioName()).as("Verify correct Compared Scenario in Comparison")
+            .isIn(comparePage.getScenariosInComparison());
 
         softAssertions.assertAll();
     }

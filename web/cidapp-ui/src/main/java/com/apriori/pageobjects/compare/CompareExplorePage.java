@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.compare;
+package com.apriori.pageobjects.compare;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ComponentTableActions;
@@ -6,10 +6,11 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.compare.ComparePage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.navtoolbars.CompareToolbar;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,7 +45,7 @@ public class CompareExplorePage extends CompareToolbar {
     @FindBy(id = "qa-scenario-list-filter-selector")
     private WebElement filterDropdown;
 
-    @FindBy(css = "[id='qa-scenario-list-filter-selector'] input")
+    @FindBy(css = "div[data-testid='search-field'] input")
     private WebElement filterInput;
 
     @FindBy(css = "div.no-content.medium-no-content")
@@ -64,7 +65,6 @@ public class CompareExplorePage extends CompareToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        //this.scenarioTableController = new ScenarioTableController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
         this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -80,6 +80,15 @@ public class CompareExplorePage extends CompareToolbar {
     public CompareExplorePage selectFilter(String filter) {
         pageUtils.typeAheadSelect(filterDropdown, "modal-body", filter);
         return this;
+    }
+
+    /**
+     * Check Comparison Name Filter display state
+     *
+     * @return Boolean of Comparison Name filter display state
+     */
+    public Boolean isComparisonNameFilterDisplayed() {
+        return filterInput.isDisplayed();
     }
 
     /**
