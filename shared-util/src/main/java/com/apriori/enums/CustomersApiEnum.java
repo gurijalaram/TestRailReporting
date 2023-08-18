@@ -3,13 +3,17 @@ package com.apriori.enums;
 import com.apriori.interfaces.ExternalEndpointEnum;
 import com.apriori.properties.PropertiesContext;
 
-public enum DeploymentsAPIEnum implements ExternalEndpointEnum {
+public enum CustomersApiEnum implements ExternalEndpointEnum {
 
-    DEPLOYMENTS("customers/%s/deployments");
+    // SITES
+    SITES_BY_CUSTOMER_ID("customers/%s/sites"),
+
+    //CUSTOMERS
+    CUSTOMERS("customers");
 
     private final String endpoint;
 
-    DeploymentsAPIEnum(String endpoint) {
+    CustomersApiEnum(String endpoint) {
         this.endpoint = endpoint;
     }
 

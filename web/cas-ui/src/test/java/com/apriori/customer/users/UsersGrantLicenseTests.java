@@ -2,9 +2,7 @@ package com.apriori.customer.users;
 
 import com.apriori.PageUtils;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.models.response.Customer;
 import com.apriori.cds.models.response.LicenseResponse;
-import com.apriori.cds.models.response.Site;
 import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.CardsViewComponent;
@@ -12,6 +10,8 @@ import com.apriori.components.SourceListComponent;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.Obligation;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.Customer;
+import com.apriori.models.response.Site;
 import com.apriori.pageobjects.customer.users.UsersListPage;
 import com.apriori.pageobjects.customer.users.profile.UserProfilePage;
 import com.apriori.pageobjects.login.CasLoginPage;
