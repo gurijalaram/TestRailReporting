@@ -20,7 +20,9 @@
                   "email",
                   "username",
                   "givenName",
-                  "familyName"
+                  "familyName",
+                  "prefix",
+                  "suffix"
                 ],
                 "properties": {
                   "identity": {
@@ -39,6 +41,12 @@
                     "type": "string"
                   },
                   "familyName": {
+                    "type": "string"
+                  },
+                  "prefix": {
+                    "type": "string"
+                  },
+                  "suffix": {
                     "type": "string"
                   }
                 }
