@@ -11,7 +11,7 @@ public class EdgeManager implements DriverManager<EdgeOptions> {
     private EdgeOptions edgeOptions = new EdgeOptions();
 
     public WebDriver createDriver() {
-        WebDriverManager.edgedriver().browserVersion("115").setup();
+        WebDriverManager.edgedriver().browserVersion("115.0").setup();
 
         int sessionRetries = 0;
 
