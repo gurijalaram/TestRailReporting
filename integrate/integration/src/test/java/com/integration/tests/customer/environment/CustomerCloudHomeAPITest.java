@@ -3,11 +3,8 @@ package com.integration.tests.customer.environment;
 
 import com.apriori.cds.models.response.AccessControlResponse;
 import com.apriori.cds.models.response.User;
-import com.apriori.login.CloudHomePage;
-import com.apriori.login.LoginService;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
-import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.testrail.TestRail;
 
 import com.integration.tests.customer.util.CustomerEnvironmentUtil;
@@ -17,13 +14,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerCloudHomeTest extends CustomerEnvironmentUtil {
-    private final UserCredentials userCredentials = getAwsCustomerUserCredentials();
-    private CloudHomePage cloudHomePage;
-    private LoginService aprioriLoginService;
-
-
-
+public class CustomerCloudHomeAPITest extends CustomerEnvironmentUtil {
     @Test
     @TestRail(id = {27011})
     public void validateCustomerApplicationsByAPI() {
@@ -94,12 +85,5 @@ public class CustomerCloudHomeTest extends CustomerEnvironmentUtil {
         );
 
         return customerReferences;
-    }
-
-    @Test
-//    @TestRail(id = {27011})
-    public void validateCustomerApplicationsByUI() {
-        aprioriLoginService = new LoginService(driver, "");
-        cloudHomePage = aprioriLoginService.login(userCredentials, CloudHomePage.class);
     }
 }
