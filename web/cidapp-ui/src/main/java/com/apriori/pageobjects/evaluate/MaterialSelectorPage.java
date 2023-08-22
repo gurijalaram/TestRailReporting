@@ -45,6 +45,9 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     @FindBy(css = ".material-selector [type='button']")
     private WebElement cancelButton;
 
+    @FindBy(css = "div[role='status']")
+    private WebElement loadingSpinner;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -67,6 +70,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(materialTable);
         pageUtils.waitForElementToAppear(rowText);
+        pageUtils.waitForElementNotVisible(loadingSpinner, 1);
     }
 
     /**
