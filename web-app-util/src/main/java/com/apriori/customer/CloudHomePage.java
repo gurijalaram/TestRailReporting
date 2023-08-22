@@ -23,9 +23,6 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     @FindBy(css = "img[alt='Application Logo']")
     private WebElement logo;
 
-    @FindBy(css = "div[class='application-card css-12t9ocp']")
-    private List<WebElement> applications;
-
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
 
@@ -57,6 +54,8 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     public List<ApplicationDataDTO> getListOfApplications() {
         List<ApplicationDataDTO> applicationsDTO = new ArrayList<>();
+
+        List<WebElement> applications = pageUtils.waitForElementsToAppear(By.cssSelector("div[class='application-card css-12t9ocp']"));
 
         applications.forEach(webApplication -> {
             applicationsDTO.add(ApplicationDataDTO.builder()

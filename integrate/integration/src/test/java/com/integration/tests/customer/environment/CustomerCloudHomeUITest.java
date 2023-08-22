@@ -8,7 +8,9 @@ import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
 import com.apriori.reader.file.user.UserCredentials;
 
+import com.apriori.testrail.TestRail;
 import com.integration.tests.customer.util.CustomerEnvironmentUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -22,11 +24,9 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
 
 
     @Test
-    //@TestRail(id = {27951})
+    @TestRail(id = {27951})
     public void validateCustomerApplicationsByUI() {
         final String customerIdentity = AuthorizationUtil.getCurrentCustomerData().getIdentity();
-        //        final User customerUser = getCustomerUserDataByEmail(userCredentials.getEmail(), customerIdentity);
-        //        List<AccessControlResponse> userAccessControls = getUserAccessControls(customerUser.getIdentity(), customerIdentity);
         List<Deployment> customerDeployments = getCustomerDeployments(customerIdentity);
         HashMap<String, List<ApplicationDataDTO>> mappedCustomerDeployments =  mapCustomerDeploymentDataToDTO(customerDeployments);
 
@@ -34,30 +34,11 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
         cloudHomePage = aprioriLoginService.login(userCredentials, CloudHomePage.class);
 
         List<ApplicationDataDTO> applications = cloudHomePage.getListOfApplications();
-        System.out.println();
 
+       List<ApplicationDataDTO> deploymentApplications = mappedCustomerDeployments.get("Production");
+       applications.removeAll(deploymentApplications);
 
-//        cloudHomePage.getListOfApplications().forEach(webApplicationFromUI -> {
-//
-//                customerDeployments.forEach(deployment -> {
-//                    deployment.getInstallations().stream()
-//                        .filter(installation -> installation.getName().equals(webApplicationFromUI.getInstallation())
-//                            && installation.getApVersion().equals(webApplicationFromUI.getVersion())
-//                        ).findFirst()
-//                        .orElseThrow(() -> new IllegalArgumentException(String.format("Installation %s\nWith version %s\nFor deployment %s\nWas not found.",
-//                            webApplicationFromUI.getApplicationName(), webApplicationFromUI.getInstallation(), webApplicationFromUI.getVersion(), deployment.getName()))
-//                        )
-//                        .getApplications().stream()
-//                        .filter(application -> application.getName().equals(webApplicationFromUI.getApplicationName()))
-//                        .findFirst()
-//                        .orElseThrow(() -> new IllegalArgumentException(String.format("Web application %s\nFor installation %s\nWith version %s\nFor deployment %s\nWas not found.",
-//                            webApplicationFromUI.getApplicationName(), webApplicationFromUI.getInstallation(), webApplicationFromUI.getVersion(), deployment.getName()))
-//                        );
-//                });
-//
-//                //                cloudHomePage.clickWebApplicationByName(webApplicationFromUI.getApplicationName(), CloudHomePage.class).goToProfilePage();
-//            }
-//        );
+        Assertions.assertEquals(0, applications.size(), "Applications list should be empty, else application has an text representation not related to the customers environment.");
     }
 
 
@@ -70,14 +51,15 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
 
                 deployment.getInstallations().forEach(
                     installation -> {
-                        ApplicationDataDTO applicationDataDTO = ApplicationDataDTO.builder()
-                            .installation(installation.getName())
-                            .version(installation.getApVersion())
-                            .build();
-
                         installation.getApplications().forEach(
                             application -> {
-                                applicationDataDTO.setApplicationName(application.getName());
+                                ApplicationDataDTO applicationDataDTO = ApplicationDataDTO.builder()
+                                    .installation(installation.getName())
+                                    .version(installation.getApVersion())
+                                    .applicationName(application.getName())
+                                    .build();
+
+
                                 applicationDataDTOS.add(applicationDataDTO);
                             }
                         );
