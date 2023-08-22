@@ -12,9 +12,9 @@ import utils.JasperApiAuthenticationUtil;
 
 public class PotentialSavingsValueTrackingReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.POTENTIAL_SAVINGS_VALUE_TRACKING.getEndpoint();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.POTENTIAL_SAVINGS_VALUE_TRACKING;
     // Export set is not relevant for this report
     private static final String exportSetName = "";
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.POTENTIAL_SAVINGS_VALUE_TRACKING;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach

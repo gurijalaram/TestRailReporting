@@ -15,8 +15,8 @@ import utils.JasperApiAuthenticationUtil;
 import java.util.Arrays;
 
 public class CostOutlierIdentificationTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.COST_OUTLIER_IDENTIFICATION.getEndpoint();
     private static final String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
+    private static final String reportsJsonFileName = JasperApiEnum.COST_OUTLIER_IDENTIFICATION.getEndpoint();
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.COST_OUTLIER_IDENTIFICATION;
     private static JasperApiUtils jasperApiUtils;
 

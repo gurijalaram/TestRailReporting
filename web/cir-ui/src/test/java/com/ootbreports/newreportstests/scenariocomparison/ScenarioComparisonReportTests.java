@@ -13,8 +13,8 @@ import utils.JasperApiAuthenticationUtil;
 
 public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.SCENARIO_COMPARISON.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_COMPARISON;
+    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
