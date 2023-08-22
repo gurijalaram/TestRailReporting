@@ -85,6 +85,7 @@ int-core:
 staging:
   name: staging
   aws_parameter_store_name: stage
+  customer_aws_account_type: staging
   deployment_name: Production
   installation_name: Production na-1
   application_name: CID
