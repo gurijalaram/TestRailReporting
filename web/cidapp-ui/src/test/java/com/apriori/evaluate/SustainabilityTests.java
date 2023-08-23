@@ -1,5 +1,8 @@
 package com.apriori.evaluate;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -44,11 +47,6 @@ public class SustainabilityTests extends TestBaseUI {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isSustainabilityTabIsPresentedForCosted()).isTrue();
-
-        softAssertions.assertThat(evaluatePage.getSustainabilityNames()).containsAll(Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon",
-            "Logistics Carbon", "Total Carbon"));
-
         materialProcessPage = evaluatePage.openMaterialProcess();
         materialUtilizationPage = materialProcessPage.openMaterialUtilizationTab();
         softAssertions.assertThat(materialUtilizationPage.isMaterialCarbonPresent()).isTrue();
@@ -57,7 +55,12 @@ public class SustainabilityTests extends TestBaseUI {
             .selectProcessesTab()
             .selectBarChart("Compaction Pressing")
             .selectProcessTab();
-        softAssertions.assertThat(materialProcessPage.isEnergyCarbonPresent()).isTrue();
-        softAssertions.assertAll();
+
+        assertAll(
+            () -> assertThat(evaluatePage.isSustainabilityTabIsPresentedForCosted()).isTrue(),
+            () -> assertThat(evaluatePage.getSustainabilityNames()).containsAll(Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon",
+                "Logistics Carbon", "Total Carbon")),
+            () -> assertThat(materialProcessPage.isEnergyCarbonPresent()).isTrue()
+        );
     }
 }
