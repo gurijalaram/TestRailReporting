@@ -12,9 +12,9 @@ import utils.JasperApiAuthenticationUtil;
 
 public class TargetAndQuotedCostValueTrackingReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.TARGET_QUOTED_COST_VALUE_TRACKING.getEndpoint();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING;
     // Export set is not relevant for this report
     private static final String exportSetName = "";
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach

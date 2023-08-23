@@ -12,9 +12,9 @@ import utils.JasperApiAuthenticationUtil;
 
 public class TargetCostTrendReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.TARGET_COST_TREND.getEndpoint();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.TARGET_COST_TREND;
     // Export set is not relevant for this report
     private static final String exportSetName = "";
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.TARGET_COST_TREND;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach

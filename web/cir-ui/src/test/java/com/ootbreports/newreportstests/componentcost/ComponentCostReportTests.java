@@ -13,8 +13,8 @@ import utils.JasperApiAuthenticationUtil;
 
 public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.COMPONENT_COST.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.COMPONENT_COST;
+    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
