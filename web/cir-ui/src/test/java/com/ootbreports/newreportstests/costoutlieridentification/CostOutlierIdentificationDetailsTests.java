@@ -17,13 +17,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CostOutlierIdentificationDetailsTests extends JasperApiAuthenticationUtil {
+    private static final String reportsJsonFileName = JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS;
+    private static final String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
     private final List<String> partNames = Arrays.asList(
         JasperCirApiPartsEnum.SM_CLEVIS_2207240161.getPartName(),
         JasperCirApiPartsEnum.P_18_1.getPartName()
     );
-    private static final String reportsJsonFileName = JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
