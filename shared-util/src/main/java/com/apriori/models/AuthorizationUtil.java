@@ -27,6 +27,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.core5.http.HttpStatus;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -185,6 +186,7 @@ public class AuthorizationUtil {
 
         return currentCustomer = customersResponseWrapper.getResponseEntity().getItems()
             .stream()
+            .filter(customer -> Objects.nonNull(customer.getCloudReference()))
             .filter(customer -> customer.getCloudReference()
                 .equals(PropertiesContext.get("${customer}.cloud_reference_name")
                 )

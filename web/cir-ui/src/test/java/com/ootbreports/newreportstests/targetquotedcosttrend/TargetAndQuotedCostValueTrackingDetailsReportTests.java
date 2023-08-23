@@ -12,9 +12,9 @@ import utils.JasperApiAuthenticationUtil;
 
 public class TargetAndQuotedCostValueTrackingDetailsReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.TARGET_QUOTED_COST_VALUE_TRACKING_DETAILS.getEndpoint();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS;
     // Export set is not relevant for this report
     private static final String exportSetName = "";
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
@@ -23,7 +23,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends JasperAp
     }
 
     @Test
-    @TestRail(id = {26437})
+    @TestRail(id = 26437)
     @Description("Validate Currency Code Input Control - Target and Quoted Cost Value Tracking Details Report")
     public void testCurrencyCodeInputControl() {
         jasperApiUtils.targetQuotedCostTrendAndPotentialSavingsGenericCurrencyTest(20, 93, 121);
