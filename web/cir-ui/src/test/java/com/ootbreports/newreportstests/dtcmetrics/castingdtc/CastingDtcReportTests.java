@@ -23,12 +23,12 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.CASTING_DTC.getEndpoint();
     private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CASTING_DTC;
-    private static JasperApiUtils jasperApiUtils;
     private final List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.B2315.getPartName(),
         JasperCirApiPartsEnum.P_40090936_MLDES_0004.getPartName(),
         JasperCirApiPartsEnum.CASE_08.getPartName()
     );
+    private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
@@ -36,7 +36,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {1699})
+    @TestRail(id = 1699)
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
         jasperApiUtils.genericDtcCurrencyTest(
@@ -46,7 +46,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {1695})
+    @TestRail(id = 1695)
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcTest(
@@ -56,7 +56,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {7408})
+    @TestRail(id = 7408)
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Report")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcTest(
@@ -66,7 +66,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {1696})
+    @TestRail(id = 1696)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
@@ -76,7 +76,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {7388})
+    @TestRail(id = 7388)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcTest(
@@ -86,7 +86,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {7454})
+    @TestRail(id = 7454)
     @Description("Verify process group input control functionality - Die Casting - Casting DTC Report")
     public void testProcessGroupInputControlDieCastingOnly() {
         List<String> partNames = Arrays.asList(
@@ -100,7 +100,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {7453})
+    @TestRail(id = 7453)
     @Description("Verify process group input control functionality - Sand Casting - Casting DTC Report")
     public void testProcessGroupInputControlSandCastingOnly() {
         List<String> partNames = Arrays.asList(
@@ -114,7 +114,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {7455})
+    @TestRail(id = 7455)
     @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Report")
     public void testProcessGroupInputControlDieAndSandCasting() {
         List<String> partNames = Arrays.asList(

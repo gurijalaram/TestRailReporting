@@ -13,8 +13,8 @@ import utils.JasperApiAuthenticationUtil;
 
 public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.SCENARIO_COMPARISON.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_COMPARISON;
+    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
@@ -23,7 +23,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {3305})
+    @TestRail(id = 3305)
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
         jasperApiUtils.scenarioComparisonCurrencyTest();

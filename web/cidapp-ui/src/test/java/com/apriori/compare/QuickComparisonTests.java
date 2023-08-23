@@ -1,6 +1,5 @@
 package com.apriori.compare;
 
-import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.response.CostingTemplate;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -16,6 +15,7 @@ import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.google.common.collect.Ordering;
@@ -129,7 +129,7 @@ public class QuickComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
             .isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
 
-        List<ComponentInfoBuilder> comparisonScenarios = new ArrayList<ComponentInfoBuilder>();
+        List<ComponentInfoBuilder> comparisonScenarios = new ArrayList<>();
         comparePage.getScenariosInComparison().forEach(comparison -> {
             List<ScenarioItem> scenarioDetails = componentsUtil.getUnCostedComponent(comparison.split(" / ")[0], comparison.split(" / ")[1], currentUser);
             ComponentInfoBuilder scenario = ComponentInfoBuilder.builder()

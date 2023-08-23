@@ -6,11 +6,11 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 import com.apriori.PageUtils;
-import com.apriori.TestBaseUI;
 import com.apriori.components.SelectionTreeItemComponent;
 import com.apriori.pageobjects.customer.systemconfiguration.SystemConfigurationPermissionsPage;
 import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.ListUtils;
 

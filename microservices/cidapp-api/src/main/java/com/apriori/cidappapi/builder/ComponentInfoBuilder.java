@@ -6,8 +6,10 @@ import com.apriori.cidappapi.models.response.PostComponentResponse;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.reader.file.user.UserCredentials;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.File;
 import java.io.Serializable;
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ComponentInfoBuilder implements Serializable {
     private UserCredentials user;
     private String componentName;

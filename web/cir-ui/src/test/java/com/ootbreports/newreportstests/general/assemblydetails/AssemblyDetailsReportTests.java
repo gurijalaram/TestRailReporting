@@ -13,8 +13,8 @@ import utils.JasperApiAuthenticationUtil;
 
 public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.ASSEMBLY_DETAILS.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.ASSEMBLY_DETAILS;
+    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
@@ -23,7 +23,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TestRail(id = {1922})
+    @TestRail(id = 1922)
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
         jasperApiUtils.genericDtcCurrencyTest(

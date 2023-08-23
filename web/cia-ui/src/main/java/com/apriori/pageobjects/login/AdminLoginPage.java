@@ -6,13 +6,13 @@ import com.apriori.PageUtils;
 import com.apriori.login.LoginService;
 import com.apriori.pageobjects.header.AdminHeader;
 import com.apriori.pageobjects.homepage.AdminHomePage;
-import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import utils.Constants;
 
 @Slf4j
 public class AdminLoginPage extends AdminHeader {
@@ -39,7 +39,7 @@ public class AdminLoginPage extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertThat("CIA login page was not displayed", aprioriLoginService.getLoginTitle().contains(PropertiesContext.get("${env}.admin.welcome_page_text")));
+        assertThat("CIA login page was not displayed", aprioriLoginService.getLoginTitle().contains(Constants.WELCOME_PAGE_TEXT));
     }
 
     /**

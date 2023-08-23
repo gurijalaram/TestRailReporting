@@ -18,13 +18,13 @@ import java.util.List;
 
 public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.DESIGN_OUTLIER_IDENTIFICATION.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.DESIGN_OUTLIER_IDENTIFICATION;
-    private static JasperApiUtils jasperApiUtils;
+    private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
     private final List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.P_257280C.getPartName(),
         JasperCirApiPartsEnum.P_40137441_MLDES_0002_WITHOUT_INITIAL.getPartName()
     );
+    private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
@@ -32,7 +32,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
-    @TestRail(id = {1997})
+    @TestRail(id = 1997)
     @Description("Verify mass metric - finish mass - Design Outlier Identification Report")
     public void testMassMetricFinishMass() {
         jasperApiUtils.genericDtcTest(
@@ -42,7 +42,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
-    @TestRail(id = {7385})
+    @TestRail(id = 7385)
     @Description("Verify mass metric - rough mass - Design Outlier Identification Report")
     public void testMassMetricRoughMass() {
         jasperApiUtils.genericDtcTest(

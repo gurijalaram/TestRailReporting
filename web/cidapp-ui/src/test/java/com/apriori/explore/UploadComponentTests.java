@@ -11,7 +11,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
-import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.request.AssemblyRequest;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -29,6 +28,7 @@ import com.apriori.pageobjects.explore.ImportCadFilePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
 
@@ -49,6 +49,8 @@ import java.util.List;
 
 public class UploadComponentTests extends TestBaseUI {
 
+    private static ComponentInfoBuilder componentAssembly;
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private File resourceFile;
     private File resourceFile1;
     private ExplorePage explorePage;
@@ -58,8 +60,6 @@ public class UploadComponentTests extends TestBaseUI {
     private EvaluatePage evaluatePage;
     private ComponentsTreePage componentsTreePage;
     private ComponentInfoBuilder cidComponentItem;
-    private static ComponentInfoBuilder componentAssembly;
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();
 
@@ -172,7 +172,7 @@ public class UploadComponentTests extends TestBaseUI {
             " Supported file types are: .asat, .asm, .asm.#, .catpart, .catproduct, .iam, .ipt," +
             " .jt, .model, .par, .prt, .prt.#, .psm, .sab, .sat, .sldasm, .sldprt, .step, .stp, .x_b, .x_t, .xas, .xpr";
 
-        new CidAppLoginPage(driver)
+        importCadFilePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .importCadFile();
 
@@ -201,7 +201,7 @@ public class UploadComponentTests extends TestBaseUI {
 
         List<String> componentsToDelete = Arrays.asList("big ring.SLDPRT", "Pin.SLDPRT", "small ring.SLDPRT");
 
-        new CidAppLoginPage(driver)
+        importCadFilePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .importCadFile()
             .inputMultiComponents(multiComponents)
@@ -239,7 +239,7 @@ public class UploadComponentTests extends TestBaseUI {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE, "SheetMetal.prt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, "Casting.prt"), scenarioName));
 
-        new CidAppLoginPage(driver)
+        importCadFilePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .importCadFile()
             .inputMultiComponents(multiComponents)
@@ -271,7 +271,7 @@ public class UploadComponentTests extends TestBaseUI {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston.prt.5"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
 
-        new CidAppLoginPage(driver)
+        explorePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .importCadFile()
             .inputScenarioName(scenarioName)
@@ -333,7 +333,7 @@ public class UploadComponentTests extends TestBaseUI {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE, "SheetMetal.prt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL_HYDROFORMING, "FlangedRound.SLDPRT"), scenarioName));
 
-        new CidAppLoginPage(driver)
+        importCadFilePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .importCadFile()
             .inputScenarioName(scenarioName)
@@ -361,7 +361,7 @@ public class UploadComponentTests extends TestBaseUI {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring" + sldprt), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly" + ".SLDASM"), scenarioName));
 
-        new CidAppLoginPage(driver)
+        explorePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .importCadFile()
             .tick("Override existing scenario")
@@ -395,7 +395,7 @@ public class UploadComponentTests extends TestBaseUI {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston.prt.5"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
 
-        new CidAppLoginPage(driver)
+        explorePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .importCadFile()
             .inputScenarioName(scenarioName)
@@ -427,7 +427,7 @@ public class UploadComponentTests extends TestBaseUI {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        new CidAppLoginPage(driver)
+        cidComponentItem = new CidAppLoginPage(driver)
             .login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
@@ -454,7 +454,7 @@ public class UploadComponentTests extends TestBaseUI {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
 
-        new CidAppLoginPage(driver)
+        importCadFilePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .importCadFile()
             .inputScenarioName(scenarioName)
@@ -481,7 +481,7 @@ public class UploadComponentTests extends TestBaseUI {
         final String extension2 = ".prt.6";
         resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + extension2);
 
-        new CidAppLoginPage(driver)
+        evaluatePage = new CidAppLoginPage(driver)
             .login(currentUser)
             .uploadComponentAndOpen(componentName1, scenarioName, resourceFile, currentUser)
             .clickExplore()

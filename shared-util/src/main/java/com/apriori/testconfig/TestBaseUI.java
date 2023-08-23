@@ -1,4 +1,4 @@
-package com.apriori;
+package com.apriori.testconfig;
 
 import static com.apriori.webdriver.DriverFactory.os;
 import static com.apriori.webdriver.DriverFactory.testMode;

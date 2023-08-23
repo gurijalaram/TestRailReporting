@@ -2,7 +2,6 @@ package com.apriori.navigation;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.customer.CustomerWorkspacePage;
 import com.apriori.pageobjects.customer.users.ImportPage;
 import com.apriori.pageobjects.customer.users.UsersListPage;
@@ -12,6 +11,7 @@ import com.apriori.pageobjects.newcustomer.CustomerProfilePage;
 import com.apriori.pageobjects.newcustomer.InfrastructurePage;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

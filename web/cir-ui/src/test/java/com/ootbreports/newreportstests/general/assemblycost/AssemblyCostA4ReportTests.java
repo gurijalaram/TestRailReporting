@@ -13,8 +13,8 @@ import utils.JasperApiAuthenticationUtil;
 
 public class AssemblyCostA4ReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.ASSEMBLY_COST_A4.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.ASSEMBLY_COST_A4;
+    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach

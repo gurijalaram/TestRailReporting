@@ -1,6 +1,5 @@
 package com.navigation;
 
-import com.apriori.TestBaseUI;
 import com.apriori.pageobjects.cirpages.CirUserGuidePage;
 import com.apriori.pageobjects.homepage.AdminHomePage;
 import com.apriori.pageobjects.login.AdminLoginPage;
@@ -9,6 +8,7 @@ import com.apriori.pageobjects.manage.ScenarioExport;
 import com.apriori.pageobjects.manage.SystemDataExport;
 import com.apriori.pageobjects.userguides.CiaUserGuide;
 import com.apriori.properties.PropertiesContext;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -127,7 +127,7 @@ public class AdminNavigationTests extends TestBaseUI {
 
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        softAssertions.assertThat(homePage.getCurrentUrl()).startsWith("https://".concat(PropertiesContext.get("reports.ui_url")));
+        softAssertions.assertThat(homePage.getCurrentUrl()).startsWith(PropertiesContext.get("reports.ui_url"));
         softAssertions.assertThat(homePage.getTabCount()).isEqualTo(2);
         softAssertions.assertThat(homePage.isReportsWelcomeTextDisplayed()).isEqualTo(true);
         softAssertions.assertThat(homePage.isReportsWelcomeTextEnabled()).isEqualTo(true);

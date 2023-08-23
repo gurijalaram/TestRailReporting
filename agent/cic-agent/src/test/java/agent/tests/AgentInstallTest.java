@@ -1,8 +1,8 @@
 package agent.tests;
 
-import com.apriori.TestBaseUI;
 import com.apriori.cic.utils.CicLoginUtil;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;

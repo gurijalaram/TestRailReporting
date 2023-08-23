@@ -1,6 +1,5 @@
 package com.integration.tests;
 
-import com.apriori.TestBaseUI;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.enums.DigitalFactoryEnum;
@@ -17,6 +16,7 @@ import com.apriori.pageobjects.settings.ProductionDefaultsPage;
 import com.apriori.pageobjects.view.reports.ComponentCostReportPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
 import com.utils.ColumnsEnum;
