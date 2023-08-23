@@ -1,5 +1,6 @@
 package com.apriori.acs.utils.acs;
 
+import com.apriori.acs.entity.response.acs.designGuidance.DesignGuidanceResponse;
 import com.apriori.acs.enums.acs.AcsApiEnum;
 import com.apriori.acs.models.request.workorders.NewPartRequest;
 import com.apriori.acs.models.response.acs.GcdProperties.GcdPropertiesGroupItemsInputs;

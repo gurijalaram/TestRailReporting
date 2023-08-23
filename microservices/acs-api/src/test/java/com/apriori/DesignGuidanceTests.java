@@ -1,15 +1,15 @@
-package tests.acs;
+package com.apriori;
 
 import com.apriori.acs.entity.response.acs.designGuidance.DesignGuidanceResponse;
-import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
+import com.apriori.acs.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
-import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.testrail.TestRail;
+import com.apriori.workorders.WorkorderAPITests;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Test;
-import tests.workorders.WorkorderAPITests;
+import org.junit.jupiter.api.Test;
 
 public class DesignGuidanceTests {
     private AcsResources acsResources = new AcsResources();
@@ -25,7 +25,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(testCaseId = "")
+    @TestRail(id = 12222)
     @Description("Test Get Design Guidance for Casting - Die")
     public void testGetDesignGuidanceCastingDie() {
         String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
@@ -37,7 +37,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(testCaseId = "")
+    @TestRail(id = 2)
     @Description("Test Get Design Guidance for Casting - Sand")
     public void testGetDesignGuidanceCastingSand() {
         String processGroup = ProcessGroupEnum.CASTING_SAND.getProcessGroup();
@@ -49,7 +49,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(testCaseId = "")
+    @TestRail(id = 5)
     @Description("Test Get Design Guidance for Casting - Investment")
     public void testGetDesignGuidanceCastingInvestment() {
         String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();
@@ -61,7 +61,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(testCaseId = "")
+    @TestRail(id = 5)
     @Description("Test Get Design Guidance for Sheet Metal")
     public void testGetDesignGuidanceSheetMetal() {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
@@ -73,7 +73,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(testCaseId = "")
+    @TestRail(id = 5)
     @Description("Test Get Design Guidance for Sheet Metal - Hydroforming")
     public void testGetDesignGuidanceSheetMetalHydroforming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup();
@@ -85,7 +85,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(testCaseId = "")
+    @TestRail(id = 5)
     @Description("Test Get Design Guidance for Sheet Metal - Transfer Die")
     public void testGetDesignGuidanceSheetMetalTransferDie() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup();
@@ -97,7 +97,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(testCaseId = "")
+    @TestRail(id = 5)
     @Description("Test Get Design Guidance for Sheet Metal - Roll Forming")
     public void testGetDesignGuidanceSheetMetalRollForming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup();
@@ -109,7 +109,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(testCaseId = "")
+    @TestRail(id = 5)
     @Description("Test Get Design Guidance for Sheet Metal - Stretch Forming")
     public void testGetDesignGuidanceSheetMetalStretchForming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup();

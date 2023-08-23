@@ -1,7 +1,5 @@
 package com.apriori.acs.entity.response.acs.designGuidance;
 
-import com.apriori.acs.entity.response.acs.costresults.GcdItem;
-
 import lombok.Data;
 
 import java.util.ArrayList;
