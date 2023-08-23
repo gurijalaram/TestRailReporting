@@ -17,6 +17,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class SustainabilityTests extends TestBaseUI {
     UserCredentials currentUser;
@@ -44,6 +45,9 @@ public class SustainabilityTests extends TestBaseUI {
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isSustainabilityTabIsPresentedForCosted()).isTrue();
+
+        softAssertions.assertThat(evaluatePage.getSustainabilityNames()).containsAll(Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon",
+            "Logistics Carbon", "Total Carbon"));
 
         materialProcessPage = evaluatePage.openMaterialProcess();
         materialUtilizationPage = materialProcessPage.openMaterialUtilizationTab();
