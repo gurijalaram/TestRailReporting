@@ -159,9 +159,9 @@ public class JasperApiUtils {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
 
-        setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.CURRENCY.getInputControlId(), currencyString);
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyString);
         String projectRollupValue = inputControls.getProjectRollup().getOption(projectRollupName).getValue();
-        setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), projectRollupValue);
+        setReportParameterByName(InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), projectRollupValue);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
