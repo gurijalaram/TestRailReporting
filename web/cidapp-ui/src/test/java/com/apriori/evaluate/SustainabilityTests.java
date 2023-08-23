@@ -43,7 +43,7 @@ public class SustainabilityTests extends TestBaseUI {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isSustainabilityTabIsPresentedForCosted()).isTrue();
+        softAssertions.assertThat(evaluatePage.isSustainabilityDetailsPresentForCosted()).isTrue();
 
         materialProcessPage = evaluatePage.openMaterialProcess();
         materialUtilizationPage = materialProcessPage.openMaterialUtilizationTab();
