@@ -1447,8 +1447,13 @@ public class ComparisonTests extends TestBaseUI {
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify comparison loaded as expected")
             .isEqualTo(part1.getComponentName().toUpperCase() + "  / " + part1.getScenarioName());
+        softAssertions.assertThat(comparePage.getComparisonName()).as("Verify comparison is unsaved").isEqualTo("Untitled Comparison");
 
-        compareExplorePage = comparePage.clickAllComparisons();
+        compareExplorePage = comparePage
+//            .saveNew()
+//            .inputName("Why must I do this")
+//            .save(ComparePage.class)
+            .clickAllComparisons();
 
         softAssertions.assertThat(compareExplorePage.isComparisonNameFilterDisplayed()).as("Verify Comparison Explorer was Loaded from Comparison")
             .isTrue();
