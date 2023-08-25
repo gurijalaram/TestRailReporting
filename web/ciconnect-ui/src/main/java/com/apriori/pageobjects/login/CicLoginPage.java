@@ -48,4 +48,5 @@ public class CicLoginPage extends CICBasePage {
         }
         return ciConnectHome;
     }
+
 }
