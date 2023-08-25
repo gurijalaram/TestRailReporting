@@ -168,6 +168,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = ".sustainability-summary-card")
     private WebElement sustainabilityDetails;
 
+    @FindBy(css = ".sustainability-summary-card .property-name")
+    private List<WebElement> sustainabilityPropertyNames;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -725,6 +728,14 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public boolean isSustainabilityDetailsPresentForCosted() {
         return pageUtils.isElementDisplayed(sustainabilityDetails);
+    }
+
+    /**
+     * Get list of property names in sustainability card
+     * @return list of string
+     */
+    public List<String> getSustainabilityNames() {
+        return pageUtils.waitForElementsToAppear(sustainabilityPropertyNames).stream().map(o -> o.getAttribute("textContent")).collect(Collectors.toList());
     }
 
     /**
