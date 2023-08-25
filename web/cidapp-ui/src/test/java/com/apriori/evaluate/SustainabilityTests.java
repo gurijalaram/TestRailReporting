@@ -1,8 +1,5 @@
 package com.apriori.evaluate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -23,7 +20,7 @@ import java.io.File;
 import java.util.Arrays;
 
 public class SustainabilityTests extends TestBaseUI {
-    UserCredentials currentUser;
+    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private File resourceFile;
     private EvaluatePage evaluatePage;
@@ -48,8 +45,8 @@ public class SustainabilityTests extends TestBaseUI {
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isSustainabilityDetailsPresentForCosted()).isTrue();
-        () -> assertThat(evaluatePage.getSustainabilityNames()).containsAll(Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon",
-            "Logistics Carbon", "Total Carbon")),
+        softAssertions.assertThat(evaluatePage.getSustainabilityNames()).containsAll(Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon",
+            "Logistics Carbon", "Total Carbon"));
 
         materialProcessPage = evaluatePage.openMaterialProcess();
         materialUtilizationPage = materialProcessPage.openMaterialUtilizationTab();
