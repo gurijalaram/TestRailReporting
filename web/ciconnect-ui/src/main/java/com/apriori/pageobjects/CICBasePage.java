@@ -3,6 +3,7 @@ package com.apriori.pageobjects;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.PageUtils;
+import com.apriori.login.LoginService;
 import com.apriori.pagedata.WorkFlowData;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import utils.TableUtils;
 @Slf4j
 public class CICBasePage extends LoadableComponent<CICBasePage> {
 
+    protected LoginService aprioriLoginService;
     protected static final String OPTIONS_CONTENT_OPEN_DROPDOWN_CSS = "div[class^='ss-content ss-'][class$='ss-open'] div[class='ss-list']";
     protected static final String PARENT_ELEMENT_CSS = "div[id^='root_pagemashupcontainer-1_navigation-']";
     protected static final long WAIT_TIME = 30;
@@ -39,6 +41,12 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
 
     @FindBy(css = "span[title='Users']")
     protected WebElement usersMenuBtn;
+
+    @FindBy(css = "input[name='email']")
+    protected WebElement emailInputCloud;
+
+    @FindBy(css = "button[type='submit']")
+    protected WebElement loginButtonCloud;
 
     public CICBasePage(WebDriver driver) {
         this.driver = driver;
@@ -94,17 +102,36 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
         pageUtils.waitForElementToBeClickable(webElement);
     }
 
+    /**
+     * Get Next button element during workflow creation flow
+     *
+     * @return WebElement
+     */
     protected WebElement getNextButtonElement() {
         pageUtils.waitForElementToAppear(workflowPopUpActiveTabElement);
         return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//button[.='Next']", workflowPopUpActiveTabElement.getText())));
     }
 
+    /**
+     * get workflow name element
+     *
+     * @return WebElement
+     */
     public WebElement getNameTextFieldElement() {
         return driver.findElement(with(By.xpath("//input")).below(By.xpath("//span[.='Name']")));
     }
 
+    /**
+     * get emailInput webElement
+     *
+     * @return WebElement
+     */
+    public WebElement getEmailInputCloud() {
+        return emailInputCloud;
+    }
+
     protected WebElement getQDReturnOnlyCheckboxElement() {
         pageUtils.waitForElementToAppear(workflowPopUpActiveTabElement);
-        return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//input[@type='checkbox']",workflowPopUpActiveTabElement.getText())));
+        return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//input[@type='checkbox']", workflowPopUpActiveTabElement.getText())));
     }
 }
