@@ -23,6 +23,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -36,7 +37,6 @@ public class DiscussionTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static ResponseWrapper<DiscussionResponse> discussionResponse;
     private static String discussionDescription = StringUtils.EMPTY;
-
 
     @BeforeEach
     public void testSetup() {
@@ -213,7 +213,7 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
-    @Disabled
+    @Ignore
     @TestRail(id = {12410})
     @Description("Search discussions")
     public void searchDiscussions() {
