@@ -2,6 +2,7 @@ package com.apriori.customer;
 
 import com.apriori.PageUtils;
 import com.apriori.customer.dto.ApplicationDataDTO;
+import com.apriori.customer.enums.CustomerDeploymentsEnum;
 import com.apriori.login.UserProfilePage;
 import com.apriori.properties.PropertiesContext;
 
@@ -25,6 +26,20 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
+
+    @FindBy(xpath = "//div[@class='user-dropdown dropdown']//button[@class='transparent dropdown-toggle btn btn-secondary']")
+    private WebElement userElement;
+
+    @FindBy(xpath = "//div[@class='deployment-connection-info']/h5[3]")
+    private WebElement deploymentLabel;
+
+    //    @FindBy(xpath = "//div[@class='dropdown-menu dropdown-menu-right show']/button[1]")
+    @FindBy(xpath = "//*[local-name()='svg' and @class='svg-inline--fa fa-network-wired fa-fw']")
+    private WebElement switchDeploymentButton;
+
+    @FindBy(xpath = "//div[@class='apriori-select searchable switch-deployment-dialog-deployments css-1xzq4gn-container']")
+    private WebElement deploymentSelector;
+
 
     public CloudHomePage(WebDriver driver) {
         this.driver = driver;
@@ -77,4 +92,17 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     }
 
 
+    public CloudHomePage clickUserPanel() {
+        pageUtils.waitForElementAndClick(userElement);
+        return this;
+    }
+
+    public SwitchDeploymentPopUpPage clickSwitchDeploymentButton() {
+        pageUtils.waitForElementAndClick(switchDeploymentButton);
+        return new SwitchDeploymentPopUpPage(driver);
+    }
+
+    public String getDeployment() {
+        return pageUtils.waitForElementAppear(deploymentLabel).getText();
+    }
 }
