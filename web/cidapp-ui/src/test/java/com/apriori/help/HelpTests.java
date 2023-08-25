@@ -88,7 +88,7 @@ public class HelpTests extends TestBaseUI {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Utilization Details"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design"));
     }
 
     @Test
@@ -109,7 +109,7 @@ public class HelpTests extends TestBaseUI {
             .openDesignGuidance()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Examine Design Issues"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design"));
     }
 
     @Test
@@ -130,7 +130,7 @@ public class HelpTests extends TestBaseUI {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Utilization Details"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design"));
     }
 
     @Test
@@ -151,7 +151,7 @@ public class HelpTests extends TestBaseUI {
             .openCostDetails()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), is(equalTo("Examine the Cost Results Details")));
+        assertThat(helpDocPage.getChildPageTitle(), is(equalTo("Explore the Cost Results")));
     }
 
     @Test

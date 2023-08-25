@@ -16,5 +16,10 @@ public class SecondaryProcesses {
     @JsonProperty("Other Secondary Processes")
     private List<String> otherSecondaryProcesses;
     @JsonProperty("Heat Treatment")
-    private List<HeatTreatment> heatTreatment;
+    private List<String> heatTreatment;
+    @JsonProperty("Machining")
+    private List<String> machining;
+    @JsonProperty("Surface Treatment")
+    private List<String> surfaceTreatment;
+
 }
