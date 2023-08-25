@@ -47,6 +47,10 @@ public class SustainabilityTests extends TestBaseUI {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
+        softAssertions.assertThat(evaluatePage.isSustainabilityDetailsPresentForCosted()).isTrue();
+        () -> assertThat(evaluatePage.getSustainabilityNames()).containsAll(Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon",
+            "Logistics Carbon", "Total Carbon")),
+
         materialProcessPage = evaluatePage.openMaterialProcess();
         materialUtilizationPage = materialProcessPage.openMaterialUtilizationTab();
         softAssertions.assertThat(materialUtilizationPage.isMaterialCarbonPresent()).isTrue();
@@ -55,12 +59,7 @@ public class SustainabilityTests extends TestBaseUI {
             .selectProcessesTab()
             .selectBarChart("Compaction Pressing")
             .selectProcessTab();
-
-        assertAll(
-            () -> assertThat(evaluatePage.isSustainabilityTabIsPresentedForCosted()).isTrue(),
-            () -> assertThat(evaluatePage.getSustainabilityNames()).containsAll(Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon",
-                "Logistics Carbon", "Total Carbon")),
-            () -> assertThat(materialProcessPage.isEnergyCarbonPresent()).isTrue()
-        );
+        softAssertions.assertThat(materialProcessPage.isEnergyCarbonPresent()).isTrue();
+        softAssertions.assertAll();
     }
 }
