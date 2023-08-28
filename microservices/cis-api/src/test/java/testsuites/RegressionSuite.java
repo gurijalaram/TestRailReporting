@@ -12,12 +12,12 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({
-    //CisBidPackageTest.class,
+    CisBidPackageTest.class,
     CisBidPackageItemTest.class,
-    //CisBidPackageProjectsTest.class,
-    //CisBidPackageProjectUsersTest.class,
+    CisBidPackageProjectsTest.class,
+    CisBidPackageProjectUsersTest.class,
     CisUserPreferencesTest.class,
-    //CisComponentTest.class,
+    CisComponentTest.class,
 
 })
 public class RegressionSuite {
