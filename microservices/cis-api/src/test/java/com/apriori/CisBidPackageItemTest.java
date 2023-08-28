@@ -115,8 +115,8 @@ public class CisBidPackageItemTest extends TestUtil {
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
         softAssertions.assertThat(cisErrorMessage.getMessage()).contains("2 validation failures were found:" +
-            "* 'bidPackageIdentity' is not a valid identity." +
-            "* 'identity' is not a valid identity.");
+            "\n* 'bidPackageIdentity' is not a valid identity." +
+            "\n* 'identity' is not a valid identity.");
     }
 
     @Test
@@ -173,8 +173,8 @@ public class CisBidPackageItemTest extends TestUtil {
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
         softAssertions.assertThat(cisInvalidErrorMessage.getMessage()).contains("2 validation failures were found:" +
-            "* 'bidPackageIdentity' is not a valid identity." +
-            "* 'identity' is not a valid identity.");
+            "\n* 'bidPackageIdentity' is not a valid identity." +
+            "\n* 'identity' is not a valid identity.");
     }
 
     @Test
