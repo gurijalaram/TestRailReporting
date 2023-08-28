@@ -20,7 +20,6 @@ import org.apache.http.HttpStatus;
 
 import java.util.List;
 
-
 /**
  * Customer environment util class
  * Contains methods with base functionality for customer environments tests
