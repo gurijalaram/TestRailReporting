@@ -25,6 +25,7 @@ import org.apache.http.HttpStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,13 +84,18 @@ public class JasperReportUtil {
         this.waitUntilReportReady(response.getRequestId(),
             exportedReport.getId());
 
+        String requestId = response.getRequestId();
+        String reportId = exportedReport.getId();
+
         return JasperReportSummary.builder()
-            .reportHtmlPart(this.getReportHtmlData(response.getRequestId(),
-                exportedReport.getId())
+            .reportHtmlPart(this.getReportHtmlData(requestId,
+                reportId)
             )
-            .chartData(this.getReportChartData(response.getRequestId(),
-                exportedReport.getId())
+            .chartData(this.getReportChartData(requestId,
+                reportId)
             )
+            .chartDataRaw(this.getReportChartDataRaw(requestId,
+                reportId))
             .build();
     }
 
@@ -145,6 +151,7 @@ public class JasperReportUtil {
         return Jsoup.parse(htmlData, "UTF-8", "/aPriori/reports/");
     }
 
+    @SneakyThrows
     private List<ChartData> getReportChartData(final String requestId, final String exportId) {
         RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs, null)
             .inlineVariables(requestId, exportId)
@@ -154,6 +161,16 @@ public class JasperReportUtil {
         return parseJsonResponse(HTTPRequest.build(requestEntity).get()
             .getBody()
         );
+    }
+
+    @SneakyThrows
+    private ReportComponentsResponse getReportChartDataRaw(final String requestId, final String exportId) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs, ReportComponentsResponse.class)
+            .inlineVariables(requestId, exportId)
+            .headers(initHeadersWithJSession())
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return (ReportComponentsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     @SneakyThrows

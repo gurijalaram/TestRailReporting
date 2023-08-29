@@ -1,0 +1,3651 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "reportConfig": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "reportConfig": {
+          "type": "array",
+          "items": {}
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "reportConfig"
+      ]
+    },
+    "91544a69-eb37-47d2-8783-8f940ac904f0_40#1": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "chartUuid": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "module": {
+          "type": "string"
+        },
+        "uimodule": {
+          "type": "string"
+        },
+        "globalOptions": {
+          "type": "object",
+          "properties": {
+            "lang": {
+              "type": "object",
+              "properties": {
+                "decimalPoint": {
+                  "type": "string"
+                },
+                "thousandsSep": {
+                  "type": "string"
+                },
+                "months": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "shortMonths": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "weekdays": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "decimalPoint",
+                "thousandsSep",
+                "months",
+                "shortMonths",
+                "weekdays"
+              ]
+            }
+          },
+          "required": [
+            "lang"
+          ]
+        },
+        "hcinstancedata": {
+          "type": "object",
+          "properties": {
+            "services": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "properties": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "prop": {
+                                  "type": "string"
+                                },
+                                "val": {
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "prop",
+                                "val"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "prop": {
+                                  "type": "string"
+                                },
+                                "val": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "prop",
+                                "val"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "prop": {
+                                  "type": "string"
+                                },
+                                "val": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "prop",
+                                "val"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "prop": {
+                                  "type": "string"
+                                },
+                                "val": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "prop",
+                                "val"
+                              ]
+                            }
+                          ]
+                        },
+                        "xCategories": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "series": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "properties": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "prop": {
+                                          "type": "string"
+                                        },
+                                        "val": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "prop",
+                                        "val"
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "properties",
+                                "data"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "properties": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "prop": {
+                                          "type": "string"
+                                        },
+                                        "val": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "prop",
+                                        "val"
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "properties",
+                                "data"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "properties": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "prop": {
+                                          "type": "string"
+                                        },
+                                        "val": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "prop",
+                                        "val"
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "properties",
+                                "data"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "properties": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "prop": {
+                                          "type": "string"
+                                        },
+                                        "val": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "prop",
+                                        "val"
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "properties",
+                                "data"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "properties": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "prop": {
+                                          "type": "string"
+                                        },
+                                        "val": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "prop",
+                                        "val"
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "properties",
+                                "data"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "properties": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "prop": {
+                                          "type": "string"
+                                        },
+                                        "val": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "prop",
+                                        "val"
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "properties",
+                                "data"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "properties",
+                        "xCategories",
+                        "series"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "service",
+                    "data"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "array",
+                              "items": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "service",
+                    "data"
+                  ]
+                }
+              ]
+            },
+            "renderto": {
+              "type": "string"
+            },
+            "width": {
+              "type": "integer"
+            },
+            "height": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "services",
+            "renderto",
+            "width",
+            "height"
+          ]
+        },
+        "interactive": {
+          "type": "boolean"
+        },
+        "charttype": {
+          "type": "string"
+        },
+        "datetimeSupported": {
+          "type": "boolean"
+        },
+        "treemapSupported": {
+          "type": "boolean"
+        },
+        "gaugesSupported": {
+          "type": "boolean"
+        },
+        "detailChartEnabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "chartUuid",
+        "type",
+        "module",
+        "uimodule",
+        "globalOptions",
+        "hcinstancedata",
+        "interactive",
+        "charttype",
+        "datetimeSupported",
+        "treemapSupported",
+        "gaugesSupported",
+        "detailChartEnabled"
+      ]
+    },
+    "91544a69-eb37-47d2-8783-8f940ac904f0_43#1": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "chartUuid": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "module": {
+          "type": "string"
+        },
+        "uimodule": {
+          "type": "string"
+        },
+        "hcinstancedata": {
+          "type": "object",
+          "properties": {
+            "services": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "properties": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "prop": {
+                                  "type": "string"
+                                },
+                                "val": {
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "prop",
+                                "val"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "prop": {
+                                  "type": "string"
+                                },
+                                "val": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "prop",
+                                "val"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "prop": {
+                                  "type": "string"
+                                },
+                                "val": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "prop",
+                                "val"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "prop": {
+                                  "type": "string"
+                                },
+                                "val": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "prop",
+                                "val"
+                              ]
+                            }
+                          ]
+                        },
+                        "xCategories": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "series": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "properties": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "prop": {
+                                          "type": "string"
+                                        },
+                                        "val": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "prop",
+                                        "val"
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "properties",
+                                "data"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "properties": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "prop": {
+                                          "type": "string"
+                                        },
+                                        "val": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "prop",
+                                        "val"
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "properties",
+                                "data"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "properties": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "prop": {
+                                          "type": "string"
+                                        },
+                                        "val": {
+                                          "type": "string"
+                                        }
+                                      },
+                                      "required": [
+                                        "prop",
+                                        "val"
+                                      ]
+                                    }
+                                  ]
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "integer"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "properties",
+                                "data"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "properties",
+                        "xCategories",
+                        "series"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "service",
+                    "data"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "array",
+                              "items": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "service",
+                    "data"
+                  ]
+                }
+              ]
+            },
+            "renderto": {
+              "type": "string"
+            },
+            "width": {
+              "type": "integer"
+            },
+            "height": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "services",
+            "renderto",
+            "width",
+            "height"
+          ]
+        },
+        "interactive": {
+          "type": "boolean"
+        },
+        "charttype": {
+          "type": "string"
+        },
+        "datetimeSupported": {
+          "type": "boolean"
+        },
+        "treemapSupported": {
+          "type": "boolean"
+        },
+        "gaugesSupported": {
+          "type": "boolean"
+        },
+        "detailChartEnabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "chartUuid",
+        "type",
+        "module",
+        "uimodule",
+        "hcinstancedata",
+        "interactive",
+        "charttype",
+        "datetimeSupported",
+        "treemapSupported",
+        "gaugesSupported",
+        "detailChartEnabled"
+      ]
+    },
+    "91544a69-eb37-47d2-8783-8f940ac904f0_46#1": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "chartUuid": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "module": {
+          "type": "string"
+        },
+        "uimodule": {
+          "type": "string"
+        },
+        "hcinstancedata": {
+          "type": "object",
+          "properties": {
+            "services": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "properties": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "prop": {
+                                  "type": "string"
+                                },
+                                "val": {
+                                  "type": "integer"
+                                }
+                              },
+                              "required": [
+                                "prop",
+                                "val"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "prop": {
+                                  "type": "string"
+                                },
+                                "val": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "prop",
+                                "val"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "prop": {
+                                  "type": "string"
+                                },
+                                "val": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "prop",
+                                "val"
+                              ]
+                            }
+                          ]
+                        },
+                        "xCategories": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "series": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "data"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "data"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "_jrid": {
+                                  "type": "string"
+                                },
+                                "data": {
+                                  "type": "array",
+                                  "items": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "y": {
+                                          "type": "number"
+                                        }
+                                      },
+                                      "required": [
+                                        "y"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "_jrid",
+                                "data"
+                              ]
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "properties",
+                        "xCategories",
+                        "series"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "service",
+                    "data"
+                  ]
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "service": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "array",
+                              "items": [
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                },
+                                {
+                                  "type": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "prop": {
+                              "type": "string"
+                            },
+                            "val": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "prop",
+                            "val"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "service",
+                    "data"
+                  ]
+                }
+              ]
+            },
+            "renderto": {
+              "type": "string"
+            },
+            "width": {
+              "type": "integer"
+            },
+            "height": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "services",
+            "renderto",
+            "width",
+            "height"
+          ]
+        },
+        "interactive": {
+          "type": "boolean"
+        },
+        "charttype": {
+          "type": "string"
+        },
+        "datetimeSupported": {
+          "type": "boolean"
+        },
+        "treemapSupported": {
+          "type": "boolean"
+        },
+        "gaugesSupported": {
+          "type": "boolean"
+        },
+        "detailChartEnabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "chartUuid",
+        "type",
+        "module",
+        "uimodule",
+        "hcinstancedata",
+        "interactive",
+        "charttype",
+        "datetimeSupported",
+        "treemapSupported",
+        "gaugesSupported",
+        "detailChartEnabled"
+      ]
+    },
+    "ffe91692-1124-45bf-89f7-c2120fa66886.0": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "module": {
+          "type": "string"
+        },
+        "uimodule": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "fragmentId": {
+          "type": "string"
+        },
+        "crosstabId": {
+          "type": "string"
+        },
+        "startColumnIndex": {
+          "type": "integer"
+        },
+        "hasFloatingHeaders": {
+          "type": "boolean"
+        },
+        "rowGroups": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "sortable": {
+                  "type": "boolean"
+                },
+                "order": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sortable",
+                "order"
+              ]
+            }
+          ]
+        },
+        "dataColumns": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "sortMeasureIndex": {
+                  "type": "integer"
+                },
+                "order": {
+                  "type": "null"
+                },
+                "columnValues": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "boolean"
+                        },
+                        "valueType": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "valueType",
+                        "value"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "sortMeasureIndex",
+                "order",
+                "columnValues"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "module",
+        "uimodule",
+        "id",
+        "fragmentId",
+        "crosstabId",
+        "startColumnIndex",
+        "hasFloatingHeaders",
+        "rowGroups",
+        "dataColumns"
+      ]
+    },
+    "435354b6-84b8-42be-b3ce-1d7acad695d1.1": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "module": {
+          "type": "string"
+        },
+        "uimodule": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "fragmentId": {
+          "type": "string"
+        },
+        "crosstabId": {
+          "type": "string"
+        },
+        "startColumnIndex": {
+          "type": "integer"
+        },
+        "hasFloatingHeaders": {
+          "type": "boolean"
+        },
+        "rowGroups": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "sortable": {
+                  "type": "boolean"
+                },
+                "order": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "sortable",
+                "order"
+              ]
+            }
+          ]
+        },
+        "dataColumns": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "sortMeasureIndex": {
+                  "type": "integer"
+                },
+                "order": {
+                  "type": "null"
+                },
+                "columnValues": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "boolean"
+                        },
+                        "valueType": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "valueType",
+                        "value"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "sortMeasureIndex",
+                "order",
+                "columnValues"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "module",
+        "uimodule",
+        "id",
+        "fragmentId",
+        "crosstabId",
+        "startColumnIndex",
+        "hasFloatingHeaders",
+        "rowGroups",
+        "dataColumns"
+      ]
+    },
+    "hyperlinks_958767302": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "hyperlinks": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "typeValue": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "string"
+                },
+                "targetValue": {
+                  "type": "string"
+                },
+                "params": {
+                  "type": "object",
+                  "properties": {
+                    "_report": {
+                      "type": "string"
+                    },
+                    "exportSetName": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    },
+                    "department": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "location": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "trendingPeriod": {
+                      "type": "string"
+                    },
+                    "costSource": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "_report",
+                    "exportSetName",
+                    "startDate",
+                    "endDate",
+                    "department",
+                    "location",
+                    "trendingPeriod",
+                    "costSource"
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "href": {
+                  "type": "string"
+                },
+                "selector": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "typeValue",
+                "target",
+                "targetValue",
+                "params",
+                "id",
+                "href",
+                "selector"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "typeValue": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "string"
+                },
+                "targetValue": {
+                  "type": "string"
+                },
+                "params": {
+                  "type": "object",
+                  "properties": {
+                    "_report": {
+                      "type": "string"
+                    },
+                    "exportSetName": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    },
+                    "department": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "location": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "trendingPeriod": {
+                      "type": "string"
+                    },
+                    "costSource": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "_report",
+                    "exportSetName",
+                    "startDate",
+                    "endDate",
+                    "department",
+                    "location",
+                    "trendingPeriod",
+                    "costSource"
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "href": {
+                  "type": "string"
+                },
+                "selector": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "typeValue",
+                "target",
+                "targetValue",
+                "params",
+                "id",
+                "href",
+                "selector"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "typeValue": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "string"
+                },
+                "targetValue": {
+                  "type": "string"
+                },
+                "params": {
+                  "type": "object",
+                  "properties": {
+                    "_report": {
+                      "type": "string"
+                    },
+                    "exportSetName": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    },
+                    "department": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "location": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "trendingPeriod": {
+                      "type": "string"
+                    },
+                    "costSource": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "_report",
+                    "exportSetName",
+                    "startDate",
+                    "endDate",
+                    "department",
+                    "location",
+                    "trendingPeriod",
+                    "costSource"
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "href": {
+                  "type": "string"
+                },
+                "selector": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "typeValue",
+                "target",
+                "targetValue",
+                "params",
+                "id",
+                "href",
+                "selector"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "typeValue": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "string"
+                },
+                "targetValue": {
+                  "type": "string"
+                },
+                "params": {
+                  "type": "object",
+                  "properties": {
+                    "_report": {
+                      "type": "string"
+                    },
+                    "exportSetName": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    },
+                    "department": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "location": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "trendingPeriod": {
+                      "type": "string"
+                    },
+                    "costSource": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "_report",
+                    "exportSetName",
+                    "startDate",
+                    "endDate",
+                    "department",
+                    "location",
+                    "trendingPeriod",
+                    "costSource"
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "href": {
+                  "type": "string"
+                },
+                "selector": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "typeValue",
+                "target",
+                "targetValue",
+                "params",
+                "id",
+                "href",
+                "selector"
+              ]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "typeValue": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "string"
+                },
+                "targetValue": {
+                  "type": "string"
+                },
+                "params": {
+                  "type": "object",
+                  "properties": {
+                    "_report": {
+                      "type": "string"
+                    },
+                    "exportSetName": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "startDate": {
+                      "type": "string"
+                    },
+                    "endDate": {
+                      "type": "string"
+                    },
+                    "department": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "location": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "trendingPeriod": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "_report",
+                    "exportSetName",
+                    "startDate",
+                    "endDate",
+                    "department",
+                    "location",
+                    "trendingPeriod"
+                  ]
+                },
+                "id": {
+                  "type": "string"
+                },
+                "href": {
+                  "type": "string"
+                },
+                "selector": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "typeValue",
+                "target",
+                "targetValue",
+                "params",
+                "id",
+                "href",
+                "selector"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ]
+    }
+  },
+  "required": [
+    "reportConfig",
+    "91544a69-eb37-47d2-8783-8f940ac904f0_40#1",
+    "91544a69-eb37-47d2-8783-8f940ac904f0_43#1",
+    "91544a69-eb37-47d2-8783-8f940ac904f0_46#1",
+    "ffe91692-1124-45bf-89f7-c2120fa66886.0",
+    "435354b6-84b8-42be-b3ce-1d7acad695d1.1"
+  ]
+}

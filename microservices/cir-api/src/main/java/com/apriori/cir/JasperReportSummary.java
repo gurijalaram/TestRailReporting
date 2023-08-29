@@ -2,6 +2,7 @@ package com.apriori.cir;
 
 import com.apriori.cir.models.response.ChartData;
 
+import com.apriori.cir.utils.ReportComponentsResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ import java.util.List;
 @Slf4j
 public class JasperReportSummary {
     private Document reportHtmlPart;
+    private ReportComponentsResponse chartDataRaw;
     private List<ChartData> chartData;
 
     public ChartData getFirstChartData() {

@@ -70,7 +70,8 @@ public enum CirApiEnum implements ExternalEndpointEnum {
     TARGET_COST_VALUE_TRACKING_DETAILS("reports/aPriori/reports/solutions/designToCost/targetCost/targetCostValueTrackingDetails/inputControls/projectRollup;projectName;exportDate;costMetric;currencyCode;currentProjectId;currentProjectName/values?freshData=false&includeTotalCount=true"),
     TARGET_AND_QUOTED_COST_TREND("reports/aPriori/reports/solutions/designToCost/targetAndQuotedCost/targetAndQuotedCostTrend/inputControls/projectRollup;projectName;exportDate;costMetric;sortOrder;currencyCode/values?freshData=false&includeTotalCount=true"),
     TARGET_AND_QUOTED_COST_VALUE_TRACKING("reports/aPriori/reports/solutions/designToCost/targetAndQuotedCost/targetAndQuotedCostValueTracking/inputControls/projectRollup;exportDate;costMetric;sortOrder;currencyCode/values?freshData=false&includeTotalCount=true"),
-    TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS("reports/aPriori/reports/solutions/designToCost/targetAndQuotedCost/targetAndQuotedCostValueTrackingDetailsInternal/inputControls/currentProjectName;currentProjectId;currencyCode;sortOrder;costMetric;projectRollup;projectName;exportDate/values?freshData=false&selectedOnly=true");
+    TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS("reports/aPriori/reports/solutions/designToCost/targetAndQuotedCost/targetAndQuotedCostValueTrackingDetailsInternal/inputControls/currentProjectName;currentProjectId;currencyCode;sortOrder;costMetric;projectRollup;projectName;exportDate".concat(
+        "/values?freshData=false"));
 
     private final String endpoint;
 
