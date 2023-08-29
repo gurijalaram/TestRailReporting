@@ -1,5 +1,10 @@
 package com.ootbreports.newreportstests.utils;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.cir.JasperReportSummary;
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.cir.models.request.ReportRequest;
@@ -150,12 +155,28 @@ public class JasperApiUtils {
     }
 
     /**
+     * Generic currency test for Upgrade Comparison and Upgrade Part Comparison Reports
+     *
+     * @param currencyToUse - String
+     * @return ArrayList of values to assert on
+     */
+    public ArrayList<String> generateReportAndGetAssertValues(String currencyToUse) {
+        JasperReportSummary jasperReportSummaryUSD = genericTestCoreCurrencyOnly(currencyToUse);
+
+        ArrayList<String> assertValues = new ArrayList<>();
+        assertValues.add(jasperReportSummaryUSD.getReportHtmlPart().getElementsByAttributeValue("colspan", "12").get(3).child(0).text());
+        assertValues.add(jasperReportSummaryUSD.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(7).child(0).text());
+        return assertValues;
+    }
+
+    /**
      * Generic test for reports that require project rollup and currency only to be specified
      *
      * @param projectRollupName - String of project rollup to use
+     * @param currencyString - String of currency to use
      * @return JasperReportSummary instance
      */
-    public JasperReportSummary genericTestCoreProjectRollupAndCurrencyOnly(String currencyString, String projectRollupName) {
+    public JasperReportSummary genericTestCoreProjectRollupAndCurrencyOnly(String projectRollupName, String currencyString) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
 
@@ -170,6 +191,19 @@ public class JasperApiUtils {
         log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
+    }
+
+    /**
+     * Generic test for currency input control within all four Spend Analysis Reports
+     *
+     * @param indexValues - indexes of assert values to get
+     */
+    public void spendAnalysisReportGenericCurrencyTest(List<Integer> indexValues) {
+        ArrayList<String> gbpAssertValues = spendAnalysisGenerateReportReturnValues(CurrencyEnum.GBP.getCurrency(), indexValues);
+        ArrayList<String> usdAssertValues = spendAnalysisGenerateReportReturnValues(CurrencyEnum.USD.getCurrency(), indexValues);
+
+        assertThat(gbpAssertValues.get(0), is(not(equalTo(usdAssertValues.get(0)))));
+        assertThat(gbpAssertValues.get(1), is(not(equalTo(usdAssertValues.get(1)))));
     }
 
     /**
@@ -676,6 +710,19 @@ public class JasperApiUtils {
             .stream().map(e -> e.getPropertyByName("Scenario Cycle Time (s)").getValue().toString())
             .collect(Collectors.toCollection(ArrayList::new)
             );
+    }
+
+    private ArrayList<String> spendAnalysisGenerateReportReturnValues(String currencyToUse, List<Integer> indexValues) {
+        String attributeValueToUse = "colspan";
+        JasperReportSummary jasperReportSummary = genericTestCoreProjectRollupAndCurrencyOnly(
+            "AC CYCLE TIME VT 1",
+            currencyToUse
+        );
+
+        ArrayList<String> assertValues = new ArrayList<>();
+        assertValues.add(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue(attributeValueToUse, indexValues.get(0).toString()).get(indexValues.get(1)).text());
+        assertValues.add(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue(attributeValueToUse, indexValues.get(2).toString()).get(indexValues.get(3)).text());
+        return assertValues;
     }
 
     private String getCurrentCurrencyFromAboveChart(JasperReportSummary jasperReportSummary, boolean areBubblesPresent) {

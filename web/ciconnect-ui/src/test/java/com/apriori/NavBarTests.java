@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.pageobjects.connectors.ConnectorsPage;
 import com.apriori.pageobjects.home.CIConnectHome;
+import com.apriori.pageobjects.home.help.CicAbout;
 import com.apriori.pageobjects.home.help.cicuserguide.CicUserGuide;
 import com.apriori.pageobjects.home.settings.CostingServiceSettings;
 import com.apriori.pageobjects.login.CicLoginPage;
@@ -14,20 +15,20 @@ import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.Year;
 
 public class NavBarTests extends WorkflowTestUtil {
 
     private SoftAssertions softAssertions;
-    private CIConnectHome ciConnectHome;
 
     @BeforeEach
     public void setup() {
         currentUser = UserUtil.getUser();
         softAssertions = new SoftAssertions();
-        ciConnectHome = new CicLoginPage(driver).login(currentUser);
-
     }
 
     @Test
@@ -40,7 +41,7 @@ public class NavBarTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(id = {3654})
+    @TestRail(id = {3654, 3660})
     public void testNavigateToConnectorsTab() {
         ConnectorsPage connectorsPage = new CicLoginPage(driver)
             .login(currentUser)
@@ -53,11 +54,13 @@ public class NavBarTests extends WorkflowTestUtil {
     @Test
     @TestRail(id = {3652})
     public void testNavigateToWorkflowsTab() {
-        WorkflowHome workflowHome = new CicLoginPage(driver)
-            .login(currentUser)
-            .clickWorkflowMenu();
+        CIConnectHome ciConnectHome = new CicLoginPage(driver).login(currentUser);
+        WorkflowHome workflowHome = ciConnectHome.clickWorkflowMenu();
 
         assertEquals("Verify Workflows menu", "Workflows", workflowHome.getWorkflowText());
+
+        CicLoginPage cicLoginPage = ciConnectHome.clickLogout();
+        softAssertions.assertThat(cicLoginPage.getEmailInputCloud().isDisplayed()).isTrue();
     }
 
     @Test
@@ -91,6 +94,23 @@ public class NavBarTests extends WorkflowTestUtil {
             .clickCostingServiceSettings();
 
         assertEquals("Verify Settings model page", "Costing Service Settings", costingServiceSettings.getCostingServiceSettingsText());
+    }
+
+    @Test
+    @TestRail(id = {24486, 24487, 24488})
+    public void testStmtAndTermsOfUse() {
+        CicAbout cicAbout = new CicLoginPage(driver)
+            .login(currentUser)
+            .navigateToAboutApConnect();
+
+        softAssertions.assertThat(cicAbout.getCicAboutStatement().getText()).isEqualTo("aP Connect is Powered by ThingWorx.");
+        softAssertions.assertThat(cicAbout.getCicTermsOfUse().getText()).isEqualTo("This aP Connect application (“Application”), including the intellectual property rights and trade secrets contained therein, is the property of aPriori Technologies, Inc. and/or its suppliers. Use of this Application in any manner is governed by the terms and conditions of a signed subscription agreement between You and aPriori. In the absence of a signed subscription agreement, the use of this software is governed solely by the aPriori Subscription and Professional Services Agreement available at https://resources.apriori.com/i/1136035-apriori-saas-subscription-agreement-060119.");
+        softAssertions.assertThat(cicAbout.getCopyRightElement().getText()).isEqualTo(String.format("aPriori Technologies Inc. © 2003-%s. All Rights Reserved.", Year.now().getValue()));
+    }
+
+    @After
+    public void cleanup() {
+        softAssertions.assertAll();
     }
 }
 

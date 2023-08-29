@@ -23,8 +23,8 @@ import java.util.List;
 
 public class DigitalFactoryPerformanceDetailsReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.DIGITAL_FACTORY_PERFORMANCE_DETAILS.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
     private static final CirApiEnum reportsNameForInputControls = CirApiEnum.DIGITAL_FACTORY_PERFORMANCE_DETAILS;
+    private static final String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach

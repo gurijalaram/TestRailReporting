@@ -1,4 +1,4 @@
-package agent.tests;
+package com.apriori;
 
 import com.apriori.cic.utils.CicLoginUtil;
 import com.apriori.reader.file.user.UserUtil;

@@ -14,9 +14,9 @@ import utils.JasperApiAuthenticationUtil;
 
 public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getEndpoint();
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS;
     // Export Set is not relevant for this report
     private static final String exportSetName = "";
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
