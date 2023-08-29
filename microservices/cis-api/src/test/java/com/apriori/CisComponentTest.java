@@ -3,9 +3,11 @@ package com.apriori;
 import com.apriori.cis.controller.CisBidPackageItemResources;
 import com.apriori.cis.controller.CisBidPackageResources;
 import com.apriori.cis.controller.CisComponentResources;
+import com.apriori.cis.models.request.bidpackage.AssignedComponentRequest;
 import com.apriori.cis.models.response.bidpackage.BidPackageItemResponse;
 import com.apriori.cis.models.response.bidpackage.BidPackageResponse;
-import com.apriori.cis.models.response.component.AssignComponentsResponse;
+import com.apriori.cis.models.response.component.AssignedComponentsResponse;
+import com.apriori.cis.models.response.component.ComponentParameters;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.ScenarioItem;
@@ -21,18 +23,21 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+
 public class CisComponentTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static ScenarioItem scenarioItem;
-    private static final UserCredentials currentUser = UserUtil.getUser();
+    private static UserCredentials currentUser;
 
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
+        currentUser = UserUtil.getUser();
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
+        scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser).get(0);
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
         CisBidPackageItemResources.createBidPackageItem(
             CisBidPackageItemResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
@@ -46,7 +51,14 @@ public class CisComponentTest extends TestUtil {
     @TestRail(id = {22906})
     @Description("Get Already Assigned Components for specific user")
     public void testGetAlreadyAssignedComponents() {
-        AssignComponentsResponse assignedComponentsResponse = CisComponentResources.getAssignedComponents(currentUser, AssignComponentsResponse.class, HttpStatus.SC_OK);
+        ComponentParameters componentParameters = ComponentParameters.builder()
+            .componentIdentity(scenarioItem.getComponentIdentity())
+            .scenarioIdentity(scenarioItem.getScenarioIdentity())
+            .iterationIdentity(scenarioItem.getIterationIdentity())
+            .build();
+
+        AssignedComponentRequest componentModel = AssignedComponentRequest.builder().components(Collections.singletonList(componentParameters)).build();
+        AssignedComponentsResponse assignedComponentsResponse = CisComponentResources.postToGetAssignedComponents(currentUser, componentModel, AssignedComponentsResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(assignedComponentsResponse.size()).isGreaterThan(0);
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(assignedComponentsResponse.stream()

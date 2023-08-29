@@ -25,6 +25,9 @@
         "applications",
         "region"
       ],
+      "optional" : [
+        "highMem"
+      ],
       "properties": {
         "identity": {
           "type": "string"
@@ -70,6 +73,9 @@
         },
         "customerIdentity": {
           "type": "string"
+        },
+        "highMem": {
+          "type": "boolean"
         },
         "applications": {
           "type": "array",

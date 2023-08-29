@@ -25,11 +25,12 @@ public class CisBidPackageProjectsTest extends TestUtil {
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static String projectName;
-    private final UserCredentials currentUser = UserUtil.getUser();
+    private static UserCredentials currentUser;
 
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
+        currentUser = UserUtil.getUser();
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
@@ -92,8 +93,8 @@ public class CisBidPackageProjectsTest extends TestUtil {
 
         softAssertions.assertThat(bidPackageProjectsError.getMessage())
             .isEqualTo("2 validation failures were found:" +
-                "* 'bidPackageIdentity' is not a valid identity." +
-                "* 'projectIdentity' is not a valid identity.");
+                "\n* 'bidPackageIdentity' is not a valid identity." +
+                "\n* 'projectIdentity' is not a valid identity.");
     }
 
     @Test
