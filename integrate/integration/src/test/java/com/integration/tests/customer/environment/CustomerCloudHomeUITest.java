@@ -3,6 +3,7 @@ package com.integration.tests.customer.environment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.apriori.PageUtils;
 import com.apriori.customer.CloudHomePage;
 import com.apriori.customer.dto.ApplicationDataDTO;
 import com.apriori.customer.enums.CustomerDeploymentsEnum;
@@ -73,14 +74,21 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
 
         assertEquals(customerDeploymentsEnum.getDeploymentName(), currentUIDeployment);
 
-        List<ApplicationDataDTO> applications = cloudHomePage.getListOfApplications();
+        List<ApplicationDataDTO> userApplicationsFromUI = cloudHomePage.getListOfApplications();
 
+        this.validateApplicationsUIText(userApplicationsFromUI, mappedCustomerDeployments.get(currentUIDeployment));
+        this.validateApplicationsAreLaunchedSuccessfully(userApplicationsFromUI);
+    }
 
-        List<ApplicationDataDTO> deploymentApplications = mappedCustomerDeployments.get(currentUIDeployment);
-        applications.removeAll(deploymentApplications);
-
+    private void validateApplicationsUIText(List<ApplicationDataDTO> applications, List<ApplicationDataDTO> customerApplicationsData) {
+        applications.removeAll(customerApplicationsData);
         assertEquals(0, applications.size(), "Applications list should be empty, else application has an text representation not related to the customers environment.");
+    }
 
+    private void validateApplicationsAreLaunchedSuccessfully(List<ApplicationDataDTO> userApplicationsFromUI) {
+        userApplicationsFromUI.forEach(application -> {
+            cloudHomePage.clickWebApplicationByName(application.getApplicationName(), null);
+        });
     }
 
 

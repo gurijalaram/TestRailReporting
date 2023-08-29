@@ -37,6 +37,7 @@ public class Installation {
     private String cloudReference;
     private String description;
     private Boolean active;
+    private Boolean highMem;
     private String apVersion;
     private String url;
     private String realm;
