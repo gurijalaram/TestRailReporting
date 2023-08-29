@@ -37,7 +37,7 @@ public class CisComponentTest extends TestUtil {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
+        scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser).get(0);
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
         CisBidPackageItemResources.createBidPackageItem(
             CisBidPackageItemResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
