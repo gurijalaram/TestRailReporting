@@ -1,0 +1,117 @@
+{
+  "reportUnitUri": "/aPriori/reports/Upgrade Process/upgradePartComparison",
+  "async": true,
+  "allowInlineScripts": false,
+  "markupType": "embeddable",
+  "interactive": true,
+  "freshData": false,
+  "saveDataSnapshot": false,
+  "transformerKey": null,
+  "pages": 1,
+  "attachmentsPrefix": "/jasperserver-pro/rest_v2/reportExecutions/{reportExecutionId}/exports/{exportExecutionId}/attachments/",
+  "baseUrl": "/jasperserver-pro",
+  "parameters": {
+    "reportParameter": [
+      {
+        "name": "useLatestExport",
+        "value": [
+          "Scenario"
+        ]
+      },
+      {
+        "name": "earliestExportDate",
+        "value": [
+          "2023-04-13T06:57:36"
+        ]
+      },
+      {
+        "name": "latestExportDate",
+        "value": [
+          "2023-08-11T06:57:36"
+        ]
+      },
+      {
+        "name": "exportSetName",
+        "value": [
+          "156221",
+          "162162"
+        ]
+      },
+      {
+        "name": "rollup",
+        "value": [
+          "162160"
+        ]
+      },
+      {
+        "name": "rollupNew",
+        "value": [
+          "168070"
+        ]
+      },
+      {
+        "name": "exportEventId",
+        "value": [
+          "156223"
+        ]
+      },
+      {
+        "name": "processGroup",
+        "value": [
+          "~NOTHING~"
+        ]
+      },
+      {
+        "name": "partNumber",
+        "value": [
+          "156226"
+        ]
+      },
+      {
+        "name": "partNumberNew",
+        "value": [
+          "162167"
+        ]
+      },
+      {
+        "name": "changeLevel",
+        "value": [
+          "High",
+          "Medium",
+          "Low",
+          "No Change"
+        ]
+      },
+      {
+        "name": "costMetricsLowThreshold",
+        "value": [
+          "10"
+        ]
+      },
+      {
+        "name": "costMetricsHighThreshold",
+        "value": [
+          "20"
+        ]
+      },
+      {
+        "name": "timeMetricsLowThreshold",
+        "value": [
+          "10"
+        ]
+      },
+      {
+        "name": "timeMetricsHighThreshold",
+        "value": [
+          "20"
+        ]
+      },
+      {
+        "name": "currencyCode",
+        "value": [
+          "USD"
+        ]
+      }
+    ]
+  }
+}

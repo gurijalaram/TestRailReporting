@@ -39,6 +39,8 @@ import com.ootbreports.newreportstests.targetcosttrend.TargetCostValueTrackingRe
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostTrendReportTests;
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
+import com.ootbreports.newreportstests.upgradecomparison.UpgradeComparisonReportTests;
+import com.ootbreports.newreportstests.upgradecomparison.UpgradePartComparisonTests;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
@@ -82,7 +84,9 @@ import org.junit.platform.suite.api.Suite;
     TargetCostValueTrackingDetailsReportTests.class,
     TargetAndQuotedCostTrendReportTests.class,
     TargetAndQuotedCostValueTrackingReportTests.class,
-    TargetAndQuotedCostValueTrackingDetailsReportTests.class
+    TargetAndQuotedCostValueTrackingDetailsReportTests.class,
+    UpgradeComparisonReportTests.class,
+    UpgradePartComparisonTests.class
 })
 public class ReportsApiTestSuite {
 }

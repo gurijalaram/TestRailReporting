@@ -46,9 +46,9 @@ services:
     container_name: selenium-hub
     restart: always
     healthcheck:  
-      interval: "15"
-      timeout: "30" 
-      retries: "5"
+      interval: 15s
+      timeout: 30s
+      retries: 5
     ports:
       - "4442:4442"
       - "4443:4443"

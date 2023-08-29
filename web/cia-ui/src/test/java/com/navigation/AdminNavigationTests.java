@@ -127,7 +127,7 @@ public class AdminNavigationTests extends TestBaseUI {
 
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        softAssertions.assertThat(homePage.getCurrentUrl()).startsWith("https://".concat(PropertiesContext.get("reports.ui_url")));
+        softAssertions.assertThat(homePage.getCurrentUrl()).startsWith(PropertiesContext.get("reports.ui_url"));
         softAssertions.assertThat(homePage.getTabCount()).isEqualTo(2);
         softAssertions.assertThat(homePage.isReportsWelcomeTextDisplayed()).isEqualTo(true);
         softAssertions.assertThat(homePage.isReportsWelcomeTextEnabled()).isEqualTo(true);

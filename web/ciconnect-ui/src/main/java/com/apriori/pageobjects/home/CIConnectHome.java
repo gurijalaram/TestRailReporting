@@ -2,8 +2,11 @@ package com.apriori.pageobjects.home;
 
 import com.apriori.pageobjects.CICBasePage;
 import com.apriori.pageobjects.connectors.ConnectorsPage;
+import com.apriori.pageobjects.home.help.CicAbout;
+import com.apriori.pageobjects.home.help.CicCommunity;
 import com.apriori.pageobjects.home.help.cicuserguide.CicUserGuide;
 import com.apriori.pageobjects.home.settings.CostingServiceSettings;
+import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.pageobjects.users.UsersPage;
 import com.apriori.pageobjects.workflows.WorkflowHome;
 
@@ -52,8 +55,20 @@ public class CIConnectHome extends CICBasePage {
     @FindBy(css = "div[id^='CIC_UserDropDown_MU-BMController-'][id$='_label-32'] > span")
     private WebElement currentCompany;
 
-    @FindBy(css = "div[id^='CIC_HelpDropDown_MU-BMController-'][id$='_link-41'] > a > span > span > span")
+    @FindBy(css = "button span[class='widget-button-icon'] img[class='default'][src$='user-selected']")
+    private WebElement userProfileLink;
+
+    @FindBy(xpath = "//button/span[contains(text(), 'Logout')]")
+    private WebElement logoutBtn;
+
+    @FindBy(xpath = "//a//span[contains(text(), 'Online Help')]")
     private WebElement onlineHelpLink;
+
+    @FindBy(xpath = "//a//span[contains(text(), 'Community')]")
+    private WebElement helpCommunityLink;
+
+    @FindBy(xpath = "//a//span[contains(text(), 'Support')]")
+    private WebElement helpSupportLink;
 
     @FindBy(css = "body")
     private WebElement pageBody;
@@ -62,14 +77,13 @@ public class CIConnectHome extends CICBasePage {
     private WebElement pageTitle;
 
     @FindBy(xpath = "//span[text() = 'About aP Connect']")
-    private WebElement aboutAPrioriLink;
+    private WebElement aboutAPConnectLink;
 
     @FindBy(xpath = "//span[contains(text(), 'Cost Insight Connect |')]")
     private WebElement cicVersionText;
 
     @FindBy(css = "div.tw-status-msg-box > div.status-msg-container > div.status-msg > div[id='status-msg-text']")
     private WebElement statusMessageLbl;
-
 
     public CIConnectHome(WebDriver driver) {
         super(driver);
@@ -170,6 +184,27 @@ public class CIConnectHome extends CICBasePage {
     }
 
     /**
+     * Open CIC Help -> community link
+     *
+     * @return CicCommunity
+     */
+    public CicCommunity navigateToCicCommunity() {
+        pageUtils.waitForElementAndClick(helpBtn);
+        pageUtils.waitForElementAndClick(helpCommunityLink);
+        return new CicCommunity(driver);
+    }
+
+    /**
+     * @return CicLoginPage
+     */
+    public CicLoginPage clickLogout() {
+        pageUtils.actionClick(userProfileLink);
+        pageUtils.waitForElementAndClick(logoutBtn);
+        pageUtils.waitForElementAppear(emailInputCloud);
+        return new CicLoginPage(driver);
+    }
+
+    /**
      * Switches to iframe within a page by its "id" value
      *
      * @param iframeId - iframe id attribute
@@ -192,10 +227,10 @@ public class CIConnectHome extends CICBasePage {
      *
      * @return CicUserGuide page object
      */
-    public CicUserGuide navigateToAboutAPriori() {
+    public CicAbout navigateToAboutApConnect() {
         pageUtils.waitForElementAndClick(helpBtn);
-        pageUtils.waitForElementAndClick(aboutAPrioriLink);
-        return new CicUserGuide(driver);
+        pageUtils.waitForElementAndClick(aboutAPConnectLink);
+        return new CicAbout(driver);
     }
 
     /**
