@@ -1,7 +1,7 @@
 package com.integration.tests.customer.environment;
 
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.customer.CloudHomePage;
 import com.apriori.customer.dto.ApplicationDataDTO;
@@ -10,8 +10,8 @@ import com.apriori.login.LoginService;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
 import com.apriori.reader.file.user.UserCredentials;
-
 import com.apriori.testrail.TestRail;
+
 import com.integration.tests.customer.util.CustomerEnvironmentUtil;
 import org.junit.jupiter.api.Test;
 

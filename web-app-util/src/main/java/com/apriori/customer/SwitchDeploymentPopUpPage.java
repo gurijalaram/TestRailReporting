@@ -2,6 +2,7 @@ package com.apriori.customer;
 
 import com.apriori.PageUtils;
 import com.apriori.customer.enums.CustomerDeploymentsEnum;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
