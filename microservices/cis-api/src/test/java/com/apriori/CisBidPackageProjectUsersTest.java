@@ -30,23 +30,17 @@ public class CisBidPackageProjectUsersTest extends TestUtil {
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
     private static String projectName;
-    private final UserCredentials currentUser = UserUtil.getUser();
+    private static UserCredentials currentUser;
 
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
+        currentUser = UserUtil.getUser();
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageProjectResponse = CisBidPackageProjectResources.createBidPackageProject(projectName,
             bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
-    }
-
-    @AfterEach
-    public void testCleanup() {
-        CisBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT,
-            currentUser);
-        softAssertions.assertAll();
     }
 
     @Test
@@ -81,5 +75,12 @@ public class CisBidPackageProjectUsersTest extends TestUtil {
         userIdentityList.add(BidPackageProjectUserParameters.builder().identity(firstUserIdentity).build());
         userIdentityList.add(BidPackageProjectUserParameters.builder().identity(secondUserIdentity).build());
         CisBidPackageProjectResources.deleteBidPackageProjectUser(userIdentityList, bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser);
+    }
+
+    @AfterEach
+    public void testCleanup() {
+        CisBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT,
+            currentUser);
+        softAssertions.assertAll();
     }
 }
