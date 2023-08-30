@@ -1,7 +1,7 @@
-package com.apriori.customer;
+package com.apriori.qa.ach.ui.pageobjects;
 
 import com.apriori.PageUtils;
-import com.apriori.customer.enums.CustomerDeploymentsEnum;
+import com.apriori.qa.ach.ui.enums.CustomerDeploymentsEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

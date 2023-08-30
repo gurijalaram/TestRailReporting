@@ -16,6 +16,7 @@ dependencies {
     implementation project(':microservices:css-api')
     implementation project(':microservices:nts-api')
     implementation project(':microservices:cic-api')
+    implementation project(':web:ach-ui')
     implementation project(':web:cidapp-ui')
     implementation project(':web:ciconnect-ui')
     implementation project(':web:cia-ui')

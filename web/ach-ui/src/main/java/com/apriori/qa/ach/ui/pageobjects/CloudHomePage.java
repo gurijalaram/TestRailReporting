@@ -1,10 +1,9 @@
-package com.apriori.customer;
+package com.apriori.qa.ach.ui.pageobjects;
 
 import com.apriori.PageUtils;
-import com.apriori.customer.dto.ApplicationDataDTO;
-import com.apriori.customer.enums.CustomerDeploymentsEnum;
 import com.apriori.login.UserProfilePage;
 import com.apriori.properties.PropertiesContext;
+import com.apriori.qa.ach.ui.dto.ApplicationDataDTO;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

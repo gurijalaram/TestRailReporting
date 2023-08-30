@@ -1,15 +1,13 @@
 package com.integration.tests.customer.environment;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.apriori.PageUtils;
-import com.apriori.customer.CloudHomePage;
-import com.apriori.customer.dto.ApplicationDataDTO;
-import com.apriori.customer.enums.CustomerDeploymentsEnum;
 import com.apriori.login.LoginService;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
+import com.apriori.qa.ach.ui.dto.ApplicationDataDTO;
+import com.apriori.qa.ach.ui.enums.CustomerDeploymentsEnum;
+import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.testrail.TestRail;
 

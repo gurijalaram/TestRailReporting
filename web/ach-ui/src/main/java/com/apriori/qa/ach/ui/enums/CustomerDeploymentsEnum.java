@@ -1,4 +1,4 @@
-package com.apriori.customer.enums;
+package com.apriori.qa.ach.ui.enums;
 
 public enum CustomerDeploymentsEnum {
     PRODUCTION("Production"),
