@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo "Building..."
                 dockerfile {
-                    filename "qa-stacks.Dockerfile"
+                    filename 'qa-stacks.Dockerfile'
                 }
                 sh """
                     docker build \
