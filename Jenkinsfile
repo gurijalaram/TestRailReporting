@@ -24,11 +24,13 @@ pipeline {
         }
 
         stage("Build") {
+            dockerfile {
+            filename "qa-stacks.Dockerfile"
+            }
             steps {
                 echo "Building..."
                 sh """
                     docker build \
-                        -f qa-stacks.Dockerfile
                         --build-arg FOLDER=${folder} \
                         --build-arg MODULE=${module} \
                         .
