@@ -17,6 +17,9 @@ public class ModalDialog extends CICBasePage {
     @FindBy(xpath = "//div[@id='confirmButtons']/a[.='Confirm']")
     private WebElement alertBoxConfirmlBtn;
 
+    @FindBy(xpath = "//div[@id='confirmButtons']/a[.='Delete']")
+    private WebElement alertBoxDeleteBtn;
+
     public ModalDialog(WebDriver driver) {
         super(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -32,6 +35,14 @@ public class ModalDialog extends CICBasePage {
      */
     public WorkflowHome clickConfirmButton() {
         pageUtils.waitForElementAndClick(alertBoxConfirmlBtn);
-        return PageFactory.initElements(driver, WorkflowHome.class);
+        return new WorkflowHome(driver);
+    }
+
+    /**
+     * Clicks on Delete button of candidates modal list
+     *
+     */
+    public void clickDeleteButton() {
+        pageUtils.waitForElementAndClick(alertBoxDeleteBtn);
     }
 }
