@@ -26,6 +26,9 @@ pipeline {
         stage("Build") {
             steps {
                 echo "Building..."
+                withCredentials([
+                         string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                         string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')])
                 sh """
                     docker build -f qa-stacks.Dockerfile \
                         --build-arg FOLDER=${folder} \
