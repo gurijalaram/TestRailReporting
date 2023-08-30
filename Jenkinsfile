@@ -26,11 +26,13 @@ pipeline {
         stage("Build") {
             steps {
                 echo "Building..."
-                withCredentials([
-                         string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
-                         string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                sh """
-                    docker build -f qa-stacks.Dockerfile \
+                withCredentials([usernamePassword(
+                    credentialsId: 'NEXUS_APRIORI_COM',
+                    passwordVariable: 'NEXUS_PASS',
+                    usernameVariable: 'NEXUS_USER')]) {
+                    sh """
+                        docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
+                        docker build -f qa-stacks.Dockerfile \
                         --build-arg FOLDER=${folder} \
                         --build-arg MODULE=${module} \
                         .
