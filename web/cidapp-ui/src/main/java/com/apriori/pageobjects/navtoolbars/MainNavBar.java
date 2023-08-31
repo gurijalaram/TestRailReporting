@@ -14,7 +14,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import sun.jvm.hotspot.oops.Klass;
+//import sun.jvm.hotspot.oops.Klass;
 
 /**
  * @author cfrith

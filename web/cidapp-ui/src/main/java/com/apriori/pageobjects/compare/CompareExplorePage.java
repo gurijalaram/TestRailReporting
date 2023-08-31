@@ -19,6 +19,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * @author cfrith
  */
@@ -27,13 +31,16 @@ public class CompareExplorePage extends CompareToolbar {
 
     private static final Logger logger = LoggerFactory.getLogger(CompareExplorePage.class);
 
+    @FindBy(css = "div[class='card-header'] .left")
+    private WebElement tableFiltersDiv;
+
     @FindBy(css = "div h5")
     private WebElement componentHeader;
 
-    @FindBy(css = "div[class='card-header'] .left")
-    private WebElement scenarioCount;
+    @FindBy(css = "div[role='status']")
+    private WebElement loadingSpinner;
 
-    @FindBy(css = "[id='qa-scenario-list-configure-button']")
+    @FindBy(id = "qa-comparison-explorer-configure-button")
     private WebElement configureButton;
 
     @FindBy(id = "qa-scenario-list-filter-button")
@@ -54,6 +61,9 @@ public class CompareExplorePage extends CompareToolbar {
     @FindBy(css = "placeholder...")
     private WebElement submitButton;
 
+    @FindBy(css = ".comparison-row-link")
+    private List<WebElement> comparisonNames;
+
     private String scenarioLocator = "div[aria-label='%s']";
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -69,6 +79,8 @@ public class CompareExplorePage extends CompareToolbar {
         this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        pageUtils.waitForElementNotVisible(loadingSpinner, 2);
+        pageUtils.waitForJavascriptLoadComplete();
     }
 
     /**
@@ -119,12 +131,11 @@ public class CompareExplorePage extends CompareToolbar {
     /**
      * Gets the number of elements present on the page
      *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return size of the element as int
+     * @return List of all Comparison Names
      */
-    public int getListOfScenarios(String componentName, String scenarioName) {
-        return scenarioTableController.getListOfScenarios(componentName, scenarioName);
+    public List<String> getListOfComparisons()
+    {
+        return comparisonNames.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     /**

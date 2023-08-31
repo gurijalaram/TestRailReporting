@@ -1401,8 +1401,8 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {26175})
-    @Description("Verify Comparison Explorer displayed when tab clicked and no active comparisons")
+    @TestRail(id = {26956, 25983, 25984, })
+    @Description("Verify Comparison Explorer and new Comparison features")
     public void testComparisonExplorer() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
@@ -1448,11 +1448,9 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getBasis()).as("Verify comparison loaded as expected")
             .isEqualTo(part1.getComponentName().toUpperCase() + "  / " + part1.getScenarioName());
         softAssertions.assertThat(comparePage.getComparisonName()).as("Verify comparison is unsaved").isEqualTo("Untitled Comparison");
+        softAssertions.assertThat(comparePage.isRefreshEnabled()).as("Verify that Refresh button is disabled while comparison unsaved").isFalse();
 
         compareExplorePage = comparePage
-//            .saveNew()
-//            .inputName("Why must I do this")
-//            .save(ComparePage.class)
             .clickAllComparisons();
 
         softAssertions.assertThat(compareExplorePage.isComparisonNameFilterDisplayed()).as("Verify Comparison Explorer was Loaded from Comparison")
@@ -1463,12 +1461,21 @@ public class ComparisonTests extends TestBaseUI {
                 part1.getComponentName() + "," + part1.getScenarioName(),
                 part2.getComponentName() + "," + part2.getScenarioName())
             .createComparison()
-            .selectManualComparison()
-            .saveNew()
+            .selectManualComparison();
+
+        softAssertions.assertThat(comparePage.isRefreshEnabled()).as("Verify that Refresh button is disabled while comparison unsaved").isFalse();
+
+        comparePage = comparePage.saveNew()
             .inputName(comparisonName)
-            .save(ComparePage.class)
-            .clickAllComparisons()
-            .openComparison(comparisonName);
+            .save(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.isRefreshEnabled()).as("Verify that Refresh button is enabled now comparison is saved").isTrue();
+
+        compareExplorePage = comparePage.clickAllComparisons();
+
+        softAssertions.assertThat(comparisonName).as("Verify comparison visible in table").isIn(compareExplorePage.getListOfComparisons());
+
+        comparePage = compareExplorePage.openComparison(comparisonName);
 
         softAssertions.assertThat(comparePage.getComparisonName()).as("Verify that correct Comparison Name displayed").isEqualTo(comparisonName);
         softAssertions.assertThat(comparePage.getBasis()).as("Verify correct Basis in Comparison")
@@ -1478,4 +1485,5 @@ public class ComparisonTests extends TestBaseUI {
 
         softAssertions.assertAll();
     }
+
 }

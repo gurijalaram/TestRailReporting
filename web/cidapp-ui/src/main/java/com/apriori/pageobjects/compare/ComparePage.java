@@ -79,6 +79,15 @@ public class ComparePage extends CompareToolbar {
     }
 
     /**
+     * Check enabled status of Refresh Button
+     *
+     * @return - Boolean of Refresh button state
+     */
+    public Boolean isRefreshEnabled() {
+        return pageUtils.isElementEnabled(refreshButton);
+    }
+
+    /**
      * Click the Refresh Button
      *
      * @return - This Page Object
