@@ -7,7 +7,7 @@ import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
 import com.apriori.testrail.TestRail;
 
-import com.integration.tests.customer.util.CustomerEnvironmentUtil;
+import com.apriori.qa.integration.utils.CustomerEnvironmentUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

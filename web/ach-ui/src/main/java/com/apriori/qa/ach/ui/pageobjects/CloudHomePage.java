@@ -69,7 +69,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     public List<ApplicationDataDTO> getListOfApplications() {
         List<ApplicationDataDTO> applicationsDTO = new ArrayList<>();
 
-        List<WebElement> applications = pageUtils.waitForElementsToAppear(By.cssSelector("div[class='application-card css-12t9ocp']"));
+        List<WebElement> applications = pageUtils.waitForElementsToAppear(By.xpath("//div[contains(@class, 'application-card css')]"));
 
         applications.forEach(webApplication -> {
             applicationsDTO.add(ApplicationDataDTO.builder()
@@ -85,8 +85,8 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     public <T> T clickWebApplicationByName(String applicationName, Class<T> webPageType) {
         By byApplicationTitle = By.xpath(String.format("//div[@data-application='%s']//div[@class='card-header']", applicationName));
-
         pageUtils.waitForElementAndClick(byApplicationTitle);
+
         return PageFactory.initElements(driver, webPageType);
     }
 

@@ -1,4 +1,4 @@
-package com.integration.tests.customer.util;
+package com.apriori.qa.integration.utils;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.AccessControlResponse;
@@ -13,18 +13,28 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.Deployment;
 import com.apriori.models.response.Deployments;
+import com.apriori.pageobjects.customeradmin.CustomerAdminPage;
+import com.apriori.pageobjects.homepage.AdminHomePage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.testconfig.TestBaseUI;
 
 import org.apache.http.HttpStatus;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Customer environment util class
  * Contains methods with base functionality for customer environments tests
  */
 public class CustomerEnvironmentUtil extends TestBaseUI {
+    private static final Map<String, Class<? extends LoadableComponent>> APPLICATIONS_CLASS = new LinkedHashMap<>() {{
+        put( "aP Admin", AdminHomePage.class);
+        put( "Customer Admin", CustomerAdminPage.class);
+    }};
+
     protected final UserCredentials userCredentials = getAwsCustomerUserCredentials();
 
 
@@ -87,5 +97,14 @@ public class CustomerEnvironmentUtil extends TestBaseUI {
 
         return customerApplicationsResponse.getResponseEntity()
             .getItems();
+    }
+
+    protected Class<? extends LoadableComponent> getPageObjectTypeByApplicationName(final String applicationName) {
+        if(APPLICATIONS_CLASS.containsKey(applicationName)) {
+            return APPLICATIONS_CLASS.get(applicationName);
+        }
+
+        throw new IllegalArgumentException("Application to open is not supported. Application name:" + applicationName);
+
     }
 }
