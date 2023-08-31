@@ -705,6 +705,11 @@ public class JasperApiUtils {
         return propertyValue.toString();
     }
 
+    /**
+     * Generates report for Scenario Activity including Raw Data
+     *
+     * @return ArrayList of Jasper Report Summary instances
+     */
     public ArrayList<JasperReportSummaryIncRawData> scenarioActivityReportGenerationTwoTrendingPeriodsIncRawData() {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(this.jSessionID);
 
@@ -730,6 +735,11 @@ public class JasperApiUtils {
         return new ArrayList<>(Arrays.asList(jasperReportSummaryDaily, jasperReportSummaryYearly));
     }
 
+    /**
+     * Generates report for Scenario Activity excluding Raw Data
+     *
+     * @return ArrayList of Jasper Report Summary instances
+     */
     public ArrayList<JasperReportSummary> scenarioActivityReportGenerationTwoTrendingPeriods() {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(this.jSessionID);
 
