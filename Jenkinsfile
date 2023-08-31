@@ -6,7 +6,7 @@ def folder = "web"
 def module = "cidapp-ui"
 def runType = "docker-test"
 
-pipeline {
+ pipeline {
     agent {
         label "automation"
     }
@@ -33,6 +33,7 @@ pipeline {
                     sh """
                         docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
                         docker build -f qa-stacks.Dockerfile \
+                        --tag ${buildInfo.name}-${module}-${runType}:${timeStamp} 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${timeStamp}
                         --build-arg FOLDER=${folder} \
                         --build-arg MODULE=${module} \
                         .
