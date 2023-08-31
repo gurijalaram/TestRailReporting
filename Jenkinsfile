@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format('yyyyMMddHHss')
@@ -73,7 +75,6 @@ def runType = "docker-test"
         always {
             echo "Cleaning up.."
             sh "docker rmi ${buildInfo.name}-${module}-${runType}:${timeStamp}"
-            sh "docker volume rm \$(docker volume ls -qf dangling=true)"
             sh "docker system prune --all --force"
             cleanWs()
         }
