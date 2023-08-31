@@ -1,6 +1,5 @@
 package com.apriori.cir;
 
-
 import com.apriori.cir.models.response.ChartData;
 import com.apriori.cir.utils.ReportComponentsResponse;
 

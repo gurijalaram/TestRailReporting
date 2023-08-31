@@ -8,11 +8,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cir.JasperReportSummary;
 import com.apriori.cir.JasperReportSummaryIncRawData;
 import com.apriori.cir.enums.CirApiEnum;
+import com.apriori.cir.models.enums.InputControlsEnum;
 import com.apriori.cir.models.request.ReportRequest;
 import com.apriori.cir.models.response.ChartDataPoint;
 import com.apriori.cir.models.response.InputControl;
 import com.apriori.cir.utils.JasperReportUtil;
-import com.apriori.cirapi.entity.enums.InputControlsEnum;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ProcessGroupEnum;
 
@@ -94,7 +94,7 @@ public class JasperApiUtils {
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
-            setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.valueOf(keyToSet.toUpperCase().replace(" ", "_")).getInputControlId(), valueToSet);
+            setReportParameterByName(InputControlsEnum.valueOf(keyToSet.toUpperCase().replace(" ", "_")).getInputControlId(), valueToSet);
         }
 
         if (processGroupName != null) {
@@ -226,7 +226,7 @@ public class JasperApiUtils {
         String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
         String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
 
-        setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
         JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(reportRequest);
 
         String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();

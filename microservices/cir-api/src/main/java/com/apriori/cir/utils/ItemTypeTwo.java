@@ -5,9 +5,9 @@ import lombok.Data;
 import java.util.ArrayList;
 
 @Data
-public class Item2 {
+public class ItemTypeTwo {
     private String name;
     private String _jrid;
-    private ArrayList<Item> properties;
-    private ArrayList<Item4> data;
+    private ArrayList<ItemTypeOne> properties;
+    private ArrayList<ItemTypeThree> data;
 }

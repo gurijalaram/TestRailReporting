@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 @Data
 public class DataItem {
-    private ArrayList<Item> properties;
+    private ArrayList<ItemTypeOne> properties;
     @JsonProperty("xCategories")
     private ArrayList<String> xcategories;
-    private ArrayList<Item2> series;
+    private ArrayList<ItemTypeTwo> series;
 }

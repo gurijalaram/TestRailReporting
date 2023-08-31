@@ -4,7 +4,6 @@ import com.apriori.cir.JasperReportSummary;
 import com.apriori.cir.JasperReportSummaryIncRawData;
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.cir.enums.ReportChartType;
-import com.apriori.cir.models.request.ParametersRequest;
 import com.apriori.cir.models.request.ReportExportRequest;
 import com.apriori.cir.models.request.ReportRequest;
 import com.apriori.cir.models.response.ChartData;
@@ -26,7 +25,6 @@ import org.apache.http.HttpStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,19 +57,6 @@ public class JasperReportUtil {
         if (value.toString().startsWith("SHEET")) {
             requestEntity.inlineVariables("%20", "%20");
         }
-
-        ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
-
-        return responseResponseWrapper.getResponseEntity();
-    }
-
-    public InputControl updateInputControls(CirApiEnum value, ParametersRequest parametersRequest) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.RECOMMENDED_TEST_PARTS, InputControl.class)
-            .headers(initHeadersWithJSession())
-            .inlineVariables("%20")
-            .body(parametersRequest)
-            .expectedResponseCode(HttpStatus.SC_OK)
-            .urlEncodingEnabled(false);
 
         ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
 

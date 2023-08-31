@@ -1,5 +1,6 @@
 package com.apriori.cir.utils;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -7,7 +8,8 @@ import java.util.ArrayList;
 @Data
 public class Properties {
     private ArrayList<Services> services;
-    private String renderto;
+    @JsonProperty("renderto")
+    private String renderTo;
     private int width;
     private int height;
     private String prop;

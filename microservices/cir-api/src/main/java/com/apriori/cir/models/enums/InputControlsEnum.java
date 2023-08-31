@@ -1,4 +1,4 @@
-package com.apriori.cirapi.entity.enums;
+package com.apriori.cir.models.enums;
 
 public enum InputControlsEnum {
 
