@@ -35,7 +35,7 @@ def runType = "docker-test"
                         docker build -f qa-stacks.Dockerfile \
                         --build-arg FOLDER=${folder} \
                         --build-arg MODULE=${module} \
-                        --tag ${buildInfo.name}-${module}-${runType}:${timeStamp} 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${timeStamp}
+                        --tag ${buildInfo.name}-${module}-${runType}:${timeStamp} 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:latest
                         .
                 """
                 }
