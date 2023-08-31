@@ -2,6 +2,7 @@ package com.apriori.cds.models.response;
 
 import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.models.response.Enablements;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -45,4 +46,5 @@ public class User {
     private Boolean hasCompleteProfile;
     private String mfaAuthenticator;
     private List<String> roles;
+    private Enablements enablements;
 }
