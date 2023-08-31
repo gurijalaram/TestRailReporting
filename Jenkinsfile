@@ -35,7 +35,7 @@ def runType = "docker-test"
                         docker build -f qa-stacks.Dockerfile \
                         --build-arg FOLDER=${folder} \
                         --build-arg MODULE=${module} \
-                        --tag ${buildInfo.name}-${module}-${runType}:${timeStamp}
+                        --tag ${buildInfo.name}-${module}-${runType}:${timeStamp} \
                         .
                 """
                 }
