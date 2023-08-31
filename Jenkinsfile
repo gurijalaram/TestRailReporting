@@ -3,7 +3,7 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format('yyyyMMddHHss')
-def javaOpts = ""
+def buildVersion = "latest"
 def folder = "web"
 def module = "cidapp-ui"
 def runType = "docker-test"
@@ -37,7 +37,7 @@ def runType = "docker-test"
                         docker build -f qa-stacks.Dockerfile \
                         --build-arg FOLDER=${folder} \
                         --build-arg MODULE=${module} \
-                        --tag ${buildInfo.name}-${module}-${runType}:${timeStamp} \
+                        --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
                         .
                 """
                 }
@@ -51,7 +51,7 @@ def runType = "docker-test"
                         string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh """
                         docker tag \
-                            ${buildInfo.name}-${module}-${runType}:latest 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:latest
+                            ${buildInfo.name}-${module}-${runType}:latest 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
                     """
                 }
             }
@@ -64,7 +64,7 @@ def runType = "docker-test"
                         string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh """
                         docker push \
-                            563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:latest
+                            563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
                     """
                 }
             }
