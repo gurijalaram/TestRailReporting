@@ -1,5 +1,6 @@
 package com.apriori.cir;
 
+
 import com.apriori.cir.models.response.ChartData;
 import com.apriori.cir.utils.ReportComponentsResponse;
 
@@ -17,9 +18,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Slf4j
-public class JasperReportSummary {
-    private Document reportHtmlPart;
+public class JasperReportSummaryIncRawData {
+    private ReportComponentsResponse chartDataRaw;
     private List<ChartData> chartData;
+    private Document reportHtmlPart;
 
     public ChartData getFirstChartData() {
         if (chartData.isEmpty()) {

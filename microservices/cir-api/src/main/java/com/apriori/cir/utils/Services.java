@@ -1,10 +1,11 @@
 package com.apriori.cir.utils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 
-@lombok.Data
+@Data
 public class Services {
     private String service;
     @JsonProperty("data")
-    private DataItem dataItem;
+    private Object dataItem;
 }

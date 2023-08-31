@@ -1,6 +1,7 @@
 package com.apriori.cir.utils;
 
 import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.JasperReportSummaryIncRawData;
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.cir.enums.ReportChartType;
 import com.apriori.cir.models.request.ParametersRequest;
@@ -88,6 +89,26 @@ public class JasperReportUtil {
         String reportId = exportedReport.getId();
 
         return JasperReportSummary.builder()
+            .reportHtmlPart(this.getReportHtmlData(requestId,
+                reportId)
+            )
+            .chartData(this.getReportChartData(requestId,
+                reportId)
+            )
+            .build();
+    }
+
+    public JasperReportSummaryIncRawData generateJasperReportSummaryIncRawData(ReportRequest reportRequest) {
+        ReportStatusResponse response = this.generateReport(reportRequest);
+        ReportStatusResponse exportedReport = this.doReportExport(response);
+
+        this.waitUntilReportReady(response.getRequestId(),
+            exportedReport.getId());
+
+        String requestId = response.getRequestId();
+        String reportId = exportedReport.getId();
+
+        return JasperReportSummaryIncRawData.builder()
             .reportHtmlPart(this.getReportHtmlData(requestId,
                 reportId)
             )
