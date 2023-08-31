@@ -37,9 +37,9 @@ pipeline {
     agent { label 'automation && docker' }
 
     stages {
-        stage('Ship') {
+        stage('Tag and Push') {
             steps {
-                echo 'Shipping..'
+                echo 'Tag..'
                 script {
                     withCredentials([usernamePassword(
                             credentialsId: 'NEXUS_APRIORI_COM',
@@ -47,8 +47,8 @@ pipeline {
                             usernameVariable: 'LOCAL_REGISTRY_USER')]) {
 
                         // Tag and push to Nexus.
-                        sh "docker login -u ${LOCAL_REGISTRY_USER} -p ${LOCAL_REGISTRY_PASS} ${nexusDockerRegistry}"
-                        tag_n_push_version(nexusDockerRegistry, buildInfo.name, buildInfo.version, timeStamp)
+                        //sh "docker login -u ${LOCAL_REGISTRY_USER} -p ${LOCAL_REGISTRY_PASS} ${nexusDockerRegistry}"
+                        //tag_n_push_version(nexusDockerRegistry, buildInfo.name, buildInfo.version, timeStamp)
                     }
 
                     // Prepare login command.
