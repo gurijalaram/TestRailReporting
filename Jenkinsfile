@@ -74,7 +74,7 @@ def runType = "docker-test"
     post {
         always {
             echo "Cleaning up.."
-            sh "docker rmi ${buildInfo.name}-${module}-${runType}:${timeStamp}"
+            sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
             sh "docker system prune --all --force"
             cleanWs()
         }
