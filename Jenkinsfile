@@ -1,5 +1,3 @@
-#!/usr/bin/env groovy
-
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format('yyyyMMddHHss')
