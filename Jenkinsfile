@@ -48,7 +48,7 @@ pipeline {
                         string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh """
                         docker tag \
-                            ${buildInfo.name}-${module}-${runType}:${timeStamp} 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${timeStamp}
+                            ${buildInfo.name}-${module}-${runType}:${timeStamp} 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:latest
                     """
                 }
             }
