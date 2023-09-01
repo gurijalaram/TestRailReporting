@@ -5,9 +5,9 @@ import com.apriori.cds.models.response.AccessControlResponse;
 import com.apriori.cds.models.response.User;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
+import com.apriori.qa.integration.utils.CustomerEnvironmentUtil;
 import com.apriori.testrail.TestRail;
 
-import com.apriori.qa.integration.utils.CustomerEnvironmentUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -76,6 +76,9 @@ public class WorkflowHome extends CICBasePage {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.isElementDisplayed(workflowLabel);
+        pageUtils.isElementDisplayed(scheduleTab);
+
     }
 
     public WorkflowHome setTestData(WorkFlowData workFlowData) {

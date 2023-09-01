@@ -11,10 +11,16 @@ import com.apriori.http.utils.AwsParameterStoreUtil;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.login.CommonLoginPageImplementation;
 import com.apriori.models.response.Deployment;
 import com.apriori.models.response.Deployments;
 import com.apriori.pageobjects.customeradmin.CustomerAdminPage;
+import com.apriori.pageobjects.header.ReportsHeader;
 import com.apriori.pageobjects.homepage.AdminHomePage;
+import com.apriori.pageobjects.messages.MessagesPage;
+import com.apriori.pageobjects.navtoolbars.MainNavBar;
+import com.apriori.pageobjects.workflows.WorkflowHome;
+import com.apriori.qa.ach.ui.pageobjects.applications.AppStreamPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.testconfig.TestBaseUI;
 
@@ -31,76 +37,88 @@ import java.util.Map;
  */
 public class CustomerEnvironmentUtil extends TestBaseUI {
     private static final Map<String, Class<? extends LoadableComponent>> APPLICATIONS_CLASS = new LinkedHashMap<>() {{
-        put( "aP Admin", AdminHomePage.class);
-        put( "Customer Admin", CustomerAdminPage.class);
-    }};
+            put("aP Admin", AdminHomePage.class);
+            put("aP Analytics", ReportsHeader.class);
+            put("aP Connect", WorkflowHome.class);
+            put("aP Design", CommonLoginPageImplementation.class);
+            put("aP Pro", AppStreamPage.class);
+            put("aP Workspace", MessagesPage.class);
+            put("Customer Admin", CustomerAdminPage.class);
+            put("Electronics Data Collection", CommonLoginPageImplementation.class);
+        }};
 
     protected final UserCredentials userCredentials = getAwsCustomerUserCredentials();
 
 
     protected UserCredentials getAwsCustomerUserCredentials() {
-        final String username = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGenerateUser");
-        final String password = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGeneratePassword");
+        //        final String username = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGenerateUser");
+        //        final String password = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGeneratePassword");
+
+        final String username = "qa-automation-01@apriori.com";
+        final String password = "TrumpetSnakeFridgeToasty18!%";
 
         return new UserCredentials(username, password);
     }
 
     /**
      * Find information about customer user
+     *
      * @param email
      * @param customerIdentity
      * @return filtered customer user and all related information
      */
     protected static User getCustomerUserDataByEmail(final String email, final String customerIdentity) {
         RequestEntity customerUsersRequest = RequestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, Users.class)
-            .inlineVariables(customerIdentity)
-            .queryParams(new QueryParams().use("email[EQ]", email))
-            .expectedResponseCode(HttpStatus.SC_OK);
+                .inlineVariables(customerIdentity)
+                .queryParams(new QueryParams().use("email[EQ]", email))
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Users> customerUsersResponse = HTTPRequest.build(customerUsersRequest).get();
 
         return customerUsersResponse
-            .getResponseEntity()
-            .getItems().stream().findFirst().orElseThrow(IllegalArgumentException::new);
+                .getResponseEntity()
+                .getItems().stream().findFirst().orElseThrow(IllegalArgumentException::new);
     }
 
     /**
      * Get user access information for a specific customer
+     *
      * @param userIdentity
      * @param customerIdentity
      * @return user access information
      */
     protected List<AccessControlResponse> getUserAccessControls(final String userIdentity, final String customerIdentity) {
         RequestEntity userAccessControlRequest = RequestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
-            .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(HttpStatus.SC_OK);
+                .inlineVariables(customerIdentity, userIdentity)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<AccessControls> serviceAccountControls = HTTPRequest.build(userAccessControlRequest)
-            .get();
+                .get();
 
         return serviceAccountControls.getResponseEntity()
-            .getItems();
+                .getItems();
     }
 
     /**
      * Get customer deployments and all related objects information
+     *
      * @param customerIdentity
      * @return customer deployments
      */
     protected List<Deployment> getCustomerDeployments(final String customerIdentity) {
         RequestEntity customerApplicationsRequest = RequestEntityUtil.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployments.class)
-            .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_OK);
+                .inlineVariables(customerIdentity)
+                .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Deployments> customerApplicationsResponse = HTTPRequest.build(customerApplicationsRequest)
-            .get();
+                .get();
 
         return customerApplicationsResponse.getResponseEntity()
-            .getItems();
+                .getItems();
     }
 
     protected Class<? extends LoadableComponent> getPageObjectTypeByApplicationName(final String applicationName) {
-        if(APPLICATIONS_CLASS.containsKey(applicationName)) {
+        if (APPLICATIONS_CLASS.containsKey(applicationName)) {
             return APPLICATIONS_CLASS.get(applicationName);
         }
 

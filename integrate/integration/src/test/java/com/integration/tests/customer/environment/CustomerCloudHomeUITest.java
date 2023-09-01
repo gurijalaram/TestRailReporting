@@ -5,15 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.apriori.login.LoginService;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
+import com.apriori.pageobjects.customeradmin.CustomerAdminPage;
+import com.apriori.pageobjects.messages.MessagesPage;
 import com.apriori.qa.ach.ui.dto.ApplicationDataDTO;
 import com.apriori.qa.ach.ui.enums.CustomerDeploymentsEnum;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
+import com.apriori.qa.ach.ui.pageobjects.applications.AppStreamPage;
+import com.apriori.qa.integration.utils.CustomerEnvironmentUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.testrail.TestRail;
 
-import com.apriori.qa.integration.utils.CustomerEnvironmentUtil;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -44,28 +48,6 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
             .clickSubmitButton();
 
         this.validateDeploymentApplications(cloudHomePage, mappedCustomerDeployments, deploymentToTest);
-
-
-//        deploymentToTest = CustomerDeploymentsEnum.PREVIEW;
-//        cloudHomePage.clickUserPanel()
-//            .clickSwitchDeploymentButton()
-//            .clickDeploymentSelector()
-//            .selectDeployment(deploymentToTest)
-//            .clickSubmitButton();
-//
-//        this.validateDeploymentApplications(cloudHomePage, mappedCustomerDeployments, deploymentToTest);
-//
-//
-//        deploymentToTest = CustomerDeploymentsEnum.SANDBOX;
-//        cloudHomePage.clickUserPanel()
-//            .clickSwitchDeploymentButton()
-//            .clickDeploymentSelector()
-//            .selectDeployment(deploymentToTest)
-//            .clickSubmitButton();
-//
-//        this.validateDeploymentApplications(cloudHomePage, mappedCustomerDeployments, deploymentToTest);
-
-
     }
 
     private void validateDeploymentApplications(CloudHomePage cloudHomePage, HashMap<String, List<ApplicationDataDTO>> mappedCustomerDeployments, CustomerDeploymentsEnum customerDeploymentsEnum) {
@@ -75,7 +57,7 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
 
         List<ApplicationDataDTO> userApplicationsFromUI = cloudHomePage.getListOfApplications();
 
-//        this.validateApplicationsUIText(userApplicationsFromUI, mappedCustomerDeployments.get(currentUIDeployment));
+        //        this.validateApplicationsUIText(userApplicationsFromUI, mappedCustomerDeployments.get(currentUIDeployment));
         this.validateApplicationsAreLaunchedSuccessfully(userApplicationsFromUI);
     }
 
@@ -87,25 +69,18 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
     private void validateApplicationsAreLaunchedSuccessfully(List<ApplicationDataDTO> userApplicationsFromUI) {
 
         userApplicationsFromUI = Arrays.asList(
-                new ApplicationDataDTO("aP Admin", null, null),
-                new ApplicationDataDTO("Customer Admin", null, null),
-                new ApplicationDataDTO("Not supported", null, null)
+                new ApplicationDataDTO("aP Pro", null,null),
+                new ApplicationDataDTO("aP Workspace", null,null),
+                new ApplicationDataDTO("Customer Admin", null,null),
+                new ApplicationDataDTO("Electronics Data Collection", null,null)
         );
+
         userApplicationsFromUI.forEach(application -> {
+            System.out.println("*********************** Application name **********************" + application.getApplicationName());
+
             cloudHomePage.clickWebApplicationByName(application.getApplicationName(),
                     getPageObjectTypeByApplicationName(application.getApplicationName())
             );
-
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);
-            driver.close();
-            driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
-
-//            cloudHomePage.clickWebApplicationByName(application.getApplicationName());
         });
     }
 

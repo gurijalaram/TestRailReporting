@@ -87,7 +87,17 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         By byApplicationTitle = By.xpath(String.format("//div[@data-application='%s']//div[@class='card-header']", applicationName));
         pageUtils.waitForElementAndClick(byApplicationTitle);
 
-        return PageFactory.initElements(driver, webPageType);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+        }
+
+        driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);
+        T responsePage = PageFactory.initElements(driver, webPageType);
+        driver.close();
+        driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
+
+        return responsePage;
     }
 
 
