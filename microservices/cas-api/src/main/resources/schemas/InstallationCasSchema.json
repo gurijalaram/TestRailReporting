@@ -27,7 +27,8 @@
         "cidGlobalKey",
         "cidApiId",
         "cidApiSecret",
-        "region"
+        "region",
+        "highMem"
       ],
       "optional": [
         "updatedAt",
@@ -102,6 +103,9 @@
         },
         "updatedBy": {
           "type": "string"
+        },
+        "highMem": {
+          "type": "boolean"
         }
       }
     }
