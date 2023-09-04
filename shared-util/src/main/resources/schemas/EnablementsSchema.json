@@ -1,0 +1,63 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "default": {},
+      "title": "The response Schema",
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "connectAdminEnabled",
+        "highMemEnabled",
+        "previewEnabled",
+        "sandboxEnabled",
+        "userAdminEnabled"
+      ],
+      "optional": [
+        "updatedBy",
+        "updatedAt",
+        "customerAssignedRole"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "connectAdminEnabled": {
+          "type": "boolean"
+        },
+        "highMemEnabled": {
+          "type": "boolean"
+        },
+        "previewEnabled": {
+          "type": "boolean"
+        },
+        "sandboxEnabled": {
+          "type": "boolean"
+        },
+        "userAdminEnabled": {
+          "type": "boolean"
+        },
+        "customerAssignedRole": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

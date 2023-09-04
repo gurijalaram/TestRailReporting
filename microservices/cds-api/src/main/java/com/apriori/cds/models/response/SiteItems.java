@@ -1,6 +1,7 @@
 package com.apriori.cds.models.response;
 
 import com.apriori.annotations.Schema;
+import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Pagination;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,5 +15,5 @@ import java.util.List;
 @Data
 @JsonRootName("response")
 public class SiteItems extends Pagination {
-    private List<LicensedSiteApplications> items;
+    private List<LicensedApplications> items;
 }
