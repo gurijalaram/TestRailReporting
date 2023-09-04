@@ -7,7 +7,7 @@ sourceSets {
     main {
         resources {
             srcDirs += [
-                    project('::shared-util').sourceSets.main.resources
+                    project(':shared-util').sourceSets.main.resources
             ]
         }
     }
@@ -16,5 +16,6 @@ sourceSets {
 dependencies {
     implementation project(':shared-util')
     implementation project(':microservices:css-api')
+    implementation project(':microservices:cus-api')
     implementation project(':serialization-util')
 }

@@ -3,7 +3,8 @@ package com.apriori.cidappapi.utils;
 import com.apriori.cidappapi.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.models.response.PeopleResponse;
 import com.apriori.cidappapi.models.response.PersonResponse;
-import com.apriori.cidappapi.models.response.User;
+import com.apriori.cus.enums.CusAppAPIEnum;
+import com.apriori.cus.models.response.User;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
@@ -19,7 +20,7 @@ public class PeopleUtil {
      * @return user object
      */
     public User getCurrentUser(UserCredentials userCredentials) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.CURRENT_USER, User.class)
+        final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.CURRENT_USER, User.class)
             .token(userCredentials.getToken());
 
         ResponseWrapper<User> userResponse = HTTPRequest.build(requestEntity).get();

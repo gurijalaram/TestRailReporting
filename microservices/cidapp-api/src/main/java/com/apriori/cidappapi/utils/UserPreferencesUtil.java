@@ -1,8 +1,8 @@
 package com.apriori.cidappapi.utils;
 
-import com.apriori.cidappapi.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.models.response.preferences.PreferenceItemsResponse;
 import com.apriori.cidappapi.models.response.preferences.PreferenceResponse;
+import com.apriori.cus.enums.CusAppAPIEnum;
 import com.apriori.enums.ColourEnum;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.DecimalPlaceEnum;
@@ -36,7 +36,7 @@ public class UserPreferencesUtil {
      * @return response object
      */
     public ResponseWrapper<String> patchPreference(UserCredentials userCredentials, PreferencesEnum preference, String value) {
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
+        RequestEntity responseEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
             .queryParams(new QueryParams().use("pageSize", "500"))
             .token(userCredentials.getToken());
 
@@ -46,7 +46,7 @@ public class UserPreferencesUtil {
 
         PreferenceResponse preferenceResponse = preferencesItems.stream().filter(x -> x.getName().equals(preference.getPreference())).collect(Collectors.toList()).get(0);
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, null)
             .token(userCredentials.getToken())
             .customBody("{\"userPreferences\": {"
                 + "\"" + preferenceResponse.getIdentity() + "\":\"" + value + "\""
@@ -94,7 +94,7 @@ public class UserPreferencesUtil {
             }
         }
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, null)
             .token(userCredentials.getToken())
             .customBody("{\"userPreferences\": [ " + updatePreferences + " ]}");
 
@@ -109,7 +109,7 @@ public class UserPreferencesUtil {
      * @return List of preferences
      */
     public List<PreferenceResponse> getPreferences(UserCredentials userCredentials) {
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
+        RequestEntity responseEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
             .queryParams(new QueryParams().use("pageSize", "500"))
             .token(userCredentials.getToken());
 
@@ -168,7 +168,7 @@ public class UserPreferencesUtil {
         String batchIdentity = mappedResponse.get(PreferencesEnum.DEFAULT_BATCH_SIZE.getPreference());
         String tolModeIdentity = mappedResponse.get(PreferencesEnum.TOLERANCE_MODE.getPreference());
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, null)
             .token(token)
             .customBody("{\"userPreferences\": {"
                 + "\"" + asmStrategyIdentity + "\":\"\","
@@ -215,7 +215,7 @@ public class UserPreferencesUtil {
         customBody.deleteCharAt(customBody.length() - 1)
             .append("}}");
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, null)
             .token(token)
             .customBody(customBody.toString());
 
@@ -229,7 +229,7 @@ public class UserPreferencesUtil {
      * @return Hashmap of preference names and associated identities
      */
     private Map<String, String> getPreferenceIdentities(String token) {
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
+        RequestEntity responseEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
             .queryParams(new QueryParams().use("pageSize", "500"))
             .token(token);
 

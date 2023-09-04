@@ -1,5 +1,6 @@
 package com.apriori.cds.utils;
 
+import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
 import com.apriori.cds.enums.CASCustomerEnum;
@@ -49,6 +50,7 @@ import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Customer;
 import com.apriori.models.response.Customers;
 import com.apriori.models.response.Deployment;
+import com.apriori.models.response.Enablements;
 import com.apriori.models.response.Features;
 import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
@@ -351,6 +353,7 @@ public class CdsTestUtil extends TestUtil {
                     .siteIdentity(siteIdentity)
                     .cloudReference(cloudReference)
                     .apVersion("2020 R1")
+                    .highMem(false)
                     .build());
 
         return HTTPRequest.build(requestEntity).post();
@@ -657,7 +660,7 @@ public class CdsTestUtil extends TestUtil {
                     .customerIdentity(Constants.getAPrioriInternalCustomerIdentity())
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
-                    .applicationIdentity(PropertiesContext.get("cds.apriori_cloud_home_identity"))
+                    .applicationIdentity(PropertiesContext.get("cds.ap_workspace_application_identity"))
                     .createdBy("#SYSTEM00000")
                     .roleName("USER")
                     .roleIdentity(PropertiesContext.get("cds.identity_role"))
@@ -939,5 +942,29 @@ public class CdsTestUtil extends TestUtil {
             .queryParams(new QueryParams().use("pageSize", "20"))
             .expectedResponseCode(HttpStatus.SC_OK);
         return (Roles) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Creates or updates user enablements
+     *
+     * @param customerIdentity - customer identity
+     * @param userIdentity - user identity
+     * @param customerAssignedRole - customerAssignedRole
+     * @param highMem - true or false
+     * @return new object
+     */
+    public ResponseWrapper<Enablements> createUpdateEnablements(String customerIdentity, String userIdentity, String customerAssignedRole, Boolean highMem) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_ENABLEMENTS, Enablements.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .body("enablements",
+                Enablements.builder()
+                     .customerAssignedRole(customerAssignedRole)
+                     .highMemEnabled(highMem)
+                     .createdBy("#SYSTEM00000")
+                     .updatedBy("#SYSTEM00000")
+                     .build())
+            .expectedResponseCode(SC_CREATED);
+
+        return HTTPRequest.build(requestEntity).put();
     }
 }
