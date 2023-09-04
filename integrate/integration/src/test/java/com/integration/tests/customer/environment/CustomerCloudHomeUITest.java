@@ -5,29 +5,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.apriori.login.LoginService;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
-import com.apriori.pageobjects.customeradmin.CustomerAdminPage;
-import com.apriori.pageobjects.messages.MessagesPage;
 import com.apriori.qa.ach.ui.dto.ApplicationDataDTO;
 import com.apriori.qa.ach.ui.enums.CustomerDeploymentsEnum;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
-import com.apriori.qa.ach.ui.pageobjects.applications.AppStreamPage;
 import com.apriori.qa.integration.utils.CustomerEnvironmentUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.testrail.TestRail;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
     private final UserCredentials userCredentials = getAwsCustomerUserCredentials();
     private CloudHomePage cloudHomePage;
     private LoginService aprioriLoginService;
-
 
     @Test
     @TestRail(id = {27951})
@@ -76,6 +73,7 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
         );
 
         userApplicationsFromUI.forEach(application -> {
+//            log.debug("*********************** Testing application name: {}  **********************", application.getApplicationName());
             System.out.println("*********************** Application name **********************" + application.getApplicationName());
 
             cloudHomePage.clickWebApplicationByName(application.getApplicationName(),
