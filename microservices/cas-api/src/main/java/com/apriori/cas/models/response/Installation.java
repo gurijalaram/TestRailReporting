@@ -50,4 +50,5 @@ public class Installation {
     private String cidApiSecret;
     private List<Application> applications = null;
     private String region;
+    private Boolean highMem;
 }
