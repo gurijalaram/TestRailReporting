@@ -26,6 +26,7 @@ qa-test:
     appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity: 7FLINC95H3A3
     cia_application_identity: 1J8M416FBJCD
+    ap_workspace_application_identity: H337GKD0M01A
     automation_user_identity02: AKC81M50KGFE
     automation_user_identity03: AFMMDK0IJHG4
     identity_role: 67J517C9L763
