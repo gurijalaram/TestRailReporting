@@ -20,19 +20,22 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class CisBidPackageTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
-    private static final UserCredentials currentUser = UserUtil.getUser();
+    private static UserCredentials currentUser;
     private static String bidPackageName;
 
-    @BeforeAll
-    public static void testSetup() {
+    @BeforeEach
+    public  void testSetup() {
         softAssertions = new SoftAssertions();
+        currentUser = UserUtil.getUser();
         bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
     }
@@ -41,7 +44,7 @@ public class CisBidPackageTest extends TestUtil {
     @TestRail(id = {14126, 14130})
     @Description("Create, Delete and verify Bid Package is deleted")
     public void testCreateDeleteAndVerifyBidPackage() {
-        String bpName = bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bpName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         BidPackageResponse createBidPackageResponse = CisBidPackageResources.createBidPackage(bpName, currentUser);
         softAssertions.assertThat(createBidPackageResponse.getName()).isEqualTo(bpName);
 
@@ -52,7 +55,6 @@ public class CisBidPackageTest extends TestUtil {
 
         softAssertions.assertThat(cisErrorMessageResponse.getMessage()).contains("Can't find bidPackage with identity '" + createBidPackageResponse.getIdentity() + "'");
 
-        softAssertions.assertAll();
     }
 
     @Test
@@ -64,8 +66,6 @@ public class CisBidPackageTest extends TestUtil {
         softAssertions.assertThat(getBidPackagesResponse.getIsFirstPage()).isTrue();
         softAssertions.assertThat(getBidPackagesResponse.getPageNumber()).isEqualTo(1);
         softAssertions.assertThat(getBidPackagesResponse.getItems().size()).isGreaterThan(0);
-
-        softAssertions.assertAll();
     }
 
     @Test
@@ -134,10 +134,10 @@ public class CisBidPackageTest extends TestUtil {
     @TestRail(id = {14371})
     @Description("Create Bid Package empty name")
     public void testCreateBidPackageWithExistingName() {
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        BidPackageResponse createBidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
+        String packageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        BidPackageResponse createBidPackageResponse = CisBidPackageResources.createBidPackage(packageName, currentUser);
 
-        softAssertions.assertThat(createBidPackageResponse.getName()).isEqualTo(bidPackageName);
+        softAssertions.assertThat(createBidPackageResponse.getName()).isEqualTo(packageName);
 
         BidPackageRequest bidPackageRequest = BidPackageRequest.builder()
             .bidPackage(BidPackageParameters.builder()
@@ -153,11 +153,12 @@ public class CisBidPackageTest extends TestUtil {
             + createBidPackageResponse.getName() + "' already exists for Customer '"
             + createBidPackageResponse.getCustomerIdentity() + "'.");
 
-        softAssertions.assertAll();
+        CisBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
-    @AfterAll
-    public static void testCleanup() {
+    @AfterEach
+    public void testCleanup() {
+        softAssertions.assertAll();
         CisBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
     }
 }

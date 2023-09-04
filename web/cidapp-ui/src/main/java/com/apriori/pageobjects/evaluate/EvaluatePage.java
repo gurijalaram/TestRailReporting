@@ -164,10 +164,13 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(css = "[data-icon = 'xmark']")
     private WebElement closeInvalidSourcePanelButton;
-    @FindBy(xpath = "//div[contains(@class,'sustainability-summary-card card')]/div[1]")
-    private WebElement sustainabilityTabHeader;
-    @FindBy(xpath = "//div[contains(@class,'sustainability-summary-card card')]/div[2]")
-    private WebElement sustainabilityTabBody;
+
+    @FindBy(css = ".sustainability-summary-card")
+    private WebElement sustainabilityDetails;
+
+    @FindBy(css = ".sustainability-summary-card .property-name")
+    private List<WebElement> sustainabilityPropertyNames;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -723,26 +726,16 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return true/false
      */
-    public boolean isSustainabilityTabIsPresentedForCosted() {
-        String header =
-            pageUtils.waitForElementToAppear(sustainabilityTabHeader).getText();
-        String body =
-            pageUtils.waitForElementToAppear(sustainabilityTabBody).getText();
-        if (!header.contains("SUSTAINABILITY")) {
-            System.out.println("header SUSTAINABILITY is not presented on the screen");
-            return false;
-        }
-        List<String> list = Arrays.asList("Processes Missing Sustainability", "Material Carbon", "Process Carbon",
-            "Logistics Carbon", "Total Carbon");
+    public boolean isSustainabilityDetailsPresentForCosted() {
+        return pageUtils.isElementDisplayed(sustainabilityDetails);
+    }
 
-        return list.stream()
-            .allMatch(elementToCheck -> {
-                if (!body.contains(elementToCheck)) {
-                    System.out.println("Missed element:" + elementToCheck);
-                    return false;
-                }
-                return true;
-            });
+    /**
+     * Get list of property names in sustainability card
+     * @return list of string
+     */
+    public List<String> getSustainabilityNames() {
+        return pageUtils.waitForElementsToAppear(sustainabilityPropertyNames).stream().map(o -> o.getAttribute("textContent")).collect(Collectors.toList());
     }
 
     /**
