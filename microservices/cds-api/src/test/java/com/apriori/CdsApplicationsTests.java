@@ -39,7 +39,7 @@ public class CdsApplicationsTests {
             Constants.getApProApplicationIdentity()
         );
 
-        soft.assertThat(response.getResponseEntity().getName()).isEqualTo("aPriori Professional");
+        soft.assertThat(response.getResponseEntity().getName()).isEqualTo("aP Pro");
         soft.assertAll();
     }
 

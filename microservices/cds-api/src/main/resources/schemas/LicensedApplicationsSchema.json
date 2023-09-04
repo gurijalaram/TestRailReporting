@@ -12,11 +12,17 @@
         "application",
         "applicationIdentity"
       ],
+      "optional": [
+        "createdAt"
+      ],
       "properties": {
         "identity": {
           "type": "string"
         },
         "createdBy": {
+          "type": "string"
+        },
+        "createdAt": {
           "type": "string"
         },
         "application": {
