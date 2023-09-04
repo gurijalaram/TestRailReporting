@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.IGNORE;
+
 import com.apriori.dds.enums.DDSApiEnum;
 import com.apriori.dds.models.request.DiscussionsRequest;
 import com.apriori.dds.models.request.DiscussionsRequestParameters;
@@ -23,9 +25,11 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -36,7 +40,6 @@ public class DiscussionTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static ResponseWrapper<DiscussionResponse> discussionResponse;
     private static String discussionDescription = StringUtils.EMPTY;
-
 
     @BeforeEach
     public void testSetup() {
@@ -213,7 +216,8 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
-    @Disabled
+    @Tag(IGNORE)
+    @Disabled("At the moment a new scenario name cannot be created from a public scenario")
     @TestRail(id = {12410})
     @Description("Search discussions")
     public void searchDiscussions() {

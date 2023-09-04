@@ -28,15 +28,15 @@ public class CisBidPackageItemTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageItemResponse bidPackageItemResponse;
-    private static final UserCredentials currentUser = UserUtil.getUser();
+    private static UserCredentials currentUser;
     private static ScenarioItem scenarioItem;
 
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
-        bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
+        currentUser = UserUtil.getUser();
+        scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser).get(0);
+        bidPackageResponse = CisBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbers(), currentUser);
         bidPackageItemResponse = CisBidPackageItemResources.createBidPackageItem(
             CisBidPackageItemResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
@@ -115,8 +115,8 @@ public class CisBidPackageItemTest extends TestUtil {
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST, currentUser);
 
         softAssertions.assertThat(cisErrorMessage.getMessage()).contains("2 validation failures were found:" +
-            "* 'bidPackageIdentity' is not a valid identity." +
-            "* 'identity' is not a valid identity.");
+            "\n* 'bidPackageIdentity' is not a valid identity." +
+            "\n* 'identity' is not a valid identity.");
     }
 
     @Test
@@ -173,8 +173,8 @@ public class CisBidPackageItemTest extends TestUtil {
             CisErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
 
         softAssertions.assertThat(cisInvalidErrorMessage.getMessage()).contains("2 validation failures were found:" +
-            "* 'bidPackageIdentity' is not a valid identity." +
-            "* 'identity' is not a valid identity.");
+            "\n* 'bidPackageIdentity' is not a valid identity." +
+            "\n* 'identity' is not a valid identity.");
     }
 
     @Test

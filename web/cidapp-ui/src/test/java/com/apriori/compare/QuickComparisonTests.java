@@ -18,7 +18,6 @@ import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
-import com.google.common.collect.Ordering;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
@@ -30,6 +29,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -150,8 +150,7 @@ public class QuickComparisonTests extends TestBaseUI {
         List<LocalDateTime> comparisonScenarioTimes = comparisonScenarios.stream().map(comparison ->
             scenarioUtil.getScenario(comparison).getResponseEntity().getUpdatedAt()).collect(Collectors.toList());
 
-        softAssertions.assertThat(Ordering.natural().reverse().isOrdered(comparisonScenarioTimes)).as("Verify Quick Compare scenarios in Date/Time order")
-                .isTrue();
+        softAssertions.assertThat(comparisonScenarioTimes).isSortedAccordingTo(Comparator.reverseOrder());
 
         softAssertions.assertAll();
     }
@@ -205,8 +204,7 @@ public class QuickComparisonTests extends TestBaseUI {
         List<LocalDateTime> comparisonScenarioTimes = comparisonScenarios.stream().map(comparison ->
             scenarioUtil.getScenario(comparison).getResponseEntity().getUpdatedAt()).collect(Collectors.toList());
 
-        softAssertions.assertThat(Ordering.natural().reverse().isOrdered(comparisonScenarioTimes)).as("Verify Quick Compare scenarios in Date/Time order")
-            .isTrue();
+        softAssertions.assertThat(comparisonScenarioTimes).isSortedAccordingTo(Comparator.reverseOrder());
 
         softAssertions.assertAll();
     }

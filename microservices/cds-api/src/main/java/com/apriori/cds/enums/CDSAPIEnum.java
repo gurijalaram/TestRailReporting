@@ -98,7 +98,10 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     //ACCESS_AUTHORIZATIONS
     ACCESS_AUTHORIZATIONS("customers/%s/access-authorizations"),
     ACCESS_AUTHORIZATION_BY_ID("customers/%s/access-authorizations/%s"),
-    ACCESS_AUTHORIZATION_STATUS("customers/%s/access-authorizations/status");
+    ACCESS_AUTHORIZATION_STATUS("customers/%s/access-authorizations/status"),
+
+    //USER_ENABLEMENTS
+    USER_ENABLEMENTS("customers/%s/users/%s/enablements");
 
     private final String endpoint;
 

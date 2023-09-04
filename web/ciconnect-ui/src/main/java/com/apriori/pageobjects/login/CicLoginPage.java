@@ -9,6 +9,7 @@ import com.apriori.reader.file.user.UserCredentials;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.Objects;
@@ -47,5 +48,14 @@ public class CicLoginPage extends CICBasePage {
             throw new RuntimeException("Login failed!!");
         }
         return ciConnectHome;
+    }
+
+    /**
+     * get email Input
+     *
+     * @return WebElement
+     */
+    public WebElement getEmailInputCloud() {
+        return emailInputCloud;
     }
 }

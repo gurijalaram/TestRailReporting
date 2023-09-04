@@ -10,8 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-@SuppressWarnings("unused")
-public class BidPackageItemParameters {
+public class ComponentParameters {
     private String componentIdentity;
     private String iterationIdentity;
     private String scenarioIdentity;

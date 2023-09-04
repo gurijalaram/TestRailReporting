@@ -18,8 +18,7 @@
         "componentIdentity",
         "scenarioIdentity",
         "iterationIdentity"
-      ],
-      "additionalProperties": false
+      ]
     }
   ]
 }

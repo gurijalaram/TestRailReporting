@@ -13,7 +13,11 @@
     "userType",
     "mfaRequired",
     "customerIdentity",
-    "hasCompleteProfile"
+    "hasCompleteProfile",
+    "enablements"
+  ],
+  "optional": [
+    "updatedAt"
   ],
   "properties": {
     "identity": {

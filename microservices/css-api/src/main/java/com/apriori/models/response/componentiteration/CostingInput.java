@@ -1,5 +1,7 @@
 package com.apriori.models.response.componentiteration;
 
+import com.apriori.models.response.SecondaryDigitalFactories;
+import com.apriori.models.response.SecondaryProcesses;
 import com.apriori.models.response.Thumbnail;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -34,12 +36,6 @@ public class CostingInput {
     private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
 
     static class ProcessSetupOptions {
-    }
-
-    static class SecondaryProcesses {
-    }
-
-    static class SecondaryDigitalFactories {
     }
 
     static class Threads {

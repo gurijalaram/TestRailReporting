@@ -2,7 +2,7 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
-import com.apriori.cds.models.response.LicensedSiteApplications;
+import com.apriori.cds.models.response.SiteItems;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -81,7 +81,7 @@ public class CdsSitesApplicationsTests {
             .siteIdentity(siteIdentity)
             .licenseIdentity(licensedApplicationIdentity)
             .build();
-        soft.assertThat(licensedApp.getResponseEntity().getApplication()).isEqualTo("aPriori Professional");
+        soft.assertThat(licensedApp.getResponseEntity().getApplication()).isEqualTo("aP Pro");
         soft.assertAll();
     }
 
@@ -99,14 +99,14 @@ public class CdsSitesApplicationsTests {
              .licenseIdentity(licensedApplicationIdentity)
              .build();
 
-        ResponseWrapper<LicensedSiteApplications> licensedApplications = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS,
-            LicensedSiteApplications.class,
+        ResponseWrapper<SiteItems> licensedApplications = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS,
+                SiteItems.class,
             HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity
         );
 
-        soft.assertThat(licensedApplications.getResponseEntity().getLicensedApplications().size()).isGreaterThanOrEqualTo(1);
+        soft.assertThat(licensedApplications.getResponseEntity().getItems().size()).isGreaterThanOrEqualTo(1);
 
         ResponseWrapper<LicensedApplications> licensedApplicationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
             LicensedApplications.class,
@@ -115,7 +115,7 @@ public class CdsSitesApplicationsTests {
             siteIdentity,
             licensedApplicationIdentity
         );
-        soft.assertThat(licensedApplicationResponse.getResponseEntity().getApplication()).isEqualTo("Cost Insight Admin");
+        soft.assertThat(licensedApplicationResponse.getResponseEntity().getApplication()).isEqualTo("aP Admin");
         soft.assertThat(licensedApplicationResponse.getResponseEntity().getApplicationIdentity()).isEqualTo(Constants.getCiaApplicationIdentity());
         soft.assertAll();
     }
