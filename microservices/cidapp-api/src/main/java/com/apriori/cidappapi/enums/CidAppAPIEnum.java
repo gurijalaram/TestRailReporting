@@ -25,9 +25,6 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     //ROUTINGS
     ROUTINGS("components/%s/scenarios/%s/available-routings"),
 
-    //PREFERENCES
-    PREFERENCES("users/current/preferences"),
-
     //SCENARIO
     COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/cost"),
     COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/copy"),
@@ -44,9 +41,6 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     //PUBLISH
     PUBLISH_SCENARIO("components/%s/scenarios/%s/publish"),
     PUBLISH_SCENARIOS("scenarios/publish"),
-
-    //USER
-    CURRENT_USER("users/current"),
 
     //PEOPLE
     CURRENT_PERSON("people?username[EQ]=%s"),
