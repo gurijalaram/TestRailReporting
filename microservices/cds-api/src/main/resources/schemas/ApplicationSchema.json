@@ -18,6 +18,9 @@
         "serviceName",
         "description"
       ],
+      "optional": [
+        "roles"
+      ],
       "properties": {
         "isCloudHomeApp": {
           "type": "boolean"
@@ -63,6 +66,14 @@
         "iconUrl": {
           "type": "string",
           "pattern": "^(.*)$"
+        },
+        "roles": {
+          "type": "array",
+          "items": [
+            {
+              "type": "string"
+            }
+          ]
         }
       }
     }
