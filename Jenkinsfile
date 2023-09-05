@@ -12,7 +12,7 @@ pipeline {
     }
 
     stages {
-        stage {
+        stage ('BuildAndTest') {
             matrix {
                 axes {
                     axis {
