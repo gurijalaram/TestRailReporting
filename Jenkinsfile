@@ -1,3 +1,5 @@
+import groovy.sql.GroovyResultSet
+
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format('yyyyMMddHHss')
@@ -17,7 +19,7 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        values module.forEach {value -> value}
+                        module.forEach {GroovyResultSet value -> values value}
                     }
                 }
 
