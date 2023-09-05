@@ -77,8 +77,8 @@ pipeline {
             cleanWs()
         }
         failure {
-            mail to: 'cfrith@apriori.com'
-            subject: "Failed to create image: ${module}:${buildVersion}"
+            mail to: 'cfrith@apriori.com', 'jvautour@apriori.com',
+            subject: "Failed to create image: ${module}:${buildVersion}",
             body: "Error in ${env.BUILD.URL}"
         }
     }
