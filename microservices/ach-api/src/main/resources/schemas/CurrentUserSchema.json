@@ -20,7 +20,8 @@
         "mfaRequired",
         "customAttributes",
         "resourcesAllowedToCreate",
-        "userType"
+        "userType",
+        "roles"
       ],
       "properties": {
         "isSystemUser": {
@@ -103,6 +104,9 @@
         },
         "userType": {
           "type": "string"
+        },
+        "roles": {
+          "type": "array"
         }
       }
     }

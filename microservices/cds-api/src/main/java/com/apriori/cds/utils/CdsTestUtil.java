@@ -376,6 +376,7 @@ public class CdsTestUtil extends TestUtil {
         installationItems.setRealm(realmKey);
         installationItems.setSiteIdentity(siteIdentity);
         installationItems.setCloudReference(cloudReference);
+        installationItems.setHighMem(false);
         installationItems.setFeatures(Features.builder().workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled).build());
 
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)

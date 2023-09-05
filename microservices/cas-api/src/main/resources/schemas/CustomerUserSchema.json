@@ -20,7 +20,8 @@
         "customAttributes",
         "createdByName",
         "userType",
-        "hasCompleteProfile"
+        "hasCompleteProfile",
+        "roles"
       ],
       "optional": [
         "customProperties",
@@ -126,6 +127,9 @@
         },
         "hasCompleteProfile": {
           "type": "boolean"
+        },
+        "roles": {
+          "type": "array"
         }
       }
     }
