@@ -16,8 +16,8 @@ import java.io.File;
 @Slf4j
 public class CompareToolbar extends MainNavBar {
 
-    @FindBy(id = "qa-sub-header-import-button")
-    private WebElement importButton;
+    @FindBy(id = "qa-sub-header-new-comparison")
+    private WebElement newButton;
 
     @FindBy(id = "qa-sub-header-modify-button")
     private WebElement modifyButton;
@@ -34,7 +34,7 @@ public class CompareToolbar extends MainNavBar {
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementToAppear(importButton);
+        pageUtils.waitForElementToAppear(newButton);
     }
 
     /**

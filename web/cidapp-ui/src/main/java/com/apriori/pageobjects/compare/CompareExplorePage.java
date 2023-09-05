@@ -40,6 +40,9 @@ public class CompareExplorePage extends CompareToolbar {
     @FindBy(css = "div[role='status']")
     private WebElement loadingSpinner;
 
+    @FindBy(id = "qa-sub-header-refresh-view-button")
+    private WebElement refreshButton;
+
     @FindBy(id = "qa-comparison-explorer-configure-button")
     private WebElement configureButton;
 
@@ -61,10 +64,15 @@ public class CompareExplorePage extends CompareToolbar {
     @FindBy(css = "placeholder...")
     private WebElement submitButton;
 
+    // ToDo:- Rethink name
+    @FindBy(css = "div[class='card-header'] .left")
+    private WebElement comparisonCount;
+
     @FindBy(css = ".comparison-row-link")
     private List<WebElement> comparisonNames;
 
-    private String scenarioLocator = "div[aria-label='%s']";
+//    private String scenarioLocator = "//div[aria-label='%s']/..";
+    private String scenarioLocator = "//div[.='%s']/ancestor::div[@data-header-id='comparisonName']//a";
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -80,7 +88,8 @@ public class CompareExplorePage extends CompareToolbar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementNotVisible(loadingSpinner, 2);
-        pageUtils.waitForJavascriptLoadComplete();
+        pageUtils.waitForElementToAppear(comparisonCount);
+
     }
 
     /**
@@ -110,10 +119,21 @@ public class CompareExplorePage extends CompareToolbar {
      * @return a new page object
      */
     public ComparePage openComparison(String comparisonName) {
-        By comparisonSelector = By.cssSelector(String.format(scenarioLocator, comparisonName));
+        By comparisonSelector = By.xpath(String.format(scenarioLocator, comparisonName));
+        pageUtils.waitForElementToAppear(comparisonSelector);
         moveToComparison(comparisonName);
         pageUtils.waitForElementAndClick(comparisonSelector);
         return new ComparePage(driver);
+    }
+
+    /**
+     * Click the refresh button
+     *
+     * @return New copy of current page object
+     */
+    public CompareExplorePage clickRefresh() {
+        pageUtils.waitForElementAndClick(refreshButton);
+        return new CompareExplorePage(driver);
     }
 
     /**
@@ -214,7 +234,7 @@ public class CompareExplorePage extends CompareToolbar {
      * @param comparisonName - component name
      */
     private void moveToComparison(String comparisonName) {
-        WebElement comparison = driver.findElement(By.cssSelector(String.format(scenarioLocator, comparisonName)));            ;
+        WebElement comparison = driver.findElement(By.xpath(String.format(scenarioLocator, comparisonName)));            ;
         pageUtils.scrollWithJavaScript(comparison, true);
         pageUtils.mouseMove(comparison);
     }

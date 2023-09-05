@@ -1401,8 +1401,8 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {26956, 25983, 25984, })
-    @Description("Verify Comparison Explorer and new Comparison features")
+    @TestRail(id = {25983, 25984, 26956, 26957, 26958, 27005, 27995})
+    @Description("Verify Comparison Explorer can be launched and saved comparisons can be opened from it")
     public void testComparisonExplorer() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
@@ -1439,7 +1439,7 @@ public class ComparisonTests extends TestBaseUI {
             .isTrue();
 
         comparePage = compareExplorePage.clickExplore()
-            .multiHighlightScenarios(
+            .multiSelectScenarios(
                 part1.getComponentName() + "," + part1.getScenarioName(),
                 part2.getComponentName() + "," + part2.getScenarioName())
             .createComparison()
@@ -1450,6 +1450,13 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getComparisonName()).as("Verify comparison is unsaved").isEqualTo("Untitled Comparison");
         softAssertions.assertThat(comparePage.isRefreshEnabled()).as("Verify that Refresh button is disabled while comparison unsaved").isFalse();
 
+        comparePage = comparePage.clickExplore()
+            .clickCompare(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getBasis()).as("Verify comparison retained as expected")
+            .isEqualTo(part1.getComponentName().toUpperCase() + "  / " + part1.getScenarioName());
+        softAssertions.assertThat(comparePage.getComparisonName()).as("Verify comparison remains unsaved").isEqualTo("Untitled Comparison");
+
         compareExplorePage = comparePage
             .clickAllComparisons();
 
@@ -1457,7 +1464,7 @@ public class ComparisonTests extends TestBaseUI {
             .isTrue();
 
         comparePage = compareExplorePage.clickExplore()
-            .multiHighlightScenarios(
+            .multiSelectScenarios(
                 part1.getComponentName() + "," + part1.getScenarioName(),
                 part2.getComponentName() + "," + part2.getScenarioName())
             .createComparison()
@@ -1471,7 +1478,8 @@ public class ComparisonTests extends TestBaseUI {
 
         softAssertions.assertThat(comparePage.isRefreshEnabled()).as("Verify that Refresh button is enabled now comparison is saved").isTrue();
 
-        compareExplorePage = comparePage.clickAllComparisons();
+        compareExplorePage = comparePage.clickAllComparisons()
+            .clickRefresh();
 
         softAssertions.assertThat(comparisonName).as("Verify comparison visible in table").isIn(compareExplorePage.getListOfComparisons());
 
@@ -1484,6 +1492,21 @@ public class ComparisonTests extends TestBaseUI {
             .isIn(comparePage.getScenariosInComparison());
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    public void testControlDown() {
+
+        String scenariosName = "ControlClickTest";
+        String componentName1 = "big ring";
+        String componentName2 = "box";
+
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser);
+
+//        explorePage.multiSelectScenarios();
     }
 
 }

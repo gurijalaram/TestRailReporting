@@ -112,9 +112,7 @@ public class ComparePage extends CompareToolbar {
      * @return Comparison Explorer PO
      */
     public CompareExplorePage clickAllComparisons() {
-        pageUtils.waitForElementToBeClickable(backButton);
-//        pageUtils.waitForElementAndClick(backButton);
-        pageUtils.actionClick(backButton);
+        pageUtils.waitForElementAndClick(backButton);
         return new CompareExplorePage(driver);
     }
 
