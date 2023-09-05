@@ -32,7 +32,7 @@ pipeline {
                         usernameVariable: 'NEXUS_USER')]) {
                     sh """
                         docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
-                        docker build -f qa-stacks.Dockerfil \
+                        docker build -f qa-stacks.Dockerfile \
                         --build-arg FOLDER=${folder} \
                         --build-arg MODULE=${module} \
                         --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
@@ -75,11 +75,6 @@ pipeline {
             sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
             sh "docker system prune --all --force"
             cleanWs()
-        }
-        failure {
-            mail to: 'cfrith@apriori.com',
-            subject: "Failed to create image: ${module}:${buildVersion}",
-            body: "Error in ${env.BUILD.URL}"
         }
     }
 }
