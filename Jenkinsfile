@@ -6,15 +6,15 @@ def folder = "web"
 def module = "cidapp-ui"
 def runType = "docker-test"
 
- pipeline {
+pipeline {
     agent {
         label "automation"
     }
 
     stages {
-    stage("Initialize") {
-        steps {
-            echo "Initializing.."
+        stage("Initialize") {
+            steps {
+                echo "Initializing.."
                 script {
                     // Read file.
                     buildInfo = readYaml file: buildInfoFile
@@ -27,9 +27,9 @@ def runType = "docker-test"
             steps {
                 echo "Building..."
                 withCredentials([usernamePassword(
-                    credentialsId: 'NEXUS_APRIORI_COM',
-                    passwordVariable: 'NEXUS_PASS',
-                    usernameVariable: 'NEXUS_USER')]) {
+                        credentialsId: 'NEXUS_APRIORI_COM',
+                        passwordVariable: 'NEXUS_PASS',
+                        usernameVariable: 'NEXUS_USER')]) {
                     sh """
                         docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
                         docker build -f qa-stacks.Dockerfile \
