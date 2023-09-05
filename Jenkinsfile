@@ -17,7 +17,7 @@ pipeline {
                 axes {
                     axis {
                         name 'module'
-                        values ${module}
+                        values "${module}"
                     }
                 }
 
