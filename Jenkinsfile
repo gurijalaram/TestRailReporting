@@ -16,8 +16,8 @@ pipeline {
             matrix {
                 axes {
                     axis {
-                        name 'module'
-                        values { module }
+                        name 'modules'
+                        values {module}
                     }
                 }
 
