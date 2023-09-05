@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ApplicationDataDTO {
+public class ApplicationDTO {
     private String applicationName;
     private String version;
     private String installation;

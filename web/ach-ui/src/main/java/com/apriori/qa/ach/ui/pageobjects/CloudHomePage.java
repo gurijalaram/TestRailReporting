@@ -3,7 +3,7 @@ package com.apriori.qa.ach.ui.pageobjects;
 import com.apriori.PageUtils;
 import com.apriori.login.UserProfilePage;
 import com.apriori.properties.PropertiesContext;
-import com.apriori.qa.ach.ui.dto.ApplicationDataDTO;
+import com.apriori.qa.ach.ui.dto.ApplicationDTO;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -66,13 +66,13 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return new UserProfilePage(driver);
     }
 
-    public List<ApplicationDataDTO> getListOfApplications() {
-        List<ApplicationDataDTO> applicationsDTO = new ArrayList<>();
+    public List<ApplicationDTO> getListOfApplications() {
+        List<ApplicationDTO> applicationsDTO = new ArrayList<>();
 
         List<WebElement> applications = pageUtils.waitForElementsToAppear(By.xpath("//div[contains(@class, 'application-card css')]"));
 
         applications.forEach(webApplication -> {
-            applicationsDTO.add(ApplicationDataDTO.builder()
+            applicationsDTO.add(ApplicationDTO.builder()
                 .applicationName(webApplication.getAttribute("data-application"))
                 .version(webApplication.getAttribute("data-version"))
                 .installation(webApplication.getAttribute("data-installation"))

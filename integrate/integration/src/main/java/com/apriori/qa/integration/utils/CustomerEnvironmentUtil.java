@@ -51,8 +51,8 @@ public class CustomerEnvironmentUtil extends TestBaseUI {
 
 
     protected UserCredentials getAwsCustomerUserCredentials() {
-        //        final String username = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGenerateUser");
-        //        final String password = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGeneratePassword");
+//          final String username = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGenerateUser");
+//          final String password = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGeneratePassword");
 
         final String username = "qa-automation-01@apriori.com";
         final String password = "TrumpetSnakeFridgeToasty18!%";
