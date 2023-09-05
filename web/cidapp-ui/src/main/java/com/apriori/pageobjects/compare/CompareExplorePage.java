@@ -6,8 +6,6 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.ScenarioTableController;
-import com.apriori.pageobjects.compare.ComparePage;
-import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.navtoolbars.CompareToolbar;
 
 import org.openqa.selenium.By;
@@ -15,7 +13,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,6 +80,7 @@ public class CompareExplorePage extends CompareToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.scenarioTableController = new ScenarioTableController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
         this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
