@@ -12,13 +12,11 @@ pipeline {
     }
 
     stages {
-        stage("Define Matrix") {
-            matrix {
-                axes {
-                    axis {
-                        name 'module'
-                        values 'cidapp-ui', 'cidapp-api'
-                    }
+        matrix {
+            axes {
+                axis {
+                    name 'module'
+                    values 'cidapp-ui', 'cidapp-api'
                 }
             }
 
