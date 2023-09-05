@@ -40,5 +40,6 @@ public class SustainabilityFieldsTests extends TestBaseUI {
 
         List<String> headers = explorePage.getTableHeaders();
         softAssertions.assertThat(headers).contains("Material Carbon","Process Carbon","Logistics Carbon");
+        softAssertions.assertAll();
     }
 }
