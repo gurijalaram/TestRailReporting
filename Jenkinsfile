@@ -19,7 +19,7 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        module.forEach {GroovyResultSet value -> values value}
+                        values module.forEach {GroovyResultSet value -> value}
                     }
                 }
 
