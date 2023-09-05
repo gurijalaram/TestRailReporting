@@ -3,12 +3,23 @@ def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format('yyyyMMddHHss')
 def buildVersion = "latest"
 def folder = "web"
-def module = "cidapp-ui"
+//def module = "cidapp-ui"
 def runType = "docker-test"
 
 pipeline {
     agent {
         label "automation"
+    }
+
+    stages {
+        stage("Define Matrix") {
+            axes {
+                axis {
+                    name 'module'
+                    values 'cidapp-ui', 'cidapp-api'
+                }
+            }
+        }
     }
 
     stages {
