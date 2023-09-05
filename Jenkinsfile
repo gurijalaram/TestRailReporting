@@ -17,7 +17,7 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        module.forEach {value -> values: value}
+                        module.forEach {value -> values value}
                     }
                 }
 
