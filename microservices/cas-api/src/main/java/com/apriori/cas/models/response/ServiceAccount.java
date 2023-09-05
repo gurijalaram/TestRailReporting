@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "ServiceAccountSchema.json")
@@ -24,6 +25,9 @@ public class ServiceAccount {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
     private String createdBy;
     private String customerIdentity;
     private CustomerUserProfile userProfile;
@@ -37,4 +41,5 @@ public class ServiceAccount {
     private String serviceAccount;
     private String status;
     private String userType;
+    private List<String> roles;
 }

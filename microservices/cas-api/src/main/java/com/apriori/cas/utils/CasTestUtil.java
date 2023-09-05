@@ -574,7 +574,7 @@ public class CasTestUtil extends TestUtil {
             .body("accessControl",
                 AccessControl.builder()
                     .customerIdentity(PropertiesContext.get("customer_identity"))
-                    .applicationIdentity(PropertiesContext.get("cds.apriori_cloud_home_identity"))
+                    .applicationIdentity(PropertiesContext.get("cds.ap_workspace_application_identity"))
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
                     .build());
