@@ -12,7 +12,7 @@ pipeline {
     }
 
     stages {
-        stage("Define Matrix") {
+        stage('Define Matrix') {
             matrix {
                 axes {
                     axis {
