@@ -63,7 +63,7 @@ public class AchUserPreferencesTests {
     @Description("Create and update a UserPreference for a user")
     public void createUpdateUserPreference() {
         String prefName = generateStringUtil.getRandomString();
-        String value = generateStringUtil.getRandomNumbersSpecLength(4);
+        String value = generateStringUtil.getRandomNumbersStartsNoZero();
         ResponseWrapper<SuccessUpdatePreferencesResponse> newPreference = achTestUtil.putUserPreference(prefName, value, SuccessUpdatePreferencesResponse.class);
 
         soft.assertThat(newPreference.getResponseEntity().getSuccesses().get(0).getIdentity()).isNotEmpty();
@@ -90,11 +90,11 @@ public class AchUserPreferencesTests {
     @Description("Update user preferences by PUT request")
     public void updateUserPreference() {
         String prefName = generateStringUtil.getRandomString();
-        String value = generateStringUtil.getRandomNumbersSpecLength(4);
+        String value = generateStringUtil.getRandomNumbersStartsNoZero();
         ResponseWrapper<SuccessUpdatePreferencesResponse> newPreference = achTestUtil.putUserPreference(prefName, value, SuccessUpdatePreferencesResponse.class);
         String prefIdentity = newPreference.getResponseEntity().getSuccesses().get(0).getIdentity();
 
-        String newValue = generateStringUtil.getRandomNumbersSpecLength(4);
+        String newValue = generateStringUtil.getRandomNumbersStartsNoZero();
         ResponseWrapper<SuccessUpdatePreferencesResponse> updatedPreference = achTestUtil.updatePreferencesByPut(prefName, newValue);
         soft.assertThat(updatedPreference.getResponseEntity().getSuccesses().get(0).getValue().toString()).isEqualTo(newValue);
         soft.assertAll();
@@ -111,7 +111,7 @@ public class AchUserPreferencesTests {
     @Description("Update user preferences with missing field in a body")
     public void failureUpdatePreference() {
         String prefName = generateStringUtil.getRandomString();
-        String value = generateStringUtil.getRandomNumbersSpecLength(4);
+        String value = generateStringUtil.getRandomNumbersStartsNoZero();
         Success successResponse = achTestUtil.putUserPreference(prefName, value, SuccessUpdatePreferencesResponse.class)
             .getResponseEntity().getSuccesses().stream().findFirst().get();
 

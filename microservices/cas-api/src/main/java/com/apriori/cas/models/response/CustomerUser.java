@@ -49,4 +49,5 @@ public class CustomerUser {
     private List<Object> licenseAssignments = null;
     private String userType;
     private Boolean hasCompleteProfile;
+    private List<String> roles;
 }
