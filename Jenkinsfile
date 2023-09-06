@@ -5,7 +5,7 @@ def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format('yyyyMMddHHss')
 def buildVersion = "latest"
 def folder = "web"
-//def module = ["cidapp-ui", "cidapp-api"]
+def module
 def runType = "docker-test"
 
 pipeline {
@@ -22,6 +22,8 @@ pipeline {
                         values 'cidapp-ui', 'cidapp-api'
                     }
                 }
+
+                module = ${MODULE}
 
                 stages {
                     stage("Initialize") {
