@@ -45,13 +45,12 @@ pipeline {
                                 } else if (!folder && "${MODULE}".contains("-api")) {
                                     folder = "microservices"
                                 }
-                            }
 
-                            withCredentials([usernamePassword(
-                                    credentialsId: 'NEXUS_APRIORI_COM',
-                                    passwordVariable: 'NEXUS_PASS',
-                                    usernameVariable: 'NEXUS_USER')]) {
-                                sh """
+                                withCredentials([usernamePassword(
+                                        credentialsId: 'NEXUS_APRIORI_COM',
+                                        passwordVariable: 'NEXUS_PASS',
+                                        usernameVariable: 'NEXUS_USER')]) {
+                                    sh """
                         docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
                         docker build -f qa-stacks.Dockerfile \
                         --build-arg FOLDER=${folder} \
@@ -59,6 +58,7 @@ pipeline {
                         --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
                         .
                         """
+                                }
                             }
                         }
                     }
