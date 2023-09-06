@@ -4,7 +4,7 @@ def buildInfo
 def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format('yyyyMMddHHss')
 def buildVersion = "latest"
-def folder = "web"
+def folder
 def module = ["cidapp-ui", "cidapp-api"]
 def runType = "docker-test"
 
