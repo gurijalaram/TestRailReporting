@@ -6,6 +6,7 @@ import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.models.response.CostingInput;
 import com.apriori.models.response.SecondaryDigitalFactories;
 import com.apriori.models.response.SecondaryProcesses;
+import com.apriori.models.response.componentiteration.ProcessSetupOptions;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -77,7 +78,7 @@ public class CostingTemplate {
     @Builder.Default
     private List<String> propertiesToReset = null;
     private List<RoutingNodeOptions> routingNodeOptions;
-    private CostingInput.ProcessSetupOptions processSetupOptions;
+    private ProcessSetupOptions processSetupOptions;
     private SecondaryDigitalFactories secondaryDigitalFactories;
     private SecondaryProcesses secondaryProcesses;
     private CostingInput.Threads threads;

@@ -424,7 +424,7 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), nonAdminProjectUser, ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("User does not have rights to update the project attributes");
+            .contains("User is not part of the project and does not have rights to update the project");
     }
 
     @Test

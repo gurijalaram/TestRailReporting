@@ -21,6 +21,7 @@
       "optional": [
         "updatedBy",
         "updatedAt",
+        "exportAdminEnabled",
         "customerAssignedRole"
       ],
       "properties": {
@@ -52,6 +53,9 @@
           "type": "boolean"
         },
         "userAdminEnabled": {
+          "type": "boolean"
+        },
+        "exportAdminEnabled": {
           "type": "boolean"
         },
         "customerAssignedRole": {

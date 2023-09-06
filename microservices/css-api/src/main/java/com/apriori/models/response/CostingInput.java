@@ -1,5 +1,8 @@
 package com.apriori.models.response;
 
+import com.apriori.models.response.componentiteration.CustomAttributes;
+import com.apriori.models.response.componentiteration.ProcessSetupOptions;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,9 +42,6 @@ public class CostingInput {
     private String materialUtilizationMode;
     private List<RoutingNodeOptions> routingNodeOptions;
     private String twoModelSourceScenarioIdentity;
-
-    public static class ProcessSetupOptions {
-    }
 
     public static class Threads {
     }
