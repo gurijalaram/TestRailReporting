@@ -1,7 +1,6 @@
 package com.apriori.qa.ach.ui.pageobjects;
 
 import com.apriori.PageUtils;
-import com.apriori.qa.ach.ui.enums.CustomerDeploymentsEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,7 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-public class SwitchDeploymentPopUpPage  extends LoadableComponent<SwitchDeploymentPopUpPage> {
+public class SwitchDeploymentPopUpPage extends LoadableComponent<SwitchDeploymentPopUpPage> {
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -35,9 +34,10 @@ public class SwitchDeploymentPopUpPage  extends LoadableComponent<SwitchDeployme
     }
 
 
-    public SwitchDeploymentPopUpPage selectDeployment(CustomerDeploymentsEnum customerDeploymentsEnum) {
-        pageUtils.waitForElementAndClick(By.xpath(String.format("//div[contains(@class, 'MuiDialogContent-root')]//div[@class='text-overflow option-content' and contains(text(), '%s')]",
-            customerDeploymentsEnum.getDeploymentName()))
+    public SwitchDeploymentPopUpPage selectDeployment(final String customerDeploymentName) {
+        pageUtils.waitForElementAndClick(
+                By.xpath(String.format("//div[contains(@class, 'MuiDialogContent-root')]//div[@class='text-overflow option-content' and contains(text(), '%s')]",
+                        customerDeploymentName))
         );
         return this;
     }

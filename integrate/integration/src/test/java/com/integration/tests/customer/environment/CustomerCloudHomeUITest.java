@@ -4,9 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.login.LoginService;
 import com.apriori.models.AuthorizationUtil;
-import com.apriori.models.response.Deployment;
 import com.apriori.qa.ach.ui.dto.ApplicationDTO;
-import com.apriori.qa.ach.ui.enums.CustomerDeploymentsEnum;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.qa.integration.utils.CustomerEnvironmentUtil;
 import com.apriori.reader.file.user.UserCredentials;
@@ -16,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -29,31 +26,32 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
     @TestRail(id = {27951})
     public void validateCustomerApplicationsByUI() {
         final String customerIdentity = AuthorizationUtil.getCurrentCustomerData().getIdentity();
-        List<Deployment> customerDeployments = getCustomerDeployments(customerIdentity);
-        HashMap<String, List<ApplicationDTO>> mappedCustomerDeployments = mapCustomerDeploymentDataToDTO(customerDeployments);
+
+        List<ApplicationDTO> mappedCustomerApplications = mapCustomerDeploymentDataToDTO(
+                getCustomerDeploymentInformation(customerIdentity)
+        );
 
         aprioriLoginService = new LoginService(driver, "");
         cloudHomePage = aprioriLoginService.login(userCredentials, CloudHomePage.class);
 
 
-        CustomerDeploymentsEnum deploymentToTest = CustomerDeploymentsEnum.PRODUCTION;
         cloudHomePage.clickUserPanel()
-            .clickSwitchDeploymentButton()
-            .clickDeploymentSelector()
-            .selectDeployment(deploymentToTest)
-            .clickSubmitButton();
+                .clickSwitchDeploymentButton()
+                .clickDeploymentSelector()
+                .selectDeployment(deploymentName)
+                .clickSubmitButton();
 
-        this.validateDeploymentApplications(cloudHomePage, mappedCustomerDeployments, deploymentToTest);
+        this.validateDeploymentApplications(cloudHomePage, mappedCustomerApplications, deploymentName);
     }
 
-    private void validateDeploymentApplications(CloudHomePage cloudHomePage, HashMap<String, List<ApplicationDTO>> mappedCustomerDeployments, CustomerDeploymentsEnum customerDeploymentsEnum) {
+    private void validateDeploymentApplications(CloudHomePage cloudHomePage, List<ApplicationDTO> mappedCustomerApplications, String deploymentName) {
         String currentUIDeployment = cloudHomePage.getDeployment();
 
-        assertEquals(customerDeploymentsEnum.getDeploymentName(), currentUIDeployment);
+        assertEquals(deploymentName, currentUIDeployment);
 
         List<ApplicationDTO> userApplicationsFromUI = cloudHomePage.getListOfApplications();
 
-        this.validateApplicationsUIText(new ArrayList<>(userApplicationsFromUI), mappedCustomerDeployments.get(currentUIDeployment));
+        this.validateApplicationsUIText(new ArrayList<>(userApplicationsFromUI), mappedCustomerApplications);
         this.validateApplicationsAreLaunchedSuccessfully(userApplicationsFromUI);
     }
 
@@ -71,37 +69,5 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
                     getPageObjectTypeByApplicationName(application.getApplicationName())
             );
         });
-    }
-
-
-    private HashMap<String, List<ApplicationDTO>> mapCustomerDeploymentDataToDTO(List<Deployment> customerDeployments) {
-        HashMap<String, List<ApplicationDTO>> mappedDeploymentData = new HashMap<>();
-
-        customerDeployments.forEach(
-            deployment -> {
-                List<ApplicationDTO> applicationDTOS = new ArrayList<>();
-
-                deployment.getInstallations().forEach(
-                    installation -> {
-                        installation.getApplications().forEach(
-                            application -> {
-                                ApplicationDTO applicationDTO = ApplicationDTO.builder()
-                                    .installation(installation.getName())
-                                    .version(installation.getApVersion())
-                                    .applicationName(application.getName())
-                                    .build();
-
-
-                                applicationDTOS.add(applicationDTO);
-                            }
-                        );
-                    }
-                );
-
-                mappedDeploymentData.put(deployment.getName(), applicationDTOS);
-            }
-        );
-
-        return mappedDeploymentData;
     }
 }

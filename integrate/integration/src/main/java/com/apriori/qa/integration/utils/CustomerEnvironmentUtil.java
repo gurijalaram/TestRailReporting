@@ -7,7 +7,6 @@ import com.apriori.cds.models.response.User;
 import com.apriori.cds.models.response.Users;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
-import com.apriori.http.utils.AwsParameterStoreUtil;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
@@ -18,8 +17,9 @@ import com.apriori.pageobjects.customeradmin.CustomerAdminPage;
 import com.apriori.pageobjects.header.ReportsHeader;
 import com.apriori.pageobjects.homepage.AdminHomePage;
 import com.apriori.pageobjects.messages.MessagesPage;
-import com.apriori.pageobjects.navtoolbars.MainNavBar;
 import com.apriori.pageobjects.workflows.WorkflowHome;
+import com.apriori.properties.PropertiesContext;
+import com.apriori.qa.ach.ui.dto.ApplicationDTO;
 import com.apriori.qa.ach.ui.pageobjects.applications.AppStreamPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.testconfig.TestBaseUI;
@@ -27,32 +27,35 @@ import com.apriori.testconfig.TestBaseUI;
 import org.apache.http.HttpStatus;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Customer environment util class
  * Contains methods with base functionality for customer environments tests
  */
 public class CustomerEnvironmentUtil extends TestBaseUI {
+
+    protected final String deploymentName = PropertiesContext.get("${deployment}.name");
+    protected final String identitiesDelimiter = "_";
+
     private static final Map<String, Class<? extends LoadableComponent>> APPLICATIONS_CLASS = new LinkedHashMap<>() {{
-            put("aP Admin", AdminHomePage.class);
-            put("aP Analytics", ReportsHeader.class);
-            put("aP Connect", WorkflowHome.class);
-            put("aP Design", CommonLoginPageImplementation.class);
-            put("aP Pro", AppStreamPage.class);
-            put("aP Workspace", MessagesPage.class);
-            put("Customer Admin", CustomerAdminPage.class);
-            put("Electronics Data Collection", CommonLoginPageImplementation.class);
-        }};
+        put("aP Admin", AdminHomePage.class);
+        put("aP Analytics", ReportsHeader.class);
+        put("aP Connect", WorkflowHome.class);
+        put("aP Design", CommonLoginPageImplementation.class);
+        put("aP Pro", AppStreamPage.class);
+        put("aP Workspace", MessagesPage.class);
+        put("Customer Admin", CustomerAdminPage.class);
+        put("Electronics Data Collection", CommonLoginPageImplementation.class);
+    }};
 
     protected final UserCredentials userCredentials = getAwsCustomerUserCredentials();
 
 
     protected UserCredentials getAwsCustomerUserCredentials() {
-//          final String username = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGenerateUser");
-//          final String password = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGeneratePassword");
+        // TODO z: uncomment this
+        //          final String username = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGenerateUser");
+        //          final String password = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGeneratePassword");
 
         final String username = "qa-automation-01@apriori.com";
         final String password = "TrumpetSnakeFridgeToasty18!%";
@@ -105,16 +108,21 @@ public class CustomerEnvironmentUtil extends TestBaseUI {
      * @param customerIdentity
      * @return customer deployments
      */
-    protected List<Deployment> getCustomerDeployments(final String customerIdentity) {
+    protected Deployment getCustomerDeploymentInformation(final String customerIdentity) {
         RequestEntity customerApplicationsRequest = RequestEntityUtil.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployments.class)
                 .inlineVariables(customerIdentity)
+                .queryParams(new QueryParams().use("name[EQ]", deploymentName))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Deployments> customerApplicationsResponse = HTTPRequest.build(customerApplicationsRequest)
                 .get();
 
-        return customerApplicationsResponse.getResponseEntity()
-                .getItems();
+        return customerApplicationsResponse
+                .getResponseEntity()
+                .getItems()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Customer deployment was not found. Deployment name: " + deploymentName));
     }
 
     protected Class<? extends LoadableComponent> getPageObjectTypeByApplicationName(final String applicationName) {
@@ -124,5 +132,34 @@ public class CustomerEnvironmentUtil extends TestBaseUI {
 
         throw new IllegalArgumentException("Application to open is not supported. Application name:" + applicationName);
 
+    }
+
+    protected List<ApplicationDTO> mapCustomerDeploymentDataToDTO(final Deployment customerDeployment) {
+        final List<ApplicationDTO> mappedApplicationDTOs = new ArrayList<>();
+
+        customerDeployment.getInstallations().forEach(
+                installation -> {
+                    installation.getApplications().forEach(
+                            application -> {
+                                ApplicationDTO applicationDTO = ApplicationDTO.builder()
+                                        .identitiesHierarchy(
+                                                new StringBuilder("customerId:" + customerDeployment.getCustomerIdentity())
+                                                        .append(identitiesDelimiter + "deploymentId:" + customerDeployment.getIdentity())
+                                                        .append(identitiesDelimiter + "installationId:" + installation.getIdentity())
+                                                        .append(identitiesDelimiter + "applicationId:" + application.getIdentity())
+                                                        .toString()
+                                        )
+                                        .installation(installation.getName())
+                                        .version(installation.getApVersion())
+                                        .applicationName(application.getName())
+                                        .build();
+
+                                mappedApplicationDTOs.add(applicationDTO);
+                            }
+                    );
+                }
+        );
+
+        return mappedApplicationDTOs;
     }
 }

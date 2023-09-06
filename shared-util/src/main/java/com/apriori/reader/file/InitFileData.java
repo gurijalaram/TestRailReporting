@@ -71,7 +71,7 @@ public class InitFileData {
      * @return thread safe queue
      */
     @SneakyThrows
-    //TODO z: should be updated for users util too, as a separate PR
+    //TODO : should be updated for users util too, as a separate PR
     public <T> ConcurrentLinkedQueue<T> initRows(Class<T> mapperType, File fileToRead) {
         CsvSchema orderLineSchema = CsvSchema.emptySchema().withHeader();
         CsvMapper csvMapper = new CsvMapper();

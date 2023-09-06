@@ -999,7 +999,6 @@ public class PageUtils {
      * @param locator        - the locator of the element
      * @param dropdownOption - the dropdown option
      */
-    // TODO z;
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
         new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
             .ignoreAll(ignoredWebDriverExceptions)
@@ -1226,7 +1225,6 @@ public class PageUtils {
      * @param value            - the value
      * @return current page object
      */
-    //TODO z:
     public void typeAheadSelect(WebElement dropdownSelector, String value) {
         waitForElementToAppear(dropdownSelector);
         waitForElementAndClick(dropdownSelector);
