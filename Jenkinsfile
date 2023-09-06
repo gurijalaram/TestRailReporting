@@ -40,10 +40,10 @@ pipeline {
                             echo "Building.."
 
                             script{
-                                if (${MODULE}.contains("-ui")) {
+                                if ("${MODULE}".contains("-ui")) {
                                     folder = "web"
                                 }
-                                else if (${MODULE}.contains("-api")) {
+                                else if ("${MODULE}".contains("-api")) {
                                     folder = "microservices"
                                 }
                             }
