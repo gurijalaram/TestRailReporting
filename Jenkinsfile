@@ -19,11 +19,7 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        script {
-                            for (String mod in module) {
-                                values mod
-                            }
-                        }
+                        values module
                     }
                 }
 
