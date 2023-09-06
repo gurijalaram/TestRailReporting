@@ -19,7 +19,7 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        values module.get(0).toString()
+                        values module.listIterator()
                     }
                 }
 
