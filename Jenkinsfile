@@ -90,10 +90,12 @@ pipeline {
                     }
 
                     stage("Cleaning") {
-                        echo "Cleaning up.."
-                        sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
-                        sh "docker system prune --all --force"
-                        cleanWs()
+                        steps {
+                            echo "Cleaning up.."
+                            sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
+                            sh "docker system prune --all --force"
+                            cleanWs()
+                        }
                     }
                 }
             }
