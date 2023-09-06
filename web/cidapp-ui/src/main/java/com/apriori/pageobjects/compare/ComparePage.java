@@ -88,16 +88,6 @@ public class ComparePage extends CompareToolbar {
     }
 
     /**
-     * Click the Refresh Button
-     *
-     * @return - This Page Object
-     */
-    public ComparePage clickRefresh() {
-        pageUtils.waitForElementAndClick(refreshButton);
-        return this;
-    }
-
-    /**
      * Checks if Back to Comparison Explorer button is enabled
      *
      * @return Boolean of enabled state

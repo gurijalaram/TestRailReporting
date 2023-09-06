@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
+import com.apriori.pageobjects.compare.CompareExplorePage;
 import com.apriori.pageobjects.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.compare.SaveComparisonPage;
 import com.apriori.pageobjects.explore.ImportCadFilePage;
@@ -19,6 +20,27 @@ public class CompareToolbar extends MainNavBar {
     @FindBy(id = "qa-sub-header-new-comparison")
     private WebElement newButton;
 
+    @FindBy(xpath = "//div[@id='qa-sub-header-delete-button']//span[.='Delete']/../..")
+    private WebElement deleteButton;
+
+    @FindBy(xpath = "//div[@id='qa-sub-header-delete-button']//span[.='Rename']/../..")
+    private WebElement renameButton;
+
+//    @FindBy(id = "qa-sub-header-delete-button")
+//    private WebElement deleteButton;
+//
+//    @FindBy(id = "qa-sub-header-rename-button")
+//    private WebElement renameButton;
+
+    @FindBy(id = "qa-sub-header-refresh-view-button")
+    private WebElement refreshButton;
+
+    @FindBy(css = "")
+    private WebElement saveStatusIcon;
+
+    @FindBy(css = "")
+    private WebElement saveStatusText;
+
     @FindBy(id = "qa-sub-header-modify-button")
     private WebElement modifyButton;
 
@@ -35,6 +57,16 @@ public class CompareToolbar extends MainNavBar {
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(newButton);
+    }
+
+    /**
+     * Click the refresh button
+     *
+     * @return New copy of current page object
+     */
+    public <T> T clickRefresh(Class<T> klass) {
+        pageUtils.waitForElementAndClick(refreshButton);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**

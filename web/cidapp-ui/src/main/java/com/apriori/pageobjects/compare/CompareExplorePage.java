@@ -31,23 +31,8 @@ public class CompareExplorePage extends CompareToolbar {
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement tableFiltersDiv;
 
-    @FindBy(css = "div h5")
-    private WebElement componentHeader;
-
-    @FindBy(css = "div[role='status']")
-    private WebElement loadingSpinner;
-
-    @FindBy(id = "qa-sub-header-refresh-view-button")
-    private WebElement refreshButton;
-
-    @FindBy(id = "qa-comparison-explorer-configure-button")
-    private WebElement configureButton;
-
     @FindBy(id = "qa-scenario-list-filter-button")
     private WebElement filterButton;
-
-    @FindBy(id = "qa-scenario-list-preview-button")
-    private WebElement previewButton;
 
     @FindBy(id = "qa-scenario-list-filter-selector")
     private WebElement filterDropdown;
@@ -55,20 +40,19 @@ public class CompareExplorePage extends CompareToolbar {
     @FindBy(css = "div[data-testid='search-field'] input")
     private WebElement filterInput;
 
+    @FindBy(id = "qa-comparison-explorer-configure-button")
+    private WebElement configureButton;
+
+    @FindBy(css = "div[role='status']")
+    private WebElement loadingSpinner;
+
+
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
-
-    @FindBy(css = "placeholder...")
-    private WebElement submitButton;
-
-    // ToDo:- Rethink name
-    @FindBy(css = "div[class='card-header'] .left")
-    private WebElement comparisonCount;
 
     @FindBy(css = ".comparison-row-link")
     private List<WebElement> comparisonNames;
 
-//    private String scenarioLocator = "//div[aria-label='%s']/..";
     private String scenarioLocator = "//div[.='%s']/ancestor::div[@data-header-id='comparisonName']//a";
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -86,7 +70,7 @@ public class CompareExplorePage extends CompareToolbar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementNotVisible(loadingSpinner, 2);
-        pageUtils.waitForElementToAppear(comparisonCount);
+        pageUtils.waitForElementToAppear(tableFiltersDiv);
 
     }
 
@@ -122,16 +106,6 @@ public class CompareExplorePage extends CompareToolbar {
         moveToComparison(comparisonName);
         pageUtils.waitForElementAndClick(comparisonSelector);
         return new ComparePage(driver);
-    }
-
-    /**
-     * Click the refresh button
-     *
-     * @return New copy of current page object
-     */
-    public CompareExplorePage clickRefresh() {
-        pageUtils.waitForElementAndClick(refreshButton);
-        return new CompareExplorePage(driver);
     }
 
     /**
@@ -206,15 +180,6 @@ public class CompareExplorePage extends CompareToolbar {
      */
     public FilterPage filter() {
         return componentTableActions.filter(filterButton);
-    }
-
-    /**
-     * Selects the submit button
-     *
-     * @return generic page object
-     */
-    public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(submitButton, klass);
     }
 
     /**
