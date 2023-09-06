@@ -19,7 +19,7 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        values module.listIterator()
+                        values module.each {mod -> values "$mod"}
                     }
                 }
 
