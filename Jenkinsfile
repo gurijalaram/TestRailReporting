@@ -5,7 +5,7 @@ def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format('yyyyMMddHHss')
 def buildVersion = "latest"
 def folder = "web"
-def module
+def module = ["cidapp-ui", "cidapp-api"]
 def runType = "docker-test"
 
 pipeline {
@@ -20,7 +20,6 @@ pipeline {
                     axis {
                         name 'MODULE'
                         values 'cidapp-ui', 'cidapp-api'
-                        module = ${MODULE}
                     }
                 }
 
@@ -39,6 +38,15 @@ pipeline {
                     stage("Build") {
                         steps {
                             echo "Building.."
+
+                            script{
+                                if (${MODULE}.contains("-ui")) {
+                                    folder = "web"
+                                }
+                                else if (${MODULE}.contains("-api")) {
+                                    folder = "microservices"
+                                }
+                            }
                             withCredentials([usernamePassword(
                                     credentialsId: 'NEXUS_APRIORI_COM',
                                     passwordVariable: 'NEXUS_PASS',
@@ -80,6 +88,13 @@ pipeline {
                             }
                         }
                     }
+
+                    stage("Cleaning") {
+                        echo "Cleaning up.."
+                        sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
+                        sh "docker system prune --all --force"
+                        cleanWs()
+                    }
                 }
             }
         }
@@ -87,9 +102,6 @@ pipeline {
 
     post {
         always {
-            echo "Cleaning up.."
-            sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
-            sh "docker system prune --all --force"
             cleanWs()
         }
     }
