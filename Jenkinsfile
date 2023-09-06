@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage("Deploy") {
+        steps {
             script {
                 for (module in modules) {
 
