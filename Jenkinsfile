@@ -20,6 +20,7 @@ pipeline {
                     axis {
                         name 'MODULE'
                         values 'cidapp-ui', 'cidapp-api'
+                        module = ${MODULE}
                     }
                 }
 
@@ -28,7 +29,6 @@ pipeline {
                         steps {
                             echo "Initializing.."
                             script {
-                                module = ${MODULE}
                                 // Read file.
                                 buildInfo = readYaml file: buildInfoFile
                                 sh "rm ${buildInfoFile}"
