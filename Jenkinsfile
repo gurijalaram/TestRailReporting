@@ -26,8 +26,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 script {
-                    modules.each { module ->
-
+                    for (int i = 0; modules.size(); i++) {
                         stage("Build") {
                             steps {
                                 echo "Building..."
