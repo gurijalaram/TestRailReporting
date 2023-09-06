@@ -19,8 +19,9 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        for (String mod in module) {
+                        when { expression {for (String mod in module) {
                             values "$mod"
+                        }}
                         }
                     }
                 }
