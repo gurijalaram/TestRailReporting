@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage("Initialize") {
             steps {
-                echo "Initializing.."
+                echo "Initializing..."
                 script {
                     // Read file.
                     buildInfo = readYaml file: buildInfoFile
@@ -72,8 +72,8 @@ pipeline {
                             }
                         }
 
-                        stage("Cleaning") {
-                            echo "Cleaning up.."
+                        stage("Clean") {
+                            echo "Cleaning up..."
                             sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
                             sh "docker system prune --all --force"
                         }
