@@ -27,10 +27,9 @@ pipeline {
             steps {
                 script {
                     modules.each { module ->
-                        echo "current module = $module"
 
                         stage("Build") {
-                            steps {
+//                            steps {
                                 echo "Building..."
                                 withCredentials([usernamePassword(
                                         credentialsId: 'NEXUS_APRIORI_COM',
@@ -45,11 +44,11 @@ pipeline {
                         .
                 """
                                 }
-                            }
+//                            }
                         }
 
                         stage("Tag") {
-                            steps {
+//                            steps {
                                 withCredentials([
                                         string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
                                         string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
@@ -58,11 +57,11 @@ pipeline {
                             ${buildInfo.name}-${module}-${runType}:latest 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
                     """
                                 }
-                            }
+//                            }
                         }
 
                         stage("Push") {
-                            steps {
+//                            steps {
                                 withCredentials([
                                         string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
                                         string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
@@ -71,16 +70,16 @@ pipeline {
                             563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
                     """
                                 }
-                            }
+//                            }
                         }
 
                         stage("Cleaning") {
-                            steps {
+//                            steps {
                                 echo "Cleaning up.."
                                 sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
                                 sh "docker system prune --all --force"
                             }
-                        }
+//                        }
                     }
                 }
             }
