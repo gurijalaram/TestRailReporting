@@ -60,4 +60,5 @@ public class InstallationItems {
     private List<Application> applications;
     private String apVersion;
     private Features features;
+    private Boolean highMem;
 }

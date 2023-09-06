@@ -31,7 +31,7 @@ public class User {
     private String customerIdentity;
     private UserProfile userProfile;
     private String email;
-    private boolean hasCompleteProfile;
+    private Boolean hasCompleteProfile;
     private String username;
     private Boolean active;
     private Boolean mfaRequired;
@@ -39,6 +39,7 @@ public class User {
     private CustomProperties customProperties;
     private String userType;
     private List<String> resourcesAllowedToCreate;
+    private List<String> roles;
 
     public static class CustomProperties {
     }

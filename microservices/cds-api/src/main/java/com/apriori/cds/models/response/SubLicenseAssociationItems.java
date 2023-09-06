@@ -1,10 +1,16 @@
 package com.apriori.cds.models.response;
 
 import com.apriori.annotations.Schema;
+import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.models.response.Enablements;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -13,7 +19,12 @@ import java.util.List;
 public class SubLicenseAssociationItems {
     private String identity;
     private String createdBy;
-    private String createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
     private UserProfile userProfile;
     private String email;
     private String username;
@@ -25,4 +36,5 @@ public class SubLicenseAssociationItems {
     private Boolean hasCompleteProfile;
     private String customerIdentity;
     private List<String> roles;
+    private Enablements enablements;
 }
