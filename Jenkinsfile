@@ -28,10 +28,10 @@ pipeline {
                         steps {
                             echo "Initializing.."
                             script {
+                                module = ${MODULE}
                                 // Read file.
                                 buildInfo = readYaml file: buildInfoFile
                                 sh "rm ${buildInfoFile}"
-                                module = ${MODULE}
                             }
                         }
                     }
