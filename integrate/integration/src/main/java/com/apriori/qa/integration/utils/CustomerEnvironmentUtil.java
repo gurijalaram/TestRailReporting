@@ -27,7 +27,11 @@ import com.apriori.testconfig.TestBaseUI;
 import org.apache.http.HttpStatus;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * Customer environment util class
@@ -39,15 +43,15 @@ public class CustomerEnvironmentUtil extends TestBaseUI {
     protected final String identitiesDelimiter = "_";
 
     private static final Map<String, Class<? extends LoadableComponent>> APPLICATIONS_CLASS = new LinkedHashMap<>() {{
-        put("aP Admin", AdminHomePage.class);
-        put("aP Analytics", ReportsHeader.class);
-        put("aP Connect", WorkflowHome.class);
-        put("aP Design", CommonLoginPageImplementation.class);
-        put("aP Pro", AppStreamPage.class);
-        put("aP Workspace", MessagesPage.class);
-        put("Customer Admin", CustomerAdminPage.class);
-        put("Electronics Data Collection", CommonLoginPageImplementation.class);
-    }};
+            put("aP Admin", AdminHomePage.class);
+            put("aP Analytics", ReportsHeader.class);
+            put("aP Connect", WorkflowHome.class);
+            put("aP Design", CommonLoginPageImplementation.class);
+            put("aP Pro", AppStreamPage.class);
+            put("aP Workspace", MessagesPage.class);
+            put("Customer Admin", CustomerAdminPage.class);
+            put("Electronics Data Collection", CommonLoginPageImplementation.class);
+        }};
 
     protected final UserCredentials userCredentials = getAwsCustomerUserCredentials();
 

@@ -43,7 +43,7 @@ public class CustomerCloudHomeAPITest extends CustomerEnvironmentUtil {
 
         userAccessControls.forEach(
             userAccessControl -> {
-                if(userAccessControl.getDeploymentIdentity().equals(deploymentIdentity)) {
+                if (userAccessControl.getDeploymentIdentity().equals(deploymentIdentity)) {
                     userReferences.add(
                             new StringBuilder("customerId:" + userAccessControl.getCustomerIdentity())
                                     .append(identitiesDelimiter + "deploymentId:" + userAccessControl.getDeploymentIdentity())
