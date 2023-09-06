@@ -23,10 +23,9 @@ pipeline {
                     }
                 }
 
-                module = ${MODULE}
-
                 stages {
                     stage("Initialize") {
+                        module = ${MODULE}
                         steps {
                             echo "Initializing.."
                             script {
