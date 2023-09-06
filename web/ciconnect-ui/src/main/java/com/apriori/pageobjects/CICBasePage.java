@@ -3,24 +3,26 @@ package com.apriori.pageobjects;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.PageUtils;
-import com.apriori.login.LoginService;
 import com.apriori.pagedata.WorkFlowData;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import utils.TableUtils;
 
 @Slf4j
 public class CICBasePage extends LoadableComponent<CICBasePage> {
 
-    protected LoginService aprioriLoginService;
     protected static final String OPTIONS_CONTENT_OPEN_DROPDOWN_CSS = "div[class^='ss-content ss-'][class$='ss-open'] div[class='ss-list']";
     protected static final String PARENT_ELEMENT_CSS = "div[id^='root_pagemashupcontainer-1_navigation-']";
     protected static final long WAIT_TIME = 30;
+    protected static final long DEFAULT_WAIT_TIME = 3;
     protected static WorkFlowData workFlowData;
 
     protected WebDriver driver;
@@ -39,14 +41,20 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
     @FindBy(css = "div[class$='modalTitle']")
     protected WebElement workflowPopUpTitleElement;
 
-    @FindBy(css = "span[title='Users']")
-    protected WebElement usersMenuBtn;
-
     @FindBy(css = "input[name='email']")
     protected WebElement emailInputCloud;
 
-    @FindBy(css = "button[type='submit']")
-    protected WebElement loginButtonCloud;
+    @FindBy(css = "span[title='Users']")
+    protected WebElement usersMenuBtn;
+
+    @FindBy(css = "div.tw-status-msg-box")
+    protected WebElement statusMessagePopUpElement;
+
+    @FindBy(css = "div.tw-status-msg-box > div.status-msg-container > div.status-msg > div[id='status-msg-text']")
+    protected WebElement statusMessageLbl;
+
+    @FindBy(css = "div.tw-status-msg-box > div.close-sticky")
+    protected WebElement statusMessageCloseBtn;
 
     public CICBasePage(WebDriver driver) {
         this.driver = driver;
@@ -102,36 +110,35 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
         pageUtils.waitForElementToBeClickable(webElement);
     }
 
-    /**
-     * Get Next button element during workflow creation flow
-     *
-     * @return WebElement
-     */
     protected WebElement getNextButtonElement() {
         pageUtils.waitForElementToAppear(workflowPopUpActiveTabElement);
         return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//button[.='Next']", workflowPopUpActiveTabElement.getText())));
     }
 
-    /**
-     * get workflow name element
-     *
-     * @return WebElement
-     */
     public WebElement getNameTextFieldElement() {
         return driver.findElement(with(By.xpath("//input")).below(By.xpath("//span[.='Name']")));
-    }
-
-    /**
-     * get emailInput webElement
-     *
-     * @return WebElement
-     */
-    public WebElement getEmailInputCloud() {
-        return emailInputCloud;
     }
 
     protected WebElement getQDReturnOnlyCheckboxElement() {
         pageUtils.waitForElementToAppear(workflowPopUpActiveTabElement);
         return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//input[@type='checkbox']", workflowPopUpActiveTabElement.getText())));
+    }
+
+    /**
+     * capture the message from confirmation pop up window
+     *
+     * @return message
+     */
+    public String getStatusMessage() {
+        pageUtils.waitForElementToAppear(statusMessagePopUpElement);
+        return statusMessageLbl.getText();
+    }
+
+    /**
+     * click close button on status message alert box
+     */
+    public <T> T closeMessageAlert(Class<T> klass) {
+        pageUtils.waitForElementAndClick(statusMessageCloseBtn);
+        return PageFactory.initElements(driver, klass);
     }
 }

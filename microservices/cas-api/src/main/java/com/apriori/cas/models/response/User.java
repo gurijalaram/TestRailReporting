@@ -40,4 +40,5 @@ public class User {
     private List<String> resourcesAllowedToCreate;
     private UserEnablements userEnablements;
     private Boolean hasCompleteProfile;
+    private List<String> roles;
 }

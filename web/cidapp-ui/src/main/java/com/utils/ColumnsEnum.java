@@ -41,7 +41,10 @@ public enum ColumnsEnum {
     DFM_RISK("DFM Risk"),
     FULLY_BURDENED_COST("Fully Burdened Cost"),
     EXCLUDED("Excluded"),
-    QUANTITY("Quantity");
+    QUANTITY("Quantity"),
+    MATERIAL_CARBON("Material Carbon"),
+    PROCESS_CARBON("Process Carbon"),
+    LOGISTICS_CARBON("Logistics Carbon");
 
     private final String columns;
 

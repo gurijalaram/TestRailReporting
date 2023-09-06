@@ -19,11 +19,13 @@
         "active",
         "mfaRequired",
         "customAttributes",
-        "userType"
+        "userType",
+        "hasCompleteProfile"
       ],
       "optional": [
         "customProperties",
-        "updatedAt"
+        "updatedAt",
+        "userEnablements"
       ],
       "properties": {
         "isSystemUser": {
@@ -53,6 +55,17 @@
             "givenName",
             "familyName"
           ],
+          "optional": [
+            "prefix",
+            "suffix",
+            "jobTitle",
+            "department",
+            "townCity",
+            "county",
+            "timezone",
+            "officePhoneCountryCode",
+            "officePhoneNumber"
+          ],
           "properties": {
             "identity": {
               "type": "string"
@@ -68,6 +81,33 @@
             },
             "familyName": {
               "type": "string"
+            },
+            "prefix": {
+              "type": "string"
+            },
+            "suffix": {
+              "type": "string"
+            },
+            "jobTitle": {
+              "type": "string"
+            },
+            "department": {
+              "type": "string"
+            },
+            "townCity": {
+              "type": "string"
+            },
+            "county": {
+              "type": "string"
+            },
+            "timezone": {
+              "type": "string"
+            },
+            "officePhoneCountryCode": {
+              "type": "string"
+            },
+            "officePhoneNumber": {
+              "type": "string"
             }
           }
         },
@@ -78,6 +118,9 @@
           "type": "string"
         },
         "active": {
+          "type": "boolean"
+        },
+        "hasCompleteProfile": {
           "type": "boolean"
         },
         "mfaRequired": {
@@ -97,6 +140,33 @@
         },
         "userType": {
           "type": "string"
+        },
+        "userEnablements": {
+          "type": "object",
+          "properties": {
+            "connectAdminEnabled": {
+              "type": "boolean"
+            },
+            "highMemEnabled": {
+              "type": "boolean"
+            },
+            "previewEnabled": {
+              "type": "boolean"
+            },
+            "sandboxEnabled": {
+              "type": "boolean"
+            },
+            "userAdminEnabled": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "connectAdminEnabled",
+            "highMemEnabled",
+            "previewEnabled",
+            "sandboxEnabled",
+            "userAdminEnabled"
+          ]
         }
       }
     }

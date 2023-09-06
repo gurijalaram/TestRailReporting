@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(location = "AtsAuthorizeSchema.json")
 @NoArgsConstructor
@@ -42,4 +43,5 @@ public class AuthorizationResponse {
     private LocalDateTime updatedAt;
     private UserEnablements userEnablements;
     private Boolean hasCompleteProfile;
+    private List<String> roles;
 }

@@ -181,7 +181,8 @@
                           "optional": [
                             "deploymentIdentity",
                             "customerIdentity",
-                            "applications"
+                            "applications",
+                            "highMem"
                           ],
                           "properties": {
                             "identity": {
@@ -237,6 +238,9 @@
                             },
                             "region": {
                               "type": "string"
+                            },
+                            "highMem": {
+                              "type": "boolean"
                             }
                           }
                         }

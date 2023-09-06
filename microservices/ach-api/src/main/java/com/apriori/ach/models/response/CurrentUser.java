@@ -38,4 +38,5 @@ public class CurrentUser {
     private String userType;
     private UserEnablements userEnablements;
     private Boolean hasCompleteProfile;
+    private List<String> roles;
 }

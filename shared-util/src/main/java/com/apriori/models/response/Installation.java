@@ -52,4 +52,5 @@ public class Installation {
     private List<Application> applications = null;
     private String region;
     private Features features;
+    private Boolean highMem;
 }

@@ -1,22 +1,26 @@
 package com.apriori.pageobjects.connectors;
 
-import com.apriori.pageobjects.CICBasePage;
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.pageobjects.CICBasePage;
+import com.apriori.pageobjects.workflows.history.ModalDialog;
+
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import utils.Constants;
 
 /**
  * Connectors page
  */
+@Slf4j
 public class ConnectorsPage extends CICBasePage {
-    private static final Logger logger = LoggerFactory.getLogger(ConnectorsPage.class);
 
-    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-44-grid-advanced > div.objbox > table > tbody")
+    @FindBy(css = "div[class$='cic-table'] table.obj")
     private WebElement connectorListTable;
 
     @FindBy(css = "div.xhdr td:nth-of-type(4)")
@@ -31,14 +35,14 @@ public class ConnectorsPage extends CICBasePage {
     @FindBy(css = "div.xhdr td:nth-of-type(8)")
     private WebElement connectionStatusHeader;
 
-    @FindBy(css = "div#root_pagemashupcontainer-1_button-29 > button")
-    private WebElement editConnectorBtn;
+    @FindBy(xpath = "//button[.='New']")
+    private WebElement newConnectorBtn;
 
-    @FindBy(css = "div#root_pagemashupcontainer-1_button-30 > button")
+    @FindBy(xpath = "//button[.='Delete']")
     private WebElement deleteConnectorBtn;
 
-    @FindBy(css = "div#root_pagemashupcontainer-1_button-28 > button")
-    private WebElement newConnectorBtn;
+    @FindBy(xpath = "//button[.='Edit']")
+    private WebElement editConnectorBtn;
 
     @FindBy(css = "div#root_pagemashupcontainer-1_button-31 > button")
     private WebElement refreshConnectorStatusBtn;
@@ -46,10 +50,9 @@ public class ConnectorsPage extends CICBasePage {
     @FindBy(css = "div[id='root_pagemashupcontainer-1_label-8'] > span")
     private WebElement connectorsLabel;
 
-
     public ConnectorsPage(WebDriver driver) {
         super(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -60,9 +63,10 @@ public class ConnectorsPage extends CICBasePage {
 
     @Override
     protected void isLoaded() {
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         pageUtils.waitForElementToAppear(newConnectorBtn);
-    }
 
+    }
 
     /**
      * Select workflow in table
@@ -75,6 +79,58 @@ public class ConnectorsPage extends CICBasePage {
         tableUtils.selectRowByName(connectorListTable, connectorName, 4);
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
         return new ConnectorsPage(driver);
+    }
+
+    /**
+     * Select workflow in table
+     *
+     * @param connectorName - name of workflow to select
+     * @return new Schedule page object
+     */
+    public Boolean isConnectorExist(String connectorName) {
+        Boolean isConnectorDeleted = true;
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        int attempts = 0;
+        while (attempts < 10) {
+            try {
+                isConnectorDeleted = tableUtils.itemExistsInTable(connectorListTable, connectorName);
+                break;
+            } catch (StaleElementReferenceException e) {
+                log.info(e.getMessage());
+            }
+            attempts++;
+        }
+        return isConnectorDeleted;
+    }
+
+    /**
+     * click New button in connectors home page
+     *
+     * @return ConnectorDetails object
+     */
+    public ConnectorDetails clickNewBtn() {
+        pageUtils.waitForElementAndClick(newConnectorBtn);
+        return new ConnectorDetails(driver);
+    }
+
+    /**
+     * click delete button in connectors home page
+     *
+     * @return current class object
+     */
+    public ConnectorsPage clickDeleteBtn() {
+        pageUtils.waitForElementAndClick(deleteConnectorBtn);
+        return this;
+    }
+
+    /**
+     * click delete button model dialog confirmation pop up window
+     *
+     * @return current class object
+     */
+    public ConnectorsPage clickConfirmAlertDelete() {
+        new ModalDialog(driver).clickDeleteButton();
+        return this;
     }
 
     /**
@@ -120,7 +176,6 @@ public class ConnectorsPage extends CICBasePage {
      * @return WebElement
      */
     public WebElement getRefreshConnectorStatusBtn() {
-        return refreshConnectorStatusBtn;
+        return driver.findElement(with(By.xpath("//button//span[@class='widget-button-text']")).toLeftOf(By.xpath("//button[.='Delete']")));
     }
-
 }

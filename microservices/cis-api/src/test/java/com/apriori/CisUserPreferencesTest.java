@@ -15,13 +15,14 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
 public class CisUserPreferencesTest extends CisUserPreferencesResources {
 
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void testSetup() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 

@@ -37,15 +37,6 @@ public class WorkflowHome extends CICBasePage {
     @FindBy(css = "#root_pagemashupcontainer-1_tabsv2-10 > div.tab-content > div.tabsv2-viewport > div > div > div.tabsv2-tab.enabled.selected[tab-value=schedule]")
     private WebElement selectedScheduleTab;
 
-    @FindBy(css = "div.tw-status-msg-box")
-    private WebElement statusMessagePopUpElement;
-
-    @FindBy(css = "div.tw-status-msg-box > div.status-msg-container > div.status-msg > div[id='status-msg-text']")
-    private WebElement statusMessageLbl;
-
-    @FindBy(css = "div.tw-status-msg-box > div.close-sticky")
-    private WebElement statusMessageCloseBtn;
-
     @FindBy(css = "div[id='root_pagemashupcontainer-1_label-18'] > span")
     private WebElement workflowLabel;
 
@@ -75,7 +66,7 @@ public class WorkflowHome extends CICBasePage {
     }
 
     @Override
-    protected void isLoaded() throws Error {
+    protected void isLoaded() {
         pageUtils.isElementDisplayed(workflowLabel);
         pageUtils.isElementDisplayed(scheduleTab);
 
