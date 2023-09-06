@@ -4,7 +4,7 @@ def buildInfo
 def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format('yyyyMMddHHss')
 def buildVersion = "latest"
-def folder
+def folder = "web"
 def module = ["cidapp-ui", "cidapp-api"]
 def runType = "docker-test"
 
@@ -30,7 +30,7 @@ pipeline {
                             script {
                                 // Read file.
                                 buildInfo = readYaml file: buildInfoFile
-//                                sh "rm ${buildInfoFile}"
+                                sh "rm ${buildInfoFile}"
                             }
                         }
                     }
@@ -38,19 +38,11 @@ pipeline {
                     stage("Build") {
                         steps {
                             echo "Building.."
-
-                            script {
-                                if (!folder && "${MODULE}".contains("-ui")) {
-                                    folder = "web"
-                                } else if (!folder && "${MODULE}".contains("-api")) {
-                                    folder = "microservices"
-                                }
-
-                                withCredentials([usernamePassword(
-                                        credentialsId: 'NEXUS_APRIORI_COM',
-                                        passwordVariable: 'NEXUS_PASS',
-                                        usernameVariable: 'NEXUS_USER')]) {
-                                    sh """
+                            withCredentials([usernamePassword(
+                                    credentialsId: 'NEXUS_APRIORI_COM',
+                                    passwordVariable: 'NEXUS_PASS',
+                                    usernameVariable: 'NEXUS_USER')]) {
+                                sh """
                         docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
                         docker build -f qa-stacks.Dockerfile \
                         --build-arg FOLDER=${folder} \
@@ -58,7 +50,6 @@ pipeline {
                         --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
                         .
                         """
-                                }
                             }
                         }
                     }
