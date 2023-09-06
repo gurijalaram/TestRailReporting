@@ -19,7 +19,7 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        values module.each {mod -> values "$mod"}
+                        module.each {mod -> values "$mod"}
                     }
                 }
 
