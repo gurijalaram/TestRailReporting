@@ -61,16 +61,16 @@ pipeline {
                             }
                         }
 
-//                        stage("Push") {
-//                            withCredentials([
-//                                    string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
-//                                    string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-//                                sh """
-//                        docker push \
-//                            563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
-//                    """
-//                            }
-//                        }
+                        stage("Push") {
+                            withCredentials([
+                                    string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                                    string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                                sh """
+                        docker push \
+                            563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
+                    """
+                            }
+                        }
 
                         stage("Cleaning") {
                             echo "Cleaning up.."
