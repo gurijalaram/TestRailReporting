@@ -19,8 +19,8 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        for (value in module) {
-                            values {value}
+                        for (mod in module) {
+                            values "$mod"
                         }
                     }
                 }
