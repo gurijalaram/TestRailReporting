@@ -26,7 +26,7 @@ pipeline {
         stage("Deploy") {
             steps {
                 script {
-                    modules.forEach {module ->
+                    modules.each {module ->
 
                         stage("Build") {
                             steps {
