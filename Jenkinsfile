@@ -30,7 +30,7 @@ pipeline {
                             script {
                                 // Read file.
                                 buildInfo = readYaml file: buildInfoFile
-                                sh "rm ${buildInfoFile}"
+//                                sh "rm ${buildInfoFile}"
                             }
                         }
                     }
