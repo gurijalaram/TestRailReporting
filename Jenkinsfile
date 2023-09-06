@@ -19,7 +19,7 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        values module
+                        values module.get(0)
                     }
                 }
 
