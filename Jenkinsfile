@@ -69,9 +69,11 @@ pipeline {
         }
 
         stage("Cleaning") {
-            echo "Cleaning up.."
-            sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
-            sh "docker system prune --all --force"
+            steps {
+                echo "Cleaning up.."
+                sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+                sh "docker system prune --all --force"
+            }
         }
     }
 
