@@ -19,9 +19,10 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        when { expression {for (String mod in module) {
-                            values "$mod"
-                        }}
+                        script {
+                            for (String mod in module) {
+                                values mod
+                            }
                         }
                     }
                 }
@@ -45,7 +46,7 @@ pipeline {
                                     credentialsId: 'NEXUS_APRIORI_COM',
                                     passwordVariable: 'NEXUS_PASS',
                                     usernameVariable: 'NEXUS_USER')]) {
-                        sh """
+                                sh """
                         docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
                         docker build -f qa-stacks.Dockerfile \
                         --build-arg FOLDER=${folder} \
@@ -62,7 +63,7 @@ pipeline {
                             withCredentials([
                                     string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
                                     string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        sh """
+                                sh """
                         docker tag \
                             ${buildInfo.name}-${module}-${runType}:latest 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
                         """
@@ -75,7 +76,7 @@ pipeline {
                             withCredentials([
                                     string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
                                     string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        sh """
+                                sh """
                         docker push \
                             563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
                         """
