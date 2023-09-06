@@ -5,7 +5,7 @@ def buildInfoFile = "build-info.yml"
 def timeStamp = new Date().format('yyyyMMddHHss')
 def buildVersion = "latest"
 def folder = "web"
-def module = ["cidapp-ui", "cidapp-api"]
+//def module = ["cidapp-ui", "cidapp-api"]
 def runType = "docker-test"
 
 pipeline {
@@ -18,8 +18,8 @@ pipeline {
             matrix {
                 axes {
                     axis {
-                        name 'modules'
-                        values module.forEach {mod -> mod.toString()}
+                        name 'MODULE'
+                        values 'cidapp-ui', 'cidapp-api'
                     }
                 }
 
@@ -46,8 +46,8 @@ pipeline {
                         docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
                         docker build -f qa-stacks.Dockerfile \
                         --build-arg FOLDER=${folder} \
-                        --build-arg MODULE=${module} \
-                        --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
+                        --build-arg MODULE=${MODULE} \
+                        --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
                         .
                         """
                             }
@@ -61,7 +61,7 @@ pipeline {
                                     string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                                 sh """
                         docker tag \
-                            ${buildInfo.name}-${module}-${runType}:latest 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
+                            ${buildInfo.name}-${MODULE}-${runType}:latest 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${MODULE}:${buildVersion}
                         """
                             }
                         }
@@ -74,7 +74,7 @@ pipeline {
                                     string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                                 sh """
                         docker push \
-                            563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
+                            563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${MODULE}:${buildVersion}
                         """
                             }
                         }
@@ -87,7 +87,7 @@ pipeline {
     post {
         always {
             echo "Cleaning up.."
-            sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+            sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
             sh "docker system prune --all --force"
             cleanWs()
         }
