@@ -39,14 +39,14 @@ pipeline {
                         steps {
                             echo "Building.."
 
-                            script{
-                                if ("${MODULE}".contains("-ui")) {
+                            script {
+                                if (!folder && "${MODULE}".contains("-ui")) {
                                     folder = "web"
-                                }
-                                else if ("${MODULE}".contains("-api")) {
+                                } else if (!folder && "${MODULE}".contains("-api")) {
                                     folder = "microservices"
                                 }
                             }
+
                             withCredentials([usernamePassword(
                                     credentialsId: 'NEXUS_APRIORI_COM',
                                     passwordVariable: 'NEXUS_PASS',
