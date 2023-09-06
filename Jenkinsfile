@@ -23,19 +23,20 @@ pipeline {
             }
         }
 
-        stages("Deploy") {
-            steps {
-                script {
-                    for (module in modules) {
+        stage {
+            stages("Deploy") {
+                steps {
+                    script {
+                        for (module in modules) {
 
-                        stage("Build") {
-                            steps {
-                                echo "Building..."
-                                withCredentials([usernamePassword(
-                                        credentialsId: 'NEXUS_APRIORI_COM',
-                                        passwordVariable: 'NEXUS_PASS',
-                                        usernameVariable: 'NEXUS_USER')]) {
-                                    sh """
+                            stage("Build") {
+                                steps {
+                                    echo "Building..."
+                                    withCredentials([usernamePassword(
+                                            credentialsId: 'NEXUS_APRIORI_COM',
+                                            passwordVariable: 'NEXUS_PASS',
+                                            usernameVariable: 'NEXUS_USER')]) {
+                                        sh """
                         docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
                         docker build -f qa-stacks.Dockerfile \
                         --build-arg FOLDER=${folder} \
@@ -43,41 +44,42 @@ pipeline {
                         --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
                         .
                         """
+                                    }
                                 }
                             }
-                        }
 
-                        stage("Tag") {
-                            steps {
-                                withCredentials([
-                                        string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
-                                        string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                                    sh """
+                            stage("Tag") {
+                                steps {
+                                    withCredentials([
+                                            string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                                            string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                                        sh """
                         docker tag \
                             ${buildInfo.name}-${module}-${runType}:latest 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
                     """
+                                    }
                                 }
                             }
-                        }
 
-                        stage("Push") {
-                            steps {
-                                withCredentials([
-                                        string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
-                                        string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                                    sh """
+                            stage("Push") {
+                                steps {
+                                    withCredentials([
+                                            string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                                            string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                                        sh """
                         docker push \
                             563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-${module}:${buildVersion}
                     """
+                                    }
                                 }
                             }
-                        }
 
-                        stage("Cleaning") {
-                            steps {
-                                echo "Cleaning up.."
-                                sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
-                                sh "docker system prune --all --force"
+                            stage("Cleaning") {
+                                steps {
+                                    echo "Cleaning up.."
+                                    sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+                                    sh "docker system prune --all --force"
+                                }
                             }
                         }
                     }
