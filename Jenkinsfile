@@ -19,8 +19,8 @@ pipeline {
                 axes {
                     axis {
                         name 'modules'
-                        for (mod in module) {
-                            values mod.toString()
+                        for (String mod in module) {
+                            values mod
                         }
                     }
                 }
