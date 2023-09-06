@@ -20,7 +20,7 @@ pipeline {
                     axis {
                         name 'modules'
                         for (mod in module) {
-                            values "$mod"
+                            values mod.toString()
                         }
                     }
                 }
