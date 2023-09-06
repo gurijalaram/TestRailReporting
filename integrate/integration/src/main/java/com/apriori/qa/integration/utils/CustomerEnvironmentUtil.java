@@ -7,6 +7,7 @@ import com.apriori.cds.models.response.User;
 import com.apriori.cds.models.response.Users;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AwsParameterStoreUtil;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
@@ -56,19 +57,19 @@ public class CustomerEnvironmentUtil extends TestBaseUI {
     protected final UserCredentials userCredentials = getAwsCustomerUserCredentials();
 
 
+    /**
+     * Get user credentials for a customer from AWS ParameterStore
+     * @return
+     */
     protected UserCredentials getAwsCustomerUserCredentials() {
-        // TODO z: uncomment this
-        //          final String username = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGenerateUser");
-        //          final String password = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGeneratePassword");
-
-        final String username = "qa-automation-01@apriori.com";
-        final String password = "TrumpetSnakeFridgeToasty18!%";
+        final String username = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGenerateUser");
+        final String password = AwsParameterStoreUtil.getSystemParameter("/antman/aPrioriCIGeneratePassword");
 
         return new UserCredentials(username, password);
     }
 
     /**
-     * Find information about customer user
+     * Find information about customer's user
      *
      * @param email
      * @param customerIdentity
@@ -129,6 +130,11 @@ public class CustomerEnvironmentUtil extends TestBaseUI {
                 .orElseThrow(() -> new IllegalArgumentException("Customer deployment was not found. Deployment name: " + deploymentName));
     }
 
+    /**
+     * Specify PageObject type based on an application name
+     * @param applicationName
+     * @return
+     */
     protected Class<? extends LoadableComponent> getPageObjectTypeByApplicationName(final String applicationName) {
         if (APPLICATIONS_CLASS.containsKey(applicationName)) {
             return APPLICATIONS_CLASS.get(applicationName);
@@ -138,6 +144,11 @@ public class CustomerEnvironmentUtil extends TestBaseUI {
 
     }
 
+    /**
+     * Map customer deployment data into ApplicationDTO class
+     * @param customerDeployment
+     * @return
+     */
     protected List<ApplicationDTO> mapCustomerDeploymentDataToDTO(final Deployment customerDeployment) {
         final List<ApplicationDTO> mappedApplicationDTOs = new ArrayList<>();
 

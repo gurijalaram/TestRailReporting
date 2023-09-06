@@ -38,6 +38,13 @@ public class CustomerCloudHomeAPITest extends CustomerEnvironmentUtil {
         Assertions.assertEquals(0, userReferences.size(), "User list should be empty, else user has an access not related to the customers environment.");
     }
 
+    /**
+     * Filter user access data based on environment <br>
+     * Map identities into string for future compare
+     * @param userAccessControls
+     * @param deploymentIdentity
+     * @return
+     */
     private List<String> filterAccessForDeploymentAndConcatIdentities(List<AccessControlResponse> userAccessControls, final String deploymentIdentity) {
         List<String> userReferences = new ArrayList<>();
 

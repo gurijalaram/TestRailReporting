@@ -44,6 +44,12 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
         this.validateDeploymentApplications(cloudHomePage, mappedCustomerApplications, deploymentName);
     }
 
+    /**
+     * Validate applications on the user screen
+     * @param cloudHomePage
+     * @param mappedCustomerApplications
+     * @param deploymentName
+     */
     private void validateDeploymentApplications(CloudHomePage cloudHomePage, List<ApplicationDTO> mappedCustomerApplications, String deploymentName) {
         String currentUIDeployment = cloudHomePage.getDeployment();
 
@@ -55,11 +61,20 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
         this.validateApplicationsAreLaunchedSuccessfully(userApplicationsFromUI);
     }
 
+    /**
+     * Validate applications text in UI
+     * @param applications
+     * @param customerApplicationsData
+     */
     private void validateApplicationsUIText(List<ApplicationDTO> applications, List<ApplicationDTO> customerApplicationsData) {
         applications.removeAll(customerApplicationsData);
         assertEquals(0, applications.size(), "Applications list should be empty, else application has an text representation not related to the customers environment.");
     }
 
+    /**
+     * Click on each application on the user screen and validate that application is launched
+     * @param userApplicationsFromUI
+     */
     private void validateApplicationsAreLaunchedSuccessfully(List<ApplicationDTO> userApplicationsFromUI) {
 
         userApplicationsFromUI.forEach(application -> {
