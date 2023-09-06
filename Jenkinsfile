@@ -22,6 +22,12 @@ pipeline {
                         values 'cidapp-ui', 'cidapp-api'
                     }
                 }
+                when {
+                    "${MODULE}" values.contains("-ui"), folder = "web"
+                }
+                when {
+                    "${MODULE}" values.contains("-api"), folder = "microservices"
+                }
 
                 stages {
                     stage("Initialize") {
