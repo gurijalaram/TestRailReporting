@@ -19,4 +19,14 @@ public class CustomAttributes {
     @JsonProperty("EPAMassembly")
     private String epamAssembly;
     private List<String> tags;
+    @JsonProperty("UDA5")
+    public Object uda5;
+    @JsonProperty("UDA4")
+    public Object uda4;
+    @JsonProperty("UDA3")
+    public String uda3;
+    @JsonProperty("UDA1")
+    public String uda1;
+    @JsonProperty("UDA2")
+    public Object uda2;
 }
