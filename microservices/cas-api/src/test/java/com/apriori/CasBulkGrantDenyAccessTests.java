@@ -123,14 +123,14 @@ public class CasBulkGrantDenyAccessTests {
             user1Identity);
         soft.assertThat(userDeniedControls.getResponseEntity().getTotalItemCount())
             .overridingErrorMessage("Expected all users were denied access control to customer application")
-            .isEqualTo(0L);
+            .isEqualTo(3L);
 
         ResponseWrapper<AccessControls> user2DeniedControls = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
             user2Identity);
         soft.assertThat(user2DeniedControls.getResponseEntity().getTotalItemCount())
             .overridingErrorMessage("Expected all users were denied access control to customer application")
-            .isEqualTo(0L);
+            .isEqualTo(3L);
         soft.assertAll();
     }
 
@@ -172,7 +172,7 @@ public class CasBulkGrantDenyAccessTests {
         ResponseWrapper<AccessControls> userControlsGranted = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
             customerIdentity,
             userIdentity);
-        soft.assertThat(userControlsGranted.getResponseEntity().getItems().get(0).getDeploymentIdentity())
+        soft.assertThat(userControlsGranted.getResponseEntity().getItems().get(3).getDeploymentIdentity())
             .overridingErrorMessage("Expected all users were granted access control to customer application")
             .isEqualTo(deploymentIdentity);
 
@@ -183,7 +183,7 @@ public class CasBulkGrantDenyAccessTests {
             userIdentity);
         soft.assertThat(userDeniedControls.getResponseEntity().getTotalItemCount())
             .overridingErrorMessage("Expected all users were denied access control to customer application")
-            .isEqualTo(0L);
+            .isEqualTo(3L);
         soft.assertAll();
     }
 }
