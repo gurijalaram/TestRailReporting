@@ -1,14 +1,13 @@
 package com.apriori;
 
-import com.apriori.cis.controller.CisBidPackageItemResources;
-import com.apriori.cis.controller.CisBidPackageResources;
+
+import static com.apriori.enums.CssSearch.SCENARIO_CREATED_AT_GT;
+
 import com.apriori.cis.controller.CisComponentResources;
 import com.apriori.cis.models.request.bidpackage.AssignedComponentRequest;
-import com.apriori.cis.models.response.bidpackage.BidPackageItemResponse;
-import com.apriori.cis.models.response.bidpackage.BidPackageResponse;
 import com.apriori.cis.models.response.component.AssignedComponentsResponse;
 import com.apriori.cis.models.response.component.ComponentParameters;
-import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
@@ -35,7 +34,7 @@ public class CisComponentTest extends TestUtil {
     public void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
-        scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser).get(0);
+        scenarioItem = new CssComponent().getBaseCssComponents(currentUser, SCENARIO_CREATED_AT_GT.getKey() + DateUtil.getDateDaysBefore(90, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)).get(0);
     }
 
     @Test

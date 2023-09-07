@@ -48,7 +48,8 @@
                       "createdByName",
                       "identityProviders",
                       "emailDomains",
-                      "authenticationType"
+                      "authenticationType",
+                      "roles"
                     ],
                     "properties": {
                       "identity": {
@@ -208,6 +209,9 @@
                       },
                       "authenticationType": {
                         "type": "string"
+                      },
+                      "roles": {
+                        "type": "array"
                       }
                     }
                   }
