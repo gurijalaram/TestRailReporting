@@ -21,7 +21,8 @@
         "createdByName",
         "userType",
         "hasCompleteProfile",
-        "roles"
+        "roles",
+        "enablements"
       ],
       "optional": [
         "customProperties",
@@ -130,6 +131,9 @@
         },
         "roles": {
           "type": "array"
+        },
+        "enablements": {
+          "type": "object"
         }
       }
     }

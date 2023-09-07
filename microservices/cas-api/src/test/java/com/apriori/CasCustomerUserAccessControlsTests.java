@@ -23,6 +23,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.Collectors;
+
 public class CasCustomerUserAccessControlsTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final SoftAssertions soft = new SoftAssertions();
@@ -102,7 +104,7 @@ public class CasCustomerUserAccessControlsTests {
 
         soft.assertThat(listOfControls.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
-        soft.assertThat(listOfControls.getResponseEntity().getItems().get(0).getIdentity())
+        soft.assertThat(listOfControls.getResponseEntity().getItems().stream().filter(ac -> ac.getApplicationName().equals("aP Workspace")).collect(Collectors.toList()).get(0).getIdentity())
             .isEqualTo(accessControlId);
         soft.assertAll();
 
