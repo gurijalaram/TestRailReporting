@@ -78,7 +78,6 @@ pipeline {
 
                             sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
-                            def awsArtifactCurrent = "${ecrDockerRegistry}/${module}:${buildVersion}"
                             def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
 
                             // Tag and push to ECR.
