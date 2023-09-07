@@ -16,7 +16,8 @@
         "highMemEnabled",
         "previewEnabled",
         "sandboxEnabled",
-        "userAdminEnabled"
+        "userAdminEnabled",
+        "exportAdminEnabled"
       ],
       "optional": [
         "updatedBy",
