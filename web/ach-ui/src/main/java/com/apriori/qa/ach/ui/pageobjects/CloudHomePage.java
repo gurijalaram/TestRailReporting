@@ -17,9 +17,6 @@ import java.util.List;
 
 public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     @FindBy(css = "img[alt='Application Logo']")
     private WebElement logo;
 
@@ -39,6 +36,8 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     @FindBy(xpath = "//div[@class='apriori-select searchable switch-deployment-dialog-deployments css-1xzq4gn-container']")
     private WebElement deploymentSelector;
 
+    private PageUtils pageUtils;
+    private WebDriver driver;
 
     public CloudHomePage(WebDriver driver) {
         this.driver = driver;
