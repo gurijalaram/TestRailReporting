@@ -2,6 +2,7 @@ package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
 import com.apriori.pageobjects.compare.CompareExplorePage;
+import com.apriori.pageobjects.compare.ComparePage;
 import com.apriori.pageobjects.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.compare.SaveComparisonPage;
 import com.apriori.pageobjects.explore.ImportCadFilePage;
@@ -60,34 +61,32 @@ public class CompareToolbar extends MainNavBar {
     }
 
     /**
-     * Click the refresh button
+     * Create new Empty Comparison
      *
-     * @return New copy of current page object
+     * @return Comparison View Page Object
      */
-    public <T> T clickRefresh(Class<T> klass) {
-        pageUtils.waitForElementAndClick(refreshButton);
-        return PageFactory.initElements(driver, klass);
+    public ComparePage newComparison() {
+        pageUtils.waitForElementAndClick(newButton);
+        return new ComparePage(driver);
     }
 
     /**
-     * Selects the file dropdown and enters file details
+     * Check enabled status of Delete button
      *
-     * @param scenarioName - the name of the scenario
-     * @param filePath     - location of the file
-     * @return new page object
+     * @return - Boolean
      */
-    public ImportCadFilePage uploadComponent(String scenarioName, File filePath) {
-        return new ExploreToolbar(driver).importCadFile()
-            .inputComponentDetails(scenarioName, filePath);
+    public Boolean isDeleteEnabled() {
+        return pageUtils.isElementEnabled(deleteButton);
     }
 
     /**
-     * Copies a scenario
+     * Click Delete button
      *
-     * @return new page object
+     * @return - Confirm deletion modal PO
      */
-    public ScenarioPage copyScenario() {
-        return new ExploreToolbar(driver).copyScenario();
+    public DeletePage delete() {
+        pageUtils.waitForElementAndClick(deleteButton);
+        return new DeletePage(driver);
     }
 
     /**
@@ -130,4 +129,15 @@ public class CompareToolbar extends MainNavBar {
     public Boolean saveButtonEnabled() {
         return pageUtils.isElementEnabled(saveButton);
     }
+
+    /**
+     * Click the refresh button
+     *
+     * @return New copy of current page object
+     */
+    public <T> T clickRefresh(Class<T> klass) {
+        pageUtils.waitForElementAndClick(refreshButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
 }
