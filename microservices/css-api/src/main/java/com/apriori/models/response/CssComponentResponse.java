@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Schema(location = "CssComponentResponse.json")
+@Schema(location = "ComponentIterationsResponse.json")
 @JsonRootName("response")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data

@@ -35,5 +35,6 @@ public class Enablements {
     private Boolean previewEnabled;
     private Boolean sandboxEnabled;
     private Boolean userAdminEnabled;
+    private Boolean exportAdminEnabled;
     private String customerAssignedRole;
 }
