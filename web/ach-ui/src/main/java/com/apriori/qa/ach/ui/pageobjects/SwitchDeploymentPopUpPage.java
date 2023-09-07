@@ -20,7 +20,6 @@ public class SwitchDeploymentPopUpPage extends LoadableComponent<SwitchDeploymen
     @FindBy(css = "button[type='submit']")
     private WebElement deploymentsPopUpSubmit;
 
-
     public SwitchDeploymentPopUpPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -32,7 +31,6 @@ public class SwitchDeploymentPopUpPage extends LoadableComponent<SwitchDeploymen
         pageUtils.waitForElementAndClick(deploymentsPopUpSubmit);
         return new CloudHomePage(driver);
     }
-
 
     public SwitchDeploymentPopUpPage selectDeployment(final String customerDeploymentName) {
         pageUtils.waitForElementAndClick(
