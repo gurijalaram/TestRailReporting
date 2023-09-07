@@ -28,6 +28,20 @@ public class SwitchDeploymentPopUpPage extends LoadableComponent<SwitchDeploymen
         this.get();
     }
 
+    @Override
+    protected void load() {
+        // not needed
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        // not needed
+    }
+
+    /**
+     * Click submit button to change deployment
+     * @return
+     */
     public CloudHomePage clickSubmitButton() {
         pageUtils.waitForElementAndClick(deploymentsPopUpSubmit);
         return new CloudHomePage(driver);
@@ -45,15 +59,5 @@ public class SwitchDeploymentPopUpPage extends LoadableComponent<SwitchDeploymen
     public SwitchDeploymentPopUpPage clickDeploymentSelector() {
         pageUtils.waitForElementAndClick(deploymentSelector);
         return this;
-    }
-
-    @Override
-    protected void load() {
-
-    }
-
-    @Override
-    protected void isLoaded() throws Error {
-
     }
 }

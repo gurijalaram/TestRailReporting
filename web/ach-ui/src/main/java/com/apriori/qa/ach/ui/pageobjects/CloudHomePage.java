@@ -5,6 +5,7 @@ import com.apriori.login.UserProfilePage;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.qa.ach.ui.dto.ApplicationDTO;
 
+import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,7 +33,6 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     @FindBy(xpath = "//div[@class='deployment-connection-info']/h5[3]")
     private WebElement deploymentLabel;
 
-    //    @FindBy(xpath = "//div[@class='dropdown-menu dropdown-menu-right show']/button[1]")
     @FindBy(xpath = "//*[local-name()='svg' and @class='svg-inline--fa fa-network-wired fa-fw']")
     private WebElement switchDeploymentButton;
 
@@ -66,6 +66,10 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return new UserProfilePage(driver);
     }
 
+    /**
+     * Get list of applications from user screen and map them into ApplicationDTO objects
+     * @return
+     */
     public List<ApplicationDTO> getListOfApplications() {
         List<ApplicationDTO> applicationsDTO = new ArrayList<>();
 
@@ -83,14 +87,12 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return applicationsDTO;
     }
 
+    @SneakyThrows
     public <T> T clickWebApplicationByName(String applicationName, Class<T> webPageType) {
         By byApplicationTitle = By.xpath(String.format("//div[@data-application='%s']//div[@class='card-header']", applicationName));
         pageUtils.waitForElementAndClick(byApplicationTitle);
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-        }
+        Thread.sleep(2000); // need to wait until browser tab will be created
 
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);
         T responsePage = PageFactory.initElements(driver, webPageType);
