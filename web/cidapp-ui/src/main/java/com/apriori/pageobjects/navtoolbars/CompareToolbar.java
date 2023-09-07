@@ -20,6 +20,9 @@ public class CompareToolbar extends MainNavBar {
     @FindBy(id = "qa-sub-header-new-comparison")
     private WebElement newButton;
 
+    @FindBy(id = "qa-sub-header-modify-button")
+    private WebElement modifyButton;
+
     @FindBy(xpath = "//div[@id='qa-sub-header-delete-button']//span[.='Delete']/../..")
     private WebElement deleteButton;
 
@@ -35,17 +38,14 @@ public class CompareToolbar extends MainNavBar {
     @FindBy(id = "qa-sub-header-refresh-view-button")
     private WebElement refreshButton;
 
-    @FindBy(css = "")
-    private WebElement saveStatusIcon;
-
-    @FindBy(css = "")
-    private WebElement saveStatusText;
-
-    @FindBy(id = "qa-sub-header-modify-button")
-    private WebElement modifyButton;
-
     @FindBy(css = "div[id='qa-sub-header-save-as-button'] button")
     private WebElement saveButton;
+
+    @FindBy(css = "div[data-testid='apriori-alert'] div[class*='MuiAlert-icon']")
+    private WebElement saveStatusIcon;
+
+    @FindBy(css = "div[data-testid='apriori-alert'] div[class*='MuiAlert-message']")
+    private WebElement saveStatusText;
 
     private WebDriver driver;
     private PageUtils pageUtils;
