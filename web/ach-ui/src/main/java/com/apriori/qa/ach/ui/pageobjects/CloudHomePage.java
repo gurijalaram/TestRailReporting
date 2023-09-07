@@ -99,7 +99,6 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return responsePage;
     }
 
-
     public CloudHomePage clickUserPanel() {
         pageUtils.waitForElementAndClick(userElement);
         return this;
