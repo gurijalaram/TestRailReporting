@@ -61,13 +61,19 @@ pipeline {
 
                         stage("Build") {
                             echo "Building..."
-                        sh """
-                            docker build -f qa-stacks.Dockerfile \
-                            --build-arg FOLDER=${folder} \
-                            --build-arg MODULE=${module} \
-                            --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
-                            .
-                        """
+                            withCredentials([usernamePassword(
+                                    credentialsId: 'NEXUS_APRIORI_COM',
+                                    passwordVariable: 'NEXUS_PASS',
+                                    usernameVariable: 'NEXUS_USER')]) {
+
+                                sh """
+                                    docker build -f qa-stacks.Dockerfile \
+                                    --build-arg FOLDER=${folder} \
+                                    --build-arg MODULE=${module} \
+                                    --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
+                                    .
+                                """
+                            }
                         }
 
                         stage("Tag_n_Push") {
