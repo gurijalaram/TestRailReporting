@@ -34,7 +34,7 @@ def tag_n_push_version(currentVersion = '', targetVersion = '') {
 
 pipeline {
     agent {
-        label "automation"
+        label "WALQSDOCKER08"
     }
 
     stages {
