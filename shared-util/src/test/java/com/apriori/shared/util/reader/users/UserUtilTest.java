@@ -1,4 +1,4 @@
-package reader.users;
+package com.apriori.shared.util.reader.users;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
