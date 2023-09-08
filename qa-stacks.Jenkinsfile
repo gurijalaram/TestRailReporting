@@ -58,12 +58,14 @@ pipeline {
                         name 'module'
                         values 'cidapp-api', 'cidapp-ui'
                     }
+                    steps {
 //                    modules.each { module ->
-                    script {
-                        if ($ { module }.endsWith("-ui")) {
-                            folder = "web"
-                        } else {
-                            folder = "microservices"
+                        script {
+                            if ($ { module }.endsWith("-ui")) {
+                                folder = "web"
+                            } else {
+                                folder = "microservices"
+                            }
                         }
                     }
                     stage("Build") {
