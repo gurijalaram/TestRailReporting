@@ -49,7 +49,7 @@ pipeline {
             }
         }
 
-        stage {
+        stage ("Parallel") {
             script {
                 modules.each { module ->
                     if (module.endsWith("-ui")) {
