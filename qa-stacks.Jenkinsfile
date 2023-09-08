@@ -50,7 +50,7 @@ pipeline {
         }
 
         stage("Deploy") {
-            steps {
+//            steps {
                 matrix {
                     axes {
                         axis {
@@ -67,39 +67,45 @@ pipeline {
                             }
 
                             stage("Build") {
-                                echo "Building..."
-                                sh """
+                                steps {
+                                    echo "Building..."
+                                    sh """
                                     docker build -f qa-stacks.Dockerfile \
                                     --build-arg FOLDER=${folder} \
                                     --build-arg MODULE="${MODULE}" \
                                     --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
                                     .
                                 """
+                                }
                             }
 
                             stage("Tag_n_Push") {
-                                echo "Tagging and Pushing ..."
+                                steps {
+                                    echo "Tagging and Pushing ..."
 
-                                // Prepare aws login command.
-                                def registryPwd = registry_password(environment.profile, environment.region)
+                                    // Prepare aws login command.
+                                    def registryPwd = registry_password(environment.profile, environment.region)
 
-                                sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
-                                def awsArtifactTarget = "${ecrDockerRegistry}-${MODULE}:${buildVersion}"
+                                    def awsArtifactTarget = "${ecrDockerRegistry}-${MODULE}:${buildVersion}"
 
-                                // Tag and push to ECR.
-                                tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
+                                    // Tag and push to ECR.
+                                    tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
+                                }
                             }
 
                             stage("Clean") {
-                                echo "Cleaning up..."
-                                sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
-                                sh "docker system prune --all --force"
+                                steps {
+                                    echo "Cleaning up..."
+                                    sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
+                                    sh "docker system prune --all --force"
+                                }
                             }
 //                        }
                     }
                 }
-            }
+//            }
         }
     }
 
