@@ -52,6 +52,7 @@ public class AtsTestUtil extends TestUtil {
                 .given_name(generator.getRandomStringSpecLength(5))
                 .family_name(generator.getRandomStringSpecLength(5))
                 .name(userName)
+                .roles("APRIORI_USER")
                 .build());
 
         return HTTPRequest.build(requestEntity).put();
