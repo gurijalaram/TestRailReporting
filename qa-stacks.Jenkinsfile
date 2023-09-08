@@ -49,6 +49,7 @@ pipeline {
             }
         }
 
+        stage ("Stage") {
         parallel {
             stage("Deploy") {
                 steps {
@@ -93,6 +94,7 @@ pipeline {
                             sh "docker system prune --all --force"
                         }
                     }
+                }
                 }
             }
         }
