@@ -49,17 +49,16 @@ pipeline {
             }
         }
 
-        stage("Deploy") {
-            script {
-                modules.each { module ->
-                    if (module.endsWith("-ui")) {
-                        folder = "web"
-                    } else {
-                        folder = "microservices"
-                    }
+        script {
+            modules.each { module ->
+                if (module.endsWith("-ui")) {
+                    folder = "web"
+                } else {
+                    folder = "microservices"
+                }
+
+                stage("Deploy") {
                     parallel {
-
-
                         stage("Build") {
                             steps {
                                 echo "Building..."
