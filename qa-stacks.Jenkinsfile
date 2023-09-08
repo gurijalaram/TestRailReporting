@@ -50,17 +50,16 @@ pipeline {
         }
 
         stage("Stage") {
-            parallel {
-                stage("Deploy") {
-                    steps {
-                        script {
-                            modules.each { module ->
-                                if (module.endsWith("-ui")) {
-                                    folder = "web"
-                                } else {
-                                    folder = "microservices"
-                                }
-
+            stage("Deploy") {
+                steps {
+                    script {
+                        modules.each { module ->
+                            if (module.endsWith("-ui")) {
+                                folder = "web"
+                            } else {
+                                folder = "microservices"
+                            }
+                            parallel {
                                 stage("Build") {
                                     echo "Building..."
                                     sh """
@@ -86,12 +85,12 @@ pipeline {
                                     // Tag and push to ECR.
                                     tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
                                 }
+                            }
 
-                                stage("Clean") {
-                                    echo "Cleaning up..."
-                                    sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
-                                    sh "docker system prune --all --force"
-                                }
+                            stage("Clean") {
+                                echo "Cleaning up..."
+                                sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+                                sh "docker system prune --all --force"
                             }
                         }
                     }
