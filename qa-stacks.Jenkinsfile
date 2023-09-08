@@ -49,52 +49,52 @@ pipeline {
             }
         }
 
-        stage ("Stage") {
-        parallel {
-            stage("Deploy") {
-                steps {
-                    script {
-                        modules.each { module ->
-                            if (module.endsWith("-ui")) {
-                                folder = "web"
-                            } else {
-                                folder = "microservices"
-                            }
+        stage("Stage") {
+            parallel {
+                stage("Deploy") {
+                    steps {
+                        script {
+                            modules.each { module ->
+                                if (module.endsWith("-ui")) {
+                                    folder = "web"
+                                } else {
+                                    folder = "microservices"
+                                }
 
-                            stage("Build") {
-                                echo "Building..."
-                                sh """
+                                stage("Build") {
+                                    echo "Building..."
+                                    sh """
                                     docker build -f qa-stacks.Dockerfile \
                                     --build-arg FOLDER=${folder} \
                                     --build-arg MODULE=${module} \
                                     --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
                                     .
                                 """
+                                }
+
+                                stage("Tag_n_Push") {
+                                    echo "Tagging and Pushing ..."
+
+                                    // Prepare aws login command.
+                                    def registryPwd = registry_password(environment.profile, environment.region)
+
+                                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+
+                                    def awsArtifactCurrent = "${ecrDockerRegistry}/${module}:${buildVersion}"
+                                    def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
+
+                                    // Tag and push to ECR.
+                                    tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
+                                }
+
+                                stage("Clean") {
+                                    echo "Cleaning up..."
+                                    sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+                                    sh "docker system prune --all --force"
+                                }
                             }
-
-                            stage("Tag_n_Push") {
-                                echo "Tagging and Pushing ..."
-
-                                // Prepare aws login command.
-                                def registryPwd = registry_password(environment.profile, environment.region)
-
-                                sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-
-                                def awsArtifactCurrent = "${ecrDockerRegistry}/${module}:${buildVersion}"
-                                def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
-
-                                // Tag and push to ECR.
-                                tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
-                            }
-                        }
-
-                        stage("Clean") {
-                            echo "Cleaning up..."
-                            sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
-                            sh "docker system prune --all --force"
                         }
                     }
-                }
                 }
             }
         }
