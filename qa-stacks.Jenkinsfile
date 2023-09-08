@@ -49,7 +49,8 @@ pipeline {
             }
         }
 
-        stages("Deploy") {
+        stages {
+            stage("Deploy") {
 //            steps {
 //                script {
             matrix {
@@ -104,6 +105,7 @@ pipeline {
                         }
                     }
                 }
+            }
 //                    }
 //                    }
             }
