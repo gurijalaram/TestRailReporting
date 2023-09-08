@@ -65,6 +65,7 @@ pipeline {
                             } else {
                                 folder = "microservices"
                             }
+                        stages {
 
                             stage("Build") {
                                 steps {
@@ -103,6 +104,7 @@ pipeline {
                                 }
                             }
 //                        }
+                        }
                     }
                 }
 //            }
