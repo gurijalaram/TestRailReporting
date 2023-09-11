@@ -1509,7 +1509,7 @@ public class ComparisonTests extends TestBaseUI {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName1 = new GenerateStringUtil().generateComparisonName();
-        String ComparisonName2 = new GenerateStringUtil().generateComparisonName();
+        String comparisonName2 = new GenerateStringUtil().generateComparisonName();
         String comparisonViewRename = new GenerateStringUtil().generateComparisonName();
         String comparisonExplorerRename = new GenerateStringUtil().generateComparisonName();
         String invalidComparisonName = "Special+Characters~100%";
@@ -1541,9 +1541,19 @@ public class ComparisonTests extends TestBaseUI {
             .saveNew()
             .inputName(comparisonName1)
             .save(ComparePage.class)
+            .clickAllComparisons()
+            .clickExplore()
+            .multiSelectScenarios(
+                part2.getComponentName() + "," + part2.getScenarioName(),
+                part1.getComponentName() + "," + part1.getScenarioName())
+            .createComparison()
+            .selectManualComparison()
+            .saveNew()
+            .inputName(comparisonName2)
+            .save(ComparePage.class)
             .clickAllComparisons();
 
-
+        compareExplorePage.multiSelectScenarios()
     }
 
 }

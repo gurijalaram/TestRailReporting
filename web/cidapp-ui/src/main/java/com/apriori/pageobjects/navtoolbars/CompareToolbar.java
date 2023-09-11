@@ -71,9 +71,19 @@ public class CompareToolbar extends MainNavBar {
     }
 
     /**
+     * Modify a scenario
+     *
+     * @return new page object
+     */
+    public ModifyComparisonPage modify() {
+        pageUtils.waitForElementAndClick(modifyButton);
+        return new ModifyComparisonPage(driver);
+    }
+
+    /**
      * Check enabled status of Delete button
      *
-     * @return - Boolean
+     * @return - Boolean representation of Delete button state
      */
     public Boolean isDeleteEnabled() {
         return pageUtils.isElementEnabled(deleteButton);
@@ -90,13 +100,22 @@ public class CompareToolbar extends MainNavBar {
     }
 
     /**
-     * Modify a scenario
+     * Check enabled status of Rename button
      *
-     * @return new page object
+     * @return - Boolean representation of Delete button state
      */
-    public ModifyComparisonPage modify() {
-        pageUtils.waitForElementAndClick(modifyButton);
-        return new ModifyComparisonPage(driver);
+    public Boolean isRenameEnabled() {
+        return pageUtils.isElementEnabled(deleteButton);
+    }
+
+    /**
+     * Click Rename button
+     *
+     * @return - Save Comparison modal PO
+     */
+    public SaveComparisonPage rename() {
+        pageUtils.waitForElementAndClick(deleteButton);
+        return new SaveComparisonPage(driver);
     }
 
     /**
