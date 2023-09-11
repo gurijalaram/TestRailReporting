@@ -81,7 +81,7 @@ public class TestMain {
 
         final LauncherDiscoveryRequest request =
             LauncherDiscoveryRequestBuilder.request()
-                .selectors(selectClass(TestMain.class))
+                .selectors(selectClass(testClass))
                 .build();
 
         final Launcher launcher = LauncherFactory.create();
