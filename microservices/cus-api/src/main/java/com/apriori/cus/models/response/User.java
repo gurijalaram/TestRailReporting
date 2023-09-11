@@ -2,6 +2,7 @@ package com.apriori.cus.models.response;
 
 import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.models.response.Enablements;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -40,6 +41,7 @@ public class User {
     private String userType;
     private List<String> resourcesAllowedToCreate;
     private List<String> roles;
+    private Enablements enablements;
 
     public static class CustomProperties {
     }
