@@ -86,12 +86,13 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return applicationsDTO;
     }
 
-    @SneakyThrows
     public <T> T clickWebApplicationByName(String applicationName, Class<T> webPageType) {
         By byApplicationTitle = By.xpath(String.format("//div[@data-application='%s']//div[@class='card-header']", applicationName));
+        By byLoadingTitle = By.xpath("//div[@class='loader large-loader opaque full-screen']");
         pageUtils.waitForElementAndClick(byApplicationTitle);
 
-        Thread.sleep(2000); // need to wait until browser tab will be created
+        pageUtils.waitForElementToAppear(byLoadingTitle);
+        pageUtils.waitForElementsToNotAppear(byLoadingTitle);
 
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);
         T responsePage = PageFactory.initElements(driver, webPageType);
