@@ -49,29 +49,19 @@ pipeline {
             }
         }
 
-            stage("Deploy") {
-//            steps {
-//                script {
-            matrix {
-                axes {
-                    axis {
-                        name 'module'
-                        values 'cidapp-api', 'cidapp-ui'
-                    }
-                    steps {
-//                    modules.each { module ->
-                        script {
-                            if ($ { module }.endsWith("-ui")) {
-                                folder = "web"
-                            } else {
-                                folder = "microservices"
-                            }
+        stage("Deploy") {
+            steps {
+                script {
+                    modules.each { module ->
+                        if (module.endsWith("-ui")) {
+                            folder = "web"
+                        } else {
+                            folder = "microservices"
                         }
-                    }
-                    stage("Build") {
-                        steps {
+
+                        stage("Build") {
                             echo "Building..."
-                            sh """
+                             sh """
                                     docker build -f qa-stacks.Dockerfile \
                                     --build-arg FOLDER=${folder} \
                                     --build-arg MODULE=${module} \
@@ -79,10 +69,8 @@ pipeline {
                                     .
                                 """
                         }
-                    }
 
-                    stage("Tag_n_Push") {
-                        steps {
+                        stage("Tag_n_Push") {
                             echo "Tagging and Pushing ..."
 
                             // Prepare aws login command.
@@ -96,20 +84,15 @@ pipeline {
                             // Tag and push to ECR.
                             tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
                         }
-                    }
 
-                    stage("Clean") {
-                        steps {
+                        stage("Clean") {
                             echo "Cleaning up..."
                             sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
                             sh "docker system prune --all --force"
                         }
                     }
                 }
-//                    }
-//                    }
             }
-//            }
         }
     }
 

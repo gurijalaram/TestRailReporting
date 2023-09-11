@@ -1,9 +1,9 @@
 # Prepare runtime.
-FROM docker.apriori.com/apriori-jre-base:8 AS runtime
+FROM docker.apriori.com/apriori-jre-base:11.0.20 AS runtime
 WORKDIR /app
 
 # Prepare build workspace.
-FROM docker.apriori.com/apriori-jdk-base:8 AS sdk
+FROM docker.apriori.com/apriori-jdk-base:11.0.20 AS sdk
 USER root
 
 COPY . .
