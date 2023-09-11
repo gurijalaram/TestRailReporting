@@ -64,8 +64,40 @@
                 },
                 "epamAssembly": {
                   "type": "string"
+                },
+                "UDA5": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "UDA4": {
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "UDA3": {
+                  "type": "string"
+                },
+                "UDA1": {
+                  "type": "string"
+                },
+                "UDA2": {
+                  "type": ["string", "integer"]
                 }
-              }
+              },
+              "optional": [
+                "UDA5",
+                "UDA4",
+                "UDA3",
+                "UDA2",
+                "UDA1"
+              ]
             },
             "machiningMode": {
               "type": "string"

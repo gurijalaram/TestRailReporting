@@ -15,7 +15,12 @@
     "customAttributes",
     "createdByName",
     "licenseAssignments",
-    "userType"
+    "userType",
+    "enablements",
+    "roles"
+  ],
+  "optional": [
+    "updatedAt"
   ],
   "properties": {
     "isSystemUser": {
@@ -104,6 +109,12 @@
     },
     "userType": {
       "type": "string"
+    },
+    "roles": {
+      "type": "array"
+    },
+    "enablements": {
+      "type": "object"
     }
   }
 }

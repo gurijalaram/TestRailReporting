@@ -1,15 +1,25 @@
 package com.apriori.models.response;
 
+import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(location = "EnablementsSchema.json")
+@JsonRootName("response")
 public class Enablements {
     private String identity;
     private String createdBy;
@@ -25,4 +35,6 @@ public class Enablements {
     private Boolean previewEnabled;
     private Boolean sandboxEnabled;
     private Boolean userAdminEnabled;
+    private Boolean exportAdminEnabled;
+    private String customerAssignedRole;
 }
