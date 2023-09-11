@@ -204,13 +204,14 @@ class ConnectionManager<T> {
     public <T> ResponseWrapper<T> get() {
 
         return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .get(requestEntity.buildEndpoint())
-                .then()
-                .log()
-                .ifValidationFails()
+                validateAndLog(
+                        createRequestSpecification()
+                                .when()
+                                .relaxedHTTPSValidation()
+                                .get(requestEntity.buildEndpoint())
+                                .then()
+                )
+
         );
     }
 
@@ -221,13 +222,13 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> post() {
         return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .post(requestEntity.buildEndpoint())
-                .then()
-                .log()
-                .ifValidationFails()
+                validateAndLog(
+                        createRequestSpecification()
+                                .when()
+                                .relaxedHTTPSValidation()
+                                .post(requestEntity.buildEndpoint())
+                                .then()
+                )
         );
     }
 
@@ -237,20 +238,21 @@ class ConnectionManager<T> {
      *
      * @return JSON POJO object instance of @returnType
      */
+    // TODO z: do we really need this method?
     public <T> ResponseWrapper<T> postMultiPart() {
         return resultOf(
-            createRequestSpecification()
-                .given()
-                .config(
-                    RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
-                        ContentType.TEXT)))
-                .relaxedHTTPSValidation()
-                .expect()
-                .when()
-                .post(requestEntity.buildEndpoint())
-                .then()
-                .log()
-                .ifValidationFails()
+                validateAndLog(
+                    createRequestSpecification()
+                            .given()
+                            .config(
+                                    RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
+                                            ContentType.TEXT)))
+                            .relaxedHTTPSValidation()
+                            .expect()
+                            .when()
+                            .post(requestEntity.buildEndpoint())
+                            .then()
+                )
         );
     }
 
@@ -261,13 +263,13 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> put() {
         return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .put(requestEntity.buildEndpoint())
-                .then()
-                .log()
-                .ifValidationFails()
+                validateAndLog(
+                    createRequestSpecification()
+                        .when()
+                        .relaxedHTTPSValidation()
+                        .put(requestEntity.buildEndpoint())
+                        .then()
+                )
         );
     }
 
@@ -278,13 +280,13 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> patch() {
         return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .patch(requestEntity.buildEndpoint())
-                .then()
-                .log()
-                .ifValidationFails()
+                validateAndLog(
+                    createRequestSpecification()
+                        .when()
+                        .relaxedHTTPSValidation()
+                        .patch(requestEntity.buildEndpoint())
+                        .then()
+                )
         );
     }
 
@@ -295,14 +297,26 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> delete() {
         return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .delete(requestEntity.buildEndpoint())
-                .then()
-                .log()
-                .ifValidationFails()
+                validateAndLog(
+                    createRequestSpecification()
+                        .when()
+                        .relaxedHTTPSValidation()
+                        .delete(requestEntity.buildEndpoint())
+                        .then()
+                )
         );
+    }
+
+    private ValidatableResponse validateAndLog(ValidatableResponse validatableResponse) {
+        if (System.getProperty("mode") != null) {
+            return validatableResponse
+                    .log()
+                    .ifValidationFails();
+        }
+
+        return validatableResponse
+                .log()
+                .all();
     }
 
 }
