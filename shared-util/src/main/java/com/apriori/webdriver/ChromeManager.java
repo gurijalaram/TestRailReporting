@@ -23,7 +23,7 @@ public class ChromeManager implements DriverManager<ChromeOptions> {
     private HashMap<String, Object> chromePrefs = new HashMap<>();
 
     public WebDriver createDriver() {
-        WebDriverManager.chromedriver().browserVersion("115.0").setup();
+        WebDriverManager.chromedriver().setup();
 
         int sessionRetries = 0;
 
