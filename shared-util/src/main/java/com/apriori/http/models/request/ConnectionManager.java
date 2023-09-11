@@ -184,6 +184,8 @@ class ConnectionManager<T> {
 
             T responseEntity = response.assertThat()
                 .body(matchesJsonSchema(resource))
+                .log()
+                .ifValidationFails()
                 .extract()
                 .response()
                 .as((Type) returnType, objectMapper);
@@ -207,23 +209,8 @@ class ConnectionManager<T> {
                 .relaxedHTTPSValidation()
                 .get(requestEntity.buildEndpoint())
                 .then()
-                .log().all()
-        );
-    }
-
-    /**
-     * Sends request to desired endpoint with the desired specifications using HTTP GET method
-     *
-     * @return JSON POJO object instance of @returnType
-     */
-    public <T> ResponseWrapper<T> getWithNoLogInfo() {
-        return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .get(requestEntity.buildEndpoint())
-                .then()
-                .log().ifError()
+                .log()
+                .ifValidationFails()
         );
     }
 
@@ -239,7 +226,8 @@ class ConnectionManager<T> {
                 .relaxedHTTPSValidation()
                 .post(requestEntity.buildEndpoint())
                 .then()
-                .log().all()
+                .log()
+                .ifValidationFails()
         );
     }
 
@@ -261,7 +249,8 @@ class ConnectionManager<T> {
                 .when()
                 .post(requestEntity.buildEndpoint())
                 .then()
-                .log().all()
+                .log()
+                .ifValidationFails()
         );
     }
 
@@ -277,7 +266,8 @@ class ConnectionManager<T> {
                 .relaxedHTTPSValidation()
                 .put(requestEntity.buildEndpoint())
                 .then()
-                .log().all()
+                .log()
+                .ifValidationFails()
         );
     }
 
@@ -294,7 +284,7 @@ class ConnectionManager<T> {
                 .patch(requestEntity.buildEndpoint())
                 .then()
                 .log()
-                .all()
+                .ifValidationFails()
         );
     }
 
@@ -310,7 +300,8 @@ class ConnectionManager<T> {
                 .relaxedHTTPSValidation()
                 .delete(requestEntity.buildEndpoint())
                 .then()
-                .log().all()
+                .log()
+                .ifValidationFails()
         );
     }
 
