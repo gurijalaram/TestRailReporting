@@ -6,6 +6,7 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.Users;
+
 import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 
