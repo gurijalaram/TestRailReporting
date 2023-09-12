@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.messages;
 
 import com.apriori.EagerPageComponent;
+import com.apriori.PageUtils;
 import com.apriori.pageobjects.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 
 import lombok.extern.slf4j.Slf4j;
@@ -123,6 +124,8 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        getPageUtils().isElementDisplayed(allMessages);
+        getPageUtils().isElementEnabled(allMessages);
     }
 
     /**

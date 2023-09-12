@@ -55,4 +55,5 @@ public class Application {
     private List<String> identityProviders;
     private List<String> emailDomains;
     private String authenticationType;
+    private List<String> roles;
 }

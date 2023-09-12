@@ -21,7 +21,10 @@ public enum ACHAPIEnum implements ExternalEndpointEnum {
     NOTIFICATIONS(CUSTOMERS.getEndpointString().concat("/%s/deployments/%s/notifications")),
 
     //APPLICATION METADATA
-    APP_METADATA("application-metadata");
+    APP_METADATA("application-metadata"),
+
+    //ENABLEMENTS_SUPPORT
+    ENABLEMENTS_SUPPORT("enablements-support");
 
 
     private final String endpoint;

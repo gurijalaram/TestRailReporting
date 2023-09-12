@@ -53,7 +53,7 @@ public class Constants {
      *
      * @return string
      */
-    // TODO z: should be updated to a new approach without secret_key property
+    // TODO : should be updated to a new approach without secret_key property
     public static String getServiceUrl() {
         String secretKey;
 
