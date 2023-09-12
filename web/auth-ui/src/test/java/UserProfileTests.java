@@ -1,9 +1,10 @@
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.login.CloudHomePage;
 import com.apriori.login.LoginService;
 import com.apriori.login.UserProfilePage;
+import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testconfig.TestBaseUI;

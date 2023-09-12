@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-// TODO z: ignored due to https://jira.apriori.com/browse/BA-1943
+// TODO : ignored due to https://jira.apriori.com/browse/BA-1943
 //  shouldn't be un-ignored
 @Disabled
 public class ConnectionsTest extends SDSTestUtil {
