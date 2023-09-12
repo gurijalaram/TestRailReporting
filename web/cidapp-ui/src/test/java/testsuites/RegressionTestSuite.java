@@ -52,6 +52,7 @@ import com.apriori.explore.GroupEditTests;
 import com.apriori.explore.GroupMachineStrategyApplyTests;
 import com.apriori.explore.GroupPublishTests;
 import com.apriori.explore.PreviewPanelTests;
+import com.apriori.explore.SustainabilityFieldsTests;
 import com.apriori.explore.TableHeadersTests;
 import com.apriori.explore.UploadComponentTests;
 import com.apriori.explore.UploadTests;
@@ -118,7 +119,8 @@ import org.junit.platform.suite.api.Suite;
     AssemblyGroupDeleteTests.class,
     MaturityAssemblyAssociationsTests.class,
     MissingAssemblyAssociationsTests.class,
-    SustainabilityTests.class
+    SustainabilityTests.class,
+    SustainabilityFieldsTests.class
 })
 public class RegressionTestSuite {
 }

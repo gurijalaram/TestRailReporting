@@ -17,4 +17,6 @@ public class People {
     private String username;
     private String givenName;
     private String familyName;
+    private String prefix;
+    private String suffix;
 }

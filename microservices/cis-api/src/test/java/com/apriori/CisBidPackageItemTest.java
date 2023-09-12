@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.enums.CssSearch.SCENARIO_CREATED_AT_GT;
+
 import com.apriori.cis.controller.CisBidPackageItemResources;
 import com.apriori.cis.controller.CisBidPackageResources;
 import com.apriori.cis.models.request.bidpackage.BidPackageItemParameters;
@@ -8,6 +10,7 @@ import com.apriori.cis.models.response.bidpackage.BidPackageItemResponse;
 import com.apriori.cis.models.response.bidpackage.BidPackageItemsResponse;
 import com.apriori.cis.models.response.bidpackage.BidPackageResponse;
 import com.apriori.cis.models.response.bidpackage.CisErrorMessage;
+import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.ScenarioItem;
@@ -20,6 +23,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,11 +35,15 @@ public class CisBidPackageItemTest extends TestUtil {
     private static UserCredentials currentUser;
     private static ScenarioItem scenarioItem;
 
+    @BeforeAll
+    public static void beforeClass() {
+        currentUser = UserUtil.getUser();
+        scenarioItem = new CssComponent().getBaseCssComponents(currentUser, SCENARIO_CREATED_AT_GT.getKey() + DateUtil.getDateDaysBefore(90, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)).get(0);
+    }
+
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        currentUser = UserUtil.getUser();
-        scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser).get(0);
         bidPackageResponse = CisBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbers(), currentUser);
         bidPackageItemResponse = CisBidPackageItemResources.createBidPackageItem(
             CisBidPackageItemResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),

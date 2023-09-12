@@ -2,6 +2,7 @@ package com.apriori.cas.models.response;
 
 import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.models.response.Enablements;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -21,6 +22,9 @@ public class SublicenseAssociationUsers {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
     private String createdBy;
     private String customerIdentity;
     private UserProfile userProfile;
@@ -33,4 +37,6 @@ public class SublicenseAssociationUsers {
     private String createdByName;
     private List<String> licenseAssignments = null;
     private String userType;
+    private Enablements enablements;
+    private List<String> roles;
 }

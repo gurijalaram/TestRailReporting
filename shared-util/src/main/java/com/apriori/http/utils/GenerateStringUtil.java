@@ -281,6 +281,15 @@ public class GenerateStringUtil {
     }
 
     /**
+     * Generates a specific length character numeric without zero
+     *
+     * @return string
+     */
+    public String getRandomNumbersStartsNoZero() {
+        return RandomStringUtils.random(4, "123456789");
+    }
+
+    /**
      * Generates a 12 character numeric string
      *
      * @return String

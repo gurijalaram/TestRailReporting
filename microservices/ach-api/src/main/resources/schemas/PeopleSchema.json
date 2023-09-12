@@ -14,6 +14,10 @@
         "givenName",
         "familyName"
       ],
+      "optional": [
+        "prefix",
+        "suffix"
+      ],
       "properties": {
         "identity": {
           "type": "string"

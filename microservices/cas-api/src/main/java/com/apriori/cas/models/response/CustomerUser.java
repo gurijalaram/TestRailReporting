@@ -3,6 +3,7 @@ package com.apriori.cas.models.response;
 import com.apriori.annotations.CreatableModel;
 import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.models.response.Enablements;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -49,4 +50,6 @@ public class CustomerUser {
     private List<Object> licenseAssignments = null;
     private String userType;
     private Boolean hasCompleteProfile;
+    private List<String> roles;
+    private Enablements enablements;
 }
