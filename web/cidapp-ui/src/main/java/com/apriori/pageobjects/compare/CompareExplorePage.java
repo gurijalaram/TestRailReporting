@@ -113,8 +113,7 @@ public class CompareExplorePage extends CompareToolbar {
      *
      * @return List of all Comparison Names
      */
-    public List<String> getListOfComparisons()
-    {
+    public List<String> getListOfComparisons() {
         return comparisonNames.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
