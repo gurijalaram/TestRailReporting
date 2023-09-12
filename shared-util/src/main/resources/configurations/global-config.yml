@@ -11,6 +11,7 @@ customer: ap-int
 
 # Deployment
 production:
+  name: Production
   url_part: ${env}
 
 sandbox:

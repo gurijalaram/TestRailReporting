@@ -254,7 +254,7 @@ public abstract class SDSTestUtil extends TestUtil {
         };
     }
 
-    // TODO z: can be migrated to AuthorizationUtil if make this decision based on usage this functionality outside sds
+    // TODO : can be migrated to AuthorizationUtil if make this decision based on usage this functionality outside sds
     private static String getApApplicationContext() {
 
         if (appApplicationContext != null) {
