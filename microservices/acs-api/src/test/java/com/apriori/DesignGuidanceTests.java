@@ -66,7 +66,7 @@ public class DesignGuidanceTests {
     public void testGetDesignGuidanceSheetMetal() {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "SheMetDTC.SLDPRT", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "flanged_hole.prt", workorderAPITests.setupProductionInfoInputs());
         DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
 
         designGuidanceAssertion(designGuidanceResponse, "DTC_MESSAGES");
