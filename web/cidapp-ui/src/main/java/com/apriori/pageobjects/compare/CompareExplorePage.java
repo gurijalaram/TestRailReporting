@@ -109,18 +109,6 @@ public class CompareExplorePage extends CompareToolbar {
     }
 
     /**
-     * Highlights the scenario in the table
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return current page object
-     */
-    public CompareExplorePage highlightScenario(String componentName, String scenarioName) {
-        scenarioTableController.highlightScenario(componentName, scenarioName);
-        return this;
-    }
-
-    /**
      * Gets the number of elements present on the page
      *
      * @return List of all Comparison Names
@@ -140,36 +128,25 @@ public class CompareExplorePage extends CompareToolbar {
     }
 
     /**
-     * Multi-highlight scenarios
+     * Select single scenario
      *
-     * @param componentScenarioName - component name and method name
-     * @return current page object
+     * @param comparisonName - Name of comparison to be selected
+     *
+     * @return - This page object
      */
-    public CompareExplorePage multiHighlightScenarios(String... componentScenarioName) {
-        scenarioTableController.multiHighlightScenario(componentScenarioName);
+    public CompareExplorePage selectComparison(String comparisonName) {
+        findComparisonCheckbox(comparisonName).click();
         return this;
     }
 
     /**
      * Multi-select scenario
      *
-     * @param componentScenarioName - component name and method name
+     * @param comparisonNames - component name and method name
      * @return current page object
      */
-    public CompareExplorePage multiSelectScenarios(String... componentScenarioName) {
-        scenarioTableController.multiSelectScenario(componentScenarioName);
-        return this;
-    }
-
-    /**
-     * Highlights the scenario in the table using the keyboard control key
-     *
-     * @param componentName - component name
-     * @param scenarioName  - scenario name
-     * @return current page object
-     */
-    public CompareExplorePage controlHighlightScenario(String componentName, String scenarioName) {
-        scenarioTableController.controlHighlightScenario(componentName, scenarioName);
+    public CompareExplorePage multiSelectComparisons(String... comparisonNames) {
+        Arrays.stream(comparisonNames).forEach(comparisonName -> findComparisonCheckbox(comparisonName).click());
         return this;
     }
 
@@ -187,6 +164,7 @@ public class CompareExplorePage extends CompareToolbar {
      *
      * @return generic page object
      */
+
     public <T> T cancel(Class<T> klass) {
         return modalDialogController.cancel(klass);
     }
@@ -196,9 +174,18 @@ public class CompareExplorePage extends CompareToolbar {
      *
      * @param comparisonName - component name
      */
+
     private void moveToComparison(String comparisonName) {
-        WebElement comparison = driver.findElement(By.xpath(String.format(scenarioLocator, comparisonName)));            ;
+        WebElement comparison = driver.findElement(By.xpath(String.format(scenarioLocator, comparisonName)));
         pageUtils.scrollWithJavaScript(comparison, true);
         pageUtils.mouseMove(comparison);
+    }
+
+    private WebElement findComparisonCheckbox(String comparisonName) {
+        By comparison = By.xpath(
+            String.format("//div[.='%s']/ancestor::div[@data-header-id='comparisonName']/ancestor::div[@role='row']//span[@data-testid='checkbox']",
+            comparisonName));
+        pageUtils.waitForElementToAppear(comparison);
+        return pageUtils.scrollWithJavaScript(driver.findElement(comparison), true);
     }
 }

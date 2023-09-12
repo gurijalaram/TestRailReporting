@@ -1513,6 +1513,7 @@ public class ComparisonTests extends TestBaseUI {
         String comparisonViewRename = new GenerateStringUtil().generateComparisonName();
         String comparisonExplorerRename = new GenerateStringUtil().generateComparisonName();
         String invalidComparisonName = "Special+Characters~100%";
+        String invalidCharacterErrorText = "Must only contain characters, numbers, spaces and the following special characters: . - _ ( )";
 
         ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
             .componentName(componentName)
@@ -1553,7 +1554,134 @@ public class ComparisonTests extends TestBaseUI {
             .save(ComparePage.class)
             .clickAllComparisons();
 
-        compareExplorePage.multiSelectScenarios()
+        softAssertions.assertThat(compareExplorePage.isRenameEnabled()).as("Verify that Rename button is disabled when nothing selected").isFalse();
+
+        compareExplorePage.selectComparison(comparisonName1);
+
+        softAssertions.assertThat(compareExplorePage.isRenameEnabled()).as("Verify that Rename button is enabled when comparison selected").isTrue();
+
+        SaveComparisonPage renamePage = compareExplorePage.rename()
+            .inputName(invalidComparisonName);
+
+        softAssertions.assertThat(renamePage.isInvalidCharacterErrorDisplayed()).as("Verify that invalid character error is displayed").isTrue();
+        softAssertions.assertThat(renamePage.getInvalidCharacterErrorText()).as("Verify invlaid character error message").isEqualTo(invalidCharacterErrorText);
+
+        renamePage.inputName(comparisonName1);
+        softAssertions.assertThat(renamePage.isSaveEnabled()).as("Verify that Submit button disabled while existing name used").isFalse();
+
+        compareExplorePage = renamePage.inputName(comparisonExplorerRename)
+            .save(CompareExplorePage.class);
+
+        softAssertions.assertThat(comparisonName1).as("Verify that original comparison name no longer in Explore list")
+            .isNotIn(compareExplorePage.getListOfComparisons());
+        softAssertions.assertThat(comparisonExplorerRename).as("Verify that new Comparison Name displayed in explore table")
+            .isIn(compareExplorePage.getListOfComparisons());
+
+        comparePage = compareExplorePage.openComparison(comparisonName2)
+            .rename()
+            .inputName(comparisonViewRename)
+            .save(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.getComparisonName()).as("Verify Comparison name updated").isEqualTo(comparisonViewRename);
+
+        compareExplorePage = comparePage.clickAllComparisons()
+            .clickRefresh(CompareExplorePage.class);
+
+        softAssertions.assertThat(comparisonViewRename).as("Verify that new Comparison Name displayed in explore table")
+            .isIn(compareExplorePage.getListOfComparisons());
+
+        softAssertions.assertAll();
+
+    }
+
+    @Test
+    @TestRail(id = {26150, 26151, 27965})
+    @Description("Verify Deleting Comparisons from Explore and Viewer pages")
+    public void testDeleteComparisons() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
+
+        String componentName = "Casting";
+        String componentName2 = "SandCastBox";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String comparisonName1 = new GenerateStringUtil().generateComparisonName();
+        String comparisonName2 = new GenerateStringUtil().generateComparisonName();
+
+        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
+
+        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(componentName2)
+            .scenarioName(scenarioName2)
+            .processGroup(processGroupEnum)
+            .resourceFile(resourceFile2)
+            .user(currentUser)
+            .build());
+
+        explorePage = new CidAppLoginPage(driver)
+            .login(currentUser);
+
+        comparePage = explorePage.multiSelectScenarios(
+                part1.getComponentName() + "," + part1.getScenarioName(),
+                part2.getComponentName() + "," + part2.getScenarioName())
+            .createComparison()
+            .selectManualComparison();
+
+        softAssertions.assertThat(comparePage.isDeleteEnabled()).as("Verify Delete button disabled when comparison has not been saved").isFalse();
+
+        comparePage = comparePage.saveNew()
+            .inputName(comparisonName1)
+            .save(ComparePage.class);
+
+        softAssertions.assertThat(comparePage.isDeleteEnabled()).as("Verify Delete button enabled after comparison has been saved").isTrue();
+
+        compareExplorePage = comparePage.clickAllComparisons()
+            .clickExplore()
+            .multiSelectScenarios(
+                part2.getComponentName() + "," + part2.getScenarioName(),
+                part1.getComponentName() + "," + part1.getScenarioName())
+            .createComparison()
+            .selectManualComparison()
+            .saveNew()
+            .inputName(comparisonName2)
+            .save(ComparePage.class)
+            .clickAllComparisons()
+            .clickRefresh(CompareExplorePage.class);
+
+        softAssertions.assertThat(compareExplorePage.isDeleteEnabled()).as("Verify that delete button is disabled when no comparison selected")
+            .isFalse();
+
+        compareExplorePage.selectComparison(comparisonName1);
+        softAssertions.assertThat(compareExplorePage.isDeleteEnabled()).as("Verify that delete button is enabled when single comparison selected")
+            .isTrue();
+
+        compareExplorePage = compareExplorePage.delete()
+            .clickDelete(CompareExplorePage.class)
+            .clickRefresh(CompareExplorePage.class);
+
+        softAssertions.assertThat(comparisonName1).as("Verify that deleted comparison no longer shown in explorer table")
+            .isNotIn(compareExplorePage.getListOfComparisons());
+
+        softAssertions.assertThat(comparisonName2).as("Verify that second saved comparison still displayed in explorer table")
+            .isIn(compareExplorePage.getListOfComparisons());
+
+        compareExplorePage = compareExplorePage.openComparison(comparisonName2)
+            .delete()
+            .clickDelete(CompareExplorePage.class)
+            .clickRefresh(CompareExplorePage.class);
+
+        softAssertions.assertThat(comparisonName2).as("Verify that second saved comparison no longer displayed in explorer table")
+            .isNotIn(compareExplorePage.getListOfComparisons());
+
+        softAssertions.assertAll();
     }
 
 }

@@ -24,17 +24,11 @@ public class CompareToolbar extends MainNavBar {
     @FindBy(id = "qa-sub-header-modify-button")
     private WebElement modifyButton;
 
-    @FindBy(xpath = "//div[@id='qa-sub-header-delete-button']//span[.='Delete']/../..")
+    @FindBy(css = "div[id='qa-sub-header-delete-button'] button")
     private WebElement deleteButton;
 
-    @FindBy(xpath = "//div[@id='qa-sub-header-delete-button']//span[.='Rename']/../..")
+    @FindBy(css = "div[id='qa-sub-header-rename-button'] button")
     private WebElement renameButton;
-
-//    @FindBy(id = "qa-sub-header-delete-button")
-//    private WebElement deleteButton;
-//
-//    @FindBy(id = "qa-sub-header-rename-button")
-//    private WebElement renameButton;
 
     @FindBy(id = "qa-sub-header-refresh-view-button")
     private WebElement refreshButton;
@@ -105,7 +99,7 @@ public class CompareToolbar extends MainNavBar {
      * @return - Boolean representation of Delete button state
      */
     public Boolean isRenameEnabled() {
-        return pageUtils.isElementEnabled(deleteButton);
+        return pageUtils.isElementEnabled(renameButton);
     }
 
     /**
@@ -114,7 +108,7 @@ public class CompareToolbar extends MainNavBar {
      * @return - Save Comparison modal PO
      */
     public SaveComparisonPage rename() {
-        pageUtils.waitForElementAndClick(deleteButton);
+        pageUtils.waitForElementAndClick(renameButton);
         return new SaveComparisonPage(driver);
     }
 
