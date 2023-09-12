@@ -307,6 +307,13 @@ class ConnectionManager<T> {
         );
     }
 
+    /**
+     * If the system contains a property mode (automatically inserted by the Jenkins task), we will only log the request data.<br>
+     * A response will only be logged if another response code with the expected status code or the scheme check failed.<br>
+     * If the system does not contain a properties mode, all data (request/response/errors) will be logged.
+     * @param validatableResponse
+     * @return
+     */
     private ValidatableResponse validateAndLog(ValidatableResponse validatableResponse) {
         if (System.getProperty("mode") != null) {
             return validatableResponse
