@@ -38,15 +38,18 @@ public class ScenarioActivityProcessGroupActivityReportTests extends JasperApiAu
         JasperReportSummary jasperReportSummaryDaily = jasperReportSummaries.get(0);
         JasperReportSummary jasperReportSummaryYearly = jasperReportSummaries.get(1);
 
-        ArrayList<Element> dateElementsDaily = jasperReportSummaryDaily.getReportHtmlPart().getElementsContainingText("Process Group").get(8).children();
-        ArrayList<Element> dateElementsYearly = jasperReportSummaryYearly.getReportHtmlPart().getElementsContainingText("Process Group").get(8).children();
+        ArrayList<Element> dateElementsDaily = jasperApiUtils.getElementsForScenarioActivityReportTests(jasperReportSummaryDaily);
+        ArrayList<Element> dateElementsYearly = jasperApiUtils.getElementsForScenarioActivityReportTests(jasperReportSummaryYearly);
+
         int currentDayOfMonth = LocalDateTime.now().getDayOfMonth();
+        String currentMonthValue = jasperApiUtils.getCurrentMonthValue();
+
         assertAll("Grouped Date Axis Assertions",
-            () -> assertEquals(dateElementsDaily.get(2).text(), "Jul 29"),
-            () -> assertEquals(dateElementsDaily.get(3).text(), "Jul 30"),
-            () -> assertEquals(dateElementsDaily.get(4).text(), "Apr 07"),
-            () -> assertEquals(dateElementsYearly.get(2).text(), String.format("Aug %s", currentDayOfMonth)),
-            () -> assertEquals(dateElementsYearly.get(3).text(), String.format("Aug %s", currentDayOfMonth))
+            () -> assertEquals(dateElementsDaily.get(0).text(), "Jul 29"),
+            () -> assertEquals(dateElementsDaily.get(1).text(), "Jul 30"),
+            () -> assertEquals(dateElementsDaily.get(2).text(), "Apr 07"),
+            () -> assertEquals(dateElementsYearly.get(0).text(), String.format("%s %s", currentMonthValue, currentDayOfMonth)),
+            () -> assertEquals(dateElementsYearly.get(1).text(), String.format("%s %s", currentMonthValue, currentDayOfMonth))
         );
 
         assertAll("Grouped Trending Period Assertions",

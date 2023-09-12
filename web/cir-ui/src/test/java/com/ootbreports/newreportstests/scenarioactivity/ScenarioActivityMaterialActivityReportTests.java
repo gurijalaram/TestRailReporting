@@ -32,21 +32,24 @@ public class ScenarioActivityMaterialActivityReportTests extends JasperApiAuthen
 
     @Test
     @TestRail(id = 28003)
-    @Description("Input Controls - Trending period - Digital Factory Activity Report")
+    @Description("Input Controls - Trending period - Material Activity Report")
     public void testTrendingPeriod() {
         ArrayList<JasperReportSummary> jasperReportSummaries = jasperApiUtils.scenarioActivityReportGenerationTwoTrendingPeriods();
         JasperReportSummary jasperReportSummaryDaily = jasperReportSummaries.get(0);
         JasperReportSummary jasperReportSummaryYearly = jasperReportSummaries.get(1);
 
-        ArrayList<Element> dateElementsDaily = jasperReportSummaryDaily.getReportHtmlPart().getElementsContainingText("Material Name").get(6).siblingElements();
-        ArrayList<Element> dateElementsYearly = jasperReportSummaryYearly.getReportHtmlPart().getElementsContainingText("Material Name").get(6).siblingElements();
+        ArrayList<Element> dateElementsDaily = jasperApiUtils.getElementsForScenarioActivityReportTests(jasperReportSummaryDaily);
+        ArrayList<Element> dateElementsYearly = jasperApiUtils.getElementsForScenarioActivityReportTests(jasperReportSummaryYearly);
+
         int currentDayOfMonth = LocalDateTime.now().getDayOfMonth();
+        String currentMonthValue = jasperApiUtils.getCurrentMonthValue();
+
         assertAll("Grouped Date Axis Assertions",
-            () -> assertEquals(dateElementsDaily.get(1).text(), "Jul 29"),
-            () -> assertEquals(dateElementsDaily.get(2).text(), "Jul 30"),
-            () -> assertEquals(dateElementsDaily.get(3).text(), "Apr 07"),
-            () -> assertEquals(dateElementsYearly.get(1).text(), String.format("Aug %s", currentDayOfMonth)),
-            () -> assertEquals(dateElementsYearly.get(2).text(), String.format("Aug %s", currentDayOfMonth))
+            () -> assertEquals(dateElementsDaily.get(0).text(), "Jul 29"),
+            () -> assertEquals(dateElementsDaily.get(1).text(), "Jul 30"),
+            () -> assertEquals(dateElementsDaily.get(2).text(), "Apr 07"),
+            () -> assertEquals(dateElementsYearly.get(0).text(), String.format("%s %s", currentMonthValue, currentDayOfMonth)),
+            () -> assertEquals(dateElementsYearly.get(1).text(), String.format("%s %s", currentMonthValue, currentDayOfMonth))
         );
 
         assertAll("Grouped Trending Period Assertions",

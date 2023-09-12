@@ -21,13 +21,4 @@ public class JasperReportSummaryIncRawData {
     private ReportComponentsResponse chartDataRaw;
     private List<ChartData> chartData;
     private Document reportHtmlPart;
-
-    public ChartData getFirstChartData() {
-        if (chartData.isEmpty()) {
-            log.warn("Chart data is not present");
-            return null;
-        }
-
-        return chartData.get(0);
-    }
 }

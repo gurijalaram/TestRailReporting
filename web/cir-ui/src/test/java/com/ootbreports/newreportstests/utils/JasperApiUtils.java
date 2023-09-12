@@ -765,6 +765,26 @@ public class JasperApiUtils {
         return new ArrayList<>(Arrays.asList(jasperReportSummaryDaily, jasperReportSummaryYearly));
     }
 
+    /**
+     * Gets current month value as a String (capital at the start) of three characters
+     *
+     * @return String of current month
+     */
+    public String getCurrentMonthValue() {
+        String currentMonth = LocalDateTime.now().getMonth().toString();
+        return currentMonth.substring(0, 1).concat(currentMonth.substring(1, 3).toLowerCase());
+    }
+
+    /**
+     * Get elements for scenario activity report tests
+     *
+     * @param jasperReportSummary JasperReportSummary to use
+     * @return ArrayList of Jsoup Elements
+     */
+    public ArrayList<Element> getElementsForScenarioActivityReportTests(JasperReportSummary jasperReportSummary) {
+        return jasperReportSummary.getReportHtmlPart().select("[class='jrxtcolfloating jrxtcolheader']");
+    }
+
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
         return genericTestCoreCurrencyAndDateOnly(currencyToGet)
             .getFirstChartData().getChartDataPoints()
