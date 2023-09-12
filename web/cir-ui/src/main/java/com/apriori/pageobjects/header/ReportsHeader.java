@@ -141,6 +141,8 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.isElementDisplayed(homePageAprioriLogo);
+        pageUtils.isElementEnabled(homePageAprioriLogo);
     }
 
     /**

@@ -18,7 +18,7 @@ public class UserCredentials implements Serializable {
     private String token;
     private String username;
     private String cloudContext;
-    //TODO z: change it on Security ENUM when will be information about security levels
+    //TODO : change it on Security ENUM when will be information about security levels
     private String accessLevel;
 
     public UserCredentials(String email, String password, String accessLevel) {

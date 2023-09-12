@@ -1,9 +1,9 @@
 package com.apriori.cir.utils;
 
 import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.JasperReportSummaryIncRawData;
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.cir.enums.ReportChartType;
-import com.apriori.cir.models.request.ParametersRequest;
 import com.apriori.cir.models.request.ReportExportRequest;
 import com.apriori.cir.models.request.ReportRequest;
 import com.apriori.cir.models.response.ChartData;
@@ -63,19 +63,6 @@ public class JasperReportUtil {
         return responseResponseWrapper.getResponseEntity();
     }
 
-    public InputControl updateInputControls(CirApiEnum value, ParametersRequest parametersRequest) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.RECOMMENDED_TEST_PARTS, InputControl.class)
-            .headers(initHeadersWithJSession())
-            .inlineVariables("%20")
-            .body(parametersRequest)
-            .expectedResponseCode(HttpStatus.SC_OK)
-            .urlEncodingEnabled(false);
-
-        ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
-
-        return responseResponseWrapper.getResponseEntity();
-    }
-
     public JasperReportSummary generateJasperReportSummary(ReportRequest reportRequest) {
         ReportStatusResponse response = this.generateReport(reportRequest);
         ReportStatusResponse exportedReport = this.doReportExport(response);
@@ -83,13 +70,38 @@ public class JasperReportUtil {
         this.waitUntilReportReady(response.getRequestId(),
             exportedReport.getId());
 
+        String requestId = response.getRequestId();
+        String reportId = exportedReport.getId();
+
         return JasperReportSummary.builder()
-            .reportHtmlPart(this.getReportHtmlData(response.getRequestId(),
-                exportedReport.getId())
+            .reportHtmlPart(this.getReportHtmlData(requestId,
+                reportId)
             )
-            .chartData(this.getReportChartData(response.getRequestId(),
-                exportedReport.getId())
+            .chartData(this.getReportChartData(requestId,
+                reportId)
             )
+            .build();
+    }
+
+    public JasperReportSummaryIncRawData generateJasperReportSummaryIncRawData(ReportRequest reportRequest) {
+        ReportStatusResponse response = this.generateReport(reportRequest);
+        ReportStatusResponse exportedReport = this.doReportExport(response);
+
+        this.waitUntilReportReady(response.getRequestId(),
+            exportedReport.getId());
+
+        String requestId = response.getRequestId();
+        String reportId = exportedReport.getId();
+
+        return JasperReportSummaryIncRawData.builder()
+            .reportHtmlPart(this.getReportHtmlData(requestId,
+                reportId)
+            )
+            .chartData(this.getReportChartData(requestId,
+                reportId)
+            )
+            .chartDataRaw(this.getReportChartDataRaw(requestId,
+                reportId))
             .build();
     }
 
@@ -145,6 +157,7 @@ public class JasperReportUtil {
         return Jsoup.parse(htmlData, "UTF-8", "/aPriori/reports/");
     }
 
+    @SneakyThrows
     private List<ChartData> getReportChartData(final String requestId, final String exportId) {
         RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs, null)
             .inlineVariables(requestId, exportId)
@@ -154,6 +167,16 @@ public class JasperReportUtil {
         return parseJsonResponse(HTTPRequest.build(requestEntity).get()
             .getBody()
         );
+    }
+
+    @SneakyThrows
+    private ReportComponentsResponse getReportChartDataRaw(final String requestId, final String exportId) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs, ReportComponentsResponse.class)
+            .inlineVariables(requestId, exportId)
+            .headers(initHeadersWithJSession())
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return (ReportComponentsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     @SneakyThrows

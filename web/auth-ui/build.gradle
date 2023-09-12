@@ -1,4 +1,5 @@
 dependencies {
     implementation project(':shared-util')
+    implementation project(':web:ach-ui')
     implementation project(':web-app-util')
 }

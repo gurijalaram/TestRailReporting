@@ -6,6 +6,7 @@ import com.apriori.properties.PropertiesContext;
 public enum CirApiEnum implements ExternalEndpointEnum {
     DTC_METRICS_REPORT_START("reports/aPriori/reports/DTC%sMetrics/"),
     APRIORI_REPORTS_START("reports/aPriori/reports/"),
+    APRIORI_DEPLOYMENT_LEADER_REPORTS(APRIORI_REPORTS_START.getEndpointString().concat("deploymentLeader/")),
     APRIORI_GENERAL_REPORTS(APRIORI_REPORTS_START.getEndpointString().concat("general/")),
     APRIORI_SOLUTIONS_REPORTS(APRIORI_REPORTS_START.getEndpointString().concat("solutions/")),
     APRIORI_SOLUTIONS_QUOTING_REPORTS(APRIORI_SOLUTIONS_REPORTS.getEndpointString().concat("quoting/")),
@@ -62,6 +63,12 @@ public enum CirApiEnum implements ExternalEndpointEnum {
     REPORT_OUTPUT_STATUS_BY_REQUEST_EXPORT_IDs("reportExecutions/%s/exports/%s/status"),
     REPORT_OUTPUT_RESOURCE_BY_REQUEST_EXPORT_IDs("reportExecutions/%s/exports/%s/outputResource"),
     REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs("reportExecutions/%s/exports/%s/attachments/reportComponents.json"),
+    SCENARIO_ACTIVITY(APRIORI_DEPLOYMENT_LEADER_REPORTS.getEndpointString().concat("scenarioActivity/inputControls/exportSetName;startDate;endDate;trendingPeriod;department;location;costSource/values/pagination?freshData=false&includeTotalCount=true")),
+    SCENARIO_ACTIVITY_DIGITAL_FACTORY_ACTIVITY(APRIORI_DEPLOYMENT_LEADER_REPORTS.getEndpointString().concat("VPEActivity/inputControls/exportSetName;startDate;endDate;department;location;trendingPeriod;costSource/values/pagination?freshData=false&includeTotalCount=true")),
+    SCENARIO_ACTIVITY_MATERIAL_ACTIVITY(APRIORI_DEPLOYMENT_LEADER_REPORTS.getEndpointString().concat("materialActivity/inputControls/exportSetName;startDate;endDate;department;location;trendingPeriod;costSource/values/pagination?freshData=false&includeTotalCount=true")),
+    SCENARIO_ACTIVITY_PROCESS_ACTIVITY(APRIORI_DEPLOYMENT_LEADER_REPORTS.getEndpointString().concat("processActivity/inputControls/exportSetName;startDate;endDate;department;location;trendingPeriod;costSource/values/pagination?freshData=false&includeTotalCount=true")),
+    SCENARIO_ACTIVITY_PROCESS_GROUP_ACTIVITY(APRIORI_DEPLOYMENT_LEADER_REPORTS.getEndpointString().concat("processGroupsActivity/inputControls/exportSetName;startDate;endDate;department;location;trendingPeriod;costSource/values/pagination?freshData=false&includeTotalCount=true")),
+    SCENARIO_ACTIVITY_TOTAL_ACTIVITY(APRIORI_DEPLOYMENT_LEADER_REPORTS.getEndpointString().concat("totalActivity/inputControls/exportSetName;startDate;endDate;department;location;trendingPeriod/values/pagination?freshData=false&includeTotalCount=true")),
     SCENARIO_COMPARISON(APRIORI_GENERAL_REPORTS.getEndpointString().concat("scenarioComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;allExportIds;componentType;createdBy;lastModifiedBy;partNumber;scenarioName;scenarioToCompareIDs;scenarioIDs;").concat(
         "currencyCode/values?freshData=false")),
     SPEND_ANALYSIS_VALUE_TRACKING(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("spendAnalysisValueTracking/inputControls/projectRollup;exportDate;costMetric;currencyCode/values")),
@@ -76,12 +83,18 @@ public enum CirApiEnum implements ExternalEndpointEnum {
         "rollup;costMetric;massMetric;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;outlierDistance;partsSelect/values?freshData=false")),
     TARGET_COST_TREND(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("targetCost/targetCostTrend/inputControls/projectRollup;projectName;exportDate;costMetric;currencyCode/values?freshData=false&includeTotalCount=true")),
     TARGET_COST_VALUE_TRACKING(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("targetCost/targetCostValueTracking/inputControls/projectRollup;exportDate;costMetric;currencyCode/values?freshData=false&includeTotalCount=true")),
-    TARGET_COST_VALUE_TRACKING_DETAILS(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("targetCost/targetCostValueTrackingDetails/inputControls/projectRollup;projectName;exportDate;costMetric;currencyCode;currentProjectId;currentProjectName/values?freshData=false&includeTotalCount=true")),
-    TARGET_AND_QUOTED_COST_TREND(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST.getEndpointString().concat("targetAndQuotedCostTrend/inputControls/projectRollup;projectName;exportDate;costMetric;sortOrder;currencyCode/values?freshData=false&includeTotalCount=true"))),
-    TARGET_AND_QUOTED_COST_VALUE_TRACKING(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST.getEndpointString().concat("targetAndQuotedCostValueTracking/inputControls/projectRollup;exportDate;costMetric;sortOrder;currencyCode/values?freshData=false&includeTotalCount=true"))),
-    TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST.getEndpointString().concat("targetAndQuotedCostValueTrackingDetailsInternal/inputControls/currentProjectName;currentProjectId;currencyCode;sortOrder;costMetric;projectRollup;projectName;exportDate/values?freshData=false"))),
-    UPGRADE_COMPARISON(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("upgradeComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;changeLevel;costMetricsLowThreshold;costMetricsHighThreshold;timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false")),
-    UPGRADE_PART_COMPARISON(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("upgradePartComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;partNumber;partNumberNew;changeLevel;costMetricsLowThreshold;costMetricsHighThreshold;timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false"));
+    TARGET_COST_VALUE_TRACKING_DETAILS(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("targetCost/targetCostValueTrackingDetails/inputControls/projectRollup;projectName;exportDate;costMetric;currencyCode;currentProjectId;currentProjectName/values".concat(
+        "?freshData=false&includeTotalCount=true"))),
+    TARGET_AND_QUOTED_COST_TREND(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST.getEndpointString().concat("targetAndQuotedCostTrend/inputControls/projectRollup;projectName;exportDate;costMetric;sortOrder;".concat(
+        "currencyCode/values?freshData=false&includeTotalCount=true")))),
+    TARGET_AND_QUOTED_COST_VALUE_TRACKING(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST.getEndpointString().concat("targetAndQuotedCostValueTracking/inputControls/projectRollup;exportDate;costMetric;sortOrder;".concat(
+        "currencyCode/values?freshData=false&includeTotalCount=true")))),
+    TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST.getEndpointString().concat("targetAndQuotedCostValueTrackingDetailsInternal/inputControls/currentProjectName;".concat(
+        "currentProjectId;currencyCode;sortOrder;costMetric;projectRollup;projectName;exportDate/values?freshData=false")))),
+    UPGRADE_COMPARISON(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("upgradeComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;changeLevel;costMetricsLowThreshold;costMetricsHighThreshold;".concat(
+        "timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false"))),
+    UPGRADE_PART_COMPARISON(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("upgradePartComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;partNumber;partNumberNew;changeLevel;".concat(
+        "costMetricsLowThreshold;costMetricsHighThreshold;timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false")));
 
     private final String endpoint;
 

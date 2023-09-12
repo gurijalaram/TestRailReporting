@@ -76,7 +76,8 @@ public class CommonLoginPageImplementation extends LoadableComponent<CommonLogin
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.isElementDisplayed(cloudLoginTitle);
+        pageUtils.isElementDisplayed(aprioriLogo);
     }
 
     /**
