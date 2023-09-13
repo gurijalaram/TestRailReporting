@@ -25,7 +25,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(id = 12222)
+    @TestRail(id = 28350)
     @Description("Test Get Design Guidance for Casting - Die")
     public void testGetDesignGuidanceCastingDie() {
         String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
@@ -37,7 +37,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(id = 2)
+    @TestRail(id = 28351)
     @Description("Test Get Design Guidance for Casting - Sand")
     public void testGetDesignGuidanceCastingSand() {
         String processGroup = ProcessGroupEnum.CASTING_SAND.getProcessGroup();
@@ -49,7 +49,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(id = 5)
+    @TestRail(id = 28352)
     @Description("Test Get Design Guidance for Casting - Investment")
     public void testGetDesignGuidanceCastingInvestment() {
         String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();
@@ -61,7 +61,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(id = 5)
+    @TestRail(id = 28353)
     @Description("Test Get Design Guidance for Sheet Metal")
     public void testGetDesignGuidanceSheetMetal() {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
@@ -73,7 +73,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(id = 5)
+    @TestRail(id = 28354)
     @Description("Test Get Design Guidance for Sheet Metal - Hydroforming")
     public void testGetDesignGuidanceSheetMetalHydroforming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup();
@@ -85,7 +85,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(id = 5)
+    @TestRail(id = 28355)
     @Description("Test Get Design Guidance for Sheet Metal - Transfer Die")
     public void testGetDesignGuidanceSheetMetalTransferDie() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup();
@@ -97,7 +97,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(id = 5)
+    @TestRail(id = 28357)
     @Description("Test Get Design Guidance for Sheet Metal - Roll Forming")
     public void testGetDesignGuidanceSheetMetalRollForming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup();
@@ -109,7 +109,7 @@ public class DesignGuidanceTests {
     }
 
     @Test
-    @TestRail(id = 5)
+    @TestRail(id = 28356)
     @Description("Test Get Design Guidance for Sheet Metal - Stretch Forming")
     public void testGetDesignGuidanceSheetMetalStretchForming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup();

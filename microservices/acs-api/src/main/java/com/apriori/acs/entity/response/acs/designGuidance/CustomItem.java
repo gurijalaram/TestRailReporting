@@ -22,4 +22,10 @@ public class CustomItem {
     private ProcessItem opName;
     private ProcessItem procName;
     private String materialYieldStrengthConversion;
+    private String suggestedStock;
+    private String thinnerStock;
+    private String allStockThicknesses;
+    private String thickerStock;
+    private String bendCount;
+    private String bendRadius;
 }
