@@ -1,10 +1,10 @@
 package com.apriori;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.enums.acs.AcsApiEnum;
 import com.apriori.acs.models.response.acs.genericclasses.GenericErrorResponse;
