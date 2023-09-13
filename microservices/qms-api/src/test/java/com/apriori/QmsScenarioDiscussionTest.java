@@ -1,9 +1,12 @@
 package com.apriori;
 
+import static com.apriori.enums.CssSearch.SCENARIO_CREATED_AT_GT;
+
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.AuthUserContextUtil;
+import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
@@ -26,10 +29,12 @@ import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
+import com.apriori.utils.CssComponent;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.math3.random.RandomDataGenerator;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
@@ -39,6 +44,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
+import java.util.List;
 
 public class QmsScenarioDiscussionTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
@@ -50,8 +56,12 @@ public class QmsScenarioDiscussionTest extends TestUtil {
 
     @BeforeAll
     public static void beforeClass() {
-        scenarioItem = QmsApiTestUtils
-            .createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        List<ScenarioItem> scenarioItemList = new CssComponent().getBaseCssComponents(currentUser, SCENARIO_CREATED_AT_GT.getKey() +
+            DateUtil.getDateDaysBefore(90, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
+
+        scenarioItem = (scenarioItemList.size() > 0) ? scenarioItemList.get(new RandomDataGenerator().nextInt(0,scenarioItemList.size())) :
+            QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+
         bidPackageResponse = QmsApiTestUtils.createTestDataBidPackage(currentUser, softAssertions);
         QmsApiTestUtils.createTestDataBidPackageItem(scenarioItem, bidPackageResponse, currentUser, softAssertions);
         QmsApiTestUtils.createTestDataBidPackageProject(bidPackageResponse, currentUser, softAssertions);

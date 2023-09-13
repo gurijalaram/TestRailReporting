@@ -122,7 +122,7 @@ public class QmsProjectsTest extends TestUtil {
             HttpStatus.SC_CREATED,
             currentUser);
 
-        softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(12);
+        softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(11);
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(bppResponse.getUsers().stream()
                 .anyMatch(u -> projectUsersList.contains(u.getUserIdentity()))).isTrue();
