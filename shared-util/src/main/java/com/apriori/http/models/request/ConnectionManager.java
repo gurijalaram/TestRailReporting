@@ -45,6 +45,8 @@ import java.util.Map;
  */
 @Slf4j
 class ConnectionManager<T> {
+    private static final Boolean IS_JENKINS_BUILD = System.getProperty("mode") != null;
+
     private Class<T> returnType;
     private RequestEntity requestEntity;
 
@@ -315,7 +317,7 @@ class ConnectionManager<T> {
      * @return
      */
     private ValidatableResponse validateAndLog(ValidatableResponse validatableResponse) {
-        if (System.getProperty("mode") != null) {
+        if (IS_JENKINS_BUILD) {
             return validatableResponse
                     .log()
                     .ifValidationFails();
