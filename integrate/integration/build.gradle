@@ -9,6 +9,9 @@ repositories {
 
 dependencies {
     implementation project(':shared-util')
+    implementation project(':web-app-util')
+
+    // microservices
     implementation project(':microservices:sds-api')
     implementation project(':microservices:bcs-api')
     implementation project(':microservices:cidapp-api')
@@ -16,11 +19,13 @@ dependencies {
     implementation project(':microservices:css-api')
     implementation project(':microservices:nts-api')
     implementation project(':microservices:cic-api')
+
+    // web
+    implementation project(':web:ach-ui')
+    implementation project(':web:cas-ui')
     implementation project(':web:cidapp-ui')
     implementation project(':web:ciconnect-ui')
     implementation project(':web:cia-ui')
     implementation project(':web:cir-ui')
-    implementation project(':web-app-util')
-
- //   testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation project(':web:cis-ui')
 }

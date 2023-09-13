@@ -13,7 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class AdminHomePage extends AdminPageHeader {
 
-    @FindBy(xpath = "//div[@class='devices']")
+    @FindBy(xpath = "//div[@class='index-welcome-text'][1]")
     private WebElement onPremWelcomeText;
 
     private WebDriver driver;
