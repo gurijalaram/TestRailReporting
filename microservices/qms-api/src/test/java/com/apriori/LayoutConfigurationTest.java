@@ -165,6 +165,7 @@ public class LayoutConfigurationTest extends TestUtil {
     @Test
     @TestRail(id = {12541})
     @Issue("COL-1710")
+    @Issue("COL-1416")
     @Description("Create layout configuration with blank name")
     public void createLayoutConfigurationWithEmptyName() {
         ApwErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
@@ -180,6 +181,7 @@ public class LayoutConfigurationTest extends TestUtil {
     @Test
     @TestRail(id = {12881})
     @Issue("COL-1710")
+    @Issue("COL-1416")
     @Description("Create layout configuration name more than 64 characters")
     public void createLayoutConfigurationNameMoreThan64() {
         ApwErrorMessage lycErrorResponse = QmsLayoutResources.createLayoutConfiguration(
