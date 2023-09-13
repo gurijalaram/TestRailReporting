@@ -24,6 +24,7 @@ import java.util.List;
 @Builder
 @JsonRootName("response")
 public class User {
+    private Boolean isSystemUser;
     private String identity;
     private String createdBy;
     private String userType;

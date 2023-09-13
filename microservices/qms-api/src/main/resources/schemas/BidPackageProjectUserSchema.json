@@ -16,6 +16,12 @@
     "updatedBy": {
       "type": "string"
     },
+    "deletedAt": {
+      "type": "string"
+    },
+    "deletedBy": {
+      "type": "string"
+    },
     "projectIdentity": {
       "type": "string"
     },
@@ -44,6 +50,8 @@
   ],
   "optional": [
     "updatedAt",
-    "updatedBy"
+    "updatedBy",
+    "deletedAt",
+    "deletedBy"
   ]
 }

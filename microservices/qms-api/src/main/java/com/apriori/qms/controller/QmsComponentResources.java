@@ -15,6 +15,7 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.enums.QMSAPIEnum;
+import com.apriori.qms.models.request.bidpackage.AssignedComponentRequest;
 import com.apriori.qms.models.request.scenariodiscussion.ProjectUserParameters;
 import com.apriori.qms.models.request.scenariodiscussion.ProjectUserRequest;
 import com.apriori.qms.models.response.component.ComponentResponse;
@@ -249,13 +250,14 @@ public class QmsComponentResources {
      * @param currentUser   the current user
      * @return the components assigned
      */
-    public static <T> T getComponentsAssigned(Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+    public static <T> T getComponentsAssigned(AssignedComponentRequest assignedComponentRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENTS_ASSIGNED, responseClass)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .body(assignedComponentRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 
-        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
         return responseWrapper.getResponseEntity();
     }
 }
