@@ -9,6 +9,8 @@ import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.properties.PropertiesContext;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
@@ -22,6 +24,7 @@ import io.restassured.internal.mapping.Jackson2Mapper;
 import io.restassured.mapper.ObjectMapper;
 import io.restassured.mapper.ObjectMapperType;
 import io.restassured.parsing.Parser;
+import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +48,9 @@ import java.util.Map;
  */
 @Slf4j
 class ConnectionManager<T> {
+
+    private static final Boolean IS_JENKINS_BUILD = System.getProperty("mode") != null;
+
     private Class<T> returnType;
     private RequestEntity requestEntity;
 
@@ -179,14 +185,24 @@ class ConnectionManager<T> {
             }
 
             ObjectMapper objectMapper = new Jackson2Mapper(((type, charset) ->
-                new com.apriori.http.models.request.ObjectMapper())
+                new com.apriori.http.models.request.ObjectMapper()
+//                        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            )
             );
 
-            T responseEntity = response.assertThat()
-                .body(matchesJsonSchema(resource))
-                .extract()
-                .response()
-                .as((Type) returnType, objectMapper);
+            Response extractedResponse = response.assertThat()
+                    .body(matchesJsonSchema(resource))
+                    .extract()
+                    .response();
+
+            T responseEntity = null;
+            try {
+                responseEntity = extractedResponse.as((Type) returnType, objectMapper);
+
+            } catch (Exception e) {
+                log.error("Response contains UnrecognizedPropertyException. \n ***Exception message: {} \n ***Response: {}", e.getMessage(), extractedResponse.asPrettyString());
+
+            }
 
             return ResponseWrapper.build(responseCode, responseHeaders, responseBody, responseEntity);
         } else {
