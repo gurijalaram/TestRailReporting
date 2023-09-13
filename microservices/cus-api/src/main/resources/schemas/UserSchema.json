@@ -20,12 +20,12 @@
         "mfaRequired",
         "customAttributes",
         "userType",
-        "hasCompleteProfile"
+        "hasCompleteProfile",
+        "enablements"
       ],
       "optional": [
         "customProperties",
-        "updatedAt",
-        "userEnablements"
+        "updatedAt"
       ],
       "properties": {
         "isSystemUser": {
@@ -141,9 +141,41 @@
         "userType": {
           "type": "string"
         },
-        "userEnablements": {
+        "enablements": {
           "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "updatedAt",
+            "updatedBy",
+            "customerAssignedRole",
+            "connectAdminEnabled",
+            "highMemEnabled",
+            "previewEnabled",
+            "sandboxEnabled",
+            "userAdminEnabled",
+            "exportAdminEnabled"
+          ],
           "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            },
+            "updatedBy": {
+              "type": "string"
+            },
+            "customerAssignedRole": {
+              "type": "string"
+            },
             "connectAdminEnabled": {
               "type": "boolean"
             },
@@ -158,15 +190,11 @@
             },
             "userAdminEnabled": {
               "type": "boolean"
+            },
+            "exportAdminEnabled": {
+              "type": "boolean"
             }
-          },
-          "required": [
-            "connectAdminEnabled",
-            "highMemEnabled",
-            "previewEnabled",
-            "sandboxEnabled",
-            "userAdminEnabled"
-          ]
+          }
         }
       }
     }

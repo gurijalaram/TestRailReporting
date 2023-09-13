@@ -2,6 +2,7 @@ package com.apriori.ats.models.response;
 
 import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.models.response.Enablements;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -41,7 +42,7 @@ public class AuthorizationResponse {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-    private UserEnablements userEnablements;
+    private Enablements enablements;
     private Boolean hasCompleteProfile;
     private List<String> roles;
 }
