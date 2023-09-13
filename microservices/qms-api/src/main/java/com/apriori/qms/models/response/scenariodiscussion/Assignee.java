@@ -16,23 +16,24 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Assignee {
-    public boolean isSystemUser;
-    public String identity;
+    private Boolean isSystemUser;
+    private String identity;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    public LocalDateTime createdAt;
-    public String createdBy;
+    private LocalDateTime createdAt;
+    private String createdBy;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    public LocalDateTime updatedAt;
-    public String updatedBy;
-    public String customerIdentity;
-    public UserProfile userProfile;
-    public String email;
-    public String username;
-    public Boolean active;
-    public Boolean mfaRequired;
-    public CustomAttributes customAttributes;
-    public String userType;
-    public String avatarColor;
-    public Boolean hasCompleteProfile;
+    private LocalDateTime updatedAt;
+    private String updatedBy;
+    private String customerIdentity;
+    private UserProfile userProfile;
+    private String email;
+    private String username;
+    private Boolean active;
+    private Boolean mfaRequired;
+    private String mfaAuthenticator;
+    private CustomAttributes customAttributes;
+    private String userType;
+    private String avatarColor;
+    private Boolean hasCompleteProfile;
     private BidPackageProjectUserEnablements userEnablements;
 }

@@ -1,22 +1,26 @@
 package com.apriori;
 
+import static com.apriori.enums.CssSearch.SCENARIO_CREATED_AT_GT;
+
 import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
-import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.AuthUserContextUtil;
+import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.controller.QmsComponentResources;
+import com.apriori.qms.models.request.bidpackage.AssignedComponentRequest;
 import com.apriori.qms.models.request.scenariodiscussion.ProjectUserParameters;
+import com.apriori.qms.models.response.component.ComponentAssignedParameters;
 import com.apriori.qms.models.response.component.ComponentResponse;
 import com.apriori.qms.models.response.component.ComponentsAssignedResponse;
 import com.apriori.qms.models.response.scenario.ScenariosResponse;
 import com.apriori.qms.models.response.scenariodiscussion.ScenarioProjectUserResponse;
-import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
+import com.apriori.utils.CssComponent;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -27,21 +31,23 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+
 public class QmsComponentTest extends TestUtil {
-    private static final UserCredentials currentUser = UserUtil.getUser();
+    private static UserCredentials currentUser;
     private static String userContext;
     private static SoftAssertions softAssertions = new SoftAssertions();
     private static ScenarioItem scenarioItem;
 
     @BeforeAll
     public static void beforeClass() {
+        currentUser = UserUtil.getUser();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
+        scenarioItem = new CssComponent().getBaseCssComponents(currentUser, SCENARIO_CREATED_AT_GT.getKey() + DateUtil.getDateDaysBefore(90, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)).get(0);
     }
 
     @AfterAll
     public static void afterClass() {
-        QmsApiTestUtils.deleteScenarioViaCidApp(scenarioItem, currentUser);
         softAssertions.assertAll();
     }
 
@@ -128,7 +134,14 @@ public class QmsComponentTest extends TestUtil {
     @TestRail(id = {26878})
     @Description("Verify that user can find list of components, scenarios, and iterations")
     public void getComponentsAssigned() {
-        ComponentsAssignedResponse componentsAssignedResponse = QmsComponentResources.getComponentsAssigned(
+        ComponentAssignedParameters componentParameters = ComponentAssignedParameters.builder()
+            .componentIdentity(scenarioItem.getComponentIdentity())
+            .scenarioIdentity(scenarioItem.getScenarioIdentity())
+            .iterationIdentity(scenarioItem.getIterationIdentity())
+            .build();
+        AssignedComponentRequest componentModel = AssignedComponentRequest.builder().components(Collections.singletonList(componentParameters)).build();
+
+        ComponentsAssignedResponse componentsAssignedResponse = QmsComponentResources.getComponentsAssigned(componentModel,
             ComponentsAssignedResponse.class,
             HttpStatus.SC_OK,
             currentUser);
