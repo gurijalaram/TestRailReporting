@@ -21,7 +21,8 @@
         "customAttributes",
         "resourcesAllowedToCreate",
         "userType",
-        "roles"
+        "roles",
+        "enablements"
       ],
       "properties": {
         "isSystemUser": {
@@ -107,6 +108,61 @@
         },
         "roles": {
           "type": "array"
+        },
+        "enablements": {
+          "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "updatedAt",
+            "updatedBy",
+            "customerAssignedRole",
+            "connectAdminEnabled",
+            "highMemEnabled",
+            "previewEnabled",
+            "sandboxEnabled",
+            "userAdminEnabled",
+            "exportAdminEnabled"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            },
+            "updatedBy": {
+              "type": "string"
+            },
+            "customerAssignedRole": {
+              "type": "string"
+            },
+            "connectAdminEnabled": {
+              "type": "boolean"
+            },
+            "highMemEnabled": {
+              "type": "boolean"
+            },
+            "previewEnabled": {
+              "type": "boolean"
+            },
+            "sandboxEnabled": {
+              "type": "boolean"
+            },
+            "userAdminEnabled": {
+              "type": "boolean"
+            },
+            "exportAdminEnabled": {
+              "type": "boolean"
+            }
+          }
         }
       }
     }
