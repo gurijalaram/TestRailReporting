@@ -292,7 +292,6 @@ public class PageUtils {
      */
     public void actionClick(WebElement targetElement) {
         Actions builder = new Actions(driver);
-        builder.keyUp(Keys.CONTROL);
         builder.click(waitForElementToAppear(targetElement)).build().perform();
     }
 
