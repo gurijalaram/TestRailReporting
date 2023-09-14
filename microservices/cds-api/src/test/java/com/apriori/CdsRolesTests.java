@@ -21,9 +21,9 @@ public class CdsRolesTests {
     public void getRoles() {
         Roles response = cdsTestUtil.getRoles();
 
-        soft.assertThat(response.getTotalItemCount()).isEqualTo(12);
+        soft.assertThat(response.getTotalItemCount()).isEqualTo(13);
         soft.assertThat(response.getItems().stream().map(Role::getName).collect(Collectors.toList()))
-            .contains("AP_ANALYST", "AP_AUTOMATION", "AP_CONNECT_USER", "AP_CONTRIBUTOR","AP_DESIGNER","AP_EDC","AP_EXPERT","AP_HIGH_MEM","AP_PREVIEW","AP_SANDBOX","AP_USER","AP_USER_ADMIN");
+            .contains("AP_ANALYST", "AP_AUTOMATION", "AP_CONNECT_USER", "AP_CONTRIBUTOR","AP_DESIGNER","AP_EDC","AP_EXPERT","AP_HIGH_MEM","AP_PREVIEW","AP_SANDBOX","AP_USER","AP_USER_ADMIN","AP_EXPORT_ADMIN");
         soft.assertAll();
     }
 
