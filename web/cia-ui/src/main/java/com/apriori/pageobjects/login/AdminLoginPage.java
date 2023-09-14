@@ -39,7 +39,7 @@ public class AdminLoginPage extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertThat("CIA login page was not displayed", aprioriLoginService.getLoginTitle().contains(Constants.WELCOME_PAGE_TEXT));
+        assertThat("CIA login page was not displayed", aprioriLoginService.getLoginTitle().contains(Constants.WELCOME_PAGE_TEXT_ADMIN));
     }
 
     /**
