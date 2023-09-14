@@ -1,3 +1,5 @@
+package com.apriori.shared.util;
+
 import com.apriori.http.utils.AwsParameterStoreUtil;
 
 import lombok.extern.slf4j.Slf4j;
