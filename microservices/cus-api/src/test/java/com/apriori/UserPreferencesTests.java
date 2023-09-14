@@ -49,7 +49,7 @@ public class UserPreferencesTests {
             .getIdentity();
         String value = getItem(userPreferencesResponse,"display.decimalPlaces").getValue();
         String newValue = peopleUtil.ifNumberChangeQty(value);
-        Map<String,String> newMap = new HashMap();
+        Map<String,String> newMap = new HashMap<>();
         newMap.put(identity, newValue);
 
         UpdateUserPrefRequest updateUserPrefRequest =

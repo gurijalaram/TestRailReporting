@@ -41,6 +41,8 @@ public class CisComponentTest extends TestUtil {
     @TestRail(id = {22906})
     @Description("Get Already Assigned Components for specific user")
     public void testGetAlreadyAssignedComponents() {
+
+
         ComponentParameters componentParameters = ComponentParameters.builder()
             .componentIdentity(scenarioItem.getComponentIdentity())
             .scenarioIdentity(scenarioItem.getScenarioIdentity())

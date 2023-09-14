@@ -120,6 +120,7 @@ public class BidPackageProjectsTest extends TestUtil {
 
     @Test
     @TestRail(id = {13751, 22958, 24277, 25989})
+    @Issue("COL-2020")
     @Description("Update Bid Package Project By Identity")
     public void updateBidPackageProject() {
         String projectNameNew = new GenerateStringUtil().getRandomString();
@@ -284,7 +285,7 @@ public class BidPackageProjectsTest extends TestUtil {
             .build();
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("'name' should not be null");
+        softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage()).contains("2 validation failures were found:\n* 'name' should not be empty.\n* 'name' should not be blank");
 
         //Project Name is null
         projectRequest = BidPackageProjectRequest.builder()
@@ -315,6 +316,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @Test
     @TestRail(id = {24267})
     @Description("Verify display name can be updated with maximum of 64 characters only")
+    @Issue("COL-2021")
     public void updateProjectDisplayNameEqualTo64() {
         String projectDisplayName = RandomStringUtils.randomAlphabetic(64);
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
@@ -440,9 +442,9 @@ public class BidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
             .contains("3 validation failures were found:" +
-                "* 'owner' should not be empty." +
-                "* 'owner' should not be blank." +
-                "* 'owner' is not a valid identity.");
+                "\n* 'owner' should not be empty." +
+                "\n* 'owner' should not be blank." +
+                "\n* 'owner' is not a valid identity.");
 
         //Project owner is null
         projectRequest = BidPackageProjectRequest.builder()
@@ -593,6 +595,7 @@ public class BidPackageProjectsTest extends TestUtil {
     @Test
     @TestRail(id = {24350})
     @Description("Verify project description can be updated with maximum of 254 characters only")
+    @Issue("COL-2021")
     public void updateProjectDescriptionEqualTo254() {
         String projectDescription254 = RandomStringUtils.randomAlphabetic(254);
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
@@ -671,7 +674,7 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_FORBIDDEN);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("User does not have rights to update the project attributes");
+            .contains("User does not have permissions to update project");
     }
 
     @Test
@@ -776,7 +779,7 @@ public class BidPackageProjectsTest extends TestUtil {
         ApwErrorMessage getBidPackageProjectErrorResponse = QmsBidPackageResources.updateBidPackageProject(projectRequest,
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, ApwErrorMessage.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(getBidPackageProjectErrorResponse.getMessage())
-            .contains("Status  can be changed to only \"IN_NEGOTIATION\",\"COMPLETED\" and PURCHASED\"");
+            .contains("Status  can be changed to only \"IN_PROGRESS\",\"OPEN\" and COMPLETED\"");
     }
 
     @Test
