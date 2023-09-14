@@ -195,12 +195,18 @@ class ConnectionManager<T> {
                     .extract()
                     .response();
 
-            T responseEntity = null;
+            T responseEntity;
+
             try {
                 responseEntity = extractedResponse.as((Type) returnType, objectMapper);
 
             } catch (Exception e) {
-                log.error("Response contains UnrecognizedPropertyException. \n ***Exception message: {} \n ***Response: {}", e.getMessage(), extractedResponse.asPrettyString());
+                log.error("Response contains MappingException. \n ***Exception message: {} \n ***Response: {}", e.getMessage(), extractedResponse.asPrettyString());
+
+                responseEntity = extractedResponse.as((Type) returnType, new Jackson2Mapper(((type, charset) ->
+                        new com.apriori.http.models.request.ObjectMapper()
+                                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                )));
 
             }
 
