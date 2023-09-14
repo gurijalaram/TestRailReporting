@@ -1,3 +1,5 @@
+package com.apriori.shared.util;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.apriori.properties.PropertiesContext;

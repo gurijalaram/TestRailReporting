@@ -177,7 +177,7 @@ public class BatchPartResources {
         requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity)
             .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("number_of_parts")));
-        return HTTPRequest.build(requestEntity).getMultipart();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**

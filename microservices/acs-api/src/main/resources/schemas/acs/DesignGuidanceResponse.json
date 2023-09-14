@@ -1,0 +1,174 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "infosByTopics": {
+      "type": "object",
+      "properties": {
+        "DTC_MESSAGES": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "string"
+                },
+                "suggested": {
+                  "type": "string"
+                },
+                "secondaryGcd": {
+                  "type": "object",
+                  "properties": {
+                    "artifactTypeName": {
+                      "type": "string"
+                    },
+                    "sequenceNumber": {
+                      "type": "integer"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "artifactTypeName",
+                    "sequenceNumber",
+                    "displayName"
+                  ]
+                },
+                "suggestedMin": {
+                  "type": "string"
+                },
+                "vpe": {
+                  "type": "string"
+                },
+                "gcd": {
+                  "type": "object",
+                  "properties": {
+                    "artifactTypeName": {
+                      "type": "string"
+                    },
+                    "sequenceNumber": {
+                      "type": "integer"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "artifactTypeName",
+                    "sequenceNumber",
+                    "displayName"
+                  ]
+                },
+                "attributeText": {
+                  "type": "string"
+                },
+                "decimalPlaces": {
+                  "type": "integer"
+                },
+                "current": {
+                  "type": ["string", "number", "integer"]
+                },
+                "custom": {
+                  "type": "object",
+                  "properties": {
+                    "tableType": {
+                      "type": "string"
+                    },
+                    "panelOutput": {
+                      "type": "string"
+                    },
+                    "utilizationProcessName": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "panelOutput"
+                  ]
+                },
+                "attributeId": {
+                  "type": "string"
+                },
+                "messageId": {
+                  "type": "string"
+                },
+                "process": {
+                  "type": "object",
+                  "properties": {
+                    "processGroupName": {
+                      "type": "string"
+                    },
+                    "processName": {
+                      "type": "string"
+                    },
+                    "index": {
+                      "type": "integer"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "processGroupName",
+                    "processName",
+                    "index",
+                    "displayName"
+                  ]
+                },
+                "messageText": {
+                  "type": "string"
+                },
+                "suggestedText": {
+                  "type": "string"
+                },
+                "currentText": {
+                  "type": "string"
+                },
+                "categoryText": {
+                  "type": "string"
+                },
+                "suggestedIsMultiValued": {
+                  "type": "boolean"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "rule": {
+                  "type": "string"
+                },
+                "priority": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "@type",
+                "vpe",
+                "gcd",
+                "attributeText",
+                "decimalPlaces",
+                "custom",
+                "attributeId",
+                "messageId",
+                "process",
+                "messageText",
+                "categoryText",
+                "suggestedIsMultiValued",
+                "category",
+                "rule",
+                "priority"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "costingFailed": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "infosByTopics",
+    "costingFailed"
+  ]
+}

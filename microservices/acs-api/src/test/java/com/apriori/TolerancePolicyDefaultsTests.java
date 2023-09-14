@@ -1,10 +1,10 @@
 package com.apriori;
 
-import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 import com.apriori.acs.enums.acs.AcsApiEnum;
 import com.apriori.acs.models.response.acs.genericclasses.GenericErrorResponse;
@@ -31,7 +31,7 @@ public class TolerancePolicyDefaultsTests extends TestUtil {
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
 
         assertThat(propertyValueMap.getTotalRunoutOverride(), is(notNullValue()));
-        assertThat(propertyValueMap.getToleranceMode(), anyOf(equalTo("SYSTEMDEFAULT"), equalTo("PARTOVERRIDE")));
+        assertThat(propertyValueMap.getToleranceMode(), anyOf((equalTo("SYSTEMDEFAULT")), equalTo("PARTOVERRIDE")));
         assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
 
         GenericExtendedPropertyInfoItem totalRunoutOverrideItem = getTolerancePolicyDefaultsResponse.getPropertyInfoMap().getTotalRunoutOverride();
