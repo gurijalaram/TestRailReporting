@@ -1,5 +1,6 @@
 package com.apriori.acs.utils.acs;
 
+import com.apriori.acs.entity.response.acs.designGuidance.DesignGuidanceResponse;
 import com.apriori.acs.enums.acs.AcsApiEnum;
 import com.apriori.acs.models.request.workorders.NewPartRequest;
 import com.apriori.acs.models.response.acs.GcdProperties.GcdPropertiesGroupItemsInputs;
@@ -142,6 +143,29 @@ public class AcsResources {
             .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Gets All Material Stocks Info
+     *
+     * @param scenarioIterationKey      - scenario to get Design Guidance for
+     * @return instance of DesignGuidanceResponse
+     */
+    public DesignGuidanceResponse getDesignGuidance(ScenarioIterationKey scenarioIterationKey, String guidanceTopics) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.DESIGN_GUIDANCE, DesignGuidanceResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString())
+            .queryParams(new QueryParams().use("guidanceTopics", guidanceTopics));
+
+        return (DesignGuidanceResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**

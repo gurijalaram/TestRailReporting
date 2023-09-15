@@ -48,8 +48,7 @@ import java.util.Map;
  */
 @Slf4j
 class ConnectionManager<T> {
-
-    private static final Boolean IS_JENKINS_BUILD = System.getProperty("mode") != null;
+    private static final Boolean IS_JENKINS_BUILD = System.getProperty("mode") != null && !System.getProperty("mode").equals("PROD");
 
     private Class<T> returnType;
     private RequestEntity requestEntity;
@@ -185,13 +184,14 @@ class ConnectionManager<T> {
             }
 
             ObjectMapper objectMapper = new Jackson2Mapper(((type, charset) ->
-                new com.apriori.http.models.request.ObjectMapper()
-//                        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            )
+                new com.apriori.http.models.request.ObjectMapper())
             );
+
 
             Response extractedResponse = response.assertThat()
                     .body(matchesJsonSchema(resource))
+                    .log()
+                    .ifValidationFails()
                     .extract()
                     .response();
 
@@ -224,28 +224,14 @@ class ConnectionManager<T> {
     public <T> ResponseWrapper<T> get() {
 
         return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .get(requestEntity.buildEndpoint())
-                .then()
-                .log().all()
-        );
-    }
+                validateAndLog(
+                        createRequestSpecification()
+                                .when()
+                                .relaxedHTTPSValidation()
+                                .get(requestEntity.buildEndpoint())
+                                .then()
+                )
 
-    /**
-     * Sends request to desired endpoint with the desired specifications using HTTP GET method
-     *
-     * @return JSON POJO object instance of @returnType
-     */
-    public <T> ResponseWrapper<T> getWithNoLogInfo() {
-        return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .get(requestEntity.buildEndpoint())
-                .then()
-                .log().ifError()
         );
     }
 
@@ -256,12 +242,13 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> post() {
         return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .post(requestEntity.buildEndpoint())
-                .then()
-                .log().all()
+                validateAndLog(
+                        createRequestSpecification()
+                                .when()
+                                .relaxedHTTPSValidation()
+                                .post(requestEntity.buildEndpoint())
+                                .then()
+                )
         );
     }
 
@@ -273,17 +260,18 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> postMultiPart() {
         return resultOf(
-            createRequestSpecification()
-                .given()
-                .config(
-                    RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
-                        ContentType.TEXT)))
-                .relaxedHTTPSValidation()
-                .expect()
-                .when()
-                .post(requestEntity.buildEndpoint())
-                .then()
-                .log().all()
+                validateAndLog(
+                    createRequestSpecification()
+                            .given()
+                            .config(
+                                    RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
+                                            ContentType.TEXT)))
+                            .relaxedHTTPSValidation()
+                            .expect()
+                            .when()
+                            .post(requestEntity.buildEndpoint())
+                            .then()
+                )
         );
     }
 
@@ -294,12 +282,13 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> put() {
         return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .put(requestEntity.buildEndpoint())
-                .then()
-                .log().all()
+                validateAndLog(
+                    createRequestSpecification()
+                        .when()
+                        .relaxedHTTPSValidation()
+                        .put(requestEntity.buildEndpoint())
+                        .then()
+                )
         );
     }
 
@@ -310,13 +299,13 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> patch() {
         return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .patch(requestEntity.buildEndpoint())
-                .then()
-                .log()
-                .all()
+                validateAndLog(
+                    createRequestSpecification()
+                        .when()
+                        .relaxedHTTPSValidation()
+                        .patch(requestEntity.buildEndpoint())
+                        .then()
+                )
         );
     }
 
@@ -327,13 +316,33 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> delete() {
         return resultOf(
-            createRequestSpecification()
-                .when()
-                .relaxedHTTPSValidation()
-                .delete(requestEntity.buildEndpoint())
-                .then()
-                .log().all()
+                validateAndLog(
+                    createRequestSpecification()
+                        .when()
+                        .relaxedHTTPSValidation()
+                        .delete(requestEntity.buildEndpoint())
+                        .then()
+                )
         );
+    }
+
+    /**
+     * If the system contains a property mode (automatically inserted by the Jenkins task), we will only log the request data.<br>
+     * A response will only be logged if another response code with the expected status code or the scheme check failed.<br>
+     * If the system does not contain a properties mode, all data (request/response/errors) will be logged.
+     * @param validatableResponse
+     * @return
+     */
+    private ValidatableResponse validateAndLog(ValidatableResponse validatableResponse) {
+        if (IS_JENKINS_BUILD) {
+            return validatableResponse
+                    .log()
+                    .ifValidationFails();
+        }
+
+        return validatableResponse
+                .log()
+                .all();
     }
 
 }

@@ -20,6 +20,8 @@ public class BidPackageProjectUserResponse {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
     private String updatedBy;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime deletedAt;
     private String projectIdentity;
     private String userIdentity;
     private String role;
