@@ -12,5 +12,5 @@ import org.junit.runner.RunWith;
 @RunWith(org.junit.runners.Suite.class)
 @SelectPackages("com.apriori")
 @IncludeTags(SANITY)
-public class SanitySuiteTest {
+public class SanityTestSuite {
 }
