@@ -232,13 +232,13 @@ Those marked with a * are required or the job will not run
                     reportFiles: 'index.html',
                     reportName: "${buildInfo.name} Test Report"
                 ])
-            } */
-        }
+            }
+        } */
 
         stage('CheckLog on mapping errors') {
             steps {
                 script {
-                    // if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
+                    /* if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) { */
 
                     echo "**********************************************************************"
                     echo env.MARK_BUILD_AS_FAILED
