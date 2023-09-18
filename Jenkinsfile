@@ -231,13 +231,13 @@ Those marked with a * are required or the job will not run
         }
     }
 
-    // TODO z: finish this
      stage('CheckLog') {
           steps {
             if (currentBuild.rawBuild.log().contains('Response contains MappingException.')) {
               error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs.")
             }
-    }
+          }
+     }
 
     post {
         always {
