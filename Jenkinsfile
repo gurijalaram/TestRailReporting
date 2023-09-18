@@ -40,6 +40,11 @@ Those marked with a * are required or the job will not run
         string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
         string(name: 'CSV_FILE', defaultValue: 'none', description: 'What is the csv file to use?')
     }
+
+
+    environment {
+        MARK_BUILD_AS_FAILED=false
+    }
 */
     agent {
         label "automation"
@@ -233,7 +238,12 @@ Those marked with a * are required or the job will not run
         stage('CheckLog on mapping errors') {
             steps {
                 script {
-                    if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
+                    // if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
+
+                    echo "**********************************************************************"
+                    echo env.MARK_BUILD_AS_FAILED
+                    if (env.MARK_BUILD_AS_FAILED) {
+                        echo "inside error"
                         error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs.")
                     }
                 }
