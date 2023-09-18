@@ -1415,21 +1415,8 @@ public class ComparisonTests extends TestBaseUI {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
-
-        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName2)
-            .scenarioName(scenarioName2)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile2)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder part1 = componentsUtil.postComponentCID(componentName, scenarioName, processGroupEnum, resourceFile, currentUser);
+        ComponentInfoBuilder part2 = componentsUtil.postComponentCID(componentName2, scenarioName2, processGroupEnum, resourceFile2, currentUser);
 
         loginPage = new CidAppLoginPage(driver);
         compareExplorePage = loginPage.login(currentUser)
@@ -1515,21 +1502,8 @@ public class ComparisonTests extends TestBaseUI {
         String invalidComparisonName = "Special+Characters~100%";
         String invalidCharacterErrorText = "Must only contain characters, numbers, spaces and the following special characters: . - _ ( )";
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
-
-        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName2)
-            .scenarioName(scenarioName2)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile2)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder part1 = componentsUtil.postComponentCID(componentName, scenarioName, processGroupEnum, resourceFile, currentUser);
+        ComponentInfoBuilder part2 = componentsUtil.postComponentCID(componentName2, scenarioName2, processGroupEnum, resourceFile2, currentUser);
 
         explorePage = new CidAppLoginPage(driver)
             .login(currentUser);
@@ -1610,21 +1584,8 @@ public class ComparisonTests extends TestBaseUI {
         String comparisonName1 = new GenerateStringUtil().generateComparisonName();
         String comparisonName2 = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
-
-        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName2)
-            .scenarioName(scenarioName2)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile2)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder part1 = componentsUtil.postComponentCID(componentName, scenarioName, processGroupEnum, resourceFile, currentUser);
+        ComponentInfoBuilder part2 = componentsUtil.postComponentCID(componentName2, scenarioName2, processGroupEnum, resourceFile2, currentUser);
 
         explorePage = new CidAppLoginPage(driver)
             .login(currentUser);
