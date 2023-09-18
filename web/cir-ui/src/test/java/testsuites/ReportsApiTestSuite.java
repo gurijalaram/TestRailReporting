@@ -28,6 +28,12 @@ import com.ootbreports.newreportstests.general.basiccostavoidance.BasicCostAvoid
 import com.ootbreports.newreportstests.potentialsavingsvaluetracking.PotentialSavingsValueTrackingDetailsReportTests;
 import com.ootbreports.newreportstests.potentialsavingsvaluetracking.PotentialSavingsValueTrackingReportTests;
 import com.ootbreports.newreportstests.recommendedtestparts.RecommendedTestPartsReportTests;
+import com.ootbreports.newreportstests.scenarioactivity.ScenarioActivityDigitalFactoryActivityReportTests;
+import com.ootbreports.newreportstests.scenarioactivity.ScenarioActivityMaterialActivityReportTests;
+import com.ootbreports.newreportstests.scenarioactivity.ScenarioActivityProcessActivityReportTests;
+import com.ootbreports.newreportstests.scenarioactivity.ScenarioActivityProcessGroupActivityReportTests;
+import com.ootbreports.newreportstests.scenarioactivity.ScenarioActivityReportTests;
+import com.ootbreports.newreportstests.scenarioactivity.ScenarioActivityTotalActivityReportTests;
 import com.ootbreports.newreportstests.scenariocomparison.ScenarioComparisonReportTests;
 import com.ootbreports.newreportstests.spendanalysisvaluetracking.SpendAnalysisValueTrackingDetailsReportTests;
 import com.ootbreports.newreportstests.spendanalysisvaluetracking.SpendAnalysisValueTrackingDetailsSimplifiedReportTests;
@@ -72,6 +78,12 @@ import org.junit.platform.suite.api.Suite;
     PotentialSavingsValueTrackingDetailsReportTests.class,
     RecommendedTestPartsReportTests.class,
     ScenarioComparisonReportTests.class,
+    ScenarioActivityReportTests.class,
+    ScenarioActivityDigitalFactoryActivityReportTests.class,
+    ScenarioActivityMaterialActivityReportTests.class,
+    ScenarioActivityProcessActivityReportTests.class,
+    ScenarioActivityProcessGroupActivityReportTests.class,
+    ScenarioActivityTotalActivityReportTests.class,
     SheetMetalDtcComparisonReportTests.class,
     SheetMetalDtcDetailsTests.class,
     SheetMetalDtcReportTests.class,

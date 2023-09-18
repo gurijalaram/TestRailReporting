@@ -17,7 +17,7 @@ public class JasperReportTest {
     @Disabled
     public void getJasperReportSummaryTest() {
 
-        // TODO z: usage example.
+        // usage example.
 
         // How to init a request data
         ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest"); // will map CastingDtcReportRequest.json to object

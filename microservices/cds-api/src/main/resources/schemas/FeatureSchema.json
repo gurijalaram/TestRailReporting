@@ -1,18 +1,41 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
+  "required": [
+    "response"
+  ],
   "properties": {
-    "identity": {
-      "type": "string"
-    },
-    "createdBy": {
-      "type": "string"
-    },
-    "createdAt": {
-      "type": "string"
-    },
-    "workOrderStatusUpdatesEnabled": {
-      "type": "boolean"
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "bulkCostingEnabled",
+        "workOrderStatusUpdatesEnabled"
+      ],
+      "optional": [
+        "updatedAt"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "bulkCostingEnabled": {
+          "type": "boolean"
+        },
+        "workOrderStatusUpdatesEnabled": {
+          "type": "boolean"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
     }
   }
 }

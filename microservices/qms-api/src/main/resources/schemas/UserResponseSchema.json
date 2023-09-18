@@ -112,6 +112,9 @@
     "mfaRequired": {
       "type": "boolean"
     },
+    "mfaAuthenticator": {
+      "type": "string"
+    },
     "customAttributes": {
       "type": "object",
       "properties": {
@@ -179,6 +182,7 @@
   ],
   "optional": [
     "updatedAt",
-    "updatedBy"
+    "updatedBy",
+    "mfaAuthenticator"
   ]
 }

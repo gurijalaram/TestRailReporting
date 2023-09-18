@@ -6,12 +6,13 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cir.JasperReportSummary;
+import com.apriori.cir.JasperReportSummaryIncRawData;
 import com.apriori.cir.enums.CirApiEnum;
+import com.apriori.cir.models.enums.InputControlsEnum;
 import com.apriori.cir.models.request.ReportRequest;
 import com.apriori.cir.models.response.ChartDataPoint;
 import com.apriori.cir.models.response.InputControl;
 import com.apriori.cir.utils.JasperReportUtil;
-import com.apriori.cirapi.entity.enums.InputControlsEnum;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ProcessGroupEnum;
 
@@ -45,19 +46,19 @@ public class JasperApiUtils {
     private String reportsJsonFileName;
     private String exportSetName;
     private String processGroupName;
-    private String jSessionId;
+    private String jSessionID;
 
     /**
      * Default constructor for this class
      *
-     * @param jSessionId          - String for authentication/session
+     * @param jSessionID          - String for authentication/session
      * @param exportSetName       - String of the export set which should be set
      * @param reportsJsonFileName - String of the right json file to use to be sent to the api
      */
-    public JasperApiUtils(String jSessionId, String exportSetName, String reportsJsonFileName, CirApiEnum reportNameForInputControls) {
+    public JasperApiUtils(String jSessionID, String exportSetName, String reportsJsonFileName, CirApiEnum reportNameForInputControls) {
         this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
         this.reportValueForInputControls = reportNameForInputControls;
-        this.jSessionId = jSessionId;
+        this.jSessionID = jSessionID;
         this.exportSetName = exportSetName;
         this.reportsJsonFileName = reportsJsonFileName;
     }
@@ -65,14 +66,14 @@ public class JasperApiUtils {
     /**
      * Second constructor for this class (not default)
      *
-     * @param jSessionId - String for authentication/session
+     * @param jSessionID - String for authentication/session
      * @param exportSetName - String of the export set which should be set
      * @param processGroup - String of process group which should be set
      * @param reportsJsonFileName - String of the right json file to use to be sent to the api
      */
-    public JasperApiUtils(String jSessionId, String exportSetName, ProcessGroupEnum processGroup, String reportsJsonFileName) {
+    public JasperApiUtils(String jSessionID, String exportSetName, ProcessGroupEnum processGroup, String reportsJsonFileName) {
         this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
-        this.jSessionId = jSessionId;
+        this.jSessionID = jSessionID;
         this.exportSetName = exportSetName;
         this.processGroupName = processGroup.getProcessGroup();
         this.reportsJsonFileName = reportsJsonFileName;
@@ -86,14 +87,14 @@ public class JasperApiUtils {
      * @return JasperReportSummary instance
      */
     public JasperReportSummary genericTestCore(String keyToSet, String valueToSet) {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionID);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
 
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
-            setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.valueOf(keyToSet.toUpperCase().replace(" ", "_")).getInputControlId(), valueToSet);
+            setReportParameterByName(InputControlsEnum.valueOf(keyToSet.toUpperCase().replace(" ", "_")).getInputControlId(), valueToSet);
         }
 
         if (processGroupName != null) {
@@ -120,7 +121,7 @@ public class JasperApiUtils {
      * @return JasperReportSummary instance
      */
     public JasperReportSummary genericTestCoreCurrencyAndDateOnly(String currencyToSet) {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionID);
 
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
         setReportParameterByName("exportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
@@ -141,7 +142,7 @@ public class JasperApiUtils {
      * @return JasperReportSummary instance
      */
     public JasperReportSummary genericTestCoreCurrencyOnly(String currencyToSet) {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionID);
 
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
 
@@ -177,12 +178,12 @@ public class JasperApiUtils {
      * @return JasperReportSummary instance
      */
     public JasperReportSummary genericTestCoreProjectRollupAndCurrencyOnly(String projectRollupName, String currencyString) {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionID);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
 
-        setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.CURRENCY.getInputControlId(), currencyString);
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyString);
         String projectRollupValue = inputControls.getProjectRollup().getOption(projectRollupName).getValue();
-        setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), projectRollupValue);
+        setReportParameterByName(InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), projectRollupValue);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -210,7 +211,7 @@ public class JasperApiUtils {
      * Generic test for currency in Assembly Cost Reports (both A4 and Letter)
      */
     public void genericAssemblyCostCurrencyTest() {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionID);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         setReportParameterByName("exportSetName", exportSetName);
@@ -225,7 +226,7 @@ public class JasperApiUtils {
         String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
         String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
 
-        setReportParameterByName(com.apriori.cirapi.entity.enums.InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
         JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(reportRequest);
 
         String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
@@ -702,6 +703,86 @@ public class JasperApiUtils {
         }
 
         return propertyValue.toString();
+    }
+
+    /**
+     * Generates report for Scenario Activity including Raw Data
+     *
+     * @return ArrayList of Jasper Report Summary instances
+     */
+    public ArrayList<JasperReportSummaryIncRawData> scenarioActivityReportGenerationTwoTrendingPeriodsIncRawData() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(this.jSessionID);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        LocalDateTime currentDateTime1 = LocalDateTime.now();
+        setReportParameterByName(InputControlsEnum.START_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1.minusYears(10)));
+        setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
+        JasperReportSummaryIncRawData jasperReportSummaryDaily = jasperReportUtil.generateJasperReportSummaryIncRawData(getReportRequest());
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        setReportParameterByName(InputControlsEnum.TRENDING_PERIOD.getInputControlId(), "Yearly");
+
+        timer.reset();
+        timer.start();
+        setReportParameterByName(InputControlsEnum.START_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1.minusYears(10)));
+        setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
+        JasperReportSummaryIncRawData jasperReportSummaryYearly = jasperReportUtil.generateJasperReportSummaryIncRawData(getReportRequest());
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return new ArrayList<>(Arrays.asList(jasperReportSummaryDaily, jasperReportSummaryYearly));
+    }
+
+    /**
+     * Generates report for Scenario Activity excluding Raw Data
+     *
+     * @return ArrayList of Jasper Report Summary instances
+     */
+    public ArrayList<JasperReportSummary> scenarioActivityReportGenerationTwoTrendingPeriods() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(this.jSessionID);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        LocalDateTime currentDateTime1 = LocalDateTime.now();
+        setReportParameterByName(InputControlsEnum.START_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1.minusYears(10)));
+        setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
+        JasperReportSummary jasperReportSummaryDaily = jasperReportUtil.generateJasperReportSummary(getReportRequest());
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        setReportParameterByName(InputControlsEnum.TRENDING_PERIOD.getInputControlId(), "Yearly");
+
+        timer.reset();
+        timer.start();
+        setReportParameterByName(InputControlsEnum.START_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1.minusYears(10)));
+        setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
+        JasperReportSummary jasperReportSummaryYearly = jasperReportUtil.generateJasperReportSummary(getReportRequest());
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return new ArrayList<>(Arrays.asList(jasperReportSummaryDaily, jasperReportSummaryYearly));
+    }
+
+    /**
+     * Gets current month value as a String (capital at the start) of three characters
+     *
+     * @return String of current month
+     */
+    public String getCurrentMonthValue() {
+        String currentMonth = LocalDateTime.now().getMonth().toString();
+        return currentMonth.substring(0, 1).concat(currentMonth.substring(1, 3).toLowerCase());
+    }
+
+    /**
+     * Get elements for scenario activity report tests
+     *
+     * @param jasperReportSummary JasperReportSummary to use
+     * @return ArrayList of Jsoup Elements
+     */
+    public ArrayList<Element> getElementsForScenarioActivityReportTests(JasperReportSummary jasperReportSummary) {
+        return jasperReportSummary.getReportHtmlPart().select("[class='jrxtcolfloating jrxtcolheader']");
     }
 
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {

@@ -10,4 +10,5 @@ public class CreateSamlUserRequest {
     private String given_name;
     private String family_name;
     private String name;
+    private String roles;
 }

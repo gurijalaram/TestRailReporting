@@ -8,8 +8,6 @@ public interface Request {
 
     <T> ResponseWrapper<T> post();
 
-    <T> ResponseWrapper<T> getMultipart();
-
     <T> ResponseWrapper<T> postMultipart();
 
     <T> ResponseWrapper<T> put();

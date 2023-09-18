@@ -1,9 +1,9 @@
 package com.apriori;
 
-import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 import com.apriori.acs.enums.acs.AcsApiEnum;
 import com.apriori.acs.models.response.acs.genericclasses.GenericErrorResponse;

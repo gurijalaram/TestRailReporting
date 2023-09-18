@@ -8,6 +8,7 @@ import com.apriori.ArtifactTableInfoTests;
 import com.apriori.AvailableRoutingsTests;
 import com.apriori.CostResultsTests;
 import com.apriori.CreateMissingScenarioTests;
+import com.apriori.DesignGuidanceTests;
 import com.apriori.DisplayUnitsTests;
 import com.apriori.EnabledCurrencyRateVersionsTests;
 import com.apriori.GcdPropertiesTests;
@@ -39,6 +40,7 @@ import org.junit.platform.suite.api.Suite;
     CostResultsTests.class,
     CreateMissingScenarioTests.class,
     DisplayUnitsTests.class,
+    DesignGuidanceTests.class,
     EnabledCurrencyRateVersionsTests.class,
     GcdTypesTests.class,
     GcdPropertiesTests.class,

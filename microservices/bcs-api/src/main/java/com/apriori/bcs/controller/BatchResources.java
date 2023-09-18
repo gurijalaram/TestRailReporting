@@ -118,7 +118,7 @@ public class BatchResources extends BcsBase {
     public static ResponseWrapper<Batch> getBatchWithNoLogInfo(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), identity);
-        return HTTPRequest.build(requestEntity).getMultipart();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -181,7 +181,7 @@ public class BatchResources extends BcsBase {
         do {
             requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity, batchIdentity);
-            batch = (Batch) HTTPRequest.build(requestEntity).getMultipart().getResponseEntity();
+            batch = (Batch) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {
                 TimeUnit.SECONDS.sleep(120);
             } catch (InterruptedException e) {
