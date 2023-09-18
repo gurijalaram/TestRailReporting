@@ -16,7 +16,8 @@ COPY . .
 FROM sdk as build
 ARG FOLDER
 ARG MODULE
-RUN gradle --build-cache clean :$FOLDER:$MODULE:build -x test
+#RUN gradle --build-cache clean :$FOLDER:$MODULE:build -x test
+RUN gradle --build-cache clean :$MODULE:build -x test
 
 # Build & Test.
 FROM build as test
@@ -30,4 +31,5 @@ ARG FOLDER
 ARG MODULE
 ARG TESTS
 
-RUN gradle --build-cache --info $JAVAOPTS :$FOLDER:$MODULE:test --tests $TESTS
+#RUN gradle --build-cache --info $JAVAOPTS :$FOLDER:$MODULE:test --tests $TESTS
+RUN gradle --build-cache --info $JAVAOPTS :$MODULE:test --tests $TESTS
