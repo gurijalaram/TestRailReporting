@@ -1,7 +1,15 @@
 package testsuites;
 
+import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
+
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
@@ -12,8 +20,6 @@ import org.junit.platform.launcher.listeners.TestExecutionSummary;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
 @Slf4j
 public class TestMain {
