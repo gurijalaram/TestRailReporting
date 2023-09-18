@@ -77,7 +77,8 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertThat("CIR login page was not displayed", loginService.getLoginTitle().contains(Constants.WELCOME_PAGE_TEXT));
+        String assertValue = isEnvOnPrem ? Constants.WELCOME_PAGE_TEXT_ANALYTICS : Constants.WELCOME_PAGE_TEXT_ADMIN;
+        assertThat("CIR login page was not displayed", loginService.getLoginTitle().contains(assertValue));
     }
 
     /**

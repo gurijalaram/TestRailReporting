@@ -10,7 +10,6 @@ import com.apriori.cus.models.response.PreferenceItemsResponse;
 import com.apriori.cus.models.response.User;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
-import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
@@ -19,8 +18,6 @@ import com.apriori.reader.file.user.UserCredentials;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
-
-import java.util.HashMap;
 
 @Slf4j
 public class PeopleUtil {
@@ -33,12 +30,7 @@ public class PeopleUtil {
      */
     public User getCurrentUser(UserCredentials userCredentials) {
         final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.CURRENT_USER, User.class)
-            .headers(new HashMap<String, String>() {
-                {
-                    put("ap-cloud-context", userCredentials.generateCloudContext().getCloudContext());
-                }
-            })
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
+            .token(userCredentials.getToken());
 
         ResponseWrapper<User> userResponse = HTTPRequest.build(requestEntity).get();
         return userResponse.getResponseEntity();
@@ -52,14 +44,8 @@ public class PeopleUtil {
      */
     public User updateCurrentUser(UserCredentials userCredentials, UpdateUserRequest updateUserRequest) {
         final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.CURRENT_USER, User.class)
-            .headers(new HashMap<String, String>() {
-                {
-                    put("ap-cloud-context", userCredentials.generateCloudContext().getCloudContext());
-                }
-            })
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
-            .body("user",
-                updateUserRequest);
+            .token(userCredentials.getToken())
+            .body("user", updateUserRequest);
 
         ResponseWrapper<User> userResponse = HTTPRequest.build(requestEntity).patch();
         return userResponse.getResponseEntity();
@@ -73,14 +59,8 @@ public class PeopleUtil {
      */
     public ErrorResponse updateCurrentUserBadRequest(UserCredentials userCredentials, UpdateUserRequest updateUserRequest) {
         final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.CURRENT_USER, ErrorResponse.class)
-            .headers(new HashMap<String, String>() {
-                {
-                    put("ap-cloud-context", userCredentials.generateCloudContext().getCloudContext());
-                }
-            })
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
-            .body("user",
-                updateUserRequest)
+            .token(userCredentials.getToken())
+            .body("user", updateUserRequest)
             .expectedResponseCode(SC_BAD_REQUEST);
         ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).patch();
         return errorResponse.getResponseEntity();
@@ -94,12 +74,7 @@ public class PeopleUtil {
      */
     public PreferenceItemsResponse getCurrentUserPref(UserCredentials userCredentials) {
         final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
-            .headers(new HashMap<String, String>() {
-                {
-                    put("ap-cloud-context", userCredentials.generateCloudContext().getCloudContext());
-                }
-            })
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
+            .token(userCredentials.getToken());
 
         ResponseWrapper<PreferenceItemsResponse> userResponse = HTTPRequest.build(requestEntity).get();
         return userResponse.getResponseEntity();
@@ -115,12 +90,7 @@ public class PeopleUtil {
 
         final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
             .queryParams(new QueryParams().use(queryName, queryValue))
-            .headers(new HashMap<String, String>() {
-                {
-                    put("ap-cloud-context", userCredentials.generateCloudContext().getCloudContext());
-                }
-            })
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
+            .token(userCredentials.getToken());
 
         ResponseWrapper<PreferenceItemsResponse> userResponse = HTTPRequest.build(requestEntity).get();
         return userResponse.getResponseEntity();
@@ -135,12 +105,7 @@ public class PeopleUtil {
      */
     public void updateCurrentUserPref(UserCredentials userCredentials, UpdateUserPrefRequest updateUserPrefRequest) {
         final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, null)
-            .headers(new HashMap<String, String>() {
-                {
-                    put("ap-cloud-context", userCredentials.generateCloudContext().getCloudContext());
-                }
-            })
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
+            .token(userCredentials.getToken())
             .body(updateUserPrefRequest)
             .expectedResponseCode(HttpStatus.SC_OK);
         HTTPRequest.build(requestEntity).patch();

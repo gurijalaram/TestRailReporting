@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
     "response"
@@ -16,7 +15,8 @@
         "username",
         "active",
         "userProfile",
-        "userType"
+        "userType",
+        "enablements"
       ],
       "properties": {
         "identity": {
@@ -69,6 +69,61 @@
         },
         "userType": {
           "type": "string"
+        },
+        "enablements": {
+          "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "updatedAt",
+            "updatedBy",
+            "customerAssignedRole",
+            "connectAdminEnabled",
+            "highMemEnabled",
+            "previewEnabled",
+            "sandboxEnabled",
+            "userAdminEnabled",
+            "exportAdminEnabled"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "updatedAt": {
+              "type": "string"
+            },
+            "updatedBy": {
+              "type": "string"
+            },
+            "customerAssignedRole": {
+              "type": "string"
+            },
+            "connectAdminEnabled": {
+              "type": "boolean"
+            },
+            "highMemEnabled": {
+              "type": "boolean"
+            },
+            "previewEnabled": {
+              "type": "boolean"
+            },
+            "sandboxEnabled": {
+              "type": "boolean"
+            },
+            "userAdminEnabled": {
+              "type": "boolean"
+            },
+            "exportAdminEnabled": {
+              "type": "boolean"
+            }
+          }
         }
       }
     }
