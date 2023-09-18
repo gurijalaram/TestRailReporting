@@ -199,6 +199,7 @@ class ConnectionManager<T> {
 
             try {
                 responseEntity = extractedResponse.as((Type) returnType, objectMapper);
+                System.setProperty("MARK_BUILD_AS_FAILED", Boolean.FALSE.toString());
 
             } catch (Exception e) {
                 log.error("Response contains MappingException. \n ***Exception message: {} \n ***Response: {}", e.getMessage(), extractedResponse.asPrettyString());

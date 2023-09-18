@@ -41,10 +41,6 @@ Those marked with a * are required or the job will not run
         string(name: 'CSV_FILE', defaultValue: 'none', description: 'What is the csv file to use?')
     }
 
-
-    environment {
-        MARK_BUILD_AS_FAILED="false"
-    }
 */
     agent {
         label "automation"
@@ -213,7 +209,7 @@ Those marked with a * are required or the job will not run
                 }
 
                  echo "S1**********************************************************************"
-                 echo env.MARK_BUILD_AS_FAILED
+                 echo System.getProperty("MARK_BUILD_AS_FAILED")
             }
         }
 
@@ -244,8 +240,11 @@ Those marked with a * are required or the job will not run
                     /* if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) { */
 
                     echo "**********************************************************************"
+                    echo System.getProperty("MARK_BUILD_AS_FAILED")
                     echo env.MARK_BUILD_AS_FAILED
-                    if (env.MARK_BUILD_AS_FAILED) {
+
+                    // if (env.MARK_BUILD_AS_FAILED) {
+                    if (System.getProperty("MARK_BUILD_AS_FAILED")) {
                         echo "inside error"
                         error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs.")
                     }
