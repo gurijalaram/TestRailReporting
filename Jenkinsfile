@@ -241,8 +241,8 @@ Those marked with a * are required or the job will not run
                     /* if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) { */
 
                     echo "**********************************************************************"
-                    echo "${env.MARK_BUILD_AS_FAILED"
-                    if ("${env.MARK_BUILD_AS_FAILED") {
+                    echo "${env.MARK_BUILD_AS_FAILED}"
+                    if ("${env.MARK_BUILD_AS_FAILED}") {
                         echo "inside error"
                         error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs.")
                     }
