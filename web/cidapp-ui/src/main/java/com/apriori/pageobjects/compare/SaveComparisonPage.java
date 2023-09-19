@@ -32,6 +32,9 @@ public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
     @FindBy(css = "div[role='status']")
     private WebElement saveSpinner;
 
+    @FindBy(css = "p[data-field='comparisonName']")
+    private WebElement nameError;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private StatusIcon statusIcon;
@@ -69,6 +72,24 @@ public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
     }
 
     /**
+     * Check if Invalid Character error is displayed
+     *
+     * @return - Boolean of error visibility
+     */
+    public Boolean isInvalidCharacterErrorDisplayed() {
+        return pageUtils.isElementDisplayed(nameError);
+    }
+
+    /**
+     * Get text of Invalid Character Error
+     *
+     * @return - String of error
+     */
+    public String getInvalidCharacterErrorText() {
+        return nameError.getText();
+    }
+
+    /**
      * Click the Cancel button
      *
      * @return new Compare Page Object
@@ -76,6 +97,15 @@ public class SaveComparisonPage extends LoadableComponent<SaveComparisonPage> {
     public ComparePage cancel() {
         pageUtils.waitForElementAndClick(cancel);
         return new ComparePage(driver);
+    }
+
+    /**
+     * Get enabled state of Save/Submit button
+     *
+     * @return - Boolean showing enabled state of Save / Submit button
+     */
+    public Boolean isSaveEnabled() {
+        return pageUtils.isElementEnabled(save);
     }
 
     /**

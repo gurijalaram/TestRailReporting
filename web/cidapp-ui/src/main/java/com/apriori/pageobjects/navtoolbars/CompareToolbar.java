@@ -1,6 +1,8 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
+import com.apriori.pageobjects.compare.CompareExplorePage;
+import com.apriori.pageobjects.compare.ComparePage;
 import com.apriori.pageobjects.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.compare.SaveComparisonPage;
 import com.apriori.pageobjects.explore.ImportCadFilePage;
@@ -16,11 +18,29 @@ import java.io.File;
 @Slf4j
 public class CompareToolbar extends MainNavBar {
 
+    @FindBy(id = "qa-sub-header-new-comparison")
+    private WebElement newButton;
+
     @FindBy(id = "qa-sub-header-modify-button")
     private WebElement modifyButton;
 
+    @FindBy(css = "div[id='qa-sub-header-delete-button'] button")
+    private WebElement deleteButton;
+
+    @FindBy(css = "div[id='qa-sub-header-rename-button'] button")
+    private WebElement renameButton;
+
+    @FindBy(id = "qa-sub-header-refresh-view-button")
+    private WebElement refreshButton;
+
     @FindBy(css = "div[id='qa-sub-header-save-as-button'] button")
     private WebElement saveButton;
+
+    @FindBy(css = "div[data-testid='apriori-alert'] div[class*='MuiAlert-icon']")
+    private WebElement saveStatusIcon;
+
+    @FindBy(css = "div[data-testid='apriori-alert'] div[class*='MuiAlert-message']")
+    private WebElement saveStatusText;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -31,28 +51,17 @@ public class CompareToolbar extends MainNavBar {
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementToAppear(modifyButton);
+        pageUtils.waitForElementToAppear(newButton);
     }
 
     /**
-     * Selects the file dropdown and enters file details
+     * Create new Empty Comparison
      *
-     * @param scenarioName - the name of the scenario
-     * @param filePath     - location of the file
-     * @return new page object
+     * @return Comparison View Page Object
      */
-    public ImportCadFilePage uploadComponent(String scenarioName, File filePath) {
-        return new ExploreToolbar(driver).importCadFile()
-            .inputComponentDetails(scenarioName, filePath);
-    }
-
-    /**
-     * Copies a scenario
-     *
-     * @return new page object
-     */
-    public ScenarioPage copyScenario() {
-        return new ExploreToolbar(driver).copyScenario();
+    public ComparePage newComparison() {
+        pageUtils.waitForElementAndClick(newButton);
+        return new ComparePage(driver);
     }
 
     /**
@@ -63,6 +72,44 @@ public class CompareToolbar extends MainNavBar {
     public ModifyComparisonPage modify() {
         pageUtils.waitForElementAndClick(modifyButton);
         return new ModifyComparisonPage(driver);
+    }
+
+    /**
+     * Check enabled status of Delete button
+     *
+     * @return - Boolean representation of Delete button state
+     */
+    public Boolean isDeleteEnabled() {
+        return pageUtils.isElementEnabled(deleteButton);
+    }
+
+    /**
+     * Click Delete button
+     *
+     * @return - Confirm deletion modal PO
+     */
+    public DeletePage delete() {
+        pageUtils.waitForElementAndClick(deleteButton);
+        return new DeletePage(driver);
+    }
+
+    /**
+     * Check enabled status of Rename button
+     *
+     * @return - Boolean representation of Delete button state
+     */
+    public Boolean isRenameEnabled() {
+        return pageUtils.isElementEnabled(renameButton);
+    }
+
+    /**
+     * Click Rename button
+     *
+     * @return - Save Comparison modal PO
+     */
+    public SaveComparisonPage rename() {
+        pageUtils.waitForElementAndClick(renameButton);
+        return new SaveComparisonPage(driver);
     }
 
     /**
@@ -95,4 +142,15 @@ public class CompareToolbar extends MainNavBar {
     public Boolean saveButtonEnabled() {
         return pageUtils.isElementEnabled(saveButton);
     }
+
+    /**
+     * Click the refresh button
+     *
+     * @return New copy of current page object
+     */
+    public <T> T clickRefresh(Class<T> klass) {
+        pageUtils.waitForElementAndClick(refreshButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
 }

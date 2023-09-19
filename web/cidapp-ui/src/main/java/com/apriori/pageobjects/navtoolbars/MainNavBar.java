@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
-import com.apriori.pageobjects.compare.ComparePage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.help.HelpPage;
@@ -133,9 +132,9 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
      *
      * @return new page object
      */
-    public ComparePage clickCompare() {
+    public <T> T clickCompare(Class<T> klass) {
         pageUtils.waitForElementAndClick(compareButton);
-        return new ComparePage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
