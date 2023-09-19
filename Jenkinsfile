@@ -207,13 +207,10 @@ Those marked with a * are required or the job will not run
                             .
                     """
                 }
-
-                 echo "S1**********************************************************************"
-                 echo System.getProperty("MARK_BUILD_AS_FAILED")
             }
         }
 
-        /* stage("Extract Test Results") {
+        stage("Extract Test Results") {
             steps {
                 // Copy out build/test artifacts.
                 echo "Extract Test Results.."
@@ -232,20 +229,12 @@ Those marked with a * are required or the job will not run
                     reportName: "${buildInfo.name} Test Report"
                 ])
             }
-        } */
+        }
 
         stage('CheckLog on mapping errors') {
             steps {
                 script {
-                    /* if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) { */
-
-                    echo "**********************************************************************"
-                    echo System.getProperty("MARK_BUILD_AS_FAILED")
-                    echo env.MARK_BUILD_AS_FAILED
-
-                    // if (env.MARK_BUILD_AS_FAILED) {
-                    if (System.getProperty("MARK_BUILD_AS_FAILED")) {
-                        echo "inside error"
+                    if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
                         error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs.")
                     }
                 }

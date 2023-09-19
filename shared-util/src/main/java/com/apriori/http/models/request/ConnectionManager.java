@@ -199,12 +199,9 @@ class ConnectionManager<T> {
 
             try {
                 responseEntity = extractedResponse.as((Type) returnType, objectMapper);
-                System.setProperty("MARK_BUILD_AS_FAILED", Boolean.FALSE.toString());
 
             } catch (Exception e) {
                 log.error("Response contains MappingException. \n ***Exception message: {} \n ***Response: {}", e.getMessage(), extractedResponse.asPrettyString());
-
-                System.setProperty("MARK_BUILD_AS_FAILED", Boolean.TRUE.toString());
                 responseEntity = extractedResponse.as((Type) returnType, new Jackson2Mapper(((type, charset) ->
                         new com.apriori.http.models.request.ObjectMapper()
                                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
