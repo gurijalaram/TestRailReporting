@@ -54,6 +54,15 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = ".card-header")
     private List<WebElement> cardHeaders;
 
+    @FindBy(css = "div[id='qa-sub-header-refresh-view-button'] button")
+    private WebElement refreshButton;
+
+    @FindBy(css = "div[data-testid='comparison-nav-bar'] h3")
+    private WebElement comparisonName;
+
+    @FindBy(css = ".back-link")
+    private WebElement backButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private StatusIcon statusIcon;
@@ -67,6 +76,43 @@ public class ComparePage extends CompareToolbar {
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(headerSections);
         pageUtils.waitForElementsToNotAppear(comparisonLoader);
+    }
+
+    /**
+     * Check enabled status of Refresh Button
+     *
+     * @return - Boolean of Refresh button state
+     */
+    public Boolean isRefreshEnabled() {
+        return pageUtils.isElementEnabled(refreshButton);
+    }
+
+    /**
+     * Checks if Back to Comparison Explorer button is enabled
+     *
+     * @return Boolean of enabled state
+     */
+    public Boolean isBackButtonEnabled() {
+        return backButton.isEnabled();
+    }
+
+    /**
+     * Click the Back to Comparison Explorer button
+     *
+     * @return Comparison Explorer PO
+     */
+    public CompareExplorePage clickAllComparisons() {
+        pageUtils.waitForElementAndClick(backButton);
+        return new CompareExplorePage(driver);
+    }
+
+    /**
+     * Get Currently displayed Comparisons name
+     *
+     * @return String of comparison name as displayed
+     */
+    public String getComparisonName() {
+        return comparisonName.getText();
     }
 
     /**
