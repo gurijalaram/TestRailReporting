@@ -210,7 +210,7 @@ Those marked with a * are required or the job will not run
             }
         }
 
-        stage("Extract Test Results") {
+        /* stage("Extract Test Results") {
             steps {
                 // Copy out build/test artifacts.
                 echo "Extract Test Results.."
@@ -229,7 +229,7 @@ Those marked with a * are required or the job will not run
                     reportName: "${buildInfo.name} Test Report"
                 ])
             }
-        }
+        } */
 
         stage('CheckLog on mapping errors') {
             steps {
