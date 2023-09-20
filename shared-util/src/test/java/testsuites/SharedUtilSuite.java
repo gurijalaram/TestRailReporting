@@ -10,9 +10,9 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({
-    //    AuthorizationUtilTest.class,
-    //    AwsParameterStoreUtilTest.class,
-    //    PropertiesContextTest.class,
+    AuthorizationUtilTest.class,
+    AwsParameterStoreUtilTest.class,
+    PropertiesContextTest.class,
     HTTPRequestTest.class
 })
 public class SharedUtilSuite {
