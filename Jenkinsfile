@@ -242,7 +242,7 @@ Those marked with a * are required or the job will not run
         }
     }
 
-    post {
+    /* post {
         always {
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-test-${timeStamp}"
@@ -251,5 +251,5 @@ Those marked with a * are required or the job will not run
             sh "docker system prune --all --force"
             cleanWs()
         }
-    }
+    } */
 }
