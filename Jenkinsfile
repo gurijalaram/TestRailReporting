@@ -210,7 +210,7 @@ Those marked with a * are required or the job will not run
             }
         }
 
-        /* stage("Extract Test Results") {
+        stage("Extract Test Results") {
             steps {
                 // Copy out build/test artifacts.
                 echo "Extract Test Results.."
@@ -230,26 +230,16 @@ Those marked with a * are required or the job will not run
                 ])
             }
         }
-
-        stage('CheckLog on mapping errors') {
-            steps {
-                script {
-                    if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
-                        error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs.")
-                    }
-                }
-            }
-        } */
     }
 
     post {
         always {
-            /* echo "Cleaning up.."
+            echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-test-${timeStamp}"
             sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
             sh "docker volume rm \$(docker volume ls -qf dangling=true)"
             sh "docker system prune --all --force"
-            cleanWs() */
+            cleanWs()
 
             script {
                 if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {

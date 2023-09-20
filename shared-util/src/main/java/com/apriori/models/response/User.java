@@ -46,5 +46,5 @@ public class User {
     private LocalDateTime updatedAt;
     private Boolean hasCompleteProfile;
     private Enablements enablements;
-    //    private String mfaAuthenticator;
+    private String mfaAuthenticator;
 }
