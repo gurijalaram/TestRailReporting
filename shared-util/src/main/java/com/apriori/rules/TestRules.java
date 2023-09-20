@@ -1,6 +1,7 @@
 package com.apriori.rules;
 
 import static com.apriori.properties.LoadProperties.loadProperties;
+import static com.apriori.testconfig.TestMode.DOCKER_GRID;
 import static com.apriori.testconfig.TestMode.QA_LOCAL;
 import static com.apriori.testrail.TestRailStatus.DISABLED;
 import static com.apriori.testrail.TestRailStatus.FAILED;
@@ -164,7 +165,7 @@ public class TestRules implements TestWatcher, BeforeAllCallback {
         ExtensionContext.Store.CloseableResource {
         @Override
         public void close() {
-            if (testMode.value().equalsIgnoreCase(QA_LOCAL.value())) {
+            if (testMode.value().equalsIgnoreCase(QA_LOCAL.value()) || testMode.value().equalsIgnoreCase(DOCKER_GRID.value())) {
                 return;
             }
             //After all tests run hook.
