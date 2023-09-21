@@ -137,8 +137,8 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
     /**
      * click close button on status message alert box
      */
-    public <T> T closeMessageAlert(Class<T> klass) {
+    public void closeMessageAlert() {
         pageUtils.waitForElementAndClick(statusMessageCloseBtn);
-        return PageFactory.initElements(driver, klass);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
     }
 }

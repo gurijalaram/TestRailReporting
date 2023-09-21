@@ -14,16 +14,23 @@ import org.openqa.selenium.support.PageFactory;
 public class ConnectorMappings extends CICBasePage {
 
     @FindBy(xpath = "//div[@class='apriori-stepper']//div[.='Mappings']")
-    private WebElement connectorMappingsTab;
+    protected WebElement connectorMappingsTab;
 
     @FindBy(xpath = "//div[@tab-number='2']//button[.='Save']")
-    private WebElement saveBtn;
+    protected WebElement saveBtn;
+
+    @FindBy(xpath = "//div[@tab-number='2']//button[.='Previous']")
+    protected WebElement previousBtn;
 
     @FindBy(css = "div[title='Standard Fields']")
-    private WebElement standardFieldsTab;
+    protected WebElement standardFieldsTab;
 
     @FindBy(css = "div[title='Additional PLM Fields']")
-    private WebElement additionalPlmFieldsTab;
+    protected WebElement additionalPlmFieldsTab;
+
+    protected static final String cssColumnSelector = "div[class*='cic-input']";
+    protected static final String cssTextboxSelector = "input[type='text']";
+    protected static WebElement selectedRow;
 
     public ConnectorMappings(WebDriver driver) {
         super(driver);
@@ -69,5 +76,15 @@ public class ConnectorMappings extends CICBasePage {
     public CIConnectHome clickSaveBtn() {
         pageUtils.waitForElementAndClick(saveBtn);
         return new CIConnectHome(driver);
+    }
+
+    /**
+     * click save button connector details page
+     *
+     * @return CIConnectHome
+     */
+    public ConnectorDetails clickPreviousBtn() {
+        pageUtils.waitForElementAndClick(previousBtn);
+        return new ConnectorDetails(driver);
     }
 }
