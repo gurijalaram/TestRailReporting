@@ -113,7 +113,7 @@ public class PropertiesContext {
     }
 
     private static String getEnvironmentValue(String propertyPath) {
-        log.info("PropertyContext: getting environment property by path: {}", propertyPath);
+        log.debug("PropertyContext: getting environment property by path: {}", propertyPath);
         return getFromPropertyContext(propertyPath);
     }
 

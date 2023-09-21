@@ -21,6 +21,7 @@ public enum PlmTypeAttributes {
     PLM_CUSTOM_NUMBER("UDA2", "RealNumber1", "Custom Number"),
     PLM_CUSTOM_DATE("UDA3", "DateTime1", "Custom Date"),
     PLM_CUSTOM_MULTI("UDA4", "MultiselectString", "Custom Multi"),
+    PLM_CUSTOM_EMAIL("UDA5", "checkInUserEmail", "Check In User Email"),
     PLM_PROCESS_GROUP("processGroupName", "ApPG", "Process Group"),
     PLM_MATERIAL_NAME("materialName", "ApMaterial", "Material"),
     PLM_BATCH_SIZE("batchSize", "BatchSize", "Batch Size"),
@@ -30,7 +31,8 @@ public enum PlmTypeAttributes {
     PLM_PART_ID("partId", "partId", "Part ID"),
     PLM_PART_NUMBER("partNumber", "Number", "Part Number"),
     PLM_REVISION("revisionNumber", "Revision", "Revision Number"),
-    PLM_DESCRIPTION("description", "testDesc", "Description");
+    PLM_DESCRIPTION("description", "testDesc", "Description"),
+    PLM_SCENARIO_NAME("scenarioName", "ScenarioName", "Scenario Name");
     
     private final String key;
     private final String value;

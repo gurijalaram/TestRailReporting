@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.connectors;
 
 import com.apriori.cic.enums.PlmTypeAttributes;
+import com.apriori.enums.ConnectorColumnFields;
 import com.apriori.enums.UsageRule;
 
 import lombok.SneakyThrows;
@@ -10,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import utils.Constants;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -17,14 +19,13 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class StandardFields extends ConnectorMappings {
 
-    @FindBy(xpath = "//div[@tab-number='1']//button//span[text()='Add Row']")
+    @FindBy(xpath = "//div[@class='tabsv2-actual-tab-contents']//div[@tab-number='1']//button//span[text()='Add Row']")
     private WebElement addRowBtn;
 
     public StandardFields(WebDriver driver) {
         super(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-
     }
 
     @Override
@@ -48,7 +49,7 @@ public class StandardFields extends ConnectorMappings {
      * @return WebElement
      */
     public WebElement getMatchedConnectFieldColumn(PlmTypeAttributes plmTypeAttributes, Integer colIndex) {
-        WebElement matchedElement = getStandardFieldsRows().stream().map(webElement -> webElement.findElements(By.cssSelector("div[class*='cic-input']"))
+        WebElement matchedElement = getStandardFieldsRows().stream().map(webElement -> webElement.findElements(By.cssSelector(cssColumnSelector))
                 .get(colIndex - 1)
                 .findElement(By.cssSelector("div[class^='ss-single-selected'] span[class='placeholder']")))
             .filter(element -> element.getText().equals(plmTypeAttributes.getCicGuiField()))
@@ -67,7 +68,7 @@ public class StandardFields extends ConnectorMappings {
     public List<WebElement> getMatchedConnectFieldRow(PlmTypeAttributes plmTypeAttributes) {
         List<WebElement> ciConnectFieldColElements = null;
         for (WebElement webElement : getStandardFieldsRows()) {
-            ciConnectFieldColElements = webElement.findElements(By.cssSelector("div[class*='cic-input']"));
+            ciConnectFieldColElements = webElement.findElements(By.cssSelector(cssColumnSelector));
             WebElement ciConnectFieldColElement = ciConnectFieldColElements.get(0).findElement(By.cssSelector("div[class^='ss-single-selected'] span[class='placeholder']"));
             if (ciConnectFieldColElement.getText().equals(plmTypeAttributes.getCicGuiField())) {
                 return ciConnectFieldColElements;
@@ -85,14 +86,39 @@ public class StandardFields extends ConnectorMappings {
      */
     public StandardFields addRow(PlmTypeAttributes plmTypeAttributes, UsageRule usageRule) {
         this.clickAddRowBtn();
-        List<WebElement> ciStandardFieldFieldCols = getStandardFieldsRows().get(getStandardFieldsRows().size() - 1).findElements(By.cssSelector("div[class*='cic-input']"));
-        selectCiConnectField(ciStandardFieldFieldCols.get(0), plmTypeAttributes);
-        selectUsageRule(ciStandardFieldFieldCols.get(1), usageRule);
-        pageUtils.clearValueOfElement(ciStandardFieldFieldCols.get(2).findElement(By.cssSelector("input[type='text']")));
-        ciStandardFieldFieldCols.get(2).findElement(By.cssSelector("input[type='text']")).sendKeys(plmTypeAttributes.getValue());
-        pageUtils.clearValueOfElement(ciStandardFieldFieldCols.get(2).findElement(By.cssSelector("input[type='text']")));
-        ciStandardFieldFieldCols.get(2).findElement(By.cssSelector("input[type='text']")).sendKeys(plmTypeAttributes.getValue());
+        List<WebElement> ciStandardFieldFieldCols = getStandardFieldsRows().get(getStandardFieldsRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
+        selectCiConnectField(ciStandardFieldFieldCols.get(ConnectorColumnFields.CI_CONNECT_FIELD.getColumnIndex()), plmTypeAttributes);
+        selectUsageRule(ciStandardFieldFieldCols.get(ConnectorColumnFields.USAGE.getColumnIndex() - 1), usageRule);
+        pageUtils.clearValueOfElement(ciStandardFieldFieldCols.get(ConnectorColumnFields.PLM_FIELD.getColumnIndex() - 1).findElement(By.cssSelector(cssTextboxSelector)));
+        ciStandardFieldFieldCols.get(ConnectorColumnFields.PLM_FIELD.getColumnIndex() - 1).findElement(By.cssSelector(cssTextboxSelector)).sendKeys(plmTypeAttributes.getValue());
+        pageUtils.clearValueOfElement(ciStandardFieldFieldCols.get(ConnectorColumnFields.PLM_FIELD.getColumnIndex() - 1).findElement(By.cssSelector(cssTextboxSelector)));
+        ciStandardFieldFieldCols.get(ConnectorColumnFields.PLM_FIELD.getColumnIndex() - 1).findElement(By.cssSelector(cssTextboxSelector)).sendKeys(plmTypeAttributes.getValue());
         return this;
+    }
+
+    /**
+     * remove row to a connector Mappings -> Standard Mappings Row
+     *
+     * @return Current class object
+     */
+    public StandardFields removeRow() {
+        selectedRow.findElements(By.cssSelector("button")).get(0).click();
+        return this;
+    }
+
+    public StandardFields selectRow() {
+        selectedRow = getStandardFieldsRows().get(getStandardFieldsRows().size() - 1);
+        return this;
+    }
+
+    public StandardFields selectCiConnectField(PlmTypeAttributes plmTypeAttributes) {
+        List<WebElement> ciStandardFieldFieldCols = selectedRow.findElements(By.cssSelector(cssColumnSelector));
+        selectCiConnectField(ciStandardFieldFieldCols.get(ConnectorColumnFields.CI_CONNECT_FIELD.getColumnIndex()), plmTypeAttributes);
+        return this;
+    }
+
+    public String getFieldDataType() {
+        return selectedRow.findElements(By.cssSelector(cssColumnSelector)).get(3).getText();
     }
 
     /**
@@ -102,17 +128,48 @@ public class StandardFields extends ConnectorMappings {
      * @return Current class Object
      */
     public StandardFields enterPlmField(PlmTypeAttributes plmTypeAttributes) {
-        pageUtils.clearValueOfElement(getMatchedConnectFieldRow(plmTypeAttributes).get(2).findElement(By.cssSelector("input[type='text']")));
-        getMatchedConnectFieldRow(plmTypeAttributes).get(2).findElement(By.cssSelector("input[type='text']")).sendKeys(plmTypeAttributes.getValue());
+        pageUtils.clearValueOfElement(getMatchedConnectFieldRow(plmTypeAttributes).get(2).findElement(By.cssSelector(cssTextboxSelector)));
+        getMatchedConnectFieldRow(plmTypeAttributes).get(2).findElement(By.cssSelector(cssTextboxSelector)).sendKeys(plmTypeAttributes.getValue());
         return this;
+    }
+
+    /**
+     * Enter the value for standard mappings for pre- loaded mappings.
+     *
+     * @param plmTypeAttributes PlmTypeAttributes enum
+     * @param attributeValue    String
+     * @return Current class Object
+     */
+    public StandardFields enterPlmField(PlmTypeAttributes plmTypeAttributes, String attributeValue) {
+        pageUtils.clearValueOfElement(getMatchedConnectFieldRow(plmTypeAttributes)
+            .get(ConnectorColumnFields.PLM_FIELD.getColumnIndex() - 1)
+            .findElement(By.cssSelector(cssTextboxSelector)));
+        getMatchedConnectFieldRow(plmTypeAttributes)
+            .get(ConnectorColumnFields.PLM_FIELD.getColumnIndex() - 1)
+            .findElement(By.cssSelector(cssTextboxSelector)).sendKeys(attributeValue);
+        return this;
+    }
+
+    /**
+     * Enter the value for standard mappings for pre- loaded mappings.
+     *
+     * @param plmTypeAttributes PlmTypeAttributes enum
+     * @return String
+     */
+    public String getPlmFieldValue(PlmTypeAttributes plmTypeAttributes) {
+        return getMatchedConnectFieldRow(plmTypeAttributes)
+            .get(ConnectorColumnFields.PLM_FIELD.getColumnIndex() - 1)
+            .findElement(By.cssSelector(cssTextboxSelector))
+            .getAttribute("value");
     }
 
     /**
      * click add row button in standard mappings tab
      */
-    private void clickAddRowBtn() {
+    public StandardFields clickAddRowBtn() {
         pageUtils.waitForElementAndClick(addRowBtn);
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
     }
 
     /**
@@ -142,8 +199,32 @@ public class StandardFields extends ConnectorMappings {
      *
      * @return list of standard mappings rows
      */
-    private List<WebElement> getStandardFieldsRows() {
-        return driver.findElements(By.cssSelector("div[tab-number='1'] div[class^='BMCollectionViewCellWrapper'] div[class$='tw-flex-row']"));
+    public List<WebElement> getStandardFieldsRows() {
+        return driver.findElements(By.cssSelector("div[class='tabsv2-actual-tab-contents'] div[tab-number='1'] div[class^='BMCollectionViewCellWrapper'] div[class$='tw-flex-row']"));
+    }
+
+    /**
+     * select CI Connect field in Standard mappings rows
+     */
+    private StandardFields clickCiConnectField() {
+        List<WebElement> ciStandardFieldFieldCols = getStandardFieldsRows().get(getStandardFieldsRows().size() - 1).findElements(By.cssSelector("div[class*='cic-input']"));
+        pageUtils.waitForElementAndClick(ciStandardFieldFieldCols.get(ConnectorColumnFields.CI_CONNECT_FIELD.getColumnIndex()));
+        pageUtils.waitForElementAppear(driver.findElement(By.cssSelector("div.ss-content.ss-open> div.ss-search > input")));
+        return this;
+    }
+
+    /**
+     * select CI Connect field in Standard mappings rows
+     *
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     */
+    public Boolean isCiConnectFieldExists(PlmTypeAttributes plmTypeAttributes) {
+        return this.driver.findElements(By.cssSelector(OPTIONS_CONTENT_OPEN_DROPDOWN_CSS)).get(0)
+            .findElements(By.cssSelector("div[class='ss-option']"))
+            .stream()
+            .filter(e -> e.getText().equals(plmTypeAttributes.getCicGuiField()))
+            .findFirst()
+            .isPresent();
     }
 
     /**
@@ -157,6 +238,7 @@ public class StandardFields extends ConnectorMappings {
         pageUtils.waitForElementAppear(driver.findElement(By.cssSelector("div.ss-content.ss-open> div.ss-search > input")));
         driver.findElement(By.cssSelector("div.ss-content.ss-open> div.ss-search > input")).sendKeys(plmTypeAttributes.getCicGuiField());
         this.selectValueFromDDL(0, plmTypeAttributes.getCicGuiField());
+        pageUtils.waitFor(Constants.DEFAULT_WAIT);
     }
 
     /**
