@@ -95,7 +95,11 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         pageUtils.waitForElementsToNotAppear(byLoadingTitle);
 
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);
-        T responsePage = PageFactory.initElements(driver, webPageType);
+        return PageFactory.initElements(driver, webPageType);
+    }
+
+    public <T> T clickWebApplicationByNameAndCloseAfterLoad(String applicationName, Class<T> webPageType) {
+        T responsePage = clickWebApplicationByName(applicationName, webPageType);
         driver.close();
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
 
