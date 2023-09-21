@@ -13,6 +13,7 @@ import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Customer;
 import com.apriori.pageobjects.compare.CompareExplorePage;
 import com.apriori.pageobjects.compare.ComparePage;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
@@ -56,6 +57,8 @@ public class ReportAnIssueTests extends TestBaseUI {
 
         ComponentInfoBuilder titanChargeAsm = asmUtils.associateAssemblyAndSubComponents(
             asmName, asmExtension, ProcessGroupEnum.ASSEMBLY, subComponentNames, subComponentExtension, subComponentProcessGroup, scenarioName, currentUser);
+        asmUtils.uploadSubComponents(titanChargeAsm)
+            .uploadAssembly(titanChargeAsm);
 
         loginPage = new CidAppLoginPage(driver);
         reportPage = loginPage.login(currentUser)
@@ -73,7 +76,7 @@ public class ReportAnIssueTests extends TestBaseUI {
 
         reportPage = reportPage.close(CompareExplorePage.class)
             .clickExplore()
-            .multiSelectScenarios(subComponentNames.stream().map(name -> name + "," + scenarioName).collect(Collectors.toList()));
+            .multiSelectScenarios(subComponentNames.stream().map(name -> name + "," + scenarioName).collect(Collectors.toList()).toArray(String[] ::new))
             .createComparison()
             .selectManualComparison()
             .goToHelp()
@@ -88,7 +91,24 @@ public class ReportAnIssueTests extends TestBaseUI {
             .clickReportAnIssue();
 
         verifyCommonDetails("Evaluate");
+        verifyScenarioDetails(titanChargeAsm.getSubComponents().get(0), "Part");
 
+        reportPage = reportPage.close(ComparePage.class)
+            .clickExplore()
+            .openScenario(titanChargeAsm.getComponentName(), scenarioName)
+            .goToHelp()
+            .clickReportAnIssue();
+
+        verifyCommonDetails("Evaluate");
+        verifyScenarioDetails(titanChargeAsm, "Assembly");
+
+        reportPage = reportPage.close(EvaluatePage.class)
+            .clickExplore()
+            .openScenario(titanChargeAsm.getComponentName(), scenarioName)
+            .goToHelp()
+            .clickReportAnIssue();
+
+        verifyCommonDetails("Evaluate");
 
         softAssertions.assertAll();
 
@@ -107,12 +127,32 @@ public class ReportAnIssueTests extends TestBaseUI {
             .isEqualTo(customerDetails.getIdentity());
 //        softAssertions.assertThat(reportPage.getFieldValue("User Identity")).as("Verify User Identity")
 //            .isEqualTo();
-
-//        softAssertions.assertThat(reportPage.getFieldValue("Browser Information")).as("Verify Browser Information")
-//            .isEqualTo());
+        softAssertions.assertThat(reportPage.getFieldValue("Browser Information")).as("Verify Browser Information")
+            .isEqualTo(driverFactory.browser);
 //        softAssertions.assertThat(reportPage.getFieldValue("Deployment")).as("Verify Deployment").isEqualTo();
 //        softAssertions.assertThat(reportPage.getFieldValue("Installation")).as("Verify Installation").isEqualTo();
         softAssertions.assertThat(reportPage.getFieldValue("Application")).as("Verify Application").isEqualTo("aP Design");
         softAssertions.assertThat(reportPage.getFieldValue("Page")).as("Verify Page").isEqualTo(expectedPageName);
+    }
+
+    /**
+     * Common assertions made across all pages under test
+     *
+     * @param scenario - ComponentInfoBuilder of scenario details to be verified
+     * @param scenarioType - String of expected scenarios type [Part | Assembly]
+     */
+    private void verifyScenarioDetails(ComponentInfoBuilder scenario, String scenarioType) {
+        softAssertions.assertThat(reportPage.getFieldValue("Component Type")).as("Verify Component Type").isEqualTo(scenarioType);
+        softAssertions.assertThat(reportPage.getFieldValue("Component Name")).as("Verify Component Name").isEqualTo(scenario.getComponentName());
+        softAssertions.assertThat(reportPage.getFieldValue("Component Identity")).as("Verify Component Identity")
+            .isEqualTo(scenario.getComponentIdentity());
+        softAssertions.assertThat(reportPage.getFieldValue("Scenario Name")).as("Verify Scenario Name")
+            .isEqualTo(scenario.getScenarioName());
+        softAssertions.assertThat(reportPage.getFieldValue("Scenario Identity")).as("Verify Scenario Identity")
+            .isEqualTo(scenario.getScenarioIdentity());
+//        softAssertions.assertThat(reportPage.getFieldValue("Iteration Number")).as("Verify Iteration Number")
+//            .isEqualTo();
+//        softAssertions.assertThat(reportPage.getFieldValue("Iteration Identity")).as("Verify Iteration Identity")
+//            .isEqualTo();
     }
 }
