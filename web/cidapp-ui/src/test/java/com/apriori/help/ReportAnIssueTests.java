@@ -76,7 +76,7 @@ public class ReportAnIssueTests extends TestBaseUI {
 
         reportPage = reportPage.close(CompareExplorePage.class)
             .clickExplore()
-            .multiSelectScenarios(subComponentNames.stream().map(name -> name + "," + scenarioName).collect(Collectors.toList()).toArray(String[] ::new))
+            .multiSelectScenarios(subComponentNames.stream().map(name -> name + "," + scenarioName).collect(Collectors.toList()).toArray(String[]::new))
             .createComparison()
             .selectManualComparison()
             .goToHelp()
@@ -125,12 +125,12 @@ public class ReportAnIssueTests extends TestBaseUI {
         softAssertions.assertThat(reportPage.getFieldValue("Customer")).as("Verify Customer Name").isEqualTo(customerDetails.getName());
         softAssertions.assertThat(reportPage.getFieldValue("Customer Identity")).as("Verify Customer Identity")
             .isEqualTo(customerDetails.getIdentity());
-//        softAssertions.assertThat(reportPage.getFieldValue("User Identity")).as("Verify User Identity")
-//            .isEqualTo();
+        //softAssertions.assertThat(reportPage.getFieldValue("User Identity")).as("Verify User Identity")
+        //    .isEqualTo();
         softAssertions.assertThat(reportPage.getFieldValue("Browser Information")).as("Verify Browser Information")
             .isEqualTo(driverFactory.browser);
-//        softAssertions.assertThat(reportPage.getFieldValue("Deployment")).as("Verify Deployment").isEqualTo();
-//        softAssertions.assertThat(reportPage.getFieldValue("Installation")).as("Verify Installation").isEqualTo();
+        //softAssertions.assertThat(reportPage.getFieldValue("Deployment")).as("Verify Deployment").isEqualTo();
+        //softAssertions.assertThat(reportPage.getFieldValue("Installation")).as("Verify Installation").isEqualTo();
         softAssertions.assertThat(reportPage.getFieldValue("Application")).as("Verify Application").isEqualTo("aP Design");
         softAssertions.assertThat(reportPage.getFieldValue("Page")).as("Verify Page").isEqualTo(expectedPageName);
     }
@@ -150,9 +150,9 @@ public class ReportAnIssueTests extends TestBaseUI {
             .isEqualTo(scenario.getScenarioName());
         softAssertions.assertThat(reportPage.getFieldValue("Scenario Identity")).as("Verify Scenario Identity")
             .isEqualTo(scenario.getScenarioIdentity());
-//        softAssertions.assertThat(reportPage.getFieldValue("Iteration Number")).as("Verify Iteration Number")
-//            .isEqualTo();
-//        softAssertions.assertThat(reportPage.getFieldValue("Iteration Identity")).as("Verify Iteration Identity")
-//            .isEqualTo();
+        //softAssertions.assertThat(reportPage.getFieldValue("Iteration Number")).as("Verify Iteration Number")
+        //    .isEqualTo();
+        //softAssertions.assertThat(reportPage.getFieldValue("Iteration Identity")).as("Verify Iteration Identity")
+        //    .isEqualTo();
     }
 }
