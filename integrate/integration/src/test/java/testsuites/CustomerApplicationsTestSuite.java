@@ -10,11 +10,11 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({
-        CIAdminApplicationTest.class,
-        CIConnectApplicationTest.class,
-        CIDesignApplicationTest.class,
-        CIReportApplicationTest.class,
-        CISandboxApplicationTest.class
+    CIAdminApplicationTest.class,
+    CIConnectApplicationTest.class,
+    CIDesignApplicationTest.class,
+    CIReportApplicationTest.class,
+    CISandboxApplicationTest.class
 })
 public class CustomerApplicationsTestSuite {
 }
