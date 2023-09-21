@@ -155,7 +155,7 @@ public class DbMigration {
 //        if (Constants.PROP_USER_NAME != null && Constants.PROP_USER_PASSWORD != null) {
 //            userCredentials = UserCredentials.init(Constants.PROP_USER_NAME, Constants.PROP_USER_PASSWORD);
 //        } else {
-//            //TODO z: should be uncommented when auth0 and jasper server will have the same test users credentials
+//            //TODO: should be uncommented when auth0 and jasper server will have the same test users credentials
 //            //migrationUser
 //            userCredentials = UserCredentials.init("qa-automation-01@apriori.com", "qa-automation-01");
 //        }

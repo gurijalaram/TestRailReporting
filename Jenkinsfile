@@ -40,6 +40,7 @@ Those marked with a * are required or the job will not run
         string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
         string(name: 'CSV_FILE', defaultValue: 'none', description: 'What is the csv file to use?')
     }
+
 */
     agent {
         label "automation"
@@ -239,6 +240,12 @@ Those marked with a * are required or the job will not run
             sh "docker volume rm \$(docker volume ls -qf dangling=true)"
             sh "docker system prune --all --force"
             cleanWs()
+
+            script {
+                if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
+                    error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs.")
+                }
+            }
         }
     }
 }

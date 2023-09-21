@@ -80,7 +80,7 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
         userApplicationsFromUI.forEach(application -> {
             log.debug("*********************** Testing application name: {}  **********************", application.getApplicationName());
 
-            cloudHomePage.clickWebApplicationByName(application.getApplicationName(),
+            cloudHomePage.clickWebApplicationByNameAndCloseAfterLoad(application.getApplicationName(),
                     getPageObjectTypeByApplicationName(application.getApplicationName())
             );
         });
