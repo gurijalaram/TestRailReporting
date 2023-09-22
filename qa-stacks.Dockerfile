@@ -18,7 +18,7 @@ RUN gradle clean :$FOLDER:$MODULE:fatJar -x test
 FROM runtime as final
 ARG FOLDER
 ARG MODULE
-ARG ASPECTJ_VERSION="1.9.9.1"
+ARG ASPECTJ_VERSION="1.9.20.1"
 COPY --from=build /home/gradle/$FOLDER/$MODULE/build/libs/automation-qa*.jar ./app.jar
 COPY --from=build /home/gradle/aspectjweaver-$ASPECTJ_VERSION.jar ./aspectjweaver-$ASPECTJ_VERSION.jar
 
@@ -33,7 +33,7 @@ ENV ENVS=$ENVS
 ENV BASE_URL=$BASE_URL
 
 CMD java \
-  -javaagent:aspectjweaver-1.9.9.1.jar \
+  -javaagent:aspectjweaver-1.9.20.1.jar \
   -DthreadCounts=$THREAD_COUNTS \
   -Dmode=$MODE \
   -Dtoken_email=$TOKEN_EMAIL \
