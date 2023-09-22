@@ -91,7 +91,7 @@ public class ReportAnIssueTests extends TestBaseUI {
             .clickReportAnIssue();
 
         verifyCommonDetails("Evaluate");
-        verifyScenarioDetails(titanChargeAsm.getSubComponents().get(0), "Part");
+        verifyScenarioDetails(titanChargeAsm.getSubComponents().get(0), "PART");
 
         reportPage = reportPage.close(ComparePage.class)
             .clickExplore()
@@ -100,7 +100,7 @@ public class ReportAnIssueTests extends TestBaseUI {
             .clickReportAnIssue();
 
         verifyCommonDetails("Evaluate");
-        verifyScenarioDetails(titanChargeAsm, "Assembly");
+        verifyScenarioDetails(titanChargeAsm, "ASSEMBLY");
 
         reportPage = reportPage.close(EvaluatePage.class)
             .clickExplore()
@@ -150,7 +150,7 @@ public class ReportAnIssueTests extends TestBaseUI {
             .isEqualTo(scenario.getScenarioName());
         softAssertions.assertThat(reportPage.getFieldValue("Scenario Identity")).as("Verify Scenario Identity")
             .isEqualTo(scenario.getScenarioIdentity());
-        //softAssertions.assertThat(reportPage.getFieldValue("Iteration Number")).as("Verify Iteration Number")
+        //softAssertions.assertThat(reportPage.getFieldValue("Iteration Index")).as("Verify Iteration Index")
         //    .isEqualTo();
         //softAssertions.assertThat(reportPage.getFieldValue("Iteration Identity")).as("Verify Iteration Identity")
         //    .isEqualTo();
