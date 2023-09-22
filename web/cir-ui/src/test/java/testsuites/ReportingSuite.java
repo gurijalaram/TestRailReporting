@@ -23,11 +23,8 @@ import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
-import org.junit.runner.RunWith;
 
 @Suite
-@org.junit.runners.Suite.SuiteClasses({})
-@RunWith(org.junit.runners.Suite.class)
 @SelectClasses({
     AssemblyDetailsReportTests.class,
     AssemblyCostReportTests.class,
