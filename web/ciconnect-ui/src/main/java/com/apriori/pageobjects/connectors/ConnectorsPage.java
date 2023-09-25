@@ -2,6 +2,9 @@ package com.apriori.pageobjects.connectors;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.enums.ConnectorListHeaders;
+import com.apriori.enums.SortedOrderType;
+import com.apriori.enums.WorkflowListColumns;
 import com.apriori.pageobjects.CICBasePage;
 import com.apriori.pageobjects.workflows.history.ModalDialog;
 
@@ -22,6 +25,9 @@ public class ConnectorsPage extends CICBasePage {
 
     @FindBy(css = "div[class$='cic-table'] table.obj")
     private WebElement connectorListTable;
+
+    @FindBy(css = "div[class$='cic-table'] table.hdr")
+    private WebElement connectorHeaderListTable;
 
     @FindBy(css = "div.xhdr td:nth-of-type(4)")
     private WebElement nameHeader;
@@ -76,7 +82,8 @@ public class ConnectorsPage extends CICBasePage {
      */
     public ConnectorsPage selectConnector(String connectorName) {
         pageUtils.waitForElementAppear(connectorListTable);
-        tableUtils.selectRowByName(connectorListTable, connectorName, 4);
+        Integer columnIndex = tableUtils.getColumnIndx(connectorHeaderListTable, ConnectorListHeaders.NAME.getColumnName().toString());
+        tableUtils.selectRowByName(connectorListTable, connectorName, columnIndex);
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
         return new ConnectorsPage(driver);
     }
@@ -121,6 +128,16 @@ public class ConnectorsPage extends CICBasePage {
     public ConnectorsPage clickDeleteBtn() {
         pageUtils.waitForElementAndClick(deleteConnectorBtn);
         return this;
+    }
+
+    /**
+     * click edit button in connectors home page
+     *
+     * @return ConnectorDetails object
+     */
+    public ConnectorDetails clickEditBtn() {
+        pageUtils.waitForElementAndClick(editConnectorBtn);
+        return new ConnectorDetails(driver);
     }
 
     /**
@@ -177,5 +194,40 @@ public class ConnectorsPage extends CICBasePage {
      */
     public WebElement getRefreshConnectorStatusBtn() {
         return driver.findElement(with(By.xpath("//button//span[@class='widget-button-text']")).toLeftOf(By.xpath("//button[.='Delete']")));
+    }
+
+    /**
+     * validates workflow is in sorted order by workflow name
+     *
+     * @param columnName  - ConnectorListColumns enum
+     * @param sortedBy    - SortedOrderType (Ascending or descending)
+     * @param columnValue - Connector name
+     * @return - true or false
+     */
+    public Boolean isConnectorListIsSorted(ConnectorListHeaders columnHeader, SortedOrderType sortedBy) {
+        Boolean isInSortedOrder = false;
+        WebElement webElement = tableUtils.getColumnHeader(connectorHeaderListTable, columnHeader.getColumnName().toString());
+        Integer columnIndex = tableUtils.getColumnIndx(connectorHeaderListTable, columnHeader.getColumnName().toString());
+        pageUtils.waitForElementAndClick(webElement);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementToBeClickable(connectorHeaderListTable);
+        switch (sortedBy.toString()) {
+            case "DESCENDING":
+                if (!webElement.getAttribute("class").equals("dhxgrid_sort_desc_col")) {
+                    pageUtils.waitForElementAndClick(webElement);
+                    pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+                    pageUtils.waitForElementToBeClickable(connectorHeaderListTable);
+                }
+                isInSortedOrder = webElement.getAttribute("class").equals("dhxgrid_sort_asc_col");
+                break;
+            default:
+                if (!webElement.getAttribute("class").equals("dhxgrid_sort_asc_col")) {
+                    pageUtils.waitForElementAndClick(webElement);
+                    pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+                    pageUtils.waitForElementToBeClickable(connectorHeaderListTable);
+                }
+                isInSortedOrder = webElement.getAttribute("class").equals("dhxgrid_sort_desc_col");
+        }
+        return isInSortedOrder;
     }
 }
