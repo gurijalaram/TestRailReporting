@@ -10,7 +10,8 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -27,10 +28,11 @@ public class CasCustomerServiceAccountsTests {
     private Customer onPremCustomer;
     private String customerIdentity;
     private SoftAssertions soft = new SoftAssertions();
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
     }
 
     @AfterEach

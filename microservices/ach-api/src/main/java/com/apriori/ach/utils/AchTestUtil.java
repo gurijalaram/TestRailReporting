@@ -11,6 +11,8 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 
 import org.apache.http.HttpStatus;
 
@@ -19,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AchTestUtil extends TestUtil {
+    public final UserCredentials currentUser = UserUtil.getUser();
 
     /**
      * Gets the special customer "aPriori Internal"

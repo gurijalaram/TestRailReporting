@@ -3,7 +3,7 @@ package com.apriori;
 import com.apriori.edc.models.response.users.Users;
 import com.apriori.edc.utils.UsersUtil;
 import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -17,7 +17,7 @@ public class UsersTest extends UsersUtil {
 
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(UserUtil.getUser().getToken());
     }
 
     @Test

@@ -5,7 +5,6 @@ import com.apriori.ach.models.response.CurrentUser;
 import com.apriori.ach.utils.AchTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -19,7 +18,7 @@ public class AchCurrentUserTests {
 
     @BeforeEach
     public void getToken() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(achTestUtil.currentUser.getToken());
     }
 
     @Test
