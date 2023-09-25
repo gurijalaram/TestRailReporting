@@ -37,15 +37,15 @@ public class APIAuthentication {
      *
      * @return Authorization Header
      */
-//    public HashMap<String, String> initAuthorizationHeaderNoContent() {
-//        return new HashMap<String, String>() {
-//            {
-//                put("Authorization", "Bearer " + new AuthorizationUtil().getTokenAsString());
-//                put("apriori.tenantgroup", "default");
-//                put("apriori.tenant", "default");
-//            }
-//        };
-//    }
+    /*public HashMap<String, String> initAuthorizationHeaderNoContent() {
+        return new HashMap<String, String>() {
+            {
+                put("Authorization", "Bearer " + new AuthorizationUtil().getTokenAsString());
+                put("apriori.tenantgroup", "default");
+                put("apriori.tenant", "default");
+            }
+        };
+    }*/
 
     public String getTokenSingular(String username) {
         return getCachedToken(username);
