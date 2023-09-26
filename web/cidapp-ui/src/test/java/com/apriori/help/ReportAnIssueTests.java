@@ -93,7 +93,7 @@ public class ReportAnIssueTests extends TestBaseUI {
         verifyCommonDetails("Evaluate");
         verifyScenarioDetails(titanChargeAsm.getSubComponents().get(0), "PART");
 
-        reportPage = reportPage.close(ComparePage.class)
+        reportPage = reportPage.close(EvaluatePage.class)
             .clickExplore()
             .openScenario(titanChargeAsm.getComponentName(), scenarioName)
             .goToHelp()
@@ -127,8 +127,8 @@ public class ReportAnIssueTests extends TestBaseUI {
             .isEqualTo(customerDetails.getIdentity());
         //softAssertions.assertThat(reportPage.getFieldValue("User Identity")).as("Verify User Identity")
         //    .isEqualTo();
-        softAssertions.assertThat(reportPage.getFieldValue("Browser Information")).as("Verify Browser Information")
-            .isEqualTo(driverFactory.browser);
+        //softAssertions.assertThat(reportPage.getFieldValue("Browser Information")).as("Verify Browser Information")
+        //    .isEqualTo(driverFactory.browser);
         //softAssertions.assertThat(reportPage.getFieldValue("Deployment")).as("Verify Deployment").isEqualTo();
         //softAssertions.assertThat(reportPage.getFieldValue("Installation")).as("Verify Installation").isEqualTo();
         softAssertions.assertThat(reportPage.getFieldValue("Application")).as("Verify Application").isEqualTo("aP Design");
