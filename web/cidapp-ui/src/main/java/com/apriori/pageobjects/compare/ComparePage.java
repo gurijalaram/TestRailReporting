@@ -261,7 +261,7 @@ public class ComparePage extends CompareToolbar {
      * @return list of string
      */
     public List<String> getSustainabilityHeaderDetails() {
-        WebElement cardHeader = driver.findElement(By.xpath("//div[contains(@data-rbd-draggable-id,'Sustainability')]/div/div[2]"));
+        WebElement cardHeader = driver.findElement(By.xpath("//div[contains(@data-rbd-draggable-id,'Sustainability')]"));
         return Arrays.asList(cardHeader.getText().split("\n"));
     }
 
