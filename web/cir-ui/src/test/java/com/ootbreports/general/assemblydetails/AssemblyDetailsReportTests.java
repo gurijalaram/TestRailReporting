@@ -22,6 +22,7 @@ import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.pageobjects.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.view.reports.GenericReportPage;
 import com.apriori.testconfig.TestBaseUI;
+import com.apriori.testconfig.TestSuiteType;
 import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;
@@ -965,5 +966,13 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         /*ArrayList<String> cidVpeValues = componentsListPage.getVpeValues();
 
         assertThat(reportsVpeValues.equals(cidVpeValues), is(equalTo(true)));*/
+    }
+
+
+    @Test
+    @Tag(TestSuiteType.TestSuite.CUSTOMER)
+    @Description("Users - Delete any non-current aPriori Staff Members")
+    public void testRemoveNotAprioriStaffUsers() {
+        System.out.println("Hello");
     }
 }
