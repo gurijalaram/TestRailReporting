@@ -21,6 +21,9 @@ import java.util.List;
 @Slf4j
 public class EvaluateToolbar extends ExploreToolbar {
 
+    @FindBy(css = "[id='qa-sub-header-progress-button'] button")
+    private WebElement progressButton;
+
     @FindBy(css = "div[data-testid='scenario-state-preview']")
     private WebElement costLabel;
 
@@ -41,6 +44,21 @@ public class EvaluateToolbar extends ExploreToolbar {
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementsToNotAppear(cogIcon);
     }
+
+    /**
+     * Check the enabled status of Progress button
+     *
+     * @return - Boolean representation of whether button is enabled / disabled
+     */
+    public Boolean isProgressButtonEnabled() {
+        return pageUtils.isElementEnabled(progressButton);
+    }
+
+    /**
+     * Click the Progress button
+     *
+     * @return - Cost History modal PO
+     */
 
     /**
      * Cost the scenario
