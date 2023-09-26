@@ -11,20 +11,20 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
 import com.apriori.reader.file.InitFileData;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import io.qameta.allure.Description;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -36,18 +36,19 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class CasCustomersUsersTests {
-    private static final Logger logger = LoggerFactory.getLogger(CasCustomersUsersTests.class);
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private Customer newCustomer;
     private String customerIdentity;
     private String userIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void getToken() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
         newCustomer = casTestUtil.createCustomer().getResponseEntity();
         customerIdentity = newCustomer.getIdentity();
     }
@@ -123,7 +124,7 @@ public class CasCustomersUsersTests {
             fileReader.close();
             csvReader.close();
         } catch (Exception e) {
-            logger.error(String.format("FILE NOT FOUND ::: %s", e.getMessage()));
+            log.error(String.format("FILE NOT FOUND ::: %s", e.getMessage()));
             throw new IllegalArgumentException(e);
         }
         return fileData;

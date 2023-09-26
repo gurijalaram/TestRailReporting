@@ -18,6 +18,7 @@ import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
 import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.pageobjects.newcustomer.InfrastructurePage;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
@@ -50,6 +51,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
     private String deploymentIdentity;
     private String installationIdentity;
     private String appIdentity;
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
@@ -57,7 +59,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         cdsTestUtil = new CdsTestUtil();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
+        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         userCreation = new UserCreation();
         sourceUsers = userCreation.populateStaffTestUsers(2, customerIdentity, customerName);

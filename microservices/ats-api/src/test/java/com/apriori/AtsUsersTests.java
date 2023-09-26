@@ -11,6 +11,8 @@ import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.Customer;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -28,6 +30,7 @@ public class AtsUsersTests {
     private ResponseWrapper<User> user;
     private String customerIdentity;
     private String userIdentity;
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @AfterEach
     public void cleanUp() {
@@ -95,7 +98,7 @@ public class AtsUsersTests {
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
 
-        customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email);
+        customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         user = cdsTestUtil.addUser(customerIdentity, userName, email);

@@ -43,7 +43,7 @@ public class UploadTests extends TestBaseUI {
 
     @AfterEach
     public void cleanUp() {
-        BillOfMaterialsUtil.deleteBillOfMaterialByIdUi(EdcUiResources.getBillOfMaterialsId(driver.getCurrentUrl()));
+        BillOfMaterialsUtil.deleteBillOfMaterialByIdUi(EdcUiResources.getBillOfMaterialsId(driver.getCurrentUrl()), currentUser);
     }
 
     @Test

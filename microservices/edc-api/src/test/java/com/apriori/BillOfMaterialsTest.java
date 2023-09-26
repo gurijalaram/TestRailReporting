@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.greaterThan;
 import com.apriori.edc.models.response.bill.of.materials.BillOfMaterialsResponse;
 import com.apriori.edc.utils.BillOfMaterialsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.models.AuthorizationUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -20,7 +19,7 @@ import java.util.List;
 
 public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
-    private static String filename = "Test BOM 5.csv";
+    private static final String filename = "Test BOM 5.csv";
     private static String billOfMaterialsIdentity;
 
     @AfterAll
@@ -32,7 +31,7 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
         billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
 
