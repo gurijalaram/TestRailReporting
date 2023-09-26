@@ -32,7 +32,10 @@ public enum PlmTypeAttributes {
     PLM_PART_NUMBER("partNumber", "Number", "Part Number"),
     PLM_REVISION("revisionNumber", "Revision", "Revision Number"),
     PLM_DESCRIPTION("description", "testDesc", "Description"),
-    PLM_SCENARIO_NAME("scenarioName", "ScenarioName", "Scenario Name");
+    PLM_SCENARIO_NAME("scenarioName", "ScenarioName", "Scenario Name"),
+    PLM_CAD_FILE_NAME("cadFileName", "cadFileName", "CAD File Name"),
+    PLM_SEQUENCE_ID("scenarioName", "ScenarioName", "Sequence Id"),
+    PLM_APRIORI_PART_NUMBER("aPrioriPartNumber", "aP Part Number", "aPriori Part Number");
     
     private final String key;
     private final String value;

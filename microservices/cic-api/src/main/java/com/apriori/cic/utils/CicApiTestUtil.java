@@ -2,6 +2,7 @@ package com.apriori.cic.utils;
 
 import com.apriori.cic.enums.CICAPIEnum;
 import com.apriori.cic.enums.CICAgentStatus;
+import com.apriori.cic.enums.CICAgentType;
 import com.apriori.cic.enums.CICReportType;
 import com.apriori.cic.enums.PlmApiEnum;
 import com.apriori.cic.enums.PlmPartDataType;
@@ -315,7 +316,7 @@ public class CicApiTestUtil {
     @SneakyThrows
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
-        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
+        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
         while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
@@ -339,7 +340,7 @@ public class CicApiTestUtil {
     @SneakyThrows
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID, CicLoginUtil cicLoginUtil) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
-        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
+        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
         while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
@@ -741,6 +742,34 @@ public class CicApiTestUtil {
                 if (cicAgentPorts.getEnvironment().equals(PropertiesContext.get("env")) &&
                     cicAgentPorts.getCustomer().equals(PropertiesContext.get("customer")) &&
                     cicAgentPorts.getAgentType().equals(PropertiesContext.get("ci-connect.agent_type"))) {
+                    log.info(String.format("PORT for Environment >>%s<< - Customer >>%s<< - Agent Type >>%s<< is >>%s<<", PropertiesContext.get("env"),
+                        PropertiesContext.get("customer"),
+                        PropertiesContext.get("ci-connect.agent_type"),
+                        cicAgentPorts.getPort()));
+                    return cicAgentPorts;
+                }
+                cicAgentPorts = cicAgentPortsQueue.poll();
+            }
+        } catch (Exception e) {
+            throw new IllegalArgumentException("MATCHED CIC AGENT PORT NOT FOUND IN DATA FILE!!");
+        }
+    }
+
+    /**
+     * get agent port data by agent type
+     *
+     * @param agentType
+     * @return AgentPort
+     */
+    public static AgentPort getAgentPortData(CICAgentType agentType) {
+        ConcurrentLinkedQueue<AgentPort> cicAgentPortsQueue = new InitFileData().initRows(AgentPort.class,
+            FileResourceUtil.getResourceAsFile("cic_agent_ports.csv"));
+        AgentPort cicAgentPorts = cicAgentPortsQueue.poll();
+        try {
+            while (true) {
+                if (cicAgentPorts.getEnvironment().equals(PropertiesContext.get("env")) &&
+                    cicAgentPorts.getCustomer().equals(PropertiesContext.get("customer")) &&
+                    cicAgentPorts.getAgentType().equals(agentType.getAgentType())) {
                     log.info(String.format("PORT for Environment >>%s<< - Customer >>%s<< - Agent Type >>%s<< is >>%s<<", PropertiesContext.get("env"),
                         PropertiesContext.get("customer"),
                         PropertiesContext.get("ci-connect.agent_type"),
