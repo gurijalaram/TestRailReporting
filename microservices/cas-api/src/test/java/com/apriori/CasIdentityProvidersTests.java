@@ -13,7 +13,8 @@ import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -36,10 +37,11 @@ public class CasIdentityProvidersTests extends TestUtil {
     private String description;
     private String userName;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
         customerName = generateStringUtil.generateCustomerName();
         userName = generateStringUtil.generateUserName();
         cloudRef = generateStringUtil.generateCloudReference();

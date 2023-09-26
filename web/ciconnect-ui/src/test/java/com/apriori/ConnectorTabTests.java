@@ -1,9 +1,12 @@
 package com.apriori;
 
+import com.apriori.cic.enums.CICAgentType;
 import com.apriori.cic.enums.PlmTypeAttributes;
 import com.apriori.cic.utils.CicApiTestUtil;
+import com.apriori.enums.ConnectorListHeaders;
 import com.apriori.enums.ConnectorType;
 import com.apriori.enums.FieldDataType;
+import com.apriori.enums.SortedOrderType;
 import com.apriori.enums.UsageRule;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.connectors.AdditionalPlmFields;
@@ -218,6 +221,96 @@ public class ConnectorTabTests extends TestBaseUI {
         standardFields = connectorDetails.clickNextBtn().selectStandardFieldsTab();
         softAssertions.assertThat(standardFields.getPlmFieldValue(PlmTypeAttributes.PLM_REVISION)).isEqualTo(PlmTypeAttributes.PLM_REVISION.getValue());
         softAssertions.assertThat(standardFields.getPlmFieldValue(PlmTypeAttributes.PLM_PART_NUMBER)).isEqualTo(PlmTypeAttributes.PLM_PART_NUMBER.getValue());
+    }
+
+    @Test
+    @TestRail(id = {3953, 4871})
+    @Description("Test Connectors List" +
+        "Test that a Connector with any associated WF's cannot be deleted")
+    public void testConnectorsList() {
+        ConnectorsPage connectorsPage = new CicLoginPage(driver)
+            .login(currentUser)
+            .clickConnectorsMenu();
+
+        softAssertions.assertThat(connectorsPage.getConnectorText()).isEqualTo("Connectors");
+        softAssertions.assertThat(connectorsPage.getNewConnectorBtn().isDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(connectorsPage.getDeleteConnectorBtn().isDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(connectorsPage.getRefreshConnectorStatusBtn().isDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(connectorsPage.getEditConnectorBtn().isDisplayed()).isEqualTo(true);
+
+        connectorsPage.selectConnector(CicApiTestUtil.getAgentPortData().getConnector());
+        softAssertions.assertThat(connectorsPage.getEditConnectorBtn().isEnabled()).isEqualTo(true);
+        softAssertions.assertThat(connectorsPage.getDeleteConnectorBtn().isEnabled()).isFalse();
+        softAssertions.assertThat(connectorsPage.isConnectorListIsSorted(ConnectorListHeaders.TYPE, SortedOrderType.ASCENDING));
+        softAssertions.assertThat(connectorsPage.isConnectorListIsSorted(ConnectorListHeaders.CONNECTION_STATUS, SortedOrderType.ASCENDING));
+        softAssertions.assertThat(connectorsPage.isConnectorListIsSorted(ConnectorListHeaders.NAME, SortedOrderType.ASCENDING));
+    }
+
+    @Test
+    @TestRail(id = {4742})
+    @Description("Test if PLM Type = File System Mandatory Fields are different")
+    public void testCreateAndDeleteConnectorFileSystem() {
+        String connectorName = GenerateStringUtil.saltString("--CON");
+        ConnectorMappings connectorMappings = new CicLoginPage(driver)
+            .login(currentUser)
+            .clickConnectorsMenu()
+            .clickNewBtn()
+            .enterConnectorName(connectorName)
+            .selectType(ConnectorType.FILE_SYSTEM)
+            .clickNextBtn();
+
+        CIConnectHome ciConnectHome  = connectorMappings.selectStandardFieldsTab()
+            .enterPlmField(PlmTypeAttributes.PLM_PART_ID)
+            .enterPlmField(PlmTypeAttributes.PLM_CAD_FILE_NAME)
+            .enterPlmField(PlmTypeAttributes.PLM_APRIORI_PART_NUMBER)
+            .clickSaveBtn();
+
+        softAssertions.assertThat(ciConnectHome.getStatusMessage()).isEqualTo("Connector created!");
+        ciConnectHome.closeMessageAlert();
+        ConnectorsPage connectorsPage = ciConnectHome.clickConnectorsMenu().selectConnector(connectorName).clickDeleteBtn().clickConfirmAlertDelete();
+        softAssertions.assertThat(connectorsPage.isConnectorExist(connectorName)).isFalse();
+    }
+
+    @Test
+    @TestRail(id = {4743})
+    @Description("Test if PLM Type is changed during Connector Creation that the UI Behaves as expected ")
+    public void testConnSwitchBetweenType() {
+        String connectorName = GenerateStringUtil.saltString("--CON");
+        ConnectorMappings connectorMappings = new CicLoginPage(driver)
+            .login(currentUser)
+            .clickConnectorsMenu()
+            .clickNewBtn()
+            .enterConnectorName(connectorName)
+            .selectType(ConnectorType.WINDCHILL)
+            .clickNextBtn();
+
+        StandardFields standardFields = connectorMappings.selectStandardFieldsTab();
+
+        softAssertions.assertThat(standardFields.getMatchedConnectFieldColumn(PlmTypeAttributes.PLM_PART_ID, 1).isEnabled()).isFalse();
+        softAssertions.assertThat(standardFields.getMatchedConnectFieldColumn(PlmTypeAttributes.PLM_REVISION, 1).isEnabled()).isFalse();
+        softAssertions.assertThat(standardFields.getMatchedConnectFieldColumn(PlmTypeAttributes.PLM_PART_NUMBER, 1).isEnabled()).isFalse();
+
+        ConnectorDetails connectorDetails = standardFields.clickPreviousBtn();
+        standardFields = connectorDetails.selectType(ConnectorType.TEAM_CENTER).clickNextBtn().selectStandardFieldsTab();
+        softAssertions.assertThat(standardFields.getMatchedConnectFieldColumn(PlmTypeAttributes.PLM_PART_ID, 1).isEnabled()).isFalse();
+        softAssertions.assertThat(standardFields.getMatchedConnectFieldColumn(PlmTypeAttributes.PLM_REVISION, 1).isEnabled()).isFalse();
+        softAssertions.assertThat(standardFields.getMatchedConnectFieldColumn(PlmTypeAttributes.PLM_PART_NUMBER, 1).isEnabled()).isFalse();
+        softAssertions.assertThat(standardFields.getMatchedConnectFieldColumn(PlmTypeAttributes.PLM_SEQUENCE_ID, 1).isEnabled()).isFalse();
+    }
+
+    @Test
+    @TestRail(id = {4003})
+    @Description("Fields populated with existing connector information")
+    public void testEditConnectors() {
+        ConnectorDetails connectorDetails = new CicLoginPage(driver)
+            .login(currentUser)
+            .clickConnectorsMenu()
+                .selectConnector(CicApiTestUtil.getAgentPortData().getConnector()).clickEditBtn();
+
+        softAssertions.assertThat(connectorDetails.getConnectorName()).isEqualTo(CicApiTestUtil.getAgentPortData().getConnector());
+        ConnectorsPage connectorsPage = connectorDetails.clickCancelBtn();
+        connectorDetails = connectorsPage.selectConnector(CicApiTestUtil.getAgentPortData(CICAgentType.TEAM_CENTER).getConnector()).clickEditBtn();
+        softAssertions.assertThat(connectorDetails.getConnectorName()).isEqualTo(CicApiTestUtil.getAgentPortData(CICAgentType.TEAM_CENTER).getConnector());
     }
 
     @AfterEach

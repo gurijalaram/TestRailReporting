@@ -8,6 +8,8 @@ import static org.hamcrest.Matchers.not;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Token;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -19,7 +21,8 @@ public class AuthorizationUtilTest {
 
     @Test
     public void getToken() {
-        ResponseWrapper<Token> response = new AuthorizationUtil().getToken();
+        final UserCredentials currentUser = UserUtil.getUser();
+        ResponseWrapper<Token> response = new AuthorizationUtil().getToken(currentUser);
 
         assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));
     }
@@ -27,12 +30,13 @@ public class AuthorizationUtilTest {
     @Test
     @SneakyThrows
     public void getTokenInThreads() {
+        final UserCredentials currentUser = UserUtil.getUser();
         final Integer threadsCount = 10;
         CountDownLatch latch = new CountDownLatch(threadsCount);
 
         for (int i = 0; i < threadsCount; i++) {
             new Thread(() -> {
-                ResponseWrapper<Token> response = new AuthorizationUtil().getToken();
+                ResponseWrapper<Token> response = new AuthorizationUtil().getToken(currentUser);
 
                 assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));
                 latch.countDown();

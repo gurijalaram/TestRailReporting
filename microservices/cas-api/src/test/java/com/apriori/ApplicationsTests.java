@@ -7,7 +7,7 @@ import com.apriori.cas.models.response.Customers;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -22,7 +22,7 @@ public class ApplicationsTests {
 
     @BeforeEach
     public void getToken() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(UserUtil.getUser().getToken());
     }
 
     @Test

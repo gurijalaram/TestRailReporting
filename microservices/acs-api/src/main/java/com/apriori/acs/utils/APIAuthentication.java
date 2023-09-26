@@ -5,13 +5,13 @@ import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
 
 import org.apache.commons.collections4.map.PassiveExpiringMap;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+// TODO: 25/09/2023 cn - mark for deletion
 public class APIAuthentication {
     private String accessToken = null;
     private int timeToLive = 0;
@@ -37,7 +37,7 @@ public class APIAuthentication {
      *
      * @return Authorization Header
      */
-    public HashMap<String, String> initAuthorizationHeaderNoContent() {
+    /*public HashMap<String, String> initAuthorizationHeaderNoContent() {
         return new HashMap<String, String>() {
             {
                 put("Authorization", "Bearer " + new AuthorizationUtil().getTokenAsString());
@@ -45,7 +45,7 @@ public class APIAuthentication {
                 put("apriori.tenant", "default");
             }
         };
-    }
+    }*/
 
     public String getTokenSingular(String username) {
         return getCachedToken(username);

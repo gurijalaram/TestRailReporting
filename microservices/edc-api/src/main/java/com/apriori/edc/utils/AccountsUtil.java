@@ -10,12 +10,15 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.json.JsonManager;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 
 import org.apache.http.HttpStatus;
 
 import java.util.List;
 
 public class AccountsUtil extends TestUtil {
+    public UserCredentials currentUser = UserUtil.getUser();
 
     /**
      * Get the list of the accounts
