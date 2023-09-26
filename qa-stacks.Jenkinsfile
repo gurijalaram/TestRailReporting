@@ -1,8 +1,7 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
-def timeStamp = new Date().format('yyyyMMddHHss')
 def buildVersion = "latest"
-def modules = ["cidapp-ui", "cidapp-api"]
+def modules = ["cidapp-ui", "cidapp-api", "cas-ui", "cas-api", "ats-api", "cds-api", "sds-api", "fms-api", "nts-api"]
 def folder
 def runType = "docker-test"
 def environment = [profile: 'development', region: 'us-east-1']
