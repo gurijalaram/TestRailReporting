@@ -42,12 +42,24 @@ public class ReportAnIssue extends LoadableComponent<ReportAnIssue> {
         pageUtils.waitForElementToAppear(copyToClipboard);
     }
 
+    /**
+     * Return the given value for a specified field
+     *
+     * @param fieldName - String used for field label
+     * @return - String of value for the specified field
+     */
     public String getFieldValue(String fieldName) {
         By locator = By.xpath(String.format("//span[.='%s']/following-sibling::span", fieldName));
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
     }
 
+    /**
+     * Close the Report an Issue modal
+     *
+     * @param klass - The intended PO to be returned to
+     * @return - New PO specified in klass
+     */
     public <T> T close(Class<T> klass) {
         pageUtils.waitForElementAndClick(close);
         return PageFactory.initElements(driver, klass);
