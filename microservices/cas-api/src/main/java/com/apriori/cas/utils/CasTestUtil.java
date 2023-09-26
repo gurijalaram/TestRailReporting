@@ -7,7 +7,6 @@ import com.apriori.cas.models.response.AccessControl;
 import com.apriori.cas.models.response.AssociationUser;
 import com.apriori.cas.models.response.BatchItem;
 import com.apriori.cas.models.response.BatchItemsPost;
-import com.apriori.cas.models.response.CustomProperties;
 import com.apriori.cas.models.response.Customer;
 import com.apriori.cas.models.response.CustomerAssociation;
 import com.apriori.cas.models.response.CustomerAssociationUser;
@@ -36,7 +35,6 @@ import com.apriori.properties.PropertiesContext;
 import org.apache.http.HttpStatus;
 
 import java.io.File;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;

@@ -19,6 +19,7 @@ import com.apriori.models.response.Customer;
 import com.apriori.pageobjects.customer.users.ImportPage;
 import com.apriori.pageobjects.customer.users.UsersListPage;
 import com.apriori.pageobjects.login.CasLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
@@ -48,6 +49,7 @@ public class BatchImportListTests extends TestBaseUI {
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
     private String invalidDataFile = "invalidUsersData.csv";
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
@@ -57,7 +59,7 @@ public class BatchImportListTests extends TestBaseUI {
 
         cdsTestUtil = new CdsTestUtil();
 
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
+        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         importPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
@@ -84,7 +86,7 @@ public class BatchImportListTests extends TestBaseUI {
     @Description("New CSV file with users can be uploaded in CAS")
     @TestRail(id = {4344, 4361, 4354, 4357, 4352, 13234})
     public void testUploadCsvNewUsers() {
-        cdsTestUtil.addCASBatchFile(Constants.USERS_BATCH, email, customerIdentity);
+        cdsTestUtil.addCASBatchFile(Constants.USERS_BATCH, email, customerIdentity, currentUser);
         ImportPage uploadUsers = importPage.refreshBatchFilesList()
             .validateImportUsersTableHasCorrectColumns("User Name", "userName", soft)
             .validateImportUsersTableHasCorrectColumns("Status", "cdsStatus", soft)
@@ -147,7 +149,7 @@ public class BatchImportListTests extends TestBaseUI {
     @Description("Users can be loaded from CSV by Load button")
     @TestRail(id = {5598, 5599, 4360, 4353, 4358, 4359})
     public void testLoadUsersFromFile() {
-        cdsTestUtil.addCASBatchFile(Constants.USERS_BATCH, email, customerIdentity);
+        cdsTestUtil.addCASBatchFile(Constants.USERS_BATCH, email, customerIdentity, currentUser);
 
         ImportPage uploadUsers = importPage.refreshBatchFilesList();
 
@@ -201,7 +203,7 @@ public class BatchImportListTests extends TestBaseUI {
     @Description("Upload user csv with invalid users data")
     @TestRail(id = {4348})
     public void testCsvInvalidUsersData() {
-        cdsTestUtil.addInvalidBatchFile(customerIdentity, invalidDataFile);
+        cdsTestUtil.addInvalidBatchFile(customerIdentity, invalidDataFile, currentUser);
         importPage.refreshBatchFilesList();
 
         PageUtils utils = new PageUtils(driver);

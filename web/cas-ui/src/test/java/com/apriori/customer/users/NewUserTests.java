@@ -13,6 +13,7 @@ import com.apriori.pageobjects.customer.users.UsersListPage;
 import com.apriori.pageobjects.customer.users.profile.NewUserPage;
 import com.apriori.pageobjects.customer.users.profile.UserProfilePage;
 import com.apriori.pageobjects.login.CasLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
@@ -35,6 +36,7 @@ public class NewUserTests extends TestBaseUI {
     private String userIdentity;
     private NewUserPage newUserPage;
     private String email;
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
@@ -43,7 +45,7 @@ public class NewUserTests extends TestBaseUI {
         email = customerName.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
+        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
 
         customerIdentity = targetCustomer.getIdentity();
 

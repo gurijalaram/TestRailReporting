@@ -46,17 +46,17 @@ public class CustomerAccessTests extends TestBaseUI {
         customerName = new GenerateStringUtil().generateCustomerName();
         cloudRef = new GenerateStringUtil().generateCloudReference();
         String email = customerName.toLowerCase();
-        UserCredentials userCreds = UserUtil.getUser();
-        userName = userCreds.getUsername();
-        userEmail = userCreds.getEmail();
+        UserCredentials currentUser = UserUtil.getUser();
+        userName = currentUser.getUsername();
+        userEmail = currentUser.getEmail();
 
         cdsTestUtil = new CdsTestUtil();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
+        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
 
         customerIdentity = targetCustomer.getIdentity();
 
         usersPage = new CasLoginPage(driver)
-            .login(userCreds)
+            .login(currentUser)
             .openCustomer(customerIdentity)
             .goToUsersPage();
     }

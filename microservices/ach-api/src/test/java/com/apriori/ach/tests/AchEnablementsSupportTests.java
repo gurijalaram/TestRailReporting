@@ -5,7 +5,8 @@ import com.apriori.ach.models.response.EnablementsSupport;
 import com.apriori.ach.utils.AchTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -16,10 +17,11 @@ import org.junit.jupiter.api.Test;
 
 public class AchEnablementsSupportTests {
     private AchTestUtil achTestUtil = new AchTestUtil();
+    private final UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void getToken() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
     }
 
     @Test

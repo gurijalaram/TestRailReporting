@@ -14,8 +14,9 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
 import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -40,12 +41,13 @@ public class CasAccessAuthorizationTests {
     private String associationIdentity;
     private String aPStaffIdentity;
     private SoftAssertions soft = new SoftAssertions();
+    private UserCredentials currentUser = UserUtil.getUser();
 
 
     @BeforeEach
     public void setup() {
         url = Constants.getServiceUrl();
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
         aPCustomerIdentity = casTestUtil.getAprioriInternal().getIdentity();
         aPStaffIdentity = PropertiesContext.get("user_identity");
         customer = casTestUtil.createCustomer().getResponseEntity();
