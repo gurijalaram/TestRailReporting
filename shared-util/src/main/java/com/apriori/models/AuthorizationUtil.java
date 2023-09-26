@@ -32,52 +32,31 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class AuthorizationUtil {
-    private String username = PropertiesContext.get("ats.token_username");
-    private String email = PropertiesContext.get("ats.token_email");
-    private String issuer = PropertiesContext.get("ats.token_issuer");
-
     private static String tokenSubject;
     private static Customer currentCustomer;
-
-    public AuthorizationUtil(UserCredentials userCredentials) {
-        this.username = userCredentials.getUsername();
-        this.email = userCredentials.getEmail();
-    }
-
-    public AuthorizationUtil() {
-    }
 
     /**
      * POST to get a JWT token
      *
      * @return string
      */
-    public ResponseWrapper<Token> getToken() {
+    public ResponseWrapper<Token> getToken(UserCredentials userCredentials) {
         log.info("Getting ATS Token...");
 
         RequestEntity requestEntity = RequestEntityUtil.init(TokenEnum.POST_TOKEN, Token.class)
             .body(TokenRequest.builder()
                 .token(TokenInformation.builder()
-                    .issuer(issuer)
+                    .issuer(PropertiesContext.get("ats.token_issuer"))
                     .subject(getTokenSubjectForCustomer())
                     .claims(Claims.builder()
-                        .name(username)
-                        .email(email)
+                        .name(userCredentials.getUsername())
+                        .email(userCredentials.getEmail())
                         .build())
                     .build())
                 .build())
             .expectedResponseCode(HttpStatus.SC_CREATED);
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Gets token as string
-     *
-     * @return string
-     */
-    public String getTokenAsString() {
-        return getToken().getResponseEntity().getToken();
     }
 
     /**

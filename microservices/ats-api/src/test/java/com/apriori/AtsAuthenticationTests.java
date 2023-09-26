@@ -48,9 +48,9 @@ public class AtsAuthenticationTests {
     @TestRail(id = {22084})
     @Description("Authenticate with email and password.")
     public void authenticateUserTest() {
-        UserCredentials userCreds = UserUtil.getUser();
-        String userEmail = userCreds.getEmail();
-        String userPassword = userCreds.getPassword();
+        UserCredentials userCredentials = UserUtil.getUser();
+        String userEmail = userCredentials.getEmail();
+        String userPassword = userCredentials.getPassword();
         ResponseWrapper<UserByEmail> authenticate = atsTestUtil.authenticateUser(userEmail, userPassword);
 
         soft.assertThat(authenticate.getResponseEntity().getEmail()).isEqualTo(userEmail);

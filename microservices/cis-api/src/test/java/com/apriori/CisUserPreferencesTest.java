@@ -10,11 +10,10 @@ import com.apriori.cis.controller.CisUserPreferencesResources;
 import com.apriori.cis.models.response.userpreferences.CurrentExtendedUserPreferencesResponse;
 import com.apriori.cis.models.response.userpreferences.ExtendedUserPreferencesResponse;
 import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,7 +22,7 @@ public class CisUserPreferencesTest extends CisUserPreferencesResources {
 
     @BeforeEach
     public void testSetup() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(UserUtil.getUser().getToken());
     }
 
     @Test
