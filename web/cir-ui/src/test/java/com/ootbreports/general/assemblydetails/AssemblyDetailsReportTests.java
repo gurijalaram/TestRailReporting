@@ -1,5 +1,6 @@
 package com.ootbreports.general.assemblydetails;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.CUSTOMER;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -22,7 +23,6 @@ import com.apriori.pageobjects.login.ReportsLoginPage;
 import com.apriori.pageobjects.view.reports.AssemblyDetailsReportPage;
 import com.apriori.pageobjects.view.reports.GenericReportPage;
 import com.apriori.testconfig.TestBaseUI;
-import com.apriori.testconfig.TestSuiteType;
 import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;
@@ -59,7 +59,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+        @Tag(ON_PREM),
+        @Tag(CUSTOMER)
+    })
     @TestRail(id = {1915})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigationAssemblyDetails() {
@@ -70,7 +72,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {3060})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyDetails() {
@@ -79,7 +83,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {1916})
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyDetails() {
@@ -89,7 +95,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+        @Tag(ON_PREM),
+        @Tag(CUSTOMER)
+    })
     @TestRail(id = {1922})
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
@@ -122,7 +130,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {3205})
     @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
@@ -170,7 +180,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {3067, 1929})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
@@ -214,7 +226,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Issue("AP-58059")
     @Issue("AP-53537")
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+        @Tag(ON_PREM),
+        @Tag(CUSTOMER)
+    })
     @TestRail(id = {3068, 1929})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
@@ -266,7 +280,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {1934, 1929})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
@@ -316,7 +332,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {3231, 1929})
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
@@ -365,7 +383,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {3232, 1929})
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
@@ -417,7 +437,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+        @Tag(ON_PREM),
+        @Tag(CUSTOMER)
+    })
     @TestRail(id = {3233, 1929})
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
@@ -469,7 +491,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+        @Tag(ON_PREM),
+        @Tag(CUSTOMER)
+    })
     @TestRail(id = {1919})
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
@@ -481,7 +505,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+        @Tag(ON_PREM),
+        @Tag(CUSTOMER)
+    })
     @TestRail(id = {3244})
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
@@ -490,7 +516,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {1930})
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
@@ -578,7 +606,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+        @Tag(ON_PREM),
+        @Tag(CUSTOMER)
+    })
     @TestRail(id = {1918})
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
@@ -611,7 +641,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+        @Tag(ON_PREM),
+        @Tag(CUSTOMER)
+    })
     @TestRail(id = {1920})
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
@@ -621,7 +653,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+            @Tag(ON_PREM),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {1931})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {
@@ -655,7 +689,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {1921})
     @Description("Export Set search function works - Assembly Details Report")
     public void testExportSetSearch() {
@@ -673,7 +709,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {7683})
     @Description("Verify Created By Filter Search")
     public void testCreatedByFilterSearch() {
@@ -685,7 +723,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {7684})
     @Description("Verify Created By Filter Operation")
     public void testCreatedByFilterOperation() {
@@ -733,7 +773,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {7685})
     @Description("Verify Created By Filter Buttons")
     public void testCreatedByFilterButtons() {
@@ -746,7 +788,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {7686})
     @Description("Verify Last Modified By Filter Search")
     public void testLastModifiedFilterSearch() {
@@ -758,7 +802,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {7687})
     @Description("Verify Last Modified By Filter Operation")
     public void testLastModifiedFilterOperation() {
@@ -794,7 +840,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {7688})
     @Description("Verify Last Modified By Filter Buttons")
     public void testLastModifiedFilterButtons() {
@@ -808,7 +856,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+            @Tag(ON_PREM),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {7689, 1921})
     @Description("Verify Assembly Number Search Criteria")
     public void testAssemblyNumberSearchCriteria() {
@@ -865,7 +915,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {1928})
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
     public void testLevelsInsideBOM() {
@@ -897,7 +949,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tags({@Tag(REPORTS),
+            @Tag(CUSTOMER)
+    })
     @TestRail(id = {1933})
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
@@ -966,13 +1020,5 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         /*ArrayList<String> cidVpeValues = componentsListPage.getVpeValues();
 
         assertThat(reportsVpeValues.equals(cidVpeValues), is(equalTo(true)));*/
-    }
-
-
-    @Test
-    @Tag(TestSuiteType.TestSuite.CUSTOMER)
-    @Description("Users - Delete any non-current aPriori Staff Members")
-    public void testRemoveNotAprioriStaffUsers() {
-        System.out.println("Hello");
     }
 }
