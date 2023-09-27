@@ -1,17 +1,21 @@
 package com.apriori;
 
-import static com.apriori.enums.CssSearch.SCENARIO_CREATED_AT_GT;
-
 import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
+import com.apriori.cis.controller.CisBidPackageProjectResources;
+import com.apriori.enums.CssSearch;
 import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.qms.controller.QmsComponentResources;
+import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.models.request.bidpackage.AssignedComponentRequest;
+import com.apriori.qms.models.request.bidpackage.BidPackageItemParameters;
+import com.apriori.qms.models.request.bidpackage.BidPackageItemRequest;
 import com.apriori.qms.models.request.scenariodiscussion.ProjectUserParameters;
+import com.apriori.qms.models.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.models.response.component.ComponentAssignedParameters;
 import com.apriori.qms.models.response.component.ComponentResponse;
 import com.apriori.qms.models.response.component.ComponentsAssignedResponse;
@@ -31,7 +35,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class QmsComponentTest extends TestUtil {
     private static UserCredentials currentUser;
@@ -43,7 +50,7 @@ public class QmsComponentTest extends TestUtil {
     public static void beforeClass() {
         currentUser = UserUtil.getUser();
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        scenarioItem = new CssComponent().getBaseCssComponents(currentUser, SCENARIO_CREATED_AT_GT.getKey() + DateUtil.getDateDaysBefore(90, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ)).get(0);
+        scenarioItem = new CssComponent().getBaseCssComponents(currentUser, CssSearch.SCENARIO_CREATED_AT_GT.getKey() + DateUtil.getDateDaysBefore(90, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ), CssSearch.COMPONENT_TYPE_EQ.getKey() + "PART").get(0);
     }
 
     @AfterAll
@@ -134,6 +141,24 @@ public class QmsComponentTest extends TestUtil {
     @TestRail(id = {26878})
     @Description("Verify that user can find list of components, scenarios, and iterations")
     public void getComponentsAssigned() {
+        List<BidPackageItemRequest> itemsList = new ArrayList<>();
+        itemsList.add(BidPackageItemRequest.builder()
+            .bidPackageItem(BidPackageItemParameters.builder()
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                .iterationIdentity(scenarioItem.getIterationIdentity())
+                .build())
+            .build());
+
+        BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
+            itemsList,
+            null,
+            BidPackageProjectResponse.class,
+            HttpStatus.SC_CREATED,
+            currentUser);
+
+        softAssertions.assertThat(bppResponse.getUsers().size()).isEqualTo(1);
+
         ComponentAssignedParameters componentParameters = ComponentAssignedParameters.builder()
             .componentIdentity(scenarioItem.getComponentIdentity())
             .scenarioIdentity(scenarioItem.getScenarioIdentity())
@@ -146,5 +171,6 @@ public class QmsComponentTest extends TestUtil {
             HttpStatus.SC_OK,
             currentUser);
         softAssertions.assertThat(componentsAssignedResponse.size()).isGreaterThan(0);
+        CisBidPackageProjectResources.deleteBidPackageProject(bppResponse.getBidPackageIdentity(), bppResponse.getIdentity(), HttpStatus.SC_NO_CONTENT, currentUser);
     }
 }

@@ -15,6 +15,21 @@
         "startDuration": "P1D",
         "frequencyValue": "R/P4H"
       }
-    }
+    },
+    "items": [
+      {
+        "bidPackageItem": {
+          "componentIdentity": "CRTRQLQDM5XS",
+          "scenarioIdentity": "CSHLLRV6VF54",
+          "iterationIdentity": "CSHLLTAJ1A5I"
+        }
+      }
+    ],
+    "users": [
+      {
+        "userIdentity": "4N630F61FGNG",
+        "customerIdentity": "212B5ABD2F6C"
+      }
+    ]
   }
 }
