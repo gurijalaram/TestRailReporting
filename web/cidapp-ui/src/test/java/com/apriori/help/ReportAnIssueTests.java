@@ -125,12 +125,15 @@ public class ReportAnIssueTests extends TestBaseUI {
         softAssertions.assertThat(reportPage.getFieldValue("Customer")).as("Verify Customer Name").isEqualTo(customerDetails.getName());
         softAssertions.assertThat(reportPage.getFieldValue("Customer Identity")).as("Verify Customer Identity")
             .isEqualTo(customerDetails.getIdentity());
+
+        //ToDo:- Complete and uncomment assertions when we can directly query the browser and customer information
         //softAssertions.assertThat(reportPage.getFieldValue("User Identity")).as("Verify User Identity")
         //    .isEqualTo();
         //softAssertions.assertThat(reportPage.getFieldValue("Browser Information")).as("Verify Browser Information")
         //    .isEqualTo(driverFactory.browser);
         //softAssertions.assertThat(reportPage.getFieldValue("Deployment")).as("Verify Deployment").isEqualTo();
         //softAssertions.assertThat(reportPage.getFieldValue("Installation")).as("Verify Installation").isEqualTo();
+
         softAssertions.assertThat(reportPage.getFieldValue("Application")).as("Verify Application").isEqualTo("aP Design");
         softAssertions.assertThat(reportPage.getFieldValue("Page")).as("Verify Page").isEqualTo(expectedPageName);
     }
@@ -150,6 +153,8 @@ public class ReportAnIssueTests extends TestBaseUI {
             .isEqualTo(scenario.getScenarioName());
         softAssertions.assertThat(reportPage.getFieldValue("Scenario Identity")).as("Verify Scenario Identity")
             .isEqualTo(scenario.getScenarioIdentity());
+
+        //ToDo:- Uncomment and complete assertions once we can access iteration information
         //softAssertions.assertThat(reportPage.getFieldValue("Iteration Index")).as("Verify Iteration Index")
         //    .isEqualTo();
         //softAssertions.assertThat(reportPage.getFieldValue("Iteration Identity")).as("Verify Iteration Identity")
