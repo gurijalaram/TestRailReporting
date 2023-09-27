@@ -22,7 +22,7 @@ public class CreateComparePage extends LoadableComponent<CreateComparePage> {
 
     private static final Logger logger = LoggerFactory.getLogger(CreateComparePage.class);
 
-    @FindBy(css = ".MuiPaper-root h2")
+    @FindBy(xpath = "//h2[contains(.,'New Comparison')]")
     private WebElement newComparisonLabel;
 
     @FindBy(xpath = "//h3[.='Quick Comparison']/../..")

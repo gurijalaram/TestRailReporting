@@ -8,6 +8,7 @@ import com.apriori.pageobjects.navtoolbars.CompareToolbar;
 import com.utils.ComparisonCardEnum;
 import com.utils.ComparisonDeltaEnum;
 import com.utils.StatusIconEnum;
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +17,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -250,6 +253,16 @@ public class ComparePage extends CompareToolbar {
     public List<String> getCardHeader() {
         List<WebElement> cardHeader = driver.findElements(By.cssSelector(".comparison-column [data-rbd-drag-handle-draggable-id] .section-header"));
         return cardHeader.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets card details for Sustainability
+     +
+     * @return list of string
+     */
+    public List<String> getSustainabilityHeaderDetails() {
+        WebElement cardHeader = driver.findElement(By.xpath("//div[contains(@data-rbd-draggable-id,'Sustainability')]"));
+        return Arrays.asList(cardHeader.getText().split("\n"));
     }
 
     /**
