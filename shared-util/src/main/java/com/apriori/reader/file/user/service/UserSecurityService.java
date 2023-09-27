@@ -29,7 +29,12 @@ public class UserSecurityService {
      * @throws NoSuchElementException if the iteration has no more elements
      */
     public static UserCredentials getUser(String accessLevel) {
-        return PropertiesContext.get("global.different_users").equals("true") ? getSecurityUser(accessLevel) : getGlobalUser();
+        String tokenEmail = System.getProperty("token_email");
+
+        if (tokenEmail == null) {
+            return PropertiesContext.get("global.different_users").equals("true") ? getSecurityUser(accessLevel) : getGlobalUser();
+        }
+        return UserCredentials.init(tokenEmail, System.getProperty("password"));
     }
 
     private static UserCredentials getGlobalUser() {
