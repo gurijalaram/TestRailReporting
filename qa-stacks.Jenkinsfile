@@ -48,8 +48,9 @@ pipeline {
             }
         }
 
-        parallel {
+
             stage("Deploy") {
+                parallel {
                 steps {
                     script {
                         modules.each { module ->
