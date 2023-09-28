@@ -60,7 +60,7 @@ pipeline {
                     }
                 }
 
-                stages{
+                stages {
 //                steps {
                     script {
 //                        modules.each { module ->
