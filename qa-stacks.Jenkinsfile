@@ -61,6 +61,7 @@ pipeline {
                 }
 
                 stages {
+                    stage("Multi-Stage"){
                 steps {
                     script {
 //                        modules.each { module ->
@@ -101,7 +102,7 @@ pipeline {
                         }
                     }
                 }
-//                }
+                }
             }
             }
         }
