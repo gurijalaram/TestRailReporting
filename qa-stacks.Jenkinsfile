@@ -1,7 +1,7 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def buildVersion = "latest"
-def module
+//def module
 def folder
 def runType = "docker-test"
 def environment = [profile: 'development', region: 'us-east-1']
@@ -60,22 +60,25 @@ pipeline {
                 stages {
                     stage("Multi-Stage") {
                         steps {
+                            echo "multistage"
                             script {
+                                echo "in script"
                                 if (${module}.endsWith("-ui")) {
                                     folder = "web"
                                 } else {
                                     folder = "microservices"
                                 }
+                                echo "end of if"
 
                                 stage("Build") {
                                     echo "Building..."
                                     sh """
-                                    docker build -f qa-stacks.Dockerfile \
-                                    --build-arg FOLDER=${folder} \
-                                    --build-arg MODULE=${module} \
-                                    --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
-                                    .
-                                """
+                                        docker build -f qa-stacks.Dockerfile \
+                                        --build-arg FOLDER=${folder} \
+                                        --build-arg MODULE=${module} \
+                                        --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
+                                        .
+                                    """
                                 }
 
                                 stage("Tag_n_Push") {
