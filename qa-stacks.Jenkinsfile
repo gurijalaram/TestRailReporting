@@ -60,7 +60,7 @@ pipeline {
                     stage("Deploy") {
                         steps {
                             script {
-                                if (MODULE.name.endsWith("-ui")) {
+                                if (MODULE.endsWith("-ui")) {
                                     folder = "web"
                                 } else {
                                     folder = "microservices"
