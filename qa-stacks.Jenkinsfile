@@ -56,7 +56,7 @@ pipeline {
                         values ''
                     }
                 }
-                stage {
+                stages {
                     steps {
                         script {
                             modules.each { module ->
