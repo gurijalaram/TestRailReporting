@@ -76,26 +76,26 @@ pipeline {
                                         .
                                     """
                                 }
-                            }
 
-                            stage("Tag_n_Push") {
-                                echo "Tagging and Pushing ..."
+                                stage("Tag_n_Push") {
+                                    echo "Tagging and Pushing ..."
 
-                                // Prepare aws login command.
-                                def registryPwd = registry_password(environment.profile, environment.region)
+                                    // Prepare aws login command.
+                                    def registryPwd = registry_password(environment.profile, environment.region)
 
-                                sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
-                                def awsArtifactTarget = "${ecrDockerRegistry}-${MODULE}:${buildVersion}"
+                                    def awsArtifactTarget = "${ecrDockerRegistry}-${MODULE}:${buildVersion}"
 
-                                // Tag and push to ECR.
-                                tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
-                            }
+                                    // Tag and push to ECR.
+                                    tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
+                                }
 
-                            stage("Clean") {
-                                echo "Cleaning up..."
-                                sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
-                                sh "docker system prune --all --force"
+                                stage("Clean") {
+                                    echo "Cleaning up..."
+                                    sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
+                                    sh "docker system prune --all --force"
+                                }
                             }
                         }
                     }
