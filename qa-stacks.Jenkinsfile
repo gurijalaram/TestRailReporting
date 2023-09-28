@@ -51,17 +51,6 @@ pipeline {
         stage("Multi-Stage") {
             parallel {
 
-                script {
-                    modules.each { module ->
-                        if (module.endsWith("-ui")) {
-                            folder = "web"
-                        } else {
-                            folder = "microservices"
-                        }
-
-                    }
-                }
-
                 stage("Build") {
                     steps {
                         echo "Building..."
