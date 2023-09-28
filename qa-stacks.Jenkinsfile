@@ -104,9 +104,18 @@ pipeline {
 
                 stage("Clean") {
                     steps {
-                        echo "Cleaning up..."
-                        sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
-                        sh "docker system prune --all --force"
+                        script {
+                            modules.each { module ->
+                                if (module.endsWith("-ui")) {
+                                    folder = "web"
+                                } else {
+                                    folder = "microservices"
+                                }
+                                echo "Cleaning up..."
+                                sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+                                sh "docker system prune --all --force"
+                            }
+                        }
                     }
                 }
             }
