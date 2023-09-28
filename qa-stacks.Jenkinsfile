@@ -52,9 +52,7 @@ pipeline {
             parallel {
 
                 stage("Build") {
-
                     steps {
-
                         script {
                             modules.each { module ->
                                 if (module.endsWith("-ui")) {
