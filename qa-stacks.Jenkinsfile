@@ -63,8 +63,8 @@ pipeline {
                                 }
 
 
-                            echo "Building..."
-                            sh """
+                                echo "Building..."
+                                sh """
                                 docker build -f qa-stacks.Dockerfile \
                                 --build-arg FOLDER=${folder} \
                                 --build-arg MODULE=${module} \
@@ -79,17 +79,25 @@ pipeline {
                 stage("Tag_n_Push") {
                     steps {
                         script {
-                            echo "Tagging and Pushing ..."
+                            modules.each { module ->
+                                if (module.endsWith("-ui")) {
+                                    folder = "web"
+                                } else {
+                                    folder = "microservices"
+                                }
 
-                            // Prepare aws login command.
-                            def registryPwd = registry_password(environment.profile, environment.region)
+                                echo "Tagging and Pushing ..."
 
-                            sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                                // Prepare aws login command.
+                                def registryPwd = registry_password(environment.profile, environment.region)
 
-                            def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
+                                sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
-                            // Tag and push to ECR.
-                            tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
+                                def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
+
+                                // Tag and push to ECR.
+                                tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
+                            }
                         }
                     }
                 }
