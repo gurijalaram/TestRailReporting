@@ -1,7 +1,7 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def buildVersion = "latest"
-def modules = ["cidapp-ui", "cidapp-api"]
+def module
 def folder
 def runType = "docker-test"
 def environment = [profile: 'development', region: 'us-east-1']
@@ -49,61 +49,57 @@ pipeline {
         }
 
         stage("Multi-Stage") {
-//            parallel {
-//
-//                stage("Build") {
             matrix {
                 axes {
-                    axis{
+                    axis {
                         name 'module'
                         values 'cidapp-ui', 'cidapp-api'
                     }
                 }
 
                 stages {
-                    stage("Multi-Stage"){
-                steps {
-                    script {
-//                        modules.each { module ->
-                            if (${module}.endsWith("-ui")) {
-                                folder = "web"
-                            } else {
-                                folder = "microservices"
-                            }
+                    stage("Multi-Stage") {
+                        steps {
+                            script {
+                                if (${module}.endsWith("-ui")) {
+                                    folder = "web"
+                                } else {
+                                    folder = "microservices"
+                                }
 
-                        stage("Build") {
-                            echo "Building..."
-                            sh """
+                                stage("Build") {
+                                    echo "Building..."
+                                    sh """
                                     docker build -f qa-stacks.Dockerfile \
                                     --build-arg FOLDER=${folder} \
                                     --build-arg MODULE=${module} \
                                     --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
                                     .
                                 """
-                        }
+                                }
 
-                        stage("Tag_n_Push") {
-                            echo "Tagging and Pushing ..."
+                                stage("Tag_n_Push") {
+                                    echo "Tagging and Pushing ..."
 
-                            // Prepare aws login command.
-                            def registryPwd = registry_password(environment.profile, environment.region)
+                                    // Prepare aws login command.
+                                    def registryPwd = registry_password(environment.profile, environment.region)
 
-                            sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
-                            def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
-                        }
+                                    def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
+                                }
 
-                        stage("Clean") {
-                            // Tag and push to ECR.
-                            tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
-                            echo "Cleaning up..."
-                            sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
-                            sh "docker system prune --all --force"
+                                stage("Clean") {
+                                    // Tag and push to ECR.
+                                    tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
+                                    echo "Cleaning up..."
+                                    sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+                                    sh "docker system prune --all --force"
+                                }
+                            }
                         }
                     }
                 }
-                }
-            }
             }
         }
     }
