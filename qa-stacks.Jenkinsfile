@@ -61,7 +61,7 @@ pipeline {
                 }
 
                 stages {
-//                steps {
+                steps {
                     script {
 //                        modules.each { module ->
                             if (${module}.endsWith("-ui")) {
@@ -100,7 +100,7 @@ pipeline {
                             sh "docker system prune --all --force"
                         }
                     }
-//                }
+                }
 //                }
             }
             }
