@@ -52,15 +52,27 @@ pipeline {
             parallel {
 
                 stage("Build") {
+
                     steps {
-                        echo "Building..."
-                        sh """
+                        script {
+                            modules.each { module ->
+                                if (module.endsWith("-ui")) {
+                                    folder = "web"
+                                } else {
+                                    folder = "microservices"
+                                }
+
+
+                            echo "Building..."
+                            sh """
                             docker build -f qa-stacks.Dockerfile \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${module} \
                             --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
                             .
                         """
+                            }
+                        }
                     }
                 }
 
