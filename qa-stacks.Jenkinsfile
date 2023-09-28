@@ -49,13 +49,14 @@ pipeline {
         }
 
         stage("Deploy") {
-                matrix {
-                    axes {
-                        axis {
-                            name ''
-                            values ''
-                        }
+            matrix {
+                axes {
+                    axis {
+                        name ''
+                        values ''
                     }
+                }
+                steps {
                     script {
                         modules.each { module ->
                             if (module.endsWith("-ui")) {
@@ -97,6 +98,7 @@ pipeline {
                         }
                     }
                 }
+            }
         }
     }
 
