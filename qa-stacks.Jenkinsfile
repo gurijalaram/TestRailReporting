@@ -60,7 +60,7 @@ pipeline {
                     stage("Deploy") {
                         steps {
                             script {
-                                if (MODULE.contains("-ui")) {
+                                if (!MODULE.contains("-ui")) {
                                     folder = "web"
                                 } else {
                                     folder = "microservices"
