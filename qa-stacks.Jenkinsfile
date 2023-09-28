@@ -57,14 +57,14 @@ pipeline {
                     }
                 }
 
-                steps {
-                    script {
-                        modules.each { module ->
-                            if (module.endsWith("-ui")) {
-                                folder = "web"
-                            } else {
-                                folder = "microservices"
-                            }
+//                steps {
+//                    script {
+//                        modules.each { module ->
+//                            if (module.endsWith("-ui")) {
+//                                folder = "web"
+//                            } else {
+//                                folder = "microservices"
+//                            }
 
                             stage("Build") {
                                 echo "Building..."
@@ -97,9 +97,9 @@ pipeline {
                                 sh "docker system prune --all --force"
                             }
                         }
-                    }
-                }
-            }
+//                    }
+//                }
+//            }
         }
     }
 
