@@ -1,7 +1,6 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def buildVersion = "latest"
-//def module
 def folder
 def runType = "docker-test"
 def environment = [profile: 'development', region: 'us-east-1']
@@ -58,25 +57,22 @@ pipeline {
                 }
 
                 stages {
-                    stage("Multi-Stage") {
+                    stage("Deploy") {
                         steps {
-                            echo "multistage"
                             script {
-                                echo "in script"
                                 if (MODULE.endsWith("-ui")) {
                                     folder = "web"
                                 } else {
                                     folder = "microservices"
                                 }
-                                echo "end of if"
 
                                 stage("Build") {
                                     echo "Building..."
                                     sh """
                                         docker build -f qa-stacks.Dockerfile \
                                         --build-arg FOLDER=${folder} \
-                                        --build-arg MODULE=${module} \
-                                        --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
+                                        --build-arg MODULE=${MODULE} \
+                                        --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
                                         .
                                     """
                                 }
@@ -89,14 +85,14 @@ pipeline {
 
                                     sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
-                                    def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
+                                    def awsArtifactTarget = "${ecrDockerRegistry}-${MODULE}:${buildVersion}"
                                 }
 
                                 stage("Clean") {
                                     // Tag and push to ECR.
-                                    tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
+                                    tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
                                     echo "Cleaning up..."
-                                    sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+                                    sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
                                     sh "docker system prune --all --force"
                                 }
                             }
