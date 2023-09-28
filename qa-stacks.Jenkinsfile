@@ -60,6 +60,7 @@ pipeline {
                     }
                 }
 
+                stages{
 //                steps {
                     script {
 //                        modules.each { module ->
@@ -101,7 +102,7 @@ pipeline {
                     }
 //                }
 //                }
-//            }
+            }
             }
         }
     }
