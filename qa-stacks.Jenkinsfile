@@ -49,7 +49,7 @@ pipeline {
         }
 
         stage("Deploy") {
-            steps {
+            parallel {
                 script {
                     modules.each { module ->
                         if (module.endsWith("-ui")) {
@@ -57,7 +57,6 @@ pipeline {
                         } else {
                             folder = "microservices"
                         }
-                        parallel {
                             stage("Build") {
                                 echo "Building..."
                                 sh """
@@ -88,7 +87,6 @@ pipeline {
                                 sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
                                 sh "docker system prune --all --force"
                             }
-                        }
                     }
                 }
             }
