@@ -49,14 +49,14 @@ pipeline {
         }
 
 
-        stage("Deploy") {
-            parallel {
-                modules.each { module ->
-                    if (module.endsWith("-ui")) {
-                        folder = "web"
-                    } else {
-                        folder = "microservices"
-                    }
+//        stage("Deploy") {
+//            parallel {
+//                modules.each { module ->
+//                    if (module.endsWith("-ui")) {
+//                        folder = "web"
+//                    } else {
+//                        folder = "microservices"
+//                    }
 
 //                    parallel {
                         stage("Build") {
@@ -96,9 +96,9 @@ pipeline {
                             }
                         }
 //                    }
-                }
-            }
-        }
+//                }
+//            }
+//        }
     }
 
     post {
