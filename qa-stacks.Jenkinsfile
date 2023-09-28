@@ -48,12 +48,12 @@ pipeline {
             }
         }
 
-        stage("Multi-Stage") {
-//            steps{
+//        stage("Multi-Stage") {
+            steps{
             parallel {
 //                stage("Parallel"){
 
-                    steps{
+//                    steps{
 
                 stage("Build") {
 
@@ -121,7 +121,7 @@ pipeline {
                         }
 //                        }
                     }
-                }
+//                }
 //                    }
                 }
             }
