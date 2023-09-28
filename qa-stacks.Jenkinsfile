@@ -86,11 +86,12 @@ pipeline {
                                     sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
                                     def awsArtifactTarget = "${ecrDockerRegistry}-${MODULE}:${buildVersion}"
+
+                                    // Tag and push to ECR.
+                                    tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
                                 }
 
                                 stage("Clean") {
-                                    // Tag and push to ECR.
-                                    tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
                                     echo "Cleaning up..."
                                     sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
                                     sh "docker system prune --all --force"
