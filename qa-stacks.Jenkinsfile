@@ -49,7 +49,6 @@ pipeline {
         }
 
         stage("Deploy") {
-            steps {
                 matrix {
                     axes {
                         axis {
@@ -98,7 +97,6 @@ pipeline {
                         }
                     }
                 }
-            }
         }
     }
 
