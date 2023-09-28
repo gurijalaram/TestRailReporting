@@ -62,8 +62,15 @@ public class CustomerEnvironmentUtil extends TestBaseUI {
      * @return
      */
     protected UserCredentials getAwsCustomerUserCredentials() {
-        final String username = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUsername1");
-        final String password = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUserPass1");
+
+        // TODO z: update to use propertyContext with Null value
+        String username = System.getProperty("username");
+        String password = System.getProperty("userpass");
+
+        if(username == null || password == null) {
+            username = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUsername1");
+            password = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUserPass1");
+        }
 
         return new UserCredentials(username, password);
     }

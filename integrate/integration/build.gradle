@@ -31,6 +31,7 @@ dependencies {
 
     // Test classes
     testImplementation project(path: ':web:cir-ui', configuration: 'testArtifacts')
+    testImplementation project(path: ':web:cidapp-ui', configuration: 'testArtifacts')
     testImplementation project(path: ':web:ciconnect-ui', configuration: 'testArtifacts')
     testImplementation project(path: ':web:cis-ui', configuration: 'testArtifacts')
 }
