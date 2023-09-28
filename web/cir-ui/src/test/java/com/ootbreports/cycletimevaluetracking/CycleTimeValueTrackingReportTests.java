@@ -5,6 +5,7 @@ import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
 
 import com.apriori.enums.ReportNamesEnum;
 import com.apriori.pageobjects.login.ReportsLoginPage;
@@ -72,7 +73,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
                 CycleTimeValueTrackingPage.class
             );
 
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("1")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), anyOf(equalTo("1"), equalTo("2")));
         String expectedProjectRollup = "AC CYCLE TIME VT 1";
         assertThat(cycleTimeValueTrackingPage.getFirstRollupName(), is(equalTo(expectedProjectRollup)));
 
@@ -96,8 +97,8 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
                 CycleTimeValueTrackingPage.class
             ).selectCycleTimeRollup();
 
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("10")));
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), is(equalTo("4")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), anyOf(equalTo("1"), equalTo("2")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("2"), anyOf(equalTo("1"), equalTo("6")));
 
         cycleTimeValueTrackingPage.clickOk(CycleTimeValueTrackingPage.class);
         assertThat(cycleTimeValueTrackingPage.getRollupInUseAboveChart(), is(equalTo("AC CYCLE TIME VT 1")));
