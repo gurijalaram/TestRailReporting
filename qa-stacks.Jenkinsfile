@@ -49,7 +49,7 @@ pipeline {
         }
 
 
-        stage("Deploy") {
+//        stage("Deploy") {
 //            script {
 //                modules.each { module ->
 //                    if (module.endsWith("-ui")) {
@@ -96,7 +96,7 @@ pipeline {
                             }
                         }
 //                    }
-                }
+//                }
 //            }
         }
     }
