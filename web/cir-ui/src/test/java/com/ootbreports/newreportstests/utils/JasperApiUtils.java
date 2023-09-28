@@ -14,11 +14,13 @@ import com.apriori.cir.models.response.ChartDataPoint;
 import com.apriori.cir.models.response.InputControl;
 import com.apriori.cir.utils.JasperReportUtil;
 import com.apriori.enums.CurrencyEnum;
+import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
 
 import com.google.common.base.Stopwatch;
 import enums.DtcScoreEnum;
 import enums.JasperCirApiPartsEnum;
+import enums.RollupEnum;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
@@ -651,13 +653,17 @@ public class JasperApiUtils {
         String attributeNameId = "id";
         String tagName = "span";
 
-        List<Element> gbpSpanElements = genericTestCoreCurrencyAndDateOnly(
-            CurrencyEnum.GBP.getCurrency()).getReportHtmlPart()
+        List<Element> gbpSpanElements = genericTestCoreProjectRollupAndCurrencyOnly(
+            RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
+            CurrencyEnum.GBP.getCurrency()
+        ).getReportHtmlPart()
             .getElementsByAttributeValue(attributeNameId, tableId).get(0)
             .getElementsByTag(tagName);
 
-        List<Element> usdSpanElements = genericTestCoreCurrencyAndDateOnly(
-            CurrencyEnum.USD.getCurrency()).getReportHtmlPart()
+        List<Element> usdSpanElements = genericTestCoreProjectRollupAndCurrencyOnly(
+            RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
+            CurrencyEnum.USD.getCurrency()
+        ).getReportHtmlPart()
             .getElementsByAttributeValue(attributeNameId, tableId).get(0)
             .getElementsByTag(tagName);
 
@@ -718,6 +724,8 @@ public class JasperApiUtils {
         LocalDateTime currentDateTime1 = LocalDateTime.now();
         setReportParameterByName(InputControlsEnum.START_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1.minusYears(10)));
         setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
+        setReportParameterByName("exportSetName", jasperReportUtil.getInputControls(reportValueForInputControls).getExportSetName().getOption(ExportSetEnum.ROLL_UP_A.getExportSetName()).getValue());
+
         JasperReportSummaryIncRawData jasperReportSummaryDaily = jasperReportUtil.generateJasperReportSummaryIncRawData(getReportRequest());
         timer.stop();
         logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
