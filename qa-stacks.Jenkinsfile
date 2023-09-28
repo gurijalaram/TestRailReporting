@@ -48,7 +48,8 @@ pipeline {
             }
         }
 
-        stage("Deploy") {
+        stages {
+            stage("Multi-Stage") {
             matrix {
                 axes {
                     axis {
@@ -56,7 +57,7 @@ pipeline {
                         values ''
                     }
                 }
-                stage("Multi-Stage") {
+
                     steps {
                         script {
                             modules.each { module ->
