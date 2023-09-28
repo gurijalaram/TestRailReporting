@@ -51,13 +51,11 @@ pipeline {
         stage("Multi-Stage") {
 //            steps{
             parallel {
-                stage("Parallel"){
 
-                    steps{
 
                 stage("Build") {
 
-//                    steps {
+                    steps {
                         script {
                             modules.each { module ->
                                 if (module.endsWith("-ui")) {
@@ -75,20 +73,20 @@ pipeline {
                                 --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
                                 .
                             """
-                            }
-//                        }
-                    }
-                }
+//                            }
+////                        }
+//                    }
+//                }
 
-                stage("Tag_n_Push") {
-//                    steps {
-                        script {
-                            modules.each { module ->
-                                if (module.endsWith("-ui")) {
-                                    folder = "web"
-                                } else {
-                                    folder = "microservices"
-                                }
+//                stage("Tag_n_Push") {
+////                    steps {
+//                        script {
+//                            modules.each { module ->
+//                                if (module.endsWith("-ui")) {
+//                                    folder = "web"
+//                                } else {
+//                                    folder = "microservices"
+//                                }
 
                                 echo "Tagging and Pushing ..."
 
@@ -101,27 +99,25 @@ pipeline {
 
                                 // Tag and push to ECR.
                                 tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
+//                            }
+////                        }
+//                    }
+//                }
+//
+//                stage("Clean") {
+////                    steps {
+//                        script {
+//                            modules.each { module ->
+//                                if (module.endsWith("-ui")) {
+//                                    folder = "web"
+//                                } else {
+//                                    folder = "microservices"
+//                                }
+                                echo "Cleaning up..."
+                                sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+                                sh "docker system prune --all --force"
                             }
-//                        }
-                    }
-                }
-
-                stage("Clean") {
-//                    steps {
-                    script {
-                        modules.each { module ->
-                            if (module.endsWith("-ui")) {
-                                folder = "web"
-                            } else {
-                                folder = "microservices"
-                            }
-                            echo "Cleaning up..."
-                            sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
-                            sh "docker system prune --all --force"
                         }
-//                        }
-                    }
-                }
                     }
                 }
             }
