@@ -52,7 +52,7 @@ pipeline {
             matrix {
                 axes {
                     axis {
-                        name 'module'
+                        name 'MODULE'
                         values 'cidapp-ui', 'cidapp-api'
                     }
                 }
@@ -63,7 +63,7 @@ pipeline {
                             echo "multistage"
                             script {
                                 echo "in script"
-                                if (${module}.endsWith("-ui")) {
+                                if (MODULE.endsWith("-ui")) {
                                     folder = "web"
                                 } else {
                                     folder = "microservices"
