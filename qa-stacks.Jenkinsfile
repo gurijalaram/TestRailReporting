@@ -50,13 +50,13 @@ pipeline {
 
 
         stage("Deploy") {
-            script {
-                modules.each { module ->
-                    if (module.endsWith("-ui")) {
-                        folder = "web"
-                    } else {
-                        folder = "microservices"
-                    }
+//            script {
+//                modules.each { module ->
+//                    if (module.endsWith("-ui")) {
+//                        folder = "web"
+//                    } else {
+//                        folder = "microservices"
+//                    }
 
                     parallel {
                         stage("Build") {
@@ -95,9 +95,9 @@ pipeline {
                                 sh "docker system prune --all --force"
                             }
                         }
-                    }
+//                    }
                 }
-            }
+//            }
         }
     }
 
