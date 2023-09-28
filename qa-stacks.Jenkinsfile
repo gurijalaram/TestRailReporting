@@ -48,18 +48,30 @@ pipeline {
             }
         }
 
-        stage("") {
+        stage("Multi-Stage") {
             parallel {
+
+                script {
+                    modules.each { module ->
+                        if (module.endsWith("-ui")) {
+                            folder = "web"
+                        } else {
+                            folder = "microservices"
+                        }
+
+                    }
+                }
+
                 stage("Build") {
                     steps {
                         echo "Building..."
                         sh """
-                docker build -f qa-stacks.Dockerfile \
-                --build-arg FOLDER=${folder} \
-                --build-arg MODULE=${module} \
-                --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
-                .
-                """
+                            docker build -f qa-stacks.Dockerfile \
+                            --build-arg FOLDER=${folder} \
+                            --build-arg MODULE=${module} \
+                            --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
+                            .
+                        """
                     }
                 }
 
