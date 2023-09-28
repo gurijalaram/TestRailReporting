@@ -1,7 +1,7 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def buildVersion = "latest"
-def modules = ["cidapp-ui", "cidapp-api", "cas-ui", "cas-api", "ats-api", "cds-api", "sds-api", "fms-api", "nts-api"]
+def modules = ["cidapp-ui", "cidapp-api"]
 def folder
 def runType = "docker-test"
 def environment = [profile: 'development', region: 'us-east-1']
@@ -50,10 +50,11 @@ pipeline {
 
         stage("Multi-Stage") {
             parallel {
+                steps{
 
                 stage("Build") {
 
-                    steps {
+//                    steps {
                         script {
                             modules.each { module ->
                                 if (module.endsWith("-ui")) {
@@ -72,12 +73,12 @@ pipeline {
                                 .
                             """
                             }
-                        }
+//                        }
                     }
                 }
 
                 stage("Tag_n_Push") {
-                    steps {
+//                    steps {
                         script {
                             modules.each { module ->
                                 if (module.endsWith("-ui")) {
@@ -98,12 +99,12 @@ pipeline {
                                 // Tag and push to ECR.
                                 tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
                             }
-                        }
+//                        }
                     }
                 }
 
                 stage("Clean") {
-                    steps {
+//                    steps {
                         script {
                             modules.each { module ->
                                 if (module.endsWith("-ui")) {
