@@ -49,18 +49,18 @@ pipeline {
         }
 
 
-            stage("Deploy") {
-                parallel {
-                steps {
-                    script {
-                        modules.each { module ->
-                            if (module.endsWith("-ui")) {
-                                folder = "web"
-                            } else {
-                                folder = "microservices"
-                            }
+        stage("Deploy") {
+            script {
+                modules.each { module ->
+                    if (module.endsWith("-ui")) {
+                        folder = "web"
+                    } else {
+                        folder = "microservices"
+                    }
 
-                            stage("Build") {
+                    parallel {
+                        stage("Build") {
+                            steps {
                                 echo "Building..."
                                 sh """
                                     docker build -f qa-stacks.Dockerfile \
@@ -70,8 +70,10 @@ pipeline {
                                     .
                                 """
                             }
+                        }
 
-                            stage("Tag_n_Push") {
+                        stage("Tag_n_Push") {
+                            steps {
                                 echo "Tagging and Pushing ..."
 
                                 // Prepare aws login command.
@@ -84,8 +86,10 @@ pipeline {
                                 // Tag and push to ECR.
                                 tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
                             }
+                        }
 
-                            stage("Clean") {
+                        stage("Clean") {
+                            steps {
                                 echo "Cleaning up..."
                                 sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
                                 sh "docker system prune --all --force"
