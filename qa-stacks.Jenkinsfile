@@ -49,9 +49,11 @@ pipeline {
         }
 
         stage("Multi-Stage") {
-            steps{
+//            steps{
             parallel {
+                stage("Parallel"){
 
+                    steps{
 
                 stage("Build") {
 
@@ -106,18 +108,20 @@ pipeline {
 
                 stage("Clean") {
 //                    steps {
-                        script {
-                            modules.each { module ->
-                                if (module.endsWith("-ui")) {
-                                    folder = "web"
-                                } else {
-                                    folder = "microservices"
-                                }
-                                echo "Cleaning up..."
-                                sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
-                                sh "docker system prune --all --force"
+                    script {
+                        modules.each { module ->
+                            if (module.endsWith("-ui")) {
+                                folder = "web"
+                            } else {
+                                folder = "microservices"
                             }
+                            echo "Cleaning up..."
+                            sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+                            sh "docker system prune --all --force"
                         }
+//                        }
+                    }
+                }
                     }
                 }
             }
