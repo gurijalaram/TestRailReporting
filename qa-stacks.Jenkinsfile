@@ -49,8 +49,9 @@ pipeline {
         }
 
         stage("Multi-Stage") {
+            steps{
             parallel {
-                steps{
+
 
                 stage("Build") {
 
