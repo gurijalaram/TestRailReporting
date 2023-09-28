@@ -53,7 +53,7 @@ pipeline {
             parallel {
 //                stage("Parallel"){
 
-//                    steps{
+                    steps{
 
                 stage("Build") {
 
@@ -122,7 +122,7 @@ pipeline {
 //                        }
                     }
 //                }
-//                    }
+                    }
                 }
             }
         }
