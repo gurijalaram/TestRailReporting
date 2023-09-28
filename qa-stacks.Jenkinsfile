@@ -51,7 +51,7 @@ pipeline {
         stage("Multi-Stage") {
             parallel {
 
-//                stage("Build") {
+                stage("Build") {
 
                     steps {
                         script {
@@ -88,7 +88,7 @@ pipeline {
                                 sh "docker system prune --all --force"
                             }
                         }
-//                    }
+                    }
                 }
             }
         }
