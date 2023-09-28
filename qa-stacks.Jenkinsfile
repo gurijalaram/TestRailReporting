@@ -52,6 +52,7 @@ pipeline {
             parallel {
 
                 stage("Build") {
+
                     steps {
                         script {
                             modules.each { module ->
@@ -61,14 +62,15 @@ pipeline {
                                     folder = "microservices"
                                 }
 
-                                echo "Building..."
-                                sh """
-                                    docker build -f qa-stacks.Dockerfile \
-                                    --build-arg FOLDER=${folder} \
-                                    --build-arg MODULE=${module} \
-                                    --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
-                                    .
-                                """
+
+                            echo "Building..."
+                            sh """
+                                docker build -f qa-stacks.Dockerfile \
+                                --build-arg FOLDER=${folder} \
+                                --build-arg MODULE=${module} \
+                                --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
+                                .
+                            """
                             }
                         }
                     }
@@ -77,52 +79,35 @@ pipeline {
                 stage("Tag_n_Push") {
                     steps {
                         script {
-                            modules.each { module ->
-                                if (module.endsWith("-ui")) {
-                                    folder = "web"
-                                } else {
-                                    folder = "microservices"
-                                }
+                            echo "Tagging and Pushing ..."
 
-                                echo "Tagging and Pushing ..."
+                            // Prepare aws login command.
+                            def registryPwd = registry_password(environment.profile, environment.region)
 
-                                // Prepare aws login command.
-                                def registryPwd = registry_password(environment.profile, environment.region)
+                            sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
-                                sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                            def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
 
-                                def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
-
-                                // Tag and push to ECR.
-                                tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
-                            }
+                            // Tag and push to ECR.
+                            tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
                         }
                     }
                 }
-            }
 
-            stage("Clean") {
-                steps {
-                    script {
-                        modules.each { module ->
-                            if (module.endsWith("-ui")) {
-                                folder = "web"
-                            } else {
-                                folder = "microservices"
-                            }
-                            echo "Cleaning up..."
-                            sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
-                            sh "docker system prune --all --force"
-                        }
+                stage("Clean") {
+                    steps {
+                        echo "Cleaning up..."
+                        sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+                        sh "docker system prune --all --force"
                     }
                 }
             }
         }
     }
-}
 
-post {
-    always {
-        cleanWs()
+    post {
+        always {
+            cleanWs()
+        }
     }
 }
