@@ -42,7 +42,7 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
 
 pipeline {
     agent {
-        label "WALQSDOCKER08"
+        label "automation"
     }
 
     stages {
@@ -59,6 +59,9 @@ pipeline {
 
         stage("Multi-Stage") {
             matrix {
+                agent {
+                    label "automation"
+                }
                 axes {
                     axis {
                         name 'MODULE'
