@@ -62,7 +62,7 @@ pipeline {
                 axes {
                     axis {
                         name 'MODULE'
-                        values 'cidapp-ui', 'cidapp-api'
+                        values 'cidapp-ui', 'cidapp-api', 'cas-ui', 'cas-api', 'ats-api', 'cds-api', 'sds-api', 'fms-api', 'nts-api'
                     }
                 }
 
