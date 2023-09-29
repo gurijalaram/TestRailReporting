@@ -1,7 +1,6 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def buildVersion = "latest"
-def modules = ["cidapp-ui", "cidapp-api", "cas-ui", "cas-api", "ats-api", "cds-api", "sds-api", "fms-api", "nts-api"]
 def folder
 def runType = "docker-test"
 def environment = [profile: 'development', region: 'us-east-1']
@@ -35,6 +34,7 @@ pipeline {
     agent {
         label "WALQSDOCKER08"
     }
+
     stages {
         stage("Initialize") {
             steps {
@@ -46,42 +46,57 @@ pipeline {
                 }
             }
         }
+
         stage("Multi-Stage") {
+            matrix {
+                axes {
+                    axis {
+                        name 'MODULE'
+                        values 'cidapp-ui', 'cidapp-api'
+                    }
+                }
 
-            parallel {
-
-                stage("Build_Tag_n_Push") {
-
-                    steps {
-                        script {
-                            modules.each { module ->
-                                if (module.endsWith("-ui")) {
+                stages {
+                    stage("Deploy") {
+                        steps {
+                            script {
+                                if (MODULE.contains("-ui")) {
                                     folder = "web"
-                                } else {
+                                }
+                                if (MODULE.contains("-api")) {
                                     folder = "microservices"
                                 }
-                                echo "Building..."
-                                sh """
-                                    docker build -f qa-stacks.Dockerfile \
-                                    --build-arg FOLDER=${folder} \
-                                    --build-arg MODULE=${module} \
-                                    --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
-                                    .
-                                """
 
-                                echo "Tagging and Pushing ..."
+                                stage("Build") {
+                                    echo "Building..."
+                                    sh """
+                                        docker build -f qa-stacks.Dockerfile \
+                                        --build-arg FOLDER=${folder} \
+                                        --build-arg MODULE=${MODULE} \
+                                        --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
+                                        .
+                                    """
+                                }
 
-                                // Prepare aws login command.
-                                def registryPwd = registry_password(environment.profile, environment.region)
-                                sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-                                def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
+                                stage("Tag_n_Push") {
+                                    echo "Tagging and Pushing ..."
 
-                                // Tag and push to ECR.
-                                tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
+                                    // Prepare aws login command.
+                                    def registryPwd = registry_password(environment.profile, environment.region)
 
-                                echo "Cleaning up..."
-                                sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
-                                sh "docker system prune --all --force"
+                                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+
+                                    def awsArtifactTarget = "${ecrDockerRegistry}-${MODULE}:${buildVersion}"
+
+                                    // Tag and push to ECR.
+                                    tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
+                                }
+
+                                stage("Clean") {
+                                    echo "Cleaning up..."
+                                    sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
+                                    sh "docker system prune --all --force"
+                                }
                             }
                         }
                     }
@@ -89,6 +104,7 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             cleanWs()
