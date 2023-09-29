@@ -74,7 +74,7 @@ pipeline {
                             expression { MODULE.contains('-ui') }
                         }
                         steps {
-                            build("web", MODULE)
+                            build("web", "MODULE")
                         }
                     }
                     stage("Build Microservices") {
