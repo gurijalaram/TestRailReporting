@@ -73,7 +73,7 @@ pipeline {
                                     echo "Building..."
                                     sh """
                                         docker build -f qa-stacks.Dockerfile \
-                                        --build-arg FOLDER=${folder} \
+                                        --build-arg FOLDER=$folder \
                                         --build-arg MODULE=${MODULE} \
                                         --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
                                         .
