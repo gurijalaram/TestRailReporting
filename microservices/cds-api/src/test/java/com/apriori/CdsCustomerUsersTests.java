@@ -2,6 +2,7 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.CredentialsItems;
+import com.apriori.cds.models.response.InstallationItems;
 import com.apriori.cds.models.response.User;
 import com.apriori.cds.models.response.UserProperties;
 import com.apriori.cds.models.response.Users;
@@ -13,7 +14,10 @@ import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.Customer;
+import com.apriori.models.response.Deployment;
 import com.apriori.models.response.ErrorMessage;
+import com.apriori.models.response.LicensedApplications;
+import com.apriori.models.response.Site;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -34,6 +38,10 @@ public class CdsCustomerUsersTests {
     private String emailPattern;
     private String customerIdentity;
     private String userIdentity;
+    private String siteIdentity;
+    private String deploymentIdentity;
+    private String licensedApplicationIdentity;
+    private String installationIdentity;
 
     @BeforeEach
     public void setDetails() {
@@ -45,10 +53,29 @@ public class CdsCustomerUsersTests {
 
         customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
+        String siteName = generateStringUtil.generateSiteName();
+        String siteID = generateStringUtil.generateSiteID();
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        siteIdentity = site.getResponseEntity().getIdentity();
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        deploymentIdentity = deployment.getResponseEntity().getIdentity();
+        String realmKey = generateStringUtil.generateRealmKey();
+        String appIdentity = Constants.getApProApplicationIdentity();
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
     }
 
     @AfterEach
     public void cleanUp() {
+        if (installationIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
+        }
+        if (licensedApplicationIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApplicationIdentity);
+        }
         if (customerIdentity != null && userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
