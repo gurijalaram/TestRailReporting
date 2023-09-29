@@ -30,12 +30,12 @@ def tag_n_push_version(currentVersion = '', targetVersion = '') {
 
 }
 
-def build(folder = '') {
+def build(folder = '', buildModule= '') {
     echo "Building..."
     sh """
             docker build -f qa-stacks.Dockerfile \
             --build-arg FOLDER=${folder} \
-            --build-arg MODULE=${MODULE} \
+            --build-arg MODULE=${buildModule} \
             --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
             .
         """
@@ -73,7 +73,7 @@ pipeline {
                             expression { MODULE.contains('-ui') }
                         }
                         steps {
-                            build("web")
+                            build("web", "${MODULE}")
                         }
                     }
                     stage("Build Microservices") {
