@@ -68,13 +68,15 @@ pipeline {
                 }
 
                 stages {
-                    stage("Build") {
+                    stage("Build Web") {
                         when {
                             expression { MODULE.contains('-ui') }
                             steps {
                                 build('web')
                             }
                         }
+                    }
+                    stage("Build Microservices") {
                         when {
                             expression { MODULE.contains('-api') }
                             steps {
