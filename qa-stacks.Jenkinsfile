@@ -61,63 +61,33 @@ pipeline {
                         steps {
                             script {
 
-                                if (MODULE.contains('-ui')) {
-                                    folder = "web"
-
-                                    stage('Build') {
-                                        echo "Building..."
-                                        sh """
+                                MODULE.each { module ->
+                                    if (module.endsWith("-ui")) {
+                                        folder = "web"
+                                    } else {
+                                        folder = "microservices"
+                                    }
+                                    echo "Building..."
+                                    sh """
                                         docker build -f qa-stacks.Dockerfile \
                                         --build-arg FOLDER=${folder} \
-                                        --build-arg MODULE=${MODULE} \
-                                        --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
+                                        --build-arg MODULE=${module} \
+                                        --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
                                         .
                                     """
-                                    }
 
-                                } else {
-                                    folder = "microservices"
-
-                                    stage('Build') {
-                                        echo "Building..."
-                                        sh """
-                                        docker build -f qa-stacks.Dockerfile \
-                                        --build-arg FOLDER=${folder} \
-                                        --build-arg MODULE=${MODULE} \
-                                        --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
-                                        .
-                                    """
-                                    }
-                                }
-
-//                                stage('Build') {
-//                                    echo "Building..."
-//                                    sh """
-//                                        docker build -f qa-stacks.Dockerfile \
-//                                        --build-arg FOLDER=${folder} \
-//                                        --build-arg MODULE=${MODULE} \
-//                                        --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
-//                                        .
-//                                    """
-//                                }
-
-                                stage('Tag_n_Push') {
                                     echo "Tagging and Pushing ..."
 
                                     // Prepare aws login command.
                                     def registryPwd = registry_password(environment.profile, environment.region)
-
                                     sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-
-                                    def awsArtifactTarget = "${ecrDockerRegistry}-${MODULE}:${buildVersion}"
+                                    def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
 
                                     // Tag and push to ECR.
-                                    tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
-                                }
+                                    tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
 
-                                stage('Clean') {
                                     echo "Cleaning up..."
-                                    sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
+                                    sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
                                     sh "docker system prune --all --force"
                                 }
                             }
