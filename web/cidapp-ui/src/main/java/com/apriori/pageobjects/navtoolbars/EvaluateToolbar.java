@@ -2,6 +2,7 @@ package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
 import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.pageobjects.evaluate.CostHistoryPage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 
 import lombok.extern.slf4j.Slf4j;
@@ -59,6 +60,10 @@ public class EvaluateToolbar extends ExploreToolbar {
      *
      * @return - Cost History modal PO
      */
+    public CostHistoryPage clickProgress() {
+        pageUtils.waitForElementAndClick(progressButton);
+        return new CostHistoryPage(driver);
+    }
 
     /**
      * Cost the scenario
