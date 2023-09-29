@@ -938,16 +938,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of class passed in
      */
     public <T> T clickOk(Class<T> className) {
-        //pageUtils.waitFor(1000);
         pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
         okButton.click();
-        /*Actions actions = new Actions(driver);
-        actions.moveToElement(okButton).perform();
-        actions.click().perform();
-        if (!getInputControlsDivClassName().contains("hidden")) {
-            actions.moveToElement(okButton).perform();
-            actions.click().perform();
-        }*/
         return PageFactory.initElements(driver, className);
     }
 
@@ -1475,7 +1467,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage clickReset() {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        //pageUtils.waitForElementAndClick(resetButton);
         resetButton.click();
         return this;
     }
@@ -1735,9 +1726,6 @@ public class GenericReportPage extends ReportsPageHeader {
         Actions actions = new Actions(driver);
         actions.moveToElement(componentSelectDropdown).perform();
         actions.click().perform();
-        /*pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a[contains(@class, 'jr-isFocused')]"));
-        pageUtils.waitForSteadinessOfElement(By.xpath("//label[@title='Component Select']//a"));
-        pageUtils.waitForElementAndClick(componentSelectDropdown);*/
         pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a[contains(@class, 'jr-isOpen')]"));
         pageUtils.waitForElementAndClick(componentSelectSearchInput);
         componentSelectSearchInput.clear();
@@ -1894,8 +1882,6 @@ public class GenericReportPage extends ReportsPageHeader {
         if (!dtcScoreToUse.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
             Actions actions = new Actions(driver);
             actions.moveToElement(driver.findElement(By.xpath("//div[@id='dtcScore']"))).perform();
-            //pageUtils.scrollWithJavaScript(driver.findElement(By.xpath("//div[@id='dtcScore']")), true);
-            //pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
             By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreToUse));
             pageUtils.waitForElementAndClick(locator);
