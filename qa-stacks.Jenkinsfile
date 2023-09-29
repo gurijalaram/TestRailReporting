@@ -30,6 +30,17 @@ def tag_n_push_version(currentVersion = '', targetVersion = '') {
 
 }
 
+def build(folder = '') {
+    echo "Building..."
+        sh """
+            docker build -f qa-stacks.Dockerfile \
+            --build-arg FOLDER=${folder} \
+            --build-arg MODULE=${MODULE} \
+            --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
+            .
+        """
+}
+
 pipeline {
     agent {
         label "WALQSDOCKER08"
@@ -59,33 +70,26 @@ pipeline {
                 stages {
                     stage("Deploy") {
                         steps {
-                            script {
 
-                                if (MODULE.contains("-api")) {
-                                    echo "in 1 microservices block module is ${MODULE} and folder is ${folder}"
-                                    folder = "microservices"
-                                    echo "in 2 microservices block module is ${MODULE} and folder is ${folder}"
+                            when {
+                                expression { MODULE.contains('-ui') }
+                                steps {
+                                    build('web')
                                 }
-                                if (MODULE.contains("-ui")) {
-                                    echo "in 1 web block module is ${MODULE} and folder is ${folder}"
-                                    folder = "web"
-                                    echo "in 2 web block module is ${MODULE} and folder is ${folder}"
+                            }
+
+                            when {
+                                expression { MODULE.contains('-api') }
+                                steps {
+                                    build('microservices')
                                 }
+                            }
 
-                                stage("Build") {
-                                    echo "Building..."
-                                    sh """
-                                        docker build -f qa-stacks.Dockerfile \
-                                        --build-arg FOLDER=${folder} \
-                                        --build-arg MODULE=${MODULE} \
-                                        --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
-                                        .
-                                    """
-                                }
 
-                                stage("Tag_n_Push") {
-                                    echo "Tagging and Pushing ..."
+                            stage("Tag_n_Push") {
+                                echo "Tagging and Pushing ..."
 
+                                script {
                                     // Prepare aws login command.
                                     def registryPwd = registry_password(environment.profile, environment.region)
 
@@ -96,12 +100,12 @@ pipeline {
                                     // Tag and push to ECR.
                                     tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
                                 }
+                            }
 
-                                stage("Clean") {
-                                    echo "Cleaning up..."
-                                    sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
-                                    sh "docker system prune --all --force"
-                                }
+                            stage("Clean") {
+                                echo "Cleaning up..."
+                                sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
+                                sh "docker system prune --all --force"
                             }
                         }
                     }
