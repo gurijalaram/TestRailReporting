@@ -74,7 +74,7 @@ pipeline {
                         }
                         steps {
                             echo "info is present ${buildInfo} ${MODULE}${runType}${buildVersion}"
-                            build("web", "${buildInfo}", "${MODULE}", "${runType}", "${buildVersion}")
+                            build("web", "buildingo", "module", "runtype", "version")
                         }
                     }
                     stage("Build Microservices") {
