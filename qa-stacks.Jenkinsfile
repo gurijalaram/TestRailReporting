@@ -36,7 +36,7 @@ pipeline {
     }
 
     stages {
-        stage("Initialize") {
+        stage('Initialize') {
             steps {
                 echo "Initializing..."
                 script {
@@ -57,16 +57,16 @@ pipeline {
                 }
 
                 stages {
-                    stage("Deploy") {
+                    stage('Deploy') {
                         steps {
                             script {
-                                if (MODULE.contains("-ui")) {
-                                    folder = "web"
+                                if (MODULE.contains('ui')) {
+                                    folder = 'web'
                                 } else {
-                                    folder = "microservices"
+                                    folder = 'microservices'
                                 }
 
-                                stage("Build") {
+                                stage('Build') {
                                     echo "Building..."
                                     sh """
                                         docker build -f qa-stacks.Dockerfile \
@@ -77,7 +77,7 @@ pipeline {
                                     """
                                 }
 
-                                stage("Tag_n_Push") {
+                                stage('Tag_n_Push') {
                                     echo "Tagging and Pushing ..."
 
                                     // Prepare aws login command.
@@ -91,7 +91,7 @@ pipeline {
                                     tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
                                 }
 
-                                stage("Clean") {
+                                stage('Clean') {
                                     echo "Cleaning up..."
                                     sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
                                     sh "docker system prune --all --force"
