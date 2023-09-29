@@ -35,7 +35,7 @@ def build(folder = '', buildModule= '') {
             docker build -f qa-stacks.Dockerfile \
             --build-arg FOLDER=${folder} \
             --build-arg MODULE=${buildModule} \
-            --tag ${buildInfo.name}-${buildModule}-${runType}:${buildVersion} \
+            --tag ${buildInfo}-${buildModule}-${runType}:${buildVersion} \
             .
         """
 }
@@ -72,10 +72,10 @@ pipeline {
                             expression { MODULE.contains('-ui') }
                         }
                         steps {
-                            build("web")
+                            build("web", "")
                         }
                     }
-                    stage("Build Microservices") {
+                    stage("Build_Microservices") {
                         when {
                             expression { MODULE.contains('-api') }
                         }
