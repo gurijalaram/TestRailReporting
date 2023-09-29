@@ -72,7 +72,7 @@ pipeline {
                             expression { MODULE.contains('-ui') }
                         }
                         steps {
-                            build("web", "")
+                            build("web")
                         }
                     }
                     stage("Build_Microservices") {
@@ -80,7 +80,7 @@ pipeline {
                             expression { MODULE.contains('-api') }
                         }
                         steps {
-                            build("microservices")
+                            build("microservices", "")
                         }
                     }
 
