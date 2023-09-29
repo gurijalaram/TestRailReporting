@@ -73,8 +73,7 @@ pipeline {
                             expression { MODULE.contains('-ui') }
                         }
                         steps {
-                            echo "info is present ${buildInfo} ${MODULE}${runType}${buildVersion}"
-                            build("web", "buildingo", "module", "runtype", "version")
+                            build("web", "${buildInfo.name}", "${MODULE}", "${runType}", "${buildVersion}")
                         }
                     }
                     stage("Build Microservices") {
@@ -82,7 +81,7 @@ pipeline {
                             expression { MODULE.contains('-api') }
                         }
                         steps {
-                            build("microservices", "${buildInfo}", "${MODULE}", "${runType}", "${buildVersion}")
+                            build("microservices", "${buildInfo.name}", "${MODULE}", "${runType}", "${buildVersion}")
                         }
                     }
 
