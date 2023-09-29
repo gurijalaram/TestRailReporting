@@ -63,22 +63,43 @@ pipeline {
 
                                 if (MODULE.contains('-ui')) {
                                     folder = "web"
-                                    echo "here ui module is - ${MODULE} and folder is ${folder}"
-                                } else {
-                                    folder = "microservices"
-                                    echo "here ui module is - ${MODULE} and folder is ${folder}"
-                                }
 
-                                stage('Build') {
-                                    echo "Building..."
-                                    sh """
+                                    stage('Build') {
+                                        echo "Building..."
+                                        sh """
                                         docker build -f qa-stacks.Dockerfile \
-                                        --build-arg FOLDER=$folder \
+                                        --build-arg FOLDER=${folder} \
                                         --build-arg MODULE=${MODULE} \
                                         --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
                                         .
                                     """
+                                    }
+
+                                } else {
+                                    folder = "microservices"
+
+                                    stage('Build') {
+                                        echo "Building..."
+                                        sh """
+                                        docker build -f qa-stacks.Dockerfile \
+                                        --build-arg FOLDER=${folder} \
+                                        --build-arg MODULE=${MODULE} \
+                                        --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
+                                        .
+                                    """
+                                    }
                                 }
+
+//                                stage('Build') {
+//                                    echo "Building..."
+//                                    sh """
+//                                        docker build -f qa-stacks.Dockerfile \
+//                                        --build-arg FOLDER=${folder} \
+//                                        --build-arg MODULE=${MODULE} \
+//                                        --tag ${buildInfo.name}-${MODULE}-${runType}:${buildVersion} \
+//                                        .
+//                                    """
+//                                }
 
                                 stage('Tag_n_Push') {
                                     echo "Tagging and Pushing ..."
