@@ -62,11 +62,11 @@ pipeline {
                             script {
 
                                 if (MODULE.contains('-ui')) {
-                                    echo "here ui module is - ${MODULE}"
                                     folder = "web"
+                                    echo "here ui module is - ${MODULE} and folder is ${folder}"
                                 } else {
-                                    echo "here api module is - ${MODULE}"
                                     folder = "microservices"
+                                    echo "here ui module is - ${MODULE} and folder is ${folder}"
                                 }
 
                                 stage('Build') {
