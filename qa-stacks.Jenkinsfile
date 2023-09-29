@@ -29,7 +29,7 @@ def tag_n_push_version(currentVersion = '', targetVersion = '') {
 
 }
 
-def build(folder = '', buildModule= '') {
+def build(folder = '', buildModule = '') {
     echo "Building..."
     sh """
             docker build -f qa-stacks.Dockerfile \
