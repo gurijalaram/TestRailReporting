@@ -86,8 +86,8 @@ pipeline {
                     }
 
                     stage("Tag_n_Push") {
-                        echo "Tagging and Pushing ..."
                         steps {
+                            echo "Tagging and Pushing ..."
                             script {
                                 // Prepare aws login command.
                                 def registryPwd = registry_password(environment.profile, environment.region)
@@ -103,8 +103,8 @@ pipeline {
                     }
 
                     stage("Clean") {
-                        echo "Cleaning up..."
                         steps {
+                            echo "Cleaning up..."
                             sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
                             sh "docker system prune --all --force"
                         }
