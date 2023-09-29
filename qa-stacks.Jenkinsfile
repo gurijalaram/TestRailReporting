@@ -34,9 +34,8 @@ pipeline {
     agent {
         label "WALQSDOCKER08"
     }
-
     stages {
-        stage('Initialize') {
+        stage("Initialize") {
             steps {
                 echo "Initializing..."
                 script {
@@ -46,50 +45,42 @@ pipeline {
                 }
             }
         }
-
         stage("Multi-Stage") {
-            matrix {
-                axes {
-                    axis {
-                        name 'MODULE'
-                        values 'cidapp-ui', 'cidapp-api'
-                    }
-                }
 
-                stages {
-                    stage('Deploy') {
-                        steps {
-                            script {
+            parallel {
 
-                                MODULE.each { module ->
-                                    if (module.endsWith("-ui")) {
-                                        folder = "web"
-                                    } else {
-                                        folder = "microservices"
-                                    }
-                                    echo "Building..."
-                                    sh """
-                                        docker build -f qa-stacks.Dockerfile \
-                                        --build-arg FOLDER=${folder} \
-                                        --build-arg MODULE=${module} \
-                                        --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
-                                        .
-                                    """
+                stage("Build") {
 
-                                    echo "Tagging and Pushing ..."
-
-                                    // Prepare aws login command.
-                                    def registryPwd = registry_password(environment.profile, environment.region)
-                                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-                                    def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
-
-                                    // Tag and push to ECR.
-                                    tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
-
-                                    echo "Cleaning up..."
-                                    sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
-                                    sh "docker system prune --all --force"
+                    steps {
+                        script {
+                            modules.each { module ->
+                                if (module.endsWith("-ui")) {
+                                    folder = "web"
+                                } else {
+                                    folder = "microservices"
                                 }
+                                echo "Building..."
+                                sh """
+                                    docker build -f qa-stacks.Dockerfile \
+                                    --build-arg FOLDER=${folder} \
+                                    --build-arg MODULE=${module} \
+                                    --tag ${buildInfo.name}-${module}-${runType}:${buildVersion} \
+                                    .
+                                """
+
+                                echo "Tagging and Pushing ..."
+
+                                // Prepare aws login command.
+                                def registryPwd = registry_password(environment.profile, environment.region)
+                                sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                                def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
+
+                                // Tag and push to ECR.
+                                tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
+
+                                echo "Cleaning up..."
+                                sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+                                sh "docker system prune --all --force"
                             }
                         }
                     }
@@ -97,7 +88,6 @@ pipeline {
             }
         }
     }
-
     post {
         always {
             cleanWs()
