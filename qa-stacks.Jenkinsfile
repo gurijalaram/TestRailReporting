@@ -81,7 +81,7 @@ pipeline {
                             expression { MODULE.contains('-api') }
                         }
                         steps {
-                            build("microservices", "${buildInfo}", "${MODULE}", "${runType}", "${buildVersion}")
+                            build("microservices", {buildInfo}, {MODULE}, {runType}, {buildVersion})
                         }
                     }
 
