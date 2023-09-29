@@ -1,8 +1,8 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def buildVersion = "latest"
+def modules = ["cidapp-ui", "cidapp-api", "cas-ui", "cas-api", "ats-api", "cds-api", "sds-api", "fms-api", "nts-api"]
 def folder
-def modules = ["cidapp-ui", "cidapp-api"]
 def runType = "docker-test"
 def environment = [profile: 'development', region: 'us-east-1']
 def ecrDockerRegistry = '563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa'
@@ -50,7 +50,7 @@ pipeline {
 
             parallel {
 
-                stage("Build") {
+                stage("Build_Tag_n_Push") {
 
                     steps {
                         script {
