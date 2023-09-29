@@ -62,10 +62,14 @@ pipeline {
                             script {
 
                                 if (MODULE.contains("-api")) {
+                                    echo "in 1 microservices block module is ${MODULE} and folder is ${folder}"
                                     folder = "microservices"
+                                    echo "in 2 microservices block module is ${MODULE} and folder is ${folder}"
                                 }
                                 if (MODULE.contains("-ui")) {
+                                    echo "in 1 web block module is ${MODULE} and folder is ${folder}"
                                     folder = "web"
+                                    echo "in 2 web block module is ${MODULE} and folder is ${folder}"
                                 }
 
                                 stage("Build") {
