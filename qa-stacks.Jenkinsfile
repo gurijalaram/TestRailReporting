@@ -32,7 +32,7 @@ def tag_n_push_version(currentVersion = '', targetVersion = '') {
 
 def build(folder = '') {
     echo "Building..."
-        sh """
+    sh """
             docker build -f qa-stacks.Dockerfile \
             --build-arg FOLDER=${folder} \
             --build-arg MODULE=${MODULE} \
@@ -68,46 +68,41 @@ pipeline {
                 }
 
                 stages {
-                    stage("Deploy") {
-                        steps {
-
-                            when {
-                                expression { MODULE.contains('-ui') }
-                                steps {
-                                    build('web')
-                                }
-                            }
-
-                            when {
-                                expression { MODULE.contains('-api') }
-                                steps {
-                                    build('microservices')
-                                }
-                            }
-
-
-                            stage("Tag_n_Push") {
-                                echo "Tagging and Pushing ..."
-
-                                script {
-                                    // Prepare aws login command.
-                                    def registryPwd = registry_password(environment.profile, environment.region)
-
-                                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-
-                                    def awsArtifactTarget = "${ecrDockerRegistry}-${MODULE}:${buildVersion}"
-
-                                    // Tag and push to ECR.
-                                    tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
-                                }
-                            }
-
-                            stage("Clean") {
-                                echo "Cleaning up..."
-                                sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
-                                sh "docker system prune --all --force"
+                    stage("Build") {
+                        when {
+                            expression { MODULE.contains('-ui') }
+                            steps {
+                                build('web')
                             }
                         }
+                        when {
+                            expression { MODULE.contains('-api') }
+                            steps {
+                                build('microservices')
+                            }
+                        }
+                    }
+
+                    stage("Tag_n_Push") {
+                        echo "Tagging and Pushing ..."
+
+                        script {
+                            // Prepare aws login command.
+                            def registryPwd = registry_password(environment.profile, environment.region)
+
+                            sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+
+                            def awsArtifactTarget = "${ecrDockerRegistry}-${MODULE}:${buildVersion}"
+
+                            // Tag and push to ECR.
+                            tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
+                        }
+                    }
+
+                    stage("Clean") {
+                        echo "Cleaning up..."
+                        sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
+                        sh "docker system prune --all --force"
                     }
                 }
             }
