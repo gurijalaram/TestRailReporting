@@ -60,10 +60,10 @@ pipeline {
                     stage('Deploy') {
                         steps {
                             script {
-                                if (module.endswith('ui')) {
-                                    folder = 'web'
+                                if (module.endswith("ui")) {
+                                    folder = "web"
                                 } else {
-                                    folder = 'microservices'
+                                    folder = "microservices"
                                 }
 
                                 stage('Build') {
