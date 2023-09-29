@@ -1,8 +1,6 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def buildVersion = "latest"
-def folder
-def buildModule
 def runType = "docker-test"
 def environment = [profile: 'development', region: 'us-east-1']
 def ecrDockerRegistry = '563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa'
