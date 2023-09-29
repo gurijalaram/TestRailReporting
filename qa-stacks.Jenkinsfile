@@ -60,9 +60,12 @@ pipeline {
                     stage('Deploy') {
                         steps {
                             script {
+
                                 if (MODULE.contains('-ui')) {
+                                    echo "here ui module is - ${MODULE}"
                                     folder = "web"
                                 } else {
+                                    echo "here api module is - ${MODULE}"
                                     folder = "microservices"
                                 }
 
