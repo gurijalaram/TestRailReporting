@@ -25,6 +25,7 @@ import com.apriori.qa.ach.ui.pageobjects.applications.AppStreamPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.testconfig.TestBaseUI;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpStatus;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
@@ -67,7 +68,7 @@ public class CustomerEnvironmentUtil extends TestBaseUI {
         String username = System.getProperty("username");
         String password = System.getProperty("userpass");
 
-        if(username == null || password == null) {
+        if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             username = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUsername1");
             password = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUserPass1");
         }
