@@ -5,9 +5,9 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({
-        CustomerApplicationsTestSuite.class,
-        CustomerEnvironmentTestSuite.class,
-        CustomerTagTestSuite.class
+    CustomerApplicationsTestSuite.class,
+    CustomerEnvironmentTestSuite.class,
+    CustomerTagTestSuite.class
 })
 public class CustomerGlobalTestSuite {
 }

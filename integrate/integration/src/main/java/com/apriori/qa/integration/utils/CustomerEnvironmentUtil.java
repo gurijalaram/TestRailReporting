@@ -68,7 +68,7 @@ public class CustomerEnvironmentUtil extends TestBaseUI {
         String username = System.getProperty("username");
         String password = System.getProperty("userpass");
 
-        if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             username = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUsername1");
             password = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUserPass1");
         }

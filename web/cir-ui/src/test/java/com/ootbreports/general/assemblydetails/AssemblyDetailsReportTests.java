@@ -58,7 +58,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
+    @Tags({
+        @Tag(REPORTS),
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
@@ -72,8 +73,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {3060})
     @Description("Validate report is available by library")
@@ -83,8 +85,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {1916})
     @Description("Validate report is available by search")
@@ -94,7 +97,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
+    @Tags({
+        @Tag(REPORTS),
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
@@ -130,8 +134,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {3205})
     @Description("Verifies that currency change and then reversion works")
@@ -180,8 +185,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {3067, 1929})
     @Description("Verify totals calculations for Sub Assembly")
@@ -280,8 +286,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {1934, 1929})
     @Description("Verify totals calculations for Top Level")
@@ -332,8 +339,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {3231, 1929})
     @Description("Verify sub total calculations for Sub Assembly")
@@ -383,8 +391,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {3232, 1929})
     @Description("Verify sub total calculations for Sub Sub ASM")
@@ -436,7 +445,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
+    @Tags({
+        @Tag(REPORTS),
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
@@ -490,7 +500,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
+    @Tags({
+        @Tag(REPORTS),
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
@@ -504,7 +515,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
+    @Tags({
+        @Tag(REPORTS),
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
@@ -516,8 +528,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {1930})
     @Description("Test Export Set with costing failures costing incomplete")
@@ -605,7 +618,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
+    @Tags({
+        @Tag(REPORTS),
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
@@ -640,7 +654,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
+    @Tags({
+        @Tag(REPORTS),
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
@@ -652,9 +667,10 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(ON_PREM),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {1931})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
@@ -689,8 +705,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {1921})
     @Description("Export Set search function works - Assembly Details Report")
@@ -709,8 +726,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {7683})
     @Description("Verify Created By Filter Search")
@@ -723,8 +741,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {7684})
     @Description("Verify Created By Filter Operation")
@@ -773,8 +792,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {7685})
     @Description("Verify Created By Filter Buttons")
@@ -788,8 +808,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {7686})
     @Description("Verify Last Modified By Filter Search")
@@ -802,8 +823,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {7687})
     @Description("Verify Last Modified By Filter Operation")
@@ -840,8 +862,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {7688})
     @Description("Verify Last Modified By Filter Buttons")
@@ -855,9 +878,10 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(ON_PREM),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {7689, 1921})
     @Description("Verify Assembly Number Search Criteria")
@@ -915,8 +939,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {1928})
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
@@ -949,8 +974,9 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-            @Tag(CUSTOMER)
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {1933})
     @Description("Verify component subassembly report details")
