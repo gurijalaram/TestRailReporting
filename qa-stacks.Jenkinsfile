@@ -42,7 +42,7 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
 
 pipeline {
     agent {
-        label "WALQSDOCKER02"
+        label "automation"
     }
 
     stages {
@@ -65,7 +65,7 @@ pipeline {
                 axes {
                     axis {
                         name 'MODULE'
-                        values 'cidapp-ui'
+                        values 'cidapp-ui', 'cidapp-api', 'cas-ui', 'cas-api', 'ats-api', 'cds-api', 'sds-api', 'fms-api', 'nts-api'
                     }
                 }
 
@@ -89,7 +89,7 @@ pipeline {
 
                     stage("Tag_n_Push") {
                         steps {
-                            echo "Tagging and Pushing ..."
+                            echo "Tagging and Pushing..."
                             script {
                                 // Prepare aws login command.
                                 def registryPwd = registry_password(environment.profile, environment.region)
