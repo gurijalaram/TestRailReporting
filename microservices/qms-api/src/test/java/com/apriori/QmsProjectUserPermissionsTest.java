@@ -34,12 +34,14 @@ import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -210,6 +212,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26661})
+    @Disabled
+    @Issue("COL-2045")
     @Description("Project Participant: Update project details")
     public void updateProjectAttributesByNonOwner() {
         //Update Description
@@ -264,6 +268,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26821})
+    @Disabled
+    @Issue("COL-2045")
     @Description("NOT Project participant: Update Project details")
     public void updateProjectAttributesByNonParticipant() {
         //Update Description
@@ -318,6 +324,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26630, 26631})
+    @Disabled
+    @Issue("COL-2045")
     @Description("Users permission validation: Add & Delete Parts & Assemblies (PI) to the project")
     public void addDeleteProjectItemsToProjectAsDifferentUsers() {
         //Add Project Item
@@ -415,6 +423,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26657, 26658})
+    @Disabled
+    @Issue("COL-2045")
     @Description("Users permission validation: Add & Delete Project Users to the project.")
     public void addDeleteProjectUsersToProjectAsDifferentUsers() {
         //Validate project user (Not Owner) CAN add another project user to the project
@@ -472,6 +482,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26659})
+    @Disabled
+    @Issue("COL-2045")
     @Description("Users permission validation: Delete Project")
     public void deleteProjectAsDifferentUsers() {
         //Validate project user (Not Owner) CANNOT delete project
@@ -493,6 +505,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26660, 26674})
+    @Disabled
+    @Issue("COL-2045")
     @Description("Owner: Remove yourself from the project.\n" +
         "Project Participant: Remove yourself from the project")
     public void deleteProjectUserSelfAsOwnerAndParticipant() {
@@ -511,6 +525,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26677})
+    @Disabled
+    @Issue("COL-2045")
     @Description("Owner: Share the scenario (Deleting Yourself from the Project)")
     public void deleteScenarioProjectUserSelfAsOwner() {
         //Update owner
@@ -561,6 +577,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26820})
+    @Disabled
+    @Issue("COL-2045")
     @Description("Project Participant: Share the scenario (Deleting Yourself from the Project)")
     public void deleteScenarioProjectUserSelfAsParticipant() {
         //Validate project user (not owner) CAN delete self from the project
@@ -614,6 +632,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26800})
+    @Disabled
+    @Issue("COL-2045")
     @Description("Users permission validation: Get project by Identity /project/{projectIdentity}")
     public void getProjectByIdentityAsDifferentUsers() {
         //Validate that the Project User (Owner) of the project is able to Get the project by identity
@@ -653,6 +673,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26813})
+    @Disabled
+    @Issue("COL-2045")
     @Description("Users permission validation: Get project by Identity bid-package/{bid-packageIdentity}/project/{projectIdentity}")
     public void getBidPackageProjectByIdentityAsDifferentUsers() {
         //Validate that the Project User (Owner) of the project is able to Get the bidpackage project by identity
@@ -695,6 +717,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26808})
+    @Disabled
+    @Issue("COL-2045")
     @Description("Users permission validation: Read the list of Parts & Assemblies (PI) of the project")
     public void getAllProjectItemsAsDifferentUsers() {
         //Validate that the Project User (Owner) of the project is able to Get Project Items of the project.
@@ -727,6 +751,8 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
 
     @Test
     @TestRail(id = {26814})
+    @Disabled
+    @Issue("COL-2045")
     @Description("Users permission validation: Read Project Users of the project")
     public void getAllProjectUsersAsDifferentUsers() {
         //Validate that the Project User (Owner) of the project is able to Get all Project users of the project.
