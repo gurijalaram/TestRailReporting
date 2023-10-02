@@ -23,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 public class TestMain {
-    public static Class defaultTest = RegressionTestSuite.class;
+    public static Class defaultTest = CISRegressionTestSuite.class;
 
     public static void main(String[] args) {
 

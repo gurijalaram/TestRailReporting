@@ -13,6 +13,7 @@ import org.junit.platform.suite.api.Suite;
         "com.apriori.navigation", // cis aP Workspace
         "com.login", // cir login aP Analytics
         "com.ootbreports.general.assemblydetails", // cir aP Analytics
+        "com.apriori.evaluate" // cid aP Design
 })
 
 @IncludeTags(TestSuiteType.TestSuite.CUSTOMER)

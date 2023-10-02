@@ -9,6 +9,7 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
+import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
@@ -38,8 +39,7 @@ public class CostScenarioTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(SANITY),
-        @Tag(CUSTOMER)
+        @Tag(SANITY)
     })
     @TestRail(id = {8891})
     @Description("Cost Scenario")
@@ -89,7 +89,9 @@ public class CostScenarioTests extends TestBaseUI {
                 .search("ANSI AL380")
                 .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
                 .submit(EvaluatePage.class)
-                .costScenario();
+                .costScenario()
+                .clickDeleteIcon()
+                .clickDelete(ExplorePage.class);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.VERIFIED)).isEqualTo((true));
