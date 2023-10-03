@@ -90,6 +90,7 @@ public class ChangeSummaryPage extends LoadableComponent<CostHistoryPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(changeSummary);
+        pageUtils.waitForElementToAppear(leftColHeader);
     }
 
     /**

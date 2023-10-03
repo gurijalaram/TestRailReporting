@@ -11,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.util.List;
+
 @Slf4j
 public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(css = "h2")
@@ -18,6 +20,9 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
 
     @FindBy(css = "h2 button")
     private WebElement close;
+
+    @FindBy(css="div[role='dialog'] div div div div div p:nth-of-type(1)")
+    private List<WebElement> iterationList;
 
     @FindBy(css = "div[role='tooltip']")
     private WebElement changeSummary;
@@ -61,12 +66,23 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     }
 
     /**
+     * Get the number of displayed iterations
+     *
+     * @return - Integer of the number of iterations displayed
+     */
+    public Integer iterationCount() {
+        return iterationList.size();
+    }
+
+    /**
      * Hover over info icon for given iteration
      *
      * @param iterationNum - The number of the specified iteration
      */
     public ChangeSummaryPage openChangeSummary(Integer iterationNum) {
+        pageUtils.waitForElementToAppear(iterationBy(iterationNum));
         pageUtils.mouseMove(iteration(iterationNum));
+        pageUtils.waitForElementToAppear(iterationInfoTooltipIcon(iterationNum));
         pageUtils.mouseMove(iterationInfoTooltipIcon(iterationNum));
         return new ChangeSummaryPage(driver);
     }
@@ -81,6 +97,17 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     private WebElement iteration(Integer iterationNum) {
         By locator = By.xpath(String.format(iterationXPath, iterationNum) + "/..");
         return driver.findElement(locator);
+    }
+
+    /**
+     * Get By for specified iteration div
+     *
+     * @param iterationNum - The number of the specified iteration
+     *
+     * @return By of specified iteration's container div
+     */
+    private By iterationBy(Integer iterationNum) {
+        return By.xpath(String.format(iterationXPath, iterationNum) + "/..");
     }
 
     /**
