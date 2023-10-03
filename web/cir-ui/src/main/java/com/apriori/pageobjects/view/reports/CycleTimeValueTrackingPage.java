@@ -23,7 +23,7 @@ public class CycleTimeValueTrackingPage extends GenericReportPage {
     @FindBy(xpath = "//span[contains(text(), 'Project Tracking Rollup:')]/../following-sibling::td[2]")
     private WebElement projectTrackingRollupAboveChart;
 
-    @FindBy(xpath = "(//td[@colspan='4'])[24]//span")
+    @FindBy(xpath = "(//td[@colspan='4'])[20]//span")
     private WebElement projectTrackingRollupInChart;
 
     @FindBy(xpath = "//label[@title='Projects Rollup']//a")

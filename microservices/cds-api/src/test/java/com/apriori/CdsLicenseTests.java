@@ -4,6 +4,7 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.models.response.ActiveLicenseModules;
 import com.apriori.cds.models.response.CdsErrorResponse;
+import com.apriori.cds.models.response.InstallationItems;
 import com.apriori.cds.models.response.LicenseResponse;
 import com.apriori.cds.models.response.Licenses;
 import com.apriori.cds.models.response.SubLicense;
@@ -17,6 +18,8 @@ import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.Customer;
+import com.apriori.models.response.Deployment;
+import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.testrail.TestRail;
@@ -52,6 +55,9 @@ public class CdsLicenseTests {
     private String subLicenseIdentity;
     private IdentityHolder deleteIdentityHolder;
     private IdentityHolder userIdentityHolder;
+    private String deploymentIdentity;
+    private String licensedApplicationIdentity;
+    private String installationIdentity;
 
     @BeforeEach
     public void setDetails() {
@@ -86,6 +92,12 @@ public class CdsLicenseTests {
                 deleteIdentityHolder.subLicenseIdentity(),
                 deleteIdentityHolder.userIdentity()
             );
+        }
+        if (installationIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
+        }
+        if (licensedApplicationIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApplicationIdentity);
         }
         if (userIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,
@@ -200,6 +212,15 @@ public class CdsLicenseTests {
     @Description("Get a sub license")
     public void getSubLicenses() {
         String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        deploymentIdentity = deployment.getResponseEntity().getIdentity();
+        String realmKey = generateStringUtil.generateRealmKey();
+        String appIdentity = Constants.getApProApplicationIdentity();
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();
@@ -225,6 +246,15 @@ public class CdsLicenseTests {
     @Description("Get a sub license by Identity")
     public void getSubLicenseIdentity() {
         String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        deploymentIdentity = deployment.getResponseEntity().getIdentity();
+        String realmKey = generateStringUtil.generateRealmKey();
+        String appIdentity = Constants.getApProApplicationIdentity();
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();
@@ -251,6 +281,15 @@ public class CdsLicenseTests {
     @Description("Adds a user sub-license association")
     public void addUserSubLicense() {
         String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        deploymentIdentity = deployment.getResponseEntity().getIdentity();
+        String realmKey = generateStringUtil.generateRealmKey();
+        String appIdentity = Constants.getApProApplicationIdentity();
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();
@@ -288,6 +327,15 @@ public class CdsLicenseTests {
     @Description("Gets a list of users with a sub-license association")
     public void getUsersAssociatedWithSubLicense() {
         String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        deploymentIdentity = deployment.getResponseEntity().getIdentity();
+        String realmKey = generateStringUtil.generateRealmKey();
+        String appIdentity = Constants.getApProApplicationIdentity();
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();
@@ -335,6 +383,15 @@ public class CdsLicenseTests {
     @Description("Returns a list of sites, licenses, and sub-licenses that the user is associated with")
     public void getUsersLicenses() {
         String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        deploymentIdentity = deployment.getResponseEntity().getIdentity();
+        String realmKey = generateStringUtil.generateRealmKey();
+        String appIdentity = Constants.getApProApplicationIdentity();
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();
@@ -380,6 +437,15 @@ public class CdsLicenseTests {
     @Description("Deletes an existing user sub-license association")
     public void deleteCustomerSubLicense() {
         String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        deploymentIdentity = deployment.getResponseEntity().getIdentity();
+        String realmKey = generateStringUtil.generateRealmKey();
+        String appIdentity = Constants.getApProApplicationIdentity();
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();

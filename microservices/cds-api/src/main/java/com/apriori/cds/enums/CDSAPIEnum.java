@@ -75,6 +75,7 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS("customers/%s/deployments/%s/installations"),
     INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS("customers/%s/deployments/%s/installations/%s"),
     INSTALLATIONS("installations"),
+    INSTALLATION_BY_ID("installations/%s"),
 
     //FEATURE
     INSTALLATION_FEATURES("customers/%s/deployments/%s/installations/%s/features"),
