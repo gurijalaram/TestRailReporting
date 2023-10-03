@@ -44,7 +44,7 @@ public class CostAllCadTests extends TestBaseUI {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {5421, 565, 567, 6624, 6626})
+    @TestRail(id = {5421, 6624, 6626})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
