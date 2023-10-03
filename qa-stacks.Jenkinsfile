@@ -56,7 +56,7 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
 
 pipeline {
     agent {
-        label "WALQSDOCKER02"
+        label "automation"
     }
 
     stages {
