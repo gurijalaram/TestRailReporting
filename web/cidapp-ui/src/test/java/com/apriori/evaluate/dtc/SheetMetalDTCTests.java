@@ -213,7 +213,7 @@ public class SheetMetalDTCTests extends TestBaseUI {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {1834, 1835, 1836, 1837, 6491, 6492, 6493, 6494})
+    @TestRail(id = {6491, 6492, 6493, 6494})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
 
@@ -258,7 +258,7 @@ public class SheetMetalDTCTests extends TestBaseUI {
     @Disabled("Requires tolerances for additional operation")
     @Tags({@Tag(SMOKE),
         @Tag(IGNORE)})
-    @TestRail(id = {6502, 719})
+    @TestRail(id = {6502})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
