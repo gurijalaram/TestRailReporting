@@ -1,4 +1,4 @@
-package com.apriori.qa.ach.ui.dto;
+package com.apriori.ach.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
