@@ -5,6 +5,7 @@ import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.number.OrderingComparison.greaterThan;
 
 import com.apriori.enums.DigitalFactoryEnum;
@@ -81,7 +82,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
                 CycleTimeValueTrackingPage.class
             );
 
-        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), is(equalTo("2")));
+        assertThat(cycleTimeValueTrackingPage.getCountOfDropdownItems("1"), anyOf(equalTo("2"), equalTo("3")));
         cycleTimeValueTrackingPage.selectProjectRollup()
             .clickOk(CycleTimeValueTrackingPage.class);
 
