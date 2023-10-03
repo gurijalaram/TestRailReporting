@@ -101,7 +101,7 @@ public class CostAllCadTests extends TestBaseUI {
     }*/
 
     @Test
-    @TestRail(id = {1605})
+    @TestRail(id = {28507})
     @Description("Upload large GCD part. Part should be displayed in the viewer within 60 seconds")
     public void translationTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
