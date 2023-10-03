@@ -22,6 +22,17 @@ def registry_password(profile = '', region = '') {
     }
 }
 
+def docker_registry_password() {
+    withCredentials([usernamePassword(
+            credentialsId: 'NEXUS_APRIORI_COM',
+            passwordVariable: 'NEXUS_PASS',
+            usernameVariable: 'NEXUS_USER')]) {
+        sh """
+            docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
+        """
+    }
+}
+
 def tag_n_push_version(currentVersion = '', targetVersion = '') {
     // Tag & push version.
     sh "docker tag ${currentVersion} ${targetVersion}"
@@ -31,6 +42,9 @@ def tag_n_push_version(currentVersion = '', targetVersion = '') {
 
 def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVersion = '') {
     echo "Building..."
+
+    docker_registry_password()
+
     sh """
             docker build -f qa-stacks.Dockerfile \
             --build-arg FOLDER=${folder} \
@@ -42,7 +56,7 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
 
 pipeline {
     agent {
-        label "automation"
+        label "WALQSDOCKER02"
     }
 
     stages {
