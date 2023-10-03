@@ -21,15 +21,15 @@ subprojects {
         testArtifacts
     }
 
-    // Abillity to use Class from src/test/java
-    task testJar(type: Jar, dependsOn: testClasses) {
-        from sourceSets.test.output
-        classifier 'tests'
-    }
+        // Abillity to use Class from src/test/java
+        task testJar(type: Jar, dependsOn: testClasses) {
+            from sourceSets.test.output
+            getArchiveClassifier().set('tests')
+        }
 
-    artifacts {
-        testArtifacts testJar
-    }
+        artifacts {
+            testArtifacts testJar
+        }
 
     apply plugin: 'java'
     apply plugin: 'checkstyle'
