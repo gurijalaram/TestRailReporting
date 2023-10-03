@@ -122,7 +122,6 @@ pipeline {
                         steps {
                             echo "Cleaning up..."
                             sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
-                            sh "docker system prune --all --force"
                         }
                     }
                 }
