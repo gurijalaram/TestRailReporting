@@ -22,7 +22,7 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.UPGRADE_COMPARISON.getEndpoint();
     // Export set name is not relevant for this report
     private static final String exportSetName = "";
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.ASSEMBLY_COST_A4;
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.UPGRADE_COMPARISON;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
