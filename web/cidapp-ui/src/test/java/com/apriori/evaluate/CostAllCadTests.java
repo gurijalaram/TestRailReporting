@@ -44,7 +44,7 @@ public class CostAllCadTests extends TestBaseUI {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {5421, 565, 567, 6624, 6626})
+    @TestRail(id = {5421, 6624, 6626})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -101,7 +101,7 @@ public class CostAllCadTests extends TestBaseUI {
     }*/
 
     @Test
-    @TestRail(id = {1605})
+    @TestRail(id = {28507})
     @Description("Upload large GCD part. Part should be displayed in the viewer within 60 seconds")
     public void translationTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
