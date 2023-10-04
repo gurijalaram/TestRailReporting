@@ -88,7 +88,7 @@ public class HelpTests extends TestBaseUI {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("aP Design"));
     }
 
     @Test

@@ -41,7 +41,7 @@ public class AboutAprioriPage extends EagerPageComponent<AboutAprioriPage> {
      * @return page object
      */
     public AboutAprioriPage switchTab() {
-        getPageUtils().windowHandler(1);
+        getPageUtils().switchToWindow(1);
         return this;
     }
 }
