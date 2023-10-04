@@ -70,7 +70,7 @@ public class AdminHomePage extends AdminPageHeader {
      * Wait for element to appear
      */
     public void waitForReportsLogoutDisplayedToAppear() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         pageUtils.waitForElementToAppear(onPremWelcomeText);
     }
 

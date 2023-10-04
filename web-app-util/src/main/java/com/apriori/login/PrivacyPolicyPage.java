@@ -44,7 +44,7 @@ public class PrivacyPolicyPage extends EagerPageComponent<PrivacyPolicyPage> {
      * @return - string
      */
     public String getPageHeading() {
-        getPageUtils().windowHandler(1);
+        getPageUtils().switchToWindow(1);
         return aprioriHeading.getText();
     }
 
@@ -54,7 +54,7 @@ public class PrivacyPolicyPage extends EagerPageComponent<PrivacyPolicyPage> {
      * @return - webelement
      */
     public boolean isPageLogoDisplayed() {
-        getPageUtils().windowHandler(1);
+        getPageUtils().switchToWindow(1);
         return getPageUtils().waitForElementToAppear(aprioriLogo).isDisplayed();
     }
 

@@ -37,7 +37,7 @@ public class CicUserGuide extends CICBasePage {
      * @return CicUserGuide Page
      */
     public CicUserGuide switchTab() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return new CicUserGuide(driver);
     }
 

@@ -117,7 +117,7 @@ public class CirUserGuidePage {
      * @return new CirUserGuide page object
      */
     public CirUserGuidePage switchTab() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return new CirUserGuidePage(driver);
     }
 }
