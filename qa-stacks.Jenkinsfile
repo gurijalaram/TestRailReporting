@@ -54,6 +54,26 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
         """
 }
 
+def tag_n_push_image(module = '', environment = '', ecrDockerRegistry = '', buildInfo = '', runType = '', buildVersion = '') {
+    echo "Tagging and Pushing..."
+    script {
+        // Prepare aws login command.
+        def registryPwd = registry_password(environment.profile, environment.region)
+
+        sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+
+        def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
+
+        // Tag and push to ECR.
+        tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
+    }
+}
+
+def remove_image(module = '', buildInfo = '', runType = '', buildVersion = '') {
+    echo "Cleaning..."
+    sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+}
+
 pipeline {
     agent {
         label "automation"
@@ -84,44 +104,32 @@ pipeline {
                 }
 
                 stages {
-                    stage("Build_Web") {
+                    stage("Deploy_Web") {
                         when {
                             expression { MODULE.contains('-ui') }
                         }
                         steps {
                             buildImage("web", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
                         }
+                        steps {
+                            tag_n_push_image("${MODULE}", "${environment}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                        }
+                        steps {
+                            remove_image("${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                        }
                     }
-                    stage("Build_Microservices") {
+                    stage("Deploy_Microservices") {
                         when {
                             expression { MODULE.contains('-api') }
                         }
                         steps {
                             buildImage("microservices", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
                         }
-                    }
-
-                    stage("Tag_n_Push") {
                         steps {
-                            echo "Tagging and Pushing..."
-                            script {
-                                // Prepare aws login command.
-                                def registryPwd = registry_password(environment.profile, environment.region)
-
-                                sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-
-                                def awsArtifactTarget = "${ecrDockerRegistry}-${MODULE}:${buildVersion}"
-
-                                // Tag and push to ECR.
-                                tag_n_push_version("${buildInfo.name}-${MODULE}-${runType}:latest", "${awsArtifactTarget}")
-                            }
+                            tag_n_push_image("${MODULE}", "${environment}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
                         }
-                    }
-
-                    stage("Clean") {
                         steps {
-                            echo "Cleaning up..."
-                            sh "docker rmi ${buildInfo.name}-${MODULE}-${runType}:${buildVersion}"
+                            remove_image("${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
                         }
                     }
                 }
