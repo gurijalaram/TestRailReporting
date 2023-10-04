@@ -49,6 +49,7 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     /**
      * Selects button to agree to gdpr
+     *
      * @return current page object
      */
     public HelpDocPage clickAgreeButton() {
@@ -58,6 +59,7 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     /**
      * Gets the page title
+     *
      * @return string
      */
     public String getChildPageTitle() {
@@ -67,10 +69,24 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     /**
      * Gets the page title
+     *
      * @return string
      */
     public String getDesignGuidanceChildPageTitle() {
         pageUtils.windowHandler(1);
         return pageUtils.waitForElementToAppear(designGuidanceUserGuideTitle).getText();
+    }
+
+    /**
+     * Close the help page and return focus to previous page
+     *
+     * @param klass - the generic class
+     * @param <T>   - the return type
+     * @return generic object
+     */
+    public <T> T closeHelpPage(Class<T> klass) {
+        driver.switchTo().window(pageUtils.windowHandler().get(1)).close();
+        driver.switchTo().window(pageUtils.windowHandler().get(0));
+        return PageFactory.initElements(driver, klass);
     }
 }
