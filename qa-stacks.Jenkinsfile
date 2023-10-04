@@ -110,11 +110,9 @@ pipeline {
                         }
                         steps {
                             buildImage("web", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
-                        }
-                        steps {
+
                             tag_n_push_image("${MODULE}", "${environment}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
-                        }
-                        steps {
+
                             remove_image("${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
                         }
                     }
@@ -124,11 +122,9 @@ pipeline {
                         }
                         steps {
                             buildImage("microservices", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
-                        }
-                        steps {
+
                             tag_n_push_image("${MODULE}", "${environment}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
-                        }
-                        steps {
+
                             remove_image("${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
                         }
                     }
