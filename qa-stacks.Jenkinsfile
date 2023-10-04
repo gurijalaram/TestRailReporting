@@ -58,7 +58,7 @@ def tag_n_push_image(module = '', environment = '', ecrDockerRegistry = '', buil
     echo "Tagging and Pushing..."
     script {
         // Prepare aws login command.
-        def registryPwd = registry_password(environment.profile, environment.region)
+        def registryPwd = registry_password("${environment.profile}", "${environment.region}")
 
         sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
