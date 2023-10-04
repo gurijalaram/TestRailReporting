@@ -42,7 +42,7 @@ public class ZendeskSignInPage extends LoadableComponent<ZendeskSignInPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
     }
 
     /**
@@ -51,7 +51,7 @@ public class ZendeskSignInPage extends LoadableComponent<ZendeskSignInPage> {
      * @return page object
      */
     public ZendeskSignInPage switchTab() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return this;
     }
 

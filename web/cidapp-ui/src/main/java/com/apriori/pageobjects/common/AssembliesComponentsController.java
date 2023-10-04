@@ -282,7 +282,7 @@ public class AssembliesComponentsController {
      */
     public EvaluatePage openAssembly(String componentName, String scenarioName) {
         scenarioTableController.openScenario(componentName, scenarioName);
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return new EvaluatePage(driver);
     }
 

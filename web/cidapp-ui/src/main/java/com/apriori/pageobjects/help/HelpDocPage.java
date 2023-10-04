@@ -63,8 +63,9 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
      * @return string
      */
     public String getChildPageTitle() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return pageUtils.waitForElementToAppear(userGuideTitle).getText();
+
     }
 
     /**
@@ -73,7 +74,7 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
      * @return string
      */
     public String getDesignGuidanceChildPageTitle() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return pageUtils.waitForElementToAppear(designGuidanceUserGuideTitle).getText();
     }
 

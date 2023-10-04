@@ -34,7 +34,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         pageUtils.waitForElementToAppear(scenarioName);
     }
 
@@ -44,7 +44,7 @@ public class EvaluatePage extends LoadableComponent<EvaluatePage> {
      * @return page object
      */
     public EvaluatePage switchTab() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return this;
     }
 
