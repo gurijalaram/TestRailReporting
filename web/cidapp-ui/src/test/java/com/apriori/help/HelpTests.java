@@ -52,7 +52,7 @@ public class HelpTests extends TestBaseUI {
     @Tag(IGNORE)
     @TestRail(id = {6371})
     @Description("Have links to a detailed help page in relevant areas of the UI")
-    public void moreInputsHelp() {
+    public void linksToHelpPage() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         String componentName = "PowderMetalShaft";
