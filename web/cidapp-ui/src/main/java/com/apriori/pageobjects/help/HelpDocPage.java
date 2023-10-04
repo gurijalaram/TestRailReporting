@@ -85,8 +85,9 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
      * @return generic object
      */
     public <T> T closeHelpPage(Class<T> klass) {
-        driver.switchTo().window(pageUtils.windowHandler().get(1)).close();
-        driver.switchTo().window(pageUtils.windowHandler().get(0));
+        List<String> listOfWindows = pageUtils.listOfWindows();
+        driver.switchTo().window(listOfWindows.get(1)).close();
+        driver.switchTo().window(listOfWindows.get(0));
         return PageFactory.initElements(driver, klass);
     }
 }
