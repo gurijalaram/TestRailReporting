@@ -34,11 +34,13 @@
         "identity",
         "createdAt",
         "createdBy",
-        "updatedAt",
-        "updatedBy",
         "customerIdentity",
-        "userIdentity",
-        "avatarColor"
+        "userIdentity"
+      ],
+      "optional": [
+        "avatarColor",
+        "updatedAt",
+        "updatedBy"
       ]
     }
   },
