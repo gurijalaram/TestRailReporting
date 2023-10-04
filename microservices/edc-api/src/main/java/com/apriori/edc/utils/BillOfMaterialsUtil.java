@@ -11,13 +11,15 @@ import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 
 import org.apache.http.HttpStatus;
 
 import java.util.List;
 
 public class BillOfMaterialsUtil extends TestUtil {
+    public UserCredentials currentUser = UserUtil.getUser();
 
     /**
      * Create Bill of Materials
@@ -71,9 +73,9 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @param billOfMaterialsId - the bill of material identity
      * @return response object
      */
-    public static ResponseWrapper<BillOfMaterialsResponse> deleteBillOfMaterialByIdUi(final String billOfMaterialsId) {
+    public static ResponseWrapper<BillOfMaterialsResponse> deleteBillOfMaterialByIdUi(final String billOfMaterialsId, UserCredentials currentUser) {
         RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.BILL_OF_MATERIALS_BY_IDENTITY, null)
-            .token(new AuthorizationUtil().getTokenAsString());
+            .token(currentUser.getToken());
 
         return HTTPRequest.build(requestEntity).delete();
     }

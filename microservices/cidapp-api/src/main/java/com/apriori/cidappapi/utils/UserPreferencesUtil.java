@@ -141,7 +141,7 @@ public class UserPreferencesUtil {
      * @return response object
      */
     public ResponseWrapper<String> resetSettings(UserCredentials userCredentials) {
-        String token = new AuthorizationUtil(userCredentials).getTokenAsString();
+        String token = new AuthorizationUtil().getToken(userCredentials).getResponseEntity().getToken();
 
         Map<String, String> mappedResponse;
 
@@ -206,7 +206,7 @@ public class UserPreferencesUtil {
      */
     public ResponseWrapper<String> resetSpecificSettings(UserCredentials userCredentials, Map<PreferencesEnum, String> preferencesToReset) {
         StringBuilder customBody = new StringBuilder();
-        String token = new AuthorizationUtil(userCredentials).getTokenAsString();
+        String token = new AuthorizationUtil().getToken(userCredentials).getResponseEntity().getToken();
 
         Map<String, String> mappedResponse = getPreferenceIdentities(token);
 

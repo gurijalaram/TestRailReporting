@@ -19,5 +19,6 @@ dependencies {
     implementation project(':microservices:css-api')
     implementation project(':microservices:cidapp-api')
     implementation project(':microservices:qds-api')
+    implementation project(':microservices:cis-api')
     implementation project(':serialization-util')
 }

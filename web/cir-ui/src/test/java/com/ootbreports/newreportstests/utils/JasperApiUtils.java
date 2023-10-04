@@ -46,19 +46,19 @@ public class JasperApiUtils {
     private String reportsJsonFileName;
     private String exportSetName;
     private String processGroupName;
-    private String jSessionID;
+    private String jasperSessionID;
 
     /**
      * Default constructor for this class
      *
-     * @param jSessionID          - String for authentication/session
+     * @param jasperSessionID          - String for authentication/session
      * @param exportSetName       - String of the export set which should be set
      * @param reportsJsonFileName - String of the right json file to use to be sent to the api
      */
-    public JasperApiUtils(String jSessionID, String exportSetName, String reportsJsonFileName, CirApiEnum reportNameForInputControls) {
+    public JasperApiUtils(String jasperSessionID, String exportSetName, String reportsJsonFileName, CirApiEnum reportNameForInputControls) {
         this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
         this.reportValueForInputControls = reportNameForInputControls;
-        this.jSessionID = jSessionID;
+        this.jasperSessionID = jasperSessionID;
         this.exportSetName = exportSetName;
         this.reportsJsonFileName = reportsJsonFileName;
     }
@@ -66,14 +66,14 @@ public class JasperApiUtils {
     /**
      * Second constructor for this class (not default)
      *
-     * @param jSessionID - String for authentication/session
+     * @param jasperSessionID - String for authentication/session
      * @param exportSetName - String of the export set which should be set
      * @param processGroup - String of process group which should be set
      * @param reportsJsonFileName - String of the right json file to use to be sent to the api
      */
-    public JasperApiUtils(String jSessionID, String exportSetName, ProcessGroupEnum processGroup, String reportsJsonFileName) {
+    public JasperApiUtils(String jasperSessionID, String exportSetName, ProcessGroupEnum processGroup, String reportsJsonFileName) {
         this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
-        this.jSessionID = jSessionID;
+        this.jasperSessionID = jasperSessionID;
         this.exportSetName = exportSetName;
         this.processGroupName = processGroup.getProcessGroup();
         this.reportsJsonFileName = reportsJsonFileName;
@@ -87,7 +87,7 @@ public class JasperApiUtils {
      * @return JasperReportSummary instance
      */
     public JasperReportSummary genericTestCore(String keyToSet, String valueToSet) {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionID);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
 
@@ -121,7 +121,7 @@ public class JasperApiUtils {
      * @return JasperReportSummary instance
      */
     public JasperReportSummary genericTestCoreCurrencyAndDateOnly(String currencyToSet) {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionID);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
 
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
         setReportParameterByName("exportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
@@ -142,7 +142,7 @@ public class JasperApiUtils {
      * @return JasperReportSummary instance
      */
     public JasperReportSummary genericTestCoreCurrencyOnly(String currencyToSet) {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionID);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
 
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
 
@@ -178,7 +178,7 @@ public class JasperApiUtils {
      * @return JasperReportSummary instance
      */
     public JasperReportSummary genericTestCoreProjectRollupAndCurrencyOnly(String projectRollupName, String currencyString) {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionID);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
 
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyString);
@@ -211,7 +211,7 @@ public class JasperApiUtils {
      * Generic test for currency in Assembly Cost Reports (both A4 and Letter)
      */
     public void genericAssemblyCostCurrencyTest() {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionID);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         setReportParameterByName("exportSetName", exportSetName);
@@ -711,7 +711,7 @@ public class JasperApiUtils {
      * @return ArrayList of Jasper Report Summary instances
      */
     public ArrayList<JasperReportSummaryIncRawData> scenarioActivityReportGenerationTwoTrendingPeriodsIncRawData() {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(this.jSessionID);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(this.jasperSessionID);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -741,7 +741,7 @@ public class JasperApiUtils {
      * @return ArrayList of Jasper Report Summary instances
      */
     public ArrayList<JasperReportSummary> scenarioActivityReportGenerationTwoTrendingPeriods() {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(this.jSessionID);
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(this.jasperSessionID);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();

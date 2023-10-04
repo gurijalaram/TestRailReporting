@@ -10,6 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
+import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ListNameEnum;
 import com.apriori.enums.OperationEnum;
@@ -27,7 +28,6 @@ import com.apriori.testrail.TestRail;
 
 import com.inputcontrols.InputControlsTests;
 import com.navigation.CommonReportTests;
-import com.utils.CurrencyEnum;
 import enums.AssemblySetEnum;
 import enums.AssemblyTypeEnum;
 import enums.ComponentInfoColumnEnum;

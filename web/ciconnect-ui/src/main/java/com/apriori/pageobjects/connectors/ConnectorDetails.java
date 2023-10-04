@@ -95,14 +95,24 @@ public class ConnectorDetails extends CICBasePage {
     }
 
     /**
-     * Click New Workflow button
+     * Click Next button
      *
-     * @return NewEditWorkflow page object
+     * @return ConnectorMappings page object
      */
     public ConnectorMappings clickNextBtn() {
         pageUtils.waitForElementAndClick(connectorDetailsNextBtn);
         pageUtils.waitForElementAppear(activeTabElement);
         return new ConnectorMappings(driver);
+    }
+
+    /**
+     * Click Cancel button
+     *
+     * @return ConnectorPage page object
+     */
+    public ConnectorsPage clickCancelBtn() {
+        pageUtils.waitForElementAndClick(connectorDetailsCancelBtn);
+        return new ConnectorsPage(driver);
     }
 
     /**

@@ -6,7 +6,6 @@ import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.github.dockerjava.api.model.ErrorResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

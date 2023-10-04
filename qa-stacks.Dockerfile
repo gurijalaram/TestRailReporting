@@ -1,9 +1,9 @@
 # Prepare runtime.
-FROM docker.apriori.com/apriori-jre-base:8 AS runtime
+FROM docker.apriori.com/apriori-jre-base:11.0.20 AS runtime
 WORKDIR /app
 
 # Prepare build workspace.
-FROM docker.apriori.com/apriori-jdk-base:8 AS sdk
+FROM gradle:8.3.0-jdk11 AS sdk
 USER root
 
 COPY . .
@@ -18,9 +18,9 @@ RUN gradle clean :$FOLDER:$MODULE:fatJar -x test
 FROM runtime as final
 ARG FOLDER
 ARG MODULE
-ARG ASPECTJ_VERSION="1.9.9.1"
-COPY --from=build /build-workspace/$FOLDER/$MODULE/build/libs/automation-qa*.jar ./app.jar
-COPY --from=build /build-workspace/aspectjweaver-$ASPECTJ_VERSION.jar ./aspectjweaver-$ASPECTJ_VERSION.jar
+ARG ASPECTJ_VERSION="1.9.20.1"
+COPY --from=build /home/gradle/$FOLDER/$MODULE/build/libs/automation-qa*.jar ./app.jar
+COPY --from=build /home/gradle/aspectjweaver-$ASPECTJ_VERSION.jar ./aspectjweaver-$ASPECTJ_VERSION.jar
 
 ENV TOKEN_EMAIL=$TOKEN_EMAIL
 ENV MODE=$MODE
@@ -33,7 +33,7 @@ ENV ENVS=$ENVS
 ENV BASE_URL=$BASE_URL
 
 CMD java \
-  -javaagent:aspectjweaver-1.9.9.1.jar \
+  -javaagent:aspectjweaver-1.9.20.1.jar \
   -DthreadCounts=$THREAD_COUNTS \
   -Dmode=$MODE \
   -Dtoken_email=$TOKEN_EMAIL \

@@ -152,6 +152,10 @@ local:
   base_url: http://localhost
   name: local
   secret_key: O85XMATZEMBO
+  customer_identity: 212B5ABD2F6C
+  application_name: cid
+  deployment: aPriori Internal Production
+  installation_name: Local
 
   admin:
     ui_url: ${local.base_url}/apriori/login

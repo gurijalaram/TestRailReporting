@@ -108,6 +108,7 @@ public class ComponentCostReportTests extends TestBaseUI {
             "Available: ",
             "1"
         );
+
         assertThat(componentCostReportPage.getComponentListCount(), is(equalTo("14")));
         assertThat(componentCostReportPage.getCountOfListAvailableOrSelectedItems(
             ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));

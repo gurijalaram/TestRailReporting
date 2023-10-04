@@ -6,7 +6,8 @@ import static com.apriori.edc.utils.BillOfMaterialsUtil.postBillOfMaterials;
 import com.apriori.edc.models.response.line.items.LineItemsResponse;
 import com.apriori.edc.utils.LineItemsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -26,6 +27,7 @@ public class LineItemsTest extends LineItemsUtil {
     private String customerPartNumber = "AAA651A1";
     private int quantity = 2;
     private int itemsCount = 9;
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @AfterAll
     public static void deleteTestingData() {
@@ -36,7 +38,7 @@ public class LineItemsTest extends LineItemsUtil {
 
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
         billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
 

@@ -13,7 +13,7 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -39,7 +39,7 @@ public class CasCustomerUserAssociationTests {
 
     @BeforeAll
     public static void globalSetup() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(UserUtil.getUser().getToken());
     }
 
     @BeforeEach
