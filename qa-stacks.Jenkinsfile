@@ -54,24 +54,24 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
         """
 }
 
-def tag_n_push_image(module = '', environment = '', ecrDockerRegistry = '', buildInfo = '', runType = '', buildVersion = '') {
+def tag_n_push_image(module = '', profile = '', region='', ecrDockerRegistry = '', buildInfo = '', runType = '', buildVersion = '') {
     echo "Tagging and Pushing..."
     script {
         // Prepare aws login command.
-        def registryPwd = registry_password("${environment.profile}", "${environment.region}")
+        def registryPwd = registry_password("${profile}", "${region}")
 
         sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
         def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
 
         // Tag and push to ECR.
-        tag_n_push_version("${buildInfo.name}-${module}-${runType}:latest", "${awsArtifactTarget}")
+        tag_n_push_version("${buildInfo}-${module}-${runType}:latest", "${awsArtifactTarget}")
     }
 }
 
 def remove_image(module = '', buildInfo = '', runType = '', buildVersion = '') {
     echo "Cleaning..."
-    sh "docker rmi ${buildInfo.name}-${module}-${runType}:${buildVersion}"
+    sh "docker rmi ${buildInfo}-${module}-${runType}:${buildVersion}"
 }
 
 pipeline {
@@ -111,7 +111,7 @@ pipeline {
                         steps {
                             buildImage("web", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
 
-                            tag_n_push_image("${MODULE}", ${environment}, "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            tag_n_push_image("${MODULE}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
 
                             remove_image("${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
                         }
@@ -123,7 +123,7 @@ pipeline {
                         steps {
                             buildImage("microservices", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
 
-                            tag_n_push_image("${MODULE}", ${environment}, "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            tag_n_push_image("${MODULE}", en"${environment.profile}", "${environment.region}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
 
                             remove_image("${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
                         }
