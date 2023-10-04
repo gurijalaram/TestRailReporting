@@ -36,7 +36,7 @@ public class HelpTests extends TestBaseUI {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {263, 6370, 6691, 6693})
+    @TestRail(id = {6370, 6691, 6693})
     @Description("Be able to access help information in the application header")
     public void onlineHelpTest() {
         loginPage = new CidAppLoginPage(driver);

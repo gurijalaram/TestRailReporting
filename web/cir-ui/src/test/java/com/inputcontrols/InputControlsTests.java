@@ -167,7 +167,6 @@ public class InputControlsTests extends TestBaseUI {
             .waitForInputControlsLoad()
             .selectExportSet(exportSetName, GenericReportPage.class)
             .clickReset()
-            .clickReset()
             .waitForExpectedExportCount("0")
             .waitForCorrectPartListCount("0");
 

@@ -132,7 +132,7 @@ subprojects {
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
         implementation 'io.github.bonigarcia:webdrivermanager:5.5.3'
         implementation 'org.seleniumhq.selenium:selenium-java:4.12.1'
-        testImplementation 'io.qameta.allure:allure-junit5:2.24.0'
+        testImplementation 'io.qameta.allure:allure-junit5:2.13.0'
         implementation 'org.projectlombok:lombok:1.18.24'
         annotationProcessor 'org.projectlombok:lombok:1.18.24'
         testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
@@ -147,8 +147,6 @@ subprojects {
         implementation 'software.amazon.awssdk:sts:2.15.20'
         implementation 'com.opencsv:opencsv:5.7.0'
         implementation 'com.auth0:java-jwt:4.2.0'
-        implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.14.0'
-        implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.14.0'
         implementation 'io.rest-assured:json-schema-validator:4.5.1'
         implementation 'io.rest-assured:rest-assured:4.5.1'
         implementation 'org.assertj:assertj-core:3.24.0'
@@ -159,5 +157,7 @@ subprojects {
         implementation 'org.jsoup:jsoup:1.15.4'
         implementation 'org.apache.commons:commons-math3:3.6.1'
         testImplementation 'org.hamcrest:hamcrest:2.2'
+        implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.14.0'
+        implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.14.0'
     }
 }
