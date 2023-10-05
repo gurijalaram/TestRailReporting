@@ -270,62 +270,6 @@ public class JasperApiUtils {
     }
 
     /**
-     * Generic method that tests currency functionality in the Scenario Comparison report
-     */
-    public void scenarioComparisonCurrencyTest() {
-        String currencyAssertValue = CurrencyEnum.GBP.getCurrency();
-        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
-
-        List<Element> currencyGBPSettingElementList = jasperReportSummaryGbp.getReportHtmlPart()
-            .getElementsContainingText("Currency").get(5).children();
-        List<String> currencySettingGBP = Arrays.asList(
-            currencyGBPSettingElementList.get(3).text(),
-            currencyGBPSettingElementList.get(4).text(),
-            currencyGBPSettingElementList.get(5).text()
-        );
-
-        List<Element> currencyValueGBPElementList = jasperReportSummaryGbp.getReportHtmlPart()
-            .getElementsContainingText("FULLY BURDENED COST").get(6).parent().children();
-        List<String> currencyValuesFbcGBP = Arrays.asList(
-            currencyValueGBPElementList.get(3).text(),
-            currencyValueGBPElementList.get(4).text(),
-            currencyValueGBPElementList.get(5).text()
-        );
-        currencyAssertValue = CurrencyEnum.USD.getCurrency();
-        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
-
-        List<Element> currencySettingUSDElementList = jasperReportSummaryUsd.getReportHtmlPart()
-            .getElementsContainingText("Currency").get(5).children();
-        List<String> currencySettingUSD = Arrays.asList(
-            currencySettingUSDElementList.get(3).text(),
-            currencySettingUSDElementList.get(4).text(),
-            currencySettingUSDElementList.get(5).text()
-        );
-
-        List<Element> currencyValueUSDElementList = jasperReportSummaryUsd.getReportHtmlPart()
-            .getElementsContainingText("FULLY BURDENED COST").get(6).parent().children();
-        List<String> currencyValuesFbcUSD = Arrays.asList(
-            currencyValueUSDElementList.get(3).text(),
-            currencyValueUSDElementList.get(4).text(),
-            currencyValueUSDElementList.get(5).text()
-        );
-
-        int i = 0;
-        for (String currentCurrencySettingGBP : currencySettingGBP) {
-            softAssertions.assertThat(currentCurrencySettingGBP).isNotEqualTo(currencySettingUSD.get(i));
-            i++;
-        }
-
-        int j = 0;
-        for (String currencyCurrencyValueGBP : currencyValuesFbcGBP) {
-            softAssertions.assertThat(currencyCurrencyValueGBP).isNotEqualTo(currencyValuesFbcUSD.get(j));
-            j++;
-        }
-
-        softAssertions.assertAll();
-    }
-
-    /**
      * Generic top level method for Cycle Time Value Tracking currency test
      */
     public void cycleTimeValueTrackingCurrencyTest() {
