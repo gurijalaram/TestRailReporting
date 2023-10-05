@@ -46,7 +46,7 @@ public class AboutUsPage extends EagerPageComponent<AboutUsPage> {
      * @return String
      */
     public String getAboutUsPageUrl() {
-        return getPageUtils().windowHandler(1).getCurrentUrl();
+        return getPageUtils().getTabTwoUrl();
     }
 
     /**

@@ -576,7 +576,7 @@ public class ProcessGroupsTests extends TestBaseUI {
     @Test
     @Tag(SMOKE)
     @Description("Testing process group Plasma Cut")
-    @TestRail(id = {6141, 6144})
+    @TestRail(id = 6141)
     public void testProcessGroupPlasmaCut() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
