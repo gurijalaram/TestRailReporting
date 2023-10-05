@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(HelpDocPage.class);
