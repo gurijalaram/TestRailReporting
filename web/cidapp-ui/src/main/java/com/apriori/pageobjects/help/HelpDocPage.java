@@ -10,6 +10,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(HelpDocPage.class);
@@ -49,6 +51,7 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     /**
      * Selects button to agree to gdpr
+     *
      * @return current page object
      */
     public HelpDocPage clickAgreeButton() {
@@ -58,6 +61,7 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     /**
      * Gets the page title
+     *
      * @return string
      */
     public String getChildPageTitle() {
@@ -68,10 +72,25 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     /**
      * Gets the page title
+     *
      * @return string
      */
     public String getDesignGuidanceChildPageTitle() {
         pageUtils.switchToWindow(1);
         return pageUtils.waitForElementToAppear(designGuidanceUserGuideTitle).getText();
+    }
+
+    /**
+     * Close the help page and return focus to previous page
+     *
+     * @param klass - the generic class
+     * @param <T>   - the return type
+     * @return generic object
+     */
+    public <T> T closeHelpPage(Class<T> klass) {
+        List<String> listOfWindows = pageUtils.listOfWindows();
+        driver.switchTo().window(listOfWindows.get(1)).close();
+        driver.switchTo().window(listOfWindows.get(0));
+        return PageFactory.initElements(driver, klass);
     }
 }
