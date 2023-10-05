@@ -6,6 +6,7 @@ public enum InputControlsEnum {
     COMPONENT_COST_CURRENCY("componentCostCurrencyCode"),
     COST_METRIC("costMetric"),
     END_DATE("endDate"),
+    EXPORT_SET_NAME("exportSetName"),
     MASS_METRIC("massMetric"),
     PROCESS_GROUP("processGroup"),
     DTC_SCORE("dtcScore"),

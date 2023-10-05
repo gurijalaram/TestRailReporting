@@ -753,9 +753,13 @@ public class JasperApiUtils {
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
+
         LocalDateTime currentDateTime1 = LocalDateTime.now();
         setReportParameterByName(InputControlsEnum.START_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1.minusYears(10)));
         setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), inputControls.getExportSetName().getOption(exportSetName).getValue());
+
         JasperReportSummary jasperReportSummaryDaily = jasperReportUtil.generateJasperReportSummary(getReportRequest());
         timer.stop();
         logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
@@ -764,8 +768,10 @@ public class JasperApiUtils {
 
         timer.reset();
         timer.start();
+
         setReportParameterByName(InputControlsEnum.START_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1.minusYears(10)));
         setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
+
         JasperReportSummary jasperReportSummaryYearly = jasperReportUtil.generateJasperReportSummary(getReportRequest());
         timer.stop();
         logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
@@ -821,9 +827,10 @@ public class JasperApiUtils {
     }
 
     private String getCurrentCurrency(JasperReportSummary jasperReportSummary, String indexOfItemToReturn, int indexOfReturnedItemsToUse) {
-        return indexOfReturnedItemsToUse == 3
+        /*return indexOfReturnedItemsToUse == 3
             ? jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text()
-            : jasperReportSummary.getReportHtmlPart().select("td[rowspan='2']").get(2).text();
+            : jasperReportSummary.getReportHtmlPart().select("td[rowspan='2']").get(2).text();*/
+        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text();
     }
 
     private String getCurrencyValueFromChart(JasperReportSummary jasperReportSummary, String partName) {
