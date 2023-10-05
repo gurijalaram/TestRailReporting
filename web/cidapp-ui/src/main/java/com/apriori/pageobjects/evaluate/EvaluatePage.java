@@ -778,7 +778,7 @@ public class EvaluatePage extends EvaluateToolbar {
     public EvaluatePage openSourceScenario(String scenarioName) {
         By byScenario = getByScenario(scenarioName);
         pageUtils.waitForElementAndClick(byScenario);
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return new EvaluatePage(driver);
     }
 
@@ -834,8 +834,9 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return page object
      */
     public EvaluatePage closeNewlyOpenedTab() {
-        pageUtils.windowHandler(1).close();
-        pageUtils.windowHandler(0);
+        List<String> listOfWindows = pageUtils.listOfWindows();
+        driver.switchTo().window(listOfWindows.get(1)).close();
+        driver.switchTo().window(listOfWindows.get(0));
         return new EvaluatePage(driver);
     }
 
