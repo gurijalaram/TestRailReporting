@@ -28,6 +28,7 @@ import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionsRes
 import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
 
@@ -42,10 +43,12 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Collections;
 import java.util.List;
 
+@ExtendWith(TestRulesApi.class)
 public class QmsScenarioDiscussionTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static SoftAssertions softAssertions = new SoftAssertions();

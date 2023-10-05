@@ -19,6 +19,7 @@ import com.apriori.qds.models.response.bidpackage.BidPackageResponse;
 import com.apriori.qds.utils.QdsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
 
@@ -28,9 +29,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.HashMap;
 
+@ExtendWith(TestRulesApi.class)
 public class BidPackageProjectItemTest extends TestUtil {
 
     private static SoftAssertions softAssertions;

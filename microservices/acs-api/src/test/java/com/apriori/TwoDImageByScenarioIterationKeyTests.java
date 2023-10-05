@@ -11,12 +11,15 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.models.response.FileResponse;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesApi.class)
 public class TwoDImageByScenarioIterationKeyTests extends TestUtil {
 
     @Test
