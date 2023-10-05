@@ -46,7 +46,7 @@ public class AchCustomerUsersTests {
         ResponseWrapper<UsersAch> users = achTestUtil.getCommonRequest(ACHAPIEnum.CUSTOMER_USERS, UsersAch.class, HttpStatus.SC_OK, customerIdentity);
         String userName = users.getResponseEntity().getItems().get(0).getUsername();
 
-        ResponseWrapper<UsersAch> userByName = achTestUtil.getCommonRequest(ACHAPIEnum.CUSTOMER_USER, UsersAch.class, HttpStatus.SC_OK, customerIdentity, "?username[CN]=" + userName);
+        ResponseWrapper<UsersAch> userByName = achTestUtil.getUsersWithParams("username[CN]", userName, customerIdentity);
 
         soft.assertThat(userByName.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         soft.assertThat(userByName.getResponseEntity().getItems().get(0).getUsername()).isEqualTo(userName);
@@ -57,7 +57,7 @@ public class AchCustomerUsersTests {
     @TestRail(id = {28479})
     @Description("Get users with request params that no users match")
     public void getNoUsersMatch() {
-        ResponseWrapper<UsersAch> userNoMatch = achTestUtil.getCommonRequest(ACHAPIEnum.CUSTOMER_USER, UsersAch.class, HttpStatus.SC_OK, customerIdentity, "?identity[CN]=000000000000");
+        ResponseWrapper<UsersAch> userNoMatch = achTestUtil.getUsersWithParams("identity[CN]", "000000000000", customerIdentity);
 
         soft.assertThat(userNoMatch.getResponseEntity().getTotalItemCount()).isEqualTo(0);
         soft.assertAll();

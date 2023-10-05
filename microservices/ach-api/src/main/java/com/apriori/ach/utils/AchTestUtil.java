@@ -6,8 +6,10 @@ import com.apriori.ach.models.response.CustomerAch;
 import com.apriori.ach.models.response.CustomersAch;
 import com.apriori.ach.models.response.SuccessUpdatePreferencesResponse;
 import com.apriori.ach.models.response.UserPreference;
+import com.apriori.ach.models.response.UsersAch;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
@@ -93,5 +95,19 @@ public class AchTestUtil extends TestUtil {
                 .build());
 
         return HTTPRequest.build(requestEntity).put();
+    }
+
+    /**
+     * @param param - name of parameter
+     * @param value - value of parameter
+     * @param inlineVariables - inline variables
+     * @return object ResponseWrapper
+     */
+    public ResponseWrapper<UsersAch> getUsersWithParams(String param, String value, String... inlineVariables) {
+        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.CUSTOMER_USERS, UsersAch.class)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .queryParams(new QueryParams().use(param, value));
+        return HTTPRequest.build(requestEntity).get();
     }
 }
