@@ -5,16 +5,19 @@ import com.apriori.enums.ColourEnum;
 import com.apriori.enums.PreferencesEnum;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@ExtendWith(TestRulesApi.class)
 public class SettingsTests {
 
     private final String asmPreferenceDefault = "";

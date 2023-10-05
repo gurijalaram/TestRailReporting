@@ -5,6 +5,7 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.sds.enums.SDSAPIEnum;
 import com.apriori.sds.models.response.PostComponentResponse;
 import com.apriori.sds.util.SDSTestUtil;
@@ -13,10 +14,12 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.File;
 
 // TODO : currently not working endpoint, should be added
+@ExtendWith(TestRulesApi.class)
 public class ApFilesTest  extends SDSTestUtil {
 
     @Test

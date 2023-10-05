@@ -13,12 +13,15 @@ import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
 import com.apriori.models.request.ErrorRequestResponse;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesApi.class)
 public class VerifyIfFailsTest {
 
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();

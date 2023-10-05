@@ -9,13 +9,16 @@ import com.apriori.acs.models.response.acs.costresults.ResultMapBean;
 import com.apriori.acs.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 import com.apriori.workorders.WorkorderAPITests;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesApi.class)
 public class CostResultsTests {
     private AcsResources acsResources = new AcsResources();
     private WorkorderAPITests workorderAPITests = new WorkorderAPITests();

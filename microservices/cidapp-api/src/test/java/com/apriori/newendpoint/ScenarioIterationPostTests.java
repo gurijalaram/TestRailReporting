@@ -14,6 +14,7 @@ import com.apriori.json.JsonManager;
 import com.apriori.models.response.CostingInput;
 import com.apriori.models.response.CssComponentResponse;
 import com.apriori.models.response.ScenarioItem;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -21,11 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
+@ExtendWith(TestRulesApi.class)
 public class ScenarioIterationPostTests {
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
 
