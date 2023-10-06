@@ -1,9 +1,7 @@
 package com.apriori;
 
-import com.apriori.enums.CssSearch;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.AuthUserContextUtil;
-import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.ScenarioItem;
@@ -22,8 +20,8 @@ import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionResp
 import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.CssComponent;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -32,11 +30,13 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@ExtendWith(TestRulesApi.class)
 public class QmsProjectsTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
     private SoftAssertions softAssertions = new SoftAssertions();

@@ -37,6 +37,7 @@ import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.json.JsonManager;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -44,12 +45,14 @@ import io.qameta.allure.Issue;
 import org.apache.commons.codec.binary.Base64;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+@ExtendWith(TestRulesApi.class)
 public class WorkorderAPITests extends TestUtil {
 
     private final FileUploadResources fileUploadResources = new FileUploadResources();
