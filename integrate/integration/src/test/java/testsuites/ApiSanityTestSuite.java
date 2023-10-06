@@ -31,6 +31,8 @@ import com.apriori.ach.tests.AchCurrentUserTests;
 import com.apriori.evaluate.DataCreationTests;
 import com.apriori.workorders.WorkorderAPITests;
 
+import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
+
 import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
@@ -65,7 +67,8 @@ import org.junit.platform.suite.api.Suite;
     ComponentsTest.class,
     DigitalFactoriesTest.class,
     ProcessGroupsTest.class,
-    QmsScenarioDiscussionTest.class
+    QmsScenarioDiscussionTest.class,
+    SheetMetalDtcReportTests.class
     })
 @IncludeTags(API_SANITY)
 public class ApiSanityTestSuite {
