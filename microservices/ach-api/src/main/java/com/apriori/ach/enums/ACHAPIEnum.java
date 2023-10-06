@@ -12,7 +12,7 @@ public enum ACHAPIEnum implements ExternalEndpointEnum {
     CUSTOMER_USERS("customers/%s/users"),
 
     //USER PREFERENCES
-    USER_PREFERENCES("users/current/preferences?sortBy[DESC]=createdAt"),
+    USER_PREFERENCES("users/current/preferences"),
 
     //USERS
     USER("users/current"),

@@ -6,6 +6,7 @@ import com.apriori.ach.models.response.CustomerAch;
 import com.apriori.ach.models.response.CustomersAch;
 import com.apriori.ach.models.response.SuccessUpdatePreferencesResponse;
 import com.apriori.ach.models.response.UserPreference;
+import com.apriori.ach.models.response.UserPreferences;
 import com.apriori.ach.models.response.UsersAch;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
@@ -108,6 +109,18 @@ public class AchTestUtil extends TestUtil {
             .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_OK)
             .queryParams(new QueryParams().use(param, value));
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Get sorted preferences
+     *
+     * @return object ResponseWrapper
+     */
+    public ResponseWrapper<UserPreferences> getSortedUserPreferences() {
+        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.USER_PREFERENCES, UserPreferences.class)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .queryParams(new QueryParams().use("sortBy[DESC]", "createdAt"));
         return HTTPRequest.build(requestEntity).get();
     }
 }
