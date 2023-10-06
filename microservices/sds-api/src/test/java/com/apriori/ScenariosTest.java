@@ -11,7 +11,7 @@ import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.ScenarioItem;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.sds.enums.SDSAPIEnum;
 import com.apriori.sds.models.request.PostComponentRequest;
 import com.apriori.sds.models.request.PostWatchpointReportRequest;
@@ -32,7 +32,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class ScenariosTest extends SDSTestUtil {
 
     private static ScenarioItem testingScenario;

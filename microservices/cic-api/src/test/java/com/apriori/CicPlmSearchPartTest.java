@@ -9,7 +9,7 @@ import com.apriori.cic.models.response.PlmSearchResponse;
 import com.apriori.cic.utils.CicApiTestUtil;
 import com.apriori.cic.utils.PlmApiTestUtil;
 import com.apriori.cic.utils.SearchFilter;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class CicPlmSearchPartTest {
     private static SoftAssertions softAssertions;
 

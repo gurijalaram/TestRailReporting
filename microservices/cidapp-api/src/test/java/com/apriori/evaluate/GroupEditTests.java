@@ -15,7 +15,7 @@ import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.models.response.ErrorMessage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
 
@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class GroupEditTests {
 
     private AssemblyUtils assemblyUtils = new AssemblyUtils();

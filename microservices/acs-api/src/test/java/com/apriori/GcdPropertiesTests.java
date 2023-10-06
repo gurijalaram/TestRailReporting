@@ -5,7 +5,7 @@ import com.apriori.acs.models.response.acs.GcdProperties.PropertiesToSet;
 import com.apriori.acs.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 import com.apriori.workorders.WorkorderAPITests;
 
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.Arrays;
 import java.util.Collections;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class GcdPropertiesTests {
 
     private void saveGcdPropertiesAssertion(GcdPropertiesResponse gcdPropertiesResponse) {

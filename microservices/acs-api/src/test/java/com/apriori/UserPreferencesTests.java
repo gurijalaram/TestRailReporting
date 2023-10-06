@@ -13,7 +13,7 @@ import com.apriori.acs.models.response.acs.genericclasses.GenericResourceCreated
 import com.apriori.acs.models.response.acs.userpreferences.UserPreferencesResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -21,7 +21,7 @@ import io.restassured.http.Header;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class UserPreferencesTests extends TestUtil {
 
     @Test

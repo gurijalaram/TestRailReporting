@@ -6,7 +6,7 @@ import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.properties.PropertiesContext;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import java.util.stream.IntStream;
 
 // TODO ALL: test it
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class ResetAutomationUsers {
     private static final Logger logger = LoggerFactory.getLogger(ResetAutomationUsers.class);
     private static final String automationPassword = PropertiesContext.get("ats.automation_password");

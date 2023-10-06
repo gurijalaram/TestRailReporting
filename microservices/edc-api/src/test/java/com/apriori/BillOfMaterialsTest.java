@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import com.apriori.edc.models.response.bill.of.materials.BillOfMaterialsResponse;
 import com.apriori.edc.utils.BillOfMaterialsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -19,7 +19,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
     private static final String filename = "Test BOM 5.csv";

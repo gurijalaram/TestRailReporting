@@ -24,7 +24,7 @@ import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -37,7 +37,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Collections;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class CicAgentRunPartsTest extends WorkflowTestUtil {
 
     private SoftAssertions softAssertions;
