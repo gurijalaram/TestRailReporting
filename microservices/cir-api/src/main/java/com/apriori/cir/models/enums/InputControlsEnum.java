@@ -18,7 +18,8 @@ public enum InputControlsEnum {
     LATEST_EXPORT_DATE("latestExportDate"),
     EARLIEST_EXPORT_DATE("earliestExportDate"),
     EXPORT_DATE("exportDate"),
-    ROLLUP("rollup");
+    ROLLUP("rollup"),
+    LATEST_COST_DATE("latestCostDate");
 
     private final String inputControlId;
 

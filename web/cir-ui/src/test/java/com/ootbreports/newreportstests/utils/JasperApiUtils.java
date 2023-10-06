@@ -158,6 +158,28 @@ public class JasperApiUtils {
     }
 
     /**
+     * Generic method for testing currency and latest cost date only
+     *
+     * @param currencyToSet - currency that is to be set
+     * @return JasperReportSummary instance
+     */
+    public JasperReportSummary genericTestCoreCurrencyLatestCostDateOnly(String currencyToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+        setReportParameterByName(InputControlsEnum.LATEST_COST_DATE.getInputControlId(),
+            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now())
+        );
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
      * Generic method for testing currency only, for UC and UPC tests
      *
      * @param currencyToSet - currency that is to be set
@@ -282,17 +304,17 @@ public class JasperApiUtils {
         String currencyAssertValue = CurrencyEnum.USD.getCurrency();
         JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
 
-        String currentCurrencyAboveChart = isSheetMetalDtcDetails ?
-            getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryUsd) :
-            getCurrentCurrencyFromAboveChart(jasperReportSummaryUsd, areBubblesPresent);
+        String currentCurrencyAboveChart = isSheetMetalDtcDetails
+            ? getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryUsd)
+            : getCurrentCurrencyFromAboveChart(jasperReportSummaryUsd, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         currencyAssertValue = CurrencyEnum.GBP.getCurrency();
         JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
 
-        currentCurrencyAboveChart = isSheetMetalDtcDetails ?
-            getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryGbp) :
-            getCurrentCurrencyFromAboveChart(jasperReportSummaryGbp, areBubblesPresent);
+        currentCurrencyAboveChart = isSheetMetalDtcDetails
+            ? getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryGbp)
+            : getCurrentCurrencyFromAboveChart(jasperReportSummaryGbp, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         String usdCurrencyValue = areBubblesPresent
