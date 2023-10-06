@@ -1,5 +1,7 @@
 package com.apriori.evaluate;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.response.CostingTemplate;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
@@ -13,6 +15,7 @@ import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesApi;
 
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -79,6 +82,7 @@ public class DataCreationTests {
     }
 
     @Test
+    @Tag(API_SANITY)
     public void dataCreateCostPublishTest() {
         final ProcessGroupEnum processGroup = ProcessGroupEnum.STOCK_MACHINING;
         final String componentName = "Machined Box AMERICAS";
