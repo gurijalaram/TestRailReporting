@@ -82,7 +82,6 @@ public class DataCreationTests {
     }
 
     @Test
-    @Tag(API_SANITY)
     public void dataCreateCostPublishTest() {
         final ProcessGroupEnum processGroup = ProcessGroupEnum.STOCK_MACHINING;
         final String componentName = "Machined Box AMERICAS";
