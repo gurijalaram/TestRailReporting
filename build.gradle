@@ -143,7 +143,7 @@ subprojects {
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
         implementation 'io.github.bonigarcia:webdrivermanager:5.5.3'
         implementation 'org.seleniumhq.selenium:selenium-java:4.12.1'
-        testImplementation 'io.qameta.allure:allure-junit5:2.13.0'
+        testImplementation 'io.qameta.allure:allure-junit5-assert:2.20.1'
         implementation 'org.projectlombok:lombok:1.18.24'
         annotationProcessor 'org.projectlombok:lombok:1.18.24'
         testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'

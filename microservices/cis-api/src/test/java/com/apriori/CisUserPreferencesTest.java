@@ -11,13 +11,15 @@ import com.apriori.cis.models.response.userpreferences.CurrentExtendedUserPrefer
 import com.apriori.cis.models.response.userpreferences.ExtendedUserPreferencesResponse;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-
+@ExtendWith(TestRulesApi.class)
 public class CisUserPreferencesTest extends CisUserPreferencesResources {
 
     @BeforeEach

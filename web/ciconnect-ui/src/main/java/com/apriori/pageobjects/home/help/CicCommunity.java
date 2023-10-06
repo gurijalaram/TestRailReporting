@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.home.help;
 
 import com.apriori.pageobjects.CICBasePage;
-import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -34,7 +33,7 @@ public class CicCommunity extends CICBasePage {
      * @return CicUserGuide Page
      */
     public CicCommunity switchTab() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return new CicCommunity(driver);
     }
 

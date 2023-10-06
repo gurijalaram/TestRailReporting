@@ -8,6 +8,7 @@ import com.apriori.dms.utils.DmsApiTestDataUtils;
 import com.apriori.dms.utils.DmsApiTestUtils;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.models.response.ApwErrorMessage;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -16,7 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesApi.class)
 public class DmsDiscussionTest extends DmsApiTestDataUtils {
     private static String discussionDescription = StringUtils.EMPTY;
 

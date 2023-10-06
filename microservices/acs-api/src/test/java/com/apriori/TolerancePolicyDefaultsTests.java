@@ -14,11 +14,14 @@ import com.apriori.acs.models.response.acs.tolerancepolicydefaults.PropertyValue
 import com.apriori.acs.models.response.acs.tolerancepolicydefaults.TolerancePolicyDefaultsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.http.utils.TestUtil;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesApi.class)
 public class TolerancePolicyDefaultsTests extends TestUtil {
 
     @Test

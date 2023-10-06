@@ -65,7 +65,7 @@ public class NavigationBar extends EagerPageComponent<NavigationBar> {
     public ZendeskSignInPage clickHelp() {
         getPageUtils().waitForElementAndClick(helpDropdown);
         getPageUtils().waitForElementAndClick(helpButton);
-        getPageUtils().windowHandler(1);
+        getPageUtils().switchToWindow(1);
         return new ZendeskSignInPage(getDriver());
     }
 
@@ -77,7 +77,7 @@ public class NavigationBar extends EagerPageComponent<NavigationBar> {
     public AboutUsPage clickAbout() {
         getPageUtils().waitForElementAndClick(helpDropdown);
         getPageUtils().waitForElementAndClick(aboutButton);
-        getPageUtils().windowHandler(1);
+        getPageUtils().switchToWindow(1);
         return new AboutUsPage(getDriver());
     }
 

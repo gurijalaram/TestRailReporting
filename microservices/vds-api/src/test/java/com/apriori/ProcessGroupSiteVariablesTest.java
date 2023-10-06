@@ -7,6 +7,7 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.ProcessGroupUtil;
 import com.apriori.util.SiteVariableUtil;
@@ -19,11 +20,13 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@ExtendWith(TestRulesApi.class)
 public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
 
     protected static final Set<String> siteVariableIdsToDelete = new HashSet<>();

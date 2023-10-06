@@ -922,7 +922,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage openNewCidTabAndFocus(int index) {
         pageUtils.jsNewTab();
-        pageUtils.windowHandler(index);
+        pageUtils.switchToWindow(index);
 
         driver.get(PropertiesContext.get("cidapp.ui_url"));
         pageUtils.waitForElementToAppear(cidLogo);
@@ -2178,7 +2178,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage switchTab(int index) {
         if (driver.getWindowHandles().size() == (index + 1)) {
-            pageUtils.windowHandler(index);
+            pageUtils.switchToWindow(index);
         }
         return this;
     }
@@ -2238,7 +2238,7 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath("//span[contains(text(), 'details')]");
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         waitForReportToLoad();
     }
 

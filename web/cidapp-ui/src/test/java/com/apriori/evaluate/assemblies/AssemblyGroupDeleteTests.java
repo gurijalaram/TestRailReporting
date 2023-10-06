@@ -6,7 +6,6 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.components.ComponentsTreePage;
-import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.reader.file.user.UserCredentials;
@@ -25,11 +24,8 @@ import java.util.List;
 public class AssemblyGroupDeleteTests extends TestBaseUI {
 
     private UserCredentials currentUser;
-    private CidAppLoginPage loginPage;
-    private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private ComponentsTreePage componentsTreePage;
-    private ComponentInfoBuilder cidComponentItem;
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
 

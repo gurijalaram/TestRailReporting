@@ -10,12 +10,15 @@ import com.apriori.nts.models.response.Email;
 import com.apriori.nts.models.response.EmailsItems;
 import com.apriori.nts.models.response.SendEmail;
 import com.apriori.nts.utils.Constants;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesApi.class)
 public class EmailsTests {
 
     @Test

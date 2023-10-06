@@ -8,11 +8,14 @@ import com.apriori.fms.models.response.FileResponse;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.json.JsonManager;
+import com.apriori.rules.TestRulesApi;
 
 import io.qameta.allure.Description;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
+@ExtendWith(TestRulesApi.class)
 public class CidWorkorderAPITests extends TestUtil {
 
     @ParameterizedTest
