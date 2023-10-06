@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
@@ -12,6 +14,7 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -19,6 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class ComponentsTest extends SDSTestUtil {
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = 6937)
     @Description("Find components for a customer matching a specified query.")
     public void getComponents() {
