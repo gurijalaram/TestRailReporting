@@ -14,7 +14,11 @@ public enum InputControlsEnum {
     SORT_ORDER("sortOrder"),
     START_DATE("startDate"),
     TRENDING_PERIOD("trendingPeriod"),
-    PROJECT_ROLLUP("projectRollup");
+    PROJECT_ROLLUP("projectRollup"),
+    LATEST_EXPORT_DATE("latestExportDate"),
+    EARLIEST_EXPORT_DATE("earliestExportDate"),
+    EXPORT_DATE("exportDate"),
+    ROLLUP("rollup");
 
     private final String inputControlId;
 

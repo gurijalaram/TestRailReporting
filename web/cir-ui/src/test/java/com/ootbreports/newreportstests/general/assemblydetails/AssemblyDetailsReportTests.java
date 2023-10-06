@@ -28,6 +28,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     public void testCurrencyCodeWorks() {
         jasperApiUtils.genericDtcCurrencyTest(
             ExportSetEnum.TOP_LEVEL.getExportSetName(),
+            false,
             false
         );
     }

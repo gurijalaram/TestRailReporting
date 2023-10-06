@@ -42,7 +42,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     public void testCurrencyCode() {
         jasperApiUtils.genericDtcCurrencyTest(
             JasperCirApiPartsEnum.P_1271576.getPartName(),
-            true
+            true,
+            false
         );
     }
 

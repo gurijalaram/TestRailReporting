@@ -102,11 +102,11 @@ public class JasperApiUtils {
 
         if (processGroupName != null) {
             String processGroupId = inputControls.getProcessGroup().getOption(processGroupName).getValue();
-            setReportParameterByName("processGroup", processGroupId);
+            setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(), processGroupId);
         }
 
-        setReportParameterByName("exportSetName", currentExportSet);
-        setReportParameterByName("latestExportDate", currentDateTime);
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -127,7 +127,7 @@ public class JasperApiUtils {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
 
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
-        setReportParameterByName("exportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
+        setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -172,10 +172,12 @@ public class JasperApiUtils {
 
         String rollupValue = inputControlState.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
 
-        setExportNameParameterByName("exportSetName", valueOneToSet, valueTwoToSet);
-        setReportParameterByName("rollup", rollupValue);
+        setExportNameParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), valueOneToSet, valueTwoToSet);
+        setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(), rollupValue);
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
-        setReportParameterByName("latestExportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
+        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
+            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now())
+        );
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -247,8 +249,8 @@ public class JasperApiUtils {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
-        setReportParameterByName("exportSetName", exportSetName);
-        setReportParameterByName("exportDate", currentDateTime);
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), exportSetName);
+        setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), currentDateTime);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -274,18 +276,23 @@ public class JasperApiUtils {
      *
      * @param partName          - String of partName which is to be used
      * @param areBubblesPresent - boolean which states if bubbles are present or not
+     * @param isSheetMetalDtcDetails - boolean which states if current test is sheet metal dtc details report or not
      */
-    public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent) {
+    public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent, boolean isSheetMetalDtcDetails) {
         String currencyAssertValue = CurrencyEnum.USD.getCurrency();
         JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
 
-        String currentCurrencyAboveChart = getCurrentCurrencyFromAboveChart(jasperReportSummaryUsd, areBubblesPresent);
+        String currentCurrencyAboveChart = isSheetMetalDtcDetails ?
+            getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryUsd) :
+            getCurrentCurrencyFromAboveChart(jasperReportSummaryUsd, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         currencyAssertValue = CurrencyEnum.GBP.getCurrency();
         JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
 
-        currentCurrencyAboveChart = getCurrentCurrencyFromAboveChart(jasperReportSummaryGbp, areBubblesPresent);
+        currentCurrencyAboveChart = isSheetMetalDtcDetails ?
+            getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryGbp) :
+            getCurrentCurrencyFromAboveChart(jasperReportSummaryGbp, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         String usdCurrencyValue = areBubblesPresent
@@ -711,7 +718,7 @@ public class JasperApiUtils {
         LocalDateTime currentDateTime1 = LocalDateTime.now();
         setReportParameterByName(InputControlsEnum.START_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1.minusYears(10)));
         setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
-        setReportParameterByName("exportSetName", jasperReportUtil.getInputControls(reportValueForInputControls).getExportSetName().getOption(ExportSetEnum.ROLL_UP_A.getExportSetName()).getValue());
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), jasperReportUtil.getInputControls(reportValueForInputControls).getExportSetName().getOption(ExportSetEnum.ROLL_UP_A.getExportSetName()).getValue());
 
         JasperReportSummaryIncRawData jasperReportSummaryDaily = jasperReportUtil.generateJasperReportSummaryIncRawData(getReportRequest());
         timer.stop();
@@ -807,6 +814,10 @@ public class JasperApiUtils {
         return assertValues;
     }
 
+    private String getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(JasperReportSummary jasperReportSummary) {
+        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(6).text();
+    }
+
     private String getCurrentCurrencyFromAboveChart(JasperReportSummary jasperReportSummary, boolean areBubblesPresent) {
         return areBubblesPresent
             ? getCurrentCurrency(jasperReportSummary, "2", 3)
@@ -817,7 +828,6 @@ public class JasperApiUtils {
         return indexOfReturnedItemsToUse == 3
             ? jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text()
             : jasperReportSummary.getReportHtmlPart().select("td[rowspan='2']").get(2).text();
-        //return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text();
     }
 
     private String getCurrencyValueFromChart(JasperReportSummary jasperReportSummary, String partName) {
