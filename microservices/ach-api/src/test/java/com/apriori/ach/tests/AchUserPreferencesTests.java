@@ -77,7 +77,7 @@ public class AchUserPreferencesTests {
         String newValue = generateStringUtil.getRandomNumbersStartsNoZero();
 
         achTestUtil.updatePreferencesByPatch(prefIdentity, newValue);
-        ResponseWrapper<UserPreferences> preferences = achTestUtil.getCommonRequest(ACHAPIEnum.USER_PREFERENCES, UserPreferences.class, HttpStatus.SC_OK);
+        ResponseWrapper<UserPreferences> preferences = achTestUtil.getSortedUserPreferences();
         String updatedValue = preferences.getResponseEntity().getItems().stream().filter(pref -> pref.getIdentity().equals(prefIdentity)).collect(Collectors.toList()).get(0).getValue();
 
         soft.assertThat(updatedValue).isEqualTo(newValue);
