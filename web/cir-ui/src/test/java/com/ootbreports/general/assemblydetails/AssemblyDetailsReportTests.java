@@ -286,8 +286,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Issue("AP-53537")
     @Tags({
         @Tag(REPORTS),
-        @Tag(CUSTOMER),
-        @Tag(API_SANITY)
+        @Tag(CUSTOMER)
     })
     @TestRail(id = {1934, 1929})
     @Description("Verify totals calculations for Top Level")
