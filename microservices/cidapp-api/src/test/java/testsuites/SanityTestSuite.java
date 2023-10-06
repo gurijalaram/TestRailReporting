@@ -8,6 +8,6 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectPackages("com.apriori")
-@IncludeTags(SANITY)
+@IncludeTags(API_SANITY)
 public class SanityTestSuite {
 }
