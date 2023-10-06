@@ -2,6 +2,7 @@ package testsuites;
 
 import com.apriori.ach.tests.AchApplicationDataTests;
 import com.apriori.ach.tests.AchCurrentUserTests;
+import com.apriori.ach.tests.AchCustomerUsersTests;
 import com.apriori.ach.tests.AchCustomersTests;
 import com.apriori.ach.tests.AchEnablementsSupportTests;
 import com.apriori.ach.tests.AchNotificationsTests;
@@ -18,6 +19,7 @@ import org.junit.platform.suite.api.Suite;
     AchApplicationDataTests.class,
     AchCurrentUserTests.class,
     AchCustomersTests.class,
+    AchCustomerUsersTests.class,
     AchEnablementsSupportTests.class,
     AchNotificationsTests.class,
     AchPeopleTests.class,
