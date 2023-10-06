@@ -814,10 +814,10 @@ public class JasperApiUtils {
     }
 
     private String getCurrentCurrency(JasperReportSummary jasperReportSummary, String indexOfItemToReturn, int indexOfReturnedItemsToUse) {
-        /*return indexOfReturnedItemsToUse == 3
+        return indexOfReturnedItemsToUse == 3
             ? jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text()
-            : jasperReportSummary.getReportHtmlPart().select("td[rowspan='2']").get(2).text();*/
-        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text();
+            : jasperReportSummary.getReportHtmlPart().select("td[rowspan='2']").get(2).text();
+        //return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", indexOfItemToReturn).get(indexOfReturnedItemsToUse).text();
     }
 
     private String getCurrencyValueFromChart(JasperReportSummary jasperReportSummary, String partName) {
