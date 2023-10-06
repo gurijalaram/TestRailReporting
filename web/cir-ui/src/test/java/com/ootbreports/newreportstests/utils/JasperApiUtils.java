@@ -12,6 +12,7 @@ import com.apriori.cir.models.enums.InputControlsEnum;
 import com.apriori.cir.models.request.ReportRequest;
 import com.apriori.cir.models.response.ChartDataPoint;
 import com.apriori.cir.models.response.InputControl;
+import com.apriori.cir.models.response.InputControlState;
 import com.apriori.cir.utils.JasperReportUtil;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ExportSetEnum;
@@ -145,8 +146,36 @@ public class JasperApiUtils {
      */
     public JasperReportSummary genericTestCoreCurrencyOnly(String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
-
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
+     * Generic method for testing currency only, for UC and UPC tests
+     *
+     * @param currencyToSet - currency that is to be set
+     * @return JasperReportSummary instance
+     */
+    public JasperReportSummary genericTestCoreCurrencyOnlyUpgradeComparisonTests(String currencyToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+
+        InputControl inputControlState = jasperReportUtil.getInputControls(reportValueForInputControls);
+        String valueOneToSet = inputControlState.getExportSetName().getOption(ExportSetEnum.ALL_PG_NEW.getExportSetName()).getValue();
+        String valueTwoToSet = inputControlState.getExportSetName().getOption(ExportSetEnum.ALL_PG_CURRENT.getExportSetName()).getValue();
+
+        String rollupValue = inputControlState.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
+
+        setExportNameParameterByName("exportSetName", valueOneToSet, valueTwoToSet);
+        setReportParameterByName("rollup", rollupValue);
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+        setReportParameterByName("latestExportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -161,14 +190,16 @@ public class JasperApiUtils {
      * Generic currency test for Upgrade Comparison and Upgrade Part Comparison Reports
      *
      * @param currencyToUse - String
+     * @param currencyIndexToGet - int
      * @return ArrayList of values to assert on
      */
-    public ArrayList<String> generateReportAndGetAssertValues(String currencyToUse) {
-        JasperReportSummary jasperReportSummaryUSD = genericTestCoreCurrencyOnly(currencyToUse);
+    public ArrayList<String> generateReportAndGetAssertValues(String currencyToUse, int currencyIndexToGet) {
+        JasperReportSummary jasperReportSummary = genericTestCoreCurrencyOnlyUpgradeComparisonTests(currencyToUse);
 
+        String colspanToUse = currencyIndexToGet == 2 ? "19" : "12";
         ArrayList<String> assertValues = new ArrayList<>();
-        assertValues.add(jasperReportSummaryUSD.getReportHtmlPart().getElementsByAttributeValue("colspan", "12").get(3).child(0).text());
-        assertValues.add(jasperReportSummaryUSD.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(7).child(0).text());
+        assertValues.add(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", colspanToUse).get(currencyIndexToGet).child(0).text());
+        assertValues.add(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(7).child(0).text());
         return assertValues;
     }
 
@@ -583,6 +614,18 @@ public class JasperApiUtils {
     public void setReportParameterByName(String valueToGet, String valueToSet) {
         this.reportRequest.getParameters().getReportParameterByName(valueToGet)
             .setValue(Collections.singletonList(valueToSet));
+    }
+
+    /**
+     * Sets export set name to more than one
+     *
+     * @param valueToGet String the key of the value to set
+     * @param valueOneToSet String of the first value which to set
+     * @param valueTwoToSet String of the second value which to set
+     */
+    public void setExportNameParameterByName(String valueToGet, String valueOneToSet, String valueTwoToSet) {
+        this.reportRequest.getParameters().getReportParameterByName(valueToGet)
+            .setValue(Arrays.asList(valueOneToSet, valueTwoToSet));
     }
 
     /**
