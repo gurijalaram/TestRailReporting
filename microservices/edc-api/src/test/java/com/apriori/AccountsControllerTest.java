@@ -9,7 +9,7 @@ import com.apriori.edc.models.response.accounts.AccountsResponse;
 import com.apriori.edc.utils.AccountsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -23,7 +23,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class AccountsControllerTest extends AccountsUtil {
 
     private static String identity;

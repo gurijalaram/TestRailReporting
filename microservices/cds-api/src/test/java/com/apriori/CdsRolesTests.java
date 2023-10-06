@@ -3,7 +3,7 @@ package com.apriori;
 import com.apriori.cds.models.response.Role;
 import com.apriori.cds.models.response.Roles;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.stream.Collectors;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class CdsRolesTests {
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private SoftAssertions soft = new SoftAssertions();

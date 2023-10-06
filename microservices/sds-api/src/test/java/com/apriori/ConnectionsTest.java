@@ -5,7 +5,7 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.properties.PropertiesContext;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.sds.enums.SDSAPIEnum;
 import com.apriori.sds.models.request.ConnectionRequest;
 import com.apriori.sds.models.response.Connection;
@@ -26,7 +26,7 @@ import java.util.Set;
 // TODO : ignored due to https://jira.apriori.com/browse/BA-1943
 //  shouldn't be un-ignored
 @Disabled
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class ConnectionsTest extends SDSTestUtil {
 
     private static Set<String> connectionsToDelete = new HashSet<>();

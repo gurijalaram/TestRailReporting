@@ -21,8 +21,11 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * @author cfrith
+ */
 @Slf4j
-public class TestRulesApi implements BeforeTestExecutionCallback, BeforeAllCallback, TestWatcher {
+public class TestRulesAPI implements BeforeTestExecutionCallback, BeforeAllCallback, TestWatcher {
 
     private static final String TESTRAIL_REPORT = "TEST_RAIL";
     private static boolean started = false;

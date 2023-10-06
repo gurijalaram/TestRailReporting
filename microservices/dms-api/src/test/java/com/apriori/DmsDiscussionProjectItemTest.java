@@ -6,7 +6,7 @@ import com.apriori.models.response.ApwErrorMessage;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionsResponse;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -14,7 +14,7 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class DmsDiscussionProjectItemTest extends DmsApiTestDataUtils {
     @Test
     @TestRail(id = {24413, 24414})
