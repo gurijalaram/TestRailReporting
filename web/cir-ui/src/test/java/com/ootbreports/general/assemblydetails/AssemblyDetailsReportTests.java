@@ -1,8 +1,6 @@
 package com.ootbreports.general.assemblydetails;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.CUSTOMER;
-import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -288,7 +286,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Issue("AP-53537")
     @Tags({
         @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(CUSTOMER),
+        @Tag(API_SANITY)
     })
     @TestRail(id = {1934, 1929})
     @Description("Verify totals calculations for Top Level")

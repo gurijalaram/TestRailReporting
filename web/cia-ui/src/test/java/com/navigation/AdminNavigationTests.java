@@ -13,8 +13,11 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.Constants;
+
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 public class AdminNavigationTests extends TestBaseUI {
 
@@ -88,6 +91,7 @@ public class AdminNavigationTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {2984})
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
