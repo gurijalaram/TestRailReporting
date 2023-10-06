@@ -1,5 +1,6 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
@@ -22,6 +23,7 @@ import com.google.common.collect.Comparators;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -45,6 +47,7 @@ public class CmpComparisonTests {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = 26182)
     @Description("Get a list of comparisons")
     public void getComparisonsTest() {

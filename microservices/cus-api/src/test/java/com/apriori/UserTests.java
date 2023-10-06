@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cus.models.request.UpdateUserRequest;
 import com.apriori.cus.models.request.UserProfile;
 import com.apriori.cus.models.response.ErrorResponse;
@@ -16,6 +18,7 @@ import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -35,6 +38,7 @@ public class UserTests {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = 16822)
     @Description("Verify GET current user endpoint test")
     public void verifyCurrentUserTest() {

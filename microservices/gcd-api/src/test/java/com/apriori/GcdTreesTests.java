@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.gcd.controller.GcdTreeController;
 import com.apriori.gcd.models.response.GcdTree;
 import com.apriori.gcd.models.response.GcdsAdded;
@@ -14,6 +16,7 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -27,6 +30,7 @@ public class GcdTreesTests {
     private SoftAssertions soft = new SoftAssertions();
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {24114})
     @Description("Validate difference is returned when different trees are submitted in request")
     public void testDifferentGcdTrees() {

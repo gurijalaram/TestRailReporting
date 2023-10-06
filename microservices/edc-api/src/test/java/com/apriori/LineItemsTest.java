@@ -2,6 +2,7 @@ package com.apriori;
 
 import static com.apriori.edc.utils.BillOfMaterialsUtil.deleteBillOfMaterialById;
 import static com.apriori.edc.utils.BillOfMaterialsUtil.postBillOfMaterials;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import com.apriori.edc.models.response.line.items.LineItemsResponse;
 import com.apriori.edc.utils.LineItemsUtil;
@@ -15,6 +16,7 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -46,6 +48,7 @@ public class LineItemsTest extends LineItemsUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = 9417)
     @Description("GET List the line items in a bill of materials matching a specified query")
     public void testGetLineItems() {

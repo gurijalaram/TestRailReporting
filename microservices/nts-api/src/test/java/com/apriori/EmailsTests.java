@@ -1,5 +1,6 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -15,6 +16,7 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -22,6 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class EmailsTests {
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {3828, 10472, 3881})
     @Description("Send an email using the NTS API")
     public void sendEmail() {
