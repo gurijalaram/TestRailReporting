@@ -37,6 +37,7 @@ import org.junit.platform.suite.api.Suite;
     CasUsersTests.class,
     CdsCustomersTests.class,
     CicAgentTest.class,
+    CostAllCadTests.class,
     DataCreationTests.class,
     CmpComparisonTests.class,
     CssSearchTests.class,
