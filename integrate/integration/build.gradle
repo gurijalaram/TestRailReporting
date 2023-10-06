@@ -36,4 +36,7 @@ dependencies {
     testImplementation project(path: ':web:cidapp-ui', configuration: 'testArtifacts')
     testImplementation project(path: ':web:ciconnect-ui', configuration: 'testArtifacts')
     testImplementation project(path: ':web:cis-ui', configuration: 'testArtifacts')
+
+
+    // TODO: add new modules for SANITY tests into build.gradle
 }
