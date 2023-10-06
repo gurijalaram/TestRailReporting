@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.models.response.Applications;
 import com.apriori.cas.models.response.CasErrorMessage;
@@ -21,6 +23,7 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -48,6 +51,7 @@ public class CasCustomersTests {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {5810})
     @Description("Get a list of CAS customers sorted by name")
     public void getCustomersSortedByName() {

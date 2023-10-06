@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.models.response.User;
 import com.apriori.cas.utils.CasTestUtil;
@@ -15,6 +17,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -30,6 +33,7 @@ public class CasUsersTests extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {5666})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
