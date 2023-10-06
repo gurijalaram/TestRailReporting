@@ -12,15 +12,20 @@ import com.apriori.pageobjects.login.CicLoginPage;
 import com.apriori.pageobjects.users.UsersPage;
 import com.apriori.pageobjects.workflows.WorkflowHome;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.testconfig.TestSuiteType;
 import com.apriori.testrail.TestRail;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.suite.api.ExcludeTags;
 
 import java.time.Year;
 
+@Tag(TestSuiteType.TestSuite.CUSTOMER)
 public class NavBarTests extends WorkflowTestUtil {
 
     private SoftAssertions softAssertions;
