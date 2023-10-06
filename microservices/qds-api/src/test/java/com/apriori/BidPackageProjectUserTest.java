@@ -18,10 +18,13 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.HashMap;
+
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 @ExtendWith(TestRulesApi.class)
 public class BidPackageProjectUserTest extends TestUtil {
@@ -43,6 +46,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {13352, 13649})
     @Description("Create and delete DEFAULT ROLE project user")
     public void createAndDeleteBidPackageDefaultProjectUser() {

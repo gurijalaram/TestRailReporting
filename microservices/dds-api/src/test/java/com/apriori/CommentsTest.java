@@ -28,12 +28,15 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 @ExtendWith(TestRulesApi.class)
 public class CommentsTest extends TestUtil {
@@ -104,6 +107,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {12373})
     @Description("get a valid comment")
     public void getComment() {
@@ -120,6 +124,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {12375})
     @Description("update a valid comment")
     public void updateComment() {

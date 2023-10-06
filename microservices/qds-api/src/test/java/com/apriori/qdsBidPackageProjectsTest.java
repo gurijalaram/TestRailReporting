@@ -20,14 +20,17 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 @ExtendWith(TestRulesApi.class)
-public class BidPackageProjectsTest extends TestUtil {
+public class qdsBidPackageProjectsTest extends TestUtil {
 
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static SoftAssertions softAssertions;
@@ -54,6 +57,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {13335, 13348, 24419})
     @Description("Get all Bid Package Projects and verify pagination")
     public void getBidPackageProjects() {
@@ -81,6 +85,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {13340, 24420})
     @Description("Update Bid Package Project By Identity")
     public void updateBidPackageProject() {

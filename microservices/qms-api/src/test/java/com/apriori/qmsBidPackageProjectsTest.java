@@ -29,6 +29,7 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -37,8 +38,10 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 @ExtendWith(TestRulesApi.class)
-public class BidPackageProjectsTest extends TestUtil {
+public class qmsBidPackageProjectsTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
@@ -88,6 +91,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {13898, 13899, 14671, 23010})
     @Description("Get list of all Bid Package Projects and verify pagination ")
     public void getBidPackageProjects() {
@@ -122,6 +126,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {13751, 22958, 24277, 25989})
     @Issue("COL-2020")
     @Description("Update Bid Package Project By Identity")
