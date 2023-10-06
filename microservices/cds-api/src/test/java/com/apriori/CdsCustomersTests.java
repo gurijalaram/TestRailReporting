@@ -15,8 +15,12 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 
 @ExtendWith(TestRulesApi.class)
 public class CdsCustomersTests {
@@ -39,6 +43,7 @@ public class CdsCustomersTests {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {3252})
     @Description("API returns a list of all the available customers in the CDS DB")
     public void getCustomers() {
