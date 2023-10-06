@@ -91,7 +91,6 @@ public class AdminNavigationTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(API_SANITY)
     @TestRail(id = {2984})
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
