@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.DateUtil;
@@ -38,10 +40,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.HashMap;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 @ExtendWith(TestRulesApi.class)
-public class qmsBidPackageProjectsTest extends TestUtil {
+public class QmsBidPackageProjectsTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;

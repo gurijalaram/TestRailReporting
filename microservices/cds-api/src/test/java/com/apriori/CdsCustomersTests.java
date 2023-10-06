@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
@@ -18,9 +20,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
-
 
 @ExtendWith(TestRulesApi.class)
 public class CdsCustomersTests {

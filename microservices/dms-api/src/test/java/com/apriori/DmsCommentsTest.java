@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.dms.models.request.CommentsRequestParameters;
 import com.apriori.dms.models.request.DmsCommentsRequest;
 import com.apriori.dms.models.response.DmsCommentResponse;
@@ -22,8 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Collections;
-
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 @ExtendWith(TestRulesApi.class)
 public class DmsCommentsTest extends DmsApiTestDataUtils {

@@ -1,6 +1,8 @@
 package com.ootbreports.general.assemblydetails;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.*;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.CUSTOMER;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;

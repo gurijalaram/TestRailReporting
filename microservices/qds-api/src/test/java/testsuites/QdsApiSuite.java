@@ -3,9 +3,9 @@ package testsuites;
 import com.apriori.BidPackageItemTest;
 import com.apriori.BidPackageProjectItemTest;
 import com.apriori.BidPackageProjectUserTest;
-import com.apriori.qdsBidPackageProjectsTest;
 import com.apriori.BidPackageTest;
 import com.apriori.LayoutTest;
+import com.apriori.QdsBidPackageProjectsTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
@@ -14,7 +14,7 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasses({
     BidPackageTest.class,
     BidPackageItemTest.class,
-    qdsBidPackageProjectsTest.class,
+    QdsBidPackageProjectsTest.class,
     BidPackageProjectItemTest.class,
     BidPackageProjectUserTest.class,
     LayoutTest.class,

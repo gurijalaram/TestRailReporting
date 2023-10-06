@@ -1,5 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -21,7 +23,6 @@ import utils.JasperApiAuthenticationUtil;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC.getEndpoint();

@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cic.enums.CICAPIEnum;
 import com.apriori.cic.enums.CICPartSelectionType;
 import com.apriori.cic.models.request.JobDefinition;
@@ -24,8 +26,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 @ExtendWith(TestRulesApi.class)
 public class CicAgentTest extends WorkflowTestUtil {

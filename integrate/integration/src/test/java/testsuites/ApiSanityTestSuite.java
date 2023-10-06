@@ -4,8 +4,6 @@ import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import com.apriori.AtsAuthorization;
 import com.apriori.BatchPartTest;
-import com.apriori.qdsBidPackageProjectsTest;
-import com.apriori.qmsBidPackageProjectsTest;
 import com.apriori.BidPackageProjectUserTest;
 import com.apriori.CasCustomersTests;
 import com.apriori.CasUsersTests;
@@ -20,19 +18,20 @@ import com.apriori.DigitalFactoriesTest;
 import com.apriori.DiscussionTest;
 import com.apriori.DmsCommentsTest;
 import com.apriori.EmailsTests;
-import com.apriori.evaluate.CostAllCadTests;
 import com.apriori.FileManagementControllerTest;
 import com.apriori.GcdTreesTests;
 import com.apriori.LineItemsTest;
 import com.apriori.ProcessGroupsTest;
+import com.apriori.QdsBidPackageProjectsTest;
+import com.apriori.QmsBidPackageProjectsTest;
 import com.apriori.QmsScenarioDiscussionTest;
 import com.apriori.UserTests;
 import com.apriori.ach.tests.AchCurrentUserTests;
+import com.apriori.evaluate.CostAllCadTests;
 import com.apriori.evaluate.DataCreationTests;
 import com.apriori.workorders.WorkorderAPITests;
 
 import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
-
 import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
@@ -45,8 +44,8 @@ import org.junit.platform.suite.api.Suite;
     AtsAuthorization.class,
     BatchPartTest.class,
     BidPackageProjectUserTest.class,
-    qdsBidPackageProjectsTest.class,
-    qmsBidPackageProjectsTest.class,
+    QdsBidPackageProjectsTest.class,
+    QmsBidPackageProjectsTest.class,
     CasCustomersTests.class,
     CasUsersTests.class,
     CdsCustomersTests.class,

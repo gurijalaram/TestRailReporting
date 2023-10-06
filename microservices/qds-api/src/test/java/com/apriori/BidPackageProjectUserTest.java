@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
@@ -23,8 +25,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.HashMap;
-
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 @ExtendWith(TestRulesApi.class)
 public class BidPackageProjectUserTest extends TestUtil {

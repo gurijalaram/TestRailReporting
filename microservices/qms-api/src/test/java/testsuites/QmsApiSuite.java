@@ -2,9 +2,9 @@ package testsuites;
 
 import com.apriori.BidPackageProjectItemTest;
 import com.apriori.BidPackageProjectUserTest;
-import com.apriori.qmsBidPackageProjectsTest;
 import com.apriori.LayoutConfigurationTest;
 import com.apriori.QmsBidPackageItemTest;
+import com.apriori.QmsBidPackageProjectsTest;
 import com.apriori.QmsBidPackageTest;
 import com.apriori.QmsComponentTest;
 import com.apriori.QmsProjectItemTest;
@@ -22,7 +22,7 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @SelectClasses({
     BidPackageProjectItemTest.class,
-    qmsBidPackageProjectsTest.class,
+    QmsBidPackageProjectsTest.class,
     BidPackageProjectUserTest.class,
     LayoutConfigurationTest.class,
     QmsBidPackageItemTest.class,

@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cis.controller.CisBidPackageProjectResources;
 import com.apriori.cis.controller.CisBidPackageResources;
 import com.apriori.cis.models.response.bidpackage.BidPackageProjectResponse;
@@ -21,8 +23,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 @ExtendWith(TestRulesApi.class)
 public class CisBidPackageProjectsTest extends TestUtil {

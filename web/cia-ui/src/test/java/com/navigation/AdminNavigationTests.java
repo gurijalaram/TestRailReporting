@@ -13,11 +13,8 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.Constants;
-
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 public class AdminNavigationTests extends TestBaseUI {
 

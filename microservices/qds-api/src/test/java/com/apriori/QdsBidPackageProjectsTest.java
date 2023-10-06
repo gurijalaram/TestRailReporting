@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -27,10 +29,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 @ExtendWith(TestRulesApi.class)
-public class qdsBidPackageProjectsTest extends TestUtil {
+public class QdsBidPackageProjectsTest extends TestUtil {
 
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static SoftAssertions softAssertions;

@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.dds.enums.DDSApiEnum;
 import com.apriori.dds.models.request.CommentsRequest;
 import com.apriori.dds.models.request.CommentsRequestParameters;
@@ -35,8 +37,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 @ExtendWith(TestRulesApi.class)
 public class CommentsTest extends TestUtil {
