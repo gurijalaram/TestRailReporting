@@ -21,5 +21,5 @@ import org.junit.platform.suite.api.Suite;
     ProjectsTest.class,
     ProjectsDetailsTest.class
 })
-public class RegressionTestSuite {
+public class CISRegressionTestSuite {
 }

@@ -1,4 +1,12 @@
 dependencies {
     implementation project(':shared-util')
     implementation project(':web-app-util')
+
+    implementation project(':microservices:ach-api')
+    implementation project(':web:cas-ui')
+    implementation project(':web:cia-ui')
+    implementation project(':web:cir-ui')
+    implementation project(':web:cis-ui')
+    implementation project(':web:ciconnect-ui')
+
 }
