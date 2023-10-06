@@ -91,8 +91,4 @@ public class DriverFactory {
     private void remoteWebDriverService(String host) {
         driver = new RemoteDriverFactory().createInstance(this.browser, ("http://").concat(host).concat(":4444"));
     }
-
-
-
-
 }

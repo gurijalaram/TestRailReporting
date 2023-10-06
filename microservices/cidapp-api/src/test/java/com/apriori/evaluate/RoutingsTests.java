@@ -21,17 +21,20 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.request.ErrorRequestResponse;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+@ExtendWith(TestRulesApi.class)
 public class RoutingsTests {
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private final SoftAssertions softAssertions = new SoftAssertions();

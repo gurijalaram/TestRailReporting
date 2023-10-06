@@ -3,6 +3,7 @@ package com.apriori;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
+import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.VDSTestUtil;
 import com.apriori.vds.enums.VDSAPIEnum;
@@ -11,7 +12,9 @@ import com.apriori.vds.models.response.customizations.CustomizationsItems;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesApi.class)
 public class CustomizationsTest extends VDSTestUtil {
 
     @Test

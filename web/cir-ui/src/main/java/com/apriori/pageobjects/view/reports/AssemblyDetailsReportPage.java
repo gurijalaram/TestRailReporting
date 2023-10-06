@@ -424,7 +424,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     public void clickAssemblyLinkAssemblyDetails() {
         pageUtils.waitForElementAndClick(assemblyLinkAssemblyDetails);
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         pageUtils.waitForElementToAppear(componentCostReportTitle);
     }
 
@@ -460,7 +460,7 @@ public class AssemblyDetailsReportPage extends GenericReportPage {
      */
     public void closeTab() {
         driver.close();
-        pageUtils.windowHandler(0);
+        pageUtils.switchToWindow(0);
     }
 
     /**

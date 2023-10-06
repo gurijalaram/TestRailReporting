@@ -84,7 +84,7 @@ public class HelpPage extends LoadableComponent<HelpPage> {
      * @return string
      */
     public String getChildPageTitle() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return pageUtils.waitForElementToAppear(userGuideTitle).getText();
     }
 
