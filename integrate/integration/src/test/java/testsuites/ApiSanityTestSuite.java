@@ -1,6 +1,5 @@
 package testsuites;
 
-
 import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import org.junit.platform.suite.api.IncludeTags;
