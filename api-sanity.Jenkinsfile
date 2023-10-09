@@ -30,10 +30,11 @@ pipeline {
                     }
                 }
 
-                stage("Build_n_Test") {
-                    steps {
-                        echo "Testing..."
-                        sh """
+                stages {
+                    stage("Build_n_Test") {
+                        steps {
+                            echo "Testing..."
+                            sh """
                                 docker build \
                                 --progress=plain \
                                 --target test \
@@ -44,8 +45,7 @@ pipeline {
                                 --build-arg TESTS="testsuites.APISanitySuite" \
                                 .
                             """
-                    }
-                    stages {
+                        }
                         stage("Publish_Results") {
                             steps {
                                 // Copy out build/test artifacts.
