@@ -11,15 +11,18 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
 import com.apriori.models.request.ErrorRequestResponse;
 import com.apriori.models.response.CssComponentResponse;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 
 import java.util.Arrays;
 
+@ExtendWith(TestRulesAPI.class)
 public class VerifyIfNotFailTests {
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
 

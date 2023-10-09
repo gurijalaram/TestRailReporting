@@ -281,7 +281,7 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
     public CirUserGuidePage navigateToHelpPage() {
         pageUtils.waitForElementToAppear(createDashboardsButton);
         CirUserGuidePage helpPage = navigateToPage(helpButton, CirUserGuidePage.class);
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         pageUtils.waitForElementToAppear(jasperLogo);
         return helpPage;
     }

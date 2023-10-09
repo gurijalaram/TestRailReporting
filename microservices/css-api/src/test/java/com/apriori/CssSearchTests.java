@@ -8,6 +8,7 @@ import com.apriori.models.response.CssComponentResponse;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
 
@@ -15,9 +16,11 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
+@ExtendWith(TestRulesAPI.class)
 public class CssSearchTests {
     SoftAssertions soft = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();

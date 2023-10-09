@@ -31,6 +31,7 @@ import com.apriori.qms.models.response.scenariodiscussion.ScenarioProjectUserRes
 import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -43,12 +44,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+@ExtendWith(TestRulesAPI.class)
 public class QmsProjectUserPermissionsTest extends TestUtil {
     private static final UserCredentials nonProjectUser = UserUtil.getUser();
     private static final UserCredentials currentOwnerUser = UserUtil.getUser();

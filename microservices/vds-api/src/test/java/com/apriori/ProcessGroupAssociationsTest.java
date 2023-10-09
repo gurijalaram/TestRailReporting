@@ -4,6 +4,7 @@ import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.ProcessGroupUtil;
 import com.apriori.vds.enums.VDSAPIEnum;
@@ -16,7 +17,9 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesAPI.class)
 public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
 
     private static ProcessGroupAssociation testingProcessGroupAssociation;

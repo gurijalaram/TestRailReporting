@@ -20,6 +20,7 @@ import com.apriori.qms.models.response.scenariodiscussion.ScenarioDiscussionResp
 import com.apriori.qms.utils.QmsApiTestUtils;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -31,12 +32,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@ExtendWith(TestRulesAPI.class)
 public class QmsProjectsFilteredTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static String projectName;

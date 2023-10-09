@@ -28,7 +28,9 @@ public enum TestSuiteType {
         public static final String REGRESSION = "REGRESSION";
         public static final String EXTENDED_REGRESSION = "EXTENDED_REGRESSION";
         public static final String SANITY = "SANITY";
+        public static final String API_SANITY = "API_SANITY";
         public static final String CUSTOMER = "CUSTOMER";
+        public static final String NON_CUSTOMER = "NON_CUSTOMER";
         public static final String SYSTEM_CONFIGURATION = "SYSTEM_CONFIGURATION";
         public static final String USERS = "USERS";
         public static final String IGNORE = "IGNORE";

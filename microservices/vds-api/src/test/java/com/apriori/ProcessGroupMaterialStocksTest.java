@@ -1,14 +1,17 @@
 package com.apriori;
 
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.ProcessGroupUtil;
 import com.apriori.vds.models.response.process.group.materials.stock.ProcessGroupMaterialStock;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
+@ExtendWith(TestRulesAPI.class)
 public class ProcessGroupMaterialStocksTest extends ProcessGroupUtil {
     @Test
     @TestRail(id = {8191})

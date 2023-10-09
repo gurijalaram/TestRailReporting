@@ -14,6 +14,7 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -22,9 +23,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.stream.Collectors;
 
+@ExtendWith(TestRulesAPI.class)
 public class AchUserPreferencesTests {
     private IdentityHolder userPreferenceIdentityHolder;
     private AchTestUtil achTestUtil = new AchTestUtil();
@@ -74,7 +77,7 @@ public class AchUserPreferencesTests {
         String newValue = generateStringUtil.getRandomNumbersStartsNoZero();
 
         achTestUtil.updatePreferencesByPatch(prefIdentity, newValue);
-        ResponseWrapper<UserPreferences> preferences = achTestUtil.getCommonRequest(ACHAPIEnum.USER_PREFERENCES, UserPreferences.class, HttpStatus.SC_OK);
+        ResponseWrapper<UserPreferences> preferences = achTestUtil.getSortedUserPreferences();
         String updatedValue = preferences.getResponseEntity().getItems().stream().filter(pref -> pref.getIdentity().equals(prefIdentity)).collect(Collectors.toList()).get(0).getValue();
 
         soft.assertThat(updatedValue).isEqualTo(newValue);

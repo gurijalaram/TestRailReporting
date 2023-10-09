@@ -1,11 +1,10 @@
 package com.apriori.qa.ach.ui.pageobjects;
 
 import com.apriori.PageUtils;
+import com.apriori.ach.dto.ApplicationDTO;
 import com.apriori.login.UserProfilePage;
 import com.apriori.properties.PropertiesContext;
-import com.apriori.qa.ach.ui.dto.ApplicationDTO;
 
-import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

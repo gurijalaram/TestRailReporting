@@ -1,6 +1,5 @@
 package com.apriori.help;
 
-import static com.apriori.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.IGNORE;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -11,6 +10,7 @@ import static org.hamcrest.core.StringContains.containsString;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.help.HelpDocPage;
 import com.apriori.pageobjects.help.HelpPage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
@@ -50,30 +50,9 @@ public class HelpTests extends TestBaseUI {
     @Test
     @Disabled("Currently no help button for inputs")
     @Tag(IGNORE)
-    @TestRail(id = {264, 6371})
+    @TestRail(id = {6371})
     @Description("Have links to a detailed help page in relevant areas of the UI")
-    public void moreInputsHelp() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .costScenario()
-            .openInputDetails()
-            .openHelp();
-
-        assertThat(helpDocPage.getChildPageTitle(), containsString("More Inputs"));
-    }
-
-    @Test
-    @TestRail(id = {264})
-    @Description("Have links to a detailed help page in relevant areas of the UI")
-    public void materialUtilHelp() {
+    public void linksToHelpPage() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         String componentName = "PowderMetalShaft";
@@ -88,66 +67,15 @@ public class HelpTests extends TestBaseUI {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design"));
-    }
+        assertThat(helpDocPage.getChildPageTitle(), containsString("aP Design"));
 
-    @Test
-    @TestRail(id = {264})
-    @Description("Have links to a detailed help page in relevant areas of the UI")
-    public void designGuidanceHelp() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(PLASTIC_MOLDING)
-            .costScenario()
+        helpDocPage.closeHelpPage(EvaluatePage.class)
             .openDesignGuidance()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design"));
-    }
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Examine Design Issues"));
 
-    @Test
-    @TestRail(id = {264})
-    @Description("Have links to a detailed help page in relevant areas of the UI")
-    public void processDetailsHelp() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .costScenario()
-            .openMaterialProcess()
-            .openHelp();
-
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design"));
-    }
-
-    @Test
-    @TestRail(id = {264})
-    @Description("Have links to a detailed help page in relevant areas of the UI")
-    public void costResultsHelp() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .costScenario()
+        helpDocPage.closeHelpPage(EvaluatePage.class)
             .openCostDetails()
             .openHelp();
 

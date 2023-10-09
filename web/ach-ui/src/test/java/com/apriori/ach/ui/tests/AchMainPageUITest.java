@@ -1,12 +1,13 @@
-package com.integration.tests.customer.environment;
+package com.apriori.ach.ui.tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.apriori.ach.dto.ApplicationDTO;
+import com.apriori.ach.utils.AchEnvironmentAPIUtil;
 import com.apriori.login.LoginService;
 import com.apriori.models.AuthorizationUtil;
-import com.apriori.qa.ach.ui.dto.ApplicationDTO;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
-import com.apriori.qa.integration.utils.CustomerEnvironmentUtil;
+import com.apriori.qa.ach.ui.utils.AchEnvironmentUIUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.testrail.TestRail;
 
@@ -17,8 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
-    private final UserCredentials userCredentials = getAwsCustomerUserCredentials();
+public class AchMainPageUITest extends AchEnvironmentUIUtil {
+    private AchEnvironmentAPIUtil achEnvironmentAPIUtil = new AchEnvironmentAPIUtil();
+    private final UserCredentials userCredentials = achEnvironmentAPIUtil.getAwsCustomerUserCredentials();
     private CloudHomePage cloudHomePage;
     private LoginService aprioriLoginService;
 
@@ -27,8 +29,8 @@ public class CustomerCloudHomeUITest extends CustomerEnvironmentUtil {
     public void validateCustomerApplicationsByUI() {
         final String customerIdentity = AuthorizationUtil.getCurrentCustomerData().getIdentity();
 
-        List<ApplicationDTO> mappedCustomerApplications = mapCustomerDeploymentDataToDTO(
-                getCustomerDeploymentInformation(customerIdentity)
+        List<ApplicationDTO> mappedCustomerApplications = achEnvironmentAPIUtil.mapCustomerDeploymentDataToDTO(
+                achEnvironmentAPIUtil.getCustomerDeploymentInformation(customerIdentity)
         );
 
         aprioriLoginService = new LoginService(driver, "");
