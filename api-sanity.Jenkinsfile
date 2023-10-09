@@ -1,5 +1,6 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
+def timeStamp = new Date().format('yyyyMMddHHss')
 
 pipeline {
     agent {
