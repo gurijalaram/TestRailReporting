@@ -161,7 +161,7 @@ public class BatchPartResources {
     public static ResponseWrapper<Parts> getBatchPartById(String batchIdentity) {
         requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity)
-            .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("number_of_parts")))
+            .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("bcs.number_of_parts")))
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).get();
     }
@@ -176,7 +176,7 @@ public class BatchPartResources {
     public static ResponseWrapper<Parts> getPartsByBatchId(String batchIdentity) {
         requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity)
-            .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("number_of_parts")));
+            .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("bcs.number_of_parts")));
         return HTTPRequest.build(requestEntity).get();
     }
 

@@ -32,7 +32,7 @@ public class BatchPartTestDemo {
 
     @BeforeAll
     public static void testSetup() {
-        System.out.println("asfadfadsf" + PropertiesContext.get("number_of_parts"));
+        System.out.println("asfadfadsf" + PropertiesContext.get("bcs.number_of_parts"));
         partDataList = new TestDataService().getPartsFromCloud(2);
 
     }

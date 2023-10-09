@@ -132,7 +132,7 @@ Those marked with a * are required or the job will not run
 
                     number_of_parts = params.NUMBER_OF_PARTS
                     if (number_of_parts && number_of_parts != "none") {
-                       javaOpts = javaOpts + " -Dnumber_of_parts=${params.NUMBER_OF_PARTS}"
+                       javaOpts = javaOpts + " -Dbcs_number_of_parts=${params.NUMBER_OF_PARTS}"
                     }
 
                     parts_csv_file = params.PARTS_CSV_FILE

@@ -42,7 +42,7 @@ public class BatchPartTest {
 
     private static Batch batch;
     private static Part part = null;
-    private static Integer number_of_parts = Integer.parseInt(PropertiesContext.get("number_of_parts"));
+    private static Integer number_of_parts = Integer.parseInt(PropertiesContext.get("bcs.number_of_parts"));
 
     @BeforeAll
     public static void testSetup() {
