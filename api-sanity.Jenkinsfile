@@ -52,7 +52,7 @@ pipeline {
                         steps {
                             // Copy out build/test artifacts.
                             echo "Extract Test Results.."
-                            sh "docker create --name ${buildInfo.name}-${MODULE}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
+                            sh "docker create --name ${buildInfo.name}-${MODULE}-test-${timeStamp} ${buildInfo.name}-${MODULE}-test-${timeStamp}:latest"
                             sh "docker cp ${buildInfo.name}-${MODULE}-test-${timeStamp}:home/gradle/microservices/${MODULE}/build ."
                             echo "Publishing Results"
                             allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
