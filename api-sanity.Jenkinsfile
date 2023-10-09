@@ -39,7 +39,7 @@ pipeline {
                                 docker build \
                                 --progress=plain \
                                 --target test \
-                                --tag ${buildInfo.name}-test-${timeStamp}:latest \
+                                --tag ${buildInfo.name}-${MODULE}-test-${timeStamp}:latest \
                                 --label \"build-date=${timeStamp}\" \
                                 --build-arg FOLDER="microservices" \
                                 --build-arg MODULE=${MODULE} \
@@ -71,7 +71,7 @@ pipeline {
                     stage("Clean") {
                         steps {
                             echo "Cleaning..."
-                            sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
+                            sh "docker rmi ${buildInfo.name}-${MODULE}-test-${timeStamp}:latest"
                         }
                     }
                 }
