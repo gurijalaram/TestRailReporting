@@ -43,7 +43,7 @@ pipeline {
                                 --label \"build-date=${timeStamp}\" \
                                 --build-arg FOLDER="microservices" \
                                 --build-arg MODULE=${MODULE} \
-                                --build-arg TESTS="testsuites.APISanitySuite" \
+                                --build-arg TESTS="testsuites.ApiSanitySuite" \
                                 .
                             """
                         }
