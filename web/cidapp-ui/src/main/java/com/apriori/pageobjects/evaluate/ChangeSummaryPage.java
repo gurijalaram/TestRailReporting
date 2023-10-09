@@ -4,6 +4,8 @@ import com.apriori.PageUtils;
 import com.apriori.pageobjects.common.ModalDialogController;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,14 +14,14 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
 public class ChangeSummaryPage extends LoadableComponent<CostHistoryPage> {
-    @FindBy(css = "div[role='tooltip']")
+    @FindBy(css = "div[role='presentation']")
     private WebElement changeSummary;
 
-    @FindBy(css = "div[role='tooltip'] div div div div div:nth-of-type(2) h3")
-    private WebElement leftColHeader;
+    @FindBy(css = "div[role='presentation'] div div div div div:nth-of-type(2) h3")
+    private WebElement changedFromHeader;
 
-    @FindBy(css = "div[role='tooltip'] div div div div div:nth-of-type(3) h3")
-    private WebElement rightColHeader;
+    @FindBy(css = "div[role='presentation'] div div div div div:nth-of-type(3) h3")
+    private WebElement changedToHeader;
 
     @FindBy(id = "qa-change-summary-column-1-Annual Volume")
     private WebElement leftColAnnualVolume;
@@ -63,12 +65,7 @@ public class ChangeSummaryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(id = "qa-change-summary-column-2-Digital Factory")
     private WebElement rightColDigitalFactory;
 
-    //Placeholders for future ones
-//    @FindBy(id = "qa-change-summary-column-1-")
-//    private WebElement leftCol;
-//
-//    @FindBy(id = "qa-change-summary-column-2-")
-//    private WebElement rightCol;
+    private String changedValueID = "qa-change-summary-column-%1$d-%2$s";
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -90,7 +87,7 @@ public class ChangeSummaryPage extends LoadableComponent<CostHistoryPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(changeSummary);
-        pageUtils.waitForElementToAppear(leftColHeader);
+        pageUtils.waitForElementToAppear(changedFromHeader);
     }
 
     /**
@@ -98,8 +95,8 @@ public class ChangeSummaryPage extends LoadableComponent<CostHistoryPage> {
      *
      * @return - String of Left Column Header Text
      */
-    public String leftColHeader() {
-        return leftColHeader.getText();
+    public String changedFromHeader() {
+        return changedFromHeader.getText();
     }
 
     /**
@@ -107,7 +104,41 @@ public class ChangeSummaryPage extends LoadableComponent<CostHistoryPage> {
      *
      * @return - String of Left Column Header Text
      */
-    public String rightColHeader() {
-        return rightColHeader.getText();
+    public String changedToHeader() {
+        return changedToHeader.getText();
+    }
+
+    /**
+     * Get value for a specified value changed from
+     *
+     * @param changedInput - String of name of changed input
+     *
+     * @return - String of displayed change
+     */
+    public String getChangedFrom(String changedInput) {
+        By locator = By.id(String.format(changedValueID, 1, changedInput));
+        return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Get value for a specified value changed from
+     *
+     * @param changedInput - String of name of changed input
+     *
+     * @return - String of displayed change
+     */
+    public String getChangedTo(String changedInput) {
+        By locator = By.id(String.format(changedValueID, 2, changedInput));
+        return driver.findElement(locator).getText();
+    }
+
+    /**
+     * Close the change summary pop up
+     *
+     * @return - Cost History PO
+     */
+    public CostHistoryPage close() {
+        pageUtils.mouseMoveWithOffsets(changedFromHeader, 0, 100);
+        return new CostHistoryPage(driver);
     }
 }
