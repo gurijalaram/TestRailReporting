@@ -71,6 +71,7 @@ pipeline {
                     stage("Clean") {
                         steps {
                             echo "Cleaning..."
+                            sh "docker rm -f ${buildInfo.name}-${MODULE}-test-${timeStamp}"
                             sh "docker rmi ${buildInfo.name}-${MODULE}-test-${timeStamp}:latest"
                         }
                     }
