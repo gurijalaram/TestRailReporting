@@ -181,13 +181,9 @@ public class ScenariosUtil {
             RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-//                .body("costingInputs", CostingTemplate.builder()
-//                    .costingTemplateIdentity(costingTemplate.getIdentity())
-//                    .deleteTemplateAfterUse(costingTemplate.getDeleteTemplateAfterUse())
-//                    .build());
                 .body("costingInputs", costingTemplate);
 
-                    HTTPRequest.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
 
         return getScenarioCompleted(componentInfo);
     }

@@ -12,9 +12,9 @@ import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.models.response.SecondaryDigitalFactories;
 import com.apriori.models.response.SecondaryProcesses;
 import com.apriori.pageobjects.evaluate.ChangeSummaryPage;
+import com.apriori.pageobjects.evaluate.CostHistoryPage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
-import com.apriori.pageobjects.evaluate.CostHistoryPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testconfig.TestBaseUI;
@@ -38,7 +38,9 @@ public class CostHistoryTests extends TestBaseUI {
     private SoftAssertions softAssertions = new SoftAssertions();
     private UserCredentials currentUser;
 
-    public CostHistoryTests() { super(); }
+    public CostHistoryTests() {
+        super();
+    }
 
     @Test
     @TestRail(id = {})

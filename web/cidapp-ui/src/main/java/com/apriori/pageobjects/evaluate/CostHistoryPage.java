@@ -21,7 +21,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(css = "h2 button")
     private WebElement close;
 
-    @FindBy(css="div[role='dialog'] div div div div div p:nth-of-type(1)")
+    @FindBy(css = "div[role='dialog'] div div div div div p:nth-of-type(1)")
     private List<WebElement> iterationList;
 
     @FindBy(css = "div[role='tooltip']")
@@ -129,7 +129,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      *
      * @return WebElement of specified iteration's info tooltip icon
      */
-    private WebElement iterationInfoTooltipIcon(Integer iterationNum){
+    private WebElement iterationInfoTooltipIcon(Integer iterationNum) {
         By locator = By.xpath(String.format(iterationXPath, iterationNum) + "//*[@data-icon='circle-info']");
         return driver.findElement(locator);
     }
