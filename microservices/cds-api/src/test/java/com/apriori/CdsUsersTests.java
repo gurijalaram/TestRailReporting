@@ -2,10 +2,10 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.CredentialsItems;
-import com.apriori.cds.models.response.User;
-import com.apriori.cds.models.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.User;
+import com.apriori.models.response.Users;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 

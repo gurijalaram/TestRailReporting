@@ -9,12 +9,12 @@
       "required": [
         "items"
       ],
-      "$ref": "common/PaginationSchema.json",
+      "$schema": "PaginationSchema.json",
       "properties": {
         "items": {
           "type": "array",
           "items": {
-            "$ref": "UserAchSchema.json"
+            "$ref": "UserSchema.json"
           }
         }
       }

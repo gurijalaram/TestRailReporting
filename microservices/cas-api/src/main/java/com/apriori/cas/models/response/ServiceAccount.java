@@ -3,6 +3,8 @@ package com.apriori.cas.models.response;
 import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.models.response.Enablements;
+import com.apriori.models.response.User;
+import com.apriori.models.response.UserProfile;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -20,28 +22,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ServiceAccount {
-    private Boolean isSystemUser;
-    private String identity;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime createdAt;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime updatedAt;
-    private String createdBy;
-    private String customerIdentity;
-    private CustomerUserProfile userProfile;
-    private String email;
-    private String username;
-    private Boolean active;
-    private Boolean hasCompleteProfile;
-    private Boolean mfaRequired;
-    private CustomAttributes customAttributes;
-    private String createdByName;
+public class ServiceAccount extends User {
     private String serviceAccount;
-    private String status;
-    private String userType;
-    private List<String> roles;
-    private Enablements enablements;
 }
