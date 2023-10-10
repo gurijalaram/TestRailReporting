@@ -23,48 +23,6 @@ public class ChangeSummaryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(css = "div[role='presentation'] div div div div div:nth-of-type(3) h3")
     private WebElement changedToHeader;
 
-    @FindBy(id = "qa-change-summary-column-1-Annual Volume")
-    private WebElement leftColAnnualVolume;
-
-    @FindBy(id = "qa-change-summary-column-2-Annual Volume")
-    private WebElement rightColAnnualVolume;
-
-    @FindBy(id = "qa-change-summary-column-1-Batch Size")
-    private WebElement leftColBatchSize;
-
-    @FindBy(id = "qa-change-summary-column-2-Batch Size")
-    private WebElement rightColBatchSize;
-
-    @FindBy(id = "qa-change-summary-column-1-Machining Mode")
-    private WebElement leftColMachiningMode;
-
-    @FindBy(id = "qa-change-summary-column-2-Machining Mode")
-    private WebElement rightColMachiningMode;
-
-    @FindBy(id = "qa-change-summary-column-1-Process Group")
-    private WebElement leftColProcessGroup;
-
-    @FindBy(id = "qa-change-summary-column-2-Process Group")
-    private WebElement rightColProcessGroup;
-
-    @FindBy(id = "qa-change-summary-column-1-Years")
-    private WebElement leftColYears;
-
-    @FindBy(id = "qa-change-summary-column-2-Years")
-    private WebElement rightColYears;
-
-    @FindBy(id = "qa-change-summary-column-1-Primary Digital Factory=Secondary Digital Factory")
-    private WebElement leftColPGMatches;
-
-    @FindBy(id = "qa-change-summary-column-2-Primary Digital Factory=Secondary Digital Factory")
-    private WebElement rightColPGMatches;
-
-    @FindBy(id = "qa-change-summary-column-1-Digital Factory")
-    private WebElement leftColDigitalFactory;
-
-    @FindBy(id = "qa-change-summary-column-2-Digital Factory")
-    private WebElement rightColDigitalFactory;
-
     private String changedValueID = "qa-change-summary-column-%1$d-%2$s";
 
     private PageUtils pageUtils;

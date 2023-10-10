@@ -5,10 +5,13 @@ import java.util.stream.Stream;
 public enum DigitalFactoryEnum {
 
     APRIORI_BRAZIL("aPriori Brazil"),
+    APRIORI_CANADA("aPriori Canada"),
     APRIORI_CHINA("aPriori China"),
     APRIORI_EASTERN_EUROPE("aPriori Eastern Europe"),
+    APRIORI_FINLAND("aPriori Finland"),
     APRIORI_GERMANY("aPriori Germany"),
     APRIORI_INDIA("aPriori India"),
+    APRIORI_IRELAND("aPriori Ireland"),
     APRIORI_MEXICO("aPriori Mexico"),
     APRIORI_UNITED_KINGDOM("aPriori United Kingdom"),
     APRIORI_USA("aPriori USA"),
