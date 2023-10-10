@@ -10,6 +10,8 @@ import com.apriori.cas.models.response.Customers;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
@@ -31,7 +33,6 @@ import org.junit.jupiter.api.parallel.Isolated;
 import java.util.Arrays;
 
 @ExtendWith(TestRulesApi.class)
-@Isolated
 public class CasCustomersTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
@@ -57,7 +58,12 @@ public class CasCustomersTests {
     @TestRail(id = {5810})
     @Description("Get a list of CAS customers sorted by name")
     public void getCustomersSortedByName() {
-        ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
+        //        ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
+        RequestEntity request = RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
+                .token(currentUser.getToken())
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<Customers> response = HTTPRequest.build(request).get();
 
         soft.assertThat(response.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
