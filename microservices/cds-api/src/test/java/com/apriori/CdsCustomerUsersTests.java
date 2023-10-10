@@ -3,9 +3,7 @@ package com.apriori;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.CredentialsItems;
 import com.apriori.cds.models.response.InstallationItems;
-import com.apriori.cds.models.response.User;
 import com.apriori.cds.models.response.UserProperties;
-import com.apriori.cds.models.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.models.entity.RequestEntity;
@@ -18,6 +16,8 @@ import com.apriori.models.response.Deployment;
 import com.apriori.models.response.ErrorMessage;
 import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
+import com.apriori.models.response.User;
+import com.apriori.models.response.Users;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 

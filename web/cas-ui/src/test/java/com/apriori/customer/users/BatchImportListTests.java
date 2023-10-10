@@ -4,8 +4,6 @@ import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.PageUtils;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.models.response.User;
-import com.apriori.cds.models.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.components.CheckboxComponent;
@@ -16,6 +14,8 @@ import com.apriori.components.TableRowComponent;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.Obligation;
 import com.apriori.models.response.Customer;
+import com.apriori.models.response.User;
+import com.apriori.models.response.Users;
 import com.apriori.pageobjects.customer.users.ImportPage;
 import com.apriori.pageobjects.customer.users.UsersListPage;
 import com.apriori.pageobjects.login.CasLoginPage;
