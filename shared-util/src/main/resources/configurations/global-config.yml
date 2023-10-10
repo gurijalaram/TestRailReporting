@@ -121,6 +121,9 @@ default:
       username: admin_platform
       password: 3Dpassport
 
+  cmp:
+    api_url: https://cmp.na-1.${deployment_url_template}
+
   css:
     api_url: https://css.${deployment_url_template}
 
