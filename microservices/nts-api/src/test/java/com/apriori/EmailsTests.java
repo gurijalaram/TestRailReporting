@@ -24,7 +24,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.parallel.Isolated;
 
 @ExtendWith(TestRulesApi.class)
-@Isolated
 public class EmailsTests {
 
     @Test

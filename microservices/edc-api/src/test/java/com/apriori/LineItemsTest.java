@@ -19,10 +19,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Isolated;
 
 import java.util.List;
 
 @ExtendWith(TestRulesApi.class)
+@Isolated
 public class LineItemsTest extends LineItemsUtil {
 
     private static String filename = "Test BOM 5.csv";
