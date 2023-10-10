@@ -118,16 +118,43 @@ public class JasperApiUtils {
     }
 
     /**
-     * Generic method for testing currency where export set is not relevant
+     * Generic method for testing currency where export set is not relevant (Cycle Time Report only)
      *
      * @param currencyToSet - currency that is to be set
      * @return JasperReportSummary instance
      */
-    public JasperReportSummary genericTestCoreCurrencyAndDateOnly(String currencyToSet) {
+    public JasperReportSummary genericTestCoreCurrencyAndDateOnlyCycleTimeReport(String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
 
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
-        setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        setReportParameterByName(InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), inputControls.getProjectRollup().getOption(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName()).getValue());
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
+     * Generic method for testing currency for Digital Factory Perf and Details Report tests
+     *
+     * @param currencyToSet - currency that is to be set
+     * @return JasperReportSummary instance
+     */
+    public JasperReportSummary genericTestCoreCurrencyAndDateOnlyDigitalFactoryPerfTests(String currencyToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+        String dateTimeNowValue = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+        setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), dateTimeNowValue);
+        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), dateTimeNowValue);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), inputControls.getExportSetName().getOption(exportSetName).getValue());
+        setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(), RollupEnum.QA_TEST_ONE.getRollupName());
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -816,7 +843,7 @@ public class JasperApiUtils {
     }
 
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
-        return genericTestCoreCurrencyAndDateOnly(currencyToGet)
+        return genericTestCoreCurrencyAndDateOnlyCycleTimeReport(currencyToGet)
             .getFirstChartData().getChartDataPoints()
             .stream().map(e -> e.getPropertyByName("Scenario Cycle Time (s)").getValue().toString())
             .collect(Collectors.toCollection(ArrayList::new)
