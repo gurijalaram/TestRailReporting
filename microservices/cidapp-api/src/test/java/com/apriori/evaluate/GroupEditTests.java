@@ -19,7 +19,7 @@ import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
 
 import io.qameta.allure.Description;
-import org.apache.commons.lang.SerializationUtils;
+import org.apache.commons.lang3.SerializationUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

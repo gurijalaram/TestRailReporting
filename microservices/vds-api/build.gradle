@@ -1,6 +1,6 @@
-repositories {
-    mavenCentral()
-}
+//repositories {
+//    mavenCentral()
+//}
 
 //This block allow to copy resources from :shared-util into current module, so we have an access to them by .getResource();
 sourceSets {

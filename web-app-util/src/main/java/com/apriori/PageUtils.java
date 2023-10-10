@@ -13,7 +13,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElem
 
 import com.apriori.http.utils.Obligation;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;

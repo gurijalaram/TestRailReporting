@@ -1,7 +1,3 @@
-repositories {
-    mavenCentral()
-}
-
 sourceSets {
     main {
         resources {
@@ -18,6 +14,6 @@ dependencies {
     implementation project(':microservices:cidapp-api')
     implementation project(':web-app-util')
     implementation project(':serialization-util')
-    implementation 'mysql:mysql-connector-java:8.0.28'
-    implementation 'org.assertj:assertj-core:3.6.1'
+//    implementation 'mysql:mysql-connector-java:8.0.28'
+//    implementation 'org.assertj:assertj-core:3.6.1'
 }
