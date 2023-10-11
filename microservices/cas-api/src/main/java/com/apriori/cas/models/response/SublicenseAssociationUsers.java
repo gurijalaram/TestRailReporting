@@ -3,6 +3,7 @@ package com.apriori.cas.models.response;
 import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.models.response.Enablements;
+import com.apriori.models.response.UserProfile;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

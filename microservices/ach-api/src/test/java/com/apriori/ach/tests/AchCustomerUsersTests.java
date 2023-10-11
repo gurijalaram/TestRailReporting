@@ -2,10 +2,10 @@ package com.apriori.ach.tests;
 
 import com.apriori.ach.enums.ACHAPIEnum;
 import com.apriori.ach.models.response.AchErrorResponse;
-import com.apriori.ach.models.response.UsersAch;
 import com.apriori.ach.utils.AchTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.Users;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesAPI;
@@ -35,7 +35,7 @@ public class AchCustomerUsersTests {
     @TestRail(id = {28477})
     @Description("Get a list of customer users")
     public void getCustomerUsers() {
-        ResponseWrapper<UsersAch> users = achTestUtil.getCommonRequest(ACHAPIEnum.CUSTOMER_USERS, UsersAch.class, HttpStatus.SC_OK, customerIdentity);
+        ResponseWrapper<Users> users = achTestUtil.getCommonRequest(ACHAPIEnum.CUSTOMER_USERS, Users.class, HttpStatus.SC_OK, customerIdentity);
 
         soft.assertThat(users.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         soft.assertThat(users.getResponseEntity().getItems().get(0).getUserProfile()).isNotNull();
@@ -46,10 +46,10 @@ public class AchCustomerUsersTests {
     @TestRail(id = {28478})
     @Description("Get user by name")
     public void getUserByName() {
-        ResponseWrapper<UsersAch> users = achTestUtil.getCommonRequest(ACHAPIEnum.CUSTOMER_USERS, UsersAch.class, HttpStatus.SC_OK, customerIdentity);
+        ResponseWrapper<Users> users = achTestUtil.getCommonRequest(ACHAPIEnum.CUSTOMER_USERS, Users.class, HttpStatus.SC_OK, customerIdentity);
         String userName = users.getResponseEntity().getItems().get(0).getUsername();
 
-        ResponseWrapper<UsersAch> userByName = achTestUtil.getUsersWithParams("username[CN]", userName, customerIdentity);
+        ResponseWrapper<Users> userByName = achTestUtil.getUsersWithParams("username[CN]", userName, customerIdentity);
 
         soft.assertThat(userByName.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         soft.assertThat(userByName.getResponseEntity().getItems().get(0).getUsername()).isEqualTo(userName);
@@ -60,7 +60,7 @@ public class AchCustomerUsersTests {
     @TestRail(id = {28479})
     @Description("Get users with request params that no users match")
     public void getNoUsersMatch() {
-        ResponseWrapper<UsersAch> userNoMatch = achTestUtil.getUsersWithParams("identity[CN]", "000000000000", customerIdentity);
+        ResponseWrapper<Users> userNoMatch = achTestUtil.getUsersWithParams("identity[CN]", "000000000000", customerIdentity);
 
         soft.assertThat(userNoMatch.getResponseEntity().getTotalItemCount()).isEqualTo(0);
         soft.assertAll();

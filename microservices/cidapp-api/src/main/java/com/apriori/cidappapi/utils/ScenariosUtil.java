@@ -804,6 +804,14 @@ public class ScenariosUtil {
             .map(ScenarioManifestSubcomponents::getExcluded).findFirst().get();
     }
 
+    /**
+     * Gets the watchpoint report
+     *
+     * @param componentId - the component id
+     * @param scenarioId  - the scenario id
+     * @param currentUser - the user details to obtain a token
+     * @return reponse object
+     */
     public <T> ResponseWrapper<T> getReports(String componentId, String scenarioId, UserCredentials currentUser) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.REPORTS, null)
