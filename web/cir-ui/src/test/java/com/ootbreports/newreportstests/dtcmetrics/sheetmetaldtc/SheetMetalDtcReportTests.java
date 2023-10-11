@@ -73,7 +73,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
             mostCommonPartNames,
-            "Cost Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
+            "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
