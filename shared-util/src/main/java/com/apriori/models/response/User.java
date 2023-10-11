@@ -16,35 +16,44 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "AuthUserSchema.json")
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(location = "UserSchema.json")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 @JsonRootName("response")
 public class User {
-    private Boolean isSystemUser;
-    private String identity;
-    private String createdBy;
-    private String userType;
-    private UserProfile userProfile;
-    private String email;
-    private String username;
-    private Boolean active;
-    private List<UserSite> sites;
-    private CustomAttributes customAttributes;
-    private List<Roles> roles;
-    private String customerIdentity;
-    private String updatedBy;
-    private Boolean mfaRequired;
+    protected Boolean isSystemUser;
+    protected String identity;
+    protected String userType;
+    protected UserProfile userProfile;
+    protected String email;
+    protected String username;
+    protected Boolean active;
+    protected List<UserSite> sites;
+    protected CustomAttributes customAttributes;
+    protected List<Roles> roles;
+    protected String customerIdentity;
+    protected Boolean mfaRequired;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime createdAt;
+    protected LocalDateTime createdAt;
+    protected String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime updatedAt;
-    private Boolean hasCompleteProfile;
-    private Enablements enablements;
-    private String mfaAuthenticator;
+    protected LocalDateTime updatedAt;
+    protected String updatedBy;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    protected LocalDateTime deletedAt;
+    protected String deletedBy;
+    protected Boolean hasCompleteProfile;
+    protected Enablements enablements;
+    protected String mfaAuthenticator;
+    protected List<Object> resourcesAllowedToCreate = null;
+    protected CustomProperties customProperties;
+    protected String createdByName;
+    protected String updatedByName;
+    protected List<Object> licenseAssignments = null;
 }

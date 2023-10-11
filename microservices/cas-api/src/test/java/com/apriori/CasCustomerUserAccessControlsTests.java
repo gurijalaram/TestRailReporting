@@ -5,7 +5,6 @@ import com.apriori.cas.models.response.AccessControl;
 import com.apriori.cas.models.response.AccessControls;
 import com.apriori.cas.models.response.CasErrorMessage;
 import com.apriori.cas.models.response.Customer;
-import com.apriori.cas.models.response.CustomerUser;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
@@ -13,6 +12,7 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.User;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesAPI;
@@ -74,7 +74,7 @@ public class CasCustomerUserAccessControlsTests {
     @TestRail(id = {16144})
     public void postAccessControl() {
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
@@ -97,7 +97,7 @@ public class CasCustomerUserAccessControlsTests {
     @TestRail(id = {16145})
     public void getUserAccessControls() {
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
@@ -125,7 +125,7 @@ public class CasCustomerUserAccessControlsTests {
     @TestRail(id = {16146})
     public void getAccessControlByIdentity() {
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
@@ -152,7 +152,7 @@ public class CasCustomerUserAccessControlsTests {
     @TestRail(id = 16147)
     public void deleteAccessControl() {
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
@@ -171,7 +171,7 @@ public class CasCustomerUserAccessControlsTests {
         String notExistingIdentity = "000000000000";
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<CasErrorMessage> response = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROL_BY_ID,

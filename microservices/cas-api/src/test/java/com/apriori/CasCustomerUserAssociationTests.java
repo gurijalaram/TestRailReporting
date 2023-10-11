@@ -6,13 +6,13 @@ import com.apriori.cas.models.response.Customer;
 import com.apriori.cas.models.response.CustomerAssociation;
 import com.apriori.cas.models.response.CustomerAssociationUser;
 import com.apriori.cas.models.response.CustomerAssociationUsers;
-import com.apriori.cas.models.response.CustomerUser;
-import com.apriori.cas.models.response.CustomerUsers;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.User;
+import com.apriori.models.response.Users;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
@@ -38,7 +38,7 @@ public class CasCustomerUserAssociationTests {
     private Customer targetCustomer;
     private CustomerAssociation customerAssociationToAprioriInternal;
     private List<CustomerAssociationUser> associatedUsers;
-    private List<CustomerUser> usersToAssociate;
+    private List<User> usersToAssociate;
 
     @BeforeAll
     public static void globalSetup() {
@@ -78,7 +78,7 @@ public class CasCustomerUserAssociationTests {
     @Description("Create a user association from a source customer user to a target customer.")
     @TestRail(id = {5683})
     public void createUserAssociation() {
-        CustomerUser user = usersToAssociate.get(0);
+        User user = usersToAssociate.get(0);
         ResponseWrapper<CustomerAssociationUser> response = casTestUtil.createCustomerAssociationUser(user, customerAssociationToAprioriInternal);
         CustomerAssociationUser associatedUser = response.getResponseEntity();
         associatedUsers.add(associatedUser);
@@ -118,8 +118,8 @@ public class CasCustomerUserAssociationTests {
     @TestRail(id = {10066})
     public void getUserAssociationCandidates() {
         associatedUsers.add(casTestUtil.createCustomerAssociationUser(usersToAssociate.get(0), customerAssociationToAprioriInternal).getResponseEntity());
-        List<CustomerUser> allUsers = casTestUtil.findUsers(aprioriInternal);
-        ResponseWrapper<CustomerUsers> response = casTestUtil.findCustomerAssociationCandidates(aprioriInternal, customerAssociationToAprioriInternal);
+        List<User> allUsers = casTestUtil.findUsers(aprioriInternal);
+        ResponseWrapper<Users> response = casTestUtil.findCustomerAssociationCandidates(aprioriInternal, customerAssociationToAprioriInternal);
 
         soft.assertThat(response.getResponseEntity().getItems().size())
             .isEqualTo(allUsers.size() - associatedUsers.size());

@@ -1,11 +1,11 @@
 package com.apriori;
 
 import com.apriori.cas.enums.CASAPIEnum;
-import com.apriori.cas.models.response.User;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
+import com.apriori.models.response.User;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesAPI;
