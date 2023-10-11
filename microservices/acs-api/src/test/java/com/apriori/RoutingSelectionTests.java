@@ -15,12 +15,15 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.fms.models.response.FileResponse;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 import com.apriori.workorders.WorkorderAPITests;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesAPI.class)
 public class RoutingSelectionTests extends TestUtil {
 
     @Test

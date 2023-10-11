@@ -1,6 +1,7 @@
 package com.apriori.cis.controller;
 
 import com.apriori.cis.enums.CisAPIEnum;
+import com.apriori.cis.models.request.bidpackage.BidPackageItemRequest;
 import com.apriori.cis.models.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.cis.models.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.cis.models.request.bidpackage.BidPackageProjectUserRequest;
@@ -15,6 +16,7 @@ import com.apriori.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CisBidPackageProjectResources {
@@ -32,6 +34,10 @@ public class CisBidPackageProjectResources {
      */
     public static <T> T createBidPackageProject(String projectName, String bidPackageIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         BidPackageProjectRequest projectRequest = getBidPackageProjectRequestBuilder(projectName, projectName);
+        List<BidPackageItemRequest> bidPackageProjectItemRequestList = new ArrayList<>();
+        List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
+        projectRequest.getProject().setItems(bidPackageProjectItemRequestList);
+        projectRequest.getProject().setUsers(usersList);
         RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECTS, responseClass)
             .inlineVariables(bidPackageIdentity)
             .body(projectRequest)

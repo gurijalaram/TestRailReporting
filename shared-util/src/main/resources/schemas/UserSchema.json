@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "deletedBy": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        },
+        "userProfile": {
+          "$ref": "UserProfileSchema.json"
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "sites": {
+          "type": "array",
+          "items": {}
+        },
+        "customAttributes": {
+          "type": "object",
+          "properties": {
+            "workspaceId": {
+              "type": "integer"
+            }
+          },
+          "optional": [
+            "workspaceId"
+          ]
+        },
+        "enablements": {
+          "$ref": "EnablementsSchema.json"
+        },
+        "roles": {
+          "type": "array",
+          "items": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "awsRole": {
+          "type": "string"
+        },
+        "userType": {
+          "type": "string"
+        },
+        "mfaRequired": {
+          "type": "boolean"
+        },
+        "hasCompleteProfile": {
+          "type": "boolean"
+        },
+        "resourcesAllowedToCreate": {
+          "type": "array",
+          "items": {}
+        },
+        "customProperties": {
+          "type": "object"
+        },
+        "createdByName": {
+          "type": "string"
+        },
+        "licenseAssignments": {
+          "type": "array",
+          "items": {
+          }
+        }
+      },
+      "required": [
+        "identity",
+        "userProfile",
+        "email",
+        "username",
+        "active",
+        "customAttributes",
+        "customerIdentity",
+        "userType",
+        "mfaRequired"
+      ],
+      "optional": [
+        "sites",
+        "hasCompleteProfile",
+        "updatedAt",
+        "updatedBy",
+        "deletedBy",
+        "deletedAt",
+        "resourcesAllowedToCreate",
+        "awsRole",
+        "createdBy",
+        "createdAt",
+        "roles",
+        "customProperties",
+        "licenseAssignments",
+        "createdByName",
+        "updatedByName"
+      ]
+    }
+  }
+}

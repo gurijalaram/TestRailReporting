@@ -3,7 +3,6 @@ package com.apriori.customer.users;
 import com.apriori.PageUtils;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.LicenseResponse;
-import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.components.CardsViewComponent;
 import com.apriori.components.SourceListComponent;
@@ -12,9 +11,11 @@ import com.apriori.http.utils.Obligation;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.Customer;
 import com.apriori.models.response.Site;
+import com.apriori.models.response.User;
 import com.apriori.pageobjects.customer.users.UsersListPage;
 import com.apriori.pageobjects.customer.users.profile.UserProfilePage;
 import com.apriori.pageobjects.login.CasLoginPage;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
@@ -48,6 +49,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
     private String subLicenseName;
     private UserProfilePage userProfilePage;
     private UsersListPage usersListPage;
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
@@ -56,7 +58,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         cdsTestUtil = new CdsTestUtil();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
+        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         user = cdsTestUtil.addUser(customerIdentity, userName, email).getResponseEntity();
         userIdentity = user.getIdentity();

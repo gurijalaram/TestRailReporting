@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import com.apriori.edc.models.response.bill.of.materials.BillOfMaterialsResponse;
 import com.apriori.edc.utils.BillOfMaterialsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -15,12 +15,14 @@ import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
+@ExtendWith(TestRulesAPI.class)
 public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
-    private static String filename = "Test BOM 5.csv";
+    private static final String filename = "Test BOM 5.csv";
     private static String billOfMaterialsIdentity;
 
     @AfterAll
@@ -32,7 +34,7 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
         billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
 

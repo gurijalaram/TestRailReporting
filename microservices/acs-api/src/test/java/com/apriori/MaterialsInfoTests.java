@@ -19,12 +19,15 @@ import com.apriori.acs.models.response.acs.materialsinfo.MaterialsInfoSheetMetal
 import com.apriori.acs.models.response.acs.materialsinfo.MaterialsInfoStockMachiningResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesAPI.class)
 public class MaterialsInfoTests {
 
     @Test

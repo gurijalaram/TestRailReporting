@@ -13,6 +13,9 @@ import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.Customer;
 import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -21,10 +24,12 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
+@ExtendWith(TestRulesAPI.class)
 public class CdsAccessAuthorizationsTests {
     private IdentityHolder accessAuthorizationIdentityHolder;
     private String customerAssociationUserIdentity;
@@ -43,6 +48,7 @@ public class CdsAccessAuthorizationsTests {
     private ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
     private ResponseWrapper<AssociationUserItems> associationUser;
     private SoftAssertions soft = new SoftAssertions();
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setDetails() {
@@ -52,7 +58,7 @@ public class CdsAccessAuthorizationsTests {
         emailPattern = "\\S+@".concat(customerName);
         aPStaffIdentity = PropertiesContext.get("user_identity");
 
-        customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, emailPattern);
+        customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, emailPattern, currentUser);
         customerIdentity = customer.getResponseEntity().getIdentity();
         aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
         customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, HttpStatus.SC_OK, aPCustomerIdentity);

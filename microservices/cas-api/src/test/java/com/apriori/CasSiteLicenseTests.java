@@ -14,7 +14,9 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -23,9 +25,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.UUID;
 
+@ExtendWith(TestRulesAPI.class)
 public class CasSiteLicenseTests {
     private SoftAssertions soft = new SoftAssertions();
     private String customerName;
@@ -39,10 +43,11 @@ public class CasSiteLicenseTests {
     private CasTestUtil casTestUtil = new CasTestUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         email = customerName.toLowerCase();

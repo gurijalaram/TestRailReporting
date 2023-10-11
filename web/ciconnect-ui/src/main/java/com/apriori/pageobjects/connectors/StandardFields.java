@@ -118,7 +118,7 @@ public class StandardFields extends ConnectorMappings {
     }
 
     public String getFieldDataType() {
-        return selectedRow.findElements(By.cssSelector(cssColumnSelector)).get(3).getText();
+        return selectedRow.findElements(By.cssSelector(cssColumnSelector)).get(ConnectorColumnFields.DATA_TYPE.getColumnIndex() - 1).getText();
     }
 
     /**
@@ -128,8 +128,8 @@ public class StandardFields extends ConnectorMappings {
      * @return Current class Object
      */
     public StandardFields enterPlmField(PlmTypeAttributes plmTypeAttributes) {
-        pageUtils.clearValueOfElement(getMatchedConnectFieldRow(plmTypeAttributes).get(2).findElement(By.cssSelector(cssTextboxSelector)));
-        getMatchedConnectFieldRow(plmTypeAttributes).get(2).findElement(By.cssSelector(cssTextboxSelector)).sendKeys(plmTypeAttributes.getValue());
+        pageUtils.clearValueOfElement(getMatchedConnectFieldRow(plmTypeAttributes).get(ConnectorColumnFields.PLM_FIELD.getColumnIndex() - 1).findElement(By.cssSelector(cssTextboxSelector)));
+        getMatchedConnectFieldRow(plmTypeAttributes).get(ConnectorColumnFields.PLM_FIELD.getColumnIndex() - 1).findElement(By.cssSelector(cssTextboxSelector)).sendKeys(plmTypeAttributes.getValue());
         return this;
     }
 

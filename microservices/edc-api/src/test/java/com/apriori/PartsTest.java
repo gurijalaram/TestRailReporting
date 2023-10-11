@@ -14,7 +14,9 @@ import com.apriori.edc.utils.LineItemsUtil;
 import com.apriori.edc.utils.PartsUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -23,17 +25,20 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@ExtendWith(TestRulesAPI.class)
 public class PartsTest extends PartsUtil {
 
     private static String filename = "Test BOM 5.csv";
     private static String billOfMaterialsIdentity;
     private SoftAssertions softAssertions = new SoftAssertions();
     private LineItemsUtil lineItems = new LineItemsUtil();
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @AfterAll
     public static void deleteTestingData() {
@@ -44,7 +49,7 @@ public class PartsTest extends PartsUtil {
 
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
         billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
 

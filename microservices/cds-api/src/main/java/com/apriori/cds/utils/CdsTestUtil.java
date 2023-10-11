@@ -32,9 +32,7 @@ import com.apriori.cds.models.response.InstallationItems;
 import com.apriori.cds.models.response.LicenseResponse;
 import com.apriori.cds.models.response.Roles;
 import com.apriori.cds.models.response.SubLicenseAssociationUser;
-import com.apriori.cds.models.response.User;
 import com.apriori.cds.models.response.UserPreference;
-import com.apriori.cds.models.response.UserProfile;
 import com.apriori.cds.models.response.UserRole;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
@@ -46,7 +44,6 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.json.JsonManager;
-import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Customer;
 import com.apriori.models.response.Customers;
 import com.apriori.models.response.Deployment;
@@ -54,7 +51,10 @@ import com.apriori.models.response.Enablements;
 import com.apriori.models.response.Features;
 import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
+import com.apriori.models.response.User;
+import com.apriori.models.response.UserProfile;
 import com.apriori.properties.PropertiesContext;
+import com.apriori.reader.file.user.UserCredentials;
 
 import org.apache.http.HttpStatus;
 
@@ -67,6 +67,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CdsTestUtil extends TestUtil {
+
     /**
      * POST call to add a customer
      *
@@ -123,10 +124,9 @@ public class CdsTestUtil extends TestUtil {
      * @param email          - the email pattern
      * @return new object
      */
-    public ResponseWrapper<Customer> addCASCustomer(String name, String cloudReference, String email) {
-        String token = new AuthorizationUtil().getTokenAsString();
+    public ResponseWrapper<Customer> addCASCustomer(String name, String cloudReference, String email, UserCredentials currentUser) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASCustomerEnum.CUSTOMERS, Customer.class)
-            .token(token)
+            .token(currentUser.getToken())
             .body("customer",
                 CASCustomerRequest.builder().name(name)
                     .cloudReference(cloudReference)
@@ -852,8 +852,7 @@ public class CdsTestUtil extends TestUtil {
      * @param customerIdentity - customerIdentity
      * @return new object
      */
-    public ResponseWrapper<PostBatch> addCASBatchFile(String users, String email, String customerIdentity) {
-        String token = new AuthorizationUtil().getTokenAsString();
+    public ResponseWrapper<PostBatch> addCASBatchFile(String users, String email, String customerIdentity, UserCredentials currentUser) {
 
         StringBuilder sb = new StringBuilder(users);
         String userRecord = "User%s,user%s@%s.com,Test%s,User%s,,,,,,,,,,,,,,,,,,,,,,,,,";
@@ -864,7 +863,7 @@ public class CdsTestUtil extends TestUtil {
         InputStream usersBatch = new ByteArrayInputStream(sb.toString().getBytes(StandardCharsets.UTF_8));
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASCustomerEnum.CUSTOMERS_BATCH, PostBatch.class)
-            .token(token)
+            .token(currentUser.getToken())
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .multiPartFiles(new MultiPartFiles().use("multiPartFile", FileResourceUtil.copyIntoTempFile(usersBatch, null, "testUsersBatch.csv")))
             .inlineVariables(customerIdentity);
@@ -879,11 +878,10 @@ public class CdsTestUtil extends TestUtil {
      * @param fileName         - name of file
      * @return new object
      */
-    public ResponseWrapper<PostBatch> addInvalidBatchFile(String customerIdentity, String fileName) {
-        String token = new AuthorizationUtil().getTokenAsString();
+    public ResponseWrapper<PostBatch> addInvalidBatchFile(String customerIdentity, String fileName, UserCredentials currentUser) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASCustomerEnum.CUSTOMERS_BATCH, PostBatch.class)
-            .token(token)
+            .token(currentUser.getToken())
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .multiPartFiles(new MultiPartFiles().use("multiPartFile", FileResourceUtil.getResourceAsFile(fileName)))
             .inlineVariables(customerIdentity);

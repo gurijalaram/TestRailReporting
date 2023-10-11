@@ -5,6 +5,7 @@ import com.apriori.CisBidPackageProjectUsersTest;
 import com.apriori.CisBidPackageProjectsTest;
 import com.apriori.CisBidPackageTest;
 import com.apriori.CisComponentTest;
+import com.apriori.CisProjectsTest;
 import com.apriori.CisUserPreferencesTest;
 
 import org.junit.platform.suite.api.SelectClasses;
@@ -17,7 +18,8 @@ import org.junit.platform.suite.api.Suite;
     CisBidPackageItemTest.class,
     CisBidPackageProjectsTest.class,
     CisComponentTest.class,
-    CisBidPackageProjectUsersTest.class
+    CisBidPackageProjectUsersTest.class,
+    CisProjectsTest.class
 })
 public class RegressionSuite {
 }

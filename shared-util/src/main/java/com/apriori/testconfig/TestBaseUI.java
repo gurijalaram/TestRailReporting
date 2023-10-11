@@ -3,7 +3,7 @@ package com.apriori.testconfig;
 import static com.apriori.webdriver.DriverFactory.os;
 import static com.apriori.webdriver.DriverFactory.testMode;
 
-import com.apriori.rules.TestRules;
+import com.apriori.rules.TestRulesUI;
 import com.apriori.webdriver.DriverFactory;
 import com.apriori.webdriver.EventCapture;
 
@@ -19,7 +19,7 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 @Slf4j
-@ExtendWith(TestRules.class)
+@ExtendWith(TestRulesUI.class)
 public class TestBaseUI {
     protected DriverFactory driverFactory;
     protected WebDriver driver;

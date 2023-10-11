@@ -282,6 +282,13 @@ public class TableUtils {
         return columns.stream().filter(column -> column.getText().equalsIgnoreCase(columnHeader)).findFirst().orElse(null);
     }
 
+    /**
+     * Get column index based on column name
+     *
+     * @param tableHeaders WebElement of table
+     * @param columnHeader Column header name
+     * @return Integer column index
+     */
     public Integer getColumnIndx(WebElement tableHeaders, String columnHeader) {
         List<WebElement> columns = tableHeaders.findElements(By.tagName("td"));
         return IntStream.range(0, columns.size())
@@ -291,6 +298,13 @@ public class TableUtils {
     }
 
 
+    /**
+     * Get row by cell text
+     *
+     * @param table    - table web element
+     * @param cellText - text to match
+     * @return WebElement
+     */
     public WebElement getRowByCellText(WebElement table, String cellText) {
         WebElement dataElement = null;
         try {

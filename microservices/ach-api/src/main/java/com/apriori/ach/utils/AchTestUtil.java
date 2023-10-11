@@ -6,11 +6,14 @@ import com.apriori.ach.models.response.CustomerAch;
 import com.apriori.ach.models.response.CustomersAch;
 import com.apriori.ach.models.response.SuccessUpdatePreferencesResponse;
 import com.apriori.ach.models.response.UserPreference;
+import com.apriori.ach.models.response.UserPreferences;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
+import com.apriori.models.response.Users;
 
 import org.apache.http.HttpStatus;
 
@@ -93,5 +96,31 @@ public class AchTestUtil extends TestUtil {
                 .build());
 
         return HTTPRequest.build(requestEntity).put();
+    }
+
+    /**
+     * @param param - name of parameter
+     * @param value - value of parameter
+     * @param inlineVariables - inline variables
+     * @return object ResponseWrapper
+     */
+    public ResponseWrapper<Users> getUsersWithParams(String param, String value, String... inlineVariables) {
+        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.CUSTOMER_USERS, Users.class)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .queryParams(new QueryParams().use(param, value));
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Get sorted preferences
+     *
+     * @return object ResponseWrapper
+     */
+    public ResponseWrapper<UserPreferences> getSortedUserPreferences() {
+        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.USER_PREFERENCES, UserPreferences.class)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .queryParams(new QueryParams().use("sortBy[DESC]", "createdAt"));
+        return HTTPRequest.build(requestEntity).get();
     }
 }

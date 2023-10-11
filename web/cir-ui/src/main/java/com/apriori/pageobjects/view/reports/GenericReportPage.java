@@ -296,7 +296,7 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='sortOrder']//input")
     private WebElement sortOrderDropdownInput;
 
-    @FindBy(xpath = "//div[@id='costMetric']//a")
+    @FindBy(xpath = "//div[@id='costMetric']//a/..")
     private WebElement costMetricDropdown;
 
     @FindBy(xpath = "(//*[@class='highcharts-root']//*[local-name() = 'tspan'])[2]")
@@ -574,6 +574,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public <T> T selectExportSet(String exportSet, Class<T> className) {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
+        pageUtils.waitForElementToAppear(locator);
         driver.findElement(locator).click();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return PageFactory.initElements(driver, className);
@@ -800,7 +801,7 @@ public class GenericReportPage extends ReportsPageHeader {
         if (!costMetricDropdown.getAttribute("title").equals(costMetric)) {
             pageUtils.waitForElementAndClick(costMetricDropdown);
             pageUtils.waitForElementAndClick(
-                    driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", costMetric)))
+                driver.findElement(By.xpath(String.format("//li[@title='%s']/div/a", costMetric)))
             );
         }
         return this;
@@ -921,9 +922,9 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage openNewCidTabAndFocus(int index) {
         pageUtils.jsNewTab();
-        pageUtils.windowHandler(index);
+        pageUtils.switchToWindow(index);
 
-        driver.get(PropertiesContext.get("{env}.cidapp.ui_url"));
+        driver.get(PropertiesContext.get("cidapp.ui_url"));
         pageUtils.waitForElementToAppear(cidLogo);
 
         return new GenericReportPage(driver);
@@ -937,13 +938,8 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return Instance of class passed in
      */
     public <T> T clickOk(Class<T> className) {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(okButton).perform();
-        actions.click().perform();
-        if (!getInputControlsDivClassName().contains("hidden")) {
-            actions.moveToElement(okButton).perform();
-            actions.click().perform();
-        }
+        pageUtils.waitForSteadinessOfElement(By.xpath("//button[@id='ok']/span/span"));
+        okButton.click();
         return PageFactory.initElements(driver, className);
     }
 
@@ -1120,7 +1116,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return new instance of page object
      */
     public <T> T waitForCorrectCurrency(String currencyToCheck, Class<T> className) {
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 2);
         By locator = By.xpath(String.format("//table//span[contains(text(), '%s')]", currencyToCheck));
         pageUtils.waitForElementToAppear(locator);
         return PageFactory.initElements(driver, className);
@@ -1471,7 +1467,6 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage clickReset() {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        pageUtils.waitForElementAndClick(resetButton);
         resetButton.click();
         return this;
     }
@@ -1731,9 +1726,6 @@ public class GenericReportPage extends ReportsPageHeader {
         Actions actions = new Actions(driver);
         actions.moveToElement(componentSelectDropdown).perform();
         actions.click().perform();
-        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a[contains(@class, 'jr-isFocused')]"));
-        pageUtils.waitForSteadinessOfElement(By.xpath("//label[@title='Component Select']//a"));
-        pageUtils.waitForElementAndClick(componentSelectDropdown);
         pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a[contains(@class, 'jr-isOpen')]"));
         pageUtils.waitForElementAndClick(componentSelectSearchInput);
         componentSelectSearchInput.clear();
@@ -1888,7 +1880,8 @@ public class GenericReportPage extends ReportsPageHeader {
         String dtcScoreToUse = dtcScoreOption.equals("Medium Casting")
                 ? DtcScoreEnum.MEDIUM.getDtcScoreName() : dtcScoreOption;
         if (!dtcScoreToUse.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
-            pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
+            Actions actions = new Actions(driver);
+            actions.moveToElement(driver.findElement(By.xpath("//div[@id='dtcScore']"))).perform();
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
             By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreToUse));
             pageUtils.waitForElementAndClick(locator);
@@ -2185,7 +2178,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage switchTab(int index) {
         if (driver.getWindowHandles().size() == (index + 1)) {
-            pageUtils.windowHandler(index);
+            pageUtils.switchToWindow(index);
         }
         return this;
     }
@@ -2245,7 +2238,7 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath("//span[contains(text(), 'details')]");
         pageUtils.waitForSteadinessOfElement(locator);
         pageUtils.waitForElementAndClick(locator);
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         waitForReportToLoad();
     }
 

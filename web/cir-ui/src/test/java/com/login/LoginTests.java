@@ -1,5 +1,6 @@
 package com.login;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.CUSTOMER;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.is;
@@ -32,7 +33,9 @@ public class LoginTests extends TestBaseUI {
 
     @Test
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+        @Tag(ON_PREM),
+        @Tag(CUSTOMER)
+    })
     @TestRail(id = {2695})
     @Description("Successful login to CI Report")
     public void testLogin() {

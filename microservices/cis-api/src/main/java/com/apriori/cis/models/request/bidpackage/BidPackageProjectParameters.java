@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -14,5 +16,8 @@ public class BidPackageProjectParameters {
     private String description;
     private String status;
     private String type;
-    public BidPackageProjectProfile projectProfile;
+    private String displayName;
+    private BidPackageProjectProfile projectProfile;
+    private List<BidPackageItemRequest> items;
+    private List<BidPackageProjectUserParameters> users;
 }

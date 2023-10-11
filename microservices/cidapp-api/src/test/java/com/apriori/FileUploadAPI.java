@@ -13,13 +13,16 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 
 import io.qameta.allure.Description;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
 import java.io.File;
 
+@ExtendWith(TestRulesAPI.class)
 public class FileUploadAPI {
 
     private final ComponentsUtil componentsUtil = new ComponentsUtil();

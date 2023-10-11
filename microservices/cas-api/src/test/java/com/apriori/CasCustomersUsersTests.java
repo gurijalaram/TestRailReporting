@@ -2,8 +2,6 @@ package com.apriori;
 
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.models.response.Customer;
-import com.apriori.cas.models.response.CustomerUser;
-import com.apriori.cas.models.response.CustomerUsers;
 import com.apriori.cas.models.response.UsersData;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -11,20 +9,24 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.models.response.User;
+import com.apriori.models.response.Users;
 import com.apriori.reader.file.InitFileData;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import io.qameta.allure.Description;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -36,18 +38,20 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 
+@Slf4j
+@ExtendWith(TestRulesAPI.class)
 public class CasCustomersUsersTests {
-    private static final Logger logger = LoggerFactory.getLogger(CasCustomersUsersTests.class);
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private Customer newCustomer;
     private String customerIdentity;
     private String userIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void getToken() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
         newCustomer = casTestUtil.createCustomer().getResponseEntity();
         customerIdentity = newCustomer.getIdentity();
     }
@@ -71,17 +75,17 @@ public class CasCustomersUsersTests {
     @Description("Add a user to a customer, return a list of users for the customer, get the User identified by its identity.")
     public void addCustomerUsers() {
 
-        ResponseWrapper<CustomerUser> user = casTestUtil.createUser(newCustomer);
+        ResponseWrapper<User> user = casTestUtil.createUser(newCustomer);
         soft.assertThat(user.getResponseEntity().getCustomerIdentity())
             .isEqualTo(customerIdentity);
 
-        ResponseWrapper<CustomerUsers> customerUsers = casTestUtil.getCommonRequest(CASAPIEnum.USERS, CustomerUsers.class, HttpStatus.SC_OK, customerIdentity);
+        ResponseWrapper<Users> customerUsers = casTestUtil.getCommonRequest(CASAPIEnum.USERS, Users.class, HttpStatus.SC_OK, customerIdentity);
         soft.assertThat(customerUsers.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
 
         userIdentity = customerUsers.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<CustomerUser> singleUser = casTestUtil.getCommonRequest(CASAPIEnum.USER, CustomerUser.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
+        ResponseWrapper<User> singleUser = casTestUtil.getCommonRequest(CASAPIEnum.USER, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         soft.assertThat(singleUser.getResponseEntity().getIdentity())
             .isEqualTo(userIdentity);
         soft.assertAll();
@@ -90,12 +94,12 @@ public class CasCustomersUsersTests {
     @Test
     @TestRail(id = {5664})
     @Description("Update the User.")
-    public void updateCustomerUsers() {
-        ResponseWrapper<CustomerUser> userResponse = casTestUtil.createUser(newCustomer);
-        CustomerUser user = userResponse.getResponseEntity();
+    public void updateUsers() {
+        ResponseWrapper<User> userResponse = casTestUtil.createUser(newCustomer);
+        User user = userResponse.getResponseEntity();
         userIdentity = user.getIdentity();
 
-        ResponseWrapper<CustomerUser> updatedUser = CasTestUtil.updateUser(user);
+        ResponseWrapper<User> updatedUser = CasTestUtil.updateUser(user);
 
         soft.assertThat(updatedUser.getResponseEntity().getUserProfile().getDepartment())
             .isEqualTo("QA");
@@ -106,7 +110,7 @@ public class CasCustomersUsersTests {
     @TestRail(id = {5667})
     @Description("Reset the MFA configuration for a user.")
     public void resettingUserMfa() {
-        ResponseWrapper<CustomerUser> user = casTestUtil.createUser(newCustomer);
+        ResponseWrapper<User> user = casTestUtil.createUser(newCustomer);
         userIdentity = user.getResponseEntity().getIdentity();
 
         CasTestUtil.resetUserMfa(customerIdentity, userIdentity);
@@ -123,7 +127,7 @@ public class CasCustomersUsersTests {
             fileReader.close();
             csvReader.close();
         } catch (Exception e) {
-            logger.error(String.format("FILE NOT FOUND ::: %s", e.getMessage()));
+            log.error(String.format("FILE NOT FOUND ::: %s", e.getMessage()));
             throw new IllegalArgumentException(e);
         }
         return fileData;
@@ -150,8 +154,8 @@ public class CasCustomersUsersTests {
     @Test
     @TestRail(id = {16378})
     @Description("Export customer users")
-    public void exportCustomerUsers() {
-        ResponseWrapper<CustomerUser> user = casTestUtil.createUser(newCustomer);
+    public void exportUsers() {
+        ResponseWrapper<User> user = casTestUtil.createUser(newCustomer);
         String cloudRef = newCustomer.getCloudReference();
         String userName = user.getResponseEntity().getUsername();
 

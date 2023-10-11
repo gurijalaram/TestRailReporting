@@ -6,16 +6,19 @@ import com.apriori.cus.models.response.PreferenceResponse;
 import com.apriori.cus.utils.PeopleUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@ExtendWith(TestRulesAPI.class)
 public class UserPreferencesTests {
 
     private static UserCredentials currentUser;

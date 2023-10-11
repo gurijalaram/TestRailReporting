@@ -12,7 +12,9 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -21,19 +23,22 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.stream.Collectors;
 
+@ExtendWith(TestRulesAPI.class)
 public class AchUserPreferencesTests {
     private IdentityHolder userPreferenceIdentityHolder;
     private AchTestUtil achTestUtil = new AchTestUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private SoftAssertions soft = new SoftAssertions();
+    private final UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void getToken() {
-        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
     }
 
     @AfterEach
@@ -69,10 +74,10 @@ public class AchUserPreferencesTests {
         soft.assertThat(newPreference.getResponseEntity().getSuccesses().get(0).getIdentity()).isNotEmpty();
 
         String prefIdentity = newPreference.getResponseEntity().getSuccesses().get(0).getIdentity();
-        String newValue = generateStringUtil.getRandomNumbersSpecLength(4);
+        String newValue = generateStringUtil.getRandomNumbersStartsNoZero();
 
         achTestUtil.updatePreferencesByPatch(prefIdentity, newValue);
-        ResponseWrapper<UserPreferences> preferences = achTestUtil.getCommonRequest(ACHAPIEnum.USER_PREFERENCES, UserPreferences.class, HttpStatus.SC_OK);
+        ResponseWrapper<UserPreferences> preferences = achTestUtil.getSortedUserPreferences();
         String updatedValue = preferences.getResponseEntity().getItems().stream().filter(pref -> pref.getIdentity().equals(prefIdentity)).collect(Collectors.toList()).get(0).getValue();
 
         soft.assertThat(updatedValue).isEqualTo(newValue);

@@ -6,6 +6,7 @@ import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.models.response.Customer;
 import com.apriori.pageobjects.login.CasLoginPage;
 import com.apriori.pageobjects.security.SecurityPage;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
@@ -23,6 +24,7 @@ public class MfaEnabledTests extends TestBaseUI {
     private Customer customer;
     private String customerIdentity;
     private String customerName;
+    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
@@ -31,7 +33,7 @@ public class MfaEnabledTests extends TestBaseUI {
         String email = "\\S+@".concat(customerName);
 
         cdsTestUtil = new CdsTestUtil();
-        customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
+        customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
         customerIdentity = customer.getIdentity();
 
         securityPage = new CasLoginPage(driver)

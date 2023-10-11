@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "required": [
+    "timestamp",
+    "status",
+    "error",
+    "message",
+    "path"
+  ],
+  "properties": {
+    "timestamp": {
+      "type": "string"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "error": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    }
+  }
+}

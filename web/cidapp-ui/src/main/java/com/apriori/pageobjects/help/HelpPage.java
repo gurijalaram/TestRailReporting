@@ -23,6 +23,9 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     @FindBy(css = "[data-ap-help='CIDesign:NGRN:NG_whats_new_2']")
     private WebElement whatsNewButton;
 
+    @FindBy(xpath = "//button[.='Report an issue']")
+    private WebElement reportAnIssueButton;
+
     @FindBy(xpath = "//button[.='About aPriori']")
     private WebElement aboutaPrioriButton;
 
@@ -81,7 +84,18 @@ public class HelpPage extends LoadableComponent<HelpPage> {
      * @return string
      */
     public String getChildPageTitle() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return pageUtils.waitForElementToAppear(userGuideTitle).getText();
     }
+
+    /**
+     * Select Report an Issue
+     *
+     * @return - Report an issue modal PO
+     */
+    public ReportAnIssue clickReportAnIssue() {
+        pageUtils.waitForElementAndClick(reportAnIssueButton);
+        return new ReportAnIssue(driver);
+    }
+
 }

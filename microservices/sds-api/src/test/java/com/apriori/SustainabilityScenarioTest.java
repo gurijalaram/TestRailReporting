@@ -10,6 +10,7 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.models.response.componentiteration.ScenarioProcess;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.sds.enums.SDSAPIEnum;
 import com.apriori.sds.models.response.ScenarioIteration;
 import com.apriori.sds.util.SDSTestUtil;
@@ -19,10 +20,12 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@ExtendWith(TestRulesAPI.class)
 public class SustainabilityScenarioTest extends SDSTestUtil {
     private SoftAssertions soft = new SoftAssertions();
 
