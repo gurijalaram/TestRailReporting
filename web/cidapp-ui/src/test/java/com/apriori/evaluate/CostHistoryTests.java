@@ -43,7 +43,7 @@ public class CostHistoryTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {28442, 28443, 28444, 28447})
     @Description("Verify Cost History available")
     public void testCostHistory() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
