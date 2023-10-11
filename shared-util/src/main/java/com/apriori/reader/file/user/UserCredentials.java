@@ -13,9 +13,10 @@ import java.time.temporal.ChronoUnit;
 public class UserCredentials implements Serializable {
 
     private final int TOKEN_MIN_TIME_IN_MINUTES = 10;
+    private volatile String token;
+
     private String email;
     private String password;
-    private String token;
     private String username;
     private String cloudContext;
     //TODO : change it on Security ENUM when will be information about security levels
@@ -79,7 +80,7 @@ public class UserCredentials implements Serializable {
         return this;
     }
 
-    public String getToken() {
+    public synchronized String getToken() {
         if (token == null) {
             generateToken();
         }
@@ -91,7 +92,7 @@ public class UserCredentials implements Serializable {
         return token;
     }
 
-    public UserCredentials generateToken() {
+    public synchronized UserCredentials generateToken() {
         this.token = new AuthorizationUtil().getToken(this)
             .getResponseEntity()
             .getToken();

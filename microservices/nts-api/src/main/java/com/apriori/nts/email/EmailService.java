@@ -36,7 +36,7 @@ public class EmailService {
      * @param subject Email subject
      * @return True, if the email exits
      */
-    public synchronized Boolean validateEmail(String subject) {
+    public Boolean validateEmail(String subject) {
         EmailMessage emailMessage = GraphEmailService.searchEmailMessage("$search," + subject);
         try {
             int count = 0;
