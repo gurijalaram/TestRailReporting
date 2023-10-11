@@ -216,7 +216,7 @@ development:
   base_url: https://cloud.na-1.development.apriori.net/
   customer_identity: 212B5ABD2F6C
   deployment_name: production
-  installation_name: core-na-1 - v22 Production
+  installation_name: Production
   secret_key: O85XMATZEMBO
   user_identity: 4N630F61FGNG
 
