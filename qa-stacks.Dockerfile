@@ -1,9 +1,31 @@
 # Prepare runtime.
-FROM docker.apriori.com/apriori-jre-base:11.0.20 AS runtime
+FROM amazoncorretto:11-alpine AS runtime
+RUN apk --no-cache add --update bash openssl
+USER root
 WORKDIR /app
 
 # Prepare build workspace.
-FROM docker.apriori.com/apriori-jdk-base:11.0.20 AS sdk
+# verify gradle version
+FROM gradle:8.3.0-jdk11 as sdk
+WORKDIR /build-workspace
+
+# Setup build workspace.
+USER root
+
+#RUN apt-get update &&  rm -rf /var/lib/apt/lists/*
+
+#RUN mkdir -p /synopsys-detect
+#RUN chmod -R 777 /synopsys-detect
+#RUN chown -R gradle /synopsys-detect
+
+# Apriori Certs
+COPY fbc-CONSVDC02-CA-2022.cer /build-workspace/fbc-CONSVDC02-CA-2022.cer
+COPY fbc1-2040.cer /build-workspace/fbc1-2040.cer
+
+RUN /opt/java/openjdk/bin/keytool -importcert -file /build-workspace/fbc-CONSVDC02-CA-2022.cer -alias fbc-consvdc02-2022 -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt
+RUN /opt/java/openjdk/bin/keytool -importcert -file /build-workspace/fbc1-2040.cer -alias fbc1-2040 -keystore $JAVA_HOME/lib/security/cacerts -storepass changeit -noprompt
+
+RUN chown -R gradle .
 USER root
 
 COPY . .
