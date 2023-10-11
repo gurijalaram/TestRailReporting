@@ -2,6 +2,8 @@ package com.apriori.evaluate;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
@@ -20,6 +22,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class WatchpointReports extends TestBaseUI {
 
@@ -27,6 +31,7 @@ public class WatchpointReports extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private UserCredentials currentUser;
 
     public WatchpointReports() {
@@ -50,6 +55,58 @@ public class WatchpointReports extends TestBaseUI {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.isReportButtonEnabled()).isTrue();
+        evaluatePage.clickReportDropdown();
+
+        softAssertions.assertThat(evaluatePage.isDownloadButtonEnabled()).isFalse();
+
+        evaluatePage.clickReportDropdown()
+            .generateReport(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3)
+            .downloadReport(EvaluatePage.class);
+
+        softAssertions.assertThat((Long) evaluatePage.getReportJQueryData().get("total")).isGreaterThan(0);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(SMOKE)
+    @Issue("BA-2962")
+    @TestRail(id = {28525, 28526})
+    @Description("Generate and download a Assembly Cost Report")
+    public void assemblyCostReport() {
+
+        final String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String bigRing = "flange";
+        final String pin = "nut";
+        final String smallRing = "bolt";
+        final List<String> subComponentNames = Arrays.asList(bigRing, pin, smallRing);
+        final String subComponentExtension = ".CATPart";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isReportButtonEnabled()).isTrue();
