@@ -46,7 +46,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
             .get(0).getIdentity(), DmsCommentResponse.class, HttpStatus.SC_CREATED);
         softAssertions.assertThat(dcResponse.getContent()).isEqualTo(commentDescription);
         DmsApiTestUtils.deleteComment(dmsScenarioDiscussionResponse.getItems().get(0)
-            .getIdentity(), dcResponse.getIdentity(), currentUser, null, HttpStatus.SC_NO_CONTENT);
+            .getIdentity(), dcRespFonse.getIdentity(), currentUser, null, HttpStatus.SC_NO_CONTENT);
     }
 
     @Test
