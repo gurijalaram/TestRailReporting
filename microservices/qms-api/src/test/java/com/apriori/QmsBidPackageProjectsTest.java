@@ -127,7 +127,6 @@ public class QmsBidPackageProjectsTest extends TestUtil {
     }
 
     @Test
-    @Tag(API_SANITY)
     @TestRail(id = {13751, 22958, 24277, 25989})
     @Issue("COL-2020")
     @Description("Update Bid Package Project By Identity")
