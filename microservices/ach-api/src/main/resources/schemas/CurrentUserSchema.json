@@ -11,7 +11,6 @@
         "identity",
         "createdAt",
         "createdBy",
-        "updatedAt",
         "customerIdentity",
         "userProfile",
         "email",
@@ -23,6 +22,9 @@
         "userType",
         "roles",
         "enablements"
+      ],
+      "optional": [
+        "updatedAt"
       ],
       "properties": {
         "isSystemUser": {
