@@ -2,6 +2,7 @@ package testsuites;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
+import com.apriori.AllMaterialStocksInfoTests;
 import com.apriori.AtsAuthorization;
 import com.apriori.BatchPartTest;
 import com.apriori.BidPackageProjectUserTest;
@@ -29,7 +30,6 @@ import com.apriori.UserTests;
 import com.apriori.ach.tests.AchCurrentUserTests;
 import com.apriori.evaluate.CostAllCadTests;
 import com.apriori.evaluate.DataCreationTests;
-import com.apriori.workorders.WorkorderAPITests;
 
 import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import org.junit.platform.suite.api.IncludeTags;
@@ -40,7 +40,7 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasses({
     AtsAuthorization.class,
     AchCurrentUserTests.class,
-    WorkorderAPITests.class,
+    AllMaterialStocksInfoTests.class,
     AtsAuthorization.class,
     BatchPartTest.class,
     BidPackageProjectUserTest.class,

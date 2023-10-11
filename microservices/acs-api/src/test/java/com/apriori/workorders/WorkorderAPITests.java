@@ -1,6 +1,5 @@
 package com.apriori.workorders;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -430,7 +429,6 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @Tag(API_SANITY)
     @TestRail(id = 12047)
     @Description("Generate Simple Image - Part File")
     public void testGenerateSimpleImageData() {
