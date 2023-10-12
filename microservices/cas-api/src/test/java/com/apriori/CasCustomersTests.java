@@ -65,7 +65,7 @@ public class CasCustomersTests {
         RequestEntity request = new RequestEntity()
             .endpoint(CASAPIEnum.CUSTOMERS)
             .returnType(Customers.class)
-            .token(userToken)
+            .token(UserUtil.getUser().getToken())
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Customers> response = HTTPRequest.build(request).get();
