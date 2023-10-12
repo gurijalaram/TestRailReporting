@@ -39,10 +39,11 @@ public class CasCustomersTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private String userToken = UserUtil.getUser().getToken();
+    private String userToken;
 
     @BeforeEach
     public void getToken() {
+        userToken = UserUtil.getUser().getToken();
         RequestEntityUtil.useTokenForRequests(userToken);
     }
 
@@ -65,7 +66,7 @@ public class CasCustomersTests {
         RequestEntity request = new RequestEntity()
             .endpoint(CASAPIEnum.CUSTOMERS)
             .returnType(Customers.class)
-            .token(UserUtil.getUser().getToken())
+            .token(userToken)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Customers> response = HTTPRequest.build(request).get();
