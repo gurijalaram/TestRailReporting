@@ -33,6 +33,7 @@ import org.junit.jupiter.api.parallel.Isolated;
 import java.util.Arrays;
 
 @ExtendWith(TestRulesApi.class)
+@Isolated
 public class CasCustomersTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
