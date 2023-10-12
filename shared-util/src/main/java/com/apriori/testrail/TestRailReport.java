@@ -3,9 +3,11 @@ package com.apriori.testrail;
 import com.apriori.properties.LoadProperties;
 
 import com.codepine.api.testrail.TestRail;
+import com.codepine.api.testrail.TestRailException;
 import com.codepine.api.testrail.model.Result;
 import com.codepine.api.testrail.model.ResultField;
 import com.codepine.api.testrail.model.Run;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.Properties;
  * For original code @see <a href="https://github.com/sandeeprao/testrail">TestRail</a>
  * Explanation @see <a href="https://medium.com/@sandeep12.rao/automating-unit-test-results-reporting-to-testrail-658d4bf97763">Code Explanation</a>
  */
+@Slf4j
 public class TestRailReport {
     private static List<Result> results = new ArrayList<>();
     private static int projectId;
@@ -34,6 +37,13 @@ public class TestRailReport {
 
         Run run = testRail.runs().get(projectId).execute();
         List<ResultField> customResultFields = testRail.resultFields().list().execute();
-        testRail.results().addForCases(run.getId(), results, customResultFields).execute();
+
+        results.forEach(result -> {
+            try {
+                testRail.results().addForCase(run.getId(), result.getTestId(), result, customResultFields).execute();
+            } catch (TestRailException tre) {
+                log.info(tre.getMessage() + " Or may not be a part of current run. Run :- {}, Case ID :- {}", run.getId(), result.getTestId());
+            }
+        });
     }
 }

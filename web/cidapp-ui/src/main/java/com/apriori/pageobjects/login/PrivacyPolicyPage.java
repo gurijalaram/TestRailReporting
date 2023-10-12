@@ -56,7 +56,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      * @return - string
      */
     public String getPageHeading() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return aprioriHeading.getText();
     }
 
@@ -66,7 +66,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      * @return - webelement
      */
     public boolean isPageLogoDisplayed() {
-        pageUtils.windowHandler(1);
+        pageUtils.switchToWindow(1);
         return pageUtils.waitForElementToAppear(aprioriLogo).isDisplayed();
     }
 

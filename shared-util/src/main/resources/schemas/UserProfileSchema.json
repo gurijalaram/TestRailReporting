@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "deletedBy": {
+      "type": "string"
+    },
+    "deletedAt": {
+      "type": "string"
+    },
+    "givenName": {
+      "type": "string"
+    },
+    "familyName": {
+      "type": "string"
+    },
+    "prefix": {
+      "type": "string"
+    },
+    "suffix": {
+      "type": "string"
+    },
+    "jobTitle": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "townCity": {
+      "type": "string"
+    },
+    "county": {
+      "type": "string"
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "officePhoneCountryCode": {
+      "type": "string"
+    },
+    "officePhoneNumber": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "createdBy",
+    "createdAt",
+    "givenName",
+    "familyName"
+  ],
+  "optional": [
+    "updatedBy",
+    "updatedAt",
+    "deletedBy",
+    "deletedAt",
+    "prefix",
+    "suffix",
+    "jobTitle",
+    "department",
+    "townCity",
+    "county",
+    "timezone",
+    "officePhoneCountryCode",
+    "officePhoneNumber"
+  ]
+}

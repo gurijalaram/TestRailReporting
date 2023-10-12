@@ -495,7 +495,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public void waitForCADViewerLoad() {
         getPageUtils().waitForElementToAppear(spinner);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@class='layout-pane layout-pane-primary']//div[@data-testid='loader']"),1);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@class='layout-pane layout-pane-primary']//div[@data-testid='loader']"), 1);
     }
 
     /**
@@ -526,7 +526,6 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     }
 
     /**
-     *
      * Checks if Scenario Results Card displayed
      *
      * @return true/false
@@ -679,7 +678,6 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public boolean isDfmRiskMenuIconDisplayed() {
         return getPageUtils().isElementDisplayed(dfmRiskIcon);
     }
-
 
     /**
      * Clicks on part nesting menu icon
@@ -971,7 +969,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return true/false
      */
     public boolean isCreateCardModalDisplayed() {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@role='dialog']"),1);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@role='dialog']"), 1);
         return getPageUtils().isElementDisplayed(createCardModal);
     }
 
@@ -1219,7 +1217,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      *
      * @return list of string
      */
-    public  List<String> getProcessRoutingDetails() {
+    public List<String> getProcessRoutingDetails() {
         return partsAndAssemblyDetailsController.getProcessRoutingDetails();
     }
 
@@ -1303,7 +1301,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      *
      * @return list of string
      */
-    public  List<String> getTableHeaders() {
+    public List<String> getTableHeaders() {
         return partsAndAssemblyDetailsController.getTableHeaders();
     }
 
@@ -1337,7 +1335,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public PartsAndAssembliesDetailsPage openAssembly(String componentName, String scenarioName) {
         getPageUtils().waitForElementsToAppear(tableRow);
         getPageUtils().waitForElementAndClick(driver.findElement(By.xpath(String.format("//div[@data-field='scenarioName']//p[text()='%s']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='%s']", scenarioName.trim(), componentName.trim()))));
-        getPageUtils().windowHandler(1);
+        getPageUtils().switchToWindow(1);
         return new PartsAndAssembliesDetailsPage(getDriver());
     }
 
@@ -1403,7 +1401,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      *
      * @return list of string
      */
-    public  List<String> getDesignGuidanceDetails() {
+    public List<String> getDesignGuidanceDetails() {
         return partsAndAssemblyDetailsController.getDesignGuidanceDetails();
     }
 
@@ -1477,7 +1475,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      *
      * @return list of string
      */
-    public  List<String> getInvestigationTopics() {
+    public List<String> getInvestigationTopics() {
         return partsAndAssemblyDetailsController.getInvestigationDetails();
     }
 
@@ -1600,7 +1598,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      *
      * @return list of string
      */
-    public  List<String> getThreadsItems() {
+    public List<String> getThreadsItems() {
         return partsAndAssemblyDetailsController.getThreadsDetails();
     }
 
@@ -1685,7 +1683,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public PartsAndAssembliesDetailsPage clickOnShare() {
         getPageUtils().waitForElementToAppear(proximityLbl);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='comments-expanded']//parent::div//..//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='comments-expanded']//parent::div//..//div[@data-testid='loader']"), 5);
         getPageUtils().waitForElementAndClick(btnShare);
         return this;
     }
@@ -2019,7 +2017,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      *
      * @return list of string
      */
-    public  List<String> getAttributeList() {
+    public List<String> getAttributeList() {
         return partsAndAssemblyDetailsController.getAttributeList();
     }
 
@@ -2038,7 +2036,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage selectCreatedDiscussion() {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         getPageUtils().waitForElementAndClick(createdDiscussion);
         return this;
     }
@@ -2104,7 +2102,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage clickDigitalFactoryMessageIcon() {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         getPageUtils().waitForElementToAppear(proximityLbl);
         getPageUtils().mouseMove(attributeDigitalFactory);
         getPageUtils().moveAndClick(attributeMessageIcon);
@@ -2223,7 +2221,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return true/false
      */
     public boolean isUndoDeleteOptionDisplayed() {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[starts-with(@id,'discussion')]//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[starts-with(@id,'discussion')]//div[@data-testid='loader']"), 5);
         return getPageUtils().waitForElementAppear(undoDeleteButton).isDisplayed();
     }
 
@@ -2282,7 +2280,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return a String
      */
     public String getAssignedState() {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),1);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 1);
         getPageUtils().waitForElementAndClick(createdDiscussion);
         return getPageUtils().waitForElementToAppear(createdDiscussion).getAttribute("innerText");
     }
@@ -2335,7 +2333,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return true/false
      */
     public PartsAndAssembliesDetailsPage reassignDiscussion(String participantName) {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),1);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 1);
         getPageUtils().waitForElementToAppear(discussionMenuIcon);
         getPageUtils().moveAndClick(discussionMenuIcon);
         clickAssignToOption();
@@ -2450,7 +2448,6 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
         return getPageUtils().waitForElementAppear(assignToMentionUserList).isDisplayed();
     }
 
-
     /**
      * clicks to change assign to user
      *
@@ -2488,7 +2485,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return true/false
      */
     public boolean isRemoveIconDisplayed() {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='modal-paper-comp-share-scenario-participant-modal']//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='modal-paper-comp-share-scenario-participant-modal']//div[@data-testid='loader']"), 5);
         return getPageUtils().isElementDisplayed(shareScenarioRemoveIcon);
     }
 

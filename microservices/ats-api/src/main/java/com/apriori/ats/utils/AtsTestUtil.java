@@ -4,7 +4,6 @@ import com.apriori.ats.models.request.AuthenticateRequest;
 import com.apriori.ats.models.request.CreateSamlUserRequest;
 import com.apriori.ats.models.request.ResetAutoUsers;
 import com.apriori.ats.models.request.ResetMFA;
-import com.apriori.ats.models.response.UserByEmail;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
@@ -13,6 +12,7 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.interfaces.EndpointEnum;
+import com.apriori.models.response.User;
 
 import org.apache.http.HttpStatus;
 
@@ -25,8 +25,8 @@ public class AtsTestUtil extends TestUtil {
      * @param password - user password
      * @return ResponseWrapper <UserByEmail>
      */
-    public ResponseWrapper<UserByEmail> authenticateUser(String email, String password) {
-        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.AUTHENTICATE, UserByEmail.class)
+    public ResponseWrapper<User> authenticateUser(String email, String password) {
+        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.AUTHENTICATE, User.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(AuthenticateRequest.builder()
                 .email(email)
@@ -42,10 +42,10 @@ public class AtsTestUtil extends TestUtil {
      * @param email - user email
      * @return ResponseWrapper <UserByEmail>
      */
-    public ResponseWrapper<UserByEmail> putSAMLProviders(String email) {
+    public ResponseWrapper<User> putSAMLProviders(String email) {
         GenerateStringUtil generator = new GenerateStringUtil();
         String userName = generator.generateUserName();
-        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.SAML_PROVIDERS, UserByEmail.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.SAML_PROVIDERS, User.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(CreateSamlUserRequest.builder()
                 .email(userName + email + ".com")

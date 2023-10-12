@@ -6,6 +6,7 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.sds.models.response.Scenario;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.testrail.TestRail;
@@ -13,10 +14,12 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Arrays;
 import java.util.List;
 
+@ExtendWith(TestRulesAPI.class)
 public class PublishAssembliesTests extends SDSTestUtil {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static ComponentInfoBuilder componentAssembly;

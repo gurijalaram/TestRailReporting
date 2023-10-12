@@ -2,7 +2,7 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
-import com.apriori.cds.models.response.User;
+import com.apriori.cds.models.response.InstallationItems;
 import com.apriori.cds.models.response.UserPreference;
 import com.apriori.cds.models.response.UserPreferences;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -10,6 +10,11 @@ import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.Customer;
+import com.apriori.models.response.Deployment;
+import com.apriori.models.response.LicensedApplications;
+import com.apriori.models.response.Site;
+import com.apriori.models.response.User;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -18,7 +23,9 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesAPI.class)
 public class CdsUserPreferencesTests {
     private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder userPreferenceIdentityHolder;
@@ -33,6 +40,10 @@ public class CdsUserPreferencesTests {
     private String emailPattern;
     private String customerIdentity;
     private String userIdentity;
+    private String siteIdentity;
+    private String deploymentIdentity;
+    private String licensedApplicationIdentity;
+    private String installationIdentity;
 
     @BeforeEach
     public void setDetails() {
@@ -45,7 +56,19 @@ public class CdsUserPreferencesTests {
 
         customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
-
+        String siteName = generateStringUtil.generateSiteName();
+        String siteID = generateStringUtil.generateSiteID();
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        siteIdentity = site.getResponseEntity().getIdentity();
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        deploymentIdentity = deployment.getResponseEntity().getIdentity();
+        String realmKey = generateStringUtil.generateRealmKey();
+        String appIdentity = Constants.getApProApplicationIdentity();
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
         user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
     }
@@ -58,6 +81,12 @@ public class CdsUserPreferencesTests {
                 userPreferenceIdentityHolder.userIdentity(),
                 userPreferenceIdentityHolder.userPreferenceIdentity()
             );
+        }
+        if (installationIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
+        }
+        if (licensedApplicationIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApplicationIdentity);
         }
         if (customerIdentity != null && userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);

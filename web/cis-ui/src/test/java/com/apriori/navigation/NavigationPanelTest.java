@@ -1,5 +1,7 @@
 package com.apriori.navigation;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite;
+
 import com.apriori.navtoolbars.CisHeaderBar;
 import com.apriori.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.help.ZendeskSignInPage;
@@ -13,6 +15,7 @@ import com.apriori.testrail.TestRail;
 import com.utils.CisNavBarItemsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class NavigationPanelTest extends TestBaseUI {
@@ -30,6 +33,7 @@ public class NavigationPanelTest extends TestBaseUI {
 
     @Test
     @TestRail(id = {11992, 12014, 12007})
+    @Tag(TestSuite.CUSTOMER)
     @Description("Verify the navigation bar default state and Header text on the home page")
     public void testNavigationBarDefaultStateAndWelcomeText() {
         loginPage = new CisLoginPage(driver);
@@ -69,6 +73,7 @@ public class NavigationPanelTest extends TestBaseUI {
 
     @Test
     @TestRail(id = {13233})
+    @Tag(TestSuite.CUSTOMER)
     @Description("Verify that user can access the Terms of Use Page")
     public void testUserCanAccessTheTermsOfUsePage() {
         loginPage = new CisLoginPage(driver);
@@ -88,6 +93,7 @@ public class NavigationPanelTest extends TestBaseUI {
 
     @Test
     @TestRail(id = {11997, 11999, 12000, 12003, 12008})
+    @Tag(TestSuite.CUSTOMER)
     @Description("Verify that user can view the left navigation bar items and aPriori logo")
     public void testNavBarItems() {
         loginPage = new CisLoginPage(driver);
@@ -108,6 +114,7 @@ public class NavigationPanelTest extends TestBaseUI {
 
     @Test
     @TestRail(id = {13553})
+    @Tag(TestSuite.CUSTOMER)
     @Description("Verify that user can access the 'Support' page")
     public void testUserCanAccessTheSupportPage() {
         loginPage = new CisLoginPage(driver);

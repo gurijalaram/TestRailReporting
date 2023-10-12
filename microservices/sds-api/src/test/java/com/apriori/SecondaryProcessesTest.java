@@ -6,6 +6,7 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.ScenarioItem;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.sds.enums.SDSAPIEnum;
 import com.apriori.sds.models.response.SecondaryProcessesItems;
 import com.apriori.sds.util.SDSTestUtil;
@@ -15,7 +16,9 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesAPI.class)
 public class SecondaryProcessesTest extends SDSTestUtil {
 
     @Test

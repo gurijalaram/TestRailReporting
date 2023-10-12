@@ -2,7 +2,6 @@ package com.apriori;
 
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.models.response.Customer;
-import com.apriori.cas.models.response.CustomerUser;
 import com.apriori.cas.models.response.IdentityProvider;
 import com.apriori.cas.models.response.IdentityProviders;
 import com.apriori.cas.utils.CasTestUtil;
@@ -13,8 +12,10 @@ import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
+import com.apriori.models.response.User;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -23,7 +24,9 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesAPI.class)
 public class CasIdentityProvidersTests extends TestUtil {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
@@ -51,7 +54,7 @@ public class CasIdentityProvidersTests extends TestUtil {
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
     }
 
