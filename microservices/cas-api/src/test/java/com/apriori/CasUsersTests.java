@@ -29,13 +29,14 @@ import org.junit.jupiter.api.parallel.Isolated;
 public class CasUsersTests extends TestUtil {
     private SoftAssertions soft = new SoftAssertions();
     private final CasTestUtil casTestUtil = new CasTestUtil();
-    // private UserCredentials currentUser = UserUtil.getUser();
+    private String userToken;
 
     // TODO z: fix it threads
-    //@BeforeEach
-    //public void getToken() {
-    //    RequestEntityUtil.useTokenForRequests(currentUser.getToken());
-    //}
+    @BeforeEach
+    public void getToken() {
+        userToken = UserUtil.getUser().getToken();
+        RequestEntityUtil.useTokenForRequests(userToken);
+    }
 
     @Test
     @Tag(API_SANITY)
@@ -46,7 +47,7 @@ public class CasUsersTests extends TestUtil {
 
         RequestEntity request = new RequestEntity().endpoint(CASAPIEnum.CURRENT_USER)
             .returnType(User.class)
-            .token(UserUtil.getUser().getToken())
+            .token(userToken)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<User> user = HTTPRequest.build(request).get();
