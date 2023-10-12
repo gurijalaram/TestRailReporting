@@ -51,11 +51,13 @@ public class GraphEmailService {
     public static synchronized EmailMessage searchEmailMessage(String... emailParamValues) {
         QueryParams emailParamValue = new KeyValueUtil().keyValue(emailParamValues, ",");
 
+        final String token = EmailConnection.getEmailAccessToken();
+
         RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class)
             .queryParams(emailParamValue)
             .headers(new HashMap<>() {
                 {
-                    put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
+                    put("Authorization", "Bearer " + token);
                 }
             }).expectedResponseCode(HttpStatus.SC_OK);
 

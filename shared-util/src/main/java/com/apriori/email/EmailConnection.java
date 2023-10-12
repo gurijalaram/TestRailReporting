@@ -24,7 +24,7 @@ public class EmailConnection {
     /**
      * Connects to test email server box using Microsoft Graph Client API and returns access token
      */
-    private static void connectEmailServer() {
+    private static String connectEmailServer() {
         Credentials graphClient = getCredentials();
         RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_TOKEN, EmailTokenResponse.class).inlineVariables(graphClient.getTenantId()).headers(new HashMap<String, String>() {
             {
@@ -44,7 +44,7 @@ public class EmailConnection {
 
         ResponseWrapper<EmailTokenResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
         log.info(String.format("ACCESSTOKEN --- %s", responseWrapper.getResponseEntity().getAccess_token()));
-        emailAccessToken = responseWrapper.getResponseEntity().getAccess_token();
+        return responseWrapper.getResponseEntity().getAccess_token();
     }
 
     /**
@@ -68,10 +68,11 @@ public class EmailConnection {
      *
      * @return access token
      */
-    public static String getEmailAccessToken() {
+    public static synchronized String getEmailAccessToken() {
         if (null == emailAccessToken) {
-            connectEmailServer();
+            emailAccessToken = connectEmailServer();
         }
+
         return emailAccessToken;
     }
 }
