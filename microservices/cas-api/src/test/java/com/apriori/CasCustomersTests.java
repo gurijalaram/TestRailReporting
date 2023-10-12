@@ -39,11 +39,11 @@ public class CasCustomersTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private UserCredentials currentUser = UserUtil.getUser();
+    private String userToken = UserUtil.getUser().getToken();
 
     @BeforeEach
     public void getToken() {
-        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
+        RequestEntityUtil.useTokenForRequests(userToken);
     }
 
     @AfterEach
@@ -51,7 +51,7 @@ public class CasCustomersTests {
         if (customerIdentity != null) {
             // TODO z: fix it threads
             // cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, currentUser.getToken(), customerIdentity);
-            HTTPRequest.build(new RequestEntity().endpoint(CDSAPIEnum.CUSTOMER_BY_ID).inlineVariables(customerIdentity).token(currentUser.getToken()).expectedResponseCode(HttpStatus.SC_NO_CONTENT)).delete();
+            HTTPRequest.build(new RequestEntity().endpoint(CDSAPIEnum.CUSTOMER_BY_ID).inlineVariables(customerIdentity).token(userToken).expectedResponseCode(HttpStatus.SC_NO_CONTENT)).delete();
         }
     }
 
@@ -65,7 +65,7 @@ public class CasCustomersTests {
         RequestEntity request = new RequestEntity()
             .endpoint(CASAPIEnum.CUSTOMERS)
             .returnType(Customers.class)
-            .token(currentUser.getToken())
+            .token(userToken)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Customers> response = HTTPRequest.build(request).get();

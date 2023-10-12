@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 
 
-@Isolated
 public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC.getEndpoint();
     private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
