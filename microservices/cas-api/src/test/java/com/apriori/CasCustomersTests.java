@@ -49,7 +49,9 @@ public class CasCustomersTests {
     @AfterEach
     public void cleanUp() {
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
+            // TODO z: fix it threads
+            // cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, currentUser.getToken(), customerIdentity);
+            HTTPRequest.build(new RequestEntity().endpoint(CDSAPIEnum.CUSTOMER_BY_ID).inlineVariables(customerIdentity).token(currentUser.getToken()).expectedResponseCode(HttpStatus.SC_NO_CONTENT)).delete();
         }
     }
 
@@ -57,11 +59,14 @@ public class CasCustomersTests {
     @Tag(API_SANITY)
     @TestRail(id = {5810})
     @Description("Get a list of CAS customers sorted by name")
+    // TODO z: fix it threads
     public void getCustomersSortedByName() {
-        //        ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
-        RequestEntity request = RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
-                .token(currentUser.getToken())
-                .expectedResponseCode(HttpStatus.SC_OK);
+        //                ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
+        RequestEntity request = new RequestEntity()
+            .endpoint(CASAPIEnum.CUSTOMERS)
+            .returnType(Customers.class)
+            .token(currentUser.getToken())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Customers> response = HTTPRequest.build(request).get();
 

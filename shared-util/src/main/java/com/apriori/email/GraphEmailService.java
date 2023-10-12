@@ -48,16 +48,19 @@ public class GraphEmailService {
      *                         (Example: "$search, \"ap-int12345\"", "hasAttachments[eq], true"
      * @return EmailMessage
      */
+    // TODO z: fix it threads
     public static synchronized EmailMessage searchEmailMessage(String... emailParamValues) {
         QueryParams emailParamValue = new KeyValueUtil().keyValue(emailParamValues, ",");
 
-        final String token = EmailConnection.getEmailAccessToken();
+        // RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class)
 
-        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class)
+        RequestEntity requestEntity = new RequestEntity()
+            .endpoint(EmailEnum.EMAIL_MESSAGES)
+            .returnType(EmailResponse.class)
             .queryParams(emailParamValue)
             .headers(new HashMap<>() {
                 {
-                    put("Authorization", "Bearer " + token);
+                    put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
                 }
             }).expectedResponseCode(HttpStatus.SC_OK);
 

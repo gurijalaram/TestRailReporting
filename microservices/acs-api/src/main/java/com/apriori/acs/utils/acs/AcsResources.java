@@ -111,9 +111,10 @@ public class AcsResources {
      */
     public AllMaterialStocksInfoResponse getAllMaterialStocksInfo(String vpeName, String processGroup, String materialName) {
         setupHeader();
-
-        final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.ALL_MATERIAL_STOCKS_INFO, AllMaterialStocksInfoResponse.class)
+        // TODO z: fix it threads
+        final RequestEntity requestEntity = new RequestEntity()
+            .endpoint(AcsApiEnum.ALL_MATERIAL_STOCKS_INFO)
+            .returnType(AllMaterialStocksInfoResponse.class)
             .headers(headers)
             .inlineVariables(
                 vpeName,

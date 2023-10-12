@@ -31,10 +31,11 @@ public class CasUsersTests extends TestUtil {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private UserCredentials currentUser = UserUtil.getUser();
 
-    @BeforeEach
-    public void getToken() {
-        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
-    }
+    // TODO z: fix it threads
+    //@BeforeEach
+    //public void getToken() {
+    //    RequestEntityUtil.useTokenForRequests(currentUser.getToken());
+    //}
 
     @Test
     @Tag(API_SANITY)
@@ -43,9 +44,10 @@ public class CasUsersTests extends TestUtil {
     public void getCurrentUser() {
         //        ResponseWrapper<User> user = casTestUtil.getCommonRequest(CASAPIEnum.CURRENT_USER, User.class, HttpStatus.SC_OK);
 
-        RequestEntity request = RequestEntityUtil.init(CASAPIEnum.CURRENT_USER, User.class)
-                .token(currentUser.getToken())
-                .expectedResponseCode(HttpStatus.SC_OK);
+        RequestEntity request = new RequestEntity().endpoint(CASAPIEnum.CURRENT_USER)
+            .returnType(User.class)
+            .token(currentUser.getToken())
+            .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<User> user = HTTPRequest.build(request).get();
 
