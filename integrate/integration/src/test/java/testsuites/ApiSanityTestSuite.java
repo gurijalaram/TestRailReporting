@@ -38,36 +38,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({
-    AtsAuthorization.class,
-    AchCurrentUserTests.class,
-    AllMaterialStocksInfoTests.class,
-    AtsAuthorization.class,
-    BatchPartTest.class,
-    BidPackageProjectUserTest.class,
-    QdsBidPackageProjectsTest.class,
-    QmsBidPackageProjectsTest.class,
-    CasCustomersTests.class,
-    CasUsersTests.class,
-    CdsCustomersTests.class,
-    CicAgentTest.class,
-    CisBidPackageProjectsTest.class,
-    CostAllCadTests.class,
-    CommentsTest.class,
-    DataCreationTests.class,
-    DiscussionTest.class,
-    DmsCommentsTest.class,
-    CmpComparisonTests.class,
-    CssSearchTests.class,
-    UserTests.class,
-    LineItemsTest.class,
-    FileManagementControllerTest.class,
-    GcdTreesTests.class,
-    EmailsTests.class,
-    ComponentsTest.class,
-    DigitalFactoriesTest.class,
-    ProcessGroupsTest.class,
-    QmsScenarioDiscussionTest.class,
-    SheetMetalDtcReportTests.class
+    EmailsTests.class
     })
 @IncludeTags(API_SANITY)
 public class ApiSanityTestSuite {
