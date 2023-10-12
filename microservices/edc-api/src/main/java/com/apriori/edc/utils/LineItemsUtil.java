@@ -22,7 +22,7 @@ public class LineItemsUtil extends TestUtil {
      * @return response object
      */
     public List<LineItemsResponse> getAllLineItems(String identity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(EDCAPIEnum.LINE_ITEMS, LineItemsItemsResponse.class)
+        RequestEntity requestEntity = new RequestEntity().endpoint(EDCAPIEnum.LINE_ITEMS).returnType(LineItemsItemsResponse.class)
             .inlineVariables(identity)
             .expectedResponseCode(HttpStatus.SC_OK);
 

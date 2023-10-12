@@ -2,10 +2,14 @@ package com.apriori;
 
 import static com.apriori.edc.utils.BillOfMaterialsUtil.deleteBillOfMaterialById;
 import static com.apriori.edc.utils.BillOfMaterialsUtil.postBillOfMaterials;
+import static com.apriori.edc.utils.BillOfMaterialsUtil.postBillOfMaterialsWithToken;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
+import com.apriori.edc.enums.EDCAPIEnum;
 import com.apriori.edc.models.response.line.items.LineItemsResponse;
 import com.apriori.edc.utils.LineItemsUtil;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
@@ -13,6 +17,7 @@ import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,19 +39,25 @@ public class LineItemsTest extends LineItemsUtil {
     private String customerPartNumber = "AAA651A1";
     private int quantity = 2;
     private int itemsCount = 9;
-    private UserCredentials currentUser = UserUtil.getUser();
+    private String userToken;
 
     @AfterAll
     public static void deleteTestingData() {
         if (billOfMaterialsIdentity != null) {
-            deleteBillOfMaterialById(billOfMaterialsIdentity);
+            //deleteBillOfMaterialById(billOfMaterialsIdentity);
+            RequestEntity requestEntity = new RequestEntity().endpoint(EDCAPIEnum.BILL_OF_MATERIALS_BY_IDENTITY)
+                .inlineVariables(billOfMaterialsIdentity)
+                .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
+
+            HTTPRequest.build(requestEntity).delete();
         }
     }
 
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
-        billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
+        userToken = UserUtil.getUser().getToken();
+        RequestEntityUtil.useTokenForRequests(userToken);
+        billOfMaterialsIdentity = postBillOfMaterialsWithToken(filename, userToken).getResponseEntity().getIdentity();
     }
 
     @Test
