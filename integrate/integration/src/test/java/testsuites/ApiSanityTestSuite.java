@@ -21,7 +21,6 @@ import com.apriori.DmsCommentsTest;
 import com.apriori.EmailsTests;
 import com.apriori.FileManagementControllerTest;
 import com.apriori.GcdTreesTests;
-import com.apriori.LineItemsTest;
 import com.apriori.ProcessGroupsTest;
 import com.apriori.QdsBidPackageProjectsTest;
 import com.apriori.QmsBidPackageProjectsTest;
@@ -59,7 +58,6 @@ import org.junit.platform.suite.api.Suite;
     CmpComparisonTests.class,
     CssSearchTests.class,
     UserTests.class,
-    LineItemsTest.class,
     FileManagementControllerTest.class,
     GcdTreesTests.class,
     EmailsTests.class,

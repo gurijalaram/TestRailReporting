@@ -63,7 +63,6 @@ public class LineItemsTest extends LineItemsUtil {
     }
 
     @Test
-    @Tag(API_SANITY)
     @TestRail(id = 9417)
     @Description("GET List the line items in a bill of materials matching a specified query")
     public void testGetLineItems() {
