@@ -5,7 +5,7 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.SiteVariableUtil;
 import com.apriori.vds.enums.VDSAPIEnum;
@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class SiteVariablesTest extends SiteVariableUtil {
     protected static final Set<String> siteVariableIdsToDelete = new HashSet<>();
 

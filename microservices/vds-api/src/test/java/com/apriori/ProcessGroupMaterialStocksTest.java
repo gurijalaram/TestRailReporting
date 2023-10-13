@@ -1,6 +1,6 @@
 package com.apriori;
 
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.ProcessGroupUtil;
 import com.apriori.vds.models.response.process.group.materials.stock.ProcessGroupMaterialStock;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class ProcessGroupMaterialStocksTest extends ProcessGroupUtil {
     @Test
     @TestRail(id = {8191})

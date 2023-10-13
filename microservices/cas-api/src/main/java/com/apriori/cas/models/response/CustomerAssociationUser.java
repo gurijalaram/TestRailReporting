@@ -2,6 +2,7 @@ package com.apriori.cas.models.response;
 
 import com.apriori.annotations.CreatableModel;
 import com.apriori.annotations.Schema;
+import com.apriori.models.response.User;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -32,5 +33,5 @@ public class CustomerAssociationUser {
     private String deletedBy = null;
     private String deletedByName = null;
     private String userIdentity;
-    private CustomerUser user = null;
+    private User user = null;
 }

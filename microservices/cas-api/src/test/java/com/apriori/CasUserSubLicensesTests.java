@@ -5,7 +5,6 @@ import com.apriori.cas.models.IdentityHolder;
 import com.apriori.cas.models.response.AssociationUser;
 import com.apriori.cas.models.response.CasErrorMessage;
 import com.apriori.cas.models.response.Customer;
-import com.apriori.cas.models.response.CustomerUser;
 import com.apriori.cas.models.response.LicenseResponse;
 import com.apriori.cas.models.response.Site;
 import com.apriori.cas.models.response.SubLicenses;
@@ -18,9 +17,10 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.User;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.time.LocalDate;
 import java.util.UUID;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class CasUserSubLicensesTests {
     private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder deleteIdentityHolder;
@@ -67,7 +67,7 @@ public class CasUserSubLicensesTests {
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<Site> site = CasTestUtil.addSite(customerIdentity, siteID, siteName);

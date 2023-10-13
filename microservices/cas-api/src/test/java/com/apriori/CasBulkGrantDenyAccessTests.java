@@ -3,7 +3,6 @@ package com.apriori;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.models.response.AccessControls;
 import com.apriori.cas.models.response.Customer;
-import com.apriori.cas.models.response.CustomerUser;
 import com.apriori.cas.models.response.Sites;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -17,10 +16,11 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.Deployment;
 import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
+import com.apriori.models.response.User;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -35,14 +35,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class CasBulkGrantDenyAccessTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private Customer sourceCustomer;
-    private List<CustomerUser> sourceUsers;
+    private List<User> sourceUsers;
     private String customerIdentity;
     private String aPrioriIdentity;
     private String siteIdentity;

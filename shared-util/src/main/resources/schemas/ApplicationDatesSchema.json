@@ -1,0 +1,32 @@
+{
+  "created_by": {
+    "createdBy": {
+      "type": "string"
+    },
+    "created_at": {
+      "createdAt": {
+        "type": "string"
+      }
+    },
+    "updated_at": {
+      "updatedAt": {
+        "type": "string"
+      }
+    },
+    "updated_by": {
+      "updatedBy": {
+        "type": "string"
+      }
+    },
+    "deleted_by": {
+      "deletedBy": {
+        "type": "string"
+      }
+    },
+    "deleted_at": {
+      "deletedAt": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -2,11 +2,11 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.CredentialsItems;
-import com.apriori.cds.models.response.User;
-import com.apriori.cds.models.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.models.response.User;
+import com.apriori.models.response.Users;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -15,7 +15,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class CdsUsersTests {
     private SoftAssertions soft = new SoftAssertions();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();

@@ -21,7 +21,7 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.request.ErrorRequestResponse;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
 
@@ -34,7 +34,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class RoutingsTests {
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private final SoftAssertions softAssertions = new SoftAssertions();

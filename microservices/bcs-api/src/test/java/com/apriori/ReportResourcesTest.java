@@ -22,7 +22,7 @@ import com.apriori.bcs.models.response.ReportTemplates;
 import com.apriori.bcs.models.response.Reports;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class ReportResourcesTest extends TestUtil {
 

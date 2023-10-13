@@ -11,7 +11,6 @@ import com.apriori.cds.models.response.SubLicense;
 import com.apriori.cds.models.response.SubLicenseAssociation;
 import com.apriori.cds.models.response.SubLicenseAssociationUser;
 import com.apriori.cds.models.response.SubLicenses;
-import com.apriori.cds.models.response.User;
 import com.apriori.cds.models.response.UsersLicensing;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
@@ -21,8 +20,9 @@ import com.apriori.models.response.Customer;
 import com.apriori.models.response.Deployment;
 import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
+import com.apriori.models.response.User;
 import com.apriori.properties.PropertiesContext;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -36,7 +36,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class CdsLicenseTests {
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();

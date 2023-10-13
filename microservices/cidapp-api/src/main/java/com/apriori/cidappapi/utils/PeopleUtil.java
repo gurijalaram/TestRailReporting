@@ -4,11 +4,11 @@ import com.apriori.cidappapi.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.models.response.PeopleResponse;
 import com.apriori.cidappapi.models.response.PersonResponse;
 import com.apriori.cus.enums.CusAppAPIEnum;
-import com.apriori.cus.models.response.User;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.User;
 import com.apriori.reader.file.user.UserCredentials;
 
 public class PeopleUtil {
