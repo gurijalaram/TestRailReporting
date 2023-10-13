@@ -43,17 +43,30 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
         pageUtils.waitForElementToAppear(logo);
     }
 
+    /**
+     * click on the add user button
+     * @return this page
+     */
+
     public UserManagementPage clickAdduser() {
         pageUtils.waitForElementAndClick(addUserButton);
         return this;
     }
 
+    /**
+     * click on the dropdown for roles
+     * @return list of roles
+     */
     public List<String> clickDropDownAndGetRoles() {
         pageUtils.waitForElementAndClick(rolesDropDown);
         List<WebElement> listOfRoles = driver.findElements(By.xpath("//div[contains(@class,'option-display-name')]"));
         return listOfRoles.stream().map(i -> i.getText()).collect(Collectors.toList());
     }
 
+    /**
+     * get all additional properties from check boxes
+     * @return list of additional properties
+     */
     public List<String> getAdditionalProperties() {
         List<String> list = new LinkedList<>(Arrays.asList(additionalProperties.getText().split("\n")));
         list.remove(0);
