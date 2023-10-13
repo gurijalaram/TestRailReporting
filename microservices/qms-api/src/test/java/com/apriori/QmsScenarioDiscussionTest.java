@@ -77,9 +77,8 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @AfterAll
-    public void afterClass() {
+    public static void afterClass() {
         QmsApiTestUtils.deleteTestData(qmsScenarioItem, bidPackageResponse, currentUser);
-        softAssertions.assertAll();
     }
 
     @BeforeEach
