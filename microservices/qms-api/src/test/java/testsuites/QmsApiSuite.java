@@ -11,7 +11,7 @@ import com.apriori.QmsProjectItemTest;
 import com.apriori.QmsProjectUserPermissionsTest;
 import com.apriori.QmsProjectsFilteredTest;
 import com.apriori.QmsProjectsTest;
-import com.apriori.QmsScenarioDiscussionFilteredTest;
+import com.apriori.QmsDiscussionFilteredTest;
 import com.apriori.QmsScenarioDiscussionTest;
 import com.apriori.QmsScenarioSharingTest;
 import com.apriori.QmsUserPreferenceTest;
@@ -34,7 +34,7 @@ import org.junit.platform.suite.api.Suite;
     QmsScenarioSharingTest.class,
     QmsUserPreferenceTest.class,
     QmsScenarioDiscussionTest.class,
-    QmsScenarioDiscussionFilteredTest.class,
+    QmsDiscussionFilteredTest.class,
     QmsProjectUserPermissionsTest.class
 })
 public class QmsApiSuite {
