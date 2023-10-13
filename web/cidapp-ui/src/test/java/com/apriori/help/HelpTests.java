@@ -44,7 +44,7 @@ public class HelpTests extends TestBaseUI {
             .goToHelp()
             .clickUserGuide();
 
-        assertThat(helpPage.getChildPageTitle(), is(equalTo("Cost Insight Design\nUser Guide")));
+        assertThat(helpPage.getChildPageTitle(), is(equalTo("aP Design\nUser Guide")));
     }
 
     @Test
