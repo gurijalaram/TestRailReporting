@@ -6,12 +6,13 @@ import static com.apriori.edc.utils.BillOfMaterialsUtil.postBillOfMaterialsWithT
 import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import com.apriori.edc.enums.EDCAPIEnum;
+import com.apriori.edc.models.response.line.items.LineItemsItemsResponse;
 import com.apriori.edc.models.response.line.items.LineItemsResponse;
 import com.apriori.edc.utils.LineItemsUtil;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
@@ -39,13 +40,14 @@ public class LineItemsTest extends LineItemsUtil {
     private String customerPartNumber = "AAA651A1";
     private int quantity = 2;
     private int itemsCount = 9;
-    private String userToken;
+    private static String userToken;
 
     @AfterAll
     public static void deleteTestingData() {
         if (billOfMaterialsIdentity != null) {
             //deleteBillOfMaterialById(billOfMaterialsIdentity);
             RequestEntity requestEntity = new RequestEntity().endpoint(EDCAPIEnum.BILL_OF_MATERIALS_BY_IDENTITY)
+                .token(userToken)
                 .inlineVariables(billOfMaterialsIdentity)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
@@ -55,7 +57,7 @@ public class LineItemsTest extends LineItemsUtil {
 
     @BeforeEach
     public void setUp() {
-        userToken = UserUtil.getUser().getToken();
+        userToken = UserUtil.getUser("admin").getToken();
         RequestEntityUtil.useTokenForRequests(userToken);
         billOfMaterialsIdentity = postBillOfMaterialsWithToken(filename, userToken).getResponseEntity().getIdentity();
     }
@@ -65,7 +67,16 @@ public class LineItemsTest extends LineItemsUtil {
     @TestRail(id = 9417)
     @Description("GET List the line items in a bill of materials matching a specified query")
     public void testGetLineItems() {
-        List<LineItemsResponse> allLineItems = getAllLineItems(billOfMaterialsIdentity);
+        //List<LineItemsResponse> allLineItems = getAllLineItems(billOfMaterialsIdentity);
+
+        RequestEntity requestEntity = new RequestEntity().endpoint(EDCAPIEnum.LINE_ITEMS).returnType(LineItemsItemsResponse.class)
+            .inlineVariables(billOfMaterialsIdentity)
+            .token(userToken)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<LineItemsItemsResponse> getAllResponse = HTTPRequest.build(requestEntity).get();
+
+        List<LineItemsResponse> allLineItems = getAllResponse.getResponseEntity().getItems();
 
         SoftAssertions softAssertions = new SoftAssertions();
 

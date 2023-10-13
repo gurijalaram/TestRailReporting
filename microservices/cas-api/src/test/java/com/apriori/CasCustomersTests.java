@@ -33,18 +33,16 @@ import org.junit.jupiter.api.parallel.Isolated;
 import java.util.Arrays;
 
 @ExtendWith(TestRulesApi.class)
-@Isolated
 public class CasCustomersTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private String userToken;
+    private String userToken = UserUtil.getUser("admin").getToken();
 
     @BeforeEach
     public void getToken() {
-        userToken = UserUtil.getUser().getToken();
         RequestEntityUtil.useTokenForRequests(userToken);
     }
 

@@ -92,7 +92,7 @@ public class UserCredentials implements Serializable {
         return token;
     }
 
-    public synchronized UserCredentials generateToken() {
+    public UserCredentials generateToken() {
         this.token = new AuthorizationUtil().getToken(this)
             .getResponseEntity()
             .getToken();

@@ -3,7 +3,6 @@ package com.apriori;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import com.apriori.cas.enums.CASAPIEnum;
-import com.apriori.cas.models.response.Customers;
 import com.apriori.cas.models.response.User;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.http.models.entity.RequestEntity;
@@ -11,7 +10,6 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesApi;
 import com.apriori.testrail.TestRail;
@@ -30,12 +28,11 @@ import org.junit.jupiter.api.parallel.Isolated;
 public class CasUsersTests extends TestUtil {
     private SoftAssertions soft = new SoftAssertions();
     private final CasTestUtil casTestUtil = new CasTestUtil();
-    private String userToken;
+    private String userToken = UserUtil.getUser("admin").getToken();
 
     // TODO z: fix it threads
     @BeforeEach
     public void getToken() {
-        userToken = UserUtil.getUser().getToken();
         RequestEntityUtil.useTokenForRequests(userToken);
     }
 

@@ -22,7 +22,25 @@ public class LineItemsUtil extends TestUtil {
      * @return response object
      */
     public List<LineItemsResponse> getAllLineItems(String identity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(EDCAPIEnum.LINE_ITEMS, LineItemsItemsResponse.class)
+            .inlineVariables(identity)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<LineItemsItemsResponse> getAllResponse = HTTPRequest.build(requestEntity).get();
+
+        return getAllResponse.getResponseEntity().getItems();
+    }
+
+    /**
+     * Get all Line items in a Bill of Materials
+     *
+     * @param identity - identity
+     * @return response object
+     */
+    //TODO z: fix threads
+    public List<LineItemsResponse> getAllLineItemsWithToken(String identity, String token) {
         RequestEntity requestEntity = new RequestEntity().endpoint(EDCAPIEnum.LINE_ITEMS).returnType(LineItemsItemsResponse.class)
+            .token(token)
             .inlineVariables(identity)
             .expectedResponseCode(HttpStatus.SC_OK);
 

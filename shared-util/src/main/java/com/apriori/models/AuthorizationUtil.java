@@ -40,7 +40,7 @@ public class AuthorizationUtil {
      *
      * @return string
      */
-    public ResponseWrapper<Token> getToken(UserCredentials userCredentials) {
+    public synchronized ResponseWrapper<Token> getToken(UserCredentials userCredentials) {
         log.info("Getting ATS Token...");
 
         RequestEntity requestEntity = RequestEntityUtil.init(TokenEnum.POST_TOKEN, Token.class)
