@@ -2,6 +2,7 @@ package com.apriori.pageobjects.workflows.history;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.enums.ViewHistoryListHeaders;
 import com.apriori.pageobjects.CICBasePage;
 
 import lombok.SneakyThrows;
@@ -38,11 +39,11 @@ public class HistoryPage extends CICBasePage {
     @FindBy(css = "div#root_pagemashupcontainer-1_button-62 button")
     private WebElement refreshButton;
 
-    @FindBy(css = "div[id='root_pagemashupcontainer-1_gridadvanced-85-grid-advanced'] > div.objbox > table")
+    @FindBy(css = "div[tab-number='2'] div[class$='cic-table'] table.obj")
     private WebElement historyJobListTable;
 
-    @FindBy(css = "div[id='root_pagemashupcontainer-1_gridadvanced-85-grid-advanced'] > div.xhdr > table")
-    private WebElement historyJobListHeader;
+    @FindBy(css = "div[tab-number='2'] div[class$='cic-table'] table.hdr")
+    private WebElement historyJobListHeaders;
 
     @FindBy(xpath = "//button[.='View Details']")
     private WebElement viewDetailsButton;
@@ -63,6 +64,8 @@ public class HistoryPage extends CICBasePage {
 
     @Override
     protected void isLoaded() {
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"), 5);
+        waitUntilRowsLoaded();
         pageUtils.waitForElementToAppear(searchJobName);
         pageUtils.waitForElementToAppear(searchBtn);
     }
@@ -79,6 +82,18 @@ public class HistoryPage extends CICBasePage {
     }
 
     /**
+     * Search work flow in History page and track the job status
+     *
+     * @param workflowName
+     * @return
+     */
+    public HistoryPage searchAndSelectWorkflowByID(String workflowName) {
+        searchWorkflow(workflowName);
+        selectWorkflow(workflowName);
+        return this;
+    }
+
+    /**
      * Track the job status by workflow
      *
      * @param workflowName
@@ -89,8 +104,9 @@ public class HistoryPage extends CICBasePage {
         List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus = StringUtils.EMPTY;
         WebElement tableRow;
-        tableRow = tableUtils.findTableItemByName(historyJobListTable, workflowName, 1);
-        finalJobStatus = tableUtils.getItemNameFromTable(tableRow, 6).getText();
+        tableRow = tableUtils.findTableItemByName(historyJobListTable, workflowName, tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.WORKFLOW_NAME.getColumnName()));
+        finalJobStatus = tableUtils.getItemNameFromTable(tableRow, tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.JOB_STATUS.getColumnName()))
+            .getText();
         while (!jobStatusList.contains(finalJobStatus)) {
             if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
                 return false;
@@ -98,7 +114,10 @@ public class HistoryPage extends CICBasePage {
             try {
                 pageUtils.waitForElementAndClick(refreshButton);
                 TimeUnit.SECONDS.sleep(WAIT_TIME);
-                finalJobStatus = tableUtils.getItemNameFromTable(tableUtils.findTableItemByName(historyJobListTable, workflowName, 1), 6).getText();
+                finalJobStatus = tableUtils.getItemNameFromTable(tableUtils.findTableItemByName(historyJobListTable, workflowName,
+                            tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.WORKFLOW_NAME.getColumnName())),
+                        tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.JOB_STATUS.getColumnName()))
+                    .getText();
                 log.info(String.format("WorkFlowName  >>%s<< ::: Job Status  >>%s<<", workflowName, finalJobStatus));
             } catch (InterruptedException e) {
                 log.error(e.getMessage());
@@ -153,7 +172,7 @@ public class HistoryPage extends CICBasePage {
         pageUtils.clearValueOfElement(searchJobName);
         searchJobName.sendKeys(workflowName);
         pageUtils.waitForElementAndClick(searchBtn);
-        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"), 5);
         pageUtils.waitForElementToAppear(historyJobListTable);
         pageUtils.waitForJavascriptLoadComplete();
         tableUtils.waitForSteadinessOfElement(historyJobListTable, workflowName, 1);
@@ -165,7 +184,7 @@ public class HistoryPage extends CICBasePage {
      */
     public HistoryPage clickCancelButton() {
         pageUtils.waitForElementAndClick(getCancelButtonElement());
-        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"), 5);
         new ModalDialog(driver).clickConfirmButton();
         return this;
     }
@@ -205,8 +224,8 @@ public class HistoryPage extends CICBasePage {
      * @return String
      */
     public String getWorkflowStartedAt(String workflowName) {
-        WebElement tableRow = tableUtils.findTableItemByName(historyJobListTable, workflowName, 1);
-        return tableUtils.getItemNameFromTable(tableRow, 4).getText();
+        WebElement tableRow = tableUtils.findTableItemByName(historyJobListTable, workflowName, tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.WORKFLOW_NAME.getColumnName()));
+        return tableUtils.getItemNameFromTable(tableRow, tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.STARTED_AT.getColumnName())).getText();
     }
 
     /**
@@ -217,7 +236,50 @@ public class HistoryPage extends CICBasePage {
     public JobDetails clickViewDetailsButton() {
         pageUtils.waitForElementAndClick(viewDetailsButton);
         pageUtils.waitForElementAppear(jobDetailsPopTitle);
-        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"), 5);
         return new JobDetails(driver);
+    }
+
+    /**
+     * Select workflow in table
+     *
+     * @param workflowName - name of workflow to select
+     * @return new Schedule page object
+     */
+    public HistoryPage selectWorkflow(String workflowName) {
+        pageUtils.waitForElementAppear(historyJobListTable);
+        tableUtils.findTableItemByName(historyJobListTable, workflowName, tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.WORKFLOW_NAME.getColumnName())).click();
+        return this;
+    }
+
+    /**
+     * wait until all the rows are loaded in standard mappings
+     */
+    @SneakyThrows
+    private void waitUntilRowsLoaded() {
+        int retries = 0;
+        int maxRetries = 12;
+        Exception ex = null;
+
+        while (retries < maxRetries) {
+            if (getHistoryWorkflowList().size() >= 1) {
+                log.info("workflows are loaded!!");
+                break;
+            }
+            TimeUnit.SECONDS.sleep(DEFAULT_WAIT_TIME);
+            retries++;
+            if (retries == maxRetries) {
+                throw new RuntimeException(String.format("Workflows are not loaded !! : %s", ex.getMessage()));
+            }
+        }
+    }
+
+    /**
+     * get the list of workflow rows
+     *
+     * @return list of workflow rows
+     */
+    public List<WebElement> getHistoryWorkflowList() {
+        return driver.findElements(By.cssSelector("div[class='tabsv2-actual-tab-contents'][tab-number='2'] div[class$='cic-table'] table.obj"));
     }
 }
