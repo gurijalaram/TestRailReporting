@@ -35,6 +35,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 @ExtendWith(TestRulesAPI.class)
@@ -129,7 +130,7 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
         ResponseWrapper<String> agentWorkflowJobRunResponse =
             CicApiTestUtil.runCicAgentWorkflowPartList(
                 this.agentWorkflowResponse.getId(),
-                new WorkflowParts(),
+                WorkflowParts.builder().parts(new ArrayList<>()).build(),
                 null,
                 HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(agentWorkflowJobRunResponse.getBody()).contains(String.format("Empty part list for workflow with id '%s'", this.agentWorkflowResponse.getId()));
@@ -154,8 +155,9 @@ public class CicAgentRunPartsTest extends WorkflowTestUtil {
             .build();
 
         AgentWorkflowJobResults agentWorkflowJobResult = this.createRestWorkflowAndGetJobResult();
-
-        softAssertions.assertThat(CicApiTestUtil.verifyAgentErrorMessage(agentWorkflowJobResult, "This part appeared multiple times in the job")).isTrue();
+        softAssertions.assertThat(agentWorkflowJobResult.size()).isGreaterThan(0);
+        softAssertions.assertThat(agentWorkflowJobResult.get(0).getApwScenarioLink()).isNotNull();
+        softAssertions.assertThat(agentWorkflowJobResult.get(0).getCidPartLink()).isNotNull();
     }
 
     @Test

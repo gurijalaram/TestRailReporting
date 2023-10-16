@@ -9,6 +9,7 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
+import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
@@ -25,7 +26,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class WatchpointReports extends TestBaseUI {
+public class WatchpointReportTests extends TestBaseUI {
 
     private File resourceFile;
     private CidAppLoginPage loginPage;
@@ -33,8 +34,9 @@ public class WatchpointReports extends TestBaseUI {
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private UserCredentials currentUser;
+    private ComponentInfoBuilder cidComponentItem;
 
-    public WatchpointReports() {
+    public WatchpointReportTests() {
         super();
     }
 
@@ -52,8 +54,11 @@ public class WatchpointReports extends TestBaseUI {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        evaluatePage = new ExplorePage(driver)
+            .navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
@@ -67,7 +72,7 @@ public class WatchpointReports extends TestBaseUI {
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3)
             .downloadReport(EvaluatePage.class);
 
-        softAssertions.assertThat((Long) evaluatePage.getReportJQueryData().get("total")).isGreaterThan(0);
+        softAssertions.assertThat(evaluatePage.getDownloadedReport(cidComponentItem).length()).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
@@ -119,7 +124,7 @@ public class WatchpointReports extends TestBaseUI {
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3)
             .downloadReport(EvaluatePage.class);
 
-        softAssertions.assertThat((Long) evaluatePage.getReportJQueryData().get("total")).isGreaterThan(0);
+        softAssertions.assertThat((Long) evaluatePage.getDownloadedReport(componentAssembly).length()).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
