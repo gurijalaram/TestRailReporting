@@ -81,7 +81,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
                 .licenseIdentity(licensedApplicationIdentity)
                 .build();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
 
         installationIdentity = installation.getResponseEntity().getIdentity();
         installationIdentityHolder = IdentityHolder.builder()
