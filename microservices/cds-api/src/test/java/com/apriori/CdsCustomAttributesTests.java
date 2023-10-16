@@ -5,7 +5,6 @@ import com.apriori.cds.models.IdentityHolder;
 import com.apriori.cds.models.response.CustomAttribute;
 import com.apriori.cds.models.response.CustomAttributesResponse;
 import com.apriori.cds.models.response.InstallationItems;
-import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -14,6 +13,7 @@ import com.apriori.models.response.Customer;
 import com.apriori.models.response.Deployment;
 import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
+import com.apriori.models.response.User;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 

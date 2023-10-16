@@ -4,8 +4,6 @@ import com.apriori.ach.dto.ApplicationDTO;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.AccessControlResponse;
 import com.apriori.cds.models.response.AccessControls;
-import com.apriori.cds.models.response.User;
-import com.apriori.cds.models.response.Users;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.AwsParameterStoreUtil;
@@ -15,6 +13,8 @@ import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.Deployment;
 import com.apriori.models.response.Deployments;
+import com.apriori.models.response.User;
+import com.apriori.models.response.Users;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 

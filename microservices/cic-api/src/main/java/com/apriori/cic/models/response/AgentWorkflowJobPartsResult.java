@@ -13,6 +13,7 @@ public class AgentWorkflowJobPartsResult {
     private String errorMessage;
     private String cicStatus;
     private String cidPartLink;
+    private String apwScenarioLink;
     private String partId;
     private String partNumber;
     private String revisionNumber;

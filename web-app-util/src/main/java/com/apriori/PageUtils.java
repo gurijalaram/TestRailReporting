@@ -40,6 +40,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,11 +78,11 @@ public class PageUtils {
 
     public static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
     static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
-    private static PageUtils instance = null;
     private WebDriver driver;
     private List<Class<? extends WebDriverException>> ignoredWebDriverExceptions = Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class,
         StaleElementReferenceException.class, ElementNotInteractableException.class);
     private String currentlyOn = "CURRENTLY ON PAGE:";
+    public String downloadPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
 
     public PageUtils(WebDriver driver) {
         this.driver = driver;

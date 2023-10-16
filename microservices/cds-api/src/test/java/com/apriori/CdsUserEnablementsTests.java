@@ -2,7 +2,6 @@ package com.apriori;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.InstallationItems;
-import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -12,6 +11,7 @@ import com.apriori.models.response.Deployment;
 import com.apriori.models.response.Enablements;
 import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
+import com.apriori.models.response.User;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
