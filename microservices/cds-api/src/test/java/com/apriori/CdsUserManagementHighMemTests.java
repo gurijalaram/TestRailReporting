@@ -4,7 +4,6 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.AccessControlResponse;
 import com.apriori.cds.models.response.AccessControls;
 import com.apriori.cds.models.response.InstallationItems;
-import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.cds.utils.RandomCustomerData;
@@ -14,6 +13,7 @@ import com.apriori.models.response.Customer;
 import com.apriori.models.response.Deployment;
 import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
+import com.apriori.models.response.User;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
@@ -78,7 +78,7 @@ public class CdsUserManagementHighMemTests {
         User getUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity).getResponseEntity();
 
         soft.assertThat(getUser.getEnablements().getHighMemEnabled()).isTrue();
-        soft.assertThat(getUser.getRoles()).contains("AP_HIGH_MEM");
+        soft.assertThat(getUser.getRoles().toString()).contains("AP_HIGH_MEM");
 
         ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         List<AccessControlResponse> apProApplicationControl = accessControls.getResponseEntity().getItems().stream().filter(control -> control.getApplicationIdentity().equals(appIdentity)).collect(Collectors.toList());
@@ -101,7 +101,7 @@ public class CdsUserManagementHighMemTests {
         User getUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity).getResponseEntity();
 
         soft.assertThat(getUser.getEnablements().getHighMemEnabled()).isFalse();
-        soft.assertThat(getUser.getRoles()).doesNotContain("AP_HIGH_MEM");
+        soft.assertThat(getUser.getRoles().toString()).doesNotContain("AP_HIGH_MEM");
 
         ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         List<AccessControlResponse> apProApplicationControl = accessControls.getResponseEntity().getItems().stream().filter(control -> control.getApplicationIdentity().equals(appIdentity)).collect(Collectors.toList());
@@ -123,7 +123,7 @@ public class CdsUserManagementHighMemTests {
         User getUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity).getResponseEntity();
 
         soft.assertThat(getUser.getEnablements().getHighMemEnabled()).isTrue();
-        soft.assertThat(getUser.getRoles()).contains("AP_HIGH_MEM");
+        soft.assertThat(getUser.getRoles().toString()).contains("AP_HIGH_MEM");
 
         ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         List<AccessControlResponse> apProApplicationControl = accessControls.getResponseEntity().getItems().stream().filter(control -> control.getApplicationIdentity().equals(appIdentity)).collect(Collectors.toList());
@@ -136,7 +136,7 @@ public class CdsUserManagementHighMemTests {
         User getUser2 = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity).getResponseEntity();
 
         soft.assertThat(getUser2.getEnablements().getHighMemEnabled()).isFalse();
-        soft.assertThat(getUser2.getRoles()).doesNotContain("AP_HIGH_MEM");
+        soft.assertThat(getUser2.getRoles().toString()).doesNotContain("AP_HIGH_MEM");
 
         ResponseWrapper<AccessControls> accessControls2 = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
         List<AccessControlResponse> apProApplicationControl2 = accessControls2.getResponseEntity().getItems().stream().filter(control -> control.getApplicationIdentity().equals(appIdentity)).collect(Collectors.toList());
