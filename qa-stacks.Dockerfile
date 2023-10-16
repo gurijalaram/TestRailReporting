@@ -1,9 +1,13 @@
 # Prepare runtime.
-FROM docker.apriori.com/apriori-jre-base:11.0.20 AS runtime
+FROM amazoncorretto:11-alpine AS runtime
+RUN apk --no-cache add --update bash openssl
+USER root
 WORKDIR /app
 
 # Prepare build workspace.
-FROM gradle:8.3.0-jdk11 AS sdk
+FROM 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-jdk-base:11 as sdk
+WORKDIR /build-workspace
+
 USER root
 
 COPY . .
@@ -19,8 +23,8 @@ FROM runtime as final
 ARG FOLDER
 ARG MODULE
 ARG ASPECTJ_VERSION="1.9.20.1"
-COPY --from=build /home/gradle/$FOLDER/$MODULE/build/libs/automation-qa*.jar ./app.jar
-COPY --from=build /home/gradle/aspectjweaver-$ASPECTJ_VERSION.jar ./aspectjweaver-$ASPECTJ_VERSION.jar
+COPY --from=build /build-workspace/$FOLDER/$MODULE/build/libs/automation-qa*.jar ./app.jar
+COPY --from=build /build-workspace/aspectjweaver-$ASPECTJ_VERSION.jar ./aspectjweaver-$ASPECTJ_VERSION.jar
 
 ENV TOKEN_EMAIL=$TOKEN_EMAIL
 ENV MODE=$MODE

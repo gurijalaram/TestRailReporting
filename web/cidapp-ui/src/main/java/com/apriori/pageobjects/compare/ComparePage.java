@@ -8,17 +8,14 @@ import com.apriori.pageobjects.navtoolbars.CompareToolbar;
 import com.utils.ComparisonCardEnum;
 import com.utils.ComparisonDeltaEnum;
 import com.utils.StatusIconEnum;
-import org.apache.commons.lang.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,9 +23,8 @@ import java.util.stream.Collectors;
  * @author cfrith
  */
 
+@Slf4j
 public class ComparePage extends CompareToolbar {
-
-    private static final Logger logger = LoggerFactory.getLogger(ComparePage.class);
 
     @FindBy(css = "[data-rbd-droppable-id='header-sections']")
     private WebElement headerSections;
@@ -75,7 +71,7 @@ public class ComparePage extends CompareToolbar {
         this.driver = driver;
         this.statusIcon = new StatusIcon(driver);
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(headerSections);
         pageUtils.waitForElementsToNotAppear(comparisonLoader);
