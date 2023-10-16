@@ -74,15 +74,15 @@ Those marked with a * are required or the job will not run
                     // Log file.
                     sh "cat ${buildInfoFile}"
 
-                    log_file_name = params.LOG_FILE_NAME
-                    if (url == null || url == "none") {
-                        log_file_name = "logback-build.xml"
+                    root_log_level = params.ROOT_LOG_LEVEL
+                    if (root_log_level == null || root_log_level == "none") {
+                        root_log_level = "INFO"
                     }
 
                     // Set run time parameters
                     javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
-                    javaOpts = javaOpts + " -Dlog_file_name=${log_file_name}"
+                    javaOpts = javaOpts + " -DROOT_LOG_LEVEL=${root_log_level}"
 
                     folder = params.MODULE_TYPE
                     if (!folder && "${MODULE}".contains("-ui")) {
