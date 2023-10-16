@@ -72,6 +72,4 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
         list.remove(0);
         return list;
     }
-
-
 }
