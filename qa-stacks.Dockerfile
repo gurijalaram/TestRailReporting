@@ -1,5 +1,7 @@
 # Prepare runtime.
-FROM 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-jre-base:11 AS runtime
+FROM amazoncorretto:11-alpine AS runtime
+RUN apk --no-cache add --update bash openssl
+USER root
 WORKDIR /app
 
 # Prepare build workspace.
