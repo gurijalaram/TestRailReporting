@@ -1,8 +1,8 @@
 # How to setup automation:
 
-1. Java 8 is used and required
+1. Java 11 is used and required
 2. Clone the apriori-qa repo using `git clone git@github.com:aPrioriTechnologies/apriori-qa.git`
-3. Import all of the modules into an IDE of your choice
+3. Import all the modules into an IDE of your choice
 4. If you have chrome installed, install it in case you don't
 5. To run the tests, you should have an AWS account and authorize it on the local machine
     - How to create AWS user account: https://confluence.apriori.com/display/ENG/Logging+into+AWS+Console
@@ -65,16 +65,16 @@
 
 ## Run Gradle tests with JVM args
 1. Open Terminal to project root directory
-2. Run `gradle clean :cid:test --tests "{parentFolder.suiteName}"` eg `gradle clean :cid:test --tests "testsuites.CIDNonSmokeTestSuite"`
-3. To pass in JVM args `gradle clean :cid:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :cid:test --tests "testsuites.CIDNonSmokeTestSuite" -DthreadCounts=3 -Denv=cid-te -Dcsv=nameOfCsv.csv`
+2. Run `gradle clean :web:cidapp-ui:test --tests "{parentFolder.suiteName}"` eg `gradle clean :web:cidapp-ui:test --tests "testsuites.SmokeTestSuite"`
+3. To pass in JVM args `gradle clean :web:cidapp-ui:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :web:cidapp-ui:test --tests "testsuites.SmokeTestSuite" -D"junit.jupiter.execution.parallel.config.fixed.max-pool-size"=3 -Denv=qa-test -Dcsv="common-users.csv"`
 
 ## How to run single suite
 1. Open Terminal to project root directory
-2. Run `gradle clean :cid:test --tests "{fully qualified packagename.nameOfClass.nameOfTest}"` eg `gradle clean :cid:test --tests "evaluate.designguidance.failures.failedCostingCount"`
+2. Run `gradle clean :web:cidapp-ui:test --tests "{fully qualified packagename.nameOfClass.nameOfTest}"` eg `gradle clean :web:cidapp-ui:test --tests "evaluate.designguidance.failures.failedCostingCount"`
 
 ## How to run multiple suites
 1. Open Terminal to project root directory
-Run `gradle clean :cid:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :cid:test --tests "testsuites.CIDNonSmokeTestSuite" --tests "testsuites.CIDSmokeTestSuite"`
+Run `gradle clean :web:cidapp-ui:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :web:cidapp-ui:test --tests "testsuites.SanityTestSuite" --tests "testsuites.SmokeTestSuite"`
 
 ## Build Gradle jar files
 1. Download and install Gradle 6.1.1 (this is the version that was first used on the project)
@@ -85,7 +85,7 @@ Run `gradle clean :cid:test --tests "{parentFolder.suiteName}" --tests "{parentF
     - `fatjar` is the task that creates the zip file (nb. this task name is not a constant)
 4. When the jar is complete -> Open Terminal to `..\cid\build\libs`
 5. Run `java -jar {nameOfJar}.jar` eg. `java -jar automation-qa-0.0.1-SNAPSHOT.jar`
-    - To pass command line arguments: `java {arg} -jar {nameOfJar}.jar` eg. `java -Denv=cid-te -jar automation-qa-0.0.1-SNAPSHOT.jar`
+    - To pass command line arguments: `java {arg} -jar {nameOfJar}.jar` eg. `java -Denv=qa-test -jar automation-qa-0.0.1-SNAPSHOT.jar`
     - To run jar with single test class: `java -jar {namOfJar}` eg. `java -jar automation-qa-0.0.1-SNAPSHOT.jar -test evaluate.ListOfVPETests`
     
 ## Users functionality
@@ -190,14 +190,16 @@ _Validation:_
 ## Run Checkstyle analysis from command line
 1. go to `build` directory, run `gradle check -x test`
 
-## Add TestRail configuration to _Test Suite_
-Annotate tests.suite class that needs ProjectRunID using following format: `@ProjectRunID("999")`
-
-Annotate tests.suite class that needs RunWith using following format (_class_ should be added from com.apriori.utils.runers, it is required) : `@RunWith(CategorySuiteRunner.class)`
+## Add TestRail Run ID
+Add `ProjectRunId.properties` to resources folder for each module and populate eg. `project_run_id=768`
 
 ## Add TestRail testCaseIDs to test methods
 Annotate method that needs testRailID using following format. Tags is optional so if you don't add, its ok
-`@TestRail(id = {717})`
+`@TestRail(id = 717)`
+
+## Tagging and running a suite of tests
+1. Create a [suite] class in the test folder of your module and annotate with `@Suite @SelectPackages("PackageName") @IncludeTags("SomeTagName")`
+2. Annotate your test with `@Tag("SomeTagName")` 
 
 ## How to run tests against local dev env
 
@@ -272,17 +274,17 @@ to get <br>
 
 ### Process of receiving property
  - 1). at first there is a search in `System properties`
- - 2). if in system properties no such variable, there is a search in **PropertyContext** for requested property path.
- - 3). if requested property path doesn't exist, then path will be updated to **environment value** and try to get it by environment path.
- - 4). if environment property path doesn't exist, then path will be updated to **default** and try to get it by default path.
- - 5). if default property not exist, then will be thrown `java.lang.IllegalArgumentException` with a text `Property with path: {propety name} not present.`
+ - 2). if in system properties there is no such variable, there is a search in **PropertyContext** for requested property path.
+ - 3). if requested property path does not exist, then path will be updated to **environment value** and try to get it by environment path.
+ - 4). if environment property path does not exist, then path will be updated to **default** and try to get it by default path.
+ - 5). if default property does not exist, then will be thrown `java.lang.IllegalArgumentException` with a text `Property with path: {propety name} not present.`
 
 e.g. PropertiesContext.get("fms.api_url") | note that env = qa-cid-perf <br>
    1). Get system environment `fms_api_url`, <br>
-   2). if step 1 return nothing | get the property from `PropertiesContext` with path `fms/api_url` <br>
-   3). if step 2 return nothing | get the property from `PropertiesContext` but with adding to the path environment part`qa-cid-perf/` as result get property `/qa-cid-perf/fms/api_url` <br>
-   4). if step 3 return nothing | get the property from `PropertiesContext` but with replacing of the first path part `qa-cid-perf/` to `default/` as result get property `/default/fms/api_url` <br>
-   5). if step 4 return nothing | thrown `java.lang.IllegalArgumentException` with a text `Property with path: fms/api_url not present.` <br>
+   2). if step 1 returns nothing | get the property from `PropertiesContext` with path `fms/api_url` <br>
+   3). if step 2 returns nothing | get the property from `PropertiesContext` but with adding to the path environment part`qa-cid-perf/` as result get property `/qa-cid-perf/fms/api_url` <br>
+   4). if step 3 returns nothing | get the property from `PropertiesContext` but with replacing of the first path part `qa-cid-perf/` to `default/` as result get property `/default/fms/api_url` <br>
+   5). if step 4 returns nothing | thrown `java.lang.IllegalArgumentException` with a text `Property with path: fms/api_url not present.` <br>
 
 ### Search Templates
 Search in `system environments` and in  `PropertiesContext` require special naming template.

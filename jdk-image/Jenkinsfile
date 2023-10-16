@@ -1,0 +1,68 @@
+def baseJDKImageName = 'jdk-base'
+def environment = [profile: 'development', region: 'us-east-1']
+def ecrDockerRegistry = '563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa'
+
+def tag_n_push(server = '', image = '', version = '') {
+    // Tag & Push Version
+    sh "docker tag ${image}:latest ${server}-${image}:${version}"
+    sh "docker push ${server}-${image}:${version}"
+
+    // Remove Images after Push
+    sh "docker image rm ${server}-${image}:${version}"
+}
+
+def registry_password(profile = '', region = '') {
+    withCredentials([
+            file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
+            file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
+        return sh(
+                returnStdout: true,
+                script: """
+                docker run \
+                    -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
+                    -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
+                    amazon/aws-cli ecr get-login-password \
+                    --profile ${profile} --region ${region}
+            """
+        ).trim()
+    }
+}
+
+pipeline {
+    agent {
+        label "automation"
+    }
+    stages{
+        stage("Multi-Stage") {
+            matrix {
+                agent {
+                    label "automation"
+                }
+                axes {
+                    axis {
+                        name 'VERSION'
+                        values '11', '17', '20'
+                    }
+                }
+                stages {
+                    stage('Build Java JDK / Build Image') {
+                        steps {
+                            sh "docker build -t ${baseJDKImageName} -f ./jdk-image/${VERSION}/Dockerfile . "
+                        }
+                    }
+                    stage('Push Java JDK / Build Image to AWS') {
+                        steps {
+                            script {
+                                // Prepare aws login command.
+                                def registryPwd = registry_password("${environment.profile}", "${environment.region}")
+                                sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                                tag_n_push("${ecrDockerRegistry}", "${baseJDKImageName}", "${VERSION}")
+                                sh "docker image rm ${baseJDKImageName} "
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

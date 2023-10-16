@@ -31,6 +31,8 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     @FindBy(xpath = "//*[local-name()='svg' and @class='svg-inline--fa fa-network-wired fa-fw']")
     private WebElement switchDeploymentButton;
+    @FindBy(xpath = "//*[local-name()='svg' and @data-icon='users']")
+    private WebElement userManagementButton;
 
     @FindBy(xpath = "//div[@class='apriori-select searchable switch-deployment-dialog-deployments css-1xzq4gn-container']")
     private WebElement deploymentSelector;
@@ -113,6 +115,11 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     public SwitchDeploymentPopUpPage clickSwitchDeploymentButton() {
         pageUtils.waitForElementAndClick(switchDeploymentButton);
         return new SwitchDeploymentPopUpPage(driver);
+    }
+
+    public UserManagementPage clickUserManagementButton() {
+        pageUtils.waitForElementAndClick(userManagementButton);
+        return new UserManagementPage(driver);
     }
 
     public String getDeployment() {
