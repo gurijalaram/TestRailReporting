@@ -5,6 +5,8 @@ import com.apriori.login.LoginService;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.qa.ach.ui.pageobjects.UserManagementPage;
 import com.apriori.qa.ach.ui.utils.AchEnvironmentUIUtil;
+import com.apriori.qa.ach.ui.utils.enums.AdditionalProperties;
+import com.apriori.qa.ach.ui.utils.enums.Roles;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.testrail.TestRail;
 
@@ -12,6 +14,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Properties;
 
 public class UserManagementPageUITest extends AchEnvironmentUIUtil {
 
@@ -36,12 +39,13 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
 
         List<String> listOfRoles = userManagementPage.clickDropDownAndGetRoles();
 
-        softAssertions.assertThat(listOfRoles).contains("APRIORI ANALYST","APRIORI CONTRIBUTOR","APRIORI DESIGNER",
-            "APRIORI DEVELOPER","APRIORI EDC","APRIORI EXPERT");
+        softAssertions.assertThat(listOfRoles).contains(Roles.APRIORI_ANALYST.getRole(),Roles.APRIORI_CONTRIBUTOR.getRole(),Roles.APRIORI_DESIGNER.getRole(),
+            Roles.APRIORI_DEVELOPER.getRole(),Roles.APRIORI_EDC.getRole(),Roles.APRIORI_EXPERT.getRole());
 
         List<String> additionalProperties = userManagementPage.getAdditionalProperties();
 
-        softAssertions.assertThat(additionalProperties).containsExactly("aP Connect Admin","aP User Admin","aP High Memory","aP Export Admin");
+        softAssertions.assertThat(additionalProperties).containsExactly(AdditionalProperties.AP_CONNECT_ADMIN.getProperties(), AdditionalProperties.AP_USER_ADMIN.getProperties(),
+            AdditionalProperties.AP_HIGH_MEMORY.getProperties(),AdditionalProperties.AP_EXPORT_ADMIN.getProperties());
         softAssertions.assertAll();
     }
 }
