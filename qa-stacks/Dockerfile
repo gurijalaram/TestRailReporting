@@ -10,7 +10,7 @@ WORKDIR /build-workspace
 
 USER root
 
-COPY . .
+COPY .. .
 
 # Build.
 FROM sdk as build
