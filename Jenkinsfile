@@ -32,6 +32,7 @@ Those marked with a * are required or the job will not run
 
         choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'RegressionTestSuite', 'AdminSuite', 'ReportingSuite', 'CIDSmokeTestSuite', 'CIDNonSmokeTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
         string(name: 'OTHER_TEST', defaultValue: 'test name', description: 'What is the test/tests.suite to execute')
+        string(name: 'LOG_FILE_NAME', defaultValue: 'logback-build.xml', description: 'Which log file configuration to use')
 
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: true)
@@ -73,9 +74,15 @@ Those marked with a * are required or the job will not run
                     // Log file.
                     sh "cat ${buildInfoFile}"
 
+                    log_file_name = params.LOG_FILE_NAME
+                    if (url == null || url == "none") {
+                        log_file_name = "logback-build.xml"
+                    }
+
                     // Set run time parameters
                     javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
+                    javaOpts = javaOpts + " -Dlog_file_name=${log_file_name}"
 
                     folder = params.MODULE_TYPE
                     if (!folder && "${MODULE}".contains("-ui")) {

@@ -144,7 +144,7 @@ public class PropertiesContext {
         final String propertyPathToGet = updatePropertyPathWithAStartKey(DEFAULT_PROPERTIES_KEY,
             convertToPropertyPathTemplate(propertyPath)
         );
-        log.info("PropertyContext: getting default property by path: {}", propertyPathToGet);
+        log.debug("PropertyContext: getting default property by path: {}", propertyPathToGet);
 
         String propertyValue = getFromPropertyContext(propertyPathToGet);
 
