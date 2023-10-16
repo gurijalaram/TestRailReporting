@@ -131,8 +131,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
         this.cicLogin()
             .create()
             .getWorkflowId()
-            .invokeRestWorkflow()
-            .track();
+            .invokeRestWorkflow();
 
         softAssertions.assertThat(CicApiTestUtil.waitUntilExpectedJobStatusMatched(this.agentWorkflowResponse.getId(), this.agentWorkflowJobRunResponse.getJobId(), CICAgentStatus.COSTING)).isTrue();
         CicApiTestUtil.cancelWorkflow(this.agentWorkflowResponse.getId(), this.agentWorkflowJobRunResponse.getJobId());
