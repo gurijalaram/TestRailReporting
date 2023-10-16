@@ -1,26 +1,10 @@
 # Prepare runtime.
-FROM amazoncorretto:11-alpine AS runtime
-RUN apk --no-cache add --update bash openssl
-USER root
+FROM 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-jre-base:11 AS runtime
 WORKDIR /app
 
 # Prepare build workspace.
-FROM gradle:8.3.0-jdk11 as sdk
+FROM 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-jdk-base:11 as sdk
 WORKDIR /build-workspace
-
-# Apriori Certs
-COPY fbc-CONSVDC02-CA-2022.cer /build-workspace/fbc-CONSVDC02-CA-2022.cer
-COPY fbc1-2040.cer /build-workspace/fbc1-2040.cer
-
-RUN /opt/java/openjdk/bin/keytool -importcert -file /build-workspace/fbc-CONSVDC02-CA-2022.cer  \
-    -alias fbc-consvdc02-2022  \
-    -keystore $JAVA_HOME/lib/security/cacerts  \
-    -storepass changeit -noprompt
-
-RUN /opt/java/openjdk/bin/keytool -importcert -file /build-workspace/fbc1-2040.cer  \
-    -alias fbc1-2040  \
-    -keystore $JAVA_HOME/lib/security/cacerts  \
-    -storepass changeit -noprompt
 
 USER root
 
