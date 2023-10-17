@@ -12,7 +12,6 @@ import com.apriori.cir.models.enums.InputControlsEnum;
 import com.apriori.cir.models.request.ReportRequest;
 import com.apriori.cir.models.response.ChartDataPoint;
 import com.apriori.cir.models.response.InputControl;
-import com.apriori.cir.models.response.InputControlState;
 import com.apriori.cir.utils.JasperReportUtil;
 import com.apriori.enums.CurrencyEnum;
 import com.apriori.enums.ExportSetEnum;
