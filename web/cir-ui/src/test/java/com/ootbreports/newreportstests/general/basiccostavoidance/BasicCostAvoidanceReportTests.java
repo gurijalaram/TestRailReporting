@@ -38,10 +38,10 @@ public class BasicCostAvoidanceReportTests extends JasperApiAuthenticationUtil {
         String gbpCurrency = CurrencyEnum.GBP.getCurrency();
         String usdCurrency = CurrencyEnum.USD.getCurrency();
 
-        JasperReportSummary gbpJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyOnly(gbpCurrency);
+        JasperReportSummary gbpJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyLatestCostDateOnly(gbpCurrency);
         ArrayList<String> gbpAssertValues = getAssertValues(gbpJasperReportSummary);
 
-        JasperReportSummary usdJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyOnly(usdCurrency);
+        JasperReportSummary usdJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyLatestCostDateOnly(usdCurrency);
         ArrayList<String> usdAssertValues = getAssertValues(usdJasperReportSummary);
 
         assertThat(gbpAssertValues.get(0), is(equalTo(gbpCurrency)));

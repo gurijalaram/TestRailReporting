@@ -197,7 +197,8 @@ public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
     public void testCurrencyCodeInputControl() {
         jasperApiUtils.genericDtcCurrencyTest(
             "",
-            false
+            false,
+            true
         );
     }
 

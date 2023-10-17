@@ -41,7 +41,8 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     public void testCurrencyCode() {
         jasperApiUtils.genericDtcCurrencyTest(
             JasperCirApiPartsEnum.P_40090936_MLDES_0004.getPartName(),
-            true
+            true,
+            false
         );
     }
 
