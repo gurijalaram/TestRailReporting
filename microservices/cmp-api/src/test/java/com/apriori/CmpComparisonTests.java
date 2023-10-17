@@ -1,5 +1,8 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cmp.models.builder.ComparisonObjectBuilder;
@@ -15,10 +18,12 @@ import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
+
 import com.google.common.collect.Comparators;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,9 +33,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(TestRulesAPI.class)
 public class CmpComparisonTests {
@@ -54,7 +56,7 @@ public class CmpComparisonTests {
 
         List<GetComparisonResponse> getComparisonsResponse = comparisonUtils.getComparisons(currentUser);
 
-        assertThat(getComparisonsResponse.size()).isGreaterThan(0);
+        assertThat(getComparisonsResponse.size(), Matchers.greaterThan(0));
     }
 
     @Test
