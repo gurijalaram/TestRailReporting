@@ -10,6 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AgentWorkflowJobPartCostingResult {
+    private Double annualManufacturingCarbon;
+    private Double capitalInvestment;
+    private Double logisticsCarbon;
+    private Double materialCarbon;
+    private Double totalCarbon;
+    private Double processCarbon;
     private Double fullyBurdenedCost;
     private String dfmRisk;
     private Double totalCost;

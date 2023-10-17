@@ -1,10 +1,8 @@
 package com.apriori;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.apriori.cic.utils.CicApiTestUtil;
 import com.apriori.dataservice.TestDataService;
+import com.apriori.enums.JobDetailsListHeaders;
 import com.apriori.enums.WorkflowListColumns;
 import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -72,15 +70,16 @@ public class WorkflowHistoryTests extends TestBaseUI {
             .selectWorkflow(workFlowData.getWorkflowName())
             .clickInvokeButton();
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).contains("The job was successfully started");
-
         softAssertions.assertThat(workflowHome.selectViewHistoryTab().searchAndTrackWorkFlowStatus(workFlowData.getWorkflowName())).isTrue();
     }
 
     @Test
-    @TestRail(id = {4317, 4397})
+    @TestRail(id = {4317, 4397, 3950, 3981})
     @Description("Verify start time displayed is based on the browser timezone, " +
-        "Locked workflow may not be edited")
-    public void testVerifyStartTimeOfWorkflow() {
+        "Locked workflow may not be edited" +
+        "Test Job Details list control panel " +
+        "Test the Job Details Dialog")
+    public void testVerifyJobDetailsOfWorkflow() {
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
         workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFC"));
         String date = DateUtil.getCurrentDate(DateFormattingUtils.dtf_MMddyyyyHHmmss_hyphen);
@@ -112,12 +111,47 @@ public class WorkflowHistoryTests extends TestBaseUI {
         HistoryPage historyPage = workflowHome.selectViewHistoryTab()
             .searchWorkflow(workFlowData.getWorkflowName());
 
-        assertEquals("The job was successfully started!", workflowHome.getWorkFlowStatusMessage());
         softAssertions.assertThat(historyPage.getWorkflowStartedAt(workFlowData.getWorkflowName())).contains(StringUtils.split(date, ":")[0]);
+        softAssertions.assertThat(historyPage.searchAndTrackWorkFlowStatus(workFlowData.getWorkflowName())).isTrue();
 
-        assertTrue(workflowHome.selectViewHistoryTab().searchAndTrackWorkFlowStatus(workFlowData.getWorkflowName()), "Verify Workflow job is finished");
         JobDetails jobDetails = historyPage.clickViewDetailsButton();
+        softAssertions.assertThat(jobDetails.getWorkflowNameElement().getText()).isEqualTo(this.workFlowData.getWorkflowName());
         softAssertions.assertThat(jobDetails.getStartedAtElement().getText()).contains(StringUtils.split(date, ":")[0]);
+        softAssertions.assertThat(jobDetails.getIdElement().getText()).isNotEmpty();
+        softAssertions.assertThat(jobDetails.getJobStatusElement().getText()).isNotEmpty();
+        softAssertions.assertThat(jobDetails.getJobStatusElement().getText()).isNotEmpty();
+
+        jobDetails = jobDetails.selectPartRow("Casting - Die", JobDetailsListHeaders.PROCESS_GROUP);
+        softAssertions.assertThat(jobDetails.getStartedAtElement().getText()).contains(StringUtils.split(date, ":")[0]);
+    }
+
+    @Test
+    @TestRail(id = {3987, 4288, 3988})
+    @Description("Test column selection dialog" +
+        "Test persistence of column selection")
+    public void testVerifyJobDetailsHeaders() {
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
+        JobDetails jobDetails = ciConnectHome.clickWorkflowMenu().selectViewHistoryTab().clickViewDetailsButton();
+        softAssertions.assertThat(jobDetails.getExportBtn().isEnabled()).isTrue();
+        softAssertions.assertThat(jobDetails.getIdElement().getText()).isNotEmpty();
+        softAssertions.assertThat(jobDetails.getJobStatusElement().getText()).isNotEmpty();
+        softAssertions.assertThat(jobDetails.getJobStatusElement().getText()).isNotEmpty();
+        softAssertions.assertThat(jobDetails.isHeaderExists(JobDetailsListHeaders.APRIORI_PART_NUMBER)).isTrue();
+        softAssertions.assertThat(jobDetails.isHeaderExists(JobDetailsListHeaders.PART_STATUS)).isTrue();
+        softAssertions.assertThat(jobDetails.isHeaderExists(JobDetailsListHeaders.STATUS_DETAILS)).isTrue();
+        softAssertions.assertThat(jobDetails.isHeaderExists(JobDetailsListHeaders.COSTING_RESULT)).isTrue();
+        softAssertions.assertThat(jobDetails.isHeaderExists(JobDetailsListHeaders.DFM_RISK_RATING)).isTrue();
+        softAssertions.assertThat(jobDetails.isHeaderExists(JobDetailsListHeaders.PROCESS_GROUP)).isTrue();
+        softAssertions.assertThat(jobDetails.isHeaderExists(JobDetailsListHeaders.DIGITAL_FACTORY)).isTrue();
+
+        jobDetails.rightClickOnHeader().clickHeaderCheckboxFromPopList(JobDetailsListHeaders.PLM_PART_ID);
+        softAssertions.assertThat(jobDetails.isHeaderExists(JobDetailsListHeaders.PLM_PART_ID)).isTrue();
+
+        jobDetails = jobDetails.clickCloseButton().clickViewDetailsButton();
+        softAssertions.assertThat(jobDetails.isHeaderExists(JobDetailsListHeaders.PLM_PART_ID)).isTrue();
+
+        jobDetails.rightClickOnHeader().clickHeaderCheckboxFromPopList(JobDetailsListHeaders.PLM_PART_ID);
+        softAssertions.assertThat(jobDetails.isHeaderExists(JobDetailsListHeaders.PLM_PART_ID)).isFalse();
     }
 
     @AfterEach

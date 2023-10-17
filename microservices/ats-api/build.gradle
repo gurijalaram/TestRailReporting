@@ -1,7 +1,3 @@
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation project(':shared-util')
     implementation project(':microservices:cds-api')

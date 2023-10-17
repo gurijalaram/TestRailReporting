@@ -5,6 +5,9 @@
     "cidPartNumber": {
       "type": "string"
     },
+    "apwScenarioLink": {
+      "type": "string"
+    },
     "cicStatus": {
       "type": "string"
     },
@@ -69,38 +72,56 @@
     "result": {
       "type": "object",
       "properties": {
-        "fullyBurdenedCost": {
+        "annualManufacturingCarbon": {
           "type": "number"
         },
-        "dfmRisk": {
-          "type": "string"
-        },
-        "totalCost": {
-          "type": "number"
-        },
-        "materialCost": {
+        "capitalInvestment": {
           "type": "number"
         },
         "cycleTime": {
           "type": "number"
         },
+        "dfmRisk": {
+          "type": "string"
+        },
+        "dfmScore": {
+          "type": "integer"
+        },
+        "finishMass": {
+          "type": "number"
+        },
+        "fullyBurdenedCost": {
+          "type": "number"
+        },
         "laborTime": {
           "type": "number"
         },
-        "finishMass": {
+        "logisticsCarbon": {
+          "type": "number"
+        },
+        "materialCarbon": {
+          "type": "number"
+        },
+        "materialCost": {
+          "type": "number"
+        },
+        "processCarbon": {
           "type": "number"
         },
         "roughMass": {
           "type": "number"
         },
-        "utilization": {
-          "type": "number"
-        },
         "routingName": {
           "type": "string"
         },
-        "dfmScore": {
-          "type": "integer"
+        "totalCarbon": {
+          "type": "number"
+        },
+        "totalCost": {
+          "type": "number"
+        },
+        "utilization": {
+          "type": "number"
         }
       },
       "required": [
@@ -115,6 +136,13 @@
         "routingName"
       ],
       "optional": [
+        "annualManufacturingCarbon",
+        "capitalInvestment",
+        "logisticsCarbon",
+        "materialCarbon",
+        "processCarbon",
+        "totalCarbon",
+        "totalCost",
         "dfmRisk",
         "dfmScore"
       ]
@@ -130,6 +158,7 @@
     "errorMessage",
     "cidPartNumber",
     "cidPartLink",
+    "apwScenarioLink",
     "description",
     "scenarioName",
     "costingResult",

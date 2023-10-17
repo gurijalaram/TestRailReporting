@@ -49,6 +49,15 @@ public class Constants {
     }
 
     /**
+     * Get identity CIR application
+     *
+     * @return string
+     */
+    public static String getCirAppIdentity() {
+        return PropertiesContext.get("cds.cir_application_identity");
+    }
+
+    /**
      * Builds the service url
      *
      * @return string
