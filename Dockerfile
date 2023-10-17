@@ -1,7 +1,13 @@
 # Prepare build workspace.
-FROM 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-jdk-base:11 as sdk
-WORKDIR /build-workspace
+FROM gradle:8.3.0-jdk11 AS sdk
 
+USER root
+COPY ../jdk-image/fbc1-2040.cer .
+RUN keytool -import -trustcacerts -noprompt \
+    -alias root \
+    -file ./fbc1-2040.cer \
+    -keystore $JAVA_HOME/lib/security/cacerts \
+    -storepass changeit
 USER root
 
 # Copy source code
