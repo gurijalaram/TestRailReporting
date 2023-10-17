@@ -47,15 +47,6 @@ Those marked with a * are required or the job will not run
     }
 
     stages {
-        stage("Java") {
-            tools {
-                jdk "OpenJDK 11.0.18_10"
-            }
-            steps {
-                sh 'java -version'
-            }
-        }
-
         stage("Initialize") {
             steps {
                 echo "Initializing.."
@@ -173,7 +164,10 @@ Those marked with a * are required or the job will not run
         stage("Build") {
             steps {
                 echo "Building..."
-                sh """
+                withCredentials([
+                        string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                        string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh """
                     docker build \
                         --no-cache \
                         --target build \
@@ -183,6 +177,7 @@ Those marked with a * are required or the job will not run
                         --build-arg MODULE=${MODULE} \
                         .
                 """
+                }
             }
         }
 
