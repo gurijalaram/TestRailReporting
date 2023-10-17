@@ -14,7 +14,7 @@ import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -28,7 +28,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class CmpSaveComparisonTests {
 
     private static ComponentsUtil componentsUtil = new ComponentsUtil();

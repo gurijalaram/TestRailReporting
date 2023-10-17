@@ -12,7 +12,7 @@ import com.apriori.cic.utils.WorkflowTestUtil;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -25,7 +25,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.HashMap;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class CicAgentJobResultsTest extends WorkflowTestUtil {
 
     private SoftAssertions softAssertions;
@@ -131,8 +131,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
         this.cicLogin()
             .create()
             .getWorkflowId()
-            .invokeRestWorkflow()
-            .track();
+            .invokeRestWorkflow();
 
         softAssertions.assertThat(CicApiTestUtil.waitUntilExpectedJobStatusMatched(this.agentWorkflowResponse.getId(), this.agentWorkflowJobRunResponse.getJobId(), CICAgentStatus.COSTING)).isTrue();
         CicApiTestUtil.cancelWorkflow(this.agentWorkflowResponse.getId(), this.agentWorkflowJobRunResponse.getJobId());

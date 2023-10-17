@@ -8,7 +8,7 @@ import com.apriori.acs.models.response.acs.partprimaryprocessgroups.PartPrimaryP
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class PartPrimaryProcessGroupsTests extends TestUtil {
 
     @Test

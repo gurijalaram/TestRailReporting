@@ -5,7 +5,7 @@ import com.apriori.cir.models.request.ParametersRequest;
 import com.apriori.cir.models.request.ReportRequest;
 import com.apriori.cir.models.response.ChartDataPoint;
 import com.apriori.cir.utils.JasperReportUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Arrays;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class JasperReportTest {
 
     @Test

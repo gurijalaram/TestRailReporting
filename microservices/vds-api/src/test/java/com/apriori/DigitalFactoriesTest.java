@@ -6,7 +6,7 @@ import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.VDSTestUtil;
 import com.apriori.vds.enums.VDSAPIEnum;
@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class DigitalFactoriesTest extends VDSTestUtil {
 
     @Test

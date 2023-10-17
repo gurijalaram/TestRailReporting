@@ -10,7 +10,7 @@ import com.apriori.dataservice.TestDataService;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.part.PartData;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.List;
 
 @Slf4j
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class MultiPartCostingTest {
     private static Batch batch;
     private static final Integer NUMBER_OF_PARTS = Integer.parseInt(PropertiesContext.get("bcs.number_of_parts"));

@@ -4,9 +4,9 @@ package com.apriori.ach.tests;
 import com.apriori.ach.dto.ApplicationDTO;
 import com.apriori.ach.utils.AchEnvironmentAPIUtil;
 import com.apriori.cds.models.response.AccessControlResponse;
-import com.apriori.cds.models.response.User;
 import com.apriori.models.AuthorizationUtil;
 import com.apriori.models.response.Deployment;
+import com.apriori.models.response.User;
 import com.apriori.testrail.TestRail;
 
 import org.junit.jupiter.api.Assertions;

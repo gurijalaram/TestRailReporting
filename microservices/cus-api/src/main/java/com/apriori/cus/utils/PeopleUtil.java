@@ -7,16 +7,16 @@ import com.apriori.cus.models.request.UpdateUserPrefRequest;
 import com.apriori.cus.models.request.UpdateUserRequest;
 import com.apriori.cus.models.response.ErrorResponse;
 import com.apriori.cus.models.response.PreferenceItemsResponse;
-import com.apriori.cus.models.response.User;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.User;
 import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 
 @Slf4j

@@ -12,9 +12,6 @@ import com.apriori.cas.models.response.CustomerAssociation;
 import com.apriori.cas.models.response.CustomerAssociationUser;
 import com.apriori.cas.models.response.CustomerAssociationUsers;
 import com.apriori.cas.models.response.CustomerAssociations;
-import com.apriori.cas.models.response.CustomerUser;
-import com.apriori.cas.models.response.CustomerUserProfile;
-import com.apriori.cas.models.response.CustomerUsers;
 import com.apriori.cas.models.response.Customers;
 import com.apriori.cas.models.response.LicenseResponse;
 import com.apriori.cas.models.response.PostBatch;
@@ -30,6 +27,9 @@ import com.apriori.http.utils.MultiPartFiles;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
+import com.apriori.models.response.User;
+import com.apriori.models.response.UserProfile;
+import com.apriori.models.response.Users;
 import com.apriori.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
@@ -51,7 +51,7 @@ public class CasTestUtil extends TestUtil {
      * @param cloudReference - the cloud reference name
      * @param description    - the description
      * @param email          - the email pattern
-     * @return ResponseWrapper <SingleCustomer>
+     * @return ResponseWrapper SingleCustomer
      */
     public static ResponseWrapper<Customer> addCustomer(String name, String cloudReference, String description, String email) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customer.class)
@@ -77,7 +77,7 @@ public class CasTestUtil extends TestUtil {
      * PATCH call to update a customer
      *
      * @param email - the email pattern
-     * @return ResponseWrapper <Customer>
+     * @return ResponseWrapper Customer
      */
     public static ResponseWrapper<Customer> updateCustomer(String identity, String email) {
 
@@ -94,7 +94,7 @@ public class CasTestUtil extends TestUtil {
 
     /**
      * @param identity - the identity
-     * @return <T>ResponseWrapper <T>
+     * @return T ResponseWrapper T
      */
     public static <T> ResponseWrapper<T> resetMfa(String identity) {
 
@@ -107,7 +107,7 @@ public class CasTestUtil extends TestUtil {
 
     /**
      * @param identity - the identity
-     * @return <T>ResponseWrapper <T>
+     * @return ResponseWrapper T
      */
     public static <T> ResponseWrapper<T> resetUserMfa(String customerIdentity, String identity) {
 
@@ -120,7 +120,7 @@ public class CasTestUtil extends TestUtil {
 
     /**
      * @param siteId - site ID
-     * @return ResponseWrapper <ValidateSite>
+     * @return ResponseWrapper ValidateSite
      */
     public static ResponseWrapper<ValidateSite> validateSite(String identity, String siteId) {
 
@@ -137,7 +137,7 @@ public class CasTestUtil extends TestUtil {
     /**
      * @param siteId   - site ID
      * @param siteName - site name
-     * @return ResponseWrapper <Site>
+     * @return ResponseWrapper Site
      */
     public static ResponseWrapper<Site> addSite(String identity, String siteId, String siteName) {
 
@@ -156,26 +156,26 @@ public class CasTestUtil extends TestUtil {
 
     /**
      * @param userName - username
-     * @return ResponseWrapper <CustomerUser>
+     * @return ResponseWrapper User
      */
-    public static ResponseWrapper<CustomerUser> addUser(String identity, String userName, String customerName) {
+    public static ResponseWrapper<User> addUser(String identity, String userName, String customerName) {
 
         String domain = String.format("%s.co.uk", customerName.toLowerCase());
         CasTestUtil util = new CasTestUtil();
         return util.createUser(identity, userName, domain);
     }
 
-    public static ResponseWrapper<CustomerUser> updateUser(CustomerUser user) {
+    public static ResponseWrapper<User> updateUser(User user) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.USER, CustomerUser.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.USER, User.class)
             .body("user",
-                CustomerUser.builder()
+                User.builder()
                     .identity(user.getIdentity())
                     .email(user.getEmail())
                     .username(user.getUsername())
                     .active(user.getActive())
                     .createdBy(user.getCreatedBy())
-                    .userProfile(CustomerUserProfile.builder()
+                    .userProfile(UserProfile.builder()
                         .createdBy(user.getUserProfile().getCreatedBy())
                         .givenName(user.getUserProfile().getGivenName())
                         .familyName(user.getUserProfile().getFamilyName())
@@ -189,7 +189,7 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @return ResponseWrapper <PostBatch>
+     * @return ResponseWrapper PostBatch
      */
     public static ResponseWrapper<PostBatch> addBatchFile(String customerIdentity) {
 
@@ -204,7 +204,7 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @return <T>ResponseWrapper <T>
+     * @return ResponseWrapper T
      */
     public static <T> ResponseWrapper<T> deleteBatch(String customerIdentity, String batchIdentity) {
 
@@ -218,7 +218,7 @@ public class CasTestUtil extends TestUtil {
     /**
      * @param customerIdentity - the customer identity
      * @param batchIdentity    - batch identity
-     * @return <T>ResponseWrapper <T>
+     * @return ResponseWrapper T
      */
     public static <T> ResponseWrapper<T> newUsersFromBatch(String customerIdentity, String batchIdentity) {
 
@@ -368,12 +368,12 @@ public class CasTestUtil extends TestUtil {
     /**
      * @param source      - the customer source
      * @param association The association that contains the target customer.
-     * @return ResponseWrapper <CustomerUsers>
+     * @return ResponseWrapper <Users>
      */
-    public ResponseWrapper<CustomerUsers> findCustomerAssociationCandidates(Customer source, CustomerAssociation association) {
+    public ResponseWrapper<Users> findCustomerAssociationCandidates(Customer source, CustomerAssociation association) {
         return find(
             CASAPIEnum.CUSTOMER_ASSOCIATION_CANDIDATES,
-            CustomerUsers.class,
+            Users.class,
             Collections.emptyMap(),
             Collections.emptyMap(),
             1,
@@ -390,7 +390,7 @@ public class CasTestUtil extends TestUtil {
      * @param association The association that contains the target customer.
      * @return The response.
      */
-    public ResponseWrapper<CustomerAssociationUser> createCustomerAssociationUser(CustomerUser user, CustomerAssociation association) {
+    public ResponseWrapper<CustomerAssociationUser> createCustomerAssociationUser(User user, CustomerAssociation association) {
         CustomerAssociationUser body = CustomerAssociationUser.builder()
             .userIdentity(user.getIdentity())
             .build();
@@ -457,17 +457,17 @@ public class CasTestUtil extends TestUtil {
 
     /**
      * @param source - the customer source
-     * @return ResponseWrapper <CustomerUser>
+     * @return ResponseWrapper <User>
      */
-    public List<CustomerUser> findUsers(Customer source) {
-        return findAll(CASAPIEnum.USERS, CustomerUsers.class, Collections.emptyMap(), Collections.emptyMap(), source.getIdentity());
+    public List<User> findUsers(Customer source) {
+        return findAll(CASAPIEnum.USERS, Users.class, Collections.emptyMap(), Collections.emptyMap(), source.getIdentity());
     }
 
     /**
      * @param customer - the customer
-     * @return ResponseWrapper <CustomerUser>
+     * @return ResponseWrapper <User>
      */
-    public ResponseWrapper<CustomerUser> createUser(Customer customer) {
+    public ResponseWrapper<User> createUser(Customer customer) {
         String domain = customer.getEmailDomains().stream().findFirst().orElseThrow(() -> new IllegalStateException("This customer has no email domains"));
         return createUser(customer.getIdentity(), domain);
     }
@@ -475,9 +475,9 @@ public class CasTestUtil extends TestUtil {
     /**
      * @param customerIdentity - customer identity
      * @param domain           - domain
-     * @return ResponseWrapper <CustomerUser>
+     * @return ResponseWrapper <User>
      */
-    public ResponseWrapper<CustomerUser> createUser(String customerIdentity, String domain) {
+    public ResponseWrapper<User> createUser(String customerIdentity, String domain) {
         GenerateStringUtil generator = new GenerateStringUtil();
         return createUser(customerIdentity, generator.generateUserName(), domain);
     }
@@ -486,12 +486,12 @@ public class CasTestUtil extends TestUtil {
      * @param customerIdentity - customer identity
      * @param userName         - user name
      * @param domain           - domain
-     * @return ResponseWrapper <CustomerUser>
+     * @return ResponseWrapper <User>
      */
-    public ResponseWrapper<CustomerUser> createUser(final String customerIdentity, final String userName, final String domain) {
+    public ResponseWrapper<User> createUser(final String customerIdentity, final String userName, final String domain) {
         String email = String.format("%s@%s", userName.toLowerCase(), domain);
 
-        CustomerUserProfile profile = CustomerUserProfile.builder().givenName("Robot")
+        UserProfile profile = UserProfile.builder().givenName("Robot")
             .familyName("Automator")
             .jobTitle("Automation Engineer")
             .department("Automation")
@@ -499,7 +499,7 @@ public class CasTestUtil extends TestUtil {
             .townCity("Brooklyn")
             .build();
 
-        CustomerUser user = CustomerUser.builder()
+        User user = User.builder()
             .userType("AP_CLOUD_USER")
             .email(email)
             .username(userName)
@@ -507,7 +507,7 @@ public class CasTestUtil extends TestUtil {
             .userProfile(profile)
             .build();
 
-        return create(CASAPIEnum.USERS, CustomerUser.class, user, HttpStatus.SC_CREATED, customerIdentity);
+        return create(CASAPIEnum.USERS, User.class, user, HttpStatus.SC_CREATED, customerIdentity);
     }
 
     /**

@@ -21,7 +21,7 @@ import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.File;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class CostAllCadTests {
 
     private final ComponentsUtil componentsUtil = new ComponentsUtil();

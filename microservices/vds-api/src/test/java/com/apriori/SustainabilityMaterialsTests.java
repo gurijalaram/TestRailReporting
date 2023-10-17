@@ -4,7 +4,7 @@ import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 import com.apriori.util.ProcessGroupUtil;
 import com.apriori.util.VDSTestUtil;
@@ -21,7 +21,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class SustainabilityMaterialsTests extends ProcessGroupUtil {
     private SoftAssertions soft = new SoftAssertions();
 

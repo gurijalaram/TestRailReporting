@@ -1,19 +1,18 @@
 package com.apriori;
 
-import com.apriori.ats.models.response.UserByEmail;
 import com.apriori.ats.utils.AtsTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.IdentityProviderResponse;
-import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.Customer;
+import com.apriori.models.response.User;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -22,7 +21,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class AtsAuthenticationTests extends TestUtil {
     private AtsTestUtil atsTestUtil = new AtsTestUtil();
     private SoftAssertions soft = new SoftAssertions();
@@ -55,7 +54,7 @@ public class AtsAuthenticationTests extends TestUtil {
         UserCredentials userCredentials = UserUtil.getUser();
         String userEmail = userCredentials.getEmail();
         String userPassword = userCredentials.getPassword();
-        ResponseWrapper<UserByEmail> authenticate = atsTestUtil.authenticateUser(userEmail, userPassword);
+        ResponseWrapper<User> authenticate = atsTestUtil.authenticateUser(userEmail, userPassword);
 
         soft.assertThat(authenticate.getResponseEntity().getEmail()).isEqualTo(userEmail);
         soft.assertAll();
@@ -80,7 +79,7 @@ public class AtsAuthenticationTests extends TestUtil {
         identityProvider = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = identityProvider.getResponseEntity().getIdentity();
 
-        ResponseWrapper<UserByEmail> createSamlUser = atsTestUtil.putSAMLProviders(emailPattern);
+        ResponseWrapper<User> createSamlUser = atsTestUtil.putSAMLProviders(emailPattern);
 
         soft.assertThat(createSamlUser.getResponseEntity().getIdentity()).isNotEmpty();
         soft.assertThat(createSamlUser.getResponseEntity().getUserType()).isEqualTo("AP_SAML_USER");

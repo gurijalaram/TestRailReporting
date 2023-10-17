@@ -32,9 +32,7 @@ import com.apriori.cds.models.response.InstallationItems;
 import com.apriori.cds.models.response.LicenseResponse;
 import com.apriori.cds.models.response.Roles;
 import com.apriori.cds.models.response.SubLicenseAssociationUser;
-import com.apriori.cds.models.response.User;
 import com.apriori.cds.models.response.UserPreference;
-import com.apriori.cds.models.response.UserProfile;
 import com.apriori.cds.models.response.UserRole;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
@@ -53,6 +51,8 @@ import com.apriori.models.response.Enablements;
 import com.apriori.models.response.Features;
 import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
+import com.apriori.models.response.User;
+import com.apriori.models.response.UserProfile;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 

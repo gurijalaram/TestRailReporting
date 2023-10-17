@@ -10,7 +10,7 @@ import com.apriori.bcs.models.response.Parts;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.part.PartData;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -22,7 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.List;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class BatchPartTestDemo {
 
     private static Batch batch;

@@ -44,7 +44,7 @@ import java.util.Optional;
  * @author cfrith
  */
 @Slf4j
-public class TestRules implements TestWatcher, BeforeAllCallback {
+public class TestRulesUI implements TestWatcher, BeforeAllCallback {
 
     public static final String DRIVER = "driver";
     private static final String TESTRAIL_REPORT = "TEST_RAIL";

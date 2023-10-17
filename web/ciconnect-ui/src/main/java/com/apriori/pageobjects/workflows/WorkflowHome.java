@@ -55,6 +55,7 @@ public class WorkflowHome extends CICBasePage {
 
     public WorkflowHome(WebDriver driver) {
         super(driver);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();

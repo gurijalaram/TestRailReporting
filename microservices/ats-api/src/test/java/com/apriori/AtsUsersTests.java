@@ -1,12 +1,10 @@
 package com.apriori;
 
 import com.apriori.ats.models.response.AtsErrorMessage;
-import com.apriori.ats.models.response.UserByEmail;
 import com.apriori.ats.utils.AtsTestUtil;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.InstallationItems;
-import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -15,9 +13,10 @@ import com.apriori.models.response.Customer;
 import com.apriori.models.response.Deployment;
 import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
+import com.apriori.models.response.User;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -27,7 +26,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class AtsUsersTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private AtsTestUtil atsTestUtil = new AtsTestUtil();
@@ -70,7 +69,7 @@ public class AtsUsersTests {
     @Description("Get the current representation of a user identified by their email.")
     public void getUserByEmailTest() {
         String userEmail = "qa-automation-01@apriori.com";
-        ResponseWrapper<UserByEmail> user = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, UserByEmail.class, HttpStatus.SC_OK, userEmail);
+        ResponseWrapper<User> user = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, userEmail);
 
         soft.assertThat(user.getResponseEntity().getEmail()).isEqualTo(userEmail);
         soft.assertAll();

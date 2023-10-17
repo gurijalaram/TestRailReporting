@@ -7,6 +7,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.ScenarioItem;
 import com.apriori.pageobjects.compare.CreateComparePage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
@@ -19,15 +20,12 @@ import com.apriori.reader.file.user.UserCredentials;
 
 import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -238,7 +236,6 @@ public class ExploreToolbar extends MainNavBar {
                                                                       String mode,
                                                                       String material,
                                                                       UserCredentials currentUser) {
-
 
         final AssemblyUtils assemblyUtils = new AssemblyUtils();
 
@@ -556,7 +553,6 @@ public class ExploreToolbar extends MainNavBar {
         return pageUtils.waitForElementToAppear(editButton).isEnabled();
     }
 
-
     /**
      * Checks if delete button is enabled
      *
@@ -644,45 +640,16 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Gets the jquery data for a report
-     * Some available fields are ->
-     * String fileName
-     * String byExtName
-     * Boolean fileExternallyRemoved
-     * Long total (or size)
-     * String fileUrl
-     * String id
-     * String progressStatusText
-     * String state
-     * String filePath
-     * String dateString
-     * Boolean hideDate
-     * String url
-     *
-     * @return HashMap
+     * Gets the downloaded report data
+     * @param componentInfo - the component object
      */
-    public HashMap<String, ?> getReportJQueryData() {
-        final long START_TIME = System.currentTimeMillis() / 1000;
-        final int WAIT_TIME = 15;
+    public File getDownloadedReport(ComponentInfoBuilder componentInfo) {
+        ResponseWrapper<String> reportsData = new ScenariosUtil().getReports(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity(), componentInfo.getUser());
+        String fileName = reportsData.getHeaders().get("Content-Disposition").getValue().split("=")[1].replace("\"", "");
 
-        ArrayList<HashMap<String, String>> element = getReportMapData();
+        File file = new File(pageUtils.downloadPath + fileName);
+        file.deleteOnExit();
 
-        while (element.isEmpty() || !element.get(0).get("state").equalsIgnoreCase("Complete") && ((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME) {
-            driver.navigate().back();
-            element = getReportMapData();
-        }
-        return element.get(0);
-    }
-
-    private ArrayList<HashMap<String, String>> getReportMapData() {
-        JavascriptExecutor js;
-        ArrayList<HashMap<String, String>> element;
-
-        driver.get("chrome://downloads/");
-        js = (JavascriptExecutor) driver;
-        element = (ArrayList<HashMap<String, String>>)
-            js.executeScript("return document.querySelector('downloads-manager').shadowRoot.getElementById('downloadsList').items;");
-
-        return element;
+        return file;
     }
 }

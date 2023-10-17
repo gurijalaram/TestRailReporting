@@ -18,6 +18,25 @@ def nexus_repository
 def nexus_version
 def custom_install
 def connector
+def environment = [profile: 'development', region: 'us-east-1']
+def ecrDockerRegistry = '563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa'
+
+def registry_password(profile = '', region = '') {
+    withCredentials([
+            file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
+            file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
+        return sh(
+                returnStdout: true,
+                script: """
+                docker run \
+                    -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
+                    -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
+                    amazon/aws-cli ecr get-login-password \
+                    --profile ${profile} --region ${region}
+            """
+        ).trim()
+    }
+}
 
 pipeline {
 /*
@@ -48,15 +67,6 @@ Those marked with a * are required or the job will not run
     }
 
     stages {
-        stage("Java") {
-            tools {
-                jdk "OpenJDK 11.0.18_10"
-            }
-            steps {
-                sh 'java -version'
-            }
-        }
-
         stage("Initialize") {
             steps {
                 echo "Initializing.."
@@ -87,15 +97,12 @@ Those marked with a * are required or the job will not run
                     folder = params.MODULE_TYPE
                     if (!folder && "${MODULE}".contains("-ui")) {
                         folder = "web"
-                    }
-                    else if (!folder && "${MODULE}".contains("-api")) {
+                    } else if (!folder && "${MODULE}".contains("-api")) {
                         folder = "microservices"
-                    }
-                    else if (!folder && "${MODULE}".contains("-agent")) {
+                    } else if (!folder && "${MODULE}".contains("-agent")) {
                         folder = "agent"
-                    }
-                    else {
-                          folder = "integrate"
+                    } else {
+                        folder = "integrate"
                     }
 
                     url = params.TARGET_URL
@@ -139,7 +146,7 @@ Those marked with a * are required or the job will not run
 
                     number_of_parts = params.NUMBER_OF_PARTS
                     if (number_of_parts && number_of_parts != "none") {
-                       javaOpts = javaOpts + " -Dbcs_number_of_parts=${params.NUMBER_OF_PARTS}"
+                       javaOpts = javaOpts + " -Dnumber_of_parts=${params.NUMBER_OF_PARTS}"
                     }
 
                     parts_csv_file = params.PARTS_CSV_FILE
@@ -250,7 +257,7 @@ Those marked with a * are required or the job will not run
 
             script {
                 if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
-                    error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs with text: Response contains MappingException")
+                    error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs.")
                 }
             }
         }

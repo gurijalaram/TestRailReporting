@@ -4,7 +4,6 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.response.IdentityProviderPagination;
 import com.apriori.cds.models.response.IdentityProviderResponse;
 import com.apriori.cds.models.response.InstallationItems;
-import com.apriori.cds.models.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.http.utils.GenerateStringUtil;
@@ -13,7 +12,8 @@ import com.apriori.models.response.Customer;
 import com.apriori.models.response.Deployment;
 import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.Site;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.models.response.User;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class CdsIdentityProvidersTests {
     private String customerIdentity;
     private String userIdentity;

@@ -17,7 +17,7 @@ import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -29,7 +29,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.io.File;
 import java.util.stream.Stream;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class MaterialSelectionTests {
 
     private ComponentsUtil componentsUtil = new ComponentsUtil();

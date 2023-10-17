@@ -24,12 +24,15 @@ public class Enablements {
     private String identity;
     private String createdBy;
     private String updatedBy;
+    private String deletedBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime deletedAt;
     private Boolean connectAdminEnabled;
     private Boolean highMemEnabled;
     private Boolean previewEnabled;

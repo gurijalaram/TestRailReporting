@@ -1,8 +1,9 @@
 package com.apriori.utils;
 
-import com.apriori.cds.models.response.User;
+
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.http.utils.TestUtil;
+import com.apriori.models.response.User;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

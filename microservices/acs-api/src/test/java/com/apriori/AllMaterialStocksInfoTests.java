@@ -7,7 +7,7 @@ import com.apriori.acs.models.response.acs.genericclasses.GenericExtendedPropert
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.rules.TestRulesApi;
+import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestRulesApi.class)
+@ExtendWith(TestRulesAPI.class)
 public class AllMaterialStocksInfoTests extends TestUtil {
 
     @Test
