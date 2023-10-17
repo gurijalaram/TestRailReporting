@@ -2,7 +2,7 @@
 FROM gradle:8.3.0-jdk11 AS sdk
 
 USER root
-COPY ../fbc1-2040.cer .
+COPY ../jdk-image/fbc1-2040.cer .
 RUN keytool -import -trustcacerts -noprompt \
     -alias root \
     -file ./fbc1-2040.cer \
