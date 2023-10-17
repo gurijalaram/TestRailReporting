@@ -30,8 +30,6 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(id = "qa-change-summary-column-1-Secondary Processes-Machining")
     private WebElement leftColSecondaryProcessMachining;
 
-
-
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -133,6 +131,4 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
         By locator = By.xpath(String.format(iterationXPath, iterationNum) + "//*[@data-icon='circle-info']");
         return driver.findElement(locator);
     }
-
-
 }
