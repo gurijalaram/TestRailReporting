@@ -186,17 +186,21 @@ Those marked with a * are required or the job will not run
 
         stage("Build") {
             steps {
-                echo "Building..."
-                sh """
-                    docker build \
-                        --no-cache \
-                        --target build \
-                        --tag ${buildInfo.name}-test-${timeStamp}:latest \
-                        --label \"build-date=${timeStamp}\" \
-                        --build-arg FOLDER=${folder} \
-                        --build-arg MODULE=${MODULE} \
-                        .
-                """
+                 echo "Building..."
+                 script {
+                     def registryPwd = registry_password("${environment.profile}", "${environment.region}")
+                     sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                     sh """
+                         docker build \
+                             --no-cache \
+                             --target build \
+                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
+                             --label \"build-date=${timeStamp}\" \
+                             --build-arg FOLDER=${folder} \
+                             --build-arg MODULE=${MODULE} \
+                             .
+                     """
+                 }
             }
         }
 
@@ -229,7 +233,7 @@ Those marked with a * are required or the job will not run
                 // Copy out build/test artifacts.
                 echo "Extract Test Results.."
                 sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
-                sh "docker cp ${buildInfo.name}-test-${timeStamp}:home/gradle/${folder}/${MODULE}/build ."
+                sh "docker cp ${buildInfo.name}-test-${timeStamp}:build-workspace/${folder}/${MODULE}/build ."
                 echo "Publishing Results"
                 allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
                 junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
