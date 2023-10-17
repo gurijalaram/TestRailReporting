@@ -13,6 +13,7 @@ public enum CirApiEnum implements ExternalEndpointEnum {
     APRIORI_SOLUTIONS_SOURCING_REPORTS(APRIORI_SOLUTIONS_REPORTS.getEndpointString().concat("sourcing/")),
     APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS(APRIORI_SOLUTIONS_REPORTS.getEndpointString().concat("designToCost/")),
     APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST(APRIORI_SOLUTIONS_REPORTS.getEndpointString().concat("/designToCost/targetAndQuotedCost/")),
+    APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST_1("targetAndQuotedCost/"),
     APRIORI_UPGRADE_PROCESS_REPORTS(APRIORI_REPORTS_START.getEndpointString().concat("Upgrade%sProcess/")),
 
     ASSEMBLY_COST_A4(APRIORI_GENERAL_REPORTS.getEndpointString().concat("assemblyCost.a4/inputControls/exportSetName;partNumber;scenarioName;exportDate;currencyCode/values?freshData=false")),
@@ -85,11 +86,11 @@ public enum CirApiEnum implements ExternalEndpointEnum {
     TARGET_COST_VALUE_TRACKING(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("targetCost/targetCostValueTracking/inputControls/projectRollup;exportDate;costMetric;currencyCode/values?freshData=false&includeTotalCount=true")),
     TARGET_COST_VALUE_TRACKING_DETAILS(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("targetCost/targetCostValueTrackingDetails/inputControls/projectRollup;projectName;exportDate;costMetric;currencyCode;currentProjectId;currentProjectName/values".concat(
         "?freshData=false&includeTotalCount=true"))),
-    TARGET_AND_QUOTED_COST_TREND(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST.getEndpointString().concat("targetAndQuotedCostTrend/inputControls/projectRollup;projectName;exportDate;costMetric;sortOrder;".concat(
+    TARGET_AND_QUOTED_COST_TREND(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("targetAndQuotedCost/".concat("targetAndQuotedCostTrend/inputControls/projectRollup;projectName;exportDate;costMetric;sortOrder;".concat(
         "currencyCode/values?freshData=false&includeTotalCount=true")))),
-    TARGET_AND_QUOTED_COST_VALUE_TRACKING(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST.getEndpointString().concat("targetAndQuotedCostValueTracking/inputControls/projectRollup;exportDate;costMetric;sortOrder;".concat(
+    TARGET_AND_QUOTED_COST_VALUE_TRACKING(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("targetAndQuotedCost/".concat("targetAndQuotedCostValueTracking/inputControls/projectRollup;exportDate;costMetric;sortOrder;".concat(
         "currencyCode/values?freshData=false&includeTotalCount=true")))),
-    TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST.getEndpointString().concat("targetAndQuotedCostValueTrackingDetailsInternal/inputControls/currentProjectName;".concat(
+    TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("targetAndQuotedCost/".concat("targetAndQuotedCostValueTrackingDetailsInternal/inputControls/currentProjectName;".concat(
         "currentProjectId;currencyCode;sortOrder;costMetric;projectRollup;projectName;exportDate/values?freshData=false")))),
     UPGRADE_COMPARISON(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("upgradeComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;changeLevel;costMetricsLowThreshold;costMetricsHighThreshold;".concat(
         "timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false"))),

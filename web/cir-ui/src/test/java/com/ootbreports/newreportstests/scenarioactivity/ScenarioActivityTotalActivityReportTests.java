@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ScenarioActivityTotalActivityReportTests extends JasperApiAuthenticationUtil {
@@ -41,7 +42,7 @@ public class ScenarioActivityTotalActivityReportTests extends JasperApiAuthentic
         ArrayList<Element> dateElementsDaily = jasperApiUtils.getElementsForScenarioActivityReportTests(jasperReportSummaryDaily);
         ArrayList<Element> dateElementsYearly = jasperApiUtils.getElementsForScenarioActivityReportTests(jasperReportSummaryYearly);
 
-        int currentDayOfMonth = LocalDateTime.now().getDayOfMonth();
+        String currentDayOfMonth = DateTimeFormatter.ofPattern("dd").format(LocalDateTime.now());
         String currentMonthValue = jasperApiUtils.getCurrentMonthValue();
 
         assertAll("Grouped Date Axis Assertions",

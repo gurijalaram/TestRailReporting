@@ -1,7 +1,7 @@
 package com.apriori.http.utils;
 
 import io.qameta.allure.Attachment;
-import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.WebElement;
 
 import java.text.DateFormat;

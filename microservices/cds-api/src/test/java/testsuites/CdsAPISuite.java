@@ -22,6 +22,7 @@ import com.apriori.CdsRolesTests;
 import com.apriori.CdsSitesApplicationsTests;
 import com.apriori.CdsSitesTests;
 import com.apriori.CdsUserEnablementsTests;
+import com.apriori.CdsUserManagementHighMemTests;
 import com.apriori.CdsUserPreferencesTests;
 import com.apriori.CdsUsersTests;
 
@@ -53,7 +54,8 @@ import org.junit.platform.suite.api.Suite;
     CdsUserPreferencesTests.class,
     CdsUsersTests.class,
     CdsFeatureTests.class,
-    CdsUserEnablementsTests.class
+    CdsUserEnablementsTests.class,
+    CdsUserManagementHighMemTests.class
 })
 public class CdsAPISuite {
 }

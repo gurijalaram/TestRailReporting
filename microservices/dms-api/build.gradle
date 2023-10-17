@@ -1,7 +1,3 @@
-repositories {
-    mavenCentral()
-}
-
 //This block allow to copy resources from shared-util into current module, so we have an access to them by .getResource();
 sourceSets {
     main {
@@ -17,7 +13,6 @@ dependencies {
     implementation project(':shared-util')
     implementation project(':db')
     implementation project(':microservices:css-api')
-    implementation 'com.massisframework:j-text-utils:0.3.4'
     implementation project(':microservices:cidapp-api')
     implementation project(':microservices:qms-api')
     implementation project(':serialization-util')

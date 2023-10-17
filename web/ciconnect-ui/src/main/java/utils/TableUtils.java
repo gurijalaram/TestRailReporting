@@ -9,9 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -319,6 +317,33 @@ public class TableUtils {
                 .stream()
                 .skip(1)
                 .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(cellText))
+                .findFirst()
+                .orElse(null);
+        }
+        return dataElement;
+    }
+
+    /**
+     * Get row by cell text
+     *
+     * @param table    - table web element
+     * @param cellText - text to match
+     * @return WebElement
+     */
+    public WebElement getRowByColumnIndex(WebElement table, String cellText, Integer columnIndex) {
+        WebElement dataElement = null;
+        try {
+            dataElement = table.findElements(By.tagName("tr"))
+                .stream()
+                .skip(1)
+                .filter(user -> user.findElements(By.tagName("td")).get(columnIndex).getText().equalsIgnoreCase(cellText))
+                .findFirst()
+                .orElse(null);
+        } catch (StaleElementReferenceException staleElementReferenceException) {
+            dataElement = table.findElements(By.tagName("tr"))
+                .stream()
+                .skip(1)
+                .filter(user -> user.findElements(By.tagName("td")).get(columnIndex).getText().equalsIgnoreCase(cellText))
                 .findFirst()
                 .orElse(null);
         }

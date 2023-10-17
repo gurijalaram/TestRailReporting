@@ -9,6 +9,8 @@ import com.apriori.pageobjects.CICBasePage;
 import com.apriori.pageobjects.workflows.WorkflowHome;
 import com.apriori.pageobjects.workflows.schedule.details.DetailsPart;
 
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -22,7 +24,10 @@ import org.slf4j.LoggerFactory;
 import utils.Constants;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class SchedulePage extends CICBasePage {
     private static final Logger logger = LoggerFactory.getLogger(SchedulePage.class);
 
@@ -34,9 +39,9 @@ public class SchedulePage extends CICBasePage {
     private WebElement deleteWorkflowButton;
     @FindBy(xpath = "//button//span[.='Invoke']")
     private WebElement invokeWorkflowBtn;
-    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced > div.objbox > table > tbody")
+    @FindBy(css = "div[class='tabsv2-actual-tab-contents'][tab-number='1'] div[class$='cic-table'] table.obj")
     private WebElement workflowList;
-    @FindBy(css = "div[id='root_pagemashupcontainer-1_gridadvanced-46-grid-advanced'] div[class='xhdr'] table[class='hdr']")
+    @FindBy(css = "div[class='tabsv2-actual-tab-contents'][tab-number='1'] div[class$='cic-table'] table.hdr")
     private WebElement workflowHeaders;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced > div.xhdr > table > tbody > tr:nth-child(2) > td:nth-child(1)")
     private WebElement firstColumn;
@@ -83,6 +88,8 @@ public class SchedulePage extends CICBasePage {
     @Override
     protected void isLoaded() {
         pageUtils.waitForElementToAppear(scheduleTab);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"), 5);
+        waitUntilRowsLoaded();
     }
 
     /**
@@ -372,6 +379,28 @@ public class SchedulePage extends CICBasePage {
     }
 
     /**
+     * wait until all the rows are loaded in standard mappings
+     */
+    @SneakyThrows
+    private void waitUntilRowsLoaded() {
+        int retries = 0;
+        int maxRetries = 12;
+        Exception ex = null;
+
+        while (retries < maxRetries) {
+            if (getScheduleWorkflowList().size() >= 1) {
+                log.info("workflows are loaded!!");
+                break;
+            }
+            TimeUnit.SECONDS.sleep(DEFAULT_WAIT_TIME);
+            retries++;
+            if (retries == maxRetries) {
+                throw new RuntimeException(String.format("Workflows are not loaded !! : %s", ex.getMessage()));
+            }
+        }
+    }
+
+    /**
      * Getter for EDIT Workflow button to verify the state
      *
      * @return WebElement
@@ -391,5 +420,14 @@ public class SchedulePage extends CICBasePage {
 
     private WebElement getScheduleTabRefreshElement() {
         return driver.findElement(with(By.xpath("//span[@class='widget-button-text']")).toLeftOf(invokeWorkflowBtn));
+    }
+
+    /**
+     * get the list of workflow rows
+     *
+     * @return list of workflow rows
+     */
+    public List<WebElement> getScheduleWorkflowList() {
+        return driver.findElements(By.cssSelector("div[class='tabsv2-actual-tab-contents'][tab-number='1'] div[class$='cic-table'] table.obj"));
     }
 }

@@ -46,7 +46,7 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
     docker_registry_password()
 
     sh """
-            docker build -f qa-stacks.Dockerfile \
+            docker build -f ./qa-stacks/Dockerfile \
             --build-arg FOLDER=${folder} \
             --build-arg MODULE=${module} \
             --tag ${buildInfo}-${module}-${runType}:${buildVersion} \
