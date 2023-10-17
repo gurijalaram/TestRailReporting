@@ -9,7 +9,9 @@ public enum ExportSetEnum {
     ROLL_UP_A("- - - 0 0 0-roll-up-a"),
     SUB_SUB_ASM("- - - 0 0 0-sub-sub-asm"),
     SHEET_METAL_DTC("- - - 0 0 0-sheet-metal-dtc"),
-    COST_OUTLIER_THRESHOLD_ROLLUP("- - - 0 0 0-cost-outlier-threshold-rollup");
+    COST_OUTLIER_THRESHOLD_ROLLUP("- - - 0 0 0-cost-outlier-threshold-rollup"),
+    ALL_PG_CURRENT("- - - 0 0 0-All-PG-Current"),
+    ALL_PG_NEW("- - - 0 0 0-All-PG-New");
 
     private final String exportSetName;
 

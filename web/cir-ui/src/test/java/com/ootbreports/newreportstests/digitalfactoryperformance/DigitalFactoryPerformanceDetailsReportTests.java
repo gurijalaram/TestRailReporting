@@ -36,10 +36,10 @@ public class DigitalFactoryPerformanceDetailsReportTests extends JasperApiAuthen
     @TestRail(id = 26941)
     @Description("Input Controls - Currency Code - Details Report")
     public void testCurrencyCode() {
-        JasperReportSummary gbpJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnly(CurrencyEnum.GBP.getCurrency());
+        JasperReportSummary gbpJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnlyDigitalFactoryPerfTests(CurrencyEnum.GBP.getCurrency());
         ArrayList<String> gbpAssertValues = getAssertValues(gbpJasperReportSummary);
 
-        JasperReportSummary usdJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnly(CurrencyEnum.USD.getCurrency());
+        JasperReportSummary usdJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnlyDigitalFactoryPerfTests(CurrencyEnum.USD.getCurrency());
         ArrayList<String> usdAssertValues = getAssertValues(usdJasperReportSummary);
 
         assertAll("Grouped Currency Assertions",

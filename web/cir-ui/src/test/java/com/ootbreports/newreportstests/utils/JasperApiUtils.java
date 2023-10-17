@@ -14,11 +14,13 @@ import com.apriori.cir.models.response.ChartDataPoint;
 import com.apriori.cir.models.response.InputControl;
 import com.apriori.cir.utils.JasperReportUtil;
 import com.apriori.enums.CurrencyEnum;
+import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
 
 import com.google.common.base.Stopwatch;
 import enums.DtcScoreEnum;
 import enums.JasperCirApiPartsEnum;
+import enums.RollupEnum;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
@@ -99,11 +101,11 @@ public class JasperApiUtils {
 
         if (processGroupName != null) {
             String processGroupId = inputControls.getProcessGroup().getOption(processGroupName).getValue();
-            setReportParameterByName("processGroup", processGroupId);
+            setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(), processGroupId);
         }
 
-        setReportParameterByName("exportSetName", currentExportSet);
-        setReportParameterByName("latestExportDate", currentDateTime);
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -115,16 +117,43 @@ public class JasperApiUtils {
     }
 
     /**
-     * Generic method for testing currency where export set is not relevant
+     * Generic method for testing currency where export set is not relevant (Cycle Time Report only)
      *
      * @param currencyToSet - currency that is to be set
      * @return JasperReportSummary instance
      */
-    public JasperReportSummary genericTestCoreCurrencyAndDateOnly(String currencyToSet) {
+    public JasperReportSummary genericTestCoreCurrencyAndDateOnlyCycleTimeReport(String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
 
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
-        setReportParameterByName("exportDate", DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        setReportParameterByName(InputControlsEnum.PROJECT_ROLLUP.getInputControlId(), inputControls.getProjectRollup().getOption(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName()).getValue());
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
+     * Generic method for testing currency for Digital Factory Perf and Details Report tests
+     *
+     * @param currencyToSet - currency that is to be set
+     * @return JasperReportSummary instance
+     */
+    public JasperReportSummary genericTestCoreCurrencyAndDateOnlyDigitalFactoryPerfTests(String currencyToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+        String dateTimeNowValue = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+        setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), dateTimeNowValue);
+        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), dateTimeNowValue);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), inputControls.getExportSetName().getOption(exportSetName).getValue());
+        setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(), RollupEnum.QA_TEST_ONE.getRollupName());
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -143,8 +172,60 @@ public class JasperApiUtils {
      */
     public JasperReportSummary genericTestCoreCurrencyOnly(String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
-
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
+     * Generic method for testing currency and latest cost date only
+     *
+     * @param currencyToSet - currency that is to be set
+     * @return JasperReportSummary instance
+     */
+    public JasperReportSummary genericTestCoreCurrencyLatestCostDateOnly(String currencyToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+        setReportParameterByName(InputControlsEnum.LATEST_COST_DATE.getInputControlId(),
+            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now())
+        );
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
+    /**
+     * Generic method for testing currency only, for UC and UPC tests
+     *
+     * @param currencyToSet - currency that is to be set
+     * @return JasperReportSummary instance
+     */
+    public JasperReportSummary genericTestCoreCurrencyOnlyUpgradeComparisonTests(String currencyToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+
+        InputControl inputControlState = jasperReportUtil.getInputControls(reportValueForInputControls);
+        String valueOneToSet = inputControlState.getExportSetName().getOption(ExportSetEnum.ALL_PG_NEW.getExportSetName()).getValue();
+        String valueTwoToSet = inputControlState.getExportSetName().getOption(ExportSetEnum.ALL_PG_CURRENT.getExportSetName()).getValue();
+
+        String rollupValue = inputControlState.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
+
+        setExportNameParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), valueOneToSet, valueTwoToSet);
+        setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(), rollupValue);
+        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
+        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
+            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now())
+        );
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -159,14 +240,16 @@ public class JasperApiUtils {
      * Generic currency test for Upgrade Comparison and Upgrade Part Comparison Reports
      *
      * @param currencyToUse - String
+     * @param currencyIndexToGet - int
      * @return ArrayList of values to assert on
      */
-    public ArrayList<String> generateReportAndGetAssertValues(String currencyToUse) {
-        JasperReportSummary jasperReportSummaryUSD = genericTestCoreCurrencyOnly(currencyToUse);
+    public ArrayList<String> generateReportAndGetAssertValues(String currencyToUse, int currencyIndexToGet) {
+        JasperReportSummary jasperReportSummary = genericTestCoreCurrencyOnlyUpgradeComparisonTests(currencyToUse);
 
+        String colspanToUse = currencyIndexToGet == 2 ? "19" : "12";
         ArrayList<String> assertValues = new ArrayList<>();
-        assertValues.add(jasperReportSummaryUSD.getReportHtmlPart().getElementsByAttributeValue("colspan", "12").get(3).child(0).text());
-        assertValues.add(jasperReportSummaryUSD.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(7).child(0).text());
+        assertValues.add(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", colspanToUse).get(currencyIndexToGet).child(0).text());
+        assertValues.add(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(7).child(0).text());
         return assertValues;
     }
 
@@ -214,8 +297,8 @@ public class JasperApiUtils {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
-        setReportParameterByName("exportSetName", exportSetName);
-        setReportParameterByName("exportDate", currentDateTime);
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), exportSetName);
+        setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), currentDateTime);
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -241,18 +324,23 @@ public class JasperApiUtils {
      *
      * @param partName          - String of partName which is to be used
      * @param areBubblesPresent - boolean which states if bubbles are present or not
+     * @param isSheetMetalDtcDetails - boolean which states if current test is sheet metal dtc details report or not
      */
-    public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent) {
+    public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent, boolean isSheetMetalDtcDetails) {
         String currencyAssertValue = CurrencyEnum.USD.getCurrency();
         JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
 
-        String currentCurrencyAboveChart = getCurrentCurrencyFromAboveChart(jasperReportSummaryUsd, areBubblesPresent);
+        String currentCurrencyAboveChart = isSheetMetalDtcDetails
+            ? getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryUsd)
+            : getCurrentCurrencyFromAboveChart(jasperReportSummaryUsd, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         currencyAssertValue = CurrencyEnum.GBP.getCurrency();
         JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
 
-        currentCurrencyAboveChart = getCurrentCurrencyFromAboveChart(jasperReportSummaryGbp, areBubblesPresent);
+        currentCurrencyAboveChart = isSheetMetalDtcDetails
+            ? getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryGbp)
+            : getCurrentCurrencyFromAboveChart(jasperReportSummaryGbp, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         String usdCurrencyValue = areBubblesPresent
@@ -263,62 +351,6 @@ public class JasperApiUtils {
             : getCurrencyValueFromChart(jasperReportSummaryGbp, "");
 
         softAssertions.assertThat(usdCurrencyValue).isNotEqualTo(gbpCurrencyValue);
-
-        softAssertions.assertAll();
-    }
-
-    /**
-     * Generic method that tests currency functionality in the Scenario Comparison report
-     */
-    public void scenarioComparisonCurrencyTest() {
-        String currencyAssertValue = CurrencyEnum.GBP.getCurrency();
-        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
-
-        List<Element> currencyGBPSettingElementList = jasperReportSummaryGbp.getReportHtmlPart()
-            .getElementsContainingText("Currency").get(5).children();
-        List<String> currencySettingGBP = Arrays.asList(
-            currencyGBPSettingElementList.get(3).text(),
-            currencyGBPSettingElementList.get(4).text(),
-            currencyGBPSettingElementList.get(5).text()
-        );
-
-        List<Element> currencyValueGBPElementList = jasperReportSummaryGbp.getReportHtmlPart()
-            .getElementsContainingText("FULLY BURDENED COST").get(6).parent().children();
-        List<String> currencyValuesFbcGBP = Arrays.asList(
-            currencyValueGBPElementList.get(3).text(),
-            currencyValueGBPElementList.get(4).text(),
-            currencyValueGBPElementList.get(5).text()
-        );
-        currencyAssertValue = CurrencyEnum.USD.getCurrency();
-        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
-
-        List<Element> currencySettingUSDElementList = jasperReportSummaryUsd.getReportHtmlPart()
-            .getElementsContainingText("Currency").get(5).children();
-        List<String> currencySettingUSD = Arrays.asList(
-            currencySettingUSDElementList.get(3).text(),
-            currencySettingUSDElementList.get(4).text(),
-            currencySettingUSDElementList.get(5).text()
-        );
-
-        List<Element> currencyValueUSDElementList = jasperReportSummaryUsd.getReportHtmlPart()
-            .getElementsContainingText("FULLY BURDENED COST").get(6).parent().children();
-        List<String> currencyValuesFbcUSD = Arrays.asList(
-            currencyValueUSDElementList.get(3).text(),
-            currencyValueUSDElementList.get(4).text(),
-            currencyValueUSDElementList.get(5).text()
-        );
-
-        int i = 0;
-        for (String currentCurrencySettingGBP : currencySettingGBP) {
-            softAssertions.assertThat(currentCurrencySettingGBP).isNotEqualTo(currencySettingUSD.get(i));
-            i++;
-        }
-
-        int j = 0;
-        for (String currencyCurrencyValueGBP : currencyValuesFbcGBP) {
-            softAssertions.assertThat(currencyCurrencyValueGBP).isNotEqualTo(currencyValuesFbcUSD.get(j));
-            j++;
-        }
 
         softAssertions.assertAll();
     }
@@ -640,6 +672,18 @@ public class JasperApiUtils {
     }
 
     /**
+     * Sets export set name to more than one
+     *
+     * @param valueToGet String the key of the value to set
+     * @param valueOneToSet String of the first value which to set
+     * @param valueTwoToSet String of the second value which to set
+     */
+    public void setExportNameParameterByName(String valueToGet, String valueOneToSet, String valueTwoToSet) {
+        this.reportRequest.getParameters().getReportParameterByName(valueToGet)
+            .setValue(Arrays.asList(valueOneToSet, valueTwoToSet));
+    }
+
+    /**
      * Generic currency test for Target Quoted Cost Trend and Potential Savings Reports
      *
      * @param keyOne - currency setting key
@@ -651,13 +695,17 @@ public class JasperApiUtils {
         String attributeNameId = "id";
         String tagName = "span";
 
-        List<Element> gbpSpanElements = genericTestCoreCurrencyAndDateOnly(
-            CurrencyEnum.GBP.getCurrency()).getReportHtmlPart()
+        List<Element> gbpSpanElements = genericTestCoreProjectRollupAndCurrencyOnly(
+            RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
+            CurrencyEnum.GBP.getCurrency()
+        ).getReportHtmlPart()
             .getElementsByAttributeValue(attributeNameId, tableId).get(0)
             .getElementsByTag(tagName);
 
-        List<Element> usdSpanElements = genericTestCoreCurrencyAndDateOnly(
-            CurrencyEnum.USD.getCurrency()).getReportHtmlPart()
+        List<Element> usdSpanElements = genericTestCoreProjectRollupAndCurrencyOnly(
+            RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName(),
+            CurrencyEnum.USD.getCurrency()
+        ).getReportHtmlPart()
             .getElementsByAttributeValue(attributeNameId, tableId).get(0)
             .getElementsByTag(tagName);
 
@@ -718,6 +766,8 @@ public class JasperApiUtils {
         LocalDateTime currentDateTime1 = LocalDateTime.now();
         setReportParameterByName(InputControlsEnum.START_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1.minusYears(10)));
         setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), jasperReportUtil.getInputControls(reportValueForInputControls).getExportSetName().getOption(ExportSetEnum.ROLL_UP_A.getExportSetName()).getValue());
+
         JasperReportSummaryIncRawData jasperReportSummaryDaily = jasperReportUtil.generateJasperReportSummaryIncRawData(getReportRequest());
         timer.stop();
         logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
@@ -745,9 +795,13 @@ public class JasperApiUtils {
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
+
         LocalDateTime currentDateTime1 = LocalDateTime.now();
         setReportParameterByName(InputControlsEnum.START_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1.minusYears(10)));
         setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), inputControls.getExportSetName().getOption(exportSetName).getValue());
+
         JasperReportSummary jasperReportSummaryDaily = jasperReportUtil.generateJasperReportSummary(getReportRequest());
         timer.stop();
         logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
@@ -756,8 +810,10 @@ public class JasperApiUtils {
 
         timer.reset();
         timer.start();
+
         setReportParameterByName(InputControlsEnum.START_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1.minusYears(10)));
         setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
+
         JasperReportSummary jasperReportSummaryYearly = jasperReportUtil.generateJasperReportSummary(getReportRequest());
         timer.stop();
         logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
@@ -786,7 +842,7 @@ public class JasperApiUtils {
     }
 
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
-        return genericTestCoreCurrencyAndDateOnly(currencyToGet)
+        return genericTestCoreCurrencyAndDateOnlyCycleTimeReport(currencyToGet)
             .getFirstChartData().getChartDataPoints()
             .stream().map(e -> e.getPropertyByName("Scenario Cycle Time (s)").getValue().toString())
             .collect(Collectors.toCollection(ArrayList::new)
@@ -804,6 +860,10 @@ public class JasperApiUtils {
         assertValues.add(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue(attributeValueToUse, indexValues.get(0).toString()).get(indexValues.get(1)).text());
         assertValues.add(jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue(attributeValueToUse, indexValues.get(2).toString()).get(indexValues.get(3)).text());
         return assertValues;
+    }
+
+    private String getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(JasperReportSummary jasperReportSummary) {
+        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(6).text();
     }
 
     private String getCurrentCurrencyFromAboveChart(JasperReportSummary jasperReportSummary, boolean areBubblesPresent) {
