@@ -200,15 +200,17 @@ Those marked with a * are required or the job will not run
         stage("Test") {
             steps {
                 echo "Testing..."
-                script {
-                    def registryPwd = registry_password("${environment.profile}", "${environment.region}")
-                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                withCredentials([
+                        string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                        string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh """
                         docker build \
                             --progress=plain \
                             --target test \
                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
                             --label \"build-date=${timeStamp}\" \
+                            --build-arg AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+                            --build-arg AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
                             --build-arg JAVAOPTS='${javaOpts}' \
