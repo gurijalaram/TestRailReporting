@@ -331,13 +331,13 @@ public class CdsTestUtil extends TestUtil {
      * @param cloudReference     - the cloud reference
      * @return new object
      */
-    public ResponseWrapper<InstallationItems> addInstallation(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference, String siteIdentity) {
+    public ResponseWrapper<InstallationItems> addInstallation(String customerIdentity, String deploymentIdentity, String name, String realmKey, String cloudReference, String siteIdentity, Boolean highMem) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)
             .inlineVariables(customerIdentity, deploymentIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("installation",
                 InstallationItems.builder()
-                    .name("Automation Installation")
+                    .name(name)
                     .description("Installation added by API automation")
                     .active(true)
                     .region("na-1")
@@ -352,8 +352,8 @@ public class CdsTestUtil extends TestUtil {
                     .cidGlobalKey("donotusethiskey")
                     .siteIdentity(siteIdentity)
                     .cloudReference(cloudReference)
-                    .apVersion("2020 R1")
-                    .highMem(false)
+                    .apVersion("2023 R1")
+                    .highMem(highMem)
                     .build());
 
         return HTTPRequest.build(requestEntity).post();

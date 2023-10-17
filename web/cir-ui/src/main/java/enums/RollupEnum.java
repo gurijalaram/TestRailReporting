@@ -6,7 +6,8 @@ public enum RollupEnum {
     ROLL_UP_A("ROLL-UP A (Initial)"),
     SHEET_METAL_DTC("SHEET METAL DTC (Initial)"),
     AC_CYCLE_TIME_VT_1("AC CYCLE TIME VT 1"),
-    QA_TEST_ONE("QA TEST 1");
+    QA_TEST_ONE("QA TEST 1"),
+    ALL_PG("ALL PG");
 
     private final String rollupName;
 

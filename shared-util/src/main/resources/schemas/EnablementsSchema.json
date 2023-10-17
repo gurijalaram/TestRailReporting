@@ -1,66 +1,73 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "properties": {
-    "identity": {
-      "type": "string"
-    },
-    "createdBy": {
-      "type": "string"
-    },
-    "updatedBy": {
-      "type": "string"
-    },
-    "createdAt": {
-      "type": "string"
-    },
-    "updatedAt": {
-      "type": "string"
-    },
-    "deletedBy": {
-      "type": "string"
-    },
-    "deletedAt": {
-      "type": "string"
-    },
-    "customerAssignedRole": {
-      "type": "string"
-    },
-    "connectAdminEnabled": {
-      "type": "boolean"
-    },
-    "highMemEnabled": {
-      "type": "boolean"
-    },
-    "previewEnabled": {
-      "type": "boolean"
-    },
-    "sandboxEnabled": {
-      "type": "boolean"
-    },
-    "userAdminEnabled": {
-      "type": "boolean"
-    },
-    "exportAdminEnabled": {
-      "type": "boolean"
-    }
-  },
-  "required": [
-    "identity",
-    "createdBy",
-    "createdAt",
-    "connectAdminEnabled",
-    "highMemEnabled",
-    "previewEnabled",
-    "sandboxEnabled",
-    "userAdminEnabled"
-  ],
   "optional": [
-    "updatedBy",
-    "updatedAt",
-    "deletedBy",
-    "deletedAt",
-    "exportAdminEnabled",
-    "customerAssignedRole"
-  ]
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "connectAdminEnabled",
+        "highMemEnabled",
+        "previewEnabled",
+        "sandboxEnabled",
+        "userAdminEnabled"
+      ],
+      "optional": [
+        "updatedBy",
+        "updatedAt",
+        "deletedBy",
+        "deletedAt",
+        "exportAdminEnabled",
+        "customerAssignedRole"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "deletedBy": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        },
+        "customerAssignedRole": {
+          "type": "string"
+        },
+        "connectAdminEnabled": {
+          "type": "boolean"
+        },
+        "highMemEnabled": {
+          "type": "boolean"
+        },
+        "previewEnabled": {
+          "type": "boolean"
+        },
+        "sandboxEnabled": {
+          "type": "boolean"
+        },
+        "userAdminEnabled": {
+          "type": "boolean"
+        },
+        "exportAdminEnabled": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
 }

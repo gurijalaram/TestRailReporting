@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -49,8 +50,8 @@ public class ScenarioActivityReportTests extends JasperApiAuthenticationUtil {
         assertThat(getTrendingValueAboveChart(jasperReportSummaryDaily), is(equalTo("Daily")));
         assertThat(getTrendingValueAboveChart(jasperReportSummaryYearly), is(equalTo("Yearly")));
 
-        int currentDayOfMonth = LocalDateTime.now().getDayOfMonth();
-        String currentMonth = getMonthIntAsString();
+        String currentDayOfMonth = DateTimeFormatter.ofPattern("dd").format(LocalDateTime.now());
+        String currentMonth = String.valueOf(LocalDateTime.now().getMonthValue());
         assertThat(getXCategories(jasperReportSummaryDaily), is(equalTo("[[2019/07/29, 2019/07/30, 2021/04/07]]")));
         assertThat(getXCategories(jasperReportSummaryYearly), is(equalTo(String.format("[[2018/%s/%s, 2020/%s/%s]]", currentMonth, currentDayOfMonth, currentMonth, currentDayOfMonth))));
     }
