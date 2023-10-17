@@ -88,7 +88,6 @@ public class CdsUserManagementHighMemTests {
         soft.assertAll();
 
         cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentityHighMem);
-
     }
 
     @Test
