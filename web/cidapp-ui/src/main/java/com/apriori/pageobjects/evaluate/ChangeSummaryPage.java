@@ -17,10 +17,10 @@ public class ChangeSummaryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(css = "div[role='presentation']")
     private WebElement changeSummary;
 
-    @FindBy(css = "div[role='presentation'] div div div div div:nth-of-type(2) h3")
+    @FindBy(xpath = "(//div[@role='presentation']//h3)[2]")
     private WebElement changedFromHeader;
 
-    @FindBy(css = "div[role='presentation'] div div div div div:nth-of-type(3) h3")
+    @FindBy(xpath = "(//div[@role='presentation']//h3)[3]")
     private WebElement changedToHeader;
 
     private String changedValueID = "qa-change-summary-column-%1$d-%2$s";

@@ -63,22 +63,26 @@ public class CostHistoryTests extends TestBaseUI {
                 .build());
 
         scenariosUtil.postCostScenario(castingPart);
+
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .processGroupName(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
                 .build());
         scenariosUtil.postCostScenario(castingPart);
+
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .processGroupName(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
                 .annualVolume(4096)
                 .build());
         scenariosUtil.postCostScenario(castingPart);
+
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .materialName(MaterialNameEnum.COPPER_UNS_C11000.getMaterialName())
                 .build());
         scenariosUtil.postCostScenario(castingPart);
+
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .secondaryProcesses(SecondaryProcesses.builder()
@@ -86,31 +90,36 @@ public class CostHistoryTests extends TestBaseUI {
                     .build())
                 .build());
         scenariosUtil.postCostScenario(castingPart);
+
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
-                .vpeName(DigitalFactoryEnum.APRIORI_IRELAND.getDigitalFactory())
+                .vpeName(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory())
                 .build());
         scenariosUtil.postCostScenario(castingPart);
+
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .vpeName(DigitalFactoryEnum.APRIORI_WESTERN_EUROPE.getDigitalFactory())
                 .build());
         scenariosUtil.postCostScenario(castingPart);
+
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .annualVolume(289)
                 .build());
         scenariosUtil.postCostScenario(castingPart);
+
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .batchSize(275)
                 .build());
         scenariosUtil.postCostScenario(castingPart);
+
         SecondaryDigitalFactories secondaryDF = new SecondaryDigitalFactories();
-        secondaryDF.setHeatTreatment(DigitalFactoryEnum.APRIORI_FINLAND.getDigitalFactory());
+        secondaryDF.setHeatTreatment(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
         secondaryDF.setMachining(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory());
         secondaryDF.setSurfaceTreatment(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory());
-        secondaryDF.setOtherSecondaryProcesses(DigitalFactoryEnum.APRIORI_CANADA.getDigitalFactory());
+        secondaryDF.setOtherSecondaryProcesses(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory());
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories(Boolean.FALSE)
@@ -124,7 +133,7 @@ public class CostHistoryTests extends TestBaseUI {
 
         softAssertions.assertThat(evaluatePage.isProgressButtonEnabled()).as("Verify Progress button disabled before initial cost").isTrue();
 
-        costHistoryPage = evaluatePage.clickProgress();
+        costHistoryPage = evaluatePage.clickHistory();
         ChangeSummaryPage changeSummary = costHistoryPage.openChangeSummary(2);
 
         softAssertions.assertThat(changeSummary.changedFromHeader()).as("Verify Left Column is Iteration 1").isEqualTo("Iteration 1");
@@ -165,7 +174,7 @@ public class CostHistoryTests extends TestBaseUI {
         softAssertions.assertThat(changeSummary.getChangedFrom("Digital Factory"))
             .as("Verify changed from in Digital Factory").isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
         softAssertions.assertThat(changeSummary.getChangedTo("Digital Factory"))
-            .as("Verify changed to in Digital Factory").isEqualTo(DigitalFactoryEnum.APRIORI_IRELAND.getDigitalFactory());
+            .as("Verify changed to in Digital Factory").isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
 
         changeSummary = changeSummary.close()
             .openChangeSummary(11);
@@ -179,7 +188,7 @@ public class CostHistoryTests extends TestBaseUI {
         softAssertions.assertThat(changeSummary.getChangedFrom("Secondary Digital Factories-Heat Treatment"))
             .as("Verify changed from in Secondary Digital Factories-Heat Treatment").isEqualTo("-");
         softAssertions.assertThat(changeSummary.getChangedTo("Secondary Digital Factories-Heat Treatment"))
-            .as("Verify changed to in Secondary Digital Factories-Heat Treatment").isEqualTo(DigitalFactoryEnum.APRIORI_FINLAND.getDigitalFactory());
+            .as("Verify changed to in Secondary Digital Factories-Heat Treatment").isEqualTo(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
         softAssertions.assertThat(changeSummary.getChangedFrom("Secondary Digital Factories-Machining"))
             .as("Verify changed from in Secondary Digital Factories-Machining").isEqualTo("-");
         softAssertions.assertThat(changeSummary.getChangedTo("Secondary Digital Factories-Machining"))
@@ -187,7 +196,7 @@ public class CostHistoryTests extends TestBaseUI {
         softAssertions.assertThat(changeSummary.getChangedFrom("Secondary Digital Factories-Other Secondary Processes"))
             .as("Verify changed from in Secondary Digital Factories-Other Secondary Processes").isEqualTo("-");
         softAssertions.assertThat(changeSummary.getChangedTo("Secondary Digital Factories-Other Secondary Processes"))
-            .as("Verify changed to in Secondary Digital Factories-Other Secondary Processes").isEqualTo(DigitalFactoryEnum.APRIORI_CANADA.getDigitalFactory());
+            .as("Verify changed to in Secondary Digital Factories-Other Secondary Processes").isEqualTo(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory());
         softAssertions.assertThat(changeSummary.getChangedFrom("Secondary Digital Factories-Surface Treatment"))
             .as("Verify changed from in Secondary Digital Factories-Surface Treatment").isEqualTo("-");
         softAssertions.assertThat(changeSummary.getChangedTo("Secondary Digital Factories-Surface Treatment"))

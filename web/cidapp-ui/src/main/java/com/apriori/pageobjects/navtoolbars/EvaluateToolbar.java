@@ -23,7 +23,7 @@ import java.util.List;
 public class EvaluateToolbar extends ExploreToolbar {
 
     @FindBy(css = "[id='qa-sub-header-scenario-progress-button'] button")
-    private WebElement progressButton;
+    private WebElement historyButton;
 
     @FindBy(css = "div[data-testid='scenario-state-preview']")
     private WebElement costLabel;
@@ -52,16 +52,16 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return - Boolean representation of whether button is enabled / disabled
      */
     public Boolean isProgressButtonEnabled() {
-        return pageUtils.isElementEnabled(progressButton);
+        return pageUtils.isElementEnabled(historyButton);
     }
 
     /**
-     * Click the Progress button
+     * Click the History button
      *
      * @return - Cost History modal PO
      */
-    public CostHistoryPage clickProgress() {
-        pageUtils.waitForElementAndClick(progressButton);
+    public CostHistoryPage clickHistory() {
+        pageUtils.waitForElementAndClick(historyButton);
         return new CostHistoryPage(driver);
     }
 
