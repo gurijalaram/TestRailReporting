@@ -21,7 +21,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(css = "h2 button")
     private WebElement close;
 
-    @FindBy(css = "div[role='dialog'] div div div div div p:nth-of-type(1)")
+    @FindBy(css = "div[role='dialog'] p:first-child")
     private List<WebElement> iterationList;
 
     @FindBy(css = "div[role='tooltip']")
