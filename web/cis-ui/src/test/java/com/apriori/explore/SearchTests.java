@@ -38,7 +38,7 @@ public class SearchTests extends TestBaseUI {
     public void testSearchByComponentName() {
         String componentName = "ASSEMBLY2";
         loginPage = new CisLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser())
+        explorePage = loginPage.login(UserUtil.getUser(), ExplorePage.class)
             .selectPresetFilter("All")
             .enterKeySearch(componentName);
 

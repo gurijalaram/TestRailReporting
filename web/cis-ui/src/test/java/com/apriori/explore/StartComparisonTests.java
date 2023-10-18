@@ -5,7 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
-import com.apriori.navtoolbars.CompareTabToolbar;
 import com.apriori.navtoolbars.ExploreTabToolbar;
 import com.apriori.pageobjects.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.explore.ExplorePage;
@@ -24,37 +23,34 @@ public class StartComparisonTests extends TestBaseUI {
     }
 
     private CisLoginPage loginPage;
-    // TODO z: compile error related to ExplorePage and ExploreTabToolbar when run integration module
-
-    //    private ExploreTabToolbar exploreTabToolbar;
-    //     private ExplorePage explorePage;
-    private CompareTabToolbar compareTabToolbar;
+    private ExploreTabToolbar exploreTabToolbar;
+    private ExplorePage explorePage;
     private ModifyComparisonPage modifyComparisonPage;
 
     @Test
     @TestRail(id = 9411)
     @Description("Verify Sub Header for Explore View")
     public void testStartComparison() {
-    //        loginPage = new CisLoginPage(driver);
-    //        exploreTabToolbar = loginPage.login(UserUtil.getUser());
+        loginPage = new CisLoginPage(driver);
+        exploreTabToolbar = loginPage.login(UserUtil.getUser(), ExploreTabToolbar.class);
 
-    //        assertThat(exploreTabToolbar.isStartComparisonEnabled(), not(true));
+        assertThat(exploreTabToolbar.isStartComparisonEnabled(), not(true));
     }
 
     @Test
     @TestRail(id = 9410)
     @Description("Verify Start Comparison button is enabled")
     public void testCreateStartComparison() {
-        // loginPage = new CisLoginPage(driver);
-        //        explorePage = loginPage.login(UserUtil.getUser())
-        //            .openFirstScenario();
-        //
-        //        assertThat(explorePage.isStartComparisonEnabled(), is(true));
-        //
-        //        modifyComparisonPage = explorePage
-        //            .clickStartComparison()
-        //            .clickModify();
+        loginPage = new CisLoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser(), ExplorePage.class)
+            .openFirstScenario();
 
-        // assertThat(modifyComparisonPage.getModifyComparisonHeaderText(), startsWith("Modify Comparison"));
+        assertThat(explorePage.isStartComparisonEnabled(), is(true));
+
+        modifyComparisonPage = explorePage
+            .clickStartComparison()
+            .clickModify();
+
+        assertThat(modifyComparisonPage.getModifyComparisonHeaderText(), startsWith("Modify Comparison"));
     }
 }
