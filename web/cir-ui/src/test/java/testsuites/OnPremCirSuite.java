@@ -33,7 +33,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 //@IncludePackages("com.ootbreports")
-@IncludeTags(ON_PREM)
+//@IncludeTags(ON_PREM)
 @SelectClasses({
     AssemblyDetailsReportTests.class,
     AssemblyCostReportTests.class,
