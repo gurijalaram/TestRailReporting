@@ -128,6 +128,7 @@ public class ExplorePage extends ExploreTabToolbar {
      *
      * @return boolean
      */
+    @Override
     public boolean isStartComparisonEnabled() {
         return getPageUtils().waitForElementToAppear(enabledStartComparison).isEnabled();
     }
