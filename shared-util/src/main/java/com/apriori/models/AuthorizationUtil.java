@@ -161,7 +161,7 @@ public class AuthorizationUtil {
 
         RequestEntity customerRequest = RequestEntityUtil.init(CustomersApiEnum.CUSTOMERS, Customers.class)
             .expectedResponseCode(HttpStatus.SC_OK)
-            .queryParams(new QueryParams().use("cloudReference[EQ]","${customer}.cloud_reference_name"));
+            .queryParams(new QueryParams().use("cloudReference[EQ]",PropertiesContext.get("${customer}.cloud_reference_name")));
 
         ResponseWrapper<Customers> customersResponseWrapper =  HTTPRequest.build(customerRequest).get();
 
