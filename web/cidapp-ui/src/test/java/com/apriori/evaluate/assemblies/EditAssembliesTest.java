@@ -982,7 +982,7 @@ public class EditAssembliesTest extends TestBaseUI {
             .closePanel()
             .clickExplore()
             .getCssComponents(currentUser, "componentName[EQ], " + BOLT, "scenarioName[EQ], " + scenarioName, "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE,
-                "scenarioPublished[EQ], false", "iteration[EQ], 1")
+                "scenarioPublished[EQ], false", "iteration[EQ], 2")
             .refresh()
             .selectFilter("Private")
             .clickSearch(BOLT)
