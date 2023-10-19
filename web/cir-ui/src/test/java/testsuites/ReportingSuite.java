@@ -21,6 +21,10 @@ import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcComparisonReportTes
 import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsReportTests;
 import com.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
+import com.ootbreports.newreportstests.scenariocomparison.ScenarioComparisonReportTests;
+import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostTrendReportTests;
+import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
+import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
@@ -44,9 +48,13 @@ import org.junit.platform.suite.api.Suite;
     PlasticDtcComparisonReportTests.class,
     PlasticDtcDetailsReportTests.class,
     PlasticDtcReportTests.class,
+    ScenarioComparisonReportTests.class,
     SheetMetalDtcComparisonReportTests.class,
     SheetMetalDtcDetailsReportTests.class,
-    SheetMetalDtcReportTests.class
+    SheetMetalDtcReportTests.class,
+    TargetAndQuotedCostTrendReportTests.class,
+    TargetAndQuotedCostValueTrackingDetailsReportTests.class,
+    TargetAndQuotedCostValueTrackingReportTests.class
 })
 public class ReportingSuite {
 }
