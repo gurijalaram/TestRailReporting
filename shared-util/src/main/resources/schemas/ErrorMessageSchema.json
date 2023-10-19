@@ -112,12 +112,12 @@
   "required": [
     "status",
     "error",
-    "message",
-    "path"
+    "message"
   ],
   "optional": [
     "timestamp",
     "method",
-    "errors"
+    "errors",
+    "path"
   ]
 }

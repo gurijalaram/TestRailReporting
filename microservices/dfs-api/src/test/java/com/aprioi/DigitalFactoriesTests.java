@@ -1,16 +1,13 @@
 package com.aprioi;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import com.apriori.dfs.models.response.DigitalFactories;
 import com.apriori.dfs.models.utils.DigitalFactoryUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ErrorMessage;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import software.amazon.awssdk.http.HttpStatusCode;
@@ -19,14 +16,18 @@ import software.amazon.awssdk.http.HttpStatusCode;
 public class DigitalFactoriesTests {
 
     private DigitalFactoryUtil digitalFactoryUtil = new DigitalFactoryUtil();
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
     @TestRail(id = {})
     @Description("Gets a list of digital factories for a specific customer")
     public void getDigitalFactoryTest() {
 
-        ResponseWrapper<DigitalFactories> getComparisonsResponse = digitalFactoryUtil.getDigitalFactories();
+        ResponseWrapper<ErrorMessage> getComparisonsResponse = digitalFactoryUtil.getDigitalFactories(HttpStatusCode.UNAUTHORIZED);
 
-        assertThat(getComparisonsResponse.getStatusCode(), is(equalTo(HttpStatusCode.OK)));
+        softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getStatus()).isEqualTo(401);
+        softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getError()).isEqualTo("Unauthorized");
+
+        softAssertions.assertAll();
     }
 }

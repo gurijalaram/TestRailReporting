@@ -2,15 +2,28 @@ package com.apriori.dfs.models.utils;
 
 import com.apriori.dfs.enums.DFSApiEnum;
 import com.apriori.dfs.models.response.DigitalFactories;
-import com.apriori.dfs.models.response.DigitalFactory;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.ErrorMessage;
 
-import java.util.List;
+import software.amazon.awssdk.http.HttpStatusCode;
 
 public class DigitalFactoryUtil {
+
+    /**
+     * GET digital factories
+     * expectedResponseCode - expected status code
+     *
+     * @return user object
+     */
+    public ResponseWrapper<ErrorMessage> getDigitalFactories(Integer expectedResponseCode) {
+        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, ErrorMessage.class)
+            .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
 
     /**
      * GET digital factories
@@ -18,10 +31,10 @@ public class DigitalFactoryUtil {
      * @return user object
      */
     public ResponseWrapper<DigitalFactories> getDigitalFactories() {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactories.class);
+        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactories.class)
+            .expectedResponseCode(HttpStatusCode.OK);
 
-        ResponseWrapper<DigitalFactories> userResponse = HTTPRequest.build(requestEntity).get();
-        return userResponse;
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -29,11 +42,11 @@ public class DigitalFactoryUtil {
      *
      * @return user object
      */
-    public List<DigitalFactory> postDigitalFactories() {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactories.class);
+    public ResponseWrapper<DigitalFactories> postDigitalFactories() {
+        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactories.class)
+            .expectedResponseCode(HttpStatusCode.OK);
 
-        ResponseWrapper<DigitalFactories> userResponse = HTTPRequest.build(requestEntity).post();
-        return userResponse.getResponseEntity().getItems();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -41,11 +54,11 @@ public class DigitalFactoryUtil {
      *
      * @return user object
      */
-    public List<DigitalFactory> getDigitalFactoriesIdentity(String identity) {
+    public ResponseWrapper<DigitalFactories> getDigitalFactoriesIdentity(String identity) {
         final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactories.class)
-            .inlineVariables(identity);
+            .inlineVariables(identity)
+            .expectedResponseCode(HttpStatusCode.OK);
 
-        ResponseWrapper<DigitalFactories> userResponse = HTTPRequest.build(requestEntity).get();
-        return userResponse.getResponseEntity().getItems();
+        return HTTPRequest.build(requestEntity).get();
     }
 }
