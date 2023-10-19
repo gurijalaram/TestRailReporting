@@ -137,7 +137,6 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     public String getUserTokenFromBrowser() {
         if (StringUtils.isBlank(userTokenFromBrowser)) {
             userTokenFromBrowser = pageUtils.getItemFromLocalStorage("ID_TOKEN");
-
         }
 
         return userTokenFromBrowser;
