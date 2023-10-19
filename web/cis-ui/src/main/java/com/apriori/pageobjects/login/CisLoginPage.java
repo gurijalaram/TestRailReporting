@@ -50,9 +50,11 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
-    public ExplorePage login(UserCredentials userCredentials) {
-        return aprioriLoginService.login(userCredentials, ExplorePage.class);
+    public  <T> T login(UserCredentials userCredentials, Class<T> klass) {
+        return aprioriLoginService.login(userCredentials, klass);
     }
+
+
 
     /**
      * Login to CIS New Application
