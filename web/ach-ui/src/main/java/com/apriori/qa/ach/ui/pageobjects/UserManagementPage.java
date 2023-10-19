@@ -102,7 +102,7 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
      */
     public UserManagementPage clickDropDownAndChooseRole(String role) {
         pageUtils.waitForElementAndClick(rolesDropDown);
-        String xpath = "//div[contains(@class,'option-display-name')][contains(.,'APRIORI ANALYST')]";
+        String xpath = "//div[contains(@class,'option-display-name')][contains(.,'" + role + "')]";
         pageUtils.waitForElementAndClick(By.xpath(xpath));
         return this;
     }
