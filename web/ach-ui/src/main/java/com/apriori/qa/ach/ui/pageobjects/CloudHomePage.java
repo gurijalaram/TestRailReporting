@@ -41,7 +41,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    private String jSessionId;
+    private String userTokenFromBrowser;
 
     public CloudHomePage(WebDriver driver) {
         this.driver = driver;
@@ -130,12 +130,16 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return pageUtils.waitForElementAppear(deploymentLabel).getText();
     }
 
-    public String getJSessionId() {
-        if (StringUtils.isBlank(jSessionId)) {
-            jSessionId = pageUtils.getItemFromLocalStorage("ID_TOKEN");
+    /**
+     * Get user ID_TOKEN from browser local storage
+     * @return
+     */
+    public String getUserTokenFromBrowser() {
+        if (StringUtils.isBlank(userTokenFromBrowser)) {
+            userTokenFromBrowser = pageUtils.getItemFromLocalStorage("ID_TOKEN");
 
         }
 
-        return jSessionId;
+        return userTokenFromBrowser;
     }
 }

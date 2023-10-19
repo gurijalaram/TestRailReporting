@@ -1424,6 +1424,11 @@ public class PageUtils {
         return currentUrl;
     }
 
+    /**
+     * Get property value from browser local storage.
+     * @param propertyName - the property name located in local storage
+     * @return - the value of property
+     */
     public String getItemFromLocalStorage(String propertyName) {
         WebStorage webStorage = (WebStorage) new Augmenter().augment(driver);
         return webStorage.getLocalStorage().getItem(propertyName);
