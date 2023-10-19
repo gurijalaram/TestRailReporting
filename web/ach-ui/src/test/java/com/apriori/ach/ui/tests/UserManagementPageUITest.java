@@ -52,7 +52,7 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
 
     @Test
     @TestRail(id = {28924})
-    public void validateAddingUer() {
+    public void validateAddingUser() {
         SoftAssertions softAssertions = new SoftAssertions();
         String username = new GenerateStringUtil().generateUserName();
         String email = new GenerateStringUtil().generateEmail();
