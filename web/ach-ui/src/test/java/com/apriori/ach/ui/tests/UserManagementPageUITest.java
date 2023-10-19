@@ -56,8 +56,6 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
         SoftAssertions softAssertions = new SoftAssertions();
         String username = new GenerateStringUtil().generateUserName();
         String email = new GenerateStringUtil().generateEmail();
-        String givenName = username;
-        String familyname = username;
 
         aprioriLoginService = new LoginService(driver, "");
         cloudHomePage = aprioriLoginService.login(userCredentials, CloudHomePage.class);
@@ -68,7 +66,7 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
                 .clickAdduser()
                 .clickDropDownAndChooseRole(Roles.APRIORI_ANALYST.getRole())
                 .clickNext()
-                .fillInAllRequiredInfo(username, email, givenName, familyname)
+                .fillInAllRequiredInfo(username, email)
                 .clickFinishButton();
 
         softAssertions.assertThat(userManagementPage.ifOnUserManagementPage()).isTrue();

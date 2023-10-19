@@ -123,12 +123,12 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
      *
      * @return this object
      */
-    public UserManagementPage fillInAllRequiredInfo(String username, String email, String givenName, String familyName) {
+    public UserManagementPage fillInAllRequiredInfo(String username, String email) {
         pageUtils.waitForElementToBeClickable(this.username);
         this.username.sendKeys(username);
         this.email.sendKeys(email);
-        this.givenName.sendKeys(givenName);
-        this.familyName.sendKeys(familyName);
+        this.givenName.sendKeys(username);
+        this.familyName.sendKeys(username);
         pageUtils.waitForElementAndClick(timezoneDropDown);
         pageUtils.waitForElementAndClick(chooseOptionFromTimezone);
         return this;
