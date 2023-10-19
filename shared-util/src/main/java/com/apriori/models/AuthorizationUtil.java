@@ -160,18 +160,12 @@ public class AuthorizationUtil {
         }
 
         RequestEntity customerRequest = RequestEntityUtil.init(CustomersApiEnum.CUSTOMERS, Customers.class)
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .queryParams(new QueryParams().use("cloudReference[EQ]","${customer}.cloud_reference_name"));
+
         ResponseWrapper<Customers> customersResponseWrapper =  HTTPRequest.build(customerRequest).get();
 
-        return currentCustomer = customersResponseWrapper.getResponseEntity().getItems()
-            .stream()
-            .filter(customer -> Objects.nonNull(customer.getCloudReference()))
-            .filter(customer -> customer.getCloudReference()
-                .equals(PropertiesContext.get("${customer}.cloud_reference_name")
-                )
-            )
-            .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
+        return currentCustomer = customersResponseWrapper.getResponseEntity().getItems().get(0);
     }
 
     private static String getCustomerSiteIdByCustomer(Customer customerToProcess) {
