@@ -1,6 +1,7 @@
 package com.apriori.ach.ui.tests;
 
 import com.apriori.ach.utils.AchEnvironmentAPIUtil;
+import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.login.LoginService;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.qa.ach.ui.pageobjects.UserManagementPage;
@@ -25,27 +26,51 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
     private LoginService aprioriLoginService;
 
     @Test
-    @TestRail(id = {28492,28502})
-    public void validateCustomerApplicationsByUI() {
+    @TestRail(id = {28492, 28502})
+    public void validateRolesAndAdditionalPropertiesTest() {
         SoftAssertions softAssertions = new SoftAssertions();
 
         aprioriLoginService = new LoginService(driver, "");
         cloudHomePage = aprioriLoginService.login(userCredentials, CloudHomePage.class);
 
         userManagementPage =
-        cloudHomePage.clickUserPanel()
+            cloudHomePage.clickUserPanel()
                 .clickUserManagementButton()
-                    .clickAdduser();
+                .clickAdduser();
 
         List<String> listOfRoles = userManagementPage.clickDropDownAndGetRoles();
 
-        softAssertions.assertThat(listOfRoles).contains(Roles.APRIORI_ANALYST.getRole(),Roles.APRIORI_CONTRIBUTOR.getRole(),Roles.APRIORI_DESIGNER.getRole(),
-            Roles.APRIORI_DEVELOPER.getRole(),Roles.APRIORI_EDC.getRole(),Roles.APRIORI_EXPERT.getRole());
+        softAssertions.assertThat(listOfRoles).contains(Roles.APRIORI_ANALYST.getRole(), Roles.APRIORI_CONTRIBUTOR.getRole(), Roles.APRIORI_DESIGNER.getRole(),
+            Roles.APRIORI_DEVELOPER.getRole(), Roles.APRIORI_EDC.getRole(), Roles.APRIORI_EXPERT.getRole());
 
         List<String> additionalProperties = userManagementPage.getAdditionalProperties();
 
         softAssertions.assertThat(additionalProperties).containsExactly(AdditionalProperties.AP_CONNECT_ADMIN.getProperties(), AdditionalProperties.AP_USER_ADMIN.getProperties(),
-            AdditionalProperties.AP_HIGH_MEMORY.getProperties(),AdditionalProperties.AP_EXPORT_ADMIN.getProperties());
+            AdditionalProperties.AP_HIGH_MEMORY.getProperties(), AdditionalProperties.AP_EXPORT_ADMIN.getProperties());
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {28924})
+    public void validateAddingUer() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        String username = new GenerateStringUtil().generateUserName();
+        String email = new GenerateStringUtil().generateEmail();
+        String givenName = username;
+        String familyname = username;
+
+        aprioriLoginService = new LoginService(driver, "");
+        cloudHomePage = aprioriLoginService.login(userCredentials, CloudHomePage.class);
+
+        userManagementPage =
+            cloudHomePage.clickUserPanel()
+                .clickUserManagementButton()
+                .clickAdduser()
+                .clickDropDownAndChooseRole(Roles.APRIORI_ANALYST.getRole())
+                .clickNext()
+                .fillInAllRequiredInfo(username, email, givenName, familyname)
+                .clickFinishButton();
+
+        softAssertions.assertThat(userManagementPage.ifOnUserManagementPage()).isTrue();
     }
 }
