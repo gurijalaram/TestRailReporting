@@ -14,8 +14,8 @@ public class DigitalFactoryUtil {
 
     /**
      * GET digital factories
-     * expectedResponseCode - expected status code
      *
+     * @param expectedResponseCode - expected response code
      * @return user object
      */
     public ResponseWrapper<ErrorMessage> getDigitalFactories(Integer expectedResponseCode) {
