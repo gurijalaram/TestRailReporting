@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 public class AssemblyRequest {
     private ComponentInfoBuilder componentAssembly;
+    private ComponentInfoBuilder component;
 
     /**
      * Gets a random assembly
@@ -40,6 +41,26 @@ public class AssemblyRequest {
             o.setScenarioName(scenarioName);
         });
         return componentAssembly;
+    }
+
+    /**
+     * Gets a random component
+     *
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getComponent() {
+        Random random = new Random();
+        final String jsonFile = "AssemblyStore.json";
+
+        AssembliesDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), AssembliesDTO.class);
+
+        component = assemblyDTO.getParts().get(random.nextInt(assemblyDTO.getParts().size() - 1));
+
+        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setUser(UserUtil.getUser());
+
+        return component;
     }
 
     /**
@@ -67,6 +88,29 @@ public class AssemblyRequest {
             o.setScenarioName(scenarioName);
         });
         return componentAssembly;
+    }
+
+    /**
+     * Gets a component specified by name
+     *
+     * @param componentName - the part name
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getComponent(String componentName) {
+        final String jsonFile = "AssemblyStore.json";
+        AssembliesDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), AssembliesDTO.class);
+
+        component = assemblyDTO.getParts()
+            .stream()
+            .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, jsonFile)));
+
+        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setUser(UserUtil.getUser());
+
+        return component;
     }
 
     /**

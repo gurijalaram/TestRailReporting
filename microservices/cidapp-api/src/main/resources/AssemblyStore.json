@@ -44,5 +44,27 @@
         }
       ]
     }
+  ],
+  "parts": [
+    {
+      "componentName": "Case_17",
+      "extension": ".stp",
+      "processGroup": "CASTING"
+    },
+    {
+      "componentName": "bracket_basic",
+      "extension": ".prt",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "PowderMetalShaft",
+      "extension": ".stp",
+      "processGroup": "POWDER_METAL"
+    },
+    {
+      "componentName": "Push Pin",
+      "extension": ".stp",
+      "processGroup": "PLASTIC_MOLDING"
+    }
   ]
 }

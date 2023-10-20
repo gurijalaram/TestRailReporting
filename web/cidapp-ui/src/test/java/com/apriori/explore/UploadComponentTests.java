@@ -50,6 +50,7 @@ import java.util.List;
 public class UploadComponentTests extends TestBaseUI {
 
     private static ComponentInfoBuilder componentAssembly;
+    private static ComponentInfoBuilder component;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private File resourceFile;
     private File resourceFile1;
@@ -67,24 +68,20 @@ public class UploadComponentTests extends TestBaseUI {
     @Tag(SANITY)
     @Description("Test uploading a component")
     public void testUploadComponent() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
 
-        final String componentName = "Case_17";
-        final String extension = ".stp";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new AssemblyRequest().getComponent();
 
         explorePage = new CidAppLoginPage(driver)
-            .login(UserUtil.getUser())
+            .login(component.getUser())
             .importCadFile()
-            .inputComponentDetails(scenarioName, resourceFile)
-            .waitForUploadStatus(componentName + extension, UploadStatusEnum.UPLOADED)
+            .inputComponentDetails(component.getScenarioName(), component.getResourceFile())
+            .waitForUploadStatus(component.getComponentName() + component.getExtension(), UploadStatusEnum.UPLOADED)
             .submit()
             .clickClose()
-            .clickSearch(componentName)
+            .clickSearch(component.getComponentName())
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()), is(equalTo(1)));
     }
 
     @Test
