@@ -233,6 +233,6 @@ development:
     identity_role: 67J517C9L763
 
   reports:
-    ui_url: ${base_server_platform_url}jasperserver-pro/
+    ui_url: ${base_api_url}jasperserver-pro/
 
 ########################################################################################################################
