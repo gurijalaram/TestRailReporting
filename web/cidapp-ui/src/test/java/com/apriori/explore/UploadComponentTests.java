@@ -347,31 +347,28 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = {11888, 5618})
     @Description("Validate override existing scenario is successful through multiple uploads when checked")
     public void testOverrideExistingScenarioSuccess() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String sldprt = ".SLDPRT";
 
-        componentAssembly = new AssemblyRequest().getAssemblySubcomponents("Hinge assembly", "Pin", "big ring", "small ring");
+        componentAssembly = new AssemblyRequest().getAssembly("flange c");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
         List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring" + sldprt), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin" + sldprt), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring" + sldprt), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly" + ".SLDASM"), scenarioName));
+
+        componentAssembly.getSubComponents().forEach(subassembly -> multiComponents.add(
+            new MultiUpload(FileResourceUtil.getCloudFile(subassembly.getProcessGroup(), subassembly.getComponentName() + subassembly.getExtension()), subassembly.getScenarioName())));
 
         explorePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(componentAssembly.getUser())
             .importCadFile()
             .tick("Override existing scenario")
-            .inputScenarioName(scenarioName)
+            .inputScenarioName(componentAssembly.getScenarioName())
             .inputMultiComponents(multiComponents)
             .submit()
             .clickClose();
 
         multiComponents.forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+            softAssertions.assertThat(cssComponent.getComponentParts(componentAssembly.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh();
