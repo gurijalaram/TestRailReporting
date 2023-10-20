@@ -30,9 +30,11 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.html5.WebStorage;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.interactions.Coordinates;
 import org.openqa.selenium.interactions.Locatable;
+import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -1422,4 +1424,13 @@ public class PageUtils {
         return currentUrl;
     }
 
+    /**
+     * Get property value from browser local storage.
+     * @param propertyName - the property name located in local storage
+     * @return - the value of property
+     */
+    public String getItemFromLocalStorage(String propertyName) {
+        WebStorage webStorage = (WebStorage) new Augmenter().augment(driver);
+        return webStorage.getLocalStorage().getItem(propertyName);
+    }
 }
