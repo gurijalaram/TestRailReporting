@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.PageUtils;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.common.ModalDialogController;
 
 import com.utils.MultiUpload;
@@ -116,6 +117,17 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
+    public ImportCadFilePage inputMultiComponentBuilderDetails(List<ComponentInfoBuilder> multiUploadList) {
+        multiUploadList.forEach(multiUpload -> {
+            String file = multiUpload.getResourceFile().getName();
+
+            enterMultiFilePath(multiUpload.getResourceFile())
+                .waitForUploadToBeDone(file)
+                .inputMultiScenarioName(multiUpload.getScenarioName(), file);
+        });
+        return this;
+    }
+
     /**
      * Upload multiple cad files
      *
@@ -134,6 +146,14 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return current page object
      */
     public ImportCadFilePage inputMultiComponents(List<MultiUpload> multiUploadList) {
+        multiUploadList.forEach(multiUpload -> {
+            enterMultiFilePath(multiUpload.getResourceFile());
+            waitForUploadToBeDone(multiUpload.getResourceFile().getName());
+        });
+        return this;
+    }
+
+    public ImportCadFilePage inputMultiComponentsBuilder(List<ComponentInfoBuilder> multiUploadList) {
         multiUploadList.forEach(multiUpload -> {
             enterMultiFilePath(multiUpload.getResourceFile());
             waitForUploadToBeDone(multiUpload.getResourceFile().getName());
