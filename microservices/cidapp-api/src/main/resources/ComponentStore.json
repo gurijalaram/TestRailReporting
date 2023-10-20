@@ -45,7 +45,7 @@
       ]
     }
   ],
-  "parts": [
+  "components": [
     {
       "componentName": "Case_17",
       "extension": ".stp",
