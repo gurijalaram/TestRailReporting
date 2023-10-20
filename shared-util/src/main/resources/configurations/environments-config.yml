@@ -215,7 +215,7 @@ development:
   aws_parameter_store_name: development
   application_name: cid
   base_url: https://cloud.na-1.development.apriori.net/
-  base_server_platform_url: https://na-1-install.apriori-internal.development.apriori.net/
+  base_api_url: https://na-1-install.apriori-internal.development.apriori.net/
   customer_identity: 212B5ABD2F6C
   deployment_name: production
   installation_name: Production

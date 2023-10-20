@@ -50,6 +50,8 @@ import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.interfaces.EndpointEnum;
+import com.apriori.models.AuthorizationUtil;
+import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 
 import com.google.common.net.UrlEscapers;
@@ -66,13 +68,19 @@ import java.util.List;
 
 @Slf4j
 public class AcsResources {
-
-    private static final String token = new OldAuthorizationUtil().getTokenAsString();
+    private static String token = "";
 
     private static final HashMap<String, String> headers = new HashMap<>();
 
-    private final String validUsername = UserUtil.getUser().getUsername();
-    private final String invalidUsername = UserUtil.getUser().getUsername().substring(0, 14).concat("41");
+    private final String validUsername;
+    private final String invalidUsername;
+
+    public AcsResources() {
+        UserCredentials user = UserUtil.getUserOnPrem();
+        token = new OldAuthorizationUtil().getTokenAsString();
+        validUsername = user.getUsername();
+        invalidUsername = user.getUsername().substring(0, 14).concat("41");
+    }
 
     /**
      * Creates Missing Scenario
