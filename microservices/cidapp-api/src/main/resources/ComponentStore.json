@@ -43,6 +43,23 @@
           "processGroup": "PLASTIC_MOLDING"
         }
       ]
+    },
+    {
+      "componentName": "piston_assembly",
+      "extension": ".asm.1",
+      "processGroup": "ASSEMBLY",
+      "subComponents": [
+        {
+          "componentName": "piston",
+          "extension": ".prt.5",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "piston_pin",
+          "extension": ".prt.1",
+          "processGroup": "PLASTIC_MOLDING"
+        }
+      ]
     }
   ],
   "components": [
@@ -64,6 +81,16 @@
     {
       "componentName": "Push Pin",
       "extension": ".stp",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Locker_bottom_panel",
+      "extension": ".prt",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "piston_pin",
+      "extension": ".prt.1",
       "processGroup": "PLASTIC_MOLDING"
     }
   ]
