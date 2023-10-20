@@ -1,7 +1,7 @@
 package com.apriori.cidappapi.models.request;
 
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.models.AssembliesDTO;
+import com.apriori.cidappapi.models.ComponentDTO;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.json.JsonManager;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class AssemblyRequest {
+public class ComponentDTORequest {
     private ComponentInfoBuilder componentAssembly;
     private ComponentInfoBuilder component;
 
@@ -26,9 +26,9 @@ public class AssemblyRequest {
      */
     public ComponentInfoBuilder getAssembly() {
         Random random = new Random();
-        final String jsonFile = "AssemblyStore.json";
+        final String jsonFile = "ComponentStore.json";
 
-        AssembliesDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), AssembliesDTO.class);
+        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), ComponentDTO.class);
 
         componentAssembly = assemblyDTO.getAssemblies().get(random.nextInt(assemblyDTO.getAssemblies().stream().findAny().get().getSubComponents().size() - 1));
 
@@ -50,9 +50,9 @@ public class AssemblyRequest {
      */
     public ComponentInfoBuilder getComponent() {
         Random random = new Random();
-        final String jsonFile = "AssemblyStore.json";
+        final String jsonFile = "ComponentStore.json";
 
-        AssembliesDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), AssembliesDTO.class);
+        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), ComponentDTO.class);
 
         component = assemblyDTO.getComponents().get(random.nextInt(assemblyDTO.getComponents().size() - 1));
 
@@ -70,8 +70,8 @@ public class AssemblyRequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssembly(String assembly) {
-        final String jsonFile = "AssemblyStore.json";
-        AssembliesDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), AssembliesDTO.class);
+        final String jsonFile = "ComponentStore.json";
+        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), ComponentDTO.class);
 
         componentAssembly = assemblyDTO.getAssemblies()
             .stream()
@@ -97,8 +97,8 @@ public class AssemblyRequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getComponent(String componentName) {
-        final String jsonFile = "AssemblyStore.json";
-        AssembliesDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), AssembliesDTO.class);
+        final String jsonFile = "ComponentStore.json";
+        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), ComponentDTO.class);
 
         component = assemblyDTO.getComponents()
             .stream()
@@ -121,8 +121,8 @@ public class AssemblyRequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssemblySubcomponents(String assembly, String... subcomponentNames) {
-        final String jsonFile = "AssemblyStore.json";
-        AssembliesDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), AssembliesDTO.class);
+        final String jsonFile = "ComponentStore.json";
+        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), ComponentDTO.class);
 
         componentAssembly = assemblyDTO.getAssemblies()
             .stream()

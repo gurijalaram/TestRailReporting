@@ -12,7 +12,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.models.request.AssemblyRequest;
+import com.apriori.cidappapi.models.request.ComponentDTORequest;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -69,7 +69,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Test uploading a component")
     public void testUploadComponent() {
 
-        component = new AssemblyRequest().getComponent();
+        component = new ComponentDTORequest().getComponent();
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -345,7 +345,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate override existing scenario is successful through multiple uploads when checked")
     public void testOverrideExistingScenarioSuccess() {
 
-        componentAssembly = new AssemblyRequest().getAssembly("flange c");
+        componentAssembly = new ComponentDTORequest().getAssembly("flange c");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
