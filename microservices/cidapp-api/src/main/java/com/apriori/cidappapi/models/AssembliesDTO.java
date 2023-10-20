@@ -15,5 +15,5 @@ import java.util.List;
 @AllArgsConstructor
 public class AssembliesDTO {
     private List<ComponentInfoBuilder> assemblies;
-    private List<ComponentInfoBuilder> parts;
+    private List<ComponentInfoBuilder> components;
 }

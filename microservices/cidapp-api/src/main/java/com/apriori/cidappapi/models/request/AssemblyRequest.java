@@ -54,7 +54,7 @@ public class AssemblyRequest {
 
         AssembliesDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), AssembliesDTO.class);
 
-        component = assemblyDTO.getParts().get(random.nextInt(assemblyDTO.getParts().size() - 1));
+        component = assemblyDTO.getComponents().get(random.nextInt(assemblyDTO.getComponents().size() - 1));
 
         component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
@@ -100,7 +100,7 @@ public class AssemblyRequest {
         final String jsonFile = "AssemblyStore.json";
         AssembliesDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), AssembliesDTO.class);
 
-        component = assemblyDTO.getParts()
+        component = assemblyDTO.getComponents()
             .stream()
             .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
             .findFirst()
