@@ -76,7 +76,7 @@ public class EmailMessage {
     public void deleteEmailMessage() {
         RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGE, null)
             .inlineVariables(this.id)
-            .headers(new HashMap<String, String>() {
+            .headers(new HashMap<>() {
                 {
                     put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
                 }
@@ -93,7 +93,7 @@ public class EmailMessage {
     public EmailMessageAttachments emailMessageAttachments() {
         RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGE_ATTACHMENTS, EmailMessageAttachments.class)
             .inlineVariables(this.id)
-            .headers(new HashMap<String, String>() {
+            .headers(new HashMap<>() {
                 {
                     put("Authorization", "Bearer " + EmailConnection.getEmailAccessToken());
                 }

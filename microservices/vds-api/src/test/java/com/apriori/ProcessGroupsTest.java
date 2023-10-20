@@ -1,5 +1,6 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -14,6 +15,7 @@ import com.apriori.vds.enums.VDSAPIEnum;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -26,6 +28,7 @@ public class ProcessGroupsTest extends ProcessGroupUtil {
     private static final List<String> cidNotSupportedPgNames = Arrays.asList("Assembly Molding", "Assembly Plastic Molding", "Assembly", "Composites");
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {8271})
     @Description("Get a list of process groups for a specific customer.")
     public void getProcessGroups() {

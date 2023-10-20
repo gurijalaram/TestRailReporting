@@ -1,12 +1,11 @@
 package com.apriori;
 
-import static com.apriori.enums.CssSearch.SCENARIO_CREATED_AT_GT;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.AuthUserContextUtil;
-import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
@@ -30,23 +29,21 @@ import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
-import com.apriori.utils.CssComponent;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.math3.random.RandomDataGenerator;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Collections;
-import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class QmsScenarioDiscussionTest extends TestUtil {
@@ -55,29 +52,23 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     private static BidPackageResponse bidPackageResponse;
     private static ScenarioDiscussionResponse scenarioDiscussionResponse;
     private static DiscussionCommentResponse discussionCommentResponse;
-    private static ScenarioItem scenarioItem;
+    private static ScenarioItem qmsScenarioItem;
 
     @BeforeAll
     public static void beforeClass() {
-        List<ScenarioItem> scenarioItemList = new CssComponent().getBaseCssComponents(currentUser, SCENARIO_CREATED_AT_GT.getKey() +
-            DateUtil.getDateDaysBefore(90, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
-
-        scenarioItem = (scenarioItemList.size() > 0) ? scenarioItemList.get(new RandomDataGenerator().nextInt(0,scenarioItemList.size())) :
-            QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
-
+        qmsScenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         bidPackageResponse = QmsApiTestUtils.createTestDataBidPackage(currentUser, softAssertions);
-        QmsApiTestUtils.createTestDataBidPackageItem(scenarioItem, bidPackageResponse, currentUser, softAssertions);
+        QmsApiTestUtils.createTestDataBidPackageItem(qmsScenarioItem, bidPackageResponse, currentUser, softAssertions);
         QmsApiTestUtils.createTestDataBidPackageProject(bidPackageResponse, currentUser, softAssertions);
         scenarioDiscussionResponse = QmsApiTestUtils
-            .createTestDataScenarioDiscussion(scenarioItem, currentUser, softAssertions);
+            .createTestDataScenarioDiscussion(qmsScenarioItem, currentUser, softAssertions);
         discussionCommentResponse = QmsApiTestUtils
             .createTestDataAddCommentToDiscussion(scenarioDiscussionResponse, currentUser, softAssertions);
     }
 
     @AfterAll
     public static void afterClass() {
-        QmsApiTestUtils.deleteTestData(scenarioItem, bidPackageResponse, currentUser);
-        softAssertions.assertAll();
+        QmsApiTestUtils.deleteTestData(qmsScenarioItem, bidPackageResponse, currentUser);
     }
 
     @BeforeEach
@@ -91,15 +82,17 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {14608, 14613})
     @Description("Create and delete Scenario Discussion")
     public void createAndDeleteScenarioDiscussion() {
-        ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(qmsScenarioItem.getComponentIdentity(), qmsScenarioItem.getScenarioIdentity(), currentUser);
         softAssertions.assertThat(csdResponse.getIdentity()).isNotNull();
         QmsScenarioDiscussionResources.deleteScenarioDiscussion(csdResponse.getIdentity(), currentUser);
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {14610})
     @Description("Get Scenario Discussion by identity")
     public void getScenarioDiscussion() {
@@ -127,7 +120,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @Issue("COL-1824")
     @Description("Verify that User can update Scenario discussion description and status (ACTIVE & RESOLVED")
     public void updateScenarioDiscussionDescriptionAndStatus() {
-        ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(qmsScenarioItem.getComponentIdentity(), qmsScenarioItem.getScenarioIdentity(), currentUser);
         softAssertions.assertThat(csdResponse.getIdentity()).isNotNull();
 
         String description = new GenerateStringUtil().generateNotes();
@@ -233,7 +226,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
         UserCredentials assignedUser = UserUtil.getUser();
         String description = new GenerateStringUtil().generateNotes();
         ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils
-            .getScenarioDiscussionRequest(assignedUser, scenarioItem, description);
+            .getScenarioDiscussionRequest(assignedUser, qmsScenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
         softAssertions.assertThat(scenarioDiscussionAssigneeResponse.getDescription()).isEqualTo(description);
 
@@ -274,7 +267,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(id = {22257})
     @Description("Verify that by default, User will GET 300 discussion (PageSize)")
     public void verifyGetDiscussionsPageSizeDefault() {
-        String[] params = {"componentIdentity[EQ]," + scenarioItem.getComponentIdentity(), "scenarioIdentity[EQ]," + scenarioItem.getScenarioIdentity()};
+        String[] params = {"componentIdentity[EQ]," + qmsScenarioItem.getComponentIdentity(), "scenarioIdentity[EQ]," + qmsScenarioItem.getScenarioIdentity()};
         ScenarioDiscussionsResponse discussionsResponse = QmsScenarioDiscussionResources.getScenarioDiscussionsWithParameters(params, ScenarioDiscussionsResponse.class, HttpStatus.SC_OK, currentUser);
         softAssertions.assertThat(discussionsResponse.getPageSize()).isEqualTo(300);
     }
@@ -286,7 +279,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
         UserCredentials assigneeUser = UserUtil.getUser();
         String description = new GenerateStringUtil().generateNotes();
         ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils
-            .getScenarioDiscussionRequest(currentUser, scenarioItem, description);
+            .getScenarioDiscussionRequest(currentUser, qmsScenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
         softAssertions.assertThat(scenarioDiscussionAssigneeResponse.getDescription()).isEqualTo(description);
 
@@ -322,7 +315,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @Issue("COL-1824")
     @Description("Verify that User cannot add comments to discussion with RESOLVED status")
     public void verifyCannotAddCommentsResolvedStatus() {
-        ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(qmsScenarioItem.getComponentIdentity(), qmsScenarioItem.getScenarioIdentity(), currentUser);
         softAssertions.assertThat(csdResponse.getIdentity()).isNotNull();
 
         ScenarioDiscussionRequest scenarioDiscussionRequest = ScenarioDiscussionRequest.builder()
@@ -379,7 +372,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(id = {14649})
     @Description("Verify that User can not change Status of Deleted Discussion")
     public void verifyNoStatusChangeAfterDiscussionDeleted() {
-        ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
+        ScenarioDiscussionResponse csdResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(qmsScenarioItem.getComponentIdentity(), qmsScenarioItem.getScenarioIdentity(), currentUser);
         softAssertions.assertThat(csdResponse.getIdentity()).isNotNull();
         QmsScenarioDiscussionResources.deleteScenarioDiscussion(csdResponse.getIdentity(), currentUser);
 

@@ -1,5 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -14,11 +16,14 @@ import enums.MassMetricEnum;
 import enums.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Isolated;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
 import java.util.List;
+
 
 public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC.getEndpoint();
@@ -37,6 +42,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = 3046)
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Report")
     public void testCurrencyCode() {

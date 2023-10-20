@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.dms.models.request.CommentsRequestParameters;
 import com.apriori.dms.models.request.DmsCommentsRequest;
 import com.apriori.dms.models.response.DmsCommentResponse;
@@ -17,6 +19,7 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -32,6 +35,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {13169, 14222})
     @Description("Verify user can add and delete comment")
     public void createAndDeleteComment() {
@@ -44,6 +48,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {15484})
     @Description("Verify user can add and update comment status to deleted")
     public void createAndUpdateComment() {
@@ -58,6 +63,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {13170})
     @Description("get a valid comments")
     public void getComments() {

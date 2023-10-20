@@ -40,6 +40,27 @@ public class BillOfMaterialsUtil extends TestUtil {
     }
 
     /**
+     * Create Bill of Materials
+     *
+     * @param fileName - the file name
+     * @return response object
+     */
+    // TODO z: fix threads
+    public static ResponseWrapper<BillOfMaterialsResponse> postBillOfMaterialsWithToken(String fileName, String token) {
+        final RequestEntity requestEntity =
+            new RequestEntity().endpoint(EDCAPIEnum.BILL_OF_MATERIALS).returnType(BillOfMaterialsResponse.class)
+                .token(token)
+                .multiPartFiles(new MultiPartFiles()
+                    .use("multiPartFile", FileResourceUtil.getResourceAsFile(fileName)))
+                .queryParams(new QueryParams()
+                    .use("type", "pcba"))
+                .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        return HTTPRequest.build(requestEntity).postMultipart();
+    }
+
+
+    /**
      * Delete Bill of Materials by Identity
      *
      * @param billOfMaterialsId - Bill of Material Id
