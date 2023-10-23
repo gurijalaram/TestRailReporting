@@ -13,7 +13,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class ChangeSummaryPage extends LoadableComponent<CostHistoryPage> {
+public class ChangeSummaryPage extends LoadableComponent<ChangeSummaryPage> {
     @FindBy(css = "div[role='presentation']")
     private WebElement changeSummary;
 
