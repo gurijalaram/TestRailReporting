@@ -54,13 +54,35 @@ public class ComponentDTORequest {
 
         ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), ComponentDTO.class);
 
-        component = assemblyDTO.getComponents().get(random.nextInt(assemblyDTO.getComponents().size() - 1));
+        component = assemblyDTO.getComponents().get(random.nextInt(assemblyDTO.getComponents().size()));
 
         component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
 
         return component;
+    }
+
+    /**
+     * Gets a number of components
+     *
+     * @param noOfComponents - the number of components
+     * @return component builder object
+     */
+    public List<ComponentInfoBuilder> getComponent(int noOfComponents) {
+        final String jsonFile = "ComponentStore.json";
+
+        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), ComponentDTO.class);
+
+        List<ComponentInfoBuilder> components = assemblyDTO.getComponents().subList(0, noOfComponents);
+
+        components.forEach(component -> {
+            component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+            component.setUser(UserUtil.getUser());
+            component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        });
+
+        return components;
     }
 
     /**
