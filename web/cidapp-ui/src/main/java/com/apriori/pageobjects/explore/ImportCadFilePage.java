@@ -153,11 +153,31 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
-    public ImportCadFilePage inputMultiComponentsBuilder(List<ComponentInfoBuilder> multiUploadList) {
-        multiUploadList.forEach(multiUpload -> {
+    /**
+     * Upload multiple cad files
+     *
+     * @param multiComponentList - component details as a list
+     * @return current page object
+     */
+    public ImportCadFilePage inputMultiComponentsBuilder(List<ComponentInfoBuilder> multiComponentList) {
+        multiComponentList.forEach(multiUpload -> {
             enterMultiFilePath(multiUpload.getResourceFile());
             waitForUploadToBeDone(multiUpload.getResourceFile().getName());
         });
+        return this;
+    }
+
+    /**
+     * Upload multiple cad files
+     *
+     * @param multiAssemblyList - assembly details
+     * @return current page object
+     */
+    public ImportCadFilePage inputMultiAssemblyBuilder(ComponentInfoBuilder multiAssemblyList) {
+        enterFilePath(multiAssemblyList.getResourceFile());
+        waitForUploadToBeDone(multiAssemblyList.getResourceFile().getName());
+
+        inputMultiComponentsBuilder(multiAssemblyList.getSubComponents());
         return this;
     }
 

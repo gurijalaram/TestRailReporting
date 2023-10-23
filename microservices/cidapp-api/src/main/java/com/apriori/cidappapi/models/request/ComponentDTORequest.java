@@ -37,9 +37,11 @@ public class ComponentDTORequest {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         componentAssembly.setUser(user);
         componentAssembly.setScenarioName(scenarioName);
+        componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
         componentAssembly.getSubComponents().forEach(o -> {
             o.setUser(user);
             o.setScenarioName(scenarioName);
+            o.setResourceFile(FileResourceUtil.getCloudFile(o.getProcessGroup(), o.getComponentName() + o.getExtension()));
         });
         return componentAssembly;
     }
@@ -106,9 +108,11 @@ public class ComponentDTORequest {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         componentAssembly.setUser(user);
         componentAssembly.setScenarioName(scenarioName);
+        componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
         componentAssembly.getSubComponents().forEach(o -> {
             o.setUser(user);
             o.setScenarioName(scenarioName);
+            o.setResourceFile(FileResourceUtil.getCloudFile(o.getProcessGroup(), o.getComponentName() + o.getExtension()));
         });
         return componentAssembly;
     }
@@ -164,9 +168,11 @@ public class ComponentDTORequest {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         componentAssembly.setUser(user);
         componentAssembly.setScenarioName(scenarioName);
+        componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
         componentAssembly.getSubComponents().forEach(o -> {
             o.setUser(user);
             o.setScenarioName(scenarioName);
+            o.setResourceFile(FileResourceUtil.getCloudFile(o.getProcessGroup(), o.getComponentName() + o.getExtension()));
         });
         return componentAssembly;
     }
