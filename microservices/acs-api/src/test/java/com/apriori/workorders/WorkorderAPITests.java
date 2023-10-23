@@ -44,6 +44,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.commons.codec.binary.Base64;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 

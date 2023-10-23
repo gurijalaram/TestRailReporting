@@ -15,11 +15,13 @@
         "email",
         "username",
         "active",
-        "sites",
         "customAttributes",
         "customerIdentity",
         "mfaRequired",
         "hasCompleteProfile"
+      ],
+      "optional": [
+        "sites"
       ],
       "properties": {
         "mfaRequired": {
@@ -98,11 +100,9 @@
             },
             "prefix": {
               "type": "string"
-
             },
             "suffix": {
               "type": "string"
-
             },
             "stateProvince": {
               "type": "string"

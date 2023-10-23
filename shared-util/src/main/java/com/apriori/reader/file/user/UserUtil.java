@@ -45,7 +45,7 @@ public class UserUtil {
      *
      * @return User
      */
-    public static UserCredentials getUser() {
+    public static synchronized UserCredentials getUser() {
         UserCredentials user = UserCommonService.getUser()
             .generateToken();
         logInfo(user);

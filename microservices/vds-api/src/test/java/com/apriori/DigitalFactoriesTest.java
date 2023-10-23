@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
@@ -14,6 +16,7 @@ import com.apriori.vds.models.response.digital.factories.DigitalFactory;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -28,6 +31,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {8030})
     @Description("Get a list of Digital Factories for a specific customer.")
     public void getDigitalFactories() {
