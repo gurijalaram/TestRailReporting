@@ -46,6 +46,7 @@ public class JasperReportUtil {
         this.jasperSessionValue = String.format(jasperSessionValue, jasperSessionId);
     }
 
+    // TODO z: fix it threads
     public InputControl getInputControls(CirApiEnum value) {
         RequestEntity requestEntity = new RequestEntity()
             .endpoint(value)

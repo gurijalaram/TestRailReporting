@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
@@ -18,6 +20,7 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -43,6 +46,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {13352, 13649})
     @Description("Create and delete DEFAULT ROLE project user")
     public void createAndDeleteBidPackageDefaultProjectUser() {

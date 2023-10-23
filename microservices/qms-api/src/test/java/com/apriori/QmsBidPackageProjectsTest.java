@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.DateUtil;
@@ -29,6 +31,7 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -38,7 +41,7 @@ import java.time.LocalTime;
 import java.util.HashMap;
 
 @ExtendWith(TestRulesAPI.class)
-public class BidPackageProjectsTest extends TestUtil {
+public class QmsBidPackageProjectsTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
@@ -88,6 +91,7 @@ public class BidPackageProjectsTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {13898, 13899, 14671, 23010})
     @Description("Get list of all Bid Package Projects and verify pagination ")
     public void getBidPackageProjects() {

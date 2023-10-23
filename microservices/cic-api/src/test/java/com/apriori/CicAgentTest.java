@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cic.enums.CICAPIEnum;
 import com.apriori.cic.enums.CICPartSelectionType;
 import com.apriori.cic.models.request.JobDefinition;
@@ -21,6 +23,7 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -39,6 +42,7 @@ public class CicAgentTest extends WorkflowTestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {5579})
     @Description("Get CIC Agent Workflows")
     public void testAgentWorkflows() {

@@ -161,7 +161,7 @@ public class CssComponent {
     public ResponseWrapper<CssComponentResponse> postSearchRequest(UserCredentials userCredentials, String componentType) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, CssComponentResponse.class)
             .token(userCredentials.getToken())
-            .headers(new HashMap<String, String>() {
+            .headers(new HashMap<>() {
                 {
                     put("content-type", "application/x-www-form-urlencoded");
                 }
