@@ -211,7 +211,8 @@ public class ComponentDTORequest {
             .filter(component -> component.getProcessGroup().equals(processGroup)).collect(Collectors.toList());
         ComponentInfoBuilder componentInfoPG = componentPG.get(random.nextInt(componentPG.size()));
 
-        componentInfoPG.setResourceFile(FileResourceUtil.getCloudFile(componentInfoPG.getProcessGroup(), componentInfoPG.getComponentName() + componentInfoPG.getExtension()));
+        componentInfoPG.setResourceFile(FileResourceUtil.getCloudFile(componentInfoPG.getProcessGroup(),
+            componentInfoPG.getComponentName() + componentInfoPG.getExtension()));
         componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
         componentInfoPG.setUser(UserUtil.getUser());
         return componentInfoPG;
