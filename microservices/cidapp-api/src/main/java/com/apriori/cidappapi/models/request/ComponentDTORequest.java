@@ -2,6 +2,7 @@ package com.apriori.cidappapi.models.request;
 
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.ComponentDTO;
+import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.json.JsonManager;
@@ -168,5 +169,51 @@ public class ComponentDTORequest {
             o.setScenarioName(scenarioName);
         });
         return componentAssembly;
+    }
+
+    /**
+     * Gets random component by extension
+     * The first dot (.) should be ignored e.g. getComponentByExtension("stp")
+     *
+     * @param extension - the extension
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getComponentByExtension(String extension) {
+        Random random = new Random();
+        final String jsonFile = "ComponentStore.json";
+
+        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), ComponentDTO.class);
+
+        List<ComponentInfoBuilder> componentExtension = assemblyDTO.getComponents().stream()
+            .filter(component -> component.getExtension().equalsIgnoreCase("." + extension)).collect(Collectors.toList());
+        ComponentInfoBuilder componentInfoExtension = componentExtension.get(random.nextInt(componentExtension.size()));
+
+        componentInfoExtension.setResourceFile(FileResourceUtil.getCloudFile(componentInfoExtension.getProcessGroup(),
+            componentInfoExtension.getComponentName() + componentInfoExtension.getExtension()));
+        componentInfoExtension.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentInfoExtension.setUser(UserUtil.getUser());
+        return componentInfoExtension;
+    }
+
+    /**
+     * Gets random component by process group
+     *
+     * @param processGroup - the process group
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getComponentByProcessGroup(ProcessGroupEnum processGroup) {
+        Random random = new Random();
+        final String jsonFile = "ComponentStore.json";
+
+        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), ComponentDTO.class);
+
+        List<ComponentInfoBuilder> componentPG = assemblyDTO.getComponents().stream()
+            .filter(component -> component.getProcessGroup().equals(processGroup)).collect(Collectors.toList());
+        ComponentInfoBuilder componentInfoPG = componentPG.get(random.nextInt(componentPG.size()));
+
+        componentInfoPG.setResourceFile(FileResourceUtil.getCloudFile(componentInfoPG.getProcessGroup(), componentInfoPG.getComponentName() + componentInfoPG.getExtension()));
+        componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentInfoPG.setUser(UserUtil.getUser());
+        return componentInfoPG;
     }
 }
