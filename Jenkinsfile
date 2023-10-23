@@ -261,7 +261,7 @@ Those marked with a * are required or the job will not run
 
             script {
                 if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
-                    error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs.")
+                    error("Build failed because of Response contains MappingException. Please check Test logs for text: Response contains MappingException.")
                 }
             }
         }
