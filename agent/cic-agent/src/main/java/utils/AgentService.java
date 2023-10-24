@@ -102,9 +102,9 @@ public class AgentService {
             log.info("########## PRIVATE KEY RETRIEVED FROM AWS SUCCESSFULLY. ########  " + agentData.getPrivateKeyFile());
             FileUtils.writeStringToFile(new File(agentData.getPrivateKeyFile()), privateKey, StandardCharsets.UTF_8);
             jSch.addIdentity(agentData.getPrivateKeyFile(), agentCredentials.getPassword());
-            log.info("########## PRIVATE KEY ADDED SUCCESSFULLY. ########");
+            log.debug("########## PRIVATE KEY ADDED SUCCESSFULLY. ########");
             jSchSession = jSch.getSession(agentCredentials.getUsername(), agentCredentials.getHost(), Integer.parseInt(agentCredentials.getPort()));
-            log.info("########## SESSION CREATED SUCCESSFULLY. ########");
+            log.debug("########## SESSION CREATED SUCCESSFULLY. ########");
             Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
             jSchSession.setConfig(config);
