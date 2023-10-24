@@ -1,6 +1,6 @@
-package com.aprioi;
+package com.aprioi.dfs.api.tests;
 
-import com.apriori.dfs.models.utils.DigitalFactoryUtil;
+import com.apriori.dfs.api.models.utils.DigitalFactoryUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.ErrorMessage;
 import com.apriori.rules.TestRulesAPI;

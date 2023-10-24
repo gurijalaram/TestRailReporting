@@ -1,4 +1,4 @@
-package com.apriori.dfs.models.response;
+package com.apriori.dfs.api.models.response;
 
 import com.apriori.annotations.Schema;
 import com.apriori.models.response.Pagination;

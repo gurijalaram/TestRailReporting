@@ -1,4 +1,4 @@
-package com.apriori.dfs.enums;
+package com.apriori.dfs.api.enums;
 
 import com.apriori.interfaces.ExternalEndpointEnum;
 import com.apriori.properties.PropertiesContext;

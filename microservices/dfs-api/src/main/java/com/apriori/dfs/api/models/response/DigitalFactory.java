@@ -1,4 +1,4 @@
-package com.apriori.dfs.models.response;
+package com.apriori.dfs.api.models.response;
 
 import lombok.Builder;
 import lombok.Data;

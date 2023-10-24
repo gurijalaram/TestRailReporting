@@ -1,7 +1,7 @@
-package com.apriori.dfs.models.utils;
+package com.apriori.dfs.api.models.utils;
 
-import com.apriori.dfs.enums.DFSApiEnum;
-import com.apriori.dfs.models.response.DigitalFactories;
+import com.apriori.dfs.api.enums.DFSApiEnum;
+import com.apriori.dfs.api.models.response.DigitalFactories;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
