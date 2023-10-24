@@ -226,7 +226,7 @@ public class UploadComponentTests extends TestBaseUI {
         componentAssembly = new AssemblyDTORequest().getAssembly();
 
         explorePage = new CidAppLoginPage(driver)
-            .login(component.getUser())
+            .login(componentAssembly.getUser())
             .importCadFile()
             .inputScenarioName(componentAssembly.getScenarioName())
             .inputMultiAssemblyBuilder(componentAssembly)

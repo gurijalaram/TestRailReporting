@@ -3,20 +3,17 @@ package com.apriori.cidappapi.models.dto;
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
-import com.apriori.json.JsonManager;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 
-import org.openqa.selenium.NoSuchElementException;
-
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class AssemblyDTORequest {
     private ComponentInfoBuilder componentAssembly;
     private static final String ASSEMBLY_STORE = "AssemblyStore.json";
+    private static final DTOReader DTO_READER = new DTOReader(ASSEMBLY_STORE);
 
     /**
      * Gets a random assembly
@@ -25,12 +22,7 @@ public class AssemblyDTORequest {
      */
     public ComponentInfoBuilder getAssembly() {
 
-        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(ASSEMBLY_STORE), ComponentDTO.class);
-
-        List<ComponentInfoBuilder> componentsAssembly = assemblyDTO.getAssemblies();
-        Collections.shuffle(componentsAssembly);
-
-        componentAssembly = componentsAssembly.stream().findFirst().get();
+        componentAssembly = DTO_READER.getAssembly();
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -53,13 +45,7 @@ public class AssemblyDTORequest {
      */
     public ComponentInfoBuilder getAssembly(String assembly) {
 
-        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(ASSEMBLY_STORE), ComponentDTO.class);
-
-        componentAssembly = assemblyDTO.getAssemblies()
-            .stream()
-            .filter(o -> o.getComponentName().equalsIgnoreCase(assembly))
-            .findFirst()
-            .orElseThrow(() -> new NoSuchElementException(String.format("The assembly '%s' was not defined in the '%s' file", assembly, ASSEMBLY_STORE)));
+        componentAssembly = DTO_READER.getAssembly(assembly);
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -83,13 +69,7 @@ public class AssemblyDTORequest {
      */
     public ComponentInfoBuilder getAssemblySubcomponents(String assembly, String... subcomponentNames) {
 
-        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(ASSEMBLY_STORE), ComponentDTO.class);
-
-        componentAssembly = assemblyDTO.getAssemblies()
-            .stream()
-            .filter(o -> o.getComponentName().equalsIgnoreCase(assembly))
-            .findFirst()
-            .orElseThrow(() -> new NoSuchElementException(String.format("The assembly '%s' was not defined in the '%s' file", assembly, ASSEMBLY_STORE)));
+        componentAssembly = DTO_READER.getAssembly(assembly);
 
         List<String> componentNames = Arrays.stream(subcomponentNames).collect(Collectors.toList());
 

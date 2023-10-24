@@ -4,7 +4,6 @@ import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
-import com.apriori.json.JsonManager;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 
@@ -17,6 +16,7 @@ import java.util.stream.Collectors;
 public class ComponentDTORequest {
     private ComponentInfoBuilder component;
     private static final String COMPONENT_STORE = "ComponentStore.json";
+    private static final DTOReader DTO_READER = new DTOReader(COMPONENT_STORE);
 
     /**
      * Gets a random component
@@ -25,9 +25,7 @@ public class ComponentDTORequest {
      */
     public ComponentInfoBuilder getComponent() {
 
-        ComponentDTO componentDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
-
-        List<ComponentInfoBuilder> listOfComponents = componentDTO.getComponents();
+        List<ComponentInfoBuilder> listOfComponents = DTO_READER.getComponents();
         Collections.shuffle(listOfComponents);
 
         component = listOfComponents.stream().findFirst().get();
@@ -47,9 +45,7 @@ public class ComponentDTORequest {
      */
     public List<ComponentInfoBuilder> getComponent(int noOfComponents) {
 
-        ComponentDTO componentDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
-
-        List<ComponentInfoBuilder> listOfComponents = componentDTO.getComponents();
+        List<ComponentInfoBuilder> listOfComponents = DTO_READER.getComponents();
         Collections.shuffle(listOfComponents);
 
         List<ComponentInfoBuilder> components = listOfComponents.subList(0, noOfComponents);
@@ -72,9 +68,7 @@ public class ComponentDTORequest {
      */
     public ComponentInfoBuilder getComponent(String componentName) {
 
-        ComponentDTO componentDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
-
-        component = componentDTO.getComponents()
+        component = DTO_READER.getComponents()
             .stream()
             .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
             .findFirst()
@@ -96,9 +90,8 @@ public class ComponentDTORequest {
      */
     public ComponentInfoBuilder getComponentByExtension(String extension) {
 
-        ComponentDTO componentDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
-
-        List<ComponentInfoBuilder> componentExtension = componentDTO.getComponents().stream()
+        List<ComponentInfoBuilder> componentExtension = DTO_READER.getComponents()
+            .stream()
             .filter(component -> component.getExtension().equalsIgnoreCase("." + extension)).collect(Collectors.toList());
         Collections.shuffle(componentExtension);
 
@@ -119,9 +112,8 @@ public class ComponentDTORequest {
      */
     public ComponentInfoBuilder getComponentByProcessGroup(ProcessGroupEnum processGroup) {
 
-        ComponentDTO componentDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
-
-        List<ComponentInfoBuilder> componentPG = componentDTO.getComponents().stream()
+        List<ComponentInfoBuilder> componentPG = DTO_READER.getComponents()
+            .stream()
             .filter(component -> component.getProcessGroup().equals(processGroup)).collect(Collectors.toList());
         Collections.shuffle(componentPG);
 
