@@ -1,5 +1,6 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.equalTo;
@@ -24,6 +25,7 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -44,6 +46,7 @@ public class AtsAuthorization extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {3913})
     @Description("Authorize a user to access a specified application")
     public void authorizeUserTest() {

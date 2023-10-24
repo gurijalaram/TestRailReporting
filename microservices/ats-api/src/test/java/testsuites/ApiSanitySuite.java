@@ -9,5 +9,5 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @SelectPackages("com.apriori")
 @IncludeTags(API_SANITY)
-public class SanityTestSuite {
+public class ApiSanitySuite {
 }

@@ -1,5 +1,7 @@
 <configuration>
 
+    <property name="ROOT_LOG_LEVEL" value="${ROOT_LOG_LEVEL:-DEBUG}" />
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{MM-dd-yyyy HH:mm:ss.SSS} - %X{methodName} - [%thread] - %msg%n%xThrowable{full}
@@ -37,7 +39,7 @@
     <logger name="org.apache" level="WARN" />
     <logger name="httpclient" level="WARN" />
 
-    <root level="debug">
+    <root level="${ROOT_LOG_LEVEL}">
         <appender-ref ref="STDOUT"/>
     </root>
 

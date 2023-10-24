@@ -1,5 +1,6 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.IGNORE;
 
 import com.apriori.dds.enums.DDSApiEnum;
@@ -81,6 +82,7 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {12406})
     @Description("Get all discussions")
     public void getDiscussions() {
@@ -95,6 +97,8 @@ public class DiscussionTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
+
     @TestRail(id = {12407})
     @Description("update a valid discussion")
     public void updateValidDiscussion() {

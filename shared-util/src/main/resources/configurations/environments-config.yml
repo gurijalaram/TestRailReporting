@@ -215,9 +215,10 @@ development:
   aws_parameter_store_name: development
   application_name: cid
   base_url: https://cloud.na-1.development.apriori.net/
+  base_api_url: https://na-1-install.apriori-internal.development.apriori.net/
   customer_identity: 212B5ABD2F6C
   deployment_name: production
-  installation_name: core-na-1 - v22 Production
+  installation_name: Production
   secret_key: O85XMATZEMBO
   user_identity: 4N630F61FGNG
 
@@ -230,5 +231,8 @@ development:
     automation_user_identity02: 4N8BBMII4MM4
     automation_user_identity03: 4N8BIL9AC4DH
     identity_role: 67J517C9L763
+
+  reports:
+    ui_url: ${base_api_url}jasperserver-pro/
 
 ########################################################################################################################

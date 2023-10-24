@@ -8,6 +8,7 @@ import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 import com.apriori.compare.ComparisonTests;
 import com.apriori.compare.QuickComparisonTests;
 import com.apriori.evaluate.CostAllCadTests;
+import com.apriori.evaluate.CostHistoryTests;
 import com.apriori.evaluate.CostScenarioTests;
 import com.apriori.evaluate.DeleteTests;
 import com.apriori.evaluate.MachiningStrategyTests;
@@ -120,7 +121,8 @@ import org.junit.platform.suite.api.Suite;
     MaturityAssemblyAssociationsTests.class,
     MissingAssemblyAssociationsTests.class,
     SustainabilityTests.class,
-    SustainabilityFieldsTests.class
+    SustainabilityFieldsTests.class,
+    CostHistoryTests.class
 })
 public class RegressionTestSuite {
 }

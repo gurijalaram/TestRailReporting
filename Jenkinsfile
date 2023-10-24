@@ -51,6 +51,7 @@ Those marked with a * are required or the job will not run
 
         choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'RegressionTestSuite', 'AdminSuite', 'ReportingSuite', 'CIDSmokeTestSuite', 'CIDNonSmokeTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
         string(name: 'OTHER_TEST', defaultValue: 'test name', description: 'What is the test/tests.suite to execute')
+        string(name: 'LOG_FILE_NAME', defaultValue: 'logback-build.xml', description: 'Which log file configuration to use')
 
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: true)
@@ -83,9 +84,15 @@ Those marked with a * are required or the job will not run
                     // Log file.
                     sh "cat ${buildInfoFile}"
 
+                    root_log_level = params.ROOT_LOG_LEVEL
+                    if (root_log_level == null || root_log_level == "none") {
+                        root_log_level = "INFO"
+                    }
+
                     // Set run time parameters
                     javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
+                    javaOpts = javaOpts + " -DROOT_LOG_LEVEL=${root_log_level}"
 
                     folder = params.MODULE_TYPE
                     if (!folder && "${MODULE}".contains("-ui")) {
@@ -129,42 +136,42 @@ Those marked with a * are required or the job will not run
 
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
-                        javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
+                       javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
                     }
 
                     default_aws_region = params.REGION
                     if (default_aws_region && default_aws_region != "none") {
-                        javaOpts = javaOpts + " -Ddefault_aws_region=${params.REGION}"
+                       javaOpts = javaOpts + " -Ddefault_aws_region=${params.REGION}"
                     }
 
                     number_of_parts = params.NUMBER_OF_PARTS
                     if (number_of_parts && number_of_parts != "none") {
-                        javaOpts = javaOpts + " -Dnumber_of_parts=${params.NUMBER_OF_PARTS}"
+                       javaOpts = javaOpts + " -Dnumber_of_parts=${params.NUMBER_OF_PARTS}"
                     }
 
                     parts_csv_file = params.PARTS_CSV_FILE
                     if (parts_csv_file && parts_csv_file != "none") {
-                        javaOpts = javaOpts + " -Dparts_csv_file=${params.PARTS_CSV_FILE}"
+                       javaOpts = javaOpts + " -Dparts_csv_file=${params.PARTS_CSV_FILE}"
                     }
 
                     agent_type = params.AGENT_TYPE
                     if (agent_type && agent_type != "none") {
-                        javaOpts = javaOpts + " -Dci-connect_agent_type=${params.AGENT_TYPE}"
+                       javaOpts = javaOpts + " -Dci-connect_agent_type=${params.AGENT_TYPE}"
                     }
 
                     nexus_repository = params.NEXUS_REPOSITORY
                     if (nexus_repository && nexus_repository != "none") {
-                        javaOpts = javaOpts + " -Dci-connect_nexus_repository=${params.NEXUS_REPOSITORY}"
+                       javaOpts = javaOpts + " -Dci-connect_nexus_repository=${params.NEXUS_REPOSITORY}"
                     }
 
                     nexus_version = params.NEXUS_VERSION
                     if (nexus_version && nexus_version != "none") {
-                        javaOpts = javaOpts + " -Dci-connect_nexus_version=${params.NEXUS_VERSION}"
+                       javaOpts = javaOpts + " -Dci-connect_nexus_version=${params.NEXUS_VERSION}"
                     }
 
                     custom_install = params.CUSTOM_INSTALL
                     if (custom_install && custom_install != "none") {
-                        javaOpts = javaOpts + " -Dci-connect_custom_install=${params.CUSTOM_INSTALL}"
+                       javaOpts = javaOpts + " -Dci-connect_custom_install=${params.CUSTOM_INSTALL}"
                     }
 
                     addlJavaOpts = params.JAVAOPTS
@@ -179,21 +186,21 @@ Those marked with a * are required or the job will not run
 
         stage("Build") {
             steps {
-                echo "Building..."
-                script {
-                    def registryPwd = registry_password("${environment.profile}", "${environment.region}")
-                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-                    sh """
-                        docker build \
-                            --no-cache \
-                            --target build \
-                            --tag ${buildInfo.name}-test-${timeStamp}:latest \
-                            --label \"build-date=${timeStamp}\" \
-                            --build-arg FOLDER=${folder} \
-                            --build-arg MODULE=${MODULE} \
-                            .
-                    """
-                }
+                 echo "Building..."
+                 script {
+                     def registryPwd = registry_password("${environment.profile}", "${environment.region}")
+                     sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                     sh """
+                         docker build \
+                             --no-cache \
+                             --target build \
+                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
+                             --label \"build-date=${timeStamp}\" \
+                             --build-arg FOLDER=${folder} \
+                             --build-arg MODULE=${MODULE} \
+                             .
+                     """
+                 }
             }
         }
 
@@ -232,12 +239,12 @@ Those marked with a * are required or the job will not run
                 junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
 
                 publishHTML(target: [
-                        allowMissing         : false,
-                        alwaysLinkToLastBuild: false,
-                        keepAll              : true,
-                        reportDir            : 'build/reports/tests/test',
-                        reportFiles          : 'index.html',
-                        reportName           : "${buildInfo.name} Test Report"
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'build/reports/tests/test',
+                    reportFiles: 'index.html',
+                    reportName: "${buildInfo.name} Test Report"
                 ])
             }
         }
@@ -254,7 +261,7 @@ Those marked with a * are required or the job will not run
 
             script {
                 if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
-                    error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs.")
+                    error("Build failed because of Response contains MappingException. Please check Test logs for text: Response contains MappingException.")
                 }
             }
         }

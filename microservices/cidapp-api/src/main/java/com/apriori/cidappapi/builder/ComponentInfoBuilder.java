@@ -35,4 +35,13 @@ public class ComponentInfoBuilder implements Serializable {
     @Builder.Default
     private Boolean overrideScenario = false;
     private CostingTemplate costingTemplate;
+
+    public CostingTemplate getCostingTemplate() {
+        if (costingTemplate == null) {
+            costingTemplate = CostingTemplate.builder()
+                .processGroupName(processGroup.getProcessGroup())
+                .build();
+        }
+        return costingTemplate;
+    }
 }

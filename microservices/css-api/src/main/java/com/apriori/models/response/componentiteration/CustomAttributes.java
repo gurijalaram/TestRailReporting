@@ -16,6 +16,14 @@ public class CustomAttributes {
     @JsonProperty("Language")
     private String language;
     private String projectType;
+    private String completedEstimate;
+    private String officialScenario;
+    private String lamScalingOverride;
+    private String topLevel;
+    private String assemblyOperationType;
+    private String grainingRequired;
+    private String ccmRequired;
+    private String accessGroup;
     @JsonProperty("EPAMassembly")
     private String epamAssembly;
     private List<String> tags;
