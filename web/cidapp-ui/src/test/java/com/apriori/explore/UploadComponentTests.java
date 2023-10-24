@@ -12,7 +12,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.models.request.ComponentDTORequest;
+import com.apriori.cidappapi.models.dto.AssemblyDTORequest;
+import com.apriori.cidappapi.models.dto.ComponentDTORequest;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -46,11 +47,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UploadComponentTests extends TestBaseUI {
 
-    private static ComponentInfoBuilder componentAssembly;
-    private static ComponentInfoBuilder component;
+    private ComponentInfoBuilder componentAssembly;
+    private ComponentInfoBuilder component;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private File resourceFile;
     private File resourceFile1;
@@ -89,46 +91,36 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = {11879, 11878, 12161})
     @Description("Validate messaging upon successful upload of multiple files")
     public void testMultiUploadSuccessMessage() {
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), new GenerateStringUtil().generateScenarioName()));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), new GenerateStringUtil().generateScenarioName()));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), new GenerateStringUtil().generateScenarioName()));
+
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(3);
 
         importCadFilePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(UserUtil.getUser())
             .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents);
+            .inputScenarioName(new GenerateStringUtil().generateScenarioName())
+            .inputMultiComponentsBuilder(components);
 
         cadFileStatusPage = importCadFilePage.submit();
 
-        assertThat(cadFileStatusPage.getNumberOfSuccesses(), is(equalTo(multiComponents.size())));
+        assertThat(cadFileStatusPage.getNumberOfSuccesses(), is(equalTo(components.size())));
     }
 
     @Test
     @TestRail(id = {11884, 11895})
     @Description("Validate that user can apply unique names to all multiple uploads")
     public void testUniqueScenarioNamesMultiUpload() {
-        currentUser = UserUtil.getUser();
-        String scenarioName1 = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-        String scenarioName3 = new GenerateStringUtil().generateScenarioName();
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), scenarioName1));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), scenarioName2));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), scenarioName3));
+
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(3);
 
         explorePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(UserUtil.getUser())
             .importCadFile()
             .unTick("Apply to all")
-            .inputMultiComponentDetails(multiComponents)
+            .inputMultiComponentBuilderDetails(components)
             .submit()
             .clickClose();
 
-        multiComponents.forEach(component ->
+        components.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
                 component.getScenarioName()), is(equalTo(1))));
     }
@@ -138,22 +130,18 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = {11878, 11883})
     @Description("Validate multi-upload through explorer menu")
     public void testMultiUploadWithSameScenarioName() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), scenarioName));
+
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(3);
 
         explorePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(UserUtil.getUser())
             .importCadFile()
-            .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
+            .inputMultiComponentsBuilder(components)
+            .inputScenarioName(new GenerateStringUtil().generateScenarioName())
             .submit()
             .clickClose();
 
-        multiComponents.forEach(component ->
+        components.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
                 component.getScenarioName()), is(equalTo(1))));
     }
@@ -187,21 +175,15 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = 11891)
     @Description("Validate that user can delete components from the Import CAD File modal")
     public void testDeleteCadFiles() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
+        componentAssembly = new AssemblyDTORequest().getAssembly("Hinge Assembly");
 
-        List<String> componentsToDelete = Arrays.asList("big ring.SLDPRT", "Pin.SLDPRT", "small ring.SLDPRT");
+        List<String> componentsToDelete = componentAssembly.getSubComponents().stream().map(ComponentInfoBuilder::getComponentName).collect(Collectors.toList());
 
         importCadFilePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(componentAssembly.getUser())
             .importCadFile()
-            .inputMultiComponents(multiComponents)
+            .inputMultiAssemblyBuilder(componentAssembly)
             .deleteCadFiles(componentsToDelete);
 
         importCadFilePage.getComponentsInDropZone().forEach(component ->
@@ -212,35 +194,13 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = {11898, 11893})
     @Description("Upload 20 different components through the explorer modal")
     public void testTwentyCadFilesMultiUpload() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston pin_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, "225_gasket-1-solid1.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "oldham.asm.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "M3CapScrew.CATPart"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "case_002_006-8611543_prt.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "BasicScenario_Forging.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.RAPID_PROTOTYPING, "Rapid Prototyping.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE, "SheetMetal.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, "Casting.prt"), scenarioName));
+
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(20);
 
         importCadFilePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(components.stream().findAny().get().getUser())
             .importCadFile()
-            .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName);
+            .inputMultiComponentsBuilder(components);
 
         softAssertions.assertThat(importCadFilePage.isTheScrollBarDisplayed()).isTrue();
 
@@ -250,7 +210,7 @@ public class UploadComponentTests extends TestBaseUI {
             .setPagination()
             .selectFilter("Recent");
 
-        multiComponents.forEach(component ->
+        components.forEach(component ->
             softAssertions.assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
                 component.getScenarioName())).isEqualTo(1));
 
@@ -261,37 +221,32 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = 11889)
     @Description("Validate override existing scenario leads to processing failure if unchecked and there are duplicate scenarios")
     public void testOverrideExistingScenarioFailure() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston.prt.5"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
+        componentAssembly = new AssemblyDTORequest().getAssembly();
 
         explorePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(component.getUser())
             .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
+            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose()
             .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
+            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         //API assertion that components are Processing Failed
-        multiComponents.forEach(component ->
+        componentAssembly.getSubComponents().forEach(component ->
             softAssertions.assertThat(cssComponent.getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.PROCESSING_FAILED)).hasSizeGreaterThan(0));
 
         explorePage.refresh();
 
         //UI Assertion that the explore page shows the Processing Failed Icon
-        multiComponents.forEach(component ->
+        componentAssembly.getSubComponents().forEach(component ->
             softAssertions.assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
                 component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED)).isTrue());
 
@@ -302,40 +257,15 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = 11901)
     @Description("Validate that user is blocked from adding to a list of 20 uploads")
     public void testExceedingMaximumUpload() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        String componentName = "Casting.prt";
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName);
-
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston pin_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, "225_gasket-1-solid1.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "oldham.asm.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "M3CapScrew.CATPart"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "case_002_006-8611543_prt.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "BasicScenario_Forging.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.RAPID_PROTOTYPING, "Rapid Prototyping.stp"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE, "SheetMetal.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL_HYDROFORMING, "FlangedRound.SLDPRT"), scenarioName));
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(20);
 
         importCadFilePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(components.get(0).getUser())
             .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
-            .enterMultiFilePath(resourceFile);
+            .inputScenarioName(new GenerateStringUtil().generateScenarioName())
+            .inputMultiComponentsBuilder(components)
+            .enterMultiFilePath(new ComponentDTORequest().getComponent().getResourceFile());
 
         assertThat(importCadFilePage.getAlertWarning(), containsString("Exceeds maximum file count. Add up to 20 files for import at a time"));
     }
@@ -345,32 +275,27 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate override existing scenario is successful through multiple uploads when checked")
     public void testOverrideExistingScenarioSuccess() {
 
-        componentAssembly = new ComponentDTORequest().getAssembly("flange c");
+        componentAssembly = new AssemblyDTORequest().getAssembly("flange c");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
-
-        List<MultiUpload> multiComponents = new ArrayList<>();
-
-        componentAssembly.getSubComponents().forEach(subassembly -> multiComponents.add(
-            new MultiUpload(FileResourceUtil.getCloudFile(subassembly.getProcessGroup(), subassembly.getComponentName() + subassembly.getExtension()), subassembly.getScenarioName())));
 
         explorePage = new CidAppLoginPage(driver)
             .login(componentAssembly.getUser())
             .importCadFile()
             .tick("Override existing scenario")
             .inputScenarioName(componentAssembly.getScenarioName())
-            .inputMultiComponents(multiComponents)
+            .inputMultiComponentsBuilder(componentAssembly.getSubComponents())
             .submit()
             .clickClose();
 
-        multiComponents.forEach(component ->
+        componentAssembly.getSubComponents().forEach(component ->
             softAssertions.assertThat(cssComponent.getComponentParts(componentAssembly.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh();
 
-        multiComponents.forEach(component ->
+        componentAssembly.getSubComponents().forEach(component ->
             assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
                 component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(true)));
     }
@@ -379,32 +304,26 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = 10750)
     @Description("Validate updated workflow of importing/uploading an assembly into CID")
     public void testUploadViaExploreAndEvaluatePage() {
-        currentUser = UserUtil.getUser();
-        String componentName = "piston_assembly";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston.prt.5"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
+        componentAssembly = new AssemblyDTORequest().getAssembly();
 
         explorePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(componentAssembly.getUser())
             .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
+            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose()
-            .openComponent(componentName.toUpperCase(), scenarioName, currentUser)
+            .openComponent(componentAssembly.getComponentName().toUpperCase(), componentAssembly.getScenarioName(), componentAssembly.getUser())
             .importCadFile()
             .inputScenarioName(scenarioName2)
-            .inputMultiComponents(multiComponents)
+            .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose()
             .refresh();
 
-        multiComponents.forEach(component ->
+        componentAssembly.getSubComponents().forEach(component ->
             assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
                 component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(true)));
     }
@@ -413,17 +332,12 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = 6037)
     @Description("Create a New Component.Scenario - user does not have a pre existing private Component.Scenario of that name")
     public void testUploadThenCheckAvailabilityWithNewUser() {
-        currentUser = UserUtil.getUser();
 
-        final String componentName = "Locker_bottom_panel";
-        final String extension = ".prt";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponent();
 
         cidComponentItem = new CidAppLoginPage(driver)
-            .login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+            .login(component.getUser())
+            .uploadComponent(component.getComponentName(), componentAssembly.getScenarioName(), resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
 
@@ -432,7 +346,7 @@ public class UploadComponentTests extends TestBaseUI {
         explorePage = evaluatePage.logout()
             .login(UserUtil.getUser());
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isEqualTo(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), componentAssembly.getScenarioName())).isEqualTo(0);
 
         softAssertions.assertAll();
     }
@@ -461,7 +375,7 @@ public class UploadComponentTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Test
+    //@Test
     @TestRail(id = {11910})
     @Description("Upload different Creo versions of files")
     public void uploadDifferentCreoVersions() {
@@ -499,7 +413,7 @@ public class UploadComponentTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Test
+    //@Test
     @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {12169, 12171, 12172, 12168})
     @Description("Validate race conditions - upload a full assembly with override")

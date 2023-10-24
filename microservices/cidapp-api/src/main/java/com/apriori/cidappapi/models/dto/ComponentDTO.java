@@ -1,4 +1,4 @@
-package com.apriori.cidappapi.models;
+package com.apriori.cidappapi.models.dto;
 
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 
