@@ -66,7 +66,7 @@
 ## Run Gradle tests with JVM args
 1. Open Terminal to project root directory
 2. Run `gradle clean :web:cidapp-ui:test --tests "{parentFolder.suiteName}"` eg `gradle clean :web:cidapp-ui:test --tests "testsuites.SmokeTestSuite"`
-3. To pass in JVM args `gradle clean :web:cidapp-ui:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :web:cidapp-ui:test --tests "testsuites.SmokeTestSuite" -D"junit.jupiter.execution.parallel.config.fixed.max-pool-size"=3 -Denv=qa-test -Dcsv="common-users.csv"`
+3. To pass in JVM args `gradle clean :web:cidapp-ui:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :web:cidapp-ui:test --tests "testsuites.SmokeTestSuite" -Djunit.jupiter.execution.parallel.config.fixed.max-pool-size=3 -Denv=qa-test -Dcsv="common-users.csv"`
 
 ## How to run single suite
 1. Open Terminal to project root directory
