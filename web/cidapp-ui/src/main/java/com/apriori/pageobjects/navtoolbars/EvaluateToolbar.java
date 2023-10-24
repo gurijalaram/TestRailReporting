@@ -2,6 +2,7 @@ package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.PageUtils;
 import com.apriori.enums.NewCostingLabelEnum;
+import com.apriori.pageobjects.evaluate.CostHistoryPage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,9 @@ import java.util.List;
 
 @Slf4j
 public class EvaluateToolbar extends ExploreToolbar {
+
+    @FindBy(css = "[id='qa-sub-header-scenario-progress-button'] button")
+    private WebElement historyButton;
 
     @FindBy(css = "div[data-testid='scenario-state-preview']")
     private WebElement costLabel;
@@ -40,6 +44,25 @@ public class EvaluateToolbar extends ExploreToolbar {
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementsToNotAppear(cogIcon);
+    }
+
+    /**
+     * Check the enabled status of Progress button
+     *
+     * @return - Boolean representation of whether button is enabled / disabled
+     */
+    public Boolean isProgressButtonEnabled() {
+        return pageUtils.isElementEnabled(historyButton);
+    }
+
+    /**
+     * Click the History button
+     *
+     * @return - Cost History modal PO
+     */
+    public CostHistoryPage clickHistory() {
+        pageUtils.waitForElementAndClick(historyButton);
+        return new CostHistoryPage(driver);
     }
 
     /**
