@@ -10,8 +10,8 @@ import com.apriori.reader.file.user.UserUtil;
 
 import org.openqa.selenium.NoSuchElementException;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ComponentDTORequest {
@@ -24,10 +24,13 @@ public class ComponentDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getComponent() {
-        Random random = new Random();
-        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
 
-        component = assemblyDTO.getComponents().get(random.nextInt(assemblyDTO.getComponents().size()));
+        ComponentDTO componentDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
+
+        List<ComponentInfoBuilder> listOfComponents = componentDTO.getComponents();
+        Collections.shuffle(listOfComponents);
+
+        component = listOfComponents.stream().findFirst().get();
 
         component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
@@ -44,9 +47,12 @@ public class ComponentDTORequest {
      */
     public List<ComponentInfoBuilder> getComponent(int noOfComponents) {
 
-        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
+        ComponentDTO componentDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
 
-        List<ComponentInfoBuilder> components = assemblyDTO.getComponents().subList(0, noOfComponents);
+        List<ComponentInfoBuilder> listOfComponents = componentDTO.getComponents();
+        Collections.shuffle(listOfComponents);
+
+        List<ComponentInfoBuilder> components = listOfComponents.subList(0, noOfComponents);
 
         final UserCredentials currentUser = UserUtil.getUser();
         components.forEach(component -> {
@@ -65,9 +71,10 @@ public class ComponentDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getComponent(String componentName) {
-        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
 
-        component = assemblyDTO.getComponents()
+        ComponentDTO componentDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
+
+        component = componentDTO.getComponents()
             .stream()
             .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
             .findFirst()
@@ -88,13 +95,14 @@ public class ComponentDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getComponentByExtension(String extension) {
-        Random random = new Random();
 
-        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
+        ComponentDTO componentDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
 
-        List<ComponentInfoBuilder> componentExtension = assemblyDTO.getComponents().stream()
+        List<ComponentInfoBuilder> componentExtension = componentDTO.getComponents().stream()
             .filter(component -> component.getExtension().equalsIgnoreCase("." + extension)).collect(Collectors.toList());
-        ComponentInfoBuilder componentInfoExtension = componentExtension.get(random.nextInt(componentExtension.size()));
+        Collections.shuffle(componentExtension);
+
+        ComponentInfoBuilder componentInfoExtension = componentExtension.stream().findFirst().get();
 
         componentInfoExtension.setResourceFile(FileResourceUtil.getCloudFile(componentInfoExtension.getProcessGroup(),
             componentInfoExtension.getComponentName() + componentInfoExtension.getExtension()));
@@ -110,13 +118,14 @@ public class ComponentDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getComponentByProcessGroup(ProcessGroupEnum processGroup) {
-        Random random = new Random();
 
-        ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
+        ComponentDTO componentDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(COMPONENT_STORE), ComponentDTO.class);
 
-        List<ComponentInfoBuilder> componentPG = assemblyDTO.getComponents().stream()
+        List<ComponentInfoBuilder> componentPG = componentDTO.getComponents().stream()
             .filter(component -> component.getProcessGroup().equals(processGroup)).collect(Collectors.toList());
-        ComponentInfoBuilder componentInfoPG = componentPG.get(random.nextInt(componentPG.size()));
+        Collections.shuffle(componentPG);
+
+        ComponentInfoBuilder componentInfoPG = componentPG.stream().findFirst().get();
 
         componentInfoPG.setResourceFile(FileResourceUtil.getCloudFile(componentInfoPG.getProcessGroup(),
             componentInfoPG.getComponentName() + componentInfoPG.getExtension()));

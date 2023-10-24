@@ -10,8 +10,8 @@ import com.apriori.reader.file.user.UserUtil;
 import org.openqa.selenium.NoSuchElementException;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 public class AssemblyDTORequest {
@@ -24,10 +24,13 @@ public class AssemblyDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssembly() {
-        Random random = new Random();
+
         ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(ASSEMBLY_STORE), ComponentDTO.class);
 
-        componentAssembly = assemblyDTO.getAssemblies().get(random.nextInt(assemblyDTO.getAssemblies().stream().findAny().get().getSubComponents().size() - 1));
+        List<ComponentInfoBuilder> componentsAssembly = assemblyDTO.getAssemblies();
+        Collections.shuffle(componentsAssembly);
+
+        componentAssembly = componentsAssembly.stream().findFirst().get();
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -49,6 +52,7 @@ public class AssemblyDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssembly(String assembly) {
+
         ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(ASSEMBLY_STORE), ComponentDTO.class);
 
         componentAssembly = assemblyDTO.getAssemblies()
@@ -78,6 +82,7 @@ public class AssemblyDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssemblySubcomponents(String assembly, String... subcomponentNames) {
+
         ComponentDTO assemblyDTO = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(ASSEMBLY_STORE), ComponentDTO.class);
 
         componentAssembly = assemblyDTO.getAssemblies()
