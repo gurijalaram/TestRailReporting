@@ -117,6 +117,12 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
+    /**
+     * Input multiple component details
+     *
+     * @param multiUploadList - component details as a list
+     * @return current page object
+     */
     public ImportCadFilePage inputMultiComponentBuilderDetails(List<ComponentInfoBuilder> multiUploadList) {
         multiUploadList.forEach(multiUpload -> {
             String file = multiUpload.getResourceFile().getName();
@@ -203,7 +209,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     private ImportCadFilePage inputMultiScenarioName(String scenarioName, String file) {
         By byMultiFileInput = By.xpath(String.format("//input[contains(@name,'%s')]", file));
         pageUtils.waitForElementToAppear(byMultiFileInput);
-        pageUtils.setValueOfElement(pageUtils.waitForElementToAppear(byMultiFileInput), scenarioName);
+        pageUtils.setValueOfElement(driver.findElement(byMultiFileInput), scenarioName);
         return this;
     }
 

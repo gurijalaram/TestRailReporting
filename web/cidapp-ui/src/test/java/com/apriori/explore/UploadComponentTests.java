@@ -98,7 +98,7 @@ public class UploadComponentTests extends TestBaseUI {
             .login(UserUtil.getUser())
             .importCadFile()
             .inputScenarioName(new GenerateStringUtil().generateScenarioName())
-            .inputMultiComponentsBuilder(components);
+            .inputMultiComponentBuilderDetails(components);
 
         cadFileStatusPage = importCadFilePage.submit();
 
@@ -136,8 +136,7 @@ public class UploadComponentTests extends TestBaseUI {
         explorePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
             .importCadFile()
-            .inputMultiComponentsBuilder(components)
-            .inputScenarioName(new GenerateStringUtil().generateScenarioName())
+            .inputMultiComponentBuilderDetails(components)
             .submit()
             .clickClose();
 
@@ -150,6 +149,7 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = {11881, 11882})
     @Description("Validate prompt if invalid files are submitted")
     public void testInvalidFileUpload() {
+
         currentUser = UserUtil.getUser();
         resourceFile = FileResourceUtil.getResourceAsFile("auto_api_upload.csv");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -200,7 +200,8 @@ public class UploadComponentTests extends TestBaseUI {
         importCadFilePage = new CidAppLoginPage(driver)
             .login(components.stream().findAny().get().getUser())
             .importCadFile()
-            .inputMultiComponentsBuilder(components);
+            .unTick("Apply to all")
+            .inputMultiComponentBuilderDetails(components);
 
         softAssertions.assertThat(importCadFilePage.isTheScrollBarDisplayed()).isTrue();
 
@@ -221,6 +222,7 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = 11889)
     @Description("Validate override existing scenario leads to processing failure if unchecked and there are duplicate scenarios")
     public void testOverrideExistingScenarioFailure() {
+
         componentAssembly = new AssemblyDTORequest().getAssembly();
 
         explorePage = new CidAppLoginPage(driver)
@@ -263,8 +265,7 @@ public class UploadComponentTests extends TestBaseUI {
         importCadFilePage = new CidAppLoginPage(driver)
             .login(components.get(0).getUser())
             .importCadFile()
-            .inputScenarioName(new GenerateStringUtil().generateScenarioName())
-            .inputMultiComponentsBuilder(components)
+            .inputMultiComponentBuilderDetails(components)
             .enterMultiFilePath(new ComponentDTORequest().getComponent().getResourceFile());
 
         assertThat(importCadFilePage.getAlertWarning(), containsString("Exceeds maximum file count. Add up to 20 files for import at a time"));
@@ -285,7 +286,7 @@ public class UploadComponentTests extends TestBaseUI {
             .importCadFile()
             .tick("Override existing scenario")
             .inputScenarioName(componentAssembly.getScenarioName())
-            .inputMultiComponentsBuilder(componentAssembly.getSubComponents())
+            .inputMultiComponentBuilderDetails(componentAssembly.getSubComponents())
             .submit()
             .clickClose();
 
@@ -304,6 +305,7 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = 10750)
     @Description("Validate updated workflow of importing/uploading an assembly into CID")
     public void testUploadViaExploreAndEvaluatePage() {
+
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
         componentAssembly = new AssemblyDTORequest().getAssembly();
@@ -355,6 +357,7 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = {11900, 11890})
     @Description("Validate multiple upload of same components is blocked")
     public void multipleUploadOfSameComponents() {
+
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -375,10 +378,11 @@ public class UploadComponentTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    //@Test
+    @Test
     @TestRail(id = {11910})
     @Description("Upload different Creo versions of files")
     public void uploadDifferentCreoVersions() {
+
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String componentName1 = "piston";
@@ -413,11 +417,12 @@ public class UploadComponentTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    //@Test
+    @Test
     @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {12169, 12171, 12172, 12168})
     @Description("Validate race conditions - upload a full assembly with override")
     public void uploadMultiLevelAssemblyWithOverrideAndRename() {
+
         currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
