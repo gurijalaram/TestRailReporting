@@ -19,5 +19,6 @@ import java.util.List;
 public class CustomerAch {
     private String identity;
     private String name;
+    private Boolean isSamlManaged;
     private List<DeploymentAch> deployments;
 }

@@ -1,5 +1,6 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -30,6 +31,7 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -40,7 +42,7 @@ public class BatchPartTest {
 
     private static Batch batch;
     private static Part part = null;
-    private static Integer number_of_parts = Integer.parseInt(PropertiesContext.get("number_of_parts"));
+    private static Integer number_of_parts = Integer.parseInt(PropertiesContext.get("bcs.number_of_parts"));
 
     @BeforeAll
     public static void testSetup() {
@@ -70,6 +72,7 @@ public class BatchPartTest {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {4280})
     @Description("Create Batch and Add Part to a batch")
     public void createBatchPart() {

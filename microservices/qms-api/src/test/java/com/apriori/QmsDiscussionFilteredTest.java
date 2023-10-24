@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class QmsScenarioDiscussionFilteredTest extends TestUtil {
+public class QmsDiscussionFilteredTest extends TestUtil {
     private static SoftAssertions softAssertions = new SoftAssertions();
     private static BidPackageResponse bidPackageResponse;
     private static ScenarioDiscussionResponse scenarioDiscussionResponse;

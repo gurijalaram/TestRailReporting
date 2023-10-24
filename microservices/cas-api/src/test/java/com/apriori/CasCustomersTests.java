@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.models.response.Applications;
 import com.apriori.cas.models.response.CasErrorMessage;
@@ -8,6 +10,8 @@ import com.apriori.cas.models.response.Customers;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.http.models.entity.RequestEntity;
+import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
@@ -21,8 +25,10 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.parallel.Isolated;
 
 import java.util.Arrays;
 
@@ -33,25 +39,36 @@ public class CasCustomersTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private UserCredentials currentUser = UserUtil.getUser();
+    private String userToken = UserUtil.getUser("admin").getToken();
 
     @BeforeEach
     public void getToken() {
-        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
+        RequestEntityUtil.useTokenForRequests(userToken);
     }
 
     @AfterEach
     public void cleanUp() {
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
+            // TODO z: fix it threads
+            // cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, currentUser.getToken(), customerIdentity);
+            HTTPRequest.build(new RequestEntity().endpoint(CDSAPIEnum.CUSTOMER_BY_ID).inlineVariables(customerIdentity).token(userToken).expectedResponseCode(HttpStatus.SC_NO_CONTENT)).delete();
         }
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {5810})
     @Description("Get a list of CAS customers sorted by name")
+    // TODO z: fix it threads
     public void getCustomersSortedByName() {
-        ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
+        //                ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
+        RequestEntity request = new RequestEntity()
+            .endpoint(CASAPIEnum.CUSTOMERS)
+            .returnType(Customers.class)
+            .token(userToken)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<Customers> response = HTTPRequest.build(request).get();
 
         soft.assertThat(response.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);

@@ -27,7 +27,7 @@ import java.util.List;
 @ExtendWith(TestRulesAPI.class)
 public class MultiPartCostingTest {
     private static Batch batch;
-    private static final Integer NUMBER_OF_PARTS = Integer.parseInt(PropertiesContext.get("number_of_parts"));
+    private static final Integer NUMBER_OF_PARTS = Integer.parseInt(PropertiesContext.get("bcs.number_of_parts"));
     private static List<PartData> partDataList = null;
 
     @BeforeAll

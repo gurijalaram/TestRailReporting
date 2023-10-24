@@ -15,12 +15,12 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @Builder
-
 public class MentionedUser {
     private Boolean active;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
+    private String updatedBy;
     private CustomAttributes customAttributes;
     private String customerIdentity;
     private String email;

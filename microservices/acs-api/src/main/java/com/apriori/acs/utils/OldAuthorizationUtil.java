@@ -37,7 +37,7 @@ public class OldAuthorizationUtil {
         UserCredentials user = UserUtil.getUser();
 
         headers.put("Content-Type", "application/x-www-form-urlencoded");
-        headers.put("Accept", "*/*");
+        headers.put("Accept", "application/json");
 
         List<Map<String, ?>> requestData = new ArrayList<>();
         Map<String, String> requestData2 = new HashMap<>();
@@ -46,7 +46,7 @@ public class OldAuthorizationUtil {
         requestData2.put("password", user.getUsername());
         requestData2.put("client_id", "apriori-web-cost");
         requestData2.put("client_secret", "donotusethiskey");
-        requestData2.put("scope", "tenantGroup=default tenant=apriori-staging");
+        requestData2.put("scope", "tenantGroup=default tenant=default");
         requestData.add(requestData2);
 
         RequestEntity requestEntity = RequestEntityUtil.init(OldTokenEnum.POST_TOKEN, OldTokenRequest.class)

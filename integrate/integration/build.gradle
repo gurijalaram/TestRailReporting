@@ -19,6 +19,26 @@ dependencies {
     implementation project(':microservices:css-api')
     implementation project(':microservices:nts-api')
     implementation project(':microservices:cic-api')
+    implementation project(':microservices:ats-api')
+
+    //cn - check correct implementation with vlad
+    implementation project(':microservices:acs-api')
+    implementation project(':microservices:cas-api')
+    implementation project(':microservices:cir-api')
+    implementation project(':microservices:css-api')
+    implementation project(':microservices:edc-api')
+    implementation project(':microservices:fms-api')
+    implementation project(':microservices:vds-api')
+    implementation project(':microservices:cis-api')
+    implementation project(':microservices:qds-api')
+    implementation project(':microservices:dds-api')
+    implementation project(':microservices:dms-api')
+    implementation project(':microservices:qms-api')
+    implementation project(':microservices:cus-api')
+    implementation project(':microservices:ach-api')
+    implementation project(':microservices:gcd-api')
+    implementation project(':microservices:cmp-api')
+
 
     // web
     implementation project(':web:ach-ui')
@@ -29,8 +49,36 @@ dependencies {
     implementation project(':web:cir-ui')
     implementation project(':web:cis-ui')
 
+
     // Test classes
     testImplementation project(path: ':microservices:ach-api', configuration: 'testArtifacts')
+
+    //cn - check correct implementation with vlad
+    testImplementation project(path: ':microservices:ats-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:sds-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:bcs-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:cidapp-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:cds-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:css-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:nts-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:cic-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:acs-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:cas-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:cir-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:css-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:edc-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:fms-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:vds-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:cis-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:qds-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:dds-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:dms-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:qms-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:cus-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:ach-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:gcd-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:cmp-api', configuration: 'testArtifacts')
+
     testImplementation project(path: ':web:ach-ui', configuration: 'testArtifacts')
     testImplementation project(path: ':web:cir-ui', configuration: 'testArtifacts')
     testImplementation project(path: ':web:cidapp-ui', configuration: 'testArtifacts')
