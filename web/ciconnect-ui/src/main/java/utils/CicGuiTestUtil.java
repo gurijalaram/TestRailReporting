@@ -45,7 +45,7 @@ public class CicGuiTestUtil extends WorkflowTestUtil {
             throw new RuntimeException("Workflow creation failed!!");
         }
         if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
-            log.info(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", this.workflowRequestDataBuilder.getName()));
+            log.debug(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", this.workflowRequestDataBuilder.getName()));
         }
         return this;
     }
@@ -90,7 +90,7 @@ public class CicGuiTestUtil extends WorkflowTestUtil {
             TimeUnit.SECONDS.sleep(WAIT_TIME);
             finalJobStatus = CicApiTestUtil.getCicAgentWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId()).getStatus();
             ciConnectHome.refreshBrowser();
-            log.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", agentWorkflowResponse.getId(), finalJobStatus));
+            log.debug(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", agentWorkflowResponse.getId(), finalJobStatus));
         }
         if (!isJobFinished) {
             throw new RuntimeException("FAILED TO FINISH WORKFLOW TO A TERMINAL STATE!!!");
