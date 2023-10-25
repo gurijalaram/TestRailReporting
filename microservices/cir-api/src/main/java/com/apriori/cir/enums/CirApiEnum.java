@@ -4,7 +4,7 @@ import com.apriori.interfaces.ExternalEndpointEnum;
 import com.apriori.properties.PropertiesContext;
 
 public enum CirApiEnum implements ExternalEndpointEnum {
-    DTC_METRICS_REPORT_START("reports/aPriori/reports/DTC%sMetrics/"),
+    DTC_METRICS_REPORT_START("reports/aPriori/reports/DTC Metrics/"),
     APRIORI_REPORTS_START("reports/aPriori/reports/"),
     APRIORI_DEPLOYMENT_LEADER_REPORTS(APRIORI_REPORTS_START.getEndpointString().concat("deploymentLeader/")),
     APRIORI_GENERAL_REPORTS(APRIORI_REPORTS_START.getEndpointString().concat("general/")),

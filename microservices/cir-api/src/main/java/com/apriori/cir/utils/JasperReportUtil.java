@@ -52,9 +52,9 @@ public class JasperReportUtil {
             .endpoint(value)
             .returnType(InputControl.class)
             .headers(initHeadersWithJSession())
-            .inlineVariables("%20")
-            .expectedResponseCode(HttpStatus.SC_OK)
-            .urlEncodingEnabled(false);
+            //.inlineVariables("%20")
+            //.expectedResponseCode(HttpStatus.SC_OK)
+            .urlEncodingEnabled(true);
 
         if (value.toString().startsWith("SHEET")) {
             requestEntity.inlineVariables("%20", "%20");

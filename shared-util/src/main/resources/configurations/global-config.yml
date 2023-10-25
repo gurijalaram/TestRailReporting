@@ -5,7 +5,7 @@
 #  - variables in the default section, that will be used if there is no corresponding variable in the environment file
 ############################################# Global properties ########################################################
 # Define main configurations
-env: development
+env: onprem
 deployment: production
 customer: ap-int
 

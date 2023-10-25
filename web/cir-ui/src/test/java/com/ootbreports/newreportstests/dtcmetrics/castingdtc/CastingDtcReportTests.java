@@ -1,5 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -13,6 +15,7 @@ import enums.JasperCirApiPartsEnum;
 import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -20,15 +23,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.CASTING_DTC.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CASTING_DTC;
-    private final List<String> mostCommonPartNames = Arrays.asList(
+    private String reportsJsonFileName = JasperApiEnum.CASTING_DTC.getEndpoint();
+    private String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.CASTING_DTC;
+    private List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.B2315.getPartName(),
         JasperCirApiPartsEnum.P_40090936_MLDES_0004.getPartName(),
         JasperCirApiPartsEnum.CASE_08.getPartName()
     );
-    private static JasperApiUtils jasperApiUtils;
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
@@ -36,6 +39,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = 1699)
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {

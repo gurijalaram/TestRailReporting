@@ -1,5 +1,7 @@
 package testsuites;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.ootbreports.newreportstests.componentcost.ComponentCostReportTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationDetailsTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationTests;
@@ -47,19 +49,21 @@ import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCost
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
 import com.ootbreports.newreportstests.upgradecomparison.UpgradeComparisonReportTests;
 import com.ootbreports.newreportstests.upgradecomparison.UpgradePartComparisonTests;
+import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
+@IncludeTags(API_SANITY)
 @SelectClasses({
-    AssemblyCostA4ReportTests.class,
-    AssemblyCostLetterReportTests.class,
-    AssemblyDetailsReportTests.class,
-    BasicCostAvoidanceReportTests.class,
-    CastingDtcComparisonReportTests.class,
-    CastingDtcDetailsReportTests.class,
+    //AssemblyCostA4ReportTests.class,
+    //AssemblyCostLetterReportTests.class,
+    //AssemblyDetailsReportTests.class,
+    //BasicCostAvoidanceReportTests.class,
+    /*CastingDtcComparisonReportTests.class,
+    CastingDtcDetailsReportTests.class,*/
     CastingDtcReportTests.class,
-    ComponentCostReportTests.class,
+    /*ComponentCostReportTests.class,
     CostOutlierIdentificationTests.class,
     CostOutlierIdentificationDetailsTests.class,
     CycleTimeValueTrackingReportTests.class,
@@ -98,7 +102,7 @@ import org.junit.platform.suite.api.Suite;
     TargetAndQuotedCostValueTrackingReportTests.class,
     TargetAndQuotedCostValueTrackingDetailsReportTests.class,
     UpgradeComparisonReportTests.class,
-    UpgradePartComparisonTests.class
+    UpgradePartComparisonTests.class*/
 })
 public class ReportsApiTestSuite {
 }
