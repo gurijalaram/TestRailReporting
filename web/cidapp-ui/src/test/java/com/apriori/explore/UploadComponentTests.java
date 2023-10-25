@@ -3,17 +3,23 @@ package com.apriori.explore;
 import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SANITY;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.request.AssemblyRequest;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.models.response.ScenarioItem;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.explore.CadFileStatusPage;
@@ -21,11 +27,16 @@ import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.explore.ImportCadFilePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.reader.file.user.UserUtil;
 import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 import com.apriori.utils.CssComponent;
 
+import com.utils.ColumnsEnum;
 import com.utils.MultiUpload;
+import com.utils.SortOrderEnum;
+import com.utils.StatusIconEnum;
+import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
@@ -33,6 +44,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UploadComponentTests extends TestBaseUI {
@@ -51,7 +63,7 @@ public class UploadComponentTests extends TestBaseUI {
     private SoftAssertions softAssertions = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();
 
-    /*@Test
+    @Test
     @Tag(SANITY)
     @Description("Test uploading a component")
     public void testUploadComponent() {
@@ -329,10 +341,9 @@ public class UploadComponentTests extends TestBaseUI {
             .enterMultiFilePath(resourceFile);
 
         assertThat(importCadFilePage.getAlertWarning(), containsString("Exceeds maximum file count. Add up to 20 files for import at a time"));
-    }*/
+    }
 
     @Test
-    @Tag(SANITY)
     @TestRail(id = {11888, 5618})
     @Description("Validate override existing scenario is successful through multiple uploads when checked")
     public void testOverrideExistingScenarioSuccess() {
@@ -370,7 +381,7 @@ public class UploadComponentTests extends TestBaseUI {
                 component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(true)));
     }
 
-    /*@Test
+    @Test
     @TestRail(id = 10750)
     @Description("Validate updated workflow of importing/uploading an assembly into CID")
     public void testUploadViaExploreAndEvaluatePage() {
@@ -617,5 +628,5 @@ public class UploadComponentTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView("78828")).isTrue();
 
         softAssertions.assertAll();
-    }*/
+    }
 }
