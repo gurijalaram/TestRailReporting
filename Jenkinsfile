@@ -112,7 +112,7 @@ Those marked with a * are required or the job will not run
 
                     threadCount = params.THREAD_COUNT
                     if (threadCount && threadCount.isInteger() && threadCount.toInteger() > 0) {
-                        javaOpts = javaOpts + " -DthreadCounts=${threadCount}"
+                        javaOpts = javaOpts + " -Djunit.jupiter.execution.parallel.config.fixed.max-pool-size=${threadCount}"
                     }
 
                     browser = params.BROWSER
