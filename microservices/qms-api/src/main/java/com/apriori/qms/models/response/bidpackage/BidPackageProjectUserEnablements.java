@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -33,4 +34,5 @@ public class BidPackageProjectUserEnablements {
     private Boolean sandboxEnabled;
     private Boolean userAdminEnabled;
     private Boolean exportAdminEnabled;
+    private List<String> roles;
 }
