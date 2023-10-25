@@ -37,4 +37,5 @@ public class BidPackageProjectUserDetails {
     private String avatarColor;
     private Boolean hasCompleteProfile;
     private BidPackageProjectUserEnablements userEnablements;
+    private BidPackageProjectUserEnablements enablements;
 }
