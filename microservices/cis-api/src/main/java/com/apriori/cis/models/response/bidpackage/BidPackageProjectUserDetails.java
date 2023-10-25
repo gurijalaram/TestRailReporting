@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -33,5 +34,6 @@ public class BidPackageProjectUserDetails {
     private String userType;
     private String avatarColor;
     private Boolean hasCompleteProfile;
-    private BidPackageProjectUserEnablements userEnablements;
+    private BidPackageProjectUserEnablements enablements;
+    private List<String> roles;
 }

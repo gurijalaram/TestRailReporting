@@ -9,13 +9,13 @@ qa-test:
   application_name: cid
   base_url: https://na-1-install.apriori-internal.qa-test.apriori.net/
   installation_name: core-na-1 - Production
-  base_server_platform_url: https://na-1-install.apriori-internal.qa-test.apriori.net/
+  base_api_sp_url: https://na-1-install.apriori-internal.qa-test.apriori.net/
   customer_identity: 6C1F8C1D4D75
   secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
 
   admin:
-    ui_url: ${base_server_platform_url}apriori/login
+    ui_url: ${base_api_sp_url}apriori/login
     welcome_page_text: CI-Admin
     login_locator: //button[@id='1-submit']
     login_title_locator: //*[@class='auth0-lock-name']
@@ -33,7 +33,7 @@ qa-test:
     identity_role: 67J517C9L763
 
   reports:
-    ui_url: ${base_server_platform_url}jasperserver-pro/
+    ui_url: ${base_api_sp_url}jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
     username_locator: //input[@type='email']
     login_locator: //button[@id='1-submit']
@@ -93,6 +93,7 @@ staging:
   application_name: CID
   ap_user_context:
   base_url: https://na-1-v22-1-demo.apriori-internal.staging.apriori.net/
+  base_api_sp_url: https://na-1-install.apriori-internal.staging.apriori.net/
   customer_identity: 7G0JGBE2N4GM
   secret_key: K6JWVF8KV884
   user_identity: 6AHL1HHGB15E
@@ -106,6 +107,9 @@ staging:
     automation_user_identity02: 6AHL3EHF264K
     automation_user_identity03: 1K2LKIB78J6A
     identity_role: 7G0JGBE2N2GE
+
+  reports:
+    ui_url: ${base_api_sp_url}jasperserver-pro/
 
 ########################################################################################################################
 
@@ -215,7 +219,7 @@ development:
   aws_parameter_store_name: development
   application_name: cid
   base_url: https://cloud.na-1.development.apriori.net/
-  base_api_url: https://na-1-install.apriori-internal.development.apriori.net/
+  base_api_sp_url: https://na-1-install.apriori-internal.development.apriori.net/
   customer_identity: 212B5ABD2F6C
   deployment_name: production
   installation_name: Production
@@ -233,6 +237,6 @@ development:
     identity_role: 67J517C9L763
 
   reports:
-    ui_url: ${base_api_url}jasperserver-pro/
+    ui_url: ${base_api_sp_url}jasperserver-pro/
 
 ########################################################################################################################

@@ -292,10 +292,10 @@ e.g. PropertiesContext.get("fms.api_url") | note that env = qa-cid-perf <br>
 Search in `system environments` and in  `PropertiesContext` require special naming template.
  - for System property, in the request property name, will be automatically replaced all `"."` with `"_"`
    Please NOTE: if you need to specify a property name as a `System environment`, you need to replace all `"."` with `"_"` in the property name, taken from java code.
-    e.g. `com.apriori.utils.properties.PropertiesContext("global.users_csv_file")` - will search system environment with name: `global_users_csv_file`
+    e.g. `com.apriori.utils.properties.PropertiesContext("users_csv_file")` - will search system environment with name: `global_users_csv_file`
    
   - for `PropertiesContext`, in requested property name, will be automatically replaced all `"."` with `"/"`
-    e.g. `com.apriori.utils.properties.PropertiesContext("global.users_csv_file")` - will search config.yml property with name: `global/users_csv_file`   
+    e.g. `com.apriori.utils.properties.PropertiesContext("users_csv_file")` - will search config.yml property with name: `global/users_csv_file`   
 
 
 #### Property references

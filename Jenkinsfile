@@ -109,7 +109,7 @@ pipeline {
 
                     users_csv_file = params.CSV_FILE
                     if (users_csv_file && users_csv_file != "none") {
-                        javaOpts = javaOpts + " -Ddefault_users_csv_file=${params.CSV_FILE}"
+                        javaOpts = javaOpts + " -Dusers_csv_file=${params.CSV_FILE}"
                     }
 
                     customer = params.CUSTOMER
