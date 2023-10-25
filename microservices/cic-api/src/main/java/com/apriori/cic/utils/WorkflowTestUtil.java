@@ -38,7 +38,7 @@ public class WorkflowTestUtil extends TestBaseUI {
             throw new RuntimeException("Workflow creation failed!!");
         }
         if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
-            log.info(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowRequestData.getName()));
+            log.debug(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowRequestData.getName()));
         }
         return this;
     }
@@ -176,7 +176,7 @@ public class WorkflowTestUtil extends TestBaseUI {
             throw new RuntimeException("Workflow creation failed!!");
         }
         if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
-            log.info(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", this.workflowRequestDataBuilder.getName()));
+            log.debug(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", this.workflowRequestDataBuilder.getName()));
         }
         return this;
     }

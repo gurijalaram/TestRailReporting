@@ -1,0 +1,21 @@
+{
+  "type": "object",
+
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "$ref": "common/PaginationSchema.json",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "DigitalFactorySchema.json"
+          }
+        }
+      }
+    }
+  }
+}

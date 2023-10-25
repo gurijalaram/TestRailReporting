@@ -16,4 +16,5 @@ public class AgentWorkflowJobPartCostingInput {
     private Integer annualVolume;
     private Integer batchSize;
     private Double productionLife;
+    private String machiningMode;
 }
