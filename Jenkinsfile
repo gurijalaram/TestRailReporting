@@ -90,6 +90,7 @@ pipeline {
                     threadCount = params.THREAD_COUNT
                     if (threadCount && threadCount.isInteger() && threadCount.toInteger() > 0) {
                         javaOpts = javaOpts +  " -D'junit.jupiter.execution.parallel.config.fixed.max-pool-size'=${threadCount}"
+                        javaOpts = javaOpts +  " -D'junit.jupiter.execution.parallel.config.fixed.parallelism'=${threadCount}"
                     }
 
                     browser = params.BROWSER
