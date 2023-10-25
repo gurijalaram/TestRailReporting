@@ -34,5 +34,4 @@ public class BidPackageProjectUserEnablements {
     private Boolean sandboxEnabled;
     private Boolean userAdminEnabled;
     private Boolean exportAdminEnabled;
-    private List<String> roles;
 }
