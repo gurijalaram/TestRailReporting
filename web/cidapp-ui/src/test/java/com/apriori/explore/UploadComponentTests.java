@@ -3,6 +3,7 @@ package com.apriori.explore;
 import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.SANITY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -27,6 +28,7 @@ import com.apriori.utils.CssComponent;
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -330,6 +332,7 @@ public class UploadComponentTests extends TestBaseUI {
 //    }
 
     @Test
+    @Tag(SANITY)
     @TestRail(id = {11888, 5618})
     @Description("Validate override existing scenario is successful through multiple uploads when checked")
     public void testOverrideExistingScenarioSuccess() {
