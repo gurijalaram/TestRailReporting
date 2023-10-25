@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.ach.dto.ApplicationDTO;
 import com.apriori.ach.utils.AchEnvironmentAPIUtil;
-import com.apriori.login.LoginService;
 import com.apriori.models.AuthorizationUtil;
+import com.apriori.qa.ach.ui.pageobjects.CloudHomeLoginPage;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.qa.ach.ui.utils.AchEnvironmentUIUtil;
 import com.apriori.reader.file.user.UserCredentials;
@@ -22,7 +22,6 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
     private AchEnvironmentAPIUtil achEnvironmentAPIUtil = new AchEnvironmentAPIUtil();
     private final UserCredentials userCredentials = achEnvironmentAPIUtil.getAwsCustomerUserCredentials();
     private CloudHomePage cloudHomePage;
-    private LoginService aprioriLoginService;
 
     @Test
     @TestRail(id = {27951})
@@ -33,15 +32,13 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
                 achEnvironmentAPIUtil.getCustomerDeploymentInformation(customerIdentity)
         );
 
-        aprioriLoginService = new LoginService(driver, "");
-        cloudHomePage = aprioriLoginService.login(userCredentials, CloudHomePage.class);
-
-
-        cloudHomePage.clickUserPanel()
-                .clickSwitchDeploymentButton()
-                .clickDeploymentSelector()
-                .selectDeployment(deploymentName)
-                .clickSubmitButton();
+        cloudHomePage = new CloudHomeLoginPage(driver)
+            .login(userCredentials)
+            .clickUserPanel()
+            .clickSwitchDeploymentButton()
+            .clickDeploymentSelector()
+            .selectDeployment(deploymentName)
+            .clickSubmitButton();
 
         this.validateDeploymentApplications(cloudHomePage, mappedCustomerApplications, deploymentName);
     }

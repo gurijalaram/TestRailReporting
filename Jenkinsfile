@@ -18,6 +18,25 @@ def nexus_repository
 def nexus_version
 def custom_install
 def connector
+def environment = [profile: 'development', region: 'us-east-1']
+def ecrDockerRegistry = '563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa'
+
+def registry_password(profile = '', region = '') {
+    withCredentials([
+            file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
+            file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
+        return sh(
+                returnStdout: true,
+                script: """
+                docker run \
+                    -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
+                    -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
+                    amazon/aws-cli ecr get-login-password \
+                    --profile ${profile} --region ${region}
+            """
+        ).trim()
+    }
+}
 
 pipeline {
 /*
@@ -32,6 +51,7 @@ Those marked with a * are required or the job will not run
 
         choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'RegressionTestSuite', 'AdminSuite', 'ReportingSuite', 'CIDSmokeTestSuite', 'CIDNonSmokeTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
         string(name: 'OTHER_TEST', defaultValue: 'test name', description: 'What is the test/tests.suite to execute')
+        string(name: 'LOG_FILE_NAME', defaultValue: 'logback-build.xml', description: 'Which log file configuration to use')
 
         choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
         booleanParam(name: 'HEADLESS', defaultValue: true)
@@ -47,15 +67,6 @@ Those marked with a * are required or the job will not run
     }
 
     stages {
-        stage("Java") {
-            tools {
-                jdk "OpenJDK 11.0.18_10"
-            }
-            steps {
-                sh 'java -version'
-            }
-        }
-
         stage("Initialize") {
             steps {
                 echo "Initializing.."
@@ -73,22 +84,25 @@ Those marked with a * are required or the job will not run
                     // Log file.
                     sh "cat ${buildInfoFile}"
 
+                    root_log_level = params.ROOT_LOG_LEVEL
+                    if (root_log_level == null || root_log_level == "none") {
+                        root_log_level = "INFO"
+                    }
+
                     // Set run time parameters
                     javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
+                    javaOpts = javaOpts + " -DROOT_LOG_LEVEL=${root_log_level}"
 
                     folder = params.MODULE_TYPE
                     if (!folder && "${MODULE}".contains("-ui")) {
                         folder = "web"
-                    }
-                    else if (!folder && "${MODULE}".contains("-api")) {
+                    } else if (!folder && "${MODULE}".contains("-api")) {
                         folder = "microservices"
-                    }
-                    else if (!folder && "${MODULE}".contains("-agent")) {
+                    } else if (!folder && "${MODULE}".contains("-agent")) {
                         folder = "agent"
-                    }
-                    else {
-                          folder = "integrate"
+                    } else {
+                        folder = "integrate"
                     }
 
                     url = params.TARGET_URL
@@ -172,17 +186,21 @@ Those marked with a * are required or the job will not run
 
         stage("Build") {
             steps {
-                echo "Building..."
-                sh """
-                    docker build \
-                        --no-cache \
-                        --target build \
-                        --tag ${buildInfo.name}-test-${timeStamp}:latest \
-                        --label \"build-date=${timeStamp}\" \
-                        --build-arg FOLDER=${folder} \
-                        --build-arg MODULE=${MODULE} \
-                        .
-                """
+                 echo "Building..."
+                 script {
+                     def registryPwd = registry_password("${environment.profile}", "${environment.region}")
+                     sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                     sh """
+                         docker build \
+                             --no-cache \
+                             --target build \
+                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
+                             --label \"build-date=${timeStamp}\" \
+                             --build-arg FOLDER=${folder} \
+                             --build-arg MODULE=${MODULE} \
+                             .
+                     """
+                 }
             }
         }
 
@@ -215,7 +233,7 @@ Those marked with a * are required or the job will not run
                 // Copy out build/test artifacts.
                 echo "Extract Test Results.."
                 sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
-                sh "docker cp ${buildInfo.name}-test-${timeStamp}:home/gradle/${folder}/${MODULE}/build ."
+                sh "docker cp ${buildInfo.name}-test-${timeStamp}:build-workspace/${folder}/${MODULE}/build ."
                 echo "Publishing Results"
                 allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
                 junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
@@ -243,7 +261,7 @@ Those marked with a * are required or the job will not run
 
             script {
                 if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
-                    error("Build failed because of Response contains UnrecognizedPropertyException. Please check Test logs.")
+                    error("Build failed because of Response contains MappingException. Please check Test logs for text: Response contains MappingException.")
                 }
             }
         }

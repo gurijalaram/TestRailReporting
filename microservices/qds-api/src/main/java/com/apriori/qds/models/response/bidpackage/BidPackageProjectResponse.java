@@ -12,7 +12,7 @@ import java.util.List;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "BidPackageProjectResponseSchema.json")
+@Schema(location = "QdsBidPackageProjectResponseSchema.json")
 public class BidPackageProjectResponse {
     public List<BidPackageProjectItemResponse> items;
     public List<BidPackageProjectUserResponse> users;

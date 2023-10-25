@@ -42,6 +42,8 @@ public class CostingInput {
     private String materialUtilizationMode;
     private List<RoutingNodeOptions> routingNodeOptions;
     private String twoModelSourceScenarioIdentity;
+    private Integer targetMass;
+
 
     public static class Threads {
     }

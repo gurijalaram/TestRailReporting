@@ -17,6 +17,9 @@ public class SwitchDeploymentPopUpPage extends LoadableComponent<SwitchDeploymen
     @FindBy(xpath = "//div[@class='apriori-select searchable switch-deployment-dialog-deployments css-1xzq4gn-container']")
     private WebElement deploymentSelector;
 
+    @FindBy(xpath = "//*[local-name()='svg' and @data-icon='users']")
+    private WebElement userManagementSelector;
+
     @FindBy(css = "button[type='submit']")
     private WebElement deploymentsPopUpSubmit;
 
@@ -57,5 +60,14 @@ public class SwitchDeploymentPopUpPage extends LoadableComponent<SwitchDeploymen
     public SwitchDeploymentPopUpPage clickDeploymentSelector() {
         pageUtils.waitForElementAndClick(deploymentSelector);
         return this;
+    }
+
+    /**
+     * Click submit button to go to the user managament page
+     * @return
+     */
+    public UserManagementPage clickUserManagementSelector() {
+        pageUtils.waitForElementAndClick(userManagementSelector);
+        return new UserManagementPage(driver);
     }
 }

@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.acs.models.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
 import com.apriori.acs.models.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
 import com.apriori.acs.utils.acs.AcsResources;
@@ -10,6 +12,7 @@ import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -17,6 +20,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class AllMaterialStocksInfoTests extends TestUtil {
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = 16829)
     @Description("Test Get All Material Stocks Info endpoint")
     public void testGetAllMaterialStocksInfo() {

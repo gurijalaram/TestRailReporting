@@ -2,6 +2,7 @@ package com.apriori;
 
 import static com.apriori.enums.CssSearch.COMPONENT_IDENTITY_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_IDENTITY_EQ;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.CssComponentResponse;
@@ -15,6 +16,7 @@ import com.apriori.utils.CssComponent;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -52,6 +54,7 @@ public class CssSearchTests {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {22731})
     @Description("Find scenario iterations for a given customer matching a specified query.")
     public void searchPartComponentScenarios() {

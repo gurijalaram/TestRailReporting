@@ -34,9 +34,9 @@ public class UpgradePartComparisonTests extends JasperApiAuthenticationUtil {
     @TestRail(id = 13944)
     @Description("Input controls - Currency code")
     public void testCurrency() {
-        ArrayList<String> gbpAssertValues = jasperApiUtils.generateReportAndGetAssertValues(CurrencyEnum.GBP.getCurrency());
+        ArrayList<String> gbpAssertValues = jasperApiUtils.generateReportAndGetAssertValues(CurrencyEnum.GBP.getCurrency(), 2);
 
-        ArrayList<String> usdAssertValues = jasperApiUtils.generateReportAndGetAssertValues(CurrencyEnum.USD.getCurrency());
+        ArrayList<String> usdAssertValues = jasperApiUtils.generateReportAndGetAssertValues(CurrencyEnum.USD.getCurrency(), 2);
 
         assertThat(gbpAssertValues.get(0), is(not(equalTo(usdAssertValues.get(0)))));
         assertThat(gbpAssertValues.get(1), is(not(equalTo(usdAssertValues.get(1)))));

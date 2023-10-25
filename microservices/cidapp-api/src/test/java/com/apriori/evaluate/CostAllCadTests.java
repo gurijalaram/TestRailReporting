@@ -1,5 +1,6 @@
 package com.apriori.evaluate;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,6 +28,7 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -41,7 +43,10 @@ public class CostAllCadTests {
     private SoftAssertions softAssertions;
 
     @Test
-    @Tag(SMOKE)
+    @Tags({
+        @Tag(SMOKE),
+        @Tag(API_SANITY)
+    })
     @TestRail(id = {5421, 565, 567})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void cadFormatSLDPRT() {

@@ -5,6 +5,7 @@ import com.apriori.ach.dto.ApplicationDTO;
 import com.apriori.login.UserProfilePage;
 import com.apriori.properties.PropertiesContext;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,12 +32,16 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     @FindBy(xpath = "//*[local-name()='svg' and @class='svg-inline--fa fa-network-wired fa-fw']")
     private WebElement switchDeploymentButton;
+    @FindBy(xpath = "//*[local-name()='svg' and @data-icon='users']")
+    private WebElement userManagementButton;
 
     @FindBy(xpath = "//div[@class='apriori-select searchable switch-deployment-dialog-deployments css-1xzq4gn-container']")
     private WebElement deploymentSelector;
 
     private PageUtils pageUtils;
     private WebDriver driver;
+
+    private String userTokenFromBrowser;
 
     public CloudHomePage(WebDriver driver) {
         this.driver = driver;
@@ -51,7 +56,8 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(logo);
+        pageUtils.waitForElementToBeClickable(logo);
+        pageUtils.waitForElementToBeClickable(userElement);
     }
 
     /**
@@ -115,7 +121,24 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return new SwitchDeploymentPopUpPage(driver);
     }
 
+    public UserManagementPage clickUserManagementButton() {
+        pageUtils.waitForElementAndClick(userManagementButton);
+        return new UserManagementPage(driver);
+    }
+
     public String getDeployment() {
         return pageUtils.waitForElementAppear(deploymentLabel).getText();
+    }
+
+    /**
+     * Get user ID_TOKEN from browser local storage
+     * @return
+     */
+    public String getUserTokenFromBrowser() {
+        if (StringUtils.isBlank(userTokenFromBrowser)) {
+            userTokenFromBrowser = pageUtils.getItemFromLocalStorage("ID_TOKEN");
+        }
+
+        return userTokenFromBrowser;
     }
 }

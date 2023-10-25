@@ -1,7 +1,3 @@
-repositories {
-    mavenCentral()
-}
-
 sourceSets {
     main {
         resources {
@@ -14,7 +10,4 @@ sourceSets {
 
 dependencies {
     implementation project(':shared-util')
-    implementation group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.2'
-    implementation group: 'net.sf.cssbox', name: 'pdf2dom', version: '2.0.1'
-    implementation group: 'org.apache.pdfbox', name: 'pdfbox-tools', version: '2.0.25'
 }

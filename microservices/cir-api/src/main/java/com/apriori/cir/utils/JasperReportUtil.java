@@ -13,7 +13,6 @@ import com.apriori.cir.models.response.InputControl;
 import com.apriori.cir.models.response.ReportStatusResponse;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
-import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -47,8 +46,11 @@ public class JasperReportUtil {
         this.jasperSessionValue = String.format(jasperSessionValue, jasperSessionId);
     }
 
+    // TODO z: fix it threads
     public InputControl getInputControls(CirApiEnum value) {
-        RequestEntity requestEntity = RequestEntityUtil.init(value, InputControl.class)
+        RequestEntity requestEntity = new RequestEntity()
+            .endpoint(value)
+            .returnType(InputControl.class)
             .headers(initHeadersWithJSession())
             .inlineVariables("%20")
             .expectedResponseCode(HttpStatus.SC_OK)
@@ -107,7 +109,9 @@ public class JasperReportUtil {
 
     @SneakyThrows
     private void waitUntilReportReady(String requestId, String exportId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_STATUS_BY_REQUEST_EXPORT_IDs, null)
+        RequestEntity requestEntity = new RequestEntity()
+            .endpoint(CirApiEnum.REPORT_OUTPUT_STATUS_BY_REQUEST_EXPORT_IDs)
+            .returnType(null)
             .inlineVariables(requestId, exportId)
             .headers(initHeadersWithJSession())
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -123,7 +127,9 @@ public class JasperReportUtil {
     }
 
     private ReportStatusResponse generateReport(ReportRequest reportRequest) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_EXECUTIONS, ReportStatusResponse.class)
+        RequestEntity requestEntity = new RequestEntity()
+            .endpoint(CirApiEnum.REPORT_EXECUTIONS)
+            .returnType(ReportStatusResponse.class)
             .headers(initHeadersWithJSession())
             .body(reportRequest)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -134,7 +140,9 @@ public class JasperReportUtil {
     }
 
     private ReportStatusResponse doReportExport(ReportStatusResponse response) {
-        RequestEntity doExportRequest = RequestEntityUtil.init(CirApiEnum.REPORT_EXPORT_BY_REQUEST_ID, ReportStatusResponse.class)
+        RequestEntity doExportRequest = new RequestEntity()
+            .endpoint(CirApiEnum.REPORT_EXPORT_BY_REQUEST_ID)
+            .returnType(ReportStatusResponse.class)
             .inlineVariables(response.getRequestId())
             .headers(initHeadersWithJSession())
             .body(ReportExportRequest.initFromJsonFile())
@@ -147,7 +155,9 @@ public class JasperReportUtil {
 
     @SneakyThrows
     private Document getReportHtmlData(final String requestId, final String exportId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_RESOURCE_BY_REQUEST_EXPORT_IDs, InputStream.class)
+        RequestEntity requestEntity = new RequestEntity()
+            .endpoint(CirApiEnum.REPORT_OUTPUT_RESOURCE_BY_REQUEST_EXPORT_IDs)
+            .returnType(InputStream.class)
             .inlineVariables(requestId, exportId)
             .headers(initHeadersWithJSession())
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -159,7 +169,8 @@ public class JasperReportUtil {
 
     @SneakyThrows
     private List<ChartData> getReportChartData(final String requestId, final String exportId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs, null)
+        RequestEntity requestEntity = new RequestEntity()
+            .endpoint(CirApiEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs)
             .inlineVariables(requestId, exportId)
             .headers(initHeadersWithJSession())
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -171,7 +182,9 @@ public class JasperReportUtil {
 
     @SneakyThrows
     private ReportComponentsResponse getReportChartDataRaw(final String requestId, final String exportId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CirApiEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs, ReportComponentsResponse.class)
+        RequestEntity requestEntity = new RequestEntity()
+            .endpoint(CirApiEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs)
+            .returnType(ReportComponentsResponse.class)
             .inlineVariables(requestId, exportId)
             .headers(initHeadersWithJSession())
             .expectedResponseCode(HttpStatus.SC_OK);

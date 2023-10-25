@@ -102,9 +102,9 @@ public class AgentService {
             log.info("########## PRIVATE KEY RETRIEVED FROM AWS SUCCESSFULLY. ########  " + agentData.getPrivateKeyFile());
             FileUtils.writeStringToFile(new File(agentData.getPrivateKeyFile()), privateKey, StandardCharsets.UTF_8);
             jSch.addIdentity(agentData.getPrivateKeyFile(), agentCredentials.getPassword());
-            log.info("########## PRIVATE KEY ADDED SUCCESSFULLY. ########");
+            log.debug("########## PRIVATE KEY ADDED SUCCESSFULLY. ########");
             jSchSession = jSch.getSession(agentCredentials.getUsername(), agentCredentials.getHost(), Integer.parseInt(agentCredentials.getPort()));
-            log.info("########## SESSION CREATED SUCCESSFULLY. ########");
+            log.debug("########## SESSION CREATED SUCCESSFULLY. ########");
             Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
             jSchSession.setConfig(config);
@@ -383,6 +383,10 @@ public class AgentService {
                             stringBuilder = (null == agentConnectionOptions.getRootFolderPath()) ? stringBuilder.append(line).append("\n") :
                                 stringBuilder.append(line).append(agentConnectionOptions.getRootFolderPath()).append("\n");
                             break;
+                        case "maxPartsToReturn=":
+                            stringBuilder = (null == agentConnectionOptions.getMaxPartsToReturn()) ? stringBuilder.append(line).append("\n") :
+                                stringBuilder.append(line).append(agentConnectionOptions.getMaxPartsToReturn()).append("\n");
+                            break;
                         default:
                             stringBuilder.append(line).append("\n");
                     }
@@ -450,6 +454,7 @@ public class AgentService {
                 agentConnectionOptions.setPlmUser(agentCredentials.getPlmUser());
                 agentConnectionOptions.setPlmPassword(agentCredentials.getPlmPassword());
                 agentConnectionOptions.setHostName(PropertiesContext.get("ci-connect.windchill.host_name"));
+                agentConnectionOptions.setMaxPartsToReturn(PropertiesContext.get("ci-connect.maximum_parts"));
                 break;
             case "teamcenter":
                 agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());

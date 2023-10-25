@@ -1,5 +1,7 @@
 package com.apriori.ach.tests;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.ach.enums.ACHAPIEnum;
 import com.apriori.ach.utils.AchTestUtil;
 import com.apriori.http.utils.RequestEntityUtil;
@@ -14,6 +16,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -28,6 +31,7 @@ public class AchCurrentUserTests {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {21956})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {

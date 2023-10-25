@@ -22,7 +22,7 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
     private static final String reportsJsonFileName = JasperApiEnum.UPGRADE_COMPARISON.getEndpoint();
     // Export set name is not relevant for this report
     private static final String exportSetName = "";
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.ASSEMBLY_COST_A4;
+    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.UPGRADE_COMPARISON;
     private static JasperApiUtils jasperApiUtils;
 
     @BeforeEach
@@ -34,9 +34,9 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = 13952)
     @Description("Input controls - Currency code")
     public void testCurrency() {
-        ArrayList<String> gbpAssertValues = jasperApiUtils.generateReportAndGetAssertValues(CurrencyEnum.GBP.getCurrency());
+        ArrayList<String> gbpAssertValues = jasperApiUtils.generateReportAndGetAssertValues(CurrencyEnum.GBP.getCurrency(), 3);
 
-        ArrayList<String> usdAssertValues = jasperApiUtils.generateReportAndGetAssertValues(CurrencyEnum.USD.getCurrency());
+        ArrayList<String> usdAssertValues = jasperApiUtils.generateReportAndGetAssertValues(CurrencyEnum.USD.getCurrency(), 3);
 
         assertThat(gbpAssertValues.get(0), is(not(equalTo(usdAssertValues.get(0)))));
         assertThat(gbpAssertValues.get(1), is(not(equalTo(usdAssertValues.get(1)))));

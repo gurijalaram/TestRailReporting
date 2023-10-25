@@ -1,5 +1,7 @@
 package com.apriori;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+
 import com.apriori.dds.enums.DDSApiEnum;
 import com.apriori.dds.models.request.CommentsRequest;
 import com.apriori.dds.models.request.CommentsRequestParameters;
@@ -28,6 +30,7 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -104,6 +107,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {12373})
     @Description("get a valid comment")
     public void getComment() {
@@ -120,6 +124,7 @@ public class CommentsTest extends TestUtil {
     }
 
     @Test
+    @Tag(API_SANITY)
     @TestRail(id = {12375})
     @Description("update a valid comment")
     public void updateComment() {

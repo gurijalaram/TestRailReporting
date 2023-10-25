@@ -1,13 +1,8 @@
 # Prepare build workspace.
-FROM gradle:8.2-jdk11 AS sdk
+FROM 563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa-jdk-base:11 as sdk
+WORKDIR /build-workspace
 
 USER root
-COPY apriori-https-cert.cer .
-RUN keytool -import -trustcacerts -noprompt \
-    -alias root \
-    -file ./apriori-https-cert.cer \
-    -keystore $JAVA_HOME/lib/security/cacerts \
-    -storepass changeit
 
 # Copy source code
 COPY . .

@@ -37,10 +37,10 @@ public class DigitalFactoryPerformanceReportTests extends JasperApiAuthenticatio
         String gbpCurrency = CurrencyEnum.GBP.getCurrency();
         String usdCurrency = CurrencyEnum.USD.getCurrency();
 
-        JasperReportSummary gbpJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnly(gbpCurrency);
+        JasperReportSummary gbpJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnlyDigitalFactoryPerfTests(gbpCurrency);
         ArrayList<String> gbpAssertValues = getAssertValues(gbpJasperReportSummary);
 
-        JasperReportSummary usdJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnly(usdCurrency);
+        JasperReportSummary usdJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnlyDigitalFactoryPerfTests(usdCurrency);
         ArrayList<String> usdAssertValues = getAssertValues(usdJasperReportSummary);
 
         assertAll("Grouped Currency Assertions",

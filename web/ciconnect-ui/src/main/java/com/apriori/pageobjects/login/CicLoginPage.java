@@ -42,8 +42,8 @@ public class CicLoginPage extends CICBasePage {
      */
     public CIConnectHome login(final UserCredentials userCredentials) {
         CIConnectHome ciConnectHome = aprioriLoginService.login(userCredentials, CIConnectHome.class);
-        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         pageUtils.waitForElementToBeClickable(usersMenuBtn);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         if (Objects.isNull(ciConnectHome)) {
             throw new RuntimeException("Login failed!!");
         }
