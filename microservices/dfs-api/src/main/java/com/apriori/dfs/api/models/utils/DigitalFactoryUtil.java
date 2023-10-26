@@ -26,11 +26,11 @@ public class DigitalFactoryUtil {
     }
 
     /**
-     * GET digital factories
+     * FIND digital factories
      *
      * @return user object
      */
-    public ResponseWrapper<DigitalFactories> getDigitalFactories() {
+    public ResponseWrapper<DigitalFactories> findDigitalFactories() {
         final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactories.class)
             .expectedResponseCode(HttpStatusCode.OK);
 

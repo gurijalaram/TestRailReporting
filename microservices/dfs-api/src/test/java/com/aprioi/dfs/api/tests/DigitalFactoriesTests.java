@@ -19,11 +19,24 @@ public class DigitalFactoriesTests {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
-    @TestRail(id = {})
-    @Description("Gets a list of digital factories for a specific customer")
+    @TestRail(id = {1})
+    @Description("Gets a specific digital factory for a specific customer")
     public void getDigitalFactoryTest() {
 
         ResponseWrapper<ErrorMessage> getComparisonsResponse = digitalFactoryUtil.getDigitalFactories(HttpStatusCode.UNAUTHORIZED);
+
+        softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getStatus()).isEqualTo(401);
+        softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getError()).isEqualTo("Unauthorized");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {2})
+    @Description("Gets a list of digital factories for a specific customer")
+    public void findDigitalFactoryTest() {
+
+        ResponseWrapper<ErrorMessage> getComparisonsResponse = digitalFactoryUtil.getDigitalFactories(HttpStatusCode.OK);
 
         softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getStatus()).isEqualTo(401);
         softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getError()).isEqualTo("Unauthorized");
