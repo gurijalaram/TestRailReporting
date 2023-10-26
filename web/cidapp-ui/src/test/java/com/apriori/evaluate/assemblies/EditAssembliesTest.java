@@ -285,7 +285,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Shallow Edit an assembly with larger set of sub-components ")
     public void testUploadCostPublishAssemblyLargeSetSubcomponents() {
 
-        componentAssembly = assemblyDTORequest.getAssembly();
+        componentAssembly = assemblyDTORequest.getAssembly("FUSELAGE_SUBASSEMBLY");
 
         assemblyUtils.uploadAssembly(componentAssembly);
         assemblyUtils.costAssembly(componentAssembly);

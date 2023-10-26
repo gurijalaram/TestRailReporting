@@ -180,6 +180,11 @@
           "processGroup": "FORGING"
         },
         {
+          "componentName": "505-04596-001 1 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
           "componentName": "550-05526-001 1 1 --A",
           "extension": ".CATPart",
           "processGroup": "FORGING"
@@ -205,62 +210,12 @@
           "processGroup": "FORGING"
         },
         {
-          "componentName": "NAS9309M-6-04 1 ---",
+          "componentName": "550-05683-001 1 1 ---",
           "extension": ".CATPart",
           "processGroup": "FORGING"
         },
         {
-          "componentName": "NAS1789-3 1 ---",
-          "extension": ".CATPart",
-          "processGroup": "FORGING"
-        },
-        {
-          "componentName": "MS24665-132 1 ---",
-          "extension": ".CATPart",
-          "processGroup": "FORGING"
-        },
-        {
-          "componentName": "MS21059L08 1 ---",
-          "extension": ".CATPart",
-          "processGroup": "FORGING"
-        },
-        {
-          "componentName": "MS21059L3 1 ---",
-          "extension": ".CATPart",
-          "processGroup": "FORGING"
-        },
-        {
-          "componentName": "MS20470AD4-6 1 ---",
-          "extension": ".CATPart",
-          "processGroup": "FORGING"
-        },
-        {
-          "componentName": "MS20470AD4-5 1 ---",
-          "extension": ".CATPart",
-          "processGroup": "FORGING"
-        },
-        {
-          "componentName": "MS20392-1C15 1 ---",
-          "extension": ".CATPart",
-          "processGroup": "FORGING"
-        },
-        {
-          "componentName": "MS14218AD4-4 1 ---",
-          "extension": ".CATPart",
-          "processGroup": "FORGING"
-        },
-        {
-          "componentName": "MS14108-15 1 ---",
-          "extension": ".CATPart",
-          "processGroup": "FORGING"
-        },
-        {
-          "componentName": "CCR244SS-3-2 1 ---",
-          "extension": ".CATPart",
-          "processGroup": "FORGING"
-        },
-        {
-          "componentName": "550-05690-001 1 1 ---",
+          "componentName": "550-05683-002 1 1 --",
           "extension": ".CATPart",
           "processGroup": "FORGING"
         },
@@ -270,7 +225,62 @@
           "processGroup": "FORGING"
         },
         {
-          "componentName": "550-05683-002 1 1 ---",
+          "componentName": "550-05690-001 1 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "CCR244SS-3-2 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS14108-15 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS14218AD4-4 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS20392-1C15 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS20470AD4-5 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS20470AD4-6 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS21059L3 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS21059L08 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS24665-132 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "NAS1789-3 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "NAS9309M-6-04 1 ---",
           "extension": ".CATPart",
           "processGroup": "FORGING"
         }
