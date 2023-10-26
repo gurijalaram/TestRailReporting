@@ -1,6 +1,7 @@
 package com.apriori.cidappapi.models.request;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
+import com.apriori.models.request.component.PublishRequest;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

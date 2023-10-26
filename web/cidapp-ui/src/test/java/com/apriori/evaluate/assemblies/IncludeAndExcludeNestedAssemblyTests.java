@@ -4,7 +4,7 @@ import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.GenerateStringUtil;

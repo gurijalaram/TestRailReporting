@@ -2,7 +2,7 @@ package com.apriori.explore;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;

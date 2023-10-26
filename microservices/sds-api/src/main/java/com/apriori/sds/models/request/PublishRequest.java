@@ -1,7 +1,7 @@
 package com.apriori.sds.models.request;
 
-import com.apriori.cidappapi.models.request.GroupItems;
-import com.apriori.cidappapi.models.request.Options;
+import com.apriori.models.request.component.GroupItems;
+import com.apriori.models.request.component.Options;
 import com.apriori.reader.file.user.UserCredentials;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

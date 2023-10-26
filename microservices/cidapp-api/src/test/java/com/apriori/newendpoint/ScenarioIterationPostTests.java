@@ -11,9 +11,9 @@ import com.apriori.cidappapi.utils.ScenarioIterationService;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
-import com.apriori.models.response.CostingInput;
-import com.apriori.models.response.CssComponentResponse;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ComponentResponse;
+import com.apriori.models.response.component.CostingInput;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
@@ -51,7 +51,7 @@ public class ScenarioIterationPostTests {
         params.setProperty("componentName");
         scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setEquals(params);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
 
         ScenarioItem scenarioItem = scenarioIterationRespond.getResponseEntity().getItems().stream()
@@ -73,7 +73,7 @@ public class ScenarioIterationPostTests {
         scenarioIterationRequest.getSorting().get(0).setProperty("componentName");
         scenarioIterationRequest.getSorting().get(0).setDirection(Direction.ASC);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
 
         assertEquals(5, scenarioIterationRespond.getResponseEntity().getItems().size());
@@ -88,7 +88,7 @@ public class ScenarioIterationPostTests {
                 FileResourceUtil.getResourceAsFile(
                     "OrOperatorWithThreeEquals.json").getPath(), ScenarioIterationRequest.class);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespondComponentNames =
             scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         List<String> items = scenarioIterationRespondComponentNames.getResponseEntity().getItems().stream()
             .map(ScenarioItem::getComponentName).collect(Collectors.toList());
@@ -111,7 +111,7 @@ public class ScenarioIterationPostTests {
         scenarioIterationRequest.getQuery().getFilter().getNot().setEquals(params);
 
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespondComponentNames =
             scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         List<String> items = scenarioIterationRespondComponentNames.getResponseEntity().getItems().stream()
             .map(ScenarioItem::getComponentName).collect(Collectors.toList());
@@ -133,7 +133,7 @@ public class ScenarioIterationPostTests {
         params.setProperty("componentName");
         scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setIsNull(params);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespondComponentNames =
             scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         List<CostingInput> costingInput = scenarioIterationRespondComponentNames.getResponseEntity().getItems().stream()
             .map(ScenarioItem::getCostingInput).collect(Collectors.toList());
@@ -150,7 +150,7 @@ public class ScenarioIterationPostTests {
                 FileResourceUtil.getResourceAsFile(
                     "MoreComplexQueryData.json").getPath(), ScenarioIterationRequest.class);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespondComponentNames =
             scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         List<ScenarioItem> items = scenarioIterationRespondComponentNames.getResponseEntity().getItems();
 

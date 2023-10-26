@@ -1,6 +1,6 @@
 package com.apriori.cidappapi.utils;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.ResponseWrapper;

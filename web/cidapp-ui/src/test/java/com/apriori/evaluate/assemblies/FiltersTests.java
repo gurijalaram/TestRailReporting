@@ -2,7 +2,7 @@ package com.apriori.evaluate.assemblies;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.NewCostingLabelEnum;

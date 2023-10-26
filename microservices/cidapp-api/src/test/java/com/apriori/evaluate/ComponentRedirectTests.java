@@ -5,15 +5,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.models.request.PublishRequest;
-import com.apriori.cidappapi.models.response.PostComponentResponse;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.request.component.PublishRequest;
+import com.apriori.models.response.component.PostComponentResponse;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesAPI;

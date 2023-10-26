@@ -3,7 +3,7 @@ package com.apriori;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cmp.models.builder.ComparisonObjectBuilder;
 import com.apriori.cmp.models.request.CreateComparison;

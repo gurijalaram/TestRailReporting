@@ -5,7 +5,7 @@ import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -17,7 +17,7 @@ import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.models.response.bidpackage.BidPackageItemResponse;

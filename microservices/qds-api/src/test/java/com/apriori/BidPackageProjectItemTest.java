@@ -8,7 +8,7 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.ErrorMessage;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qds.enums.QDSAPIEnum;
 import com.apriori.qds.models.response.bidpackage.BidPackageItemResponse;

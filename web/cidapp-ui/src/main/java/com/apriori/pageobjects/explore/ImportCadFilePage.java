@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.PageUtils;
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.common.ModalDialogController;
 
 import com.utils.MultiUpload;

@@ -2,6 +2,7 @@ package com.apriori.cidappapi.models.response;
 
 import com.apriori.annotations.Schema;
 import com.apriori.models.response.Pagination;
+import com.apriori.models.response.component.CostingTemplate;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;

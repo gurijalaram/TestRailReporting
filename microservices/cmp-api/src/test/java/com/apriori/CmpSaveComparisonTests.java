@@ -1,6 +1,6 @@
 package com.apriori;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cmp.models.builder.ComparisonObjectBuilder;
 import com.apriori.cmp.models.request.CreateComparison;
