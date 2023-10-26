@@ -5,7 +5,7 @@
 #  - variables in the default section, that will be used if there is no corresponding variable in the environment file
 ############################################# Global properties ########################################################
 # Define main configurations
-env: development
+env: qa-test
 deployment: production
 customer: ap-int
 
@@ -147,6 +147,10 @@ default:
 
   qms:
     api_url: https://qms.${deployment_url_template}
+
+  dfs:
+    api_url: https://dfs.${deployment_url_template}
+    authorization_key: DogCatMonkey
 
   gcd:
     api_url: https://gcd.${deployment_url_template}

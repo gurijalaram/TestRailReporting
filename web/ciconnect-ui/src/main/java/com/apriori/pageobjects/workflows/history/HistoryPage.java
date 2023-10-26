@@ -118,7 +118,7 @@ public class HistoryPage extends CICBasePage {
                             tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.WORKFLOW_NAME.getColumnName())),
                         tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.JOB_STATUS.getColumnName()))
                     .getText();
-                log.info(String.format("WorkFlowName  >>%s<< ::: Job Status  >>%s<<", workflowName, finalJobStatus));
+                log.debug(String.format("WorkFlowName  >>%s<< ::: Job Status  >>%s<<", workflowName, finalJobStatus));
             } catch (InterruptedException e) {
                 log.error(e.getMessage());
                 Thread.currentThread().interrupt();
