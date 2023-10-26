@@ -2,7 +2,6 @@ package com.apriori.dms.utils;
 
 import static com.apriori.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
@@ -13,7 +12,6 @@ import com.apriori.dms.models.response.DmsCommentResponse;
 import com.apriori.dms.models.response.DmsCommentViewResponse;
 import com.apriori.dms.models.response.DmsScenarioDiscussionResponse;
 import com.apriori.enums.ProcessGroupEnum;
-import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
@@ -54,7 +52,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
     protected static DmsCommentResponse dmsCommentResponse;
     protected static DmsCommentViewResponse dmsCommentViewResponse;
     protected static ScenarioItem scenarioItem;
-    protected static UserCredentials currentUser = UserUtil.getUser();
+    protected static UserCredentials currentUser;
     private static SoftAssertions softAssertionsTestData;
 
     /**
@@ -64,6 +62,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
     @Description("Create Test Data")
     public static void createTestData() {
         try {
+            currentUser = UserUtil.getUser();
             softAssertionsTestData = new SoftAssertions();
             bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
             projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
@@ -157,14 +156,14 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
             .build();
         new ComponentsUtil().postComponent(componentInfoBuilder);
         scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
-                SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)
+                SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName())
             .get(0);
         if (scenarioItem != null) {
             componentInfoBuilder.setComponentIdentity(scenarioItem.getComponentIdentity());
             componentInfoBuilder.setScenarioIdentity(scenarioItem.getScenarioIdentity());
             new ScenariosUtil().publishScenario(componentInfoBuilder, ScenarioResponse.class, HttpStatus.SC_CREATED);
             scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
-                    SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)
+                    SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName())
                 .get(0);
         }
         return scenarioItem;

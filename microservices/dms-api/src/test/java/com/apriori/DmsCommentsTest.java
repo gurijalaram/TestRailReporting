@@ -31,7 +31,6 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
 
     @BeforeEach
     public void testSetup() {
-        userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
     }
 
     @Test
@@ -48,7 +47,6 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     }
 
     @Test
-    @Tag(API_SANITY)
     @TestRail(id = {15484})
     @Description("Verify user can add and update comment status to deleted")
     public void createAndUpdateComment() {
