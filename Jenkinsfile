@@ -39,29 +39,6 @@ def registry_password(profile = '', region = '') {
 }
 
 pipeline {
-/*
-Configure the following parameters on your Jenkins jobs directly.  You only need to include those relevant to your job/app.
-This should reduce the need for multiple jenkinsfiles
-Those marked with a * are required or the job will not run
-    parameters {
-        * choice(name: 'MODULE_TYPE', choices: ['web', 'microservices', 'integrate'], description: 'What module type to run?')
-        * choice(name: 'MODULE', choices: ['edc-ui', 'cid-ui', 'apitests', 'ciconnect-ui', 'cas-ui', 'cir-ui', 'cia-ui', 'cidapp-ui', 'integration'], description: 'What target module to run?')
-        * choice(name: 'TARGET_ENV', choices: ['qa-21-1', 'qa-20-1', 'int-core'], description: 'What is the target environment?')
-        * choice(name: 'TEST_MODE', choices: ['GRID', 'LOCAL', 'QA'], description: 'What is target test mode?')
-
-        choice(name: 'TEST_SUITE', choices: ['SanityTestSuite', 'RegressionTestSuite', 'AdminSuite', 'ReportingSuite', 'CIDSmokeTestSuite', 'CIDNonSmokeTestSuite', 'AdhocTestSuite', 'CustomerSmokeTestSuite', 'CiaCirTestDevSuite', 'Other'], description: 'What is the test tests.suite?')
-        string(name: 'OTHER_TEST', defaultValue: 'test name', description: 'What is the test/tests.suite to execute')
-        string(name: 'LOG_FILE_NAME', defaultValue: 'logback-build.xml', description: 'Which log file configuration to use')
-
-        choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'none'], description: 'What is the browser?')
-        booleanParam(name: 'HEADLESS', defaultValue: true)
-        string(name: 'THREAD_COUNT', defaultValue: '1', description: 'What is the amount of browser instances?')
-
-        string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
-        string(name: 'CSV_FILE', defaultValue: 'none', description: 'What is the csv file to use?')
-    }
-
-*/
     agent {
         label "automation"
     }
@@ -112,7 +89,8 @@ Those marked with a * are required or the job will not run
 
                     threadCount = params.THREAD_COUNT
                     if (threadCount && threadCount.isInteger() && threadCount.toInteger() > 0) {
-                        javaOpts = javaOpts + " -DthreadCounts=${threadCount}"
+                        javaOpts = javaOpts +  " -D'junit.jupiter.execution.parallel.config.fixed.max-pool-size'=${threadCount}"
+                        javaOpts = javaOpts +  " -D'junit.jupiter.execution.parallel.config.fixed.parallelism'=${threadCount}"
                     }
 
                     browser = params.BROWSER
@@ -136,42 +114,42 @@ Those marked with a * are required or the job will not run
 
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
-                       javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
+                        javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
                     }
 
                     default_aws_region = params.REGION
                     if (default_aws_region && default_aws_region != "none") {
-                       javaOpts = javaOpts + " -Ddefault_aws_region=${params.REGION}"
+                        javaOpts = javaOpts + " -Ddefault_aws_region=${params.REGION}"
                     }
 
                     number_of_parts = params.NUMBER_OF_PARTS
                     if (number_of_parts && number_of_parts != "none") {
-                       javaOpts = javaOpts + " -Dnumber_of_parts=${params.NUMBER_OF_PARTS}"
+                        javaOpts = javaOpts + " -Dnumber_of_parts=${params.NUMBER_OF_PARTS}"
                     }
 
                     parts_csv_file = params.PARTS_CSV_FILE
                     if (parts_csv_file && parts_csv_file != "none") {
-                       javaOpts = javaOpts + " -Dparts_csv_file=${params.PARTS_CSV_FILE}"
+                        javaOpts = javaOpts + " -Dparts_csv_file=${params.PARTS_CSV_FILE}"
                     }
 
                     agent_type = params.AGENT_TYPE
                     if (agent_type && agent_type != "none") {
-                       javaOpts = javaOpts + " -Dci-connect_agent_type=${params.AGENT_TYPE}"
+                        javaOpts = javaOpts + " -Dci-connect_agent_type=${params.AGENT_TYPE}"
                     }
 
                     nexus_repository = params.NEXUS_REPOSITORY
                     if (nexus_repository && nexus_repository != "none") {
-                       javaOpts = javaOpts + " -Dci-connect_nexus_repository=${params.NEXUS_REPOSITORY}"
+                        javaOpts = javaOpts + " -Dci-connect_nexus_repository=${params.NEXUS_REPOSITORY}"
                     }
 
                     nexus_version = params.NEXUS_VERSION
                     if (nexus_version && nexus_version != "none") {
-                       javaOpts = javaOpts + " -Dci-connect_nexus_version=${params.NEXUS_VERSION}"
+                        javaOpts = javaOpts + " -Dci-connect_nexus_version=${params.NEXUS_VERSION}"
                     }
 
                     custom_install = params.CUSTOM_INSTALL
                     if (custom_install && custom_install != "none") {
-                       javaOpts = javaOpts + " -Dci-connect_custom_install=${params.CUSTOM_INSTALL}"
+                        javaOpts = javaOpts + " -Dci-connect_custom_install=${params.CUSTOM_INSTALL}"
                     }
 
                     addlJavaOpts = params.JAVAOPTS
@@ -186,11 +164,11 @@ Those marked with a * are required or the job will not run
 
         stage("Build") {
             steps {
-                 echo "Building..."
-                 script {
-                     def registryPwd = registry_password("${environment.profile}", "${environment.region}")
-                     sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-                     sh """
+                echo "Building..."
+                script {
+                    def registryPwd = registry_password("${environment.profile}", "${environment.region}")
+                    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
+                    sh """
                          docker build \
                              --no-cache \
                              --target build \
@@ -200,7 +178,7 @@ Those marked with a * are required or the job will not run
                              --build-arg MODULE=${MODULE} \
                              .
                      """
-                 }
+                }
             }
         }
 
@@ -239,12 +217,12 @@ Those marked with a * are required or the job will not run
                 junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
 
                 publishHTML(target: [
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'build/reports/tests/test',
-                    reportFiles: 'index.html',
-                    reportName: "${buildInfo.name} Test Report"
+                        allowMissing         : false,
+                        alwaysLinkToLastBuild: false,
+                        keepAll              : true,
+                        reportDir            : 'build/reports/tests/test',
+                        reportFiles          : 'index.html',
+                        reportName           : "${buildInfo.name} Test Report"
                 ])
             }
         }
