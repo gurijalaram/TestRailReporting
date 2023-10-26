@@ -114,6 +114,167 @@
           "processGroup": "PLASTIC_MOLDING"
         }
       ]
+    },
+    {
+      "componentName": "assy03A",
+      "extension": ".iam",
+      "processGroup": "ASSEMBLY",
+      "subComponents": [
+        {
+          "componentName": "Part0005a",
+          "extension": ".ipt",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "Part0005b",
+          "extension": ".ipt",
+          "processGroup": "SHEET_METAL"
+        }
+      ]
+    },
+    {
+      "componentName": "assy03",
+      "extension": ".iam",
+      "processGroup": "ASSEMBLY",
+      "subComponents": [
+        {
+          "componentName": "Part0004",
+          "extension": ".ipt",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "Part0003",
+          "extension": ".ipt",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "Part0002",
+          "extension": ".ipt",
+          "processGroup": "SHEET_METAL"
+        }
+      ]
+    },
+    {
+      "componentName": "FUSELAGE_SUBASSEMBLY",
+      "extension": ".CATProduct",
+      "processGroup": "ASSEMBLY",
+      "subComponents": [
+        {
+          "componentName": "505-04426-001 1 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "550-05628-401 PRIMARY 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "550-05676-001 1 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS14108-3 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "550-05526-001 1 1 --A",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "550-05629-401 PRIMARY 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "550-05673-401 PRIMARY 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "550-05676-002 1 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "550-05682-001 1 1 --A",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "NAS9309M-6-04 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "NAS1789-3 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS24665-132 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS21059L08 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS21059L3 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS20470AD4-6 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS20470AD4-5 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS20392-1C15 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS14218AD4-4 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "MS14108-15 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "CCR244SS-3-2 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "550-05690-001 1 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "550-05689-001 1 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "550-05683-002 1 1 ---",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        }
+      ]
     }
   ]
 }
