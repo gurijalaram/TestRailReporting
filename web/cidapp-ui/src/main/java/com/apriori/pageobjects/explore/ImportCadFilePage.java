@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.PageUtils;
+import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.common.ModalDialogController;
 
 import com.utils.MultiUpload;
@@ -117,6 +118,23 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
+     * Input multiple component details
+     *
+     * @param multiUploadList - component details as a list
+     * @return current page object
+     */
+    public ImportCadFilePage inputMultiComponentBuilderDetails(List<ComponentInfoBuilder> multiUploadList) {
+        multiUploadList.forEach(multiUpload -> {
+            String file = multiUpload.getResourceFile().getName();
+
+            enterMultiFilePath(multiUpload.getResourceFile())
+                .waitForUploadToBeDone(file)
+                .inputMultiScenarioName(multiUpload.getScenarioName(), file);
+        });
+        return this;
+    }
+
+    /**
      * Upload multiple cad files
      *
      * @param multiComponents - component details as a file list
@@ -142,6 +160,34 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
+     * Upload multiple cad files
+     *
+     * @param multiComponentList - component details as a list
+     * @return current page object
+     */
+    public ImportCadFilePage inputMultiComponentsBuilder(List<ComponentInfoBuilder> multiComponentList) {
+        multiComponentList.forEach(multiUpload -> {
+            enterMultiFilePath(multiUpload.getResourceFile());
+            waitForUploadToBeDone(multiUpload.getResourceFile().getName());
+        });
+        return this;
+    }
+
+    /**
+     * Upload multiple cad files
+     *
+     * @param multiAssemblyList - assembly details
+     * @return current page object
+     */
+    public ImportCadFilePage inputMultiAssemblyBuilder(ComponentInfoBuilder multiAssemblyList) {
+        enterFilePath(multiAssemblyList.getResourceFile());
+        waitForUploadToBeDone(multiAssemblyList.getResourceFile().getName());
+
+        inputMultiComponentsBuilder(multiAssemblyList.getSubComponents());
+        return this;
+    }
+
+    /**
      * Input scenario name
      *
      * @param scenarioName - the scenario name
@@ -163,7 +209,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     private ImportCadFilePage inputMultiScenarioName(String scenarioName, String file) {
         By byMultiFileInput = By.xpath(String.format("//input[contains(@name,'%s')]", file));
         pageUtils.waitForElementToAppear(byMultiFileInput);
-        pageUtils.setValueOfElement(pageUtils.waitForElementToAppear(byMultiFileInput), scenarioName);
+        pageUtils.setValueOfElement(driver.findElement(byMultiFileInput), scenarioName);
         return this;
     }
 
