@@ -96,7 +96,24 @@
     {
       "componentName": "oldham",
       "extension": ".asm.1",
-      "processGroup": "ASSEMBLY"
+      "processGroup": "ASSEMBLY",
+      "subComponents": [
+        {
+          "componentName": "stand",
+          "extension": ".prt.1",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "drive",
+          "extension": ".prt.1",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "joint",
+          "extension": ".prt.1",
+          "processGroup": "PLASTIC_MOLDING"
+        }
+      ]
     }
   ]
 }
