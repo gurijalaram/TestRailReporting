@@ -16,7 +16,7 @@ public class AssemblyDTORequest {
     private static final DTOReader DTO_READER = new DTOReader(ASSEMBLY_STORE);
 
     /**
-     * Gets a random assembly
+     * Gets a random assembly with 3 or less subcomponents
      *
      * @return component builder object
      */
@@ -92,7 +92,7 @@ public class AssemblyDTORequest {
     }
 
     /**
-     * Gets a random medium assembly
+     * Gets a random medium assembly with 4 - 9 subcomponents
      *
      * @return component builder object
      */
@@ -101,7 +101,7 @@ public class AssemblyDTORequest {
     }
 
     /**
-     * Gets a random large assembly
+     * Gets a random large assembly with 10 or more subcomponents
      *
      * @return component builder object
      */
