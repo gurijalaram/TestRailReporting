@@ -5,8 +5,8 @@ import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.models.request.CostRequest;
 import com.apriori.cidappapi.utils.ComponentsUtil;
@@ -26,7 +26,7 @@ import com.apriori.models.response.Applications;
 import com.apriori.models.response.Customer;
 import com.apriori.models.response.Customers;
 import com.apriori.models.response.ErrorMessage;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.sds.enums.SDSAPIEnum;

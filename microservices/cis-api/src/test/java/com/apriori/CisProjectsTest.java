@@ -10,7 +10,7 @@ import com.apriori.enums.CssSearch;
 import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;

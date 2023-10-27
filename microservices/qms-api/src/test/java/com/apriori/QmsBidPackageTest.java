@@ -8,7 +8,7 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.ApwErrorMessage;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.qds.controller.BidPackageResources;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.enums.QMSAPIEnum;

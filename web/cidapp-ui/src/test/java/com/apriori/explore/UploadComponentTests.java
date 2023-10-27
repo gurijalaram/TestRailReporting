@@ -11,7 +11,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.dto.AssemblyDTORequest;
 import com.apriori.cidappapi.models.dto.ComponentDTORequest;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -20,7 +20,7 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.pageobjects.explore.CadFileStatusPage;
@@ -242,7 +242,7 @@ public class UploadComponentTests extends TestBaseUI {
 
         //API assertion that components are Processing Failed
         componentAssembly.getSubComponents().forEach(component ->
-            softAssertions.assertThat(cssComponent.getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+            softAssertions.assertThat(cssComponent.getWaitBaseCssComponents(component.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.PROCESSING_FAILED)).hasSizeGreaterThan(0));
 
         explorePage.refresh();

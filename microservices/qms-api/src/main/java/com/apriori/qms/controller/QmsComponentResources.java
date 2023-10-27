@@ -1,7 +1,6 @@
 package com.apriori.qms.controller;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.enums.CssSearch;
@@ -13,7 +12,8 @@ import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
+import com.apriori.models.response.component.componentiteration.ComponentIteration;
 import com.apriori.qms.enums.QMSAPIEnum;
 import com.apriori.qms.models.request.bidpackage.AssignedComponentRequest;
 import com.apriori.qms.models.request.scenariodiscussion.ProjectUserParameters;

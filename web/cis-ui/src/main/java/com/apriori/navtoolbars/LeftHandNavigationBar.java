@@ -6,14 +6,14 @@ import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.apriori.enums.ScenarioStateEnum.COST_COMPLETE;
 import static com.apriori.enums.ScenarioStateEnum.NOT_COSTED;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.models.response.CostingTemplate;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.common.LetNavigationBarController;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.ProcessGroupEnum;
+import com.apriori.models.response.component.CostingTemplate;
 import com.apriori.pageobjects.messages.MessagesPage;
 import com.apriori.pageobjects.myuser.MyUserPage;
 import com.apriori.pageobjects.partsandassemblies.PartsAndAssembliesPage;

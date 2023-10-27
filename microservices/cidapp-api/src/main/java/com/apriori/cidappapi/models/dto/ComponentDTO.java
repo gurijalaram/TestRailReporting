@@ -1,6 +1,6 @@
 package com.apriori.cidappapi.models.dto;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -7,8 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.StringContains.containsString;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.models.response.CostingTemplate;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.DigitalFactoryEnum;
@@ -17,6 +16,7 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.models.response.component.CostingTemplate;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.SetInputStatusPage;
 import com.apriori.pageobjects.evaluate.components.ComponentsTablePage;

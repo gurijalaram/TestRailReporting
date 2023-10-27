@@ -1,5 +1,6 @@
 package com.apriori;
 
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cic.enums.CICPartSelectionType;
 import com.apriori.cic.enums.CostingInputFields;
 import com.apriori.cic.enums.MappingRule;
@@ -15,8 +16,6 @@ import com.apriori.cic.utils.PlmApiTestUtil;
 import com.apriori.cic.utils.PlmPartsUtil;
 import com.apriori.cic.utils.WorkflowDataUtil;
 import com.apriori.cic.utils.WorkflowTestUtil;
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.enums.DigitalFactoryEnum;
@@ -24,6 +23,7 @@ import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.component.componentiteration.ComponentIteration;
 import com.apriori.reader.file.part.PartData;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesAPI;

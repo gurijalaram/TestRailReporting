@@ -10,8 +10,8 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.response.CssComponentResponse;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ComponentResponse;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
@@ -141,8 +141,8 @@ public class CssComponent {
      *
      * @return the response wrapper that contains the response data
      */
-    private ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+    private ResponseWrapper<ComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, ComponentResponse.class)
             .queryParams(queryParams)
             .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT)
@@ -158,8 +158,8 @@ public class CssComponent {
      * @param componentType   - the component type
      * @return the response wrapper that contains the response data
      */
-    public ResponseWrapper<CssComponentResponse> postSearchRequest(UserCredentials userCredentials, String componentType) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, CssComponentResponse.class)
+    public ResponseWrapper<ComponentResponse> postSearchRequest(UserCredentials userCredentials, String componentType) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
             .token(userCredentials.getToken())
             .headers(new HashMap<>() {
                 {
@@ -185,8 +185,8 @@ public class CssComponent {
      * @param userCredentials - the user credentials
      * @return The response wrapper that contains the response data.
      */
-    public ResponseWrapper<CssComponentResponse> getIterationsRequest(UserCredentials userCredentials) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+    public ResponseWrapper<ComponentResponse> getIterationsRequest(UserCredentials userCredentials) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, ComponentResponse.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .token(userCredentials.getToken());
         return HTTPRequest.build(requestEntity).get();

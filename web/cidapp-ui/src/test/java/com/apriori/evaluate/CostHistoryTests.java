@@ -1,7 +1,6 @@
 package com.apriori.evaluate;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.models.response.CostingTemplate;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.DigitalFactoryEnum;
@@ -9,8 +8,9 @@ import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
-import com.apriori.models.response.SecondaryDigitalFactories;
-import com.apriori.models.response.SecondaryProcesses;
+import com.apriori.models.response.component.CostingTemplate;
+import com.apriori.models.response.component.SecondaryDigitalFactories;
+import com.apriori.models.response.component.SecondaryProcesses;
 import com.apriori.pageobjects.evaluate.ChangeSummaryPage;
 import com.apriori.pageobjects.evaluate.CostHistoryPage;
 import com.apriori.pageobjects.evaluate.EvaluatePage;

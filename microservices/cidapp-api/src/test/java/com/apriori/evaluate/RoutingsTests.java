@@ -2,11 +2,7 @@ package com.apriori.evaluate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.models.response.CostingTemplate;
-import com.apriori.cidappapi.models.response.RoutingNodeOptions;
-import com.apriori.cidappapi.models.response.componentiteration.AnalysisOfScenario;
-import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.response.scenarios.Routings;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
@@ -18,7 +14,11 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.request.ErrorRequestResponse;
+import com.apriori.models.request.component.RoutingNodeOptions;
+import com.apriori.models.response.ErrorRequestResponse;
+import com.apriori.models.response.component.CostingTemplate;
+import com.apriori.models.response.component.componentiteration.AnalysisOfScenario;
+import com.apriori.models.response.component.componentiteration.ComponentIteration;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesAPI;
