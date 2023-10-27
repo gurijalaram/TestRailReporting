@@ -180,7 +180,7 @@ public class CicApiTestUtil {
             .expectedResponseCode(HttpStatus.SC_OK);
         workflowResponse = HTTPRequest.build(requestEntity).post();
         if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
-            log.info(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowData));
+            log.debug(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowData));
         }
         return workflowResponse;
     }
@@ -205,7 +205,7 @@ public class CicApiTestUtil {
             .expectedResponseCode(HttpStatus.SC_OK);
         workflowResponse = HTTPRequest.build(requestEntity).post();
         if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
-            log.info(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowRequestDataBuilder.getName()));
+            log.debug(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowRequestDataBuilder.getName()));
         }
         return workflowResponse;
     }
@@ -325,7 +325,7 @@ public class CicApiTestUtil {
             }
             TimeUnit.SECONDS.sleep(WAIT_TIME);
             finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
-            log.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
+            log.debug(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
         }
         return true;
     }
@@ -350,7 +350,7 @@ public class CicApiTestUtil {
             TimeUnit.SECONDS.sleep(WAIT_TIME);
             finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
             cicLoginUtil.refreshBrowser();
-            log.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
+            log.debug(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
         }
         return true;
     }
@@ -374,7 +374,7 @@ public class CicApiTestUtil {
             }
             TimeUnit.SECONDS.sleep(WAIT_TIME);
             finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
-            log.info(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
+            log.debug(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
         }
         return true;
     }
@@ -742,7 +742,7 @@ public class CicApiTestUtil {
                 if (cicAgentPorts.getEnvironment().equals(PropertiesContext.get("env")) &&
                     cicAgentPorts.getCustomer().equals(PropertiesContext.get("customer")) &&
                     cicAgentPorts.getAgentType().equals(PropertiesContext.get("ci-connect.agent_type"))) {
-                    log.info(String.format("PORT for Environment >>%s<< - Customer >>%s<< - Agent Type >>%s<< is >>%s<<", PropertiesContext.get("env"),
+                    log.debug(String.format("PORT for Environment >>%s<< - Customer >>%s<< - Agent Type >>%s<< is >>%s<<", PropertiesContext.get("env"),
                         PropertiesContext.get("customer"),
                         PropertiesContext.get("ci-connect.agent_type"),
                         cicAgentPorts.getPort()));
@@ -770,7 +770,7 @@ public class CicApiTestUtil {
                 if (cicAgentPorts.getEnvironment().equals(PropertiesContext.get("env")) &&
                     cicAgentPorts.getCustomer().equals(PropertiesContext.get("customer")) &&
                     cicAgentPorts.getAgentType().equals(agentType.getAgentType())) {
-                    log.info(String.format("PORT for Environment >>%s<< - Customer >>%s<< - Agent Type >>%s<< is >>%s<<", PropertiesContext.get("env"),
+                    log.debug(String.format("PORT for Environment >>%s<< - Customer >>%s<< - Agent Type >>%s<< is >>%s<<", PropertiesContext.get("env"),
                         PropertiesContext.get("customer"),
                         PropertiesContext.get("ci-connect.agent_type"),
                         cicAgentPorts.getPort()));

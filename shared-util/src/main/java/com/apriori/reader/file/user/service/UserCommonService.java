@@ -44,7 +44,7 @@ public class UserCommonService {
 
     public static List<UserCredentials> initUsers() {
         List<String> users;
-        String csvFileName = PropertiesContext.get("${env}.users_csv_file");
+        String csvFileName = PropertiesContext.get("users_csv_file");
         users = InitFileData.initRows(csvFileName);
         if (users == null) {
             return Collections.singletonList(createDefaultUser());
