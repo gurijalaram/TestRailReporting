@@ -41,7 +41,7 @@ public class GroupEditAssemblies extends TestBaseUI {
         final String PIN = "Pin";
         final String SMALL_RING = "small ring";
 
-         componentAssembly = new AssemblyDTORequest().getAssembly("Hinge assembly");
+        componentAssembly = new AssemblyDTORequest().getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
