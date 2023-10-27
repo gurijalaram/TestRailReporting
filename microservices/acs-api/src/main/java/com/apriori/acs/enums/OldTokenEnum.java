@@ -19,7 +19,7 @@ public enum OldTokenEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("base_api_url")
+        return PropertiesContext.get("base_api_sp_url")
             + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 }

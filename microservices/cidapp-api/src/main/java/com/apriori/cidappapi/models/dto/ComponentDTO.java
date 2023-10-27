@@ -1,4 +1,4 @@
-package com.apriori.cidappapi.models;
+package com.apriori.cidappapi.models.dto;
 
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 
@@ -13,6 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AssembliesDTO {
+public class ComponentDTO {
     private List<ComponentInfoBuilder> assemblies;
+    private List<ComponentInfoBuilder> components;
 }

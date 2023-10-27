@@ -66,7 +66,9 @@
 ## Run Gradle tests with JVM args
 1. Open Terminal to project root directory
 2. Run `gradle clean :web:cidapp-ui:test --tests "{parentFolder.suiteName}"` eg `gradle clean :web:cidapp-ui:test --tests "testsuites.SmokeTestSuite"`
-3. To pass in JVM args `gradle clean :web:cidapp-ui:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :web:cidapp-ui:test --tests "testsuites.SmokeTestSuite" -Djunit.jupiter.execution.parallel.config.fixed.max-pool-size=3 -Denv=qa-test -Dcsv="common-users.csv"`
+3. To pass in JVM args `gradle clean :web:cidapp-ui:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :web:cidapp-ui:test --tests "testsuites.SmokeTestSuite"
+   -D"junit.jupiter.execution.parallel.config.fixed.max-pool-size"=3 -D"junit.jupiter.execution.parallel.config.fixed.parallelism"=4 -Denv=qa-test -Dcsv="common-users.csv"`
+**Note:** I'd advise setting `max-pool-size` and `parallelism` to the same value to avoid junit errors
 
 ## How to run single suite
 1. Open Terminal to project root directory
@@ -290,10 +292,10 @@ e.g. PropertiesContext.get("fms.api_url") | note that env = qa-cid-perf <br>
 Search in `system environments` and in  `PropertiesContext` require special naming template.
  - for System property, in the request property name, will be automatically replaced all `"."` with `"_"`
    Please NOTE: if you need to specify a property name as a `System environment`, you need to replace all `"."` with `"_"` in the property name, taken from java code.
-    e.g. `com.apriori.utils.properties.PropertiesContext("global.users_csv_file")` - will search system environment with name: `global_users_csv_file`
+    e.g. `com.apriori.utils.properties.PropertiesContext("users_csv_file")` - will search system environment with name: `global_users_csv_file`
    
   - for `PropertiesContext`, in requested property name, will be automatically replaced all `"."` with `"/"`
-    e.g. `com.apriori.utils.properties.PropertiesContext("global.users_csv_file")` - will search config.yml property with name: `global/users_csv_file`   
+    e.g. `com.apriori.utils.properties.PropertiesContext("users_csv_file")` - will search config.yml property with name: `global/users_csv_file`   
 
 
 #### Property references
