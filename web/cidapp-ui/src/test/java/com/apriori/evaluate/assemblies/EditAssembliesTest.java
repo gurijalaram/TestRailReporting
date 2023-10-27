@@ -1052,7 +1052,6 @@ public class EditAssembliesTest extends TestBaseUI {
 
         final String BIG_RING = "big ring";
         final String PIN = "Pin";
-        final String SMALL_RING = "small ring";
 
         componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
 
@@ -1142,7 +1141,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
         softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(SMALL_RING)).as("Verify 'missing' Small Ring Struck Out").isTrue();
         softAssertions.assertThat(componentsTreePage.getRowDetails(SMALL_RING, componentAssembly.getScenarioName()))
-            .as("Verify that 'missing' Small Ring is CAD DIsconnected").contains(StatusIconEnum.DISCONNECTED.getStatusIcon());
+            .as("Verify that 'missing' Small Ring is CAD Disconnected").contains(StatusIconEnum.DISCONNECTED.getStatusIcon());
 
         softAssertions.assertAll();
     }
