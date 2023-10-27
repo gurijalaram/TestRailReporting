@@ -155,6 +155,68 @@
       ]
     },
     {
+      "componentName": "RandomShapeAsm",
+      "extension": ".SLDASM",
+      "processGroup": "ASSEMBLY",
+      "subComponents": [
+        {
+          "componentName": "50mmArc",
+          "extension": ".SLDPRT",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "50mmCube",
+          "extension": ".SLDPRT",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "50mmEllipse",
+          "extension": ".SLDPRT",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "50mmOctagon",
+          "extension": ".SLDPRT",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "75mmCube",
+          "extension": ".SLDPRT",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "75mmHexagon",
+          "extension": ".SLDPRT",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "100mmCube",
+          "extension": ".SLDPRT",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "100mmSlot",
+          "extension": ".SLDPRT",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "150mmCuboid",
+          "extension": ".SLDPRT",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "200mmCylinder",
+          "extension": ".SLDPRT",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "500mmBlob",
+          "extension": ".SLDPRT",
+          "processGroup": "ASSEMBLY"
+        }
+      ]
+    },
+    {
       "componentName": "FUSELAGE_SUBASSEMBLY",
       "extension": ".CATProduct",
       "processGroup": "ASSEMBLY",
