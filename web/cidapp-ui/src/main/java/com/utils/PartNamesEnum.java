@@ -8,6 +8,7 @@ public enum PartNamesEnum {
     GASKET("gasket"),
     HANDLE("Handle"),
     LEFT_PADDLE("left paddle"),
+    LEFT_COVER("left cover"),
     STEER_WHEEL_SUPPORT("steer wheel support"),
     SEAT_LOCK("seat lock"),
     MECHANISM_BODY("mechanism body"),
