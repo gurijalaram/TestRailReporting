@@ -6,10 +6,10 @@ import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SANITY;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 
 import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.dto.AssemblyDTORequest;
