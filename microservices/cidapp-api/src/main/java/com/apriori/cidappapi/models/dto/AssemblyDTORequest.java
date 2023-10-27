@@ -90,4 +90,22 @@ public class AssemblyDTORequest {
         });
         return componentAssembly;
     }
+
+    /**
+     * Gets a random medium assembly
+     *
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getMediumAssembly() {
+        return DTO_READER.getMediumAssembly();
+    }
+
+    /**
+     * Gets a random large assembly
+     *
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getLargeAssembly() {
+        return DTO_READER.getLargeAssembly();
+    }
 }
