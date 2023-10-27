@@ -347,6 +347,93 @@
           "processGroup": "FORGING"
         }
       ]
+    },
+    {
+      "componentName": "Gym Bike",
+      "extension": ".iam",
+      "processGroup": "ASSEMBLY",
+      "subComponents": [
+        {
+          "componentName": "centre bolt",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "centre washer",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "display",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "gasket",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "Handle",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "left paddle",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "steer wheel support",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "seat lock",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "mechanism body",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "paddle bar",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "leg cover",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "leg",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "right paddle",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "washer",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "seat",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "pin",
+          "extension": ".ipt",
+          "processGroup": "PLASTIC_MOLDING"
+        }
+      ]
     }
   ]
 }
