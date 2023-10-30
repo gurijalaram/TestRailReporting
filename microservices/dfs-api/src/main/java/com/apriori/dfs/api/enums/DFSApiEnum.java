@@ -7,6 +7,7 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
 
     // DIGITAL FACTORY
     DIGITAL_FACTORIES("digital-factories"),
+    DIGITAL_FACTORIES_INVALID_SHARED_SECRET("digital-factories/%s"),
     DIGITAL_FACTORIES_BY_IDENTITY("digital-factories/%s");
 
     private final String endpoint;
@@ -22,6 +23,22 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("dfs.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("dfs.authorization_key");
+        return PropertiesContext.get("dfs.api_url") + String.format(getEndpointString(), variables) + this.getSharedSecret(String.format(getEndpointString(), variables));
+    }
+
+    private String getSharedSecret(String endpointString) {
+        if (endpointString.endsWith("/") || endpointString.contains("key=")) {
+            return "";
+        } else {
+            return customAddQuery(this.getEndpointString(), PropertiesContext.get("dfs.authorization_key"));
+        }
+    }
+
+    private String customAddQuery(String endpointString, String sharedSecret) {
+        String querySymbol = "?";
+        if (endpointString.contains("?")) {
+            querySymbol = "&";
+        }
+        return querySymbol + "key=" + sharedSecret;
     }
 }

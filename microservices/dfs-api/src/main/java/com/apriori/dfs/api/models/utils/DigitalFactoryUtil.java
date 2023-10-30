@@ -7,10 +7,10 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.ErrorMessage;
-
 import software.amazon.awssdk.http.HttpStatusCode;
 
 public class DigitalFactoryUtil {
+    private static final String INVALID_SHARED_SECRET_ENDPOINT = "?key=InvalidSharedSecret";
 
     /**
      * GET digital factories
@@ -33,6 +33,36 @@ public class DigitalFactoryUtil {
     public ResponseWrapper<DigitalFactories> findDigitalFactories() {
         final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactories.class)
             .expectedResponseCode(HttpStatusCode.OK);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * FIND digital factories with Invalid Shared Secret
+     *
+     * @param expectedResponseCode - expected response code
+     * @return ErrorMessage Object
+     */
+    public ResponseWrapper<ErrorMessage> findDigitalFactoriesWithInvalidSharedSecret(Integer expectedResponseCode) {
+
+        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_INVALID_SHARED_SECRET, ErrorMessage.class)
+                .inlineVariables(INVALID_SHARED_SECRET_ENDPOINT)
+                .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * FIND digital factories without Shared Secret
+     *
+     * @param expectedResponseCode - expected response code
+     * @return ErrorMessage Object
+     */
+    public ResponseWrapper<ErrorMessage> findDigitalFactoriesWithoutSharedSecret(Integer expectedResponseCode) {
+
+        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_INVALID_SHARED_SECRET, ErrorMessage.class)
+                .inlineVariables("")
+                .expectedResponseCode(expectedResponseCode);
 
         return HTTPRequest.build(requestEntity).get();
     }

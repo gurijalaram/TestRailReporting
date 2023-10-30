@@ -1,5 +1,6 @@
 package com.aprioi.dfs.api.tests;
 
+import com.apriori.dfs.api.models.response.DigitalFactories;
 import com.apriori.dfs.api.models.utils.DigitalFactoryUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.models.response.ErrorMessage;
@@ -33,14 +34,30 @@ public class DigitalFactoriesTests {
 
     @Test
     @TestRail(id = {2})
-    @Description("Gets a list of digital factories for a specific customer")
-    public void findDigitalFactoryTest() {
+    @Description("Gets a list of digital factories when shared secret is valid")
+    public void findDigitalFactoriesWithValidSharedSecretTest() {
 
-        ResponseWrapper<ErrorMessage> getComparisonsResponse = digitalFactoryUtil.getDigitalFactories(HttpStatusCode.OK);
+        ResponseWrapper<DigitalFactories> getComparisonsResponse = digitalFactoryUtil.findDigitalFactories();
+
+        softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getItems()).isNotNull();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {3})
+    @Description("Get Unauthorized Error when shared secret is not valid")
+    public void findDigitalFactoriesWithInvalidSharedSecretTest() {
+
+        ResponseWrapper<ErrorMessage> getComparisonsResponse = digitalFactoryUtil.findDigitalFactoriesWithInvalidSharedSecret(HttpStatusCode.UNAUTHORIZED);
 
         softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getStatus()).isEqualTo(401);
         softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getError()).isEqualTo("Unauthorized");
+        softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getMessage()).isEqualTo("Invalid or missing credential");
+        softAssertions.assertAll();
 
+        getComparisonsResponse = digitalFactoryUtil.findDigitalFactoriesWithoutSharedSecret(HttpStatusCode.UNAUTHORIZED);
+
+        softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getMessage()).isEqualTo("Invalid credential");
         softAssertions.assertAll();
     }
 }
