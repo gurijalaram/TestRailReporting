@@ -2,7 +2,7 @@ package com.apriori.evaluate.assemblies;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;

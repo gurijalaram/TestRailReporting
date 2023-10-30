@@ -3,7 +3,7 @@ package com.apriori;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.qds.enums.DiscussionStatus;
 import com.apriori.qms.controller.QmsBidPackageResources;
