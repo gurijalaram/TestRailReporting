@@ -17,6 +17,10 @@ import com.apriori.evaluate.MaterialSelectionTests;
 import com.apriori.evaluate.ReCostScenarioTests;
 import com.apriori.evaluate.RoutingsTests;
 import com.apriori.evaluate.ScenariosTests;
+import com.apriori.newendpoint.ScenarioIterationPostTests;
+import com.apriori.newendpoint.VerifyIfFailsTest;
+import com.apriori.newendpoint.VerifyIfNotFailTests;
+import com.apriori.oldendpoint.ScenarioIterationGetTests;
 
 import org.junit.platform.suite.api.ExcludeTags;
 import org.junit.platform.suite.api.SelectClasses;
@@ -38,7 +42,11 @@ import org.junit.platform.suite.api.Suite;
     ComponentRedirectTests.class,
     MaterialSelectionTests.class,
     SettingsTests.class,
-    RoutingsTests.class
+    RoutingsTests.class,
+    ScenarioIterationPostTests.class,
+    VerifyIfFailsTest.class,
+    VerifyIfNotFailTests.class,
+    ScenarioIterationGetTests.class
 })
 public class RegressionTestSuite {
 }

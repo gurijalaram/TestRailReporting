@@ -2,7 +2,7 @@ package com.apriori.evaluate;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;

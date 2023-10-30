@@ -4,7 +4,7 @@ import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.properties.PropertiesContext;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.controller.QmsProjectResources;

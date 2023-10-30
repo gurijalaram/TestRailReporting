@@ -5,8 +5,8 @@ import static com.apriori.enums.CssSearch.SCENARIO_IDENTITY_EQ;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.response.CssComponentResponse;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ComponentResponse;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.rules.TestRulesAPI;
@@ -58,7 +58,7 @@ public class CssSearchTests {
     @TestRail(id = {22731})
     @Description("Find scenario iterations for a given customer matching a specified query.")
     public void searchPartComponentScenarios() {
-        ResponseWrapper<CssComponentResponse> components = cssComponent.postSearchRequest(currentUser, componentType);
+        ResponseWrapper<ComponentResponse> components = cssComponent.postSearchRequest(currentUser, componentType);
 
         soft.assertThat(components.getResponseEntity().getPageItemCount()).isGreaterThanOrEqualTo(1);
         soft.assertThat(components.getResponseEntity().getItems().get(0).getComponentType()).isEqualTo(componentType);

@@ -9,8 +9,8 @@ import com.apriori.cidappapi.utils.ScenarioIterationService;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.json.JsonManager;
-import com.apriori.models.request.ErrorRequestResponse;
-import com.apriori.models.response.CssComponentResponse;
+import com.apriori.models.response.ErrorRequestResponse;
+import com.apriori.models.response.component.ComponentResponse;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
@@ -45,12 +45,12 @@ public class VerifyIfNotFailTests {
         params.setProperty("costingInput.identity");
         scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setEquals(params);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond = null;
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond = null;
         try {
             scenarioIterationRespond =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         } finally {
-            ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
+            ResponseWrapper<ComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
                 (Executable) finalScenarioIterationRespond::getResponseEntity);
         }
@@ -70,12 +70,12 @@ public class VerifyIfNotFailTests {
         params.setProperty("thumbnail.imageType");
         scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setEquals(params);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond = null;
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond = null;
         try {
             scenarioIterationRespond =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         } finally {
-            ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
+            ResponseWrapper<ComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
                 (Executable) finalScenarioIterationRespond::getResponseEntity);
         }
@@ -95,12 +95,12 @@ public class VerifyIfNotFailTests {
         params.setProperty("componentCreatedAt");
         scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setEquals(params);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond = null;
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond = null;
         try {
             scenarioIterationRespond =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         } finally {
-            ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
+            ResponseWrapper<ComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
                 (Executable) finalScenarioIterationRespond::getResponseEntity);
         }
@@ -120,12 +120,12 @@ public class VerifyIfNotFailTests {
         params.setProperty("iteration");
         scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setIn(params);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond = null;
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond = null;
         try {
             scenarioIterationRespond =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         } finally {
-            ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
+            ResponseWrapper<ComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
                 (Executable) finalScenarioIterationRespond::getResponseEntity);
         }
@@ -170,12 +170,12 @@ public class VerifyIfNotFailTests {
         params.setProperty("iteration");
         scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setBetween(params);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond = null;
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond = null;
         try {
             scenarioIterationRespond =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         } finally {
-            ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
+            ResponseWrapper<ComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
                 (Executable) finalScenarioIterationRespond::getResponseEntity);
         }

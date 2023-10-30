@@ -11,7 +11,7 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.ApwErrorMessage;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.qms.controller.QmsScenarioDiscussionResources;
 import com.apriori.qms.enums.QMSAPIEnum;
 import com.apriori.qms.models.request.scenariodiscussion.DiscussionCommentParameters;

@@ -1,6 +1,5 @@
 package com.apriori;
 
-import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;
 import com.apriori.cis.controller.CisBidPackageProjectResources;
 import com.apriori.enums.CssSearch;
@@ -8,7 +7,8 @@ import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.DateUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
+import com.apriori.models.response.component.componentiteration.ComponentIteration;
 import com.apriori.qms.controller.QmsComponentResources;
 import com.apriori.qms.controller.QmsProjectResources;
 import com.apriori.qms.models.request.bidpackage.AssignedComponentRequest;

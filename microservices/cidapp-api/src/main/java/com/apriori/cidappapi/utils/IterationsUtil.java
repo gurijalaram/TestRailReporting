@@ -1,12 +1,12 @@
 package com.apriori.cidappapi.utils;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.enums.CidAppAPIEnum;
-import com.apriori.cidappapi.models.response.componentiteration.ComponentIteration;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.component.componentiteration.ComponentIteration;
 
 public class IterationsUtil {
     /**

@@ -1,6 +1,6 @@
 package com.integration.tests;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.dataservice.TestDataService;
 import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.MaterialNameEnum;

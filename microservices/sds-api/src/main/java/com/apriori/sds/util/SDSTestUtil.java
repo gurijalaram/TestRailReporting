@@ -5,8 +5,8 @@ import static com.apriori.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.models.request.CostRequest;
 import com.apriori.cidappapi.utils.ComponentsUtil;
@@ -16,6 +16,7 @@ import com.apriori.enums.ScenarioStateEnum;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
@@ -26,7 +27,7 @@ import com.apriori.models.response.Applications;
 import com.apriori.models.response.Customer;
 import com.apriori.models.response.Customers;
 import com.apriori.models.response.ErrorMessage;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 import com.apriori.sds.enums.SDSAPIEnum;
@@ -55,16 +56,18 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public abstract class SDSTestUtil extends TestUtil {
 
-    protected static UserCredentials testingUser;
+    protected static UserCredentials testingUser = UserUtil.getUser("admin");
+    protected static String testingApUserContext =  new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail());
     protected static String appApplicationContext;
     protected static Set<ScenarioItem> scenariosToDelete = new HashSet<>();
     private static ScenarioItem testingComponent;
 
-    @BeforeAll
-    public static void init() {
-        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser("admin"));
-        RequestEntityUtil.useTokenForRequests(testingUser.getToken());
-    }
+    // TODO z: fix thread safe
+    //    @BeforeAll
+    //    public static void init() {
+    //        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser("admin"));
+    //        RequestEntityUtil.useTokenForRequests(testingUser.getToken());
+    //    }
 
     @AfterAll
     public static void clearTestingData() {

@@ -1,19 +1,19 @@
 package com.apriori.sds.models.response;
 
 import com.apriori.annotations.Schema;
-import com.apriori.cidappapi.models.response.componentiteration.AnalysisOfScenario;
-import com.apriori.cidappapi.models.response.componentiteration.ScenarioCustomAttribute;
-import com.apriori.cidappapi.models.response.componentiteration.ScenarioMetadata;
-import com.apriori.cidappapi.models.response.componentiteration.ScenarioRoutings;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
-import com.apriori.models.response.CostingInput;
-import com.apriori.models.response.ScenarioGcd;
-import com.apriori.models.response.Thumbnail;
-import com.apriori.models.response.componentiteration.PartNestingDiagram;
-import com.apriori.models.response.componentiteration.ScenarioDesignInvestigations;
-import com.apriori.models.response.componentiteration.ScenarioDesignIssues;
-import com.apriori.models.response.componentiteration.ScenarioDesignNotices;
-import com.apriori.models.response.componentiteration.ScenarioProcess;
+import com.apriori.models.response.component.CostingInput;
+import com.apriori.models.response.component.Thumbnail;
+import com.apriori.models.response.component.componentiteration.AnalysisOfScenario;
+import com.apriori.models.response.component.componentiteration.PartNestingDiagram;
+import com.apriori.models.response.component.componentiteration.ScenarioCustomAttribute;
+import com.apriori.models.response.component.componentiteration.ScenarioDesignInvestigations;
+import com.apriori.models.response.component.componentiteration.ScenarioDesignIssues;
+import com.apriori.models.response.component.componentiteration.ScenarioDesignNotices;
+import com.apriori.models.response.component.componentiteration.ScenarioGcd;
+import com.apriori.models.response.component.componentiteration.ScenarioMetadata;
+import com.apriori.models.response.component.componentiteration.ScenarioProcess;
+import com.apriori.models.response.component.componentiteration.ScenarioRoutings;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

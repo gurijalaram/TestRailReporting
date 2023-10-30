@@ -5,15 +5,15 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.models.response.CostingTemplate;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.CostingTemplate;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.components.ComponentsTablePage;
 import com.apriori.pageobjects.evaluate.components.ComponentsTreePage;

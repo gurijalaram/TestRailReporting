@@ -1,6 +1,6 @@
 package com.apriori.cidappapi.utils;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.request.ScenarioIterationRequest;
 import com.apriori.enums.CssAPIEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -10,9 +10,9 @@ import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.request.ErrorRequestResponse;
-import com.apriori.models.response.CssComponentResponse;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.ErrorRequestResponse;
+import com.apriori.models.response.component.ComponentResponse;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
 
@@ -41,10 +41,10 @@ public class ScenarioIterationService {
      * @param queryParams - pass parameters to the curl
      */
 
-    public ResponseWrapper<CssComponentResponse> getScenarioIterationWithParams(QueryParams queryParams) {
+    public ResponseWrapper<ComponentResponse> getScenarioIterationWithParams(QueryParams queryParams) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+            RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, ComponentResponse.class)
                 .token(currentUser.getToken())
                 .queryParams(queryParams);
         return HTTPRequest.build(requestEntity).get();
@@ -69,10 +69,10 @@ public class ScenarioIterationService {
      *
      * @param scenarioIterationRequest - pass the body
      */
-    public ResponseWrapper<CssComponentResponse> getScenarioIterationWithParamsPost(ScenarioIterationRequest scenarioIterationRequest) {
+    public ResponseWrapper<ComponentResponse> getScenarioIterationWithParamsPost(ScenarioIterationRequest scenarioIterationRequest) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ErrorRequestResponse.class)
+            RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ComponentResponse.class)
                 .body(scenarioIterationRequest)
                 .token(currentUser.getToken());
         return HTTPRequest.build(requestEntity).post();
@@ -129,7 +129,7 @@ public class ScenarioIterationService {
         QueryParams queryParams = new QueryParams();
         queryParams.use(property, searchedItem);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond =
             getScenarioIterationWithParams(queryParams);
         if (scenarioIterationRespond.getResponseEntity().getItems().size() > 0) {
             return true;
@@ -141,7 +141,7 @@ public class ScenarioIterationService {
      * assertion method used in tests
      */
 
-    public boolean validateIfTrue(ResponseWrapper<CssComponentResponse> scenarioIterationRespond) {
+    public boolean validateIfTrue(ResponseWrapper<ComponentResponse> scenarioIterationRespond) {
         for (ScenarioItem item : scenarioIterationRespond.getResponseEntity().getItems()) {
             if (item.getComponentType().equals("PART") || item.getComponentType().equals("ASSEMBLY")) {
                 continue;
@@ -157,7 +157,7 @@ public class ScenarioIterationService {
      * assertion method used in tests
      */
 
-    public boolean validateIfTrueWithAndOperator(ResponseWrapper<CssComponentResponse> scenarioIterationRespond) {
+    public boolean validateIfTrueWithAndOperator(ResponseWrapper<ComponentResponse> scenarioIterationRespond) {
         for (ScenarioItem item : scenarioIterationRespond.getResponseEntity().getItems()) {
             if (item.getComponentType().equals("PART") && item.getComponentName().equals("bracket_basic")) {
                 continue;
@@ -173,7 +173,7 @@ public class ScenarioIterationService {
      * assertion method used in tests
      */
 
-    public boolean validateIfTrueWithSwOperator(ResponseWrapper<CssComponentResponse> scenarioIterationRespond) {
+    public boolean validateIfTrueWithSwOperator(ResponseWrapper<ComponentResponse> scenarioIterationRespond) {
         Pattern p = Pattern.compile("BR.*", Pattern.CASE_INSENSITIVE);
 
         for (ScenarioItem item : scenarioIterationRespond.getResponseEntity().getItems()) {
