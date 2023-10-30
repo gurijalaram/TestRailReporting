@@ -2,6 +2,7 @@ package com.apriori.util;
 
 import com.apriori.http.models.entity.RequestEntity;
 import com.apriori.http.models.request.HTTPRequest;
+import com.apriori.http.utils.AuthUserContextUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.http.utils.TestUtil;
@@ -23,18 +24,22 @@ import java.util.List;
 public abstract class VDSTestUtil extends TestUtil {
     protected static final String customerId =  PropertiesContext.get("customer_identity");
     protected static final String userId = PropertiesContext.get("user_identity");
-    protected static UserCredentials testingUser;
+    protected static UserCredentials testingUser = UserUtil.getUser();
+    protected static String testingApUserContext =  new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail());
+
 
     private static DigitalFactory digitalFactory;
     private static String digitalFactoryIdentity;
 
-    @BeforeAll
-    public static  void init() {
-        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
-    }
+    // TODO z: fix thread safe
+    //    @BeforeAll
+    //    public static  void init() {
+    //        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
+    //    }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class)
+            .apUserContext(testingApUserContext)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
