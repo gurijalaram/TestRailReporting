@@ -8,6 +8,7 @@ import org.openqa.selenium.NoSuchElementException;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DTOReader {
     private final String jsonFile;
@@ -26,17 +27,45 @@ public class DTOReader {
     }
 
     /**
-     * Gets a random assembly
+     * Gets a random small assembly
      *
      * @return component builder object
      */
     public ComponentInfoBuilder getAssembly() {
         ComponentDTO componentDTO = readFile();
 
-        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies();
+        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("small")).collect(Collectors.toList());
         Collections.shuffle(listOfComponents);
 
-        return listOfComponents.stream().findFirst().get();
+        return listOfComponents.stream().findFirst().orElseThrow(() -> new RuntimeException("No 'small' assembly was found"));
+    }
+
+    /**
+     * Gets a random medium assembly
+     *
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getMediumAssembly() {
+        ComponentDTO componentDTO = readFile();
+
+        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("medium")).collect(Collectors.toList());
+        Collections.shuffle(listOfComponents);
+
+        return listOfComponents.stream().findFirst().orElseThrow(() -> new RuntimeException("No 'medium' assembly was found"));
+    }
+
+    /**
+     * Gets a random large assembly
+     *
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getLargeAssembly() {
+        ComponentDTO componentDTO = readFile();
+
+        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("large")).collect(Collectors.toList());
+        Collections.shuffle(listOfComponents);
+
+        return listOfComponents.stream().findFirst().orElseThrow(() -> new RuntimeException("No 'large' assembly was found"));
     }
 
     /**
