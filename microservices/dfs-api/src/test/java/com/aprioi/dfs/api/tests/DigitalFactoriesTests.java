@@ -20,7 +20,7 @@ public class DigitalFactoriesTests {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
-    @TestRail(id = {1})
+    @TestRail(id = {28962})
     @Description("Gets a specific digital factory for a specific customer")
     public void getDigitalFactoryTest() {
 
@@ -33,7 +33,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {2})
+    @TestRail(id = {28958})
     @Description("Gets a list of digital factories when shared secret is valid")
     public void findDigitalFactoriesWithValidSharedSecretTest() {
 
@@ -44,7 +44,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {3})
+    @TestRail(id = {28961})
     @Description("Get Unauthorized Error when shared secret is not valid")
     public void findDigitalFactoriesWithInvalidSharedSecretTest() {
 
