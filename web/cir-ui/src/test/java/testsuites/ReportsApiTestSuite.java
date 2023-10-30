@@ -59,9 +59,9 @@ import org.junit.platform.suite.api.Suite;
     AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
     AssemblyDetailsReportTests.class,
-    //BasicCostAvoidanceReportTests.class,
-    /*CastingDtcComparisonReportTests.class,
-    CastingDtcDetailsReportTests.class,*/
+    BasicCostAvoidanceReportTests.class,
+    CastingDtcComparisonReportTests.class,
+    CastingDtcDetailsReportTests.class,
     CastingDtcReportTests.class,
     /*ComponentCostReportTests.class,
     CostOutlierIdentificationTests.class,
@@ -91,7 +91,7 @@ import org.junit.platform.suite.api.Suite;
     SheetMetalDtcComparisonReportTests.class,
     SheetMetalDtcDetailsTests.class,*/
     SheetMetalDtcReportTests.class,
-    /*SpendAnalysisValueTrackingReportTests.class,
+    SpendAnalysisValueTrackingReportTests.class,
     SpendAnalysisValueTrackingDetailsReportTests.class,
     SpendAnalysisValueTrackingSimplifiedReportTests.class,
     SpendAnalysisValueTrackingDetailsSimplifiedReportTests.class,
@@ -102,7 +102,7 @@ import org.junit.platform.suite.api.Suite;
     TargetAndQuotedCostValueTrackingReportTests.class,
     TargetAndQuotedCostValueTrackingDetailsReportTests.class,
     UpgradeComparisonReportTests.class,
-    UpgradePartComparisonTests.class*/
+    UpgradePartComparisonTests.class
 })
 public class ReportsApiTestSuite {
 }
