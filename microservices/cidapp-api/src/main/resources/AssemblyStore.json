@@ -4,6 +4,9 @@
       "componentName": "Hinge assembly",
       "extension": ".SLDASM",
       "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
       "subComponents": [
         {
           "componentName": "big ring",
@@ -26,6 +29,9 @@
       "componentName": "flange c",
       "extension": ".CATProduct",
       "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
       "subComponents": [
         {
           "componentName": "flange",
@@ -48,6 +54,9 @@
       "componentName": "piston_assembly",
       "extension": ".asm.1",
       "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
       "subComponents": [
         {
           "componentName": "piston",
@@ -65,6 +74,9 @@
       "componentName": "v6 piston assembly_asm1",
       "extension": ".prt",
       "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
       "subComponents": [
         {
           "componentName": "piston_pin",
@@ -97,6 +109,9 @@
       "componentName": "oldham",
       "extension": ".asm.1",
       "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
       "subComponents": [
         {
           "componentName": "stand",
@@ -119,6 +134,9 @@
       "componentName": "assy03A",
       "extension": ".iam",
       "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
       "subComponents": [
         {
           "componentName": "Part0005a",
@@ -136,6 +154,9 @@
       "componentName": "assy03",
       "extension": ".iam",
       "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
       "subComponents": [
         {
           "componentName": "Part0004",
@@ -158,6 +179,9 @@
       "componentName": "RandomShapeAsm",
       "extension": ".SLDASM",
       "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "medium"
+      },
       "subComponents": [
         {
           "componentName": "50mmArc",
@@ -220,6 +244,9 @@
       "componentName": "FUSELAGE_SUBASSEMBLY",
       "extension": ".CATProduct",
       "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "large"
+      },
       "subComponents": [
         {
           "componentName": "505-04426-001 1 1 ---",
@@ -352,6 +379,9 @@
       "componentName": "Gym Bike",
       "extension": ".iam",
       "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "large"
+      },
       "subComponents": [
         {
           "componentName": "centre bolt",

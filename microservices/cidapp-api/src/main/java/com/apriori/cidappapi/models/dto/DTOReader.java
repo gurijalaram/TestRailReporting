@@ -34,10 +34,10 @@ public class DTOReader {
     public ComponentInfoBuilder getAssembly() {
         ComponentDTO componentDTO = readFile();
 
-        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getSubComponents().size() <= 3).collect(Collectors.toList());
+        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("small")).collect(Collectors.toList());
         Collections.shuffle(listOfComponents);
 
-        return listOfComponents.stream().findFirst().get();
+        return listOfComponents.stream().findFirst().orElseThrow(() -> new RuntimeException("No 'small' assembly was found"));
     }
 
     /**
@@ -48,10 +48,10 @@ public class DTOReader {
     public ComponentInfoBuilder getMediumAssembly() {
         ComponentDTO componentDTO = readFile();
 
-        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getSubComponents().size() >= 4 && o.getSubComponents().size() <= 9).collect(Collectors.toList());
+        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("medium")).collect(Collectors.toList());
         Collections.shuffle(listOfComponents);
 
-        return listOfComponents.stream().findFirst().orElseThrow(() -> new java.util.NoSuchElementException(String.format("No medium assembly with '%d' to '%d' subcomponents", 4, 9)));
+        return listOfComponents.stream().findFirst().orElseThrow(() -> new RuntimeException("No 'medium' assembly was found"));
     }
 
     /**
@@ -62,10 +62,10 @@ public class DTOReader {
     public ComponentInfoBuilder getLargeAssembly() {
         ComponentDTO componentDTO = readFile();
 
-        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getSubComponents().size() >= 10).collect(Collectors.toList());
+        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("large")).collect(Collectors.toList());
         Collections.shuffle(listOfComponents);
 
-        return listOfComponents.stream().findFirst().orElseThrow(() -> new java.util.NoSuchElementException(String.format("No assembly found with '%d' or more subcomponents", 10)));
+        return listOfComponents.stream().findFirst().orElseThrow(() -> new RuntimeException("No 'large' assembly was found"));
     }
 
     /**
