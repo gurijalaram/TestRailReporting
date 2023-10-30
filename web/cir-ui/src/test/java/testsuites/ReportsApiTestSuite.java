@@ -89,9 +89,9 @@ import org.junit.platform.suite.api.Suite;
     ScenarioActivityProcessGroupActivityReportTests.class,
     ScenarioActivityTotalActivityReportTests.class,
     SheetMetalDtcComparisonReportTests.class,
-    SheetMetalDtcDetailsTests.class,
+    SheetMetalDtcDetailsTests.class,*/
     SheetMetalDtcReportTests.class,
-    SpendAnalysisValueTrackingReportTests.class,
+    /*SpendAnalysisValueTrackingReportTests.class,
     SpendAnalysisValueTrackingDetailsReportTests.class,
     SpendAnalysisValueTrackingSimplifiedReportTests.class,
     SpendAnalysisValueTrackingDetailsSimplifiedReportTests.class,
