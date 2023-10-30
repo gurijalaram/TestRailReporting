@@ -58,7 +58,7 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasses({
     //AssemblyCostA4ReportTests.class,
     //AssemblyCostLetterReportTests.class,
-    //AssemblyDetailsReportTests.class,
+    AssemblyDetailsReportTests.class,
     //BasicCostAvoidanceReportTests.class,
     /*CastingDtcComparisonReportTests.class,
     CastingDtcDetailsReportTests.class,*/
