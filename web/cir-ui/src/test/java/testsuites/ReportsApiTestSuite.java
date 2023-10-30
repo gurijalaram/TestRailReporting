@@ -56,8 +56,8 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @IncludeTags(API_SANITY)
 @SelectClasses({
-    //AssemblyCostA4ReportTests.class,
-    //AssemblyCostLetterReportTests.class,
+    AssemblyCostA4ReportTests.class,
+    AssemblyCostLetterReportTests.class,
     AssemblyDetailsReportTests.class,
     //BasicCostAvoidanceReportTests.class,
     /*CastingDtcComparisonReportTests.class,
