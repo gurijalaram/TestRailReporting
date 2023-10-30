@@ -1,0 +1,134 @@
+{
+  "components": [
+    {
+      "componentName": "Case_17",
+      "extension": ".stp",
+      "processGroup": "CASTING"
+    },
+    {
+      "componentName": "bracket_basic",
+      "extension": ".prt",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "PowderMetalShaft",
+      "extension": ".stp",
+      "processGroup": "POWDER_METAL"
+    },
+    {
+      "componentName": "Push Pin",
+      "extension": ".stp",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Locker_bottom_panel",
+      "extension": ".prt",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "225_gasket-1-solid1",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "M3CapScrew",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "case_002_006-8611543_prt",
+      "extension": ".stp",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "BasicScenario_Forging",
+      "extension": ".stp",
+      "processGroup": "FORGING"
+    },
+    {
+      "componentName": "Rapid Prototyping",
+      "extension": ".stp",
+      "processGroup": "RAPID_PROTOTYPING"
+    },
+    {
+      "componentName": "SheetMetal",
+      "extension": ".prt",
+      "processGroup": "SHEET_METAL_TRANSFER_DIE"
+    },
+    {
+      "componentName": "Casting",
+      "extension": ".prt",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "FlangedRound",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL_HYDROFORMING"
+    },
+    {
+      "componentName": "Machined Box AMERICAS",
+      "extension": ".SLDPRT",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Machined Box AMERICAS IronCast",
+      "extension": ".SLDPRT",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Plastic moulded cap DFM",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Casting-Die",
+      "extension": ".stp",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "SandCast",
+      "extension": ".x_t",
+      "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "plasticLid",
+      "extension": ".SLDPRT",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "testpart-4",
+      "extension": ".prt",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "PlasticMoulding",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "DTCCastingIssues",
+      "extension": ".catpart",
+      "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "SandCastIssues",
+      "extension": ".SLDPRT",
+      "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "Plastic moulded cap noDraft",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Plastic moulded cap thinPart",
+      "extension": ".SLDPRT",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Plastic moulded cap edge radius",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    }
+  ]
+}

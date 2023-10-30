@@ -3,7 +3,7 @@ package com.apriori;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.TestUtil;
 import com.apriori.models.response.ApwErrorMessage;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.qms.controller.QmsBidPackageResources;
 import com.apriori.qms.models.request.bidpackage.BidPackageItemParameters;
 import com.apriori.qms.models.request.bidpackage.BidPackageItemRequest;

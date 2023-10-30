@@ -3,7 +3,7 @@ package com.apriori.pageobjects.evaluate.components;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.PageUtils;
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.ScenarioStateEnum;

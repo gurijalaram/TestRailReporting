@@ -1,6 +1,6 @@
 package com.apriori.evaluate;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.models.request.ForkRequest;
 import com.apriori.cidappapi.models.response.Scenario;
 import com.apriori.cidappapi.models.response.scenarios.ScenarioResponse;

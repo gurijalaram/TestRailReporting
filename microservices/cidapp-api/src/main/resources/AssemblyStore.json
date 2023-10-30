@@ -43,6 +43,60 @@
           "processGroup": "PLASTIC_MOLDING"
         }
       ]
+    },
+    {
+      "componentName": "piston_assembly",
+      "extension": ".asm.1",
+      "processGroup": "ASSEMBLY",
+      "subComponents": [
+        {
+          "componentName": "piston",
+          "extension": ".prt.5",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "piston_pin",
+          "extension": ".prt.1",
+          "processGroup": "PLASTIC_MOLDING"
+        }
+      ]
+    },
+    {
+      "componentName": "v6 piston assembly_asm1",
+      "extension": ".prt",
+      "processGroup": "ASSEMBLY",
+      "subComponents": [
+        {
+          "componentName": "piston_pin",
+          "extension": ".prt.1",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "piston cover_model1",
+          "extension": ".prt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "piston pin_model1",
+          "extension": ".prt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "piston rod_model1",
+          "extension": ".prt",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "piston_model1",
+          "extension": ".prt",
+          "processGroup": "PLASTIC_MOLDING"
+        }
+      ]
+    },
+    {
+      "componentName": "oldham",
+      "extension": ".asm.1",
+      "processGroup": "ASSEMBLY"
     }
   ]
 }

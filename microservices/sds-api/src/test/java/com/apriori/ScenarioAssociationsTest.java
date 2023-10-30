@@ -7,7 +7,7 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.sds.enums.SDSAPIEnum;
 import com.apriori.sds.models.request.AssociationRequest;

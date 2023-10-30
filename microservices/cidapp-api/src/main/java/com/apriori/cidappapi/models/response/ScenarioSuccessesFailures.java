@@ -1,6 +1,7 @@
 package com.apriori.cidappapi.models.response;
 
 import com.apriori.annotations.Schema;
+import com.apriori.models.request.component.Failures;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;

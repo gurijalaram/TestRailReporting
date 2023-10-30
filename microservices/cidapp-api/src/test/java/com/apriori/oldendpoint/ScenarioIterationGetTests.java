@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.apriori.cidappapi.utils.ScenarioIterationService;
 import com.apriori.http.utils.QueryParams;
 import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.response.CssComponentResponse;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ComponentResponse;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.rules.TestRulesAPI;
 import com.apriori.testrail.TestRail;
 
@@ -34,7 +34,7 @@ public class ScenarioIterationGetTests {
         queryParams.use("pageNumber", "1");
         queryParams.use("pageSize", "5");
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         assertEquals(5, scenarioIterationRespond.getResponseEntity().getItems().size());
@@ -47,7 +47,7 @@ public class ScenarioIterationGetTests {
         QueryParams queryParams = new QueryParams();
         queryParams.use("componentName[EQ]", "bracket_basic");
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         ScenarioItem scenarioItem = scenarioIterationRespond.getResponseEntity().getItems().stream()
@@ -64,7 +64,7 @@ public class ScenarioIterationGetTests {
         QueryParams queryParams = new QueryParams();
         queryParams.use("componentName[NE]", "bracket_basic");
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         assertEquals(null, scenarioIterationRespond.getResponseEntity().getItems().stream()
@@ -80,7 +80,7 @@ public class ScenarioIterationGetTests {
         QueryParams queryParams = new QueryParams();
         queryParams.use("componentType[IN]", "bracket_basic");
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         assertTrue(scenarioIterationService.validateIfTrue(scenarioIterationRespond));
@@ -93,7 +93,7 @@ public class ScenarioIterationGetTests {
         QueryParams queryParams = new QueryParams();
         queryParams.use("componentType[NI]", "PART|ASSEMBLY");
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         assertFalse(scenarioIterationService.validateIfTrue(scenarioIterationRespond));
@@ -107,7 +107,7 @@ public class ScenarioIterationGetTests {
         queryParams.use("componentType[EQ]", "PART");
         queryParams.use("componentName[EQ]", "bracket_basic");
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         assertTrue(scenarioIterationService.validateIfTrueWithAndOperator(scenarioIterationRespond));
@@ -121,7 +121,7 @@ public class ScenarioIterationGetTests {
         queryParams.use("componentName[SW]", "br");
         queryParams.use("componentName[EQ]", "bracket_basic");
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
+        ResponseWrapper<ComponentResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParams(queryParams);
 
         assertTrue(scenarioIterationService.validateIfTrueWithSwOperator(scenarioIterationRespond));

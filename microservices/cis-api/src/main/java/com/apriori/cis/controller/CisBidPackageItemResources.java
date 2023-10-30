@@ -1,6 +1,6 @@
 package com.apriori.cis.controller;
 
-import com.apriori.cidappapi.builder.ComponentInfoBuilder;
+import com.apriori.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cis.enums.CisAPIEnum;
 import com.apriori.cis.models.request.bidpackage.BidPackageItemParameters;
@@ -12,7 +12,7 @@ import com.apriori.http.models.request.HTTPRequest;
 import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.models.response.ScenarioItem;
+import com.apriori.models.response.component.ScenarioItem;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.utils.CssComponent;
 
