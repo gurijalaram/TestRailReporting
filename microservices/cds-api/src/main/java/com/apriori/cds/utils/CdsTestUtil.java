@@ -591,6 +591,8 @@ public class CdsTestUtil extends TestUtil {
                 IdentityProviderRequest.builder()
                     .description("patch IDP using Automation")
                     .contact(userIdentity)
+                    .identityProviderPlatform("Azure AD")
+                    .updatedBy("#SYSTEM00000")
                     .build());
 
         return HTTPRequest.build(requestEntity).patch();
@@ -954,13 +956,15 @@ public class CdsTestUtil extends TestUtil {
      * @param highMem - true or false
      * @return new object
      */
-    public ResponseWrapper<Enablements> createUpdateEnablements(String customerIdentity, String userIdentity, String customerAssignedRole, Boolean highMem) {
+    public ResponseWrapper<Enablements> createUpdateEnablements(String customerIdentity, String userIdentity, String customerAssignedRole, Boolean highMem, Boolean sandbox, Boolean preview) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_ENABLEMENTS, Enablements.class)
             .inlineVariables(customerIdentity, userIdentity)
             .body("enablements",
                 Enablements.builder()
                      .customerAssignedRole(customerAssignedRole)
                      .highMemEnabled(highMem)
+                     .sandboxEnabled(sandbox)
+                     .previewEnabled(preview)
                      .createdBy("#SYSTEM00000")
                      .updatedBy("#SYSTEM00000")
                      .build())
