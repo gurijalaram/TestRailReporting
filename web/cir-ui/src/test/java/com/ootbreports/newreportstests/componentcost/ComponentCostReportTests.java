@@ -15,10 +15,10 @@ import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.COMPONENT_COST.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.COMPONENT_COST;
-    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
+    private String reportsJsonFileName = JasperApiEnum.COMPONENT_COST.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.COMPONENT_COST;
+    private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
