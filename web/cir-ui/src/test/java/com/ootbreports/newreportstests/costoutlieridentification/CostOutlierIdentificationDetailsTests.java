@@ -1,6 +1,7 @@
 package com.ootbreports.newreportstests.costoutlieridentification;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
@@ -35,7 +36,7 @@ public class CostOutlierIdentificationDetailsTests extends JasperApiAuthenticati
     }
 
     @Test
-    @Tag(API_SANITY)
+    @Tag(REPORTS_API)
     @TestRail(id = 1954)
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricFbcFunctionality() {
@@ -46,7 +47,7 @@ public class CostOutlierIdentificationDetailsTests extends JasperApiAuthenticati
     }
 
     @Test
-    @Tag(API_SANITY)
+    @Tag(REPORTS_API)
     @TestRail(id = 1954)
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricPpcFunctionality() {

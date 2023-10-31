@@ -1,6 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
@@ -39,7 +40,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(API_SANITY)
+    @Tag(REPORTS_API)
     @TestRail(id = 1699)
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {

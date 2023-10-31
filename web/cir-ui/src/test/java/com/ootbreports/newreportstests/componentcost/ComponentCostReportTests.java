@@ -1,6 +1,7 @@
 package com.ootbreports.newreportstests.componentcost;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
@@ -26,7 +27,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(API_SANITY)
+    @Tag(REPORTS_API)
     @TestRail(id = 3329)
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {

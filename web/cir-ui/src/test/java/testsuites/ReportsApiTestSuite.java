@@ -1,6 +1,7 @@
 package testsuites;
 
 import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 
 import com.ootbreports.newreportstests.componentcost.ComponentCostReportTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationDetailsTests;
@@ -54,7 +55,7 @@ import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@IncludeTags(API_SANITY)
+@IncludeTags(REPORTS_API)
 @SelectClasses({
     /*AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
