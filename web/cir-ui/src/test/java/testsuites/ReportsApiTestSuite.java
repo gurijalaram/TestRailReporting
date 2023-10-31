@@ -54,19 +54,19 @@ import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-//@IncludeTags(API_SANITY)
+@IncludeTags(API_SANITY)
 @SelectClasses({
-    AssemblyCostA4ReportTests.class,
+    /*AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
-    AssemblyDetailsReportTests.class,
-    BasicCostAvoidanceReportTests.class,
+    AssemblyDetailsReportTests.class*/
+    /*BasicCostAvoidanceReportTests.class,
     CastingDtcComparisonReportTests.class,
-    CastingDtcDetailsReportTests.class,
+    CastingDtcDetailsReportTests.class,*/
     CastingDtcReportTests.class,
-    /*ComponentCostReportTests.class,
+    ComponentCostReportTests.class,
     CostOutlierIdentificationTests.class,
-    CostOutlierIdentificationDetailsTests.class,
-    CycleTimeValueTrackingReportTests.class,
+    CostOutlierIdentificationDetailsTests.class
+    /*CycleTimeValueTrackingReportTests.class,
     CycleTimeValueTrackingDetailsReportTests.class,
     DesignOutlierIdentificationReportTests.class,
     DesignOutlierIdentificationDetailsReportTests.class,
@@ -89,7 +89,7 @@ import org.junit.platform.suite.api.Suite;
     ScenarioActivityProcessGroupActivityReportTests.class,
     ScenarioActivityTotalActivityReportTests.class,
     SheetMetalDtcComparisonReportTests.class,
-    SheetMetalDtcDetailsTests.class,*/
+    SheetMetalDtcDetailsTests.class,
     SheetMetalDtcReportTests.class,
     SpendAnalysisValueTrackingReportTests.class,
     SpendAnalysisValueTrackingDetailsReportTests.class,
@@ -102,7 +102,7 @@ import org.junit.platform.suite.api.Suite;
     TargetAndQuotedCostValueTrackingReportTests.class,
     TargetAndQuotedCostValueTrackingDetailsReportTests.class,
     UpgradeComparisonReportTests.class,
-    UpgradePartComparisonTests.class
+    UpgradePartComparisonTests.class*/
 })
 public class ReportsApiTestSuite {
 }

@@ -26,7 +26,7 @@ public enum CirApiEnum implements ExternalEndpointEnum {
     CASTING_DTC_DETAILS(DTC_METRICS_REPORT_START.getEndpointString().concat("casting/castingDTCDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;").concat(
             "massMetric;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;partsSelect/values?freshData=false")),
     CASTING_DTC(DTC_METRICS_REPORT_START.getEndpointString().concat("casting/castingDTC/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;massMetric;sortOrder;currencyCode;").concat(
-        "annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;outlierDistance;partsSelect/values")),
+        "annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;outlierDistance;partsSelect/values?freshData=false")),
     COMPONENT_COST(APRIORI_GENERAL_REPORTS.getEndpointString().concat("componentCost/inputControls/exportSetName;componentType;latestExportDate;createdBy;lastModifiedBy;componentNumber;scenarioName;").concat(
         "componentSelect;componentCostCurrencyCode/values?freshData=false")),
     COST_OUTLIER_IDENTIFICATION(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("costOutlierIdentification/inputControls/useLatestExport;earliestExportDate;latestExportDate;").concat(
