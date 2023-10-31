@@ -91,12 +91,12 @@ public class CdsUserEnablementsTests {
     @TestRail(id = {25977, 28007})
     @Description("Create and update user enablements")
     public void createUpdateUserEnablements() {
-        ResponseWrapper<Enablements> createEnablements = cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, false);
+        ResponseWrapper<Enablements> createEnablements = cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, false, false, false);
 
         String enablementsIdentity = createEnablements.getResponseEntity().getIdentity();
         soft.assertThat(createEnablements.getResponseEntity().getHighMemEnabled()).isFalse();
 
-        ResponseWrapper<Enablements> updateEnablements = cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, true);
+        ResponseWrapper<Enablements> updateEnablements = cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, true, false, false);
 
         soft.assertThat(updateEnablements.getResponseEntity().getIdentity()).isEqualTo(enablementsIdentity);
         soft.assertThat(updateEnablements.getResponseEntity().getHighMemEnabled()).isTrue();
@@ -111,7 +111,7 @@ public class CdsUserEnablementsTests {
     @TestRail(id = {25978})
     @Description("Returns user enablements")
     public void getUserEnablements() {
-        cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, false);
+        cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, false, false, false);
 
         ResponseWrapper<Enablements> getEnablements = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ENABLEMENTS, Enablements.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
