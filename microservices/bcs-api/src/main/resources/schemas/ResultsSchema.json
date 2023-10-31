@@ -20,6 +20,9 @@
         "annualCost": {
           "type": "number"
         },
+        "annualManufacturingCarbon": {
+          "type": "number"
+        },
         "annualVolume": {
           "type": "integer"
         },
@@ -119,6 +122,9 @@
         "logisticsCost": {
           "type": "number"
         },
+        "logisticsCarbon": {
+          "type": "number"
+        },
         "manualMaterialName": {
           "type": "string"
         },
@@ -144,6 +150,9 @@
           "type": "string"
         },
         "materialStockName": {
+          "type": "string"
+        },
+        "cadMaterialName": {
           "type": "string"
         },
         "materialUnitCost": {
@@ -215,6 +224,9 @@
         "toolingCostPerPart": {
           "type": "number"
         },
+        "totalCarbon": {
+          "type": "number"
+        },
         "totalCost": {
           "type": "number"
         },
@@ -242,11 +254,20 @@
         "currencyCode": {
           "type": "string"
         },
+        "machiningMode": {
+          "type": "string"
+        },
         "processGroupName": {
           "type": "string"
         },
         "scenarioName": {
           "type": "string"
+        },
+        "targetCost": {
+          "type": "number"
+        },
+        "targetMass": {
+          "type": "number"
         },
         "userDefinedAttributes": {
           "type": "object"
@@ -255,7 +276,7 @@
           "type": "string"
         }
       },
-      "required": [
+      "optional": [
         "identity",
         "additionalAmortizedInvestment",
         "additionalDirectCosts",
@@ -264,9 +285,8 @@
         "annualVolume",
         "batchCost",
         "batchSetupTime",
+        "cadMaterialName",
         "batchSize",
-        "cadSerLength",
-        "cadSerWidth",
         "capitalInvestment",
         "cycleTime",
         "dfmRisk",
@@ -294,15 +314,13 @@
         "length",
         "lifetimeCost",
         "logisticsCost",
-        "manualMaterialName",
+        "logisticsCarbon",
         "margin",
         "marginPercent",
         "materialCost",
         "materialMode",
         "materialName",
         "materialOverheadCost",
-        "materialStockFormName",
-        "materialStockName",
         "materialUnitCost",
         "materialUtilizationMode",
         "notSupportedGcdsCount",
@@ -321,12 +339,9 @@
         "scrapMass",
         "setupCostPerPart",
         "sgaCost",
-        "stockPropertyLength",
-        "stockPropertyThickness",
-        "stockPropertyWidth",
         "stripNestingPitch",
         "toolingCostPerPart",
-        "totalCost",
+        "totalCarbon",
         "totalProductionVolume",
         "otherDirectCosts",
         "utilization",
@@ -335,10 +350,21 @@
         "width",
         "costingStatus",
         "currencyCode",
+        "machiningMode",
         "processGroupName",
         "scenarioName",
         "userDefinedAttributes",
-        "vpeName"
+        "vpeName",
+        "cadSerLength",
+        "cadSerWidth",
+        "manualMaterialName",
+        "materialStockFormName",
+        "materialStockName",
+        "stockPropertyLength",
+        "stockPropertyThickness",
+        "stockPropertyWidth",
+        "targetCost",
+        "targetMass"
       ]
     }
   },
