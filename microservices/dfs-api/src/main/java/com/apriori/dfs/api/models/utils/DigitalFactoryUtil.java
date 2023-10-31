@@ -45,7 +45,7 @@ public class DigitalFactoryUtil {
      */
     public ResponseWrapper<ErrorMessage> findDigitalFactoriesWithInvalidSharedSecret(Integer expectedResponseCode, String inlineVariables) {
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_INVALID_SHARED_SECRET, ErrorMessage.class)
+        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, ErrorMessage.class)
                 .inlineVariables(inlineVariables)
                 .expectedResponseCode(expectedResponseCode);
 

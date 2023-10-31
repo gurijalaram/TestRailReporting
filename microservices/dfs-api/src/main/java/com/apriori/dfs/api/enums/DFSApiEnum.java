@@ -7,8 +7,7 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
 
     // DIGITAL FACTORY
     DIGITAL_FACTORIES("digital-factories"),
-    DIGITAL_FACTORIES_INVALID_SHARED_SECRET("digital-factories/%s"),
-    DIGITAL_FACTORIES_BY_IDENTITY("digital-factories/%s");
+    DIGITAL_FACTORIES_BY_PATH_PARAMETER("digital-factories/%s");
 
     private final String endpoint;
 
