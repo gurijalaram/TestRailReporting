@@ -52,10 +52,12 @@ import com.ootbreports.newreportstests.upgradecomparison.UpgradeComparisonReport
 import com.ootbreports.newreportstests.upgradecomparison.UpgradePartComparisonTests;
 import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeTags(REPORTS_API)
+@SelectPackages("com.ootbreports.newreportstests")
 //@SelectClasses({
 /*AssemblyCostA4ReportTests.class,
 AssemblyCostLetterReportTests.class,
