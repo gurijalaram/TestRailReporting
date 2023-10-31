@@ -3,6 +3,8 @@ package com.apriori.dfs.api.enums;
 import com.apriori.interfaces.ExternalEndpointEnum;
 import com.apriori.properties.PropertiesContext;
 
+import java.util.Arrays;
+
 public enum DFSApiEnum implements ExternalEndpointEnum {
 
     // DIGITAL FACTORY
@@ -22,22 +24,20 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("dfs.api_url") + String.format(getEndpointString(), variables) + this.getSharedSecret(String.format(getEndpointString(), variables));
-    }
-
-    private String getSharedSecret(String endpointString) {
-        if (endpointString.endsWith("/") || endpointString.contains("key=")) {
-            return "";
-        } else {
-            return customAddQuery(this.getEndpointString(), PropertiesContext.get("dfs.authorization_key"));
+        String endpoint = PropertiesContext.get("dfs.api_url") + String.format(getEndpointString(), variables);
+        String sharedSecretKey = "key=";
+        if (Arrays.stream(variables).anyMatch(o -> o.toString().contains(sharedSecretKey) || o.toString().isEmpty())) {
+            return endpoint;
         }
+        return endpoint + this.addQuery(getEndpointString());
     }
 
-    private String customAddQuery(String endpointString, String sharedSecret) {
+    @Override
+    public String addQuery(String endpointString) {
         String querySymbol = "?";
         if (endpointString.contains("?")) {
             querySymbol = "&";
         }
-        return querySymbol + "key=" + sharedSecret;
+        return querySymbol + "key=" + PropertiesContext.get("dfs.authorization_key");
     }
 }
