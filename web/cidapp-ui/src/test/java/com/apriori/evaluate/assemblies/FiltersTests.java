@@ -420,7 +420,7 @@ public class FiltersTests extends TestBaseUI {
         componentAssembly = new AssemblyDTORequest().getAssembly();
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(componentAssembly.getUser())
             .uploadComponentAndOpen(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getResourceFile(), componentAssembly.getUser())
             .openComponents()
             .selectTableView()

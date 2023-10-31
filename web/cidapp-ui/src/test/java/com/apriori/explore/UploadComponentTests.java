@@ -339,7 +339,7 @@ public class UploadComponentTests extends TestBaseUI {
 
         cidComponentItem = new CidAppLoginPage(driver)
             .login(component.getUser())
-            .uploadComponent(component.getComponentName(), componentAssembly.getScenarioName(), resourceFile, currentUser);
+            .uploadComponent(component.getComponentName(), component.getScenarioName(), component.getResourceFile(), component.getUser());
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
 
@@ -348,7 +348,7 @@ public class UploadComponentTests extends TestBaseUI {
         explorePage = evaluatePage.logout()
             .login(UserUtil.getUser());
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), componentAssembly.getScenarioName())).isEqualTo(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName())).isEqualTo(0);
 
         softAssertions.assertAll();
     }
