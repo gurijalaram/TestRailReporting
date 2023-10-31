@@ -94,6 +94,7 @@ public class EditAssembliesTest extends TestBaseUI {
             .close(ComponentsTablePage.class)
             .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
             .closePanel()
+            .refresh()
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 
