@@ -16,8 +16,10 @@ import software.amazon.awssdk.http.HttpStatusCode;
 @ExtendWith(TestRulesAPI.class)
 public class DigitalFactoriesTests {
 
-    private DigitalFactoryUtil digitalFactoryUtil = new DigitalFactoryUtil();
-    private SoftAssertions softAssertions = new SoftAssertions();
+    private final DigitalFactoryUtil digitalFactoryUtil = new DigitalFactoryUtil();
+    private final SoftAssertions softAssertions = new SoftAssertions();
+    private static final String INVALID_SHARED_SECRET_ENDPOINT = "?key=InvalidSharedSecret";
+    private static final String WITHOUT_SHARED_SECRET = "";
 
     @Test
     @TestRail(id = {28962})
@@ -48,16 +50,23 @@ public class DigitalFactoriesTests {
     @Description("Get Unauthorized Error when shared secret is not valid")
     public void findDigitalFactoriesWithInvalidSharedSecretTest() {
 
-        ResponseWrapper<ErrorMessage> getComparisonsResponse = digitalFactoryUtil.findDigitalFactoriesWithInvalidSharedSecret(HttpStatusCode.UNAUTHORIZED);
+        ResponseWrapper<ErrorMessage> getComparisonsResponseWithInvalidSharedSecret = digitalFactoryUtil.findDigitalFactoriesWithInvalidSharedSecret(HttpStatusCode.UNAUTHORIZED, INVALID_SHARED_SECRET_ENDPOINT);
 
-        softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getStatus()).isEqualTo(401);
-        softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getError()).isEqualTo("Unauthorized");
-        softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getMessage()).isEqualTo("Invalid or missing credential");
+        softAssertions.assertThat(getComparisonsResponseWithInvalidSharedSecret.getResponseEntity().getStatus()).isEqualTo(401);
+        softAssertions.assertThat(getComparisonsResponseWithInvalidSharedSecret.getResponseEntity().getError()).isEqualTo("Unauthorized");
+        softAssertions.assertThat(getComparisonsResponseWithInvalidSharedSecret.getResponseEntity().getMessage()).isEqualTo("Invalid or missing credential");
         softAssertions.assertAll();
+    }
 
-        getComparisonsResponse = digitalFactoryUtil.findDigitalFactoriesWithoutSharedSecret(HttpStatusCode.UNAUTHORIZED);
+    @Test
+    @TestRail(id = {28964})
+    @Description("Get Unauthorized Error when shared secret is not provided")
+    public void findDigitalFactoriesWithoutSharedSecretTest() {
+        ResponseWrapper<ErrorMessage> getComparisonsResponseWithoutSharedSecret = digitalFactoryUtil.findDigitalFactoriesWithInvalidSharedSecret(HttpStatusCode.UNAUTHORIZED, WITHOUT_SHARED_SECRET);
 
-        softAssertions.assertThat(getComparisonsResponse.getResponseEntity().getMessage()).isEqualTo("Invalid credential");
+        softAssertions.assertThat(getComparisonsResponseWithoutSharedSecret.getResponseEntity().getStatus()).isEqualTo(401);
+        softAssertions.assertThat(getComparisonsResponseWithoutSharedSecret.getResponseEntity().getError()).isEqualTo("Unauthorized");
+        softAssertions.assertThat(getComparisonsResponseWithoutSharedSecret.getResponseEntity().getMessage()).isEqualTo("Invalid credential");
         softAssertions.assertAll();
     }
 }

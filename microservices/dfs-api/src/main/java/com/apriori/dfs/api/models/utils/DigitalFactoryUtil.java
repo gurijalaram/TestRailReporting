@@ -11,7 +11,6 @@ import com.apriori.models.response.ErrorMessage;
 import software.amazon.awssdk.http.HttpStatusCode;
 
 public class DigitalFactoryUtil {
-    private static final String INVALID_SHARED_SECRET_ENDPOINT = "?key=InvalidSharedSecret";
 
     /**
      * GET digital factories
@@ -39,30 +38,15 @@ public class DigitalFactoryUtil {
     }
 
     /**
-     * FIND digital factories with Invalid Shared Secret
+     * FIND digital factories with Invalid or without Shared Secret
      *
      * @param expectedResponseCode - expected response code
      * @return ErrorMessage Object
      */
-    public ResponseWrapper<ErrorMessage> findDigitalFactoriesWithInvalidSharedSecret(Integer expectedResponseCode) {
+    public ResponseWrapper<ErrorMessage> findDigitalFactoriesWithInvalidSharedSecret(Integer expectedResponseCode, String inlineVariables) {
 
         final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_INVALID_SHARED_SECRET, ErrorMessage.class)
-                .inlineVariables(INVALID_SHARED_SECRET_ENDPOINT)
-                .expectedResponseCode(expectedResponseCode);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
-     * FIND digital factories without Shared Secret
-     *
-     * @param expectedResponseCode - expected response code
-     * @return ErrorMessage Object
-     */
-    public ResponseWrapper<ErrorMessage> findDigitalFactoriesWithoutSharedSecret(Integer expectedResponseCode) {
-
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_INVALID_SHARED_SECRET, ErrorMessage.class)
-                .inlineVariables("")
+                .inlineVariables(inlineVariables)
                 .expectedResponseCode(expectedResponseCode);
 
         return HTTPRequest.build(requestEntity).get();
