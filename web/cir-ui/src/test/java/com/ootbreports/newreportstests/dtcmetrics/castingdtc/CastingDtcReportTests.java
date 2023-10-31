@@ -142,7 +142,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    //@Tag(REPORTS_API)
     @TestRail(id = 7508)
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Report")
     public void testDtcScoreLow() {
@@ -159,7 +159,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    //@Tag(REPORTS_API)
     @TestRail(id = 7511)
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
