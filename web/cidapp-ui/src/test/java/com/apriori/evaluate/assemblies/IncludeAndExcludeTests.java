@@ -501,7 +501,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
         componentsTreePage.clickScenarioCheckbox(componentName)
             .updateCadFile(componentResourceFile)
             .closePanel()
-            .clickRefresh(ComponentsTreePage.class);
+            .openComponents();
 
         List<ScenarioItem> autoHelmDetails = componentsUtil.getUnCostedComponent(componentName, scenarioName, currentUser);
 
@@ -514,6 +514,9 @@ public class IncludeAndExcludeTests extends TestBaseUI {
             .build();
 
         assemblyInfo.getSubComponents().add(helmInfo);
+
+        componentsTreePage = componentsTreePage.closePanel()
+            .clickRefresh(ComponentsTreePage.class);
 
         softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(componentName)).isEqualTo(false);
 

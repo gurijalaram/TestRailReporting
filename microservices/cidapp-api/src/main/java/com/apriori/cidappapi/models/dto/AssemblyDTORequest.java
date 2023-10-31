@@ -16,7 +16,7 @@ public class AssemblyDTORequest {
     private static final DTOReader DTO_READER = new DTOReader(ASSEMBLY_STORE);
 
     /**
-     * Gets a random assembly
+     * Gets a random small assembly
      *
      * @return component builder object
      */
@@ -89,5 +89,23 @@ public class AssemblyDTORequest {
             o.setResourceFile(FileResourceUtil.getCloudFile(o.getProcessGroup(), o.getComponentName() + o.getExtension()));
         });
         return componentAssembly;
+    }
+
+    /**
+     * Gets a random medium assembly
+     *
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getMediumAssembly() {
+        return DTO_READER.getMediumAssembly();
+    }
+
+    /**
+     * Gets a random large assembly
+     *
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getLargeAssembly() {
+        return DTO_READER.getLargeAssembly();
     }
 }

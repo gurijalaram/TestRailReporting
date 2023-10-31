@@ -129,6 +129,66 @@
       "componentName": "Plastic moulded cap edge radius",
       "extension": ".CATPart",
       "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "PlasticMoulded-Special Tooling Sliders Lifters",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "DTCPlasticIssues",
+      "extension": ".SLDPRT",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "bracketdfm",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "gs515625_gt077_high",
+      "extension": ".prt.2",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "9856874Medium",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "bar_test1",
+      "extension": ".prt",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "manifold2",
+      "extension": ".prt.1",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "1379344",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "1271576_CRITICAL",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "3571050_cad",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "SandCast",
+      "extension": ".x_t",
+      "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "SandCastBox",
+      "extension": ".SLDPRT",
+      "processGroup": "CASTING_SAND"
     }
   ]
 }
