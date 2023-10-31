@@ -16,6 +16,7 @@ import java.util.List;
 public class CustomAttributes {
     private String function;
     private String location;
+    private List<String> UDA5;
     private String department;
     private int workspaceId;
     private String defaultRole;

@@ -33,5 +33,5 @@ public class MentionedUser {
     private String userType;
     private String username;
     private Boolean hasCompleteProfile;
-    private BidPackageProjectUserEnablements userEnablements;
+    private BidPackageProjectUserEnablements enablements;
 }
