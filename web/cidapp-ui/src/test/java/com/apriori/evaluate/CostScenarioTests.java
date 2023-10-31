@@ -3,6 +3,8 @@ package com.apriori.evaluate;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.CUSTOMER;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.SANITY;
 
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -89,9 +91,7 @@ public class CostScenarioTests extends TestBaseUI {
                 .search("ANSI AL380")
                 .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
                 .submit(EvaluatePage.class)
-                .costScenario()
-                .clickDeleteIcon()
-                .clickDelete(ExplorePage.class);
+                .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.VERIFIED)).isEqualTo((true));

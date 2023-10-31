@@ -11,9 +11,11 @@ import com.apriori.qa.ach.ui.utils.enums.Roles;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.testrail.TestRail;
 
+import com.github.fge.jsonschema.processors.data.ValidatorList;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -68,6 +70,34 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
                 .clickNext()
                 .fillInAllRequiredInfo(username, email)
                 .clickFinishButton();
+
+        softAssertions.assertThat(userManagementPage.ifOnUserManagementPage()).isTrue();
+    }
+
+    @Test
+    @TestRail(id = {28930})
+    public void validateEditUserWindow() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        aprioriLoginService = new LoginService(driver, "");
+        cloudHomePage = aprioriLoginService.login(userCredentials, CloudHomePage.class);
+        List<String> properties = new ArrayList<>();
+        List<String> values = new ArrayList<>();
+        properties.add("Name prefix");
+        properties.add("Name suffix");
+        values.add("prefix");
+        values.add("suffix");
+
+        userManagementPage =
+            cloudHomePage.clickUserPanel()
+                .clickUserManagementButton()
+                .findUserAndClickEdit("qa-automation-28");
+
+        softAssertions.assertThat(userManagementPage.editUserHeaderIsDisplayed()).isTrue();
+
+        userManagementPage
+            .clickNext()
+            .secondPageEditUserChangeDataClickFinish(properties, values)
+            .clickFinishButton();
 
         softAssertions.assertThat(userManagementPage.ifOnUserManagementPage()).isTrue();
     }

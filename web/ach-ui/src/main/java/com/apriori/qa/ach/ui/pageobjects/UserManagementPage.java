@@ -40,6 +40,17 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
     private WebElement chooseOptionFromTimezone;
     @FindBy(id = "finish-button")
     private WebElement finishButton;
+    @FindBy(xpath = "//input[@name = 'search']")
+    private WebElement searchInput;
+    @FindBy(xpath = "//button[@data-testid = 'search-field-button']")
+    private WebElement loopIconOnSearch;
+    @FindBy(xpath = "//button[contains(@class,'menu-button')]")
+    private WebElement threeDotsOnSearchedRow;
+    @FindBy(xpath = "//div[contains(.,'Edit')][@class = 'line-item-body']")
+    private WebElement editButtonOnTheRow;
+
+    @FindBy(xpath = "//h2[contains(.,'Edit User Details')]")
+    private WebElement editUserPageHeader;
     @FindBy(xpath = "//div[contains(.,'User Management')][@class = 'apriori-source-list-title mr-2']")
     private WebElement userManagementHeader;
 
@@ -142,6 +153,51 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
      */
     public UserManagementPage clickFinishButton() {
         pageUtils.waitForElementAndClick(finishButton);
+        return this;
+    }
+
+    /**
+     * click on search form, paste a searching string, click on search and edit user
+     *
+     * @return this object
+     */
+    public UserManagementPage findUserAndClickEdit(String input) {
+        pageUtils.waitForElementAndClick(searchInput);
+        searchInput.sendKeys(input);
+        pageUtils.waitForElementAndClick(loopIconOnSearch);
+        pageUtils.waitForElementAndClick(threeDotsOnSearchedRow);
+        pageUtils.waitForElementAndClick(editButtonOnTheRow);
+        return this;
+    }
+
+    /**
+     * validate is Edit User Details header is displayed
+     *
+     * @return boolean
+     */
+    public boolean editUserHeaderIsDisplayed() {
+
+        return pageUtils.isElementDisplayed(editUserPageHeader);
+    }
+
+    /**
+     * On the second edit page change the data and click finish
+     *
+     * @return this
+     */
+    public UserManagementPage secondPageEditUserChangeDataClickFinish(List<String> nameOfProperty, List<String> valueForProperty) {
+
+        for (int i = 0; i < nameOfProperty.size(); i++) {
+            String property = nameOfProperty.get(i);
+            String value = valueForProperty.get(i);
+            String xpath = "//div[contains(.,'" + property + "')][@class = 'input-field vertical form-group']/div/input";
+            WebElement header = pageUtils.waitForElementToBeClickable(By.xpath(xpath));
+            pageUtils.waitForElementToBeClickable(header);
+            header.click();
+            header.clear();
+            header.sendKeys(value);
+        }
+
         return this;
     }
 
