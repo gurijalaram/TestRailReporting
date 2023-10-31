@@ -956,7 +956,7 @@ public class CdsTestUtil extends TestUtil {
      * @param highMem - true or false
      * @return new object
      */
-    public ResponseWrapper<Enablements> createUpdateEnablements(String customerIdentity, String userIdentity, String customerAssignedRole, Boolean highMem, Boolean sandbox, Boolean preview) {
+    public ResponseWrapper<Enablements> createUpdateEnablements(String customerIdentity, String userIdentity, String customerAssignedRole, boolean highMem, boolean sandbox, boolean preview) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_ENABLEMENTS, Enablements.class)
             .inlineVariables(customerIdentity, userIdentity)
             .body("enablements",
