@@ -1,19 +1,18 @@
 package com.apriori.builder;
 
+import java.io.File;
+import java.io.Serializable;
+import java.util.List;
+
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.models.request.component.PublishRequest;
 import com.apriori.models.response.component.CostingTemplate;
 import com.apriori.models.response.component.PostComponentResponse;
 import com.apriori.reader.file.user.UserCredentials;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.File;
-import java.io.Serializable;
-import java.util.List;
 
 @Builder
 @Data
@@ -46,5 +45,4 @@ public class ComponentInfoBuilder implements Serializable {
         }
         return costingTemplate;
     }
-
 }
