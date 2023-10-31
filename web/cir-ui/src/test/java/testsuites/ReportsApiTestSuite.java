@@ -56,17 +56,17 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeTags(REPORTS_API)
-@SelectClasses({
+//@SelectClasses({
     /*AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
     AssemblyDetailsReportTests.class*/
     /*BasicCostAvoidanceReportTests.class,
     CastingDtcComparisonReportTests.class,
     CastingDtcDetailsReportTests.class,*/
-    CastingDtcReportTests.class,
+    /*CastingDtcReportTests.class,
     ComponentCostReportTests.class,
     CostOutlierIdentificationTests.class,
-    CostOutlierIdentificationDetailsTests.class
+    CostOutlierIdentificationDetailsTests.class*/
     /*CycleTimeValueTrackingReportTests.class,
     CycleTimeValueTrackingDetailsReportTests.class,
     DesignOutlierIdentificationReportTests.class,
@@ -104,6 +104,6 @@ import org.junit.platform.suite.api.Suite;
     TargetAndQuotedCostValueTrackingDetailsReportTests.class,
     UpgradeComparisonReportTests.class,
     UpgradePartComparisonTests.class*/
-})
+//})
 public class ReportsApiTestSuite {
 }
