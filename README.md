@@ -3,7 +3,7 @@
 ## Complete Prerequisites
 - Java 11
 - Gradle 8.3
-- AWS Cli (2.3.3 or higher)
+- AWS Cli (2.13.30 or higher)
 - Allure (2.20.0 or higher)
 - Internet Browser (Chrome/Edge/FF)
 
