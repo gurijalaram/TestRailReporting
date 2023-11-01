@@ -132,45 +132,28 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11902, 10762, 11861})
     @Description("Upload Assembly with sub-components from Catia")
     public void testCatiaMultiUpload() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String assemblyName = "FLANGE C";
-        List<String> componentNames = Arrays.asList("BOLT", "NUT", "FLANGE");
-        currentUser = UserUtil.getUser();
-
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "flange.CATPart"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "nut.CATPart"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "bolt.CATPart"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "flange c.CATProduct"), scenarioName));
+        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("flange c");
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
+            .uploadAndOpenComponents(componentAssembly);
 
-        componentNames.forEach(component ->
-            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+        componentAssembly.getSubComponents().forEach(subcomponent ->
+            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase()), is(true)));
     }
 
     @Test
     @TestRail(id = {11903, 10767, 6562, 11909})
     @Description("Upload Assembly with sub-components from Creo")
     public void testCreoMultiUpload() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String assemblyName = "piston_assembly";
-        List<String> componentNames = Arrays.asList("piston_pin", "piston");
-        currentUser = UserUtil.getUser();
-
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston.prt.5"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
+        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("piston_assembly");
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
+            .uploadAndOpenComponents(componentAssembly);
 
-        componentNames.forEach(component ->
-            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+        componentAssembly.getSubComponents().forEach(subcomponent ->
+            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase()), is(true)));
     }
 
     @Test
@@ -181,13 +164,7 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
-            .importCadFile()
-            .inputScenarioName(componentAssembly.getScenarioName())
-            .inputMultiAssemblyBuilder(componentAssembly)
-            .submit()
-            .clickClose()
-            .openComponent(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getUser())
-            .openComponents();
+            .uploadAndOpenComponents(componentAssembly);
 
         componentAssembly.getSubComponents().forEach(subcomponent ->
             assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase()), is(true)));
@@ -197,31 +174,22 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11905, 10764, 11867})
     @Description("Upload Assembly with sub-components from SolidEdge")
     public void testSolidEdgeMultiUpload() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String assemblyName = "oldham";
-        List<String> componentNames = Arrays.asList("stand", "drive", "joint");
-        currentUser = UserUtil.getUser();
-
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "stand.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "drive.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "joint.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "oldham.asm.1"), scenarioName));
+        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("oldham");
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
+            .uploadAndOpenComponents(componentAssembly);
 
-        componentNames.forEach(component ->
-            softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase())).isTrue());
+        componentAssembly.getSubComponents().forEach(subcomponent ->
+            softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase())).isTrue());
 
-        componentsTreePage.clickScenarioCheckbox("stand", scenarioName);
+        componentsTreePage.clickScenarioCheckbox("stand", componentAssembly.getScenarioName());
 
-        softAssertions.assertThat(componentsTreePage.getCellColour("stand", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(componentsTreePage.getCellColour("stand", componentAssembly.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
 
         componentsTablePage = componentsTreePage.selectTableView();
 
-        softAssertions.assertThat(componentsTablePage.getCellColour("stand", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(componentsTablePage.getCellColour("stand", componentAssembly.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
 
         softAssertions.assertAll();
     }
@@ -230,33 +198,23 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11906, 10765, 11868})
     @Description("Upload Assembly with sub-components from NX")
     public void testNxMultiUpload() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String assemblyName = "v6 piston assembly_asm1";
-        List<String> componentNames = Arrays.asList("piston rod_model1", "piston_model1", "piston cover_model1", "piston pin_model1");
-        currentUser = UserUtil.getUser();
-
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston rod_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston cover_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston pin_model1.prt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
+        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("v6 piston assembly_asm1");
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
+            .uploadAndOpenComponents(componentAssembly);
 
-        componentNames.forEach(component ->
-            softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase())).isTrue());
+        componentAssembly.getSubComponents().forEach(subcomponent ->
+            softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase())).isTrue());
 
         componentsTablePage = componentsTreePage.selectTableView()
-            .clickScenarioCheckbox("piston_model1", scenarioName);
+            .clickScenarioCheckbox("piston_model1", componentAssembly.getScenarioName());
 
-        softAssertions.assertThat(componentsTablePage.getCellColour("piston_model1", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(componentsTablePage.getCellColour("piston_model1", componentAssembly.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
 
         componentsTreePage = componentsTablePage.selectTreeView();
 
-        softAssertions.assertThat(componentsTreePage.getCellColour("piston_model1", scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(componentsTreePage.getCellColour("piston_model1", componentAssembly.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
 
         softAssertions.assertAll();
     }
@@ -265,24 +223,14 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11907, 10766})
     @Description("Upload Assembly with sub-components from Inventor")
     public void testInventorMultiUpload() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String assemblyName = "Assembly01";
-        List<String> componentNames = Arrays.asList("Part0001", "Part0002", "Part0003", "Part0004");
-        currentUser = UserUtil.getUser();
-
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0001.ipt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0002.ipt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0003.ipt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "Assembly01.iam"), scenarioName));
+        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("Assembly01");
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .uploadAndOpenComponent(multiComponents, scenarioName, assemblyName, currentUser);
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
+            .uploadAndOpenComponents(componentAssembly);
 
-        componentNames.forEach(component ->
-            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+        componentAssembly.getSubComponents().forEach(subcomponent ->
+            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase()), is(true)));
     }
 
     @Test
