@@ -27,6 +27,7 @@ import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -481,6 +482,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Disabled("This test has never worked on Jenkins because the time cannot be changed, should be a manual test")
     @Issue("BA-2610")
     @TestRail(id = 6094)
     @Description("Validate Private filter displays only Private Scenarios")
