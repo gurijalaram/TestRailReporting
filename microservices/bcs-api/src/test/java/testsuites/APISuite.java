@@ -1,5 +1,6 @@
 package testsuites;
 
+import com.apriori.AdditionalMappingsTest;
 import com.apriori.BatchPartNegativeTest;
 import com.apriori.BatchPartTest;
 import com.apriori.BatchResourcesTest;
@@ -19,7 +20,8 @@ import org.junit.platform.suite.api.Suite;
     ReportResourcesTest.class,
     CostingScenarioTest.class,
     BatchPartNegativeTest.class,
-    CustomerNegativeTests.class
+    CustomerNegativeTests.class,
+    AdditionalMappingsTest.class
 })
 public class APISuite {
 }

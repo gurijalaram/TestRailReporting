@@ -74,7 +74,7 @@ public class CdsUserManagementHighMemTests {
     public void getHighMemAccess() {
         setCustomerData();
 
-        cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, true);
+        cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, true, false, false);
         User getUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity).getResponseEntity();
 
         soft.assertThat(getUser.getEnablements().getHighMemEnabled()).isTrue();
@@ -96,7 +96,7 @@ public class CdsUserManagementHighMemTests {
     public void verifyHighMemIsFalse() {
         setCustomerData();
 
-        cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, false);
+        cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, false, false, false);
         User getUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity).getResponseEntity();
 
         soft.assertThat(getUser.getEnablements().getHighMemEnabled()).isFalse();
@@ -118,7 +118,7 @@ public class CdsUserManagementHighMemTests {
     public void deleteHighMemInstallation() {
         setCustomerData();
 
-        cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, true);
+        cdsTestUtil.createUpdateEnablements(customerIdentity, userIdentity, customerAssignedRole, true, false, false);
         User getUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity).getResponseEntity();
 
         soft.assertThat(getUser.getEnablements().getHighMemEnabled()).isTrue();
