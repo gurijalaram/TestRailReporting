@@ -1,21 +1,26 @@
-# How to setup automation:
+# How to setup automation
 
-1. Java 11 is used and required
-2. Clone the apriori-qa repo using `git clone git@github.com:aPrioriTechnologies/apriori-qa.git`
-3. Import all the modules into an IDE of your choice
-4. If you have chrome installed, install it in case you don't
-5. To run the tests, you should have an AWS account and authorize it on the local machine
+## Complete Prerequisites
+- Java 11
+- Gradle 8.3
+- AWS Cli (2.3.3 or higher)
+- Allure (2.20.0 or higher)
+- Internet Browser (Chrome/Edge/FF)
+
+1. Clone the apriori-qa repo using `git clone git@github.com:aPrioriTechnologies/apriori-qa.git`
+2. Import all the modules into an IDE of your choice
+3. To run the tests, you should have an AWS account and authorize it on the local machine
     - How to create AWS user account: https://confluence.apriori.com/display/ENG/Logging+into+AWS+Console
-6. Install the AWS CLI, either via pip (if you already have Python installed) or using the MSI installer: 
+4. Install the AWS CLI, either via pip (if you already have Python installed) or using the MSI installer: 
      - http://docs.aws.amazon.com/cli/latest/userguide/awscli-install-windows.html#install-msi-on-windows
      - http://docs.aws.amazon.com/cli/latest/userguide/installing.html
-7. Once you have installed the various tools, configure your AWS credentials. <br />  
+5. Once you have installed the various tools, configure your AWS credentials. <br />  
   You can do this from a command prompt with the AWS CLI on your PATH: 
     - `aws configure` This command will prompt for your IAM user access key and secret access key (an admin user will be able to generate these details).
   You should also set your `default region` to `_us-east-1_`.
   You should set `default format` to `text`
   Your settings will be stored in your _%USERPROFILE%\.aws_ directory.
-8. Verify that things are configured properly using the following command. Confirm that the resulting ARN ends with your user name. 
+6. Verify that things are configured properly using the following command. Confirm that the resulting ARN ends with your user name. 
     - `aws sts get-caller-identity `
      ```
       {
@@ -24,14 +29,14 @@
           "Arn": "arn:aws:iam::563229348140:user/test@apriori.com"
       }
      ```  
-9.You are ready to run the tests..
+7. You are ready to run the tests.
 
 
 ## List of special modules that are not included into a common build
  - **database** module location "../db"
 
 ## Building the project
-- to build without tests, add to the end of the Gradle build command: `-x test` e.g. `gradle clean build -x test`
+- to build without running tests, add to the end of the Gradle build command: `-x test` e.g. `gradle clean build -x test`
 
  - ### You will need this for the very first time:
     - Open Terminal to project root directory
