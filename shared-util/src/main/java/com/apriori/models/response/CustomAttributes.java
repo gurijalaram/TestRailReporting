@@ -20,5 +20,6 @@ public class CustomAttributes {
     private String department;
     private int workspaceId;
     private String defaultRole;
+    private String assemblyOperationType;
     private List<Object> roles;
 }
