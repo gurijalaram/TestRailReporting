@@ -1,5 +1,7 @@
 package com.ootbreports.newreportstests.recommendedtestparts;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+
 import com.apriori.cir.JasperReportSummary;
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.cir.models.enums.InputControlsEnum;
@@ -18,6 +20,7 @@ import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
@@ -28,10 +31,10 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.RECOMMENDED_TEST_PARTS.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.RECOMMENDED_TEST_PARTS;
-    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
+    private String reportsJsonFileName = JasperApiEnum.RECOMMENDED_TEST_PARTS.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.RECOMMENDED_TEST_PARTS;
+    private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
@@ -39,6 +42,7 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TestRail(id = 14000)
     @Description("Input controls - Test Process Groups")
     public void testProcessGroupSheetMetal() {

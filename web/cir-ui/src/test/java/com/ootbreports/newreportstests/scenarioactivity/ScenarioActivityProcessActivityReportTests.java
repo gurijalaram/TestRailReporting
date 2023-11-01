@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.scenarioactivity;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,6 +14,7 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -21,10 +23,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ScenarioActivityProcessActivityReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.SCENARIO_ACTIVITY_PROCESS_ACTIVITY.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_ACTIVITY_PROCESS_ACTIVITY;
-    private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
+    private String reportsJsonFileName = JasperApiEnum.SCENARIO_ACTIVITY_PROCESS_ACTIVITY.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_ACTIVITY_PROCESS_ACTIVITY;
+    private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
@@ -32,6 +34,7 @@ public class ScenarioActivityProcessActivityReportTests extends JasperApiAuthent
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TestRail(id = 28004)
     @Description("Input Controls - Trending period - Process Activity Report")
     public void testTrendingPeriod() {

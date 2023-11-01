@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.general.basiccostavoidance;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,17 +15,18 @@ import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.ArrayList;
 
 public class BasicCostAvoidanceReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.BASIC_COST_AVOIDANCE.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.BASIC_COST_AVOIDANCE;
+    private String reportsJsonFileName = JasperApiEnum.BASIC_COST_AVOIDANCE.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.BASIC_COST_AVOIDANCE;
     // Export set is not relevant for this report
-    private static final String exportSetName = "";
-    private static JasperApiUtils jasperApiUtils;
+    private String exportSetName = "";
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
@@ -32,6 +34,7 @@ public class BasicCostAvoidanceReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TestRail(id = 8948)
     @Description("Input Controls - Currency Code")
     public void testCurrencyCode() {

@@ -1,5 +1,6 @@
 package com.ootbreports.newreportstests.upgradecomparison;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -14,16 +15,17 @@ import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.ArrayList;
 
 public class UpgradePartComparisonTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.UPGRADE_PART_COMPARISON.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.UPGRADE_PART_COMPARISON;
-    private static JasperApiUtils jasperApiUtils;
+    private String reportsJsonFileName = JasperApiEnum.UPGRADE_PART_COMPARISON.getEndpoint();
+    private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.UPGRADE_PART_COMPARISON;
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
@@ -31,6 +33,7 @@ public class UpgradePartComparisonTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TestRail(id = 13944)
     @Description("Input controls - Currency code")
     public void testCurrency() {
