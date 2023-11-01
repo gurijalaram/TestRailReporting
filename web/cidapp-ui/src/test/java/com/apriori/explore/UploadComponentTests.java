@@ -92,7 +92,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate messaging upon successful upload of multiple files")
     public void testMultiUploadSuccessMessage() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(3);
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(3);
 
         importCadFilePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
@@ -110,7 +110,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate that user can apply unique names to all multiple uploads")
     public void testUniqueScenarioNamesMultiUpload() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(3);
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(3);
 
         explorePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
@@ -131,11 +131,12 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate multi-upload through explorer menu")
     public void testMultiUploadWithSameScenarioName() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(3);
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(3);
 
         explorePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
             .importCadFile()
+            .unTick("Apply to all")
             .inputMultiComponentBuilderDetails(components)
             .submit()
             .clickClose();
@@ -195,7 +196,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Upload 20 different components through the explorer modal")
     public void testTwentyCadFilesMultiUpload() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(20);
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(20);
 
         importCadFilePage = new CidAppLoginPage(driver)
             .login(components.stream().findAny().get().getUser())
@@ -260,7 +261,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate that user is blocked from adding to a list of 20 uploads")
     public void testExceedingMaximumUpload() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(20);
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(20);
 
         importCadFilePage = new CidAppLoginPage(driver)
             .login(components.get(0).getUser())
