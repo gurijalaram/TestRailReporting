@@ -185,7 +185,7 @@ public class UploadComponentTests extends TestBaseUI {
             .login(componentAssembly.getUser())
             .importCadFile()
             .inputMultiAssemblyBuilder(componentAssembly)
-            .deleteCadFiles(componentsToDelete);
+            .deleteCadFiles(componentAssembly);
 
         importCadFilePage.getComponentsInDropZone().forEach(component ->
             assertThat(componentsToDelete.contains(component), is(false)));
