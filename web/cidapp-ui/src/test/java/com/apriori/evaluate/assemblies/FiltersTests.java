@@ -32,6 +32,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FiltersTests extends TestBaseUI {
 
@@ -427,7 +428,8 @@ public class FiltersTests extends TestBaseUI {
             .selectFilter("All");
 
         softAssertions.assertThat(componentsTablePage.isElementDisplayed("All", "text-overflow")).isTrue();
-        softAssertions.assertThat(componentsTablePage.getAllScenarioComponentName(3)).hasSize(3);
+        softAssertions.assertThat(componentsTablePage.getAllScenarioComponentName(componentAssembly.getSubComponents().size()))
+            .containsAll(componentAssembly.getSubComponents().stream().map(o -> o.getComponentName().toUpperCase()).collect(Collectors.toList()));
 
         softAssertions.assertAll();
     }
