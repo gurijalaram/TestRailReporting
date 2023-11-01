@@ -261,13 +261,15 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate that user is blocked from adding to a list of 20 uploads")
     public void testExceedingMaximumUpload() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(20);
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(21);
+        List<ComponentInfoBuilder> componentsToUpload = components.subList(0, 20);
 
         importCadFilePage = new CidAppLoginPage(driver)
             .login(components.get(0).getUser())
             .importCadFile()
-            .inputMultiComponentBuilderDetails(components)
-            .enterMultiFilePath(new ComponentDTORequest().getComponent().getResourceFile());
+            .unTick("Apply to all")
+            .inputMultiComponentBuilderDetails(componentsToUpload)
+            .enterMultiFilePath(components.remove(components.size() - 1).getResourceFile());
 
         assertThat(importCadFilePage.getAlertWarning(), containsString("Exceeds maximum file count. Add up to 20 files for import at a time"));
     }
