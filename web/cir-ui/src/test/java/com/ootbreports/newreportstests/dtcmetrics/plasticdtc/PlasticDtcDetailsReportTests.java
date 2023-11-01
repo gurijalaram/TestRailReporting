@@ -1,5 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.testrail.TestRail;
@@ -11,6 +13,7 @@ import enums.JasperCirApiPartsEnum;
 import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -18,11 +21,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
-    private final List<String> partNames = Collections.singletonList(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName());
-    private static final String reportsJsonFileName = JasperApiEnum.PLASTIC_DTC_DETAILS.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.PLASTIC_DTC_DETAILS;
-    private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
+    private List<String> partNames = Collections.singletonList(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName());
+    private String reportsJsonFileName = JasperApiEnum.PLASTIC_DTC_DETAILS.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.PLASTIC_DTC_DETAILS;
+    private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupGenericMethods() {
@@ -30,6 +33,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TestRail(id = 7406)
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Details Report ")
     public void testCostMetricInputControlPpc() {
@@ -40,6 +44,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TestRail(id = 7407)
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Details Report ")
     public void testCostMetricInputControlFbc() {
@@ -50,6 +55,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TestRail(id = 7381)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
@@ -60,6 +66,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TestRail(id = 7382)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Details Report ")
     public void testMassMetricInputControlRoughMass() {
