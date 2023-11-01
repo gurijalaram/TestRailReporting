@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,6 +33,7 @@ public class MentionedUser {
     private UserProfile userProfile;
     private String userType;
     private String username;
+    private List<String> roles;
     private Boolean hasCompleteProfile;
     private BidPackageProjectUserEnablements enablements;
 }
