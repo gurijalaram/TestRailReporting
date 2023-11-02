@@ -27,11 +27,13 @@ import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FiltersTests extends TestBaseUI {
 
@@ -420,14 +422,15 @@ public class FiltersTests extends TestBaseUI {
         componentAssembly = new AssemblyDTORequest().getAssembly();
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(componentAssembly.getUser())
             .uploadComponentAndOpen(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getResourceFile(), componentAssembly.getUser())
             .openComponents()
             .selectTableView()
             .selectFilter("All");
 
         softAssertions.assertThat(componentsTablePage.isElementDisplayed("All", "text-overflow")).isTrue();
-        softAssertions.assertThat(componentsTablePage.getAllScenarioComponentName(3)).hasSize(3);
+        softAssertions.assertThat(componentsTablePage.getAllScenarioComponentName(componentAssembly.getSubComponents().size()))
+            .containsAll(componentAssembly.getSubComponents().stream().map(o -> o.getComponentName().toUpperCase()).collect(Collectors.toList()));
 
         softAssertions.assertAll();
     }
@@ -479,6 +482,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Disabled("This test has never worked on Jenkins because the time cannot be changed, should be a manual test")
     @Issue("BA-2610")
     @TestRail(id = 6094)
     @Description("Validate Private filter displays only Private Scenarios")

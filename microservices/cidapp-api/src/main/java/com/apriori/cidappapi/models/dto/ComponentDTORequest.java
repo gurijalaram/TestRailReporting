@@ -43,7 +43,7 @@ public class ComponentDTORequest {
      * @param noOfComponents - the number of components
      * @return component builder object
      */
-    public List<ComponentInfoBuilder> getComponent(int noOfComponents) {
+    public List<ComponentInfoBuilder> getComponents(int noOfComponents) {
 
         List<ComponentInfoBuilder> listOfComponents = DTO_READER.getComponents();
         Collections.shuffle(listOfComponents);

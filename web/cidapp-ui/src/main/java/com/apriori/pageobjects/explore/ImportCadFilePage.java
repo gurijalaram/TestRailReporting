@@ -370,14 +370,14 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     /**
      * Delete cad files in the drop zone
      *
-     * @param componentNames - the component names
+     * @param componentInfoBuilder - the component info builder object
      * @return - the current page object
      */
-    public ImportCadFilePage deleteCadFiles(List<String> componentNames) {
-        for (String componentName : componentNames) {
-            By byComponentName = By.xpath(String.format("//*[text()='%s']/following::div[@data-header-id='delete-icon']", componentName));
+    public ImportCadFilePage deleteCadFiles(ComponentInfoBuilder componentInfoBuilder) {
+        componentInfoBuilder.getSubComponents().forEach(subcomponent -> {
+            By byComponentName = By.xpath(String.format("//*[text()='%s']/following::div[@data-header-id='delete-icon']", subcomponent.getComponentName() + subcomponent.getExtension()));
             pageUtils.waitForElementAndClick(byComponentName);
-        }
+        });
         return this;
     }
 
