@@ -233,7 +233,7 @@ public class ComparisonTests extends TestBaseUI {
             .collapse("Material & Utilization")
             .collapse("Design Guidance")
             .collapse("Process")
-            .collapse("Cost Result");
+            .collapse("Cost Results");
 
         softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Description")).isEqualTo(false);
         softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass")).isEqualTo(false);
