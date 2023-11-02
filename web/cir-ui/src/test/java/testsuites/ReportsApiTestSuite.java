@@ -7,7 +7,7 @@ import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@IncludeTags(REPORTS_API)
-//@SelectPackages("com.ootbreports.newreportstests")
+//@IncludeTags(REPORTS_API)
+@SelectPackages("com.ootbreports.newreportstests")
 public class ReportsApiTestSuite {
 }
