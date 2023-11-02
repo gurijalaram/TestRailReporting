@@ -89,6 +89,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
 
     protected static List<ProcessGroup> getProcessGroupsResponse() {
         RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class)
+            .apUserContext(testingApUserContext)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ProcessGroups> processGroupsResponse = HTTPRequest.build(requestEntity).get();

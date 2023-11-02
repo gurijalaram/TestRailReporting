@@ -28,6 +28,7 @@ global:
   default_access_level: admin
   default_user_name: admin@apriori.com
   default_password: admin
+  number_of_parts: 1
 
   nexus:
     api_url: https://nexus.apriori.com/

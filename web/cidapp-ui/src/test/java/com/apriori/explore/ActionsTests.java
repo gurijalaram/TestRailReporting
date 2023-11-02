@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.core.StringContains.containsString;
 
 import com.apriori.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.dto.ComponentDTORequest;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.enums.MaterialNameEnum;
 import com.apriori.enums.OperationEnum;
@@ -173,19 +174,14 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7902, 5436})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder component = new ComponentDTORequest().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        cidComponentItem = loginPage.login(component.getUser())
+            .uploadComponent(component.getComponentName(), component.getScenarioName(), component.getResourceFile(), component.getUser());
 
         previewPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
@@ -196,11 +192,11 @@ public class ActionsTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(componentName)
-            .highlightScenario(componentName, scenarioName)
+            .clickSearch(component.getComponentName())
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .lock(ExplorePage.class)
-            .highlightScenario(componentName, scenarioName)
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .openPreviewPanel();
 
         softAssertions.assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);

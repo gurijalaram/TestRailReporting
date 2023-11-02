@@ -35,6 +35,8 @@ public class ComponentInfoBuilder implements Serializable {
     @Builder.Default
     private Boolean overrideScenario = false;
     private CostingTemplate costingTemplate;
+    private Metadata metadata;
+
 
     public CostingTemplate getCostingTemplate() {
         if (costingTemplate == null) {

@@ -1,5 +1,69 @@
 {
   "type": "object",
+  "required": [
+    "annualVolume",
+    "batchesPerYear",
+    "createdAt",
+    "createdBy",
+    "identity",
+    "name",
+    "productionLife"
+  ],
   "properties": {
+    "annualVolume": {
+      "type": "integer"
+    },
+    "batchesPerYear": {
+      "type": "number"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "currencyCode": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "processGroups": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "productionLife": {
+      "type": "number"
+    },
+    "revision": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    }
   }
 }
