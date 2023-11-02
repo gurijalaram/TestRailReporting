@@ -48,12 +48,13 @@ import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCost
 import com.ootbreports.newreportstests.upgradecomparison.UpgradeComparisonReportTests;
 import com.ootbreports.newreportstests.upgradecomparison.UpgradePartComparisonReportTests;
 import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
 //@IncludeTags(REPORTS_API)
-//@SelectPackages("com.ootbreports.newreportstests")
-@SelectClasses({
+@SelectPackages("com.ootbreports.newreportstests")
+/*@SelectClasses({
     AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
     AssemblyDetailsReportTests.class,
@@ -101,6 +102,6 @@ import org.junit.platform.suite.api.Suite;
     TargetAndQuotedCostValueTrackingReportTests.class,
     UpgradeComparisonReportTests.class,
     UpgradePartComparisonReportTests.class
-})
+})*/
 public class ReportsApiTestSuite {
 }
