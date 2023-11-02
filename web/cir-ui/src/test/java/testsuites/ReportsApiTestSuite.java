@@ -56,7 +56,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @IncludeTags(REPORTS_API)
-//@SelectPackages("com.ootbreports.newreportstests")
+@SelectPackages("com.ootbreports.newreportstests")
 /*@SelectClasses({
     AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
