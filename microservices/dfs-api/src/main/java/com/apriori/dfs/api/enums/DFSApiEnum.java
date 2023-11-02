@@ -34,10 +34,6 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
 
     @Override
     public String addQuery(String endpointString) {
-        String querySymbol = "?";
-        if (endpointString.contains("?")) {
-            querySymbol = "&";
-        }
-        return querySymbol + "key=" + PropertiesContext.get("dfs.authorization_key");
+        return endpointString.contains("?") ? "&" : "?" + "key=" + PropertiesContext.get("dfs.authorization_key");
     }
 }
