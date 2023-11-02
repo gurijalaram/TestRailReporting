@@ -72,7 +72,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {1})
+    @TestRail(id = {28959})
     @Description("Gets a digital factory by identity when shared secret/identity are valid")
     public void getDigitalFactoryByIdentityTest() {
 
@@ -84,7 +84,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {2})
+    @TestRail(id = {28962})
     @Description("Get Unauthorized Error when shared secret value is invalid")
     public void getDigitalFactoryWithInvalidSharedSecretTest() {
 
@@ -97,7 +97,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {3})
+    @TestRail(id = {28977})
     @Description("Get Unauthorized Error when shared secret parameter is not provided")
     public void getDigitalFactoryWithoutSharedSecretTest() {
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.getDigitalFactory(HttpStatusCode.UNAUTHORIZED, "");
@@ -109,7 +109,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {4})
+    @TestRail(id = {28976})
     @Description("Get Unauthorized Error when shared secret value is not provided")
     public void getDigitalFactoryWithEmptySharedSecretTest() {
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.getDigitalFactory(HttpStatusCode.UNAUTHORIZED, EMPTY_SHARED_SECRET);
@@ -121,7 +121,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {5})
+    @TestRail(id = {28978})
     @Description("Get Unauthorized Error when identity is invalid")
     public void getDigitalFactoryWithBadIdentityTest() {
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.getDigitalFactory(HttpStatusCode.BAD_REQUEST,"1234567890");
