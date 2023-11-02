@@ -1,6 +1,5 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 
 import com.apriori.cir.enums.CirApiEnum;

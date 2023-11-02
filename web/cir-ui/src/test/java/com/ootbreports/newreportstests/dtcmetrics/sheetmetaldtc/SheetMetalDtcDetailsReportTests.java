@@ -23,7 +23,7 @@ import utils.JasperApiAuthenticationUtil;
 import java.util.Arrays;
 import java.util.List;
 
-public class SheetMetalDtcDetailsTests extends JasperApiAuthenticationUtil {
+public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC_DETAILS.getEndpoint();
     private CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC_DETAILS;
     private String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();

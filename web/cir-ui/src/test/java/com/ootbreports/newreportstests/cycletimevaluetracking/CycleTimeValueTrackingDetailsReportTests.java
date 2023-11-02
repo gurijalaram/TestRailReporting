@@ -1,6 +1,5 @@
 package com.ootbreports.newreportstests.cycletimevaluetracking;
 
-
 import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 
 import com.apriori.cir.JasperReportSummary;
