@@ -55,56 +55,7 @@ import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@IncludeTags(REPORTS_API)
 @SelectPackages("com.ootbreports.newreportstests")
-/*@SelectClasses({
-    AssemblyCostA4ReportTests.class,
-    AssemblyCostLetterReportTests.class,
-    AssemblyDetailsReportTests.class,
-    BasicCostAvoidanceReportTests.class,
-    CastingDtcComparisonReportTests.class,
-    CastingDtcDetailsReportTests.class,
-    CastingDtcReportTests.class,
-    ComponentCostReportTests.class,
-    CostOutlierIdentificationReportTests.class,
-    CostOutlierIdentificationDetailsReportTests.class,
-    CycleTimeValueTrackingReportTests.class,
-    CycleTimeValueTrackingDetailsReportTests.class,
-    DesignOutlierIdentificationReportTests.class,
-    DesignOutlierIdentificationDetailsReportTests.class,
-    DigitalFactoryPerformanceReportTests.class,
-    DigitalFactoryPerformanceDetailsReportTests.class,
-    MachiningDtcComparisonReportTests.class,
-    MachiningDtcDetailsReportTests.class,
-    MachiningDtcReportTests.class,
-    PlasticDtcComparisonReportTests.class,
-    PlasticDtcDetailsReportTests.class,
-    PlasticDtcReportTests.class,
-    PotentialSavingsValueTrackingDetailsReportTests.class,
-    PotentialSavingsValueTrackingReportTests.class,
-    RecommendedTestPartsReportTests.class,
-    ScenarioActivityDigitalFactoryActivityReportTests.class,
-    ScenarioActivityMaterialActivityReportTests.class,
-    ScenarioActivityProcessActivityReportTests.class,
-    ScenarioActivityProcessGroupActivityReportTests.class,
-    ScenarioActivityReportTests.class,
-    ScenarioActivityTotalActivityReportTests.class,
-    ScenarioComparisonReportTests.class,
-    SheetMetalDtcComparisonReportTests.class,
-    SheetMetalDtcDetailsReportTests.class,
-    SheetMetalDtcReportTests.class,
-    SpendAnalysisValueTrackingDetailsReportTests.class,
-    SpendAnalysisValueTrackingDetailsSimplifiedReportTests.class,
-    SpendAnalysisValueTrackingReportTests.class,
-    SpendAnalysisValueTrackingSimplifiedReportTests.class,
-    TargetCostTrendReportTests.class,
-    TargetCostValueTrackingDetailsReportTests.class,
-    TargetCostValueTrackingReportTests.class,
-    TargetAndQuotedCostTrendReportTests.class,
-    TargetAndQuotedCostValueTrackingDetailsReportTests.class,
-    TargetAndQuotedCostValueTrackingReportTests.class,
-    UpgradeComparisonReportTests.class,
-    UpgradePartComparisonReportTests.class
-})*/
+@IncludeTags(REPORTS_API)
 public class ReportsApiTestSuite {
 }
