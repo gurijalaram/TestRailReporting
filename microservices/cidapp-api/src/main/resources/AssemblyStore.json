@@ -494,6 +494,73 @@
           "processGroup": "PLASTIC_MOLDING"
         }
       ]
+    },
+    {
+      "componentName": "autobotasm",
+      "extension": ".asm.3",
+      "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "large"
+      },
+      "subComponents": [
+        {
+          "componentName": "autoparthelm",
+          "extension": ".prt.1",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "autoparthead",
+          "extension": ".prt.1",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "autoparttorso",
+          "extension": ".prt.1",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "autopartarm",
+          "extension": ".prt.1",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "autoparthand",
+          "extension": ".prt.1",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "autopartleg",
+          "extension": ".prt.1",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "autopartfoot",
+          "extension": ".prt.1",
+          "processGroup": "ASSEMBLY"
+        },
+        {
+          "componentName": "autosword",
+          "extension": ".asm.1",
+          "processGroup": "ASSEMBLY",
+          "subComponents": [
+            {
+              "componentName": "autopommel",
+              "extension": ".prt.1",
+              "processGroup": "ASSEMBLY"
+            },
+            {
+              "componentName": "autoguard",
+              "extension": ".prt.1",
+              "processGroup": "ASSEMBLY"
+            },
+            {
+              "componentName": "autoblade",
+              "extension": ".prt.1",
+              "processGroup": "ASSEMBLY"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
