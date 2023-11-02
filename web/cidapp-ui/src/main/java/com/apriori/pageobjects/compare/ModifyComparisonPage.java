@@ -73,7 +73,7 @@ public class ModifyComparisonPage extends LoadableComponent<ModifyComparisonPage
      * @return current page object
      */
     public ModifyComparisonPage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, "modal-body", filter);
+        pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-selector-table-filter-selector", filter);
         return this;
     }
 
