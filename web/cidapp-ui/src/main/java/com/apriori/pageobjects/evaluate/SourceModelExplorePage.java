@@ -45,7 +45,7 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
 
-    @FindBy(css = ".scenario-selector-table .action-buttons-container [type='submit']")
+    @FindBy(xpath = "//h2[.='Source Model']/..//button[.='Submit']")
     private WebElement submitButton;
 
     private PageUtils pageUtils;
@@ -91,7 +91,7 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
      * @return current page object
      */
     public SourceModelExplorePage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, "modal-body", filter);
+        pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-selector-table-filter-selector", filter);
         setPagination();
         return this;
     }

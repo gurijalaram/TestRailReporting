@@ -443,7 +443,7 @@ public class EditAssembliesTest extends TestBaseUI {
         componentsTreePage = editScenarioStatusPage.close(ComponentsTreePage.class);
 
         componentAssembly.getSubComponents().forEach(subcomponentName ->
-            assertThat(componentsTreePage.getScenarioState(subcomponentName.getComponentName(), componentAssembly.getScenarioName(), currentUser, ScenarioStateEnum.COST_COMPLETE),
+            assertThat(componentsTreePage.getScenarioState(subcomponentName.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getUser(), ScenarioStateEnum.COST_COMPLETE),
                 is(ScenarioStateEnum.COST_COMPLETE.getState())));
 
         softAssertions.assertThat(componentsTreePage.getRowDetails(BIG_RING, componentAssembly.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());

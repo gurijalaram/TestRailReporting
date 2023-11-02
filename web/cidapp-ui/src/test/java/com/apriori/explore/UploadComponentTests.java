@@ -92,7 +92,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate messaging upon successful upload of multiple files")
     public void testMultiUploadSuccessMessage() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(3);
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(3);
 
         importCadFilePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
@@ -110,7 +110,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate that user can apply unique names to all multiple uploads")
     public void testUniqueScenarioNamesMultiUpload() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(3);
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(3);
 
         explorePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
@@ -131,11 +131,12 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate multi-upload through explorer menu")
     public void testMultiUploadWithSameScenarioName() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(3);
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(3);
 
         explorePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
             .importCadFile()
+            .unTick("Apply to all")
             .inputMultiComponentBuilderDetails(components)
             .submit()
             .clickClose();
@@ -184,7 +185,7 @@ public class UploadComponentTests extends TestBaseUI {
             .login(componentAssembly.getUser())
             .importCadFile()
             .inputMultiAssemblyBuilder(componentAssembly)
-            .deleteCadFiles(componentsToDelete);
+            .deleteCadFiles(componentAssembly);
 
         importCadFilePage.getComponentsInDropZone().forEach(component ->
             assertThat(componentsToDelete.contains(component), is(false)));
@@ -195,7 +196,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Upload 20 different components through the explorer modal")
     public void testTwentyCadFilesMultiUpload() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(20);
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(20);
 
         importCadFilePage = new CidAppLoginPage(driver)
             .login(components.stream().findAny().get().getUser())
@@ -260,13 +261,15 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate that user is blocked from adding to a list of 20 uploads")
     public void testExceedingMaximumUpload() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponent(20);
+        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(21);
+        List<ComponentInfoBuilder> componentsToUpload = components.subList(0, 20);
 
         importCadFilePage = new CidAppLoginPage(driver)
             .login(components.get(0).getUser())
             .importCadFile()
-            .inputMultiComponentBuilderDetails(components)
-            .enterMultiFilePath(new ComponentDTORequest().getComponent().getResourceFile());
+            .unTick("Apply to all")
+            .inputMultiComponentBuilderDetails(componentsToUpload)
+            .enterMultiFilePath(components.remove(components.size() - 1).getResourceFile());
 
         assertThat(importCadFilePage.getAlertWarning(), containsString("Exceeds maximum file count. Add up to 20 files for import at a time"));
     }
@@ -339,7 +342,7 @@ public class UploadComponentTests extends TestBaseUI {
 
         cidComponentItem = new CidAppLoginPage(driver)
             .login(component.getUser())
-            .uploadComponent(component.getComponentName(), componentAssembly.getScenarioName(), resourceFile, currentUser);
+            .uploadComponent(component.getComponentName(), component.getScenarioName(), component.getResourceFile(), component.getUser());
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
 
@@ -348,7 +351,7 @@ public class UploadComponentTests extends TestBaseUI {
         explorePage = evaluatePage.logout()
             .login(UserUtil.getUser());
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), componentAssembly.getScenarioName())).isEqualTo(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName())).isEqualTo(0);
 
         softAssertions.assertAll();
     }

@@ -512,6 +512,23 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
+     * This method uploads via drop zone, wait to be in a not costed state and opens the component
+     *
+     * @param componentInfoBuilder - the component info builder object
+     * @return - new page object
+     */
+    public ComponentsTreePage uploadAndOpenComponents(ComponentInfoBuilder componentInfoBuilder) {
+        importCadFile()
+            .inputScenarioName(componentInfoBuilder.getScenarioName())
+            .inputMultiAssemblyBuilder(componentInfoBuilder)
+            .submit()
+            .clickClose()
+            .openComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser())
+            .openComponents();
+        return new ComponentsTreePage(driver);
+    }
+
+    /**
      * @param assemblyName             - the assembly name
      * @param assemblyExtension        - the assembly extension
      * @param assemblyProcessGroup     - the assembly process group

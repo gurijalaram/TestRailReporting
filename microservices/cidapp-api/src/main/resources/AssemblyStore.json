@@ -106,6 +106,36 @@
       ]
     },
     {
+      "componentName": "Assembly01",
+      "extension": ".iam",
+      "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
+      "subComponents": [
+        {
+          "componentName": "piston_pin",
+          "extension": ".ipt",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "piston cover_model1",
+          "extension": ".ipt",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "piston pin_model1",
+          "extension": ".ipt",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "piston rod_model1",
+          "extension": ".ipt",
+          "processGroup": "SHEET_METAL"
+        }
+      ]
+    },
+    {
       "componentName": "oldham",
       "extension": ".asm.1",
       "processGroup": "ASSEMBLY",
