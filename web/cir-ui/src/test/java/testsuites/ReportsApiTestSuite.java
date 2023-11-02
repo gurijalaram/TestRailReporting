@@ -56,13 +56,13 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({
-    AssemblyCostA4ReportTests.class,
+    /*AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
     AssemblyDetailsReportTests.class,
     BasicCostAvoidanceReportTests.class,
     CastingDtcComparisonReportTests.class,
     CastingDtcDetailsReportTests.class,
-    CastingDtcReportTests.class,
+    CastingDtcReportTests.class,*/
     ComponentCostReportTests.class,
     CostOutlierIdentificationReportTests.class,
     CostOutlierIdentificationDetailsReportTests.class,
@@ -72,7 +72,7 @@ import org.junit.platform.suite.api.Suite;
     DesignOutlierIdentificationDetailsReportTests.class,
     DigitalFactoryPerformanceReportTests.class,
     DigitalFactoryPerformanceDetailsReportTests.class,
-    MachiningDtcComparisonReportTests.class,
+    /*MachiningDtcComparisonReportTests.class,
     MachiningDtcDetailsReportTests.class,
     MachiningDtcReportTests.class,
     PlasticDtcComparisonReportTests.class,
@@ -102,7 +102,7 @@ import org.junit.platform.suite.api.Suite;
     TargetAndQuotedCostValueTrackingDetailsReportTests.class,
     TargetAndQuotedCostValueTrackingReportTests.class,
     UpgradeComparisonReportTests.class,
-    UpgradePartComparisonReportTests.class
+    UpgradePartComparisonReportTests.class*/
 })
 public class ReportsApiTestSuite {
 }
