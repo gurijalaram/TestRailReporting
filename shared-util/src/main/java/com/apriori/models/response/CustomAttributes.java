@@ -22,6 +22,9 @@ public class CustomAttributes {
     private String department;
     private int workspaceId;
     private String defaultRole;
+    private String grainingRequired;
+    private String ccmRequired;
+    private String accessGroup;
     private String assemblyOperationType;
     private List<Object> roles;
 
