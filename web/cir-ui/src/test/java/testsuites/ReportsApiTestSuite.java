@@ -1,5 +1,7 @@
 package testsuites;
 
+import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+
 import com.ootbreports.newreportstests.componentcost.ComponentCostReportTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationDetailsReportTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationReportTests;
@@ -47,13 +49,14 @@ import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCost
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
 import com.ootbreports.newreportstests.upgradecomparison.UpgradeComparisonReportTests;
 import com.ootbreports.newreportstests.upgradecomparison.UpgradePartComparisonReportTests;
+import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-//@IncludeTags(REPORTS_API)
-@SelectPackages("com.ootbreports.newreportstests")
+@IncludeTags(REPORTS_API)
+//@SelectPackages("com.ootbreports.newreportstests")
 /*@SelectClasses({
     AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
