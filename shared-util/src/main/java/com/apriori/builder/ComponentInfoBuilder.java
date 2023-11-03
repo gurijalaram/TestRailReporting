@@ -46,5 +46,4 @@ public class ComponentInfoBuilder implements Serializable {
         }
         return costingTemplate;
     }
-
 }

@@ -94,6 +94,7 @@ public class EditAssembliesTest extends TestBaseUI {
             .close(ComponentsTablePage.class)
             .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
             .closePanel()
+            .refresh()
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 
@@ -442,7 +443,7 @@ public class EditAssembliesTest extends TestBaseUI {
         componentsTreePage = editScenarioStatusPage.close(ComponentsTreePage.class);
 
         componentAssembly.getSubComponents().forEach(subcomponentName ->
-            assertThat(componentsTreePage.getScenarioState(subcomponentName.getComponentName(), componentAssembly.getScenarioName(), currentUser, ScenarioStateEnum.COST_COMPLETE),
+            assertThat(componentsTreePage.getScenarioState(subcomponentName.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getUser(), ScenarioStateEnum.COST_COMPLETE),
                 is(ScenarioStateEnum.COST_COMPLETE.getState())));
 
         softAssertions.assertThat(componentsTreePage.getRowDetails(BIG_RING, componentAssembly.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
@@ -713,7 +714,7 @@ public class EditAssembliesTest extends TestBaseUI {
             .closePanel()
             .clickExplore()
             .getCssComponents(componentAssembly.getUser(), "componentName[EQ], " + BOLT, "scenarioName[EQ], " + componentAssembly.getScenarioName(),
-                "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "iteration[EQ], 1")
+                "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "iteration[EQ], 2")
             .refresh()
             .selectFilter("Private")
             .clickSearch(BOLT)

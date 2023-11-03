@@ -80,6 +80,17 @@ public class CostDetailsPage extends LoadableComponent<CostDetailsPage> {
     }
 
     /**
+     * Gets the value of the dropdown label as a String
+     *
+     * @param label - the label
+     * @return String
+     */
+    public String getCostSumValueAsString(String label) {
+        By value = By.xpath(String.format("//div[normalize-space(text())='%s']/following-sibling::div", label));
+        return pageUtils.waitForElementToAppear(value).getAttribute("textContent").replaceAll("[^0-9?!\\.]", "");
+    }
+
+    /**
      * Gets the cost contribution value
      *
      * @param label - cost contribution

@@ -14,6 +14,7 @@ public class Results {
     private Double additionalDirectCosts;
     private Double amortizedInvestment;
     private Double annualCost;
+    private Double annualManufacturingCarbon;
     private Integer annualVolume;
     private Double batchCost;
     private Double batchSetupTime;
@@ -47,7 +48,9 @@ public class Results {
     private Double length;
     private Double lifetimeCost;
     private Double logisticsCost;
+    private Double logisticsCarbon;
     private String manualMaterialName;
+    private String cadMaterialName;
     private Double margin;
     private Double marginPercent;
     private Double materialCost;
@@ -88,8 +91,11 @@ public class Results {
     private Double width;
     private String costingStatus;
     private String currencyCode;
+    private String machiningMode;
     private String processGroupName;
     private String scenarioName;
+    private Double targetCost;
+    private Double targetMass;
     private UserDefinedAttributes userDefinedAttributes;
     private String vpeName;
 }

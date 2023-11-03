@@ -19,6 +19,7 @@ import com.apriori.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -78,6 +79,7 @@ public class WatchpointReportTests extends TestBaseUI {
     }
 
     @Test
+    @Disabled("Has been pulled from release")
     @Tag(SMOKE)
     @Issue("BA-2962")
     @TestRail(id = {28525, 28526})

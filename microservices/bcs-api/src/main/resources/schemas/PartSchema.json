@@ -16,6 +16,9 @@
         "partName",
         "description"
       ],
+      "optional": [
+        "apwScenarioLink"
+      ],
       "properties": {
         "identity": {
           "type": "string"
@@ -51,6 +54,9 @@
           "type": "string"
         },
         "url": {
+          "type": "string"
+        },
+        "apwScenarioLink": {
           "type": "string"
         },
         "partName": {

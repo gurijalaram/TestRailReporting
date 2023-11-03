@@ -177,7 +177,8 @@ public class DecimalPlaceTests extends TestBaseUI {
         costDetailsPage = evaluatePage.openCostDetails()
             .expandDropDown("Piece Part Cost, Fully Burdened Cost");
 
-        softAssertions.assertThat(Double.toString(costDetailsPage.getCostSumValue("Total Variable Cost")).split("\\.")[1].length())
+        String value = Double.toString(costDetailsPage.getCostSumValue("Total Variable Cost"));
+        softAssertions.assertThat(costDetailsPage.getCostSumValueAsString("Total Variable Cost").split("\\.")[1].length())
             .as("Total Variable Cost shown to 4 decimal places").isEqualTo(4);
         softAssertions.assertThat(Double.toString(costDetailsPage.getCostContributionValue("Indirect Overhead")).split("\\.")[1].length())
             .as("Indirect Overhead shown to 4 decimal places").isEqualTo(4);
