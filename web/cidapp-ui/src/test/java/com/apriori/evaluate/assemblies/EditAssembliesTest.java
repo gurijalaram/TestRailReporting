@@ -69,6 +69,7 @@ public class EditAssembliesTest extends TestBaseUI {
     private ComponentInfoBuilder cidComponentItem;
 
     @Test
+    @Issue("APD-2431")
     @Tag(SMOKE)
     @TestRail(id = 10768)
     @Description("Shallow Publish assembly and scenarios costed in CI Design")
