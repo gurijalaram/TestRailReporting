@@ -71,6 +71,31 @@
       ]
     },
     {
+      "componentName": "titan charger ass",
+      "extension": ".SLDASM",
+      "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
+      "subComponents": [
+        {
+          "componentName": "titan charger base",
+          "extension": ".SLDPRT",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "titan charger lead",
+          "extension": ".SLDPRT",
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "titan charger upper",
+          "extension": ".SLDPRT",
+          "processGroup": "PLASTIC_MOLDING"
+        }
+      ]
+    },
+    {
       "componentName": "piston_assembly",
       "extension": ".asm.1",
       "processGroup": "ASSEMBLY",
