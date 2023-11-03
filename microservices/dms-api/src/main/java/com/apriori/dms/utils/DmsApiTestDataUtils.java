@@ -62,7 +62,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
     @Description("Create Test Data")
     public static void createTestData() {
         try {
-            currentUser = UserUtil.getUser();
+            currentUser = UserUtil.getUser("admin");
             softAssertionsTestData = new SoftAssertions();
             bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
             projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
