@@ -1,11 +1,11 @@
 package testsuites;
 
-import com.apriori.AccountsControllerTest;
-import com.apriori.BillOfMaterialsTest;
-import com.apriori.LineItemsTest;
-import com.apriori.PartsTest;
-import com.apriori.ReportsTest;
-import com.apriori.UsersTest;
+import com.apriori.edc.api.tests.AccountsControllerTest;
+import com.apriori.edc.api.tests.BillOfMaterialsTest;
+import com.apriori.edc.api.tests.LineItemsTest;
+import com.apriori.edc.api.tests.PartsTest;
+import com.apriori.edc.api.tests.ReportsTest;
+import com.apriori.edc.api.tests.UsersTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

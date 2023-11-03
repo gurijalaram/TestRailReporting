@@ -1,0 +1,17 @@
+sourceSets {
+    main {
+        resources {
+            srcDirs += [
+                    project(':microservices:cic-api').sourceSets.test.resources
+            ]
+        }
+    }
+}
+
+dependencies {
+    implementation project(':shared-util')
+    implementation project(':microservices:cic-api')
+    implementation project(':microservices:cid-api')
+    implementation project(':web-app-util')
+    implementation project(':serialization-util')
+}

@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.GcdTreesTests;
+import com.apriori.gcd.api.tests.GcdTreesTests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

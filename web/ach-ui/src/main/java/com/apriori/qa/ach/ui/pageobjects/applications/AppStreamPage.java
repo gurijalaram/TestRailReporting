@@ -1,6 +1,6 @@
 package com.apriori.qa.ach.ui.pageobjects.applications;
 
-import com.apriori.PageUtils;
+import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

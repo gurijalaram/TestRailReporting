@@ -12,7 +12,7 @@ sourceSets {
 dependencies {
     implementation project(':shared-util')
     implementation project(':web-app-util')
-    implementation project(':microservices:cidapp-api')
+    implementation project(':microservices:cid-api')
     implementation project(':serialization-util')
     implementation project(':microservices:nts-api')
 }

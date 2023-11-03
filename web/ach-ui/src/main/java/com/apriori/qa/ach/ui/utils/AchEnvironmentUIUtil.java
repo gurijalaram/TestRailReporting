@@ -1,15 +1,15 @@
 package com.apriori.qa.ach.ui.utils;
 
 
-import com.apriori.login.CommonLoginPageImplementation;
-import com.apriori.pageobjects.customeradmin.CustomerAdminPage;
-import com.apriori.pageobjects.header.ReportsHeader;
-import com.apriori.pageobjects.homepage.AdminHomePage;
-import com.apriori.pageobjects.messages.MessagesPage;
-import com.apriori.pageobjects.workflows.WorkflowHome;
-import com.apriori.properties.PropertiesContext;
+import com.apriori.cas.ui.pageobjects.customeradmin.CustomerAdminPage;
+import com.apriori.cia.ui.pageobjects.homepage.AdminHomePage;
+import com.apriori.cic.ui.pageobjects.workflows.WorkflowHome;
+import com.apriori.cir.ui.pageobjects.header.ReportsHeader;
+import com.apriori.cis.ui.pageobjects.messages.MessagesPage;
 import com.apriori.qa.ach.ui.pageobjects.applications.AppStreamPage;
-import com.apriori.testconfig.TestBaseUI;
+import com.apriori.shared.util.properties.PropertiesContext;
+import com.apriori.shared.util.testconfig.TestBaseUI;
+import com.apriori.web.app.util.login.CommonLoginPageImplementation;
 
 import org.openqa.selenium.support.ui.LoadableComponent;
 

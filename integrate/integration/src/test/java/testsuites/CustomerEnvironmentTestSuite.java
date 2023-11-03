@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.ach.tests.AchMainPageAPITestAPI;
+import com.apriori.ach.api.tests.AchMainPageAPITestAPI;
 import com.apriori.ach.ui.tests.AchMainPageUITest;
 
 import org.junit.platform.suite.api.SelectClasses;

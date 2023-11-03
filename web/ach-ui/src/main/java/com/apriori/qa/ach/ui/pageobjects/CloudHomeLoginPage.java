@@ -2,9 +2,9 @@ package com.apriori.qa.ach.ui.pageobjects;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.apriori.PageUtils;
-import com.apriori.login.LoginService;
-import com.apriori.reader.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.web.app.util.PageUtils;
+import com.apriori.web.app.util.login.LoginService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

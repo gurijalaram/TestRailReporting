@@ -1,16 +1,16 @@
 package testsuites;
 
-import com.apriori.AccessControlsTest;
-import com.apriori.ConfigurationTest;
-import com.apriori.CustomAttributesTest;
-import com.apriori.CustomizationsTest;
-import com.apriori.DigitalFactoriesTest;
-import com.apriori.ProcessGroupMaterialStocksTest;
-import com.apriori.ProcessGroupMaterialsTest;
-import com.apriori.ProcessGroupSiteVariablesTest;
-import com.apriori.ProcessGroupsTest;
-import com.apriori.SiteVariablesTest;
-import com.apriori.UserGroupAssociationsTest;
+import com.apriori.vds.api.tests.AccessControlsTest;
+import com.apriori.vds.api.tests.ConfigurationTest;
+import com.apriori.vds.api.tests.CustomAttributesTest;
+import com.apriori.vds.api.tests.CustomizationsTest;
+import com.apriori.vds.api.tests.DigitalFactoriesTest;
+import com.apriori.vds.api.tests.ProcessGroupMaterialStocksTest;
+import com.apriori.vds.api.tests.ProcessGroupMaterialsTest;
+import com.apriori.vds.api.tests.ProcessGroupSiteVariablesTest;
+import com.apriori.vds.api.tests.ProcessGroupsTest;
+import com.apriori.vds.api.tests.SiteVariablesTest;
+import com.apriori.vds.api.tests.UserGroupAssociationsTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

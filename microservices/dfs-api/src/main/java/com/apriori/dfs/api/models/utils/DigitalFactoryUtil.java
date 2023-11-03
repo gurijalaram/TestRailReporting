@@ -3,11 +3,11 @@ package com.apriori.dfs.api.models.utils;
 import com.apriori.dfs.api.enums.DFSApiEnum;
 import com.apriori.dfs.api.models.response.DigitalFactories;
 import com.apriori.dfs.api.models.response.DigitalFactory;
-import com.apriori.http.models.entity.RequestEntity;
-import com.apriori.http.models.request.HTTPRequest;
-import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.response.ErrorMessage;
+import com.apriori.shared.util.http.models.entity.RequestEntity;
+import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.ErrorMessage;
 
 import software.amazon.awssdk.http.HttpStatusCode;
 

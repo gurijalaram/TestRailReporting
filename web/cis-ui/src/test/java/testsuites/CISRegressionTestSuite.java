@@ -1,12 +1,12 @@
 package testsuites;
 
-import com.apriori.messages.MessagesTest;
-import com.apriori.navigation.NavigationPanelTest;
-import com.apriori.partsandassemblies.PartsAndAssemblyTest;
-import com.apriori.partsandassembliesdetails.PartsAndAssembliesDetailsTest;
-import com.apriori.projectdetails.ProjectsDetailsTest;
-import com.apriori.projects.ProjectsTest;
-import com.apriori.userpreference.UserPreferenceTest;
+import com.apriori.cis.ui.tests.messages.MessagesTest;
+import com.apriori.cis.ui.tests.navigation.NavigationPanelTest;
+import com.apriori.cis.ui.tests.partsandassemblies.PartsAndAssemblyTest;
+import com.apriori.cis.ui.tests.partsandassembliesdetails.PartsAndAssembliesDetailsTest;
+import com.apriori.cis.ui.tests.projectdetails.ProjectsDetailsTest;
+import com.apriori.cis.ui.tests.projects.ProjectsTest;
+import com.apriori.cis.ui.tests.userpreference.UserPreferenceTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

@@ -1,17 +1,17 @@
 package testsuites;
 
-import com.apriori.ApFilesTest;
-import com.apriori.ComponentsTest;
-import com.apriori.ConnectionsTest;
-import com.apriori.CostingTemplatesTest;
-import com.apriori.FeatureDecisionsTests;
-import com.apriori.IterationsTest;
-import com.apriori.PublishAssembliesTests;
-import com.apriori.ScenarioAssociationsTest;
-import com.apriori.ScenarioIterationsTest;
-import com.apriori.ScenariosTest;
-import com.apriori.SecondaryProcessesTest;
-import com.apriori.SustainabilityScenarioTest;
+import com.apriori.sds.api.tests.ApFilesTest;
+import com.apriori.sds.api.tests.ComponentsTest;
+import com.apriori.sds.api.tests.ConnectionsTest;
+import com.apriori.sds.api.tests.CostingTemplatesTest;
+import com.apriori.sds.api.tests.FeatureDecisionsTests;
+import com.apriori.sds.api.tests.IterationsTest;
+import com.apriori.sds.api.tests.PublishAssembliesTests;
+import com.apriori.sds.api.tests.ScenarioAssociationsTest;
+import com.apriori.sds.api.tests.ScenarioIterationsTest;
+import com.apriori.sds.api.tests.ScenariosTest;
+import com.apriori.sds.api.tests.SecondaryProcessesTest;
+import com.apriori.sds.api.tests.SustainabilityScenarioTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

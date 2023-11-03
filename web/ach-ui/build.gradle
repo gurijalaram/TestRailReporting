@@ -7,6 +7,6 @@ dependencies {
     implementation project(':web:cia-ui')
     implementation project(':web:cir-ui')
     implementation project(':web:cis-ui')
-    implementation project(':web:ciconnect-ui')
+    implementation project(':web:cic-ui')
 
 }

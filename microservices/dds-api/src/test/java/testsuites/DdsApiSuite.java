@@ -1,7 +1,7 @@
 package testsuites;
 
-import com.apriori.CommentsTest;
-import com.apriori.DiscussionTest;
+import com.apriori.dds.api.tests.CommentsTest;
+import com.apriori.dds.api.tests.DiscussionTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

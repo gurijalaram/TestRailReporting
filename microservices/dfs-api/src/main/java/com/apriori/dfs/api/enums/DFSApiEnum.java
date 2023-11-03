@@ -1,7 +1,7 @@
 package com.apriori.dfs.api.enums;
 
-import com.apriori.interfaces.ExternalEndpointEnum;
-import com.apriori.properties.PropertiesContext;
+import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
+import com.apriori.shared.util.properties.PropertiesContext;
 
 import java.util.Arrays;
 

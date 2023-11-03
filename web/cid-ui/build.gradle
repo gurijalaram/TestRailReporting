@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(':shared-util')
+    implementation project(':microservices:cid-api')
+    implementation project(':microservices:css-api')
+    implementation project(':web-app-util')
+}

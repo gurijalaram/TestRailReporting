@@ -1,7 +1,7 @@
 package com.apriori.dfs.api.models.response;
 
-import com.apriori.annotations.Schema;
-import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.serialization.util.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.shared.util.annotations.Schema;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

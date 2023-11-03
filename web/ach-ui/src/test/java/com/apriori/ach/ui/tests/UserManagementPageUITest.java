@@ -1,23 +1,21 @@
 package com.apriori.ach.ui.tests;
 
-import com.apriori.ach.utils.AchEnvironmentAPIUtil;
-import com.apriori.http.utils.GenerateStringUtil;
-import com.apriori.login.LoginService;
+import com.apriori.ach.api.utils.AchEnvironmentAPIUtil;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.qa.ach.ui.pageobjects.UserManagementPage;
 import com.apriori.qa.ach.ui.utils.AchEnvironmentUIUtil;
 import com.apriori.qa.ach.ui.utils.enums.AdditionalProperties;
 import com.apriori.qa.ach.ui.utils.enums.Roles;
-import com.apriori.reader.file.user.UserCredentials;
-import com.apriori.testrail.TestRail;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.testrail.TestRail;
+import com.apriori.web.app.util.login.LoginService;
 
-import com.github.fge.jsonschema.processors.data.ValidatorList;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class UserManagementPageUITest extends AchEnvironmentUIUtil {
 

@@ -2,14 +2,14 @@ package com.apriori.ach.ui.tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.apriori.ach.dto.ApplicationDTO;
-import com.apriori.ach.utils.AchEnvironmentAPIUtil;
-import com.apriori.models.AuthorizationUtil;
+import com.apriori.ach.api.dto.ApplicationDTO;
+import com.apriori.ach.api.utils.AchEnvironmentAPIUtil;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomeLoginPage;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.qa.ach.ui.utils.AchEnvironmentUIUtil;
-import com.apriori.reader.file.user.UserCredentials;
-import com.apriori.testrail.TestRail;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.models.AuthorizationUtil;
+import com.apriori.shared.util.testrail.TestRail;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

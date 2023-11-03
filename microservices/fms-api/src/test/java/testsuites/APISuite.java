@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.FileManagementControllerTest;
+import com.apriori.fms.api.tests.FileManagementControllerTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

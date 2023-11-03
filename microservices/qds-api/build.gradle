@@ -13,6 +13,6 @@ dependencies {
     implementation project(':shared-util')
     implementation project(':db')
     implementation project(':microservices:css-api')
-    implementation project(':microservices:cidapp-api')
+    implementation project(':microservices:cid-api')
     implementation project(':serialization-util')
 }

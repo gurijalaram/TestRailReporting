@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.JasperReportTest;
+import com.apriori.cir.api.tests.JasperReportTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

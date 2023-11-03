@@ -1,20 +1,20 @@
 package testsuites;
 
-import com.apriori.BidPackageProjectItemTest;
-import com.apriori.BidPackageProjectUserTest;
-import com.apriori.LayoutConfigurationTest;
-import com.apriori.QmsBidPackageItemTest;
-import com.apriori.QmsBidPackageProjectsTest;
-import com.apriori.QmsBidPackageTest;
-import com.apriori.QmsComponentTest;
-import com.apriori.QmsDiscussionFilteredTest;
-import com.apriori.QmsProjectItemTest;
-import com.apriori.QmsProjectUserPermissionsTest;
-import com.apriori.QmsProjectsFilteredTest;
-import com.apriori.QmsProjectsTest;
-import com.apriori.QmsScenarioDiscussionTest;
-import com.apriori.QmsScenarioSharingTest;
-import com.apriori.QmsUserPreferenceTest;
+import com.apriori.qms.api.tests.BidPackageProjectItemTest;
+import com.apriori.qms.api.tests.BidPackageProjectUserTest;
+import com.apriori.qms.api.tests.LayoutConfigurationTest;
+import com.apriori.qms.api.tests.QmsBidPackageItemTest;
+import com.apriori.qms.api.tests.QmsBidPackageProjectsTest;
+import com.apriori.qms.api.tests.QmsBidPackageTest;
+import com.apriori.qms.api.tests.QmsComponentTest;
+import com.apriori.qms.api.tests.QmsDiscussionFilteredTest;
+import com.apriori.qms.api.tests.QmsProjectItemTest;
+import com.apriori.qms.api.tests.QmsProjectUserPermissionsTest;
+import com.apriori.qms.api.tests.QmsProjectsFilteredTest;
+import com.apriori.qms.api.tests.QmsProjectsTest;
+import com.apriori.qms.api.tests.QmsScenarioDiscussionTest;
+import com.apriori.qms.api.tests.QmsScenarioSharingTest;
+import com.apriori.qms.api.tests.QmsUserPreferenceTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
