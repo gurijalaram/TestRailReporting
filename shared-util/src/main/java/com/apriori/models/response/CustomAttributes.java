@@ -27,8 +27,4 @@ public class CustomAttributes {
     private String accessGroup;
     private String assemblyOperationType;
     private List<Object> roles;
-
-    public void setUDA5(List<String> uda5) {
-        this.uda5 = uda5;
-    }
 }
