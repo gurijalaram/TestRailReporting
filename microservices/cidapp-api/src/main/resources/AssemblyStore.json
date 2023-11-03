@@ -159,22 +159,22 @@
       },
       "subComponents": [
         {
-          "componentName": "piston_pin",
+          "componentName": "Part0001",
           "extension": ".ipt",
           "processGroup": "SHEET_METAL"
         },
         {
-          "componentName": "piston cover_model1",
+          "componentName": "Part0002",
           "extension": ".ipt",
           "processGroup": "SHEET_METAL"
         },
         {
-          "componentName": "piston pin_model1",
+          "componentName": "Part0003",
           "extension": ".ipt",
           "processGroup": "SHEET_METAL"
         },
         {
-          "componentName": "piston rod_model1",
+          "componentName": "Part0004",
           "extension": ".ipt",
           "processGroup": "SHEET_METAL"
         }

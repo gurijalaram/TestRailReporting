@@ -21,6 +21,7 @@ import com.apriori.pageobjects.explore.ExplorePage;
 import com.apriori.pageobjects.login.CidAppLoginPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
+import com.apriori.pageobjects.navtoolbars.PublishScenarioPage;
 import com.apriori.testconfig.TestBaseUI;
 import com.apriori.testrail.TestRail;
 
@@ -43,6 +44,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     private ComponentInfoBuilder cidComponentItemC;
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private PublishPage publishPage;
+    private PublishScenarioPage publishScenarioPage;
     private ComponentsTablePage componentsTablePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private ExplorePage explorePage;
@@ -508,7 +510,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     @TestRail(id = 10786)
     @Description("Attempt to Shallow Publish over existing Public locked scenarios")
     public void testShallowPublishExistingPublicLockedScenario() {
-        String publishingMessage = "A public scenario with this name already exists." +
+        String publishingWarning = "A public scenario with this name already exists." +
             " The public scenario is locked and cannot be overridden, please supply a different scenario name or cancel the operation.";
 
         componentAssembly = new AssemblyDTORequest().getAssembly();
@@ -521,7 +523,7 @@ public class PublishAssembliesTests extends TestBaseUI {
             .publishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        publishPage = loginPage.login(componentAssembly.getUser())
+        publishScenarioPage = loginPage.login(componentAssembly.getUser())
             .selectFilter("Public")
             .clickSearch(componentAssembly.getComponentName())
             .multiSelectScenarios(componentAssembly.getComponentName() + "," + componentAssembly.getScenarioName())
@@ -537,9 +539,9 @@ public class PublishAssembliesTests extends TestBaseUI {
             .selectFilter("Private")
             .clickSearch(componentAssembly.getComponentName())
             .multiSelectScenarios(componentAssembly.getComponentName() + "," + componentAssembly.getScenarioName())
-            .publishScenario(PublishPage.class);
+            .publishScenario(PublishScenarioPage.class);
 
-        assertThat(publishPage.getConflictMessage(), is(equalTo(publishingMessage)));
+        assertThat(publishPage.getConflictMessage(), is(equalTo(publishingWarning)));
     }
 
     @Test

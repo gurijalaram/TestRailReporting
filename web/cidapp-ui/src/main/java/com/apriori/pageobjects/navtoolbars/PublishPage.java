@@ -71,7 +71,6 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     private WebDriver driver;
     private ModalDialogController modalDialogController;
     private PeopleUtil peopleUtil = new PeopleUtil();
-    private String root = "modal-body";
 
     public PublishPage(WebDriver driver) {
         this.driver = driver;
