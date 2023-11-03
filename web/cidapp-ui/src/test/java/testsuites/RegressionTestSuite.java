@@ -32,6 +32,7 @@ import com.apriori.evaluate.assemblies.IncludeAndExcludeTests;
 import com.apriori.evaluate.assemblies.LargeGroupAssemblyTests;
 import com.apriori.evaluate.assemblies.MaturityAssemblyAssociationsTests;
 import com.apriori.evaluate.assemblies.MissingAssemblyAssociationsTests;
+import com.apriori.evaluate.assemblies.PublishAssembliesTests;
 import com.apriori.evaluate.assemblies.UpdateCADFileTests;
 import com.apriori.evaluate.assemblies.UploadAssembliesTests;
 import com.apriori.evaluate.dtc.DFMRiskTests;
@@ -122,7 +123,8 @@ import org.junit.platform.suite.api.Suite;
     MissingAssemblyAssociationsTests.class,
     SustainabilityTests.class,
     SustainabilityFieldsTests.class,
-    CostHistoryTests.class
+    CostHistoryTests.class,
+    PublishAssembliesTests.class
 })
 public class RegressionTestSuite {
 }

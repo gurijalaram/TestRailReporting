@@ -342,7 +342,6 @@ public class QuickComparisonTests extends TestBaseUI {
             .clickScenarioCheckbox(componentName, scenarioName2)
             .submit(ComparePage.class);
 
-        //ToDo:- Ping Alan on Monday and ask about the getListOfBasis method and what the intention is
         softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);
 
         softAssertions.assertAll();

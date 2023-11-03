@@ -69,30 +69,34 @@ public class EditAssembliesTest extends TestBaseUI {
     private ComponentInfoBuilder cidComponentItem;
 
     @Test
+    @Issue("APD-2431")
     @Tag(SMOKE)
     @TestRail(id = 10768)
     @Description("Shallow Publish assembly and scenarios costed in CI Design")
     public void testShallowPublishCostedCID() {
-        final String big_ring = "big ring";
-        final String pin = "Pin";
-        final String small_ring = "small ring";
-
-        componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
+        componentAssembly = assemblyDTORequest.getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentAssembly.getUser())
+        componentsTablePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
-            .multiSelectSubcomponents(big_ring + "," + componentAssembly.getScenarioName(), pin + "," + componentAssembly.getScenarioName(), small_ring + "," + componentAssembly.getScenarioName())
-            .publishSubcomponent()
+            .selectTableView();
+
+        componentAssembly.getSubComponents().forEach(subcomponent ->
+            componentsTablePage.multiSelectSubcomponents(subcomponent.getComponentName() + "," + subcomponent.getScenarioName()));
+
+        componentsTablePage.publishSubcomponent()
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
-            .close(ComponentsTablePage.class)
-            .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
+            .close(ComponentsTablePage.class);
+
+        componentAssembly.getSubComponents().forEach(subcomponent ->
+            componentsTablePage.checkSubcomponentState(componentAssembly, subcomponent.getComponentName()));
+
+        evaluatePage = componentsTablePage
             .closePanel()
             .refresh()
             .publishScenario(PublishPage.class)

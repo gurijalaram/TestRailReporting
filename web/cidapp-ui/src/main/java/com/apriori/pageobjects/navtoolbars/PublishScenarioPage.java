@@ -11,11 +11,17 @@ import org.openqa.selenium.support.FindBy;
 @Slf4j
 public class PublishScenarioPage extends EagerPageComponent<PublishScenarioPage> {
 
+    @FindBy(xpath = "//h2[.='Publish Scenario']")
+    private WebElement headerDialog;
+
     @FindBy(css = ".apriori-alert")
     private WebElement publishScenarioAlert;
 
     @FindBy(css = "[id='modal-body'] h5")
     private WebElement unpublishedScenarioAlert;
+
+    @FindBy(css = ".scenario-conflict-form [role=alert]")
+    private WebElement scenarioNameInput;
 
     private ModalDialogController modalDialogController;
 
@@ -26,7 +32,20 @@ public class PublishScenarioPage extends EagerPageComponent<PublishScenarioPage>
 
     @Override
     protected void isLoaded() throws Error {
-        getPageUtils().waitForElementToAppear(publishScenarioAlert);
+        getPageUtils().waitForElementToAppear(headerDialog);
+    }
+
+    /**
+     * Change scenario name
+     *
+     * @param scenarioName - scenario name
+     * @return current page object
+     */
+    public PublishScenarioPage inputScenarioName(String scenarioName) {
+        this.getPageUtils().waitForElementAndClick(scenarioNameInput);
+        this.getPageUtils().clearValueOfElement(scenarioNameInput);
+        scenarioNameInput.sendKeys(scenarioName);
+        return this;
     }
 
     /**
@@ -63,5 +82,14 @@ public class PublishScenarioPage extends EagerPageComponent<PublishScenarioPage>
      */
     public String getUnpublishedAlert() {
         return getPageUtils().waitForElementToAppear(unpublishedScenarioAlert).getText();
+    }
+
+    /**
+     * Select the continue button
+     *
+     * @return generic page object
+     */
+    public <T> T clickContinue(Class<T> klass) {
+        return modalDialogController.clickContinue(klass);
     }
 }
