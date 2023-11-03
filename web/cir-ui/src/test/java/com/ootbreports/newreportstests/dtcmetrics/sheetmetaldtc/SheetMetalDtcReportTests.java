@@ -18,7 +18,6 @@ import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.parallel.Isolated;
 import utils.JasperApiAuthenticationUtil;
 
 import java.util.Arrays;
@@ -26,15 +25,15 @@ import java.util.List;
 
 
 public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC;
-    private final List<String> mostCommonPartNames = Arrays.asList(
+    private String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC.getEndpoint();
+    private String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC;
+    private List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.P_2980123_CLAMP.getPartName(),
         JasperCirApiPartsEnum.AP_BRACKET_HANGER.getPartName(),
         JasperCirApiPartsEnum.DS73_F04604_PIA1.getPartName()
     );
-    private static JasperApiUtils jasperApiUtils;
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupGenericMethods() {

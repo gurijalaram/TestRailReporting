@@ -17,12 +17,12 @@ import utils.JasperApiAuthenticationUtil;
 import java.util.Arrays;
 import java.util.List;
 
-public class MachiningDtcDetailsTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.MACHINING_DTC_DETAILS.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC_DETAILS;
-    private static JasperApiUtils jasperApiUtils;
-    private final List<String> partNames = Arrays.asList(
+public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil {
+    private String reportsJsonFileName = JasperApiEnum.MACHINING_DTC_DETAILS.getEndpoint();
+    private String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC_DETAILS;
+    private JasperApiUtils jasperApiUtils;
+    private List<String> partNames = Arrays.asList(
         JasperCirApiPartsEnum.DTCMACHINING_001.getPartName(),
         JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
         JasperCirApiPartsEnum.PUNCH_INITIAL.getPartName()

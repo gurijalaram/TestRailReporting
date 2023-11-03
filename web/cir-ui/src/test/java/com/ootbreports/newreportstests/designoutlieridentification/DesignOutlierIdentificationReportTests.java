@@ -17,14 +17,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.DESIGN_OUTLIER_IDENTIFICATION.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.DESIGN_OUTLIER_IDENTIFICATION;
-    private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
-    private final List<String> mostCommonPartNames = Arrays.asList(
+    private String reportsJsonFileName = JasperApiEnum.DESIGN_OUTLIER_IDENTIFICATION.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.DESIGN_OUTLIER_IDENTIFICATION;
+    private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.P_257280C.getPartName(),
         JasperCirApiPartsEnum.P_40137441_MLDES_0002_WITHOUT_INITIAL.getPartName()
     );
-    private static JasperApiUtils jasperApiUtils;
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {

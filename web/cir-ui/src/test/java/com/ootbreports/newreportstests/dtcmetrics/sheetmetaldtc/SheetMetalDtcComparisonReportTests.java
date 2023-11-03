@@ -18,15 +18,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC_COMPARISON.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC_COMPARISON;
-    private static final String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
-    private final List<String> partNames = Arrays.asList(
+    private String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC_COMPARISON.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC_COMPARISON;
+    private String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
+    private List<String> partNames = Arrays.asList(
         JasperCirApiPartsEnum.P_1271576.getPartName(),
         JasperCirApiPartsEnum.BRACKET_V1_REV_1.getPartName(),
         JasperCirApiPartsEnum.BRACKET_V2_REV_1.getPartName()
     );
-    private static JasperApiUtils jasperApiUtils;
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupGenericMethods() {

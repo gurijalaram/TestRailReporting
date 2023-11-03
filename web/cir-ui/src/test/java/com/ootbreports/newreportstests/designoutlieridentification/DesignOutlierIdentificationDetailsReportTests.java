@@ -20,16 +20,16 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS;
-    private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
-    private final List<String> mostCommonPartNames = Arrays.asList(
+    private String reportsJsonFileName = JasperApiEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS;
+    private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName().substring(0, 19),
         JasperCirApiPartsEnum.CASE_07.getPartName(),
         JasperCirApiPartsEnum.A257280C.getPartName()
     );
-    private static final SoftAssertions softAssertions = new SoftAssertions();
-    private static JasperApiUtils jasperApiUtils;
+    private SoftAssertions softAssertions = new SoftAssertions();
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {

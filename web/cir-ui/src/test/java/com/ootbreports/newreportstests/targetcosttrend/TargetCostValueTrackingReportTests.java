@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 public class TargetCostValueTrackingReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.TARGET_COST_VALUE_TRACKING.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.TARGET_COST_VALUE_TRACKING;
+    private String reportsJsonFileName = JasperApiEnum.TARGET_COST_VALUE_TRACKING.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.TARGET_COST_VALUE_TRACKING;
     // Export set is not relevant for this report
-    private static final String exportSetName = "";
-    private static JasperApiUtils jasperApiUtils;
+    private String exportSetName = "";
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
