@@ -22,7 +22,7 @@ import java.util.List;
 @Slf4j
 public class EvaluateToolbar extends ExploreToolbar {
 
-    @FindBy(css = "[id='qa-sub-header-scenario-progress-button'] button")
+    @FindBy(css = "[id='qa-sub-header-scenario-history-button'] button")
     private WebElement historyButton;
 
     @FindBy(css = "div[data-testid='scenario-state-preview']")
