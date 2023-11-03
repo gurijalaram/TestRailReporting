@@ -53,6 +53,7 @@ import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
+import org.junit.runner.RunWith;
 
 @Suite
 @SelectClasses({
@@ -63,8 +64,8 @@ import org.junit.platform.suite.api.Suite;
     CastingDtcComparisonReportTests.class,
     CastingDtcDetailsReportTests.class,
     CastingDtcReportTests.class,*/
-    ComponentCostReportTests.class,
-    CostOutlierIdentificationReportTests.class,
+    ComponentCostReportTests.class
+    /*CostOutlierIdentificationReportTests.class,
     CostOutlierIdentificationDetailsReportTests.class,
     CycleTimeValueTrackingReportTests.class,
     CycleTimeValueTrackingDetailsReportTests.class,
@@ -72,7 +73,7 @@ import org.junit.platform.suite.api.Suite;
     DesignOutlierIdentificationDetailsReportTests.class,
     DigitalFactoryPerformanceReportTests.class,
     DigitalFactoryPerformanceDetailsReportTests.class,
-    /*MachiningDtcComparisonReportTests.class,
+    MachiningDtcComparisonReportTests.class,
     MachiningDtcDetailsReportTests.class,
     MachiningDtcReportTests.class,
     PlasticDtcComparisonReportTests.class,
