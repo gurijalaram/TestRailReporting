@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.dto.AssemblyDTORequest;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
@@ -13,7 +14,6 @@ import com.apriori.enums.DigitalFactoryEnum;
 import com.apriori.enums.NewCostingLabelEnum;
 import com.apriori.enums.ProcessGroupEnum;
 import com.apriori.enums.ScenarioStateEnum;
-import com.apriori.http.utils.FileResourceUtil;
 import com.apriori.http.utils.GenerateStringUtil;
 import com.apriori.pageobjects.evaluate.EvaluatePage;
 import com.apriori.pageobjects.evaluate.components.ComponentsTablePage;
@@ -75,25 +75,20 @@ public class PublishAssembliesTests extends TestBaseUI {
     @TestRail(id = {10763, 10768})
     @Description("Publish an assembly with no missing sub-components")
     public void shallowPublishAssemblyTest() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        String subComponentAName = "titan battery release";
-        String subComponentBName = "titan battery";
-        String assemblyName = "titan battery ass";
         String preferPublic = "Prefer Public Scenarios";
 
-        subComponentA = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, subComponentAName + ".SLDPRT");
-        subComponentB = FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, subComponentBName + ".SLDPRT");
-        assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
+        componentAssembly = new AssemblyDTORequest().getAssembly("titan battery ass");
+        ComponentInfoBuilder subComponentA = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("titan battery release")).findFirst().get();
+        ComponentInfoBuilder subComponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("titan battery")).findFirst().get();
+
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(componentAssembly.getUser())
             .openSettings()
             .goToAssemblyDefaultsTab()
             .selectAssemblyStrategy(preferPublic)
             .submit(EvaluatePage.class)
-            .uploadComponent(subComponentAName, scenarioName, subComponentA, currentUser);
+            .uploadComponent(subComponentA.getComponentName(), subComponentA.getScenarioName(), subComponentA.getResourceFile(), subComponentA.getUser());
 
         cidComponentItemB = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
@@ -101,7 +96,7 @@ public class PublishAssembliesTests extends TestBaseUI {
             .publishScenario(PublishPage.class)
             .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
-            .uploadComponent(subComponentBName, scenarioName, subComponentB, currentUser);
+            .uploadComponent(subComponentB.getComponentName(), subComponentB.getScenarioName(), subComponentB.getResourceFile(), subComponentB.getUser());
 
         cidComponentItemC = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
@@ -109,7 +104,7 @@ public class PublishAssembliesTests extends TestBaseUI {
             .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, EvaluatePage.class)
             .clickExplore()
-            .uploadComponent(assemblyName, scenarioName, assembly, currentUser);
+            .uploadComponent(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getResourceFile(), componentAssembly.getUser());
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemC)
             .selectProcessGroup(ProcessGroupEnum.ASSEMBLY)
