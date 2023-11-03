@@ -39,7 +39,7 @@ public class AllMaterialStocksInfoTests extends TestUtil {
         GenericExtendedPropertyInfoItem costPerKG = allMaterialStocksInfoResponse.getPropertyInfoMap().getCostPerKG();
 
         softAssertions.assertThat(costPerKG.getName()).isEqualTo("costPerKG");
-        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / lb");
+        softAssertions.assertThat(costPerKG.getUnitTypeName()).isEqualTo("USD / kg");
         softAssertions.assertThat(costPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
         softAssertions.assertAll();
     }
