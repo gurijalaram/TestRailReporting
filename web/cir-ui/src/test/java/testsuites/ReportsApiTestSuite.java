@@ -1,8 +1,8 @@
 package testsuites;
 
 import com.ootbreports.newreportstests.componentcost.ComponentCostReportTests;
-import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationDetailsTests;
-import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationTests;
+import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationDetailsReportTests;
+import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationReportTests;
 import com.ootbreports.newreportstests.cycletimevaluetracking.CycleTimeValueTrackingDetailsReportTests;
 import com.ootbreports.newreportstests.cycletimevaluetracking.CycleTimeValueTrackingReportTests;
 import com.ootbreports.newreportstests.designoutlieridentification.DesignOutlierIdentificationDetailsReportTests;
@@ -13,13 +13,13 @@ import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcCompariso
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcDetailsReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.machiningdtc.MachiningDtcComparisonReportTests;
-import com.ootbreports.newreportstests.dtcmetrics.machiningdtc.MachiningDtcDetailsTests;
+import com.ootbreports.newreportstests.dtcmetrics.machiningdtc.MachiningDtcDetailsReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.machiningdtc.MachiningDtcReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.plasticdtc.PlasticDtcComparisonReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.plasticdtc.PlasticDtcDetailsReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.plasticdtc.PlasticDtcReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcComparisonReportTests;
-import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsTests;
+import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsReportTests;
 import com.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostA4ReportTests;
 import com.ootbreports.newreportstests.general.assemblycost.AssemblyCostLetterReportTests;
@@ -46,7 +46,7 @@ import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCost
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
 import com.ootbreports.newreportstests.upgradecomparison.UpgradeComparisonReportTests;
-import com.ootbreports.newreportstests.upgradecomparison.UpgradePartComparisonTests;
+import com.ootbreports.newreportstests.upgradecomparison.UpgradePartComparisonReportTests;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
@@ -60,8 +60,8 @@ import org.junit.platform.suite.api.Suite;
     CastingDtcDetailsReportTests.class,
     CastingDtcReportTests.class,
     ComponentCostReportTests.class,
-    CostOutlierIdentificationTests.class,
-    CostOutlierIdentificationDetailsTests.class,
+    CostOutlierIdentificationReportTests.class,
+    CostOutlierIdentificationDetailsReportTests.class,
     CycleTimeValueTrackingReportTests.class,
     CycleTimeValueTrackingDetailsReportTests.class,
     DesignOutlierIdentificationReportTests.class,
@@ -69,36 +69,36 @@ import org.junit.platform.suite.api.Suite;
     DigitalFactoryPerformanceReportTests.class,
     DigitalFactoryPerformanceDetailsReportTests.class,
     MachiningDtcComparisonReportTests.class,
-    MachiningDtcDetailsTests.class,
+    MachiningDtcDetailsReportTests.class,
     MachiningDtcReportTests.class,
     PlasticDtcComparisonReportTests.class,
     PlasticDtcDetailsReportTests.class,
     PlasticDtcReportTests.class,
-    PotentialSavingsValueTrackingReportTests.class,
     PotentialSavingsValueTrackingDetailsReportTests.class,
+    PotentialSavingsValueTrackingReportTests.class,
     RecommendedTestPartsReportTests.class,
-    ScenarioComparisonReportTests.class,
-    ScenarioActivityReportTests.class,
     ScenarioActivityDigitalFactoryActivityReportTests.class,
     ScenarioActivityMaterialActivityReportTests.class,
     ScenarioActivityProcessActivityReportTests.class,
     ScenarioActivityProcessGroupActivityReportTests.class,
+    ScenarioActivityReportTests.class,
     ScenarioActivityTotalActivityReportTests.class,
+    ScenarioComparisonReportTests.class,
     SheetMetalDtcComparisonReportTests.class,
-    SheetMetalDtcDetailsTests.class,
+    SheetMetalDtcDetailsReportTests.class,
     SheetMetalDtcReportTests.class,
-    SpendAnalysisValueTrackingReportTests.class,
     SpendAnalysisValueTrackingDetailsReportTests.class,
-    SpendAnalysisValueTrackingSimplifiedReportTests.class,
     SpendAnalysisValueTrackingDetailsSimplifiedReportTests.class,
+    SpendAnalysisValueTrackingReportTests.class,
+    SpendAnalysisValueTrackingSimplifiedReportTests.class,
     TargetCostTrendReportTests.class,
-    TargetCostValueTrackingReportTests.class,
     TargetCostValueTrackingDetailsReportTests.class,
+    TargetCostValueTrackingReportTests.class,
     TargetAndQuotedCostTrendReportTests.class,
-    TargetAndQuotedCostValueTrackingReportTests.class,
     TargetAndQuotedCostValueTrackingDetailsReportTests.class,
+    TargetAndQuotedCostValueTrackingReportTests.class,
     UpgradeComparisonReportTests.class,
-    UpgradePartComparisonTests.class
+    UpgradePartComparisonReportTests.class
 })
 public class ReportsApiTestSuite {
 }

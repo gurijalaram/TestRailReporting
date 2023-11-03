@@ -28,10 +28,10 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.RECOMMENDED_TEST_PARTS.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.RECOMMENDED_TEST_PARTS;
-    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
+    private String reportsJsonFileName = JasperApiEnum.RECOMMENDED_TEST_PARTS.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.RECOMMENDED_TEST_PARTS;
+    private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {

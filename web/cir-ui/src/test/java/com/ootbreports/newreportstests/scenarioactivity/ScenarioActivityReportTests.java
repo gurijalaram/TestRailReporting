@@ -27,10 +27,10 @@ import java.util.List;
 
 public class ScenarioActivityReportTests extends JasperApiAuthenticationUtil {
 
-    private static final String reportsJsonFileName = JasperApiEnum.SCENARIO_ACTIVITY.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_ACTIVITY;
-    private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
+    private String reportsJsonFileName = JasperApiEnum.SCENARIO_ACTIVITY.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_ACTIVITY;
+    private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
@@ -64,14 +64,5 @@ public class ScenarioActivityReportTests extends JasperApiAuthenticationUtil {
         ReportComponentsResponse reportComponentsResponse = jasperReportSummary.getChartDataRaw();
         List<Object> serviceItemOneValues = Collections.singletonList(reportComponentsResponse.getInfoItemOne().getHcinstancedata().getServices().get(0).getDataItem());
         return Collections.singletonList(((LinkedHashMap<?, ?>) serviceItemOneValues.get(0)).get("xCategories")).toString();
-    }
-
-    private String getMonthIntAsString() {
-        String monthValue = "";
-        int monthValueInt = LocalDateTime.now().getMonthValue();
-        if (monthValueInt < 10) {
-            monthValue = "0".concat(String.valueOf(monthValueInt));
-        }
-        return monthValue;
     }
 }

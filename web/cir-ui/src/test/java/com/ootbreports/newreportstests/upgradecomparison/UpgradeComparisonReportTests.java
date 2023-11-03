@@ -19,11 +19,11 @@ import utils.JasperApiAuthenticationUtil;
 import java.util.ArrayList;
 
 public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.UPGRADE_COMPARISON.getEndpoint();
+    private String reportsJsonFileName = JasperApiEnum.UPGRADE_COMPARISON.getEndpoint();
     // Export set name is not relevant for this report
-    private static final String exportSetName = "";
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.UPGRADE_COMPARISON;
-    private static JasperApiUtils jasperApiUtils;
+    private String exportSetName = "";
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.UPGRADE_COMPARISON;
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {

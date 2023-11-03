@@ -18,11 +18,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.MACHINING_DTC_COMPARISON.getEndpoint();
-    private static final String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC_COMPARISON;
-    private static JasperApiUtils jasperApiUtils;
-    private final List<String> partNames = Arrays.asList(
+    private String reportsJsonFileName = JasperApiEnum.MACHINING_DTC_COMPARISON.getEndpoint();
+    private String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC_COMPARISON;
+    private JasperApiUtils jasperApiUtils;
+    private List<String> partNames = Arrays.asList(
         JasperCirApiPartsEnum.DTCMACHINING_001_Toleranced.getPartName(),
         JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
         JasperCirApiPartsEnum.PUNCH_INITIAL.getPartName()

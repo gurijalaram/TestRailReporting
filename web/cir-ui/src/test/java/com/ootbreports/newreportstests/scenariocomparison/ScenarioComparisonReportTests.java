@@ -18,10 +18,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.SCENARIO_COMPARISON.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_COMPARISON;
-    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
+    private String reportsJsonFileName = JasperApiEnum.SCENARIO_COMPARISON.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_COMPARISON;
+    private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {

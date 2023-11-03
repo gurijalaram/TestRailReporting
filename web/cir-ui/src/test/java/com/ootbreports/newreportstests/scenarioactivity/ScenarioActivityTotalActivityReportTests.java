@@ -21,10 +21,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ScenarioActivityTotalActivityReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.SCENARIO_ACTIVITY_TOTAL_ACTIVITY.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_ACTIVITY_TOTAL_ACTIVITY;
-    private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
+    private String reportsJsonFileName = JasperApiEnum.SCENARIO_ACTIVITY_TOTAL_ACTIVITY.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_ACTIVITY_TOTAL_ACTIVITY;
+    private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {

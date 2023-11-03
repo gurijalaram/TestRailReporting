@@ -32,8 +32,8 @@ import java.util.List;
 @Slf4j
 public class JasperReportUtil {
 
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private static final long WAIT_TIME = 30;
+    private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private long WAIT_TIME = 30;
 
     private String jasperSessionValue = "JSESSIONID=%s";
 

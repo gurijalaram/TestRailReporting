@@ -19,11 +19,11 @@ import java.util.List;
 
 public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil {
 
-    private final List<String> partNames = Collections.singletonList(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName());
-    private static final String reportsJsonFileName = JasperApiEnum.PLASTIC_DTC_COMPARISON.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.PLASTIC_DTC_COMPARISON;
-    private static final String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
+    private List<String> partNames = Collections.singletonList(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName());
+    private String reportsJsonFileName = JasperApiEnum.PLASTIC_DTC_COMPARISON.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.PLASTIC_DTC_COMPARISON;
+    private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupGenericMethods() {
