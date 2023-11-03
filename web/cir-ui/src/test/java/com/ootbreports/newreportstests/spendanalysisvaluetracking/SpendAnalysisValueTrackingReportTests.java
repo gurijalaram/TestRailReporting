@@ -13,11 +13,11 @@ import utils.JasperApiAuthenticationUtil;
 import java.util.Arrays;
 
 public class SpendAnalysisValueTrackingReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.SPEND_ANALYSIS_VALUE_TRACKING.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.SPEND_ANALYSIS_VALUE_TRACKING;
+    private String reportsJsonFileName = JasperApiEnum.SPEND_ANALYSIS_VALUE_TRACKING.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.SPEND_ANALYSIS_VALUE_TRACKING;
     // Export set is irrelevant for this report
-    private static final String exportSetName = "";
-    private static JasperApiUtils jasperApiUtils;
+    private String exportSetName = "";
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {

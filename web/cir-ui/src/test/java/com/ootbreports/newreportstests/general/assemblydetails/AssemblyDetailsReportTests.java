@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
 public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.ASSEMBLY_DETAILS.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.ASSEMBLY_DETAILS;
-    private static final String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
-    private static JasperApiUtils jasperApiUtils;
+    private String reportsJsonFileName = JasperApiEnum.ASSEMBLY_DETAILS.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.ASSEMBLY_DETAILS;
+    private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {

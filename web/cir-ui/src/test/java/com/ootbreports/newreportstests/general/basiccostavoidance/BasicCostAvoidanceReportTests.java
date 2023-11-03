@@ -20,11 +20,11 @@ import utils.JasperApiAuthenticationUtil;
 import java.util.ArrayList;
 
 public class BasicCostAvoidanceReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.BASIC_COST_AVOIDANCE.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.BASIC_COST_AVOIDANCE;
+    private String reportsJsonFileName = JasperApiEnum.BASIC_COST_AVOIDANCE.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.BASIC_COST_AVOIDANCE;
     // Export set is not relevant for this report
-    private static final String exportSetName = "";
-    private static JasperApiUtils jasperApiUtils;
+    private String exportSetName = "";
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {

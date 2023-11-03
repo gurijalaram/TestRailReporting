@@ -20,15 +20,15 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.CASTING_DTC_DETAILS.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CASTING_DTC_DETAILS;
-    private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
-    private final List<String> mostCommonPartNames = Arrays.asList(
+    private String reportsJsonFileName = JasperApiEnum.CASTING_DTC_DETAILS.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.CASTING_DTC_DETAILS;
+    private String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
+    private List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
         JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
         JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
     );
-    private static JasperApiUtils jasperApiUtils;
+    private JasperApiUtils jasperApiUtils;
 
 
     @BeforeEach

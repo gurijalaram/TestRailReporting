@@ -41,8 +41,8 @@ import java.util.stream.Collectors;
 @Data
 @Slf4j
 public class JasperApiUtils {
-    private static final Logger logger = LoggerFactory.getLogger(JasperApiUtils.class);
-    private static final SoftAssertions softAssertions = new SoftAssertions();
+    private Logger logger = LoggerFactory.getLogger(JasperApiUtils.class);
+    private SoftAssertions softAssertions = new SoftAssertions();
     private CirApiEnum reportValueForInputControls;
     private ReportRequest reportRequest;
     private String reportsJsonFileName;

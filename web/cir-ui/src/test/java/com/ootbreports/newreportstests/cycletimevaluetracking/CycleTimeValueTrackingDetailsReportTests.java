@@ -1,6 +1,5 @@
 package com.ootbreports.newreportstests.cycletimevaluetracking;
 
-
 import com.apriori.cir.JasperReportSummary;
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.cir.models.enums.InputControlsEnum;
@@ -27,12 +26,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 
 public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthenticationUtil {
-    private static final String reportsJsonFileName = JasperApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getEndpoint();
-    private static final CirApiEnum reportsNameForInputControls = CirApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS;
-    private static final Logger logger = LoggerFactory.getLogger(CycleTimeValueTrackingDetailsReportTests.class);
+    private String reportsJsonFileName = JasperApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getEndpoint();
+    private CirApiEnum reportsNameForInputControls = CirApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS;
+    private Logger logger = LoggerFactory.getLogger(CycleTimeValueTrackingDetailsReportTests.class);
     // Export Set is not relevant for this report
-    private static final String exportSetName = "";
-    private static JasperApiUtils jasperApiUtils;
+    private String exportSetName = "";
+    private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
     public void setupJasperApiUtils() {
