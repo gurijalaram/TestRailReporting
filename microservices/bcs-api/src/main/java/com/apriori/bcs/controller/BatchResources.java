@@ -14,10 +14,13 @@ import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.properties.PropertiesContext;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -183,7 +186,7 @@ public class BatchResources extends BcsBase {
                 .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity, batchIdentity);
             batch = (Batch) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {
-                TimeUnit.SECONDS.sleep(120);
+                TimeUnit.SECONDS.sleep(POLL_TIME);
             } catch (InterruptedException e) {
                 log.error(e.getMessage());
                 Thread.currentThread().interrupt();
@@ -192,6 +195,30 @@ public class BatchResources extends BcsBase {
             && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
 
         return (batch.getState().equals(bcsExpectedState.toString())) ? true : false;
+    }
+
+    /**
+     * Wait until batch costing is finished with one of status
+     *
+     * @param batchIdentity
+     * @return boolean
+     */
+    @SneakyThrows
+    public static boolean waitUntilBatchCostingReachedExpected(String batchIdentity) {
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(TIME_OUT);
+        List<String> batchStatusList = Arrays.asList(new String[]{"COMPLETED", "ERRORED", "CANCELLED", "REJECTED"});
+        Batch batch;
+        batch = getBatchRepresentation(batchIdentity).getResponseEntity();
+        while (!batchStatusList.stream().anyMatch(batch.getState()::contains)) {
+            if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
+                return false;
+            }
+            TimeUnit.SECONDS.sleep(POLL_TIME);
+            batch = getBatchRepresentation(batchIdentity).getResponseEntity();
+            log.debug(String.format("batch identity ID  >>%s<< ::: batch Status  >>%s<<", batch.getIdentity(), batch.getState()));
+        }
+        return true;
+
     }
 
     /**

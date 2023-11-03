@@ -6,6 +6,7 @@ import com.apriori.cds.models.response.AccessAuthorization;
 import com.apriori.cds.models.response.AccessAuthorizations;
 import com.apriori.cds.models.response.AssociationUserItems;
 import com.apriori.cds.models.response.CustomerAssociationResponse;
+import com.apriori.cds.models.response.StatusAccessAuthorization;
 import com.apriori.cds.models.response.StatusAccessAuthorizations;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
@@ -27,6 +28,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
@@ -112,7 +114,8 @@ public class CdsAccessAuthorizationsTests {
         String accessAuthorizationIdentity = accessAuthorization.getResponseEntity().getIdentity();
 
         ResponseWrapper<StatusAccessAuthorizations> statusResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATION_STATUS, StatusAccessAuthorizations.class, HttpStatus.SC_OK, customerIdentity);
-        soft.assertThat(statusResponse.getResponseEntity().getResponse().get(0).getAssignedAt()).isEqualTo(creationDate);
+        List<StatusAccessAuthorization> assigned = statusResponse.getResponseEntity().getResponse().stream().filter(status -> status.getStatus().equals("ASSIGNED")).collect(Collectors.toList());
+        soft.assertThat(assigned.get(0).getAssignedAt()).isEqualTo(creationDate);
         soft.assertAll();
 
         accessAuthorizationIdentityHolder = IdentityHolder.builder()

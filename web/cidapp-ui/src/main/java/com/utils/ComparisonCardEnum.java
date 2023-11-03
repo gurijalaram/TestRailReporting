@@ -23,11 +23,13 @@ public enum ComparisonCardEnum {
     COST_LABOR(2, Constants.COST_RESULT),
     COST_DIRECT_OVERHEAD(3, Constants.COST_RESULT),
     COST_INDIRECT_OVERHEAD(4, Constants.COST_RESULT),
-    COST_INVESTMENT(5, Constants.COST_RESULT),
-    COST_OTHER(6, Constants.COST_RESULT),
-    COST_FULLY_BURDENED_COST(7, Constants.COST_RESULT),
-    COST_TARGET_COST(8, Constants.COST_RESULT),
-    COST_TOTAL_CAPITAL_INVESTMENT(9, Constants.COST_RESULT);
+    COST_AMORTIZED_BATCH_SETUP(5, Constants.COST_RESULT),
+    COST_INVESTMENT(6, Constants.COST_RESULT),
+    COST_OTHER(7, Constants.COST_RESULT),
+    COST_FULLY_BURDENED_COST(8, Constants.COST_RESULT),
+    COST_PIECE_PART_COST(9, Constants.COST_RESULT),
+    COST_TARGET_COST(10, Constants.COST_RESULT),
+    COST_TOTAL_CAPITAL_INVESTMENT(11, Constants.COST_RESULT);
 
     private final int position;
     private final String cardHeader;

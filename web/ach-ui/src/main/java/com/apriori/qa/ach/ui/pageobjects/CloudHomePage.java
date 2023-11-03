@@ -121,6 +121,10 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return new SwitchDeploymentPopUpPage(driver);
     }
 
+    /**
+     * go to the user management page
+     * @return new user management page
+     */
     public UserManagementPage clickUserManagementButton() {
         pageUtils.waitForElementAndClick(userManagementButton);
         return new UserManagementPage(driver);

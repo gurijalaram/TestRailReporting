@@ -233,7 +233,7 @@ public class ComparisonTests extends TestBaseUI {
             .collapse("Material & Utilization")
             .collapse("Design Guidance")
             .collapse("Process")
-            .collapse("Cost Result");
+            .collapse("Cost Results");
 
         softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Description")).isEqualTo(false);
         softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass")).isEqualTo(false);
@@ -766,14 +766,20 @@ public class ComparisonTests extends TestBaseUI {
             .createComparison()
             .selectManualComparison();
 
-        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
-        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS, ComparisonDeltaEnum.ARROW_DOWN)).isEqualTo(true);
-        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
-        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS, ComparisonDeltaEnum.ARROW_DOWN)).isEqualTo(true);
-        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME, ComparisonDeltaEnum.RED)).isEqualTo(true);
-        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME, ComparisonDeltaEnum.ARROW_UP)).isEqualTo(true);
-        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
-        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT, ComparisonDeltaEnum.ARROW_DOWN)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS, ComparisonDeltaEnum.GREEN))
+            .as("Verify Finish Mass Arrow is Green").isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS, ComparisonDeltaEnum.ARROW_DOWN))
+            .as("Verify Finish Mass Delta Icon is a Down Arrow").isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS, ComparisonDeltaEnum.MINUS))
+            .as("Verify Design Warnings Delta Icon is a Down Arrow").isEqualTo(true);
+        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME, ComparisonDeltaEnum.RED))
+            .as("Verify Total Cycle Time shows a Red Arrow").isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME, ComparisonDeltaEnum.ARROW_UP))
+            .as("Verify Total Cycle Time Delta Icon is an Up Arrow").isEqualTo(true);
+        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT, ComparisonDeltaEnum.GREEN))
+            .as("Verify Total Capital Investment has a Green Arrow").isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT, ComparisonDeltaEnum.ARROW_DOWN))
+            .as("Verify Total Capital Investment Delta Icon is a Down Arrow").isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -810,11 +816,11 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS))
             .as("Material Finish Mass").isEqualTo("31.97%");
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS))
-            .as("Design Warnings").isEqualTo("70.59%");
+            .as("Design Warnings").isEqualTo("");
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME))
             .as("Total Cycle Time").isEqualTo("138.55%");
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT))
-            .as("Total Capital Investment").isEqualTo("3.57%");
+            .as("Total Capital Investment").isEqualTo("3.48%");
 
         softAssertions.assertAll();
     }

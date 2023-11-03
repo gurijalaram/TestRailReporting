@@ -36,4 +36,5 @@ public class IdentityProviderRequest {
     private AttributeMappings attributeMappings;
     private String createdBy;
     private String authenticationType;
+    private String updatedBy;
 }

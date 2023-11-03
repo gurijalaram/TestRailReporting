@@ -37,7 +37,7 @@ public class Part {
     private String costingResult;
     private String message;
     private String description;
-
+    private String apwScenarioLink;
 
     /**
      * Add metrics to existing PartData object

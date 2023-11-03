@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.models.dto.ComponentDTORequest;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.enums.OperationEnum;
@@ -263,26 +264,22 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6221, 6532})
     @Description("Test multiple attributes")
     public void testFilterAttributes() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
 
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        ComponentInfoBuilder component = new ComponentDTORequest().getComponent();
 
-        ScenarioItem scenarioCreated = cssComponent.findFirst(cidComponentItem.getComponentName(), cidComponentItem.getScenarioName(), currentUser);
+        loginPage = new CidAppLoginPage(driver);
+        cidComponentItem = loginPage.login(component.getUser())
+            .uploadComponent(component.getComponentName(), component.getScenarioName(), component.getResourceFile(), component.getUser());
+
+        ScenarioItem scenarioCreated = cssComponent.findFirst(cidComponentItem.getComponentName(), cidComponentItem.getScenarioName(), cidComponentItem.getUser());
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .publishScenario(PublishPage.class)
             .selectStatus("Analysis")
             .selectCostMaturity("Initial")
-            .selectAssignee(currentUser)
+            .selectAssignee(cidComponentItem.getUser())
             .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .filter()
@@ -291,7 +288,7 @@ public class FilterCriteriaTests extends TestBaseUI {
             .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreated.getScenarioCreatedByName())
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .highlightScenario(componentName, scenarioName)
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .lock(ExplorePage.class)
             .filter()
@@ -303,7 +300,7 @@ public class FilterCriteriaTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("PowderMetalShaft", scenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()), is(equalTo(1)));
     }
 
     @Test

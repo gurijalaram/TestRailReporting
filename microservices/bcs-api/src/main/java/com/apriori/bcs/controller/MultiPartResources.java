@@ -3,15 +3,12 @@ package com.apriori.bcs.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.bcs.enums.BCSState;
-import com.apriori.bcs.models.request.parts.NewPartRequest;
 import com.apriori.bcs.models.response.Batch;
 import com.apriori.bcs.models.response.Part;
 import com.apriori.bcs.models.response.Parts;
 import com.apriori.bcs.utils.BcsUtils;
-import com.apriori.database.dto.BCSPartBenchmarkingDTO;
 import com.apriori.http.utils.ResponseWrapper;
 import com.apriori.reader.file.part.PartData;
-import com.apriori.reader.file.part.PartUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -69,42 +66,6 @@ public class MultiPartResources {
         } while (getFinishedPartsCount(parts.getItems()) != parts.getItems().size() && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
 
         return (getFinishedPartsCount(parts.getItems()) == parts.getItems().size()) ? true : false;
-    }
-
-    /**
-     * Overides NewPartRequest class object with deserialized json test data with aws cloud data files
-     *
-     * @param newPartRequest
-     * @return newPartRequest - deserialized class object
-     */
-    private static NewPartRequest getNewPartRequestAndOverridePartData(NewPartRequest newPartRequest) {
-        PartData partData = PartUtil.getPartData();
-
-        newPartRequest.setFilename(partData.getFilename());
-        newPartRequest.setProcessGroup(partData.getProcessGroup());
-        newPartRequest.setMaterial(partData.getMaterial());
-        newPartRequest.setAnnualVolume(partData.getAnnualVolume());
-        newPartRequest.setBatchSize(partData.getBatchSize());
-
-        return newPartRequest;
-    }
-
-    /**
-     * Consolidates Part class data and New Part Request for reporting purpose
-     *
-     * @param batchPart
-     * @param newPartRequest
-     * @return BCSPartBenchmarkingDTO object - combined version of Part and NewPartRequest class object
-     */
-    private static BCSPartBenchmarkingDTO consolidatePartsStatus(Part batchPart, NewPartRequest newPartRequest) {
-        BCSPartBenchmarkingDTO benchData = batchPart.convertToBCSPartBenchData();
-        benchData.setFilename(newPartRequest.getFilename());
-        benchData.setProcessGroup(newPartRequest.getProcessGroup());
-        benchData.setMaterialName(newPartRequest.getMaterial());
-        benchData.setAnnualVolume(newPartRequest.getAnnualVolume());
-        benchData.setBatchSize(newPartRequest.getBatchSize());
-
-        return benchData;
     }
 
     /**
