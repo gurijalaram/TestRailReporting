@@ -1,6 +1,5 @@
 package com.ootbreports.newreportstests.upgradecomparison;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -15,7 +14,6 @@ import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -33,7 +31,6 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 13944)
     @Description("Input controls - Currency code")
     public void testCurrency() {

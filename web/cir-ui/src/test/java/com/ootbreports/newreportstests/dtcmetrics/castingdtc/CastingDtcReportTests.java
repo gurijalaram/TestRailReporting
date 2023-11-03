@@ -1,7 +1,5 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
-
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.enums.ExportSetEnum;
 import com.apriori.enums.ProcessGroupEnum;
@@ -15,7 +13,6 @@ import enums.JasperCirApiPartsEnum;
 import enums.MassMetricEnum;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -39,7 +36,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 1699)
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
@@ -51,7 +47,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 1695)
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Report")
     public void testCostMetricInputControlPpc() {
@@ -62,7 +57,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 7408)
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Report")
     public void testCostMetricInputControlFbc() {
@@ -73,7 +67,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 1696)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Report")
     public void testMassMetricInputControlFinishMass() {
@@ -84,7 +77,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 7388)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Report")
     public void testMassMetricInputControlRoughMass() {
@@ -95,7 +87,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 7454)
     @Description("Verify process group input control functionality - Die Casting - Casting DTC Report")
     public void testProcessGroupInputControlDieCastingOnly() {
@@ -110,7 +101,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 7453)
     @Description("Verify process group input control functionality - Sand Casting - Casting DTC Report")
     public void testProcessGroupInputControlSandCastingOnly() {
@@ -125,7 +115,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 7455)
     @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Report")
     public void testProcessGroupInputControlDieAndSandCasting() {
@@ -141,7 +130,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    //@Tag(REPORTS_API)
     @TestRail(id = 7508)
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Report")
     public void testDtcScoreLow() {
@@ -158,7 +146,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    //@Tag(REPORTS_API)
     @TestRail(id = 7511)
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
@@ -175,7 +162,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 7514)
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Report")
     public void testDtcScoreHigh() {
@@ -192,7 +178,6 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 1700)
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Report")
     public void testMinimumAnnualSpend() {

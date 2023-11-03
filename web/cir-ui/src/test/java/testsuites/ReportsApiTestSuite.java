@@ -1,7 +1,5 @@
 package testsuites;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
-
 import com.ootbreports.newreportstests.componentcost.ComponentCostReportTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationDetailsReportTests;
 import com.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationReportTests;
@@ -49,23 +47,20 @@ import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCost
 import com.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
 import com.ootbreports.newreportstests.upgradecomparison.UpgradeComparisonReportTests;
 import com.ootbreports.newreportstests.upgradecomparison.UpgradePartComparisonReportTests;
-import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
-import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
-import org.junit.runner.RunWith;
 
 @Suite
 @SelectClasses({
-    /*AssemblyCostA4ReportTests.class,
+    AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
     AssemblyDetailsReportTests.class,
     BasicCostAvoidanceReportTests.class,
     CastingDtcComparisonReportTests.class,
     CastingDtcDetailsReportTests.class,
-    CastingDtcReportTests.class,*/
-    ComponentCostReportTests.class
-    /*CostOutlierIdentificationReportTests.class,
+    CastingDtcReportTests.class,
+    ComponentCostReportTests.class,
+    CostOutlierIdentificationReportTests.class,
     CostOutlierIdentificationDetailsReportTests.class,
     CycleTimeValueTrackingReportTests.class,
     CycleTimeValueTrackingDetailsReportTests.class,
@@ -103,7 +98,7 @@ import org.junit.runner.RunWith;
     TargetAndQuotedCostValueTrackingDetailsReportTests.class,
     TargetAndQuotedCostValueTrackingReportTests.class,
     UpgradeComparisonReportTests.class,
-    UpgradePartComparisonReportTests.class*/
+    UpgradePartComparisonReportTests.class
 })
 public class ReportsApiTestSuite {
 }

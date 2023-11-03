@@ -1,6 +1,5 @@
 package com.ootbreports.newreportstests.digitalfactoryperformance;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -15,7 +14,6 @@ import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -33,7 +31,6 @@ public class DigitalFactoryPerformanceReportTests extends JasperApiAuthenticatio
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 13915)
     @Description("Input Controls - Currency Code - Main Report")
     public void testCurrencyCode() {

@@ -1,6 +1,5 @@
 package com.ootbreports.newreportstests.scenarioactivity;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -16,7 +15,6 @@ import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -40,7 +38,6 @@ public class ScenarioActivityReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 16195)
     @Description("Input Controls - Trending Period - Main Report")
     public void testTrendingPeriod() {
@@ -67,14 +64,5 @@ public class ScenarioActivityReportTests extends JasperApiAuthenticationUtil {
         ReportComponentsResponse reportComponentsResponse = jasperReportSummary.getChartDataRaw();
         List<Object> serviceItemOneValues = Collections.singletonList(reportComponentsResponse.getInfoItemOne().getHcinstancedata().getServices().get(0).getDataItem());
         return Collections.singletonList(((LinkedHashMap<?, ?>) serviceItemOneValues.get(0)).get("xCategories")).toString();
-    }
-
-    private String getMonthIntAsString() {
-        String monthValue = "";
-        int monthValueInt = LocalDateTime.now().getMonthValue();
-        if (monthValueInt < 10) {
-            monthValue = "0".concat(String.valueOf(monthValueInt));
-        }
-        return monthValue;
     }
 }

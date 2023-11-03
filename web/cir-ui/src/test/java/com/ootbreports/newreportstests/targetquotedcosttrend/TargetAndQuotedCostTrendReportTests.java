@@ -1,7 +1,5 @@
 package com.ootbreports.newreportstests.targetquotedcosttrend;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
-
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.testrail.TestRail;
 
@@ -9,7 +7,6 @@ import com.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -26,7 +23,6 @@ public class TargetAndQuotedCostTrendReportTests extends JasperApiAuthentication
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 25838)
     @Description("Input controls - Currency code")
     public void testCurrencyCodeInputControl() {

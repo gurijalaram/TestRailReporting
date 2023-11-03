@@ -1,6 +1,5 @@
 package com.ootbreports.newreportstests.scenarioactivity;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,7 +13,6 @@ import com.ootbreports.newreportstests.utils.JasperApiUtils;
 import io.qameta.allure.Description;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.JasperApiAuthenticationUtil;
 
@@ -34,7 +32,6 @@ public class ScenarioActivityDigitalFactoryActivityReportTests extends JasperApi
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 28002)
     @Description("Input Controls - Trending period - Digital Factory Activity Report")
     public void testTrendingPeriod() {

@@ -1,7 +1,5 @@
 package com.ootbreports.newreportstests.recommendedtestparts;
 
-import static com.apriori.testconfig.TestSuiteType.TestSuite.REPORTS_API;
-
 import com.apriori.cir.JasperReportSummary;
 import com.apriori.cir.enums.CirApiEnum;
 import com.apriori.cir.models.enums.InputControlsEnum;
@@ -20,7 +18,6 @@ import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import utils.Constants;
 import utils.JasperApiAuthenticationUtil;
@@ -42,7 +39,6 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
     @TestRail(id = 14000)
     @Description("Input controls - Test Process Groups")
     public void testProcessGroupSheetMetal() {
