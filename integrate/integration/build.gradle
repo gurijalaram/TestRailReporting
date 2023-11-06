@@ -14,7 +14,7 @@ dependencies {
     // microservices
     implementation project(':microservices:sds-api')
     implementation project(':microservices:bcs-api')
-    implementation project(':microservices:cidapp-api')
+    implementation project(':microservices:cid-api')
     implementation project(':microservices:cds-api')
     implementation project(':microservices:css-api')
     implementation project(':microservices:nts-api')
@@ -43,8 +43,8 @@ dependencies {
     // web
     implementation project(':web:ach-ui')
     implementation project(':web:cas-ui')
-    implementation project(':web:cidapp-ui')
-    implementation project(':web:ciconnect-ui')
+    implementation project(':web:cid-ui')
+    implementation project(':web:cic-ui')
     implementation project(':web:cia-ui')
     implementation project(':web:cir-ui')
     implementation project(':web:cis-ui')
@@ -57,7 +57,7 @@ dependencies {
     testImplementation project(path: ':microservices:ats-api', configuration: 'testArtifacts')
     testImplementation project(path: ':microservices:sds-api', configuration: 'testArtifacts')
     testImplementation project(path: ':microservices:bcs-api', configuration: 'testArtifacts')
-    testImplementation project(path: ':microservices:cidapp-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:cid-api', configuration: 'testArtifacts')
     testImplementation project(path: ':microservices:cds-api', configuration: 'testArtifacts')
     testImplementation project(path: ':microservices:css-api', configuration: 'testArtifacts')
     testImplementation project(path: ':microservices:nts-api', configuration: 'testArtifacts')
@@ -81,8 +81,8 @@ dependencies {
 
     testImplementation project(path: ':web:ach-ui', configuration: 'testArtifacts')
     testImplementation project(path: ':web:cir-ui', configuration: 'testArtifacts')
-    testImplementation project(path: ':web:cidapp-ui', configuration: 'testArtifacts')
-    testImplementation project(path: ':web:ciconnect-ui', configuration: 'testArtifacts')
+    testImplementation project(path: ':web:cid-ui', configuration: 'testArtifacts')
+    testImplementation project(path: ':web:cic-ui', configuration: 'testArtifacts')
     testImplementation project(path: ':web:cis-ui', configuration: 'testArtifacts')
 
 

@@ -1,11 +1,11 @@
 package testsuites;
 
-import com.apriori.fieldsvalidation.MountTypePinCountTests;
-import com.apriori.help.HelpTests;
-import com.apriori.myuser.MyProfileTests;
-import com.apriori.myuser.TermsOfUseTests;
-import com.apriori.pcba.FilterPartsTests;
-import com.apriori.pcba.UploadTests;
+import com.apriori.edc.ui.tests.fieldsvalidation.MountTypePinCountTests;
+import com.apriori.edc.ui.tests.help.HelpTests;
+import com.apriori.edc.ui.tests.myuser.MyProfileTests;
+import com.apriori.edc.ui.tests.myuser.TermsOfUseTests;
+import com.apriori.edc.ui.tests.pcba.FilterPartsTests;
+import com.apriori.edc.ui.tests.pcba.UploadTests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

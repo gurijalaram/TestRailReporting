@@ -1,11 +1,11 @@
 package testsuites;
 
-import com.apriori.BidPackageItemTest;
-import com.apriori.BidPackageProjectItemTest;
-import com.apriori.BidPackageProjectUserTest;
-import com.apriori.BidPackageTest;
-import com.apriori.LayoutTest;
-import com.apriori.QdsBidPackageProjectsTest;
+import com.apriori.qds.api.tests.BidPackageItemTest;
+import com.apriori.qds.api.tests.BidPackageProjectItemTest;
+import com.apriori.qds.api.tests.BidPackageProjectUserTest;
+import com.apriori.qds.api.tests.BidPackageTest;
+import com.apriori.qds.api.tests.LayoutTest;
+import com.apriori.qds.api.tests.QdsBidPackageProjectsTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

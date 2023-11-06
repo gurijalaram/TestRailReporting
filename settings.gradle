@@ -11,11 +11,11 @@ include(':shared-util')
 include(':web-app-util')
 include(':db')
 
-final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cidapp-api", "cir-api", "css-api",
+final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cid-api", "cir-api", "css-api",
                                        "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api",
                                        "cic-api","qds-api", "dds-api", "qms-api", "dms-api", "cus-api", "ach-api",
                                        "gcd-api", "cmp-api", "dfs-api"]
-final String[] webModules = ["ach-ui", "auth-ui", "cas-ui", "cia-ui", "ciconnect-ui", "cidapp-ui", "cir-ui", "edc-ui", "cis-ui"]
+final String[] webModules = ["ach-ui", "auth-ui", "cas-ui", "cia-ui", "cic-ui", "cid-ui", "cir-ui", "edc-ui", "cis-ui"]
 final String[] intModules = ["integration"]
 final String[] agentModules = ["cic-agent"]
 
@@ -46,7 +46,7 @@ if (configuration != null) {
     include(':microservices:ats-api')
     include(':microservices:cas-api')
     include(':microservices:cds-api')
-    include(':microservices:cidapp-api')
+    include(':microservices:cid-api')
     include(':microservices:cir-api')
     include(':microservices:css-api')
     include(':microservices:bcs-api')
@@ -72,8 +72,8 @@ if (configuration != null) {
     include ':web:auth-ui'
     include ':web:cia-ui'
     include ':web:cir-ui'
-    include ':web:cidapp-ui'
-    include ':web:ciconnect-ui'
+    include ':web:cid-ui'
+    include ':web:cic-ui'
     include ':web:cas-ui'
     include ':web:edc-ui'
     include ':web:cis-ui'

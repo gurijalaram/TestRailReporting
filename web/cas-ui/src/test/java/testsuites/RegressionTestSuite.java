@@ -1,13 +1,13 @@
 package testsuites;
 
-import com.apriori.customer.AprioriInternalProfileTests;
-import com.apriori.customer.CustomerAccessTests;
-import com.apriori.customer.CustomersTests;
-import com.apriori.customer.EditCustomerTests;
-import com.apriori.customer.NewCustomerTests;
-import com.apriori.infrastructure.AccessControlsApplicationTests;
-import com.apriori.navigation.NavigationTests;
-import com.apriori.security.MfaEnabledTests;
+import com.apriori.cas.ui.tests.customer.AprioriInternalProfileTests;
+import com.apriori.cas.ui.tests.customer.CustomerAccessTests;
+import com.apriori.cas.ui.tests.customer.CustomersTests;
+import com.apriori.cas.ui.tests.customer.EditCustomerTests;
+import com.apriori.cas.ui.tests.customer.NewCustomerTests;
+import com.apriori.cas.ui.tests.infrastructure.AccessControlsApplicationTests;
+import com.apriori.cas.ui.tests.navigation.NavigationTests;
+import com.apriori.cas.ui.tests.security.MfaEnabledTests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

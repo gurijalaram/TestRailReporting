@@ -1,12 +1,12 @@
 package testsuites;
 
-import com.apriori.customer.users.BatchImportListTests;
-import com.apriori.customer.users.CustomerStaffTests;
-import com.apriori.customer.users.EditUserTests;
-import com.apriori.customer.users.NewUserTests;
-import com.apriori.customer.users.UsersGrantApplicationAccessTests;
-import com.apriori.customer.users.UsersGrantLicenseTests;
-import com.apriori.customer.users.UsersStaffAssociationTests;
+import com.apriori.cas.ui.tests.customer.users.BatchImportListTests;
+import com.apriori.cas.ui.tests.customer.users.CustomerStaffTests;
+import com.apriori.cas.ui.tests.customer.users.EditUserTests;
+import com.apriori.cas.ui.tests.customer.users.NewUserTests;
+import com.apriori.cas.ui.tests.customer.users.UsersGrantApplicationAccessTests;
+import com.apriori.cas.ui.tests.customer.users.UsersGrantLicenseTests;
+import com.apriori.cas.ui.tests.customer.users.UsersStaffAssociationTests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

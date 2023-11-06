@@ -4,7 +4,7 @@ package com.apriori.database.test.dao;
 //import com.apriori.apibase.utils.TestUtil;
 //import com.apriori.database.actions.cloud.DbMigration;
 //import com.apriori.database.entity.MigrationEntity;
-//import com.apriori.utils.constants.Constants;
+//import com.apriori.shared.util.utils.constants.Constants;
 //
 //
 //import com.fbc.datamodel.shared.ScenarioType;

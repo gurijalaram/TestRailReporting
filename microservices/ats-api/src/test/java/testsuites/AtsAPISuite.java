@@ -1,8 +1,8 @@
 package testsuites;
 
-import com.apriori.AtsAuthenticationTests;
-import com.apriori.AtsAuthorization;
-import com.apriori.AtsUsersTests;
+import com.apriori.ats.api.tests.AtsAuthenticationTests;
+import com.apriori.ats.api.tests.AtsAuthorization;
+import com.apriori.ats.api.tests.AtsUsersTests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

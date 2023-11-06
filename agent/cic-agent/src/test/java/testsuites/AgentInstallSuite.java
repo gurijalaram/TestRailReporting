@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.AgentInstallTest;
+import com.apriori.cic.agent.tests.AgentInstallTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

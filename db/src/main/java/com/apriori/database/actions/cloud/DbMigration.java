@@ -18,7 +18,7 @@ public class DbMigration {
 //     * to aPriori jasper (reporting) database.
 //     *
 //     * @return ResponseWrapper, more info: <br>
-//     * @see com.apriori.utils.http.utils.ResponseWrapper
+//     * @see com.apriori.shared.util.utils.http.utils.ResponseWrapper
 //     */
 //    public static ResponseWrapper<ExportSchedulesResponse> migrateFromProToReport() {
 //        DbMigration dbMigration = new DbMigration();
@@ -32,7 +32,7 @@ public class DbMigration {
 //     * to aPriori jasper (reporting) database.
 //     *
 //     * @return ResponseWrapper, more info: <br>
-//     * @see com.apriori.utils.http.utils.ResponseWrapper
+//     * @see com.apriori.shared.util.utils.http.utils.ResponseWrapper
 //     */
 //    public static ResponseWrapper<ExportSchedulesResponse> migrateSpecificScenario(final MigrationEntity migrationEntity) {
 //        DbMigration dbMigration = new DbMigration();

@@ -1,7 +1,7 @@
 package testsuites;
 
-import com.apriori.CmpComparisonTests;
-import com.apriori.CmpSaveComparisonTests;
+import com.apriori.cmp.api.tests.CmpComparisonTests;
+import com.apriori.cmp.api.tests.CmpSaveComparisonTests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

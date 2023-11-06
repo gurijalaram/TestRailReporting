@@ -2,15 +2,15 @@ package com.integration.tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.apriori.bcs.controller.BatchPartResources;
-import com.apriori.bcs.controller.BatchResources;
-import com.apriori.bcs.models.request.parts.NewPartRequest;
-import com.apriori.bcs.models.response.Batch;
-import com.apriori.bcs.models.response.Part;
-import com.apriori.bcs.utils.BcsUtils;
-import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.sds.controller.IterationController;
-import com.apriori.testrail.TestRail;
+import com.apriori.bcs.api.controller.BatchPartResources;
+import com.apriori.bcs.api.controller.BatchResources;
+import com.apriori.bcs.api.models.request.parts.NewPartRequest;
+import com.apriori.bcs.api.models.response.Batch;
+import com.apriori.bcs.api.models.response.Part;
+import com.apriori.bcs.api.utils.BcsUtils;
+import com.apriori.sds.api.controller.IterationController;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;

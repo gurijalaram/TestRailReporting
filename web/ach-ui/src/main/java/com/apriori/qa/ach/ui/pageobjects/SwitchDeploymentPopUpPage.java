@@ -1,6 +1,6 @@
 package com.apriori.qa.ach.ui.pageobjects;
 
-import com.apriori.PageUtils;
+import com.apriori.web.app.util.PageUtils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

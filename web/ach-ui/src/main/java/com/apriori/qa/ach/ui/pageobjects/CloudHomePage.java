@@ -1,9 +1,9 @@
 package com.apriori.qa.ach.ui.pageobjects;
 
-import com.apriori.PageUtils;
-import com.apriori.ach.dto.ApplicationDTO;
-import com.apriori.login.UserProfilePage;
-import com.apriori.properties.PropertiesContext;
+import com.apriori.ach.api.dto.ApplicationDTO;
+import com.apriori.shared.util.properties.PropertiesContext;
+import com.apriori.web.app.util.PageUtils;
+import com.apriori.web.app.util.login.UserProfilePage;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;

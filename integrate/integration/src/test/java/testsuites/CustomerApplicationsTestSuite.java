@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.testconfig.TestSuiteType.TestSuite;
+import com.apriori.shared.util.testconfig.TestSuiteType.TestSuite;
 
 import org.junit.platform.suite.api.ExcludeTags;
 import org.junit.platform.suite.api.SelectClasses;

@@ -1,10 +1,10 @@
 package testsuites;
 
-import com.apriori.CicAgentJobPartResultTest;
-import com.apriori.CicAgentJobResultsTest;
-import com.apriori.CicAgentRunPartsTest;
-import com.apriori.CicAgentRunUdaPartsTest;
-import com.apriori.CicAgentTest;
+import com.apriori.cic.api.tests.CicAgentJobPartResultTest;
+import com.apriori.cic.api.tests.CicAgentJobResultsTest;
+import com.apriori.cic.api.tests.CicAgentRunPartsTest;
+import com.apriori.cic.api.tests.CicAgentRunUdaPartsTest;
+import com.apriori.cic.api.tests.CicAgentTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

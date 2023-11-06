@@ -1,21 +1,26 @@
-# How to setup automation:
+# How to setup automation
 
-1. Java 11 is used and required
-2. Clone the apriori-qa repo using `git clone git@github.com:aPrioriTechnologies/apriori-qa.git`
-3. Import all the modules into an IDE of your choice
-4. If you have chrome installed, install it in case you don't
-5. To run the tests, you should have an AWS account and authorize it on the local machine
+## Complete Prerequisites
+- Java 11
+- Gradle 8.3
+- AWS Cli (2.13.30 or higher)
+- Allure (2.20.0 or higher)
+- Internet Browser (Chrome/Edge/FF)
+
+1. Clone the apriori-qa repo using `git clone git@github.com:aPrioriTechnologies/apriori-qa.git`
+2. Import all the modules into an IDE of your choice
+3. To run the tests, you should have an AWS account and authorize it on the local machine
     - How to create AWS user account: https://confluence.apriori.com/display/ENG/Logging+into+AWS+Console
-6. Install the AWS CLI, either via pip (if you already have Python installed) or using the MSI installer: 
+4. Install the AWS CLI, either via pip (if you already have Python installed) or using the MSI installer: 
      - http://docs.aws.amazon.com/cli/latest/userguide/awscli-install-windows.html#install-msi-on-windows
      - http://docs.aws.amazon.com/cli/latest/userguide/installing.html
-7. Once you have installed the various tools, configure your AWS credentials. <br />  
+5. Once you have installed the various tools, configure your AWS credentials. <br />  
   You can do this from a command prompt with the AWS CLI on your PATH: 
     - `aws configure` This command will prompt for your IAM user access key and secret access key (an admin user will be able to generate these details).
   You should also set your `default region` to `_us-east-1_`.
   You should set `default format` to `text`
   Your settings will be stored in your _%USERPROFILE%\.aws_ directory.
-8. Verify that things are configured properly using the following command. Confirm that the resulting ARN ends with your user name. 
+6. Verify that things are configured properly using the following command. Confirm that the resulting ARN ends with your user name. 
     - `aws sts get-caller-identity `
      ```
       {
@@ -24,14 +29,14 @@
           "Arn": "arn:aws:iam::563229348140:user/test@apriori.com"
       }
      ```  
-9.You are ready to run the tests..
+7. You are ready to run the tests.
 
 
 ## List of special modules that are not included into a common build
  - **database** module location "../db"
 
 ## Building the project
-- to build without tests, add to the end of the Gradle build command: `-x test` e.g. `gradle clean build -x test`
+- to build without running tests, add to the end of the Gradle build command: `-x test` e.g. `gradle clean build -x test`
 
  - ### You will need this for the very first time:
     - Open Terminal to project root directory
@@ -99,9 +104,9 @@ Get user functionality has reference to `{environment}.properties` file.
        - false: will return each time the same (first from list) user
    * **users.csv.file**: the name of csv file with users list from `resources/ + {environment}` folder
         - if there are no users, return default user with:
-           - username:{com.apriori.utils.constants.CommonConstants#defaultUserName} (admin@apriori.com)
-           - password:{com.apriori.utils.constants.CommonConstants#defaultPassword} (admin)
-           - accessLevel:{com.apriori.utils.constants.CommonConstants#defaultAccessLevel} (admin)
+           - username:{com.apriori.shared.util.utils.constants.CommonConstants#defaultUserName} (admin@apriori.com)
+           - password:{com.apriori.shared.util.utils.constants.CommonConstants#defaultPassword} (admin)
+           - accessLevel:{com.apriori.shared.util.utils.constants.CommonConstants#defaultAccessLevel} (admin)
  
    Users list is global for two Collections:
    * security users collection
@@ -133,14 +138,14 @@ Get user functionality has reference to `{environment}.properties` file.
  * {username},{password},{accessLevel}
     - {username}: required
     - {password}: required
-    - {accessLevel}: is optional, if it is empty, the user will have default accessLevel from  {com.apriori.utils.constants.CommonConstants#defaultAccessLevel} (admin)
+    - {accessLevel}: is optional, if it is empty, the user will have default accessLevel from  {com.apriori.shared.util.utils.constants.CommonConstants#defaultAccessLevel} (admin)
 
 
 ## API Request functionality
 
 **`RequestEntity`** - it is a transfer object, which contain all needed information about the request
 
-- To init default RequestEntity use `com.apriori.utils.http.utils.RequestEntityUtil` :
+- To init default RequestEntity use `com.apriori.shared.util.utils.http.utils.RequestEntityUtil` :
 - You may add special parameters e.g.: 
     - `RequestEntityUtil.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsWrapper.class)
           .body("")
@@ -156,8 +161,8 @@ Get user functionality has reference to `{environment}.properties` file.
 
     
 ### To execute request
-To execute request use `com.apriori.utils.http.builder.request.HTTPRequest` it allows you to create the request. <br>
-`com.apriori.utils.http.builder.request.HTTPRequest` class <br>
+To execute request use `com.apriori.shared.util.utils.http.builder.request.HTTPRequest` it allows you to create the request. <br>
+`com.apriori.shared.util.utils.http.builder.request.HTTPRequest` class <br>
 This class has single method, `build` that requires RequestEntity object with all request configurations.<br>
 After `HTTPRequest.build()` method you will be able to select a type of request, as results you will have:
  - `HTTPRequest.build({requestEntity}).{type of request}`, e.g. `HTTPRequest.build(requestEntity).get()`
@@ -251,7 +256,7 @@ These properties are divided into three sections
 
 
 ### Get properties 
-To get any project property use `com.apriori.utils.properties.PropertiesContext` - this is a global class to work with properties.
+To get any project property use `com.apriori.shared.util.utils.properties.PropertiesContext` - this is a global class to work with properties.
 <br>`PropertyContext` - the main object to work with properties and contains all properties from properties sections. (see **Properties location and template**)
 
 #### Main configurations
@@ -264,7 +269,7 @@ To get any project property use `com.apriori.utils.properties.PropertiesContext`
   ( e.g. if `customer` has value `sprockets`, `PropertyContext` will try to find property in `CustomersProperties` file under `sprockets` section.
 - `version`: version used in Deployment url service. See URLs under  Deployment URL comment in `GlobalProperties` file.
 
-<br><br>`com.apriori.utils.properties.PropertiesContext` - contains get method, that allow to get the property value to mapped type
+<br><br>`com.apriori.shared.util.utils.properties.PropertiesContext` - contains get method, that allow to get the property value to mapped type
  - `get(String propertyName)` - return property by name mapped to String
 
 Property name represent String path of YML file e.g:
@@ -292,10 +297,10 @@ e.g. PropertiesContext.get("fms.api_url") | note that env = qa-cid-perf <br>
 Search in `system environments` and in  `PropertiesContext` require special naming template.
  - for System property, in the request property name, will be automatically replaced all `"."` with `"_"`
    Please NOTE: if you need to specify a property name as a `System environment`, you need to replace all `"."` with `"_"` in the property name, taken from java code.
-    e.g. `com.apriori.utils.properties.PropertiesContext("users_csv_file")` - will search system environment with name: `global_users_csv_file`
+    e.g. `com.apriori.shared.util.utils.properties.PropertiesContext("users_csv_file")` - will search system environment with name: `global_users_csv_file`
    
   - for `PropertiesContext`, in requested property name, will be automatically replaced all `"."` with `"/"`
-    e.g. `com.apriori.utils.properties.PropertiesContext("users_csv_file")` - will search config.yml property with name: `global/users_csv_file`   
+    e.g. `com.apriori.shared.util.utils.properties.PropertiesContext("users_csv_file")` - will search config.yml property with name: `global/users_csv_file`   
 
 
 #### Property references

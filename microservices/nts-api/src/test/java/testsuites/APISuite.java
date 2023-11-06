@@ -1,7 +1,7 @@
 package testsuites;
 
-import com.apriori.EmailsTests;
-import com.apriori.NotificationsTests;
+import com.apriori.nts.api.tests.EmailsTests;
+import com.apriori.nts.api.tests.NotificationsTests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

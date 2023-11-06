@@ -1,6 +1,7 @@
 package testsuites;
 
-import com.navigation.AdminNavigationTests;
+import com.apriori.cia.ui.tests.navigation.AdminNavigationTests;
+
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 

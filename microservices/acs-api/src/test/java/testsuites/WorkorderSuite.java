@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.workorders.WorkorderAPITests;
+import com.apriori.acs.api.tests.workorders.WorkorderAPITests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

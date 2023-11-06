@@ -1,10 +1,10 @@
 package testsuites;
 
-import com.apriori.DmsCommentViewTest;
-import com.apriori.DmsCommentsTest;
-import com.apriori.DmsDiscussionParticipantTest;
-import com.apriori.DmsDiscussionProjectItemTest;
-import com.apriori.DmsDiscussionTest;
+import com.apriori.dms.api.tests.DmsCommentViewTest;
+import com.apriori.dms.api.tests.DmsCommentsTest;
+import com.apriori.dms.api.tests.DmsDiscussionParticipantTest;
+import com.apriori.dms.api.tests.DmsDiscussionProjectItemTest;
+import com.apriori.dms.api.tests.DmsDiscussionTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
