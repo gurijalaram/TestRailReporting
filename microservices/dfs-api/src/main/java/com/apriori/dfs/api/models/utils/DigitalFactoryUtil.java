@@ -121,6 +121,11 @@ public class DigitalFactoryUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * Update or Insert a DigitalFactory with Invalid Request
+     *
+     * @return ErrorMessage object
+     */
     public ResponseWrapper<ErrorMessage> upsertDigitalFactoryWithInvalidRequest(Map<String, Object> requestBody, Integer expectedResponseCode, String inlineVariables, String contentType) {
         final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, ErrorMessage.class)
                 .body(requestBody)

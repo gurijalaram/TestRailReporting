@@ -128,7 +128,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {1})
+    @TestRail(id = {28960})
     @Description("Upsert DigitalFactory when shared secret/identity is valid")
     public void upsertDigitalFactoryWithValidSharedSecretTest() {
         ResponseWrapper<DigitalFactory> responseWrapper = digitalFactoryUtil.upsertDigitalFactory(createRequestBody());
@@ -140,7 +140,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {2})
+    @TestRail(id = {29139})
     @Description("Upsert DigitalFactory with BadRequest Error when requestBody is missing")
     public void upsertDigitalFactoryWithMissingRequestBodyTest() {
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.upsertDigitalFactoryWithInvalidRequest(Collections.emptyMap(), HttpStatusCode.BAD_REQUEST, VALID_SHARED_SECRET, VALID_CONTENT_TYPE);
@@ -152,7 +152,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {3})
+    @TestRail(id = {29140})
     @Description("Upsert DigitalFactory with UnSupported Media Type Error when Content-Type not supported")
     public void upsertDigitalFactoryWithUnSupportedMediaTypeTest() {
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.upsertDigitalFactoryWithInvalidRequest(null, 415, VALID_SHARED_SECRET, INVALID_CONTENT_TYPE);
@@ -163,7 +163,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {4})
+    @TestRail(id = {29141})
     @Description("Upsert DigitalFactory Unauthorized Error when shared secret is Invalid")
     public void upsertDigitalFactoryWithInvalidSharedSecretTest() {
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.upsertDigitalFactoryWithInvalidRequest(createRequestBody(), HttpStatusCode.UNAUTHORIZED, INVALID_SHARED_SECRET, VALID_CONTENT_TYPE);
@@ -175,7 +175,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {5})
+    @TestRail(id = {29142})
     @Description("Upsert DigitalFactory Unauthorized Error when shared secret parameter is not provided")
     public void upsertDigitalFactoryWithoutSharedSecretTest() {
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.upsertDigitalFactoryWithInvalidRequest(createRequestBody(), HttpStatusCode.UNAUTHORIZED, NO_SHARED_SECRET, VALID_CONTENT_TYPE);
