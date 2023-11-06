@@ -1,5 +1,6 @@
 package com.apriori.models.response;
 
+import com.apriori.annotations.CreatableModel;
 import com.apriori.annotations.Schema;
 import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
@@ -22,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
+@CreatableModel("user")
 @JsonRootName("response")
 public class User {
     protected Boolean isSystemUser;

@@ -13,10 +13,13 @@ import com.apriori.cas.models.response.UserLicensing;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cas.utils.Constants;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.models.response.InstallationItems;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.cds.utils.RandomCustomerData;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.Deployment;
+import com.apriori.models.response.LicensedApplications;
 import com.apriori.models.response.User;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
@@ -36,42 +39,29 @@ import java.util.UUID;
 
 @ExtendWith(TestRulesAPI.class)
 public class CasUserSubLicensesTests {
+    private final String appIdentity = com.apriori.cds.utils.Constants.getApProApplicationIdentity();
+    private final String ciaIdentity = com.apriori.cds.utils.Constants.getCiaApplicationIdentity();
+    private final String cirIdentity = com.apriori.cds.utils.Constants.getCirAppIdentity();
+    private final String acsIdentity = com.apriori.cds.utils.Constants.getACSAppIdentity();
     private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder deleteIdentityHolder;
-    private String customerName;
     private String customerIdentity;
-    private String cloudRef;
-    private String email;
-    private String description;
-    private String userName;
+    private String customerName;
     private String userIdentity;
-    private String siteName;
-    private String siteID;
     private String siteIdentity;
+    private String siteId;
     private CasTestUtil casTestUtil = new CasTestUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private UserCredentials currentUser = UserUtil.getUser();
+    private String licensedApProIdentity;
+    private String licensedCiaIdentity;
+    private String licensedCirIdentity;
+    private String licensedAcsIdentity;
+    private String installationIdentity;
 
     @BeforeEach
     public void getToken() {
         RequestEntityUtil.useTokenForRequests(currentUser.getToken());
-        customerName = generateStringUtil.generateCustomerName();
-        cloudRef = generateStringUtil.generateCloudReference();
-        email = customerName.toLowerCase();
-        description = customerName + " Description";
-        userName = generateStringUtil.generateUserName();
-        siteName = generateStringUtil.generateSiteName();
-        siteID = generateStringUtil.generateSiteID();
-
-        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-
-        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
-        userIdentity = user.getResponseEntity().getIdentity();
-
-        ResponseWrapper<Site> site = CasTestUtil.addSite(customerIdentity, siteID, siteName);
-        siteIdentity = site.getResponseEntity().getIdentity();
     }
 
     @AfterEach
@@ -84,6 +74,21 @@ public class CasUserSubLicensesTests {
                 deleteIdentityHolder.subLicenseIdentity(),
                 deleteIdentityHolder.userIdentity()
             );
+        }
+        if (installationIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
+        }
+        if (licensedApProIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApProIdentity);
+        }
+        if (licensedCiaIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCiaIdentity);
+        }
+        if (licensedCirIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCirIdentity);
+        }
+        if (licensedAcsIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedAcsIdentity);
         }
         if (userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity
@@ -99,9 +104,10 @@ public class CasUserSubLicensesTests {
     @TestRail(id = {10877})
     @Description("Make sure users cannot be assigned to a sublicense under an expired license")
     public void expiredLicense() {
+        setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
         LocalDate expireDate = licenseResponse.getResponseEntity().getSubLicenses().get(0).getExpiresAt();
@@ -117,9 +123,10 @@ public class CasUserSubLicensesTests {
     @TestRail(id = {10878})
     @Description("Make sure users cannot be assigned to a masterLicense")
     public void masterLicense() {
+        setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_MASTER_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_MASTER_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
 
@@ -134,9 +141,10 @@ public class CasUserSubLicensesTests {
     @TestRail(id = {10879})
     @Description("Make sure users cannot be assigned to a masterLicense")
     public void aPrioriInternalLicense() {
+        setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_APRIORI_INTERNAL_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_APRIORI_INTERNAL_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
 
@@ -151,9 +159,10 @@ public class CasUserSubLicensesTests {
     @TestRail(id = {5652, 5655, 5676, 5677, 5678})
     @Description("Validate that user can be added to a sub license")
     public void assignSublicenseToUser() {
+        setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
         ResponseWrapper<SubLicenses> subLicenses = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class, HttpStatus.SC_OK,
@@ -190,9 +199,10 @@ public class CasUserSubLicensesTests {
     @TestRail(id = {13105})
     @Description("Returns assigned sub license information for the specified user")
     public void getUsersSublicense() {
+        setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
         ResponseWrapper<SubLicenses> subLicenses = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class, HttpStatus.SC_OK,
@@ -220,5 +230,39 @@ public class CasUserSubLicensesTests {
             .subLicenseIdentity(subLicenseIdentity)
             .userIdentity(userIdentity)
             .build();
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        Customer newCustomer = casTestUtil.createCustomer().getResponseEntity();
+        customerIdentity = newCustomer.getIdentity();
+        customerName = newCustomer.getName();
+
+        ResponseWrapper<com.apriori.models.response.Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        siteIdentity = site.getResponseEntity().getIdentity();
+        siteId = site.getResponseEntity().getSiteId();
+
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        String deploymentIdentity = response.getResponseEntity().getIdentity();
+
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApProIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> ciaLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, ciaIdentity);
+        licensedCiaIdentity = ciaLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> cirLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, cirIdentity);
+        licensedCirIdentity = cirLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> acsLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, acsIdentity);
+        licensedAcsIdentity = acsLicensed.getResponseEntity().getIdentity();
+
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, ciaIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, cirIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, acsIdentity, siteIdentity);
+
+        ResponseWrapper<User> user = casTestUtil.createUser(newCustomer);
+        userIdentity = user.getResponseEntity().getIdentity();
     }
 }

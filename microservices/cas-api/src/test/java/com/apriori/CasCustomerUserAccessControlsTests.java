@@ -8,10 +8,15 @@ import com.apriori.cas.models.response.Customer;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.models.IdentityHolder;
+import com.apriori.cds.models.response.InstallationItems;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.http.utils.GenerateStringUtil;
+import com.apriori.cds.utils.Constants;
+import com.apriori.cds.utils.RandomCustomerData;
 import com.apriori.http.utils.RequestEntityUtil;
 import com.apriori.http.utils.ResponseWrapper;
+import com.apriori.models.response.Deployment;
+import com.apriori.models.response.LicensedApplications;
+import com.apriori.models.response.Site;
 import com.apriori.models.response.User;
 import com.apriori.reader.file.user.UserCredentials;
 import com.apriori.reader.file.user.UserUtil;
@@ -30,26 +35,27 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class CasCustomerUserAccessControlsTests {
+    private final String appIdentity = Constants.getApProApplicationIdentity();
+    private final String ciaIdentity = Constants.getCiaApplicationIdentity();
+    private final String cirIdentity = Constants.getCirAppIdentity();
+    private final String acsIdentity = Constants.getACSAppIdentity();
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final SoftAssertions soft = new SoftAssertions();
-    private final GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private IdentityHolder accessControlIdentityHolder;
-    private ResponseWrapper<Customer> customer;
     private String customerIdentity;
     private String userIdentity;
+    private String siteIdentity;
+    private String licensedApProIdentity;
+    private String licensedCiaIdentity;
+    private String licensedCirIdentity;
+    private String licensedAcsIdentity;
+    private String installationIdentity;
     private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setDetails() {
         RequestEntityUtil.useTokenForRequests(currentUser.getToken());
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String email = customerName.toLowerCase();
-        String description = customerName + " Description";
-        customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-
     }
 
     @AfterEach
@@ -60,6 +66,21 @@ public class CasCustomerUserAccessControlsTests {
                 accessControlIdentityHolder.userIdentity(),
                 accessControlIdentityHolder.accessControlIdentity()
             );
+        }
+        if (installationIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
+        }
+        if (licensedApProIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApProIdentity);
+        }
+        if (licensedCiaIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCiaIdentity);
+        }
+        if (licensedCirIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCirIdentity);
+        }
+        if (licensedAcsIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedAcsIdentity);
         }
         if (customerIdentity != null && userIdentity != null) {
             casTestUtil.delete(CASAPIEnum.USER, customerIdentity, userIdentity);
@@ -73,10 +94,7 @@ public class CasCustomerUserAccessControlsTests {
     @Description("POSTs a new access control for a user.")
     @TestRail(id = {16144})
     public void postAccessControl() {
-        String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
-        userIdentity = user.getResponseEntity().getIdentity();
-
+        setCustomerData();
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
 
         soft.assertThat(accessControl.getResponseEntity().getOutOfContext())
@@ -96,10 +114,7 @@ public class CasCustomerUserAccessControlsTests {
     @Description("Returns a list of access controls for the customer user")
     @TestRail(id = {16145})
     public void getUserAccessControls() {
-        String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
-        userIdentity = user.getResponseEntity().getIdentity();
-
+        setCustomerData();
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlId = accessControl.getResponseEntity().getIdentity();
 
@@ -124,9 +139,7 @@ public class CasCustomerUserAccessControlsTests {
     @Description("Get a specific access control for a customer user identified by its identity")
     @TestRail(id = {16146})
     public void getAccessControlByIdentity() {
-        String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
-        userIdentity = user.getResponseEntity().getIdentity();
+        setCustomerData();
 
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlId = accessControl.getResponseEntity().getIdentity();
@@ -151,9 +164,7 @@ public class CasCustomerUserAccessControlsTests {
     @Description("Delete an access control for a user")
     @TestRail(id = 16147)
     public void deleteAccessControl() {
-        String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
-        userIdentity = user.getResponseEntity().getIdentity();
+        setCustomerData();
 
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlId = accessControl.getResponseEntity().getIdentity();
@@ -169,10 +180,7 @@ public class CasCustomerUserAccessControlsTests {
     @TestRail(id = {16150})
     public void getAccessControlThatNotExists() {
         String notExistingIdentity = "000000000000";
-        String userName = generateStringUtil.generateUserName();
-
-        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
-        userIdentity = user.getResponseEntity().getIdentity();
+        setCustomerData();
 
         ResponseWrapper<CasErrorMessage> response = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROL_BY_ID,
             CasErrorMessage.class,
@@ -184,5 +192,37 @@ public class CasCustomerUserAccessControlsTests {
         soft.assertThat(response.getResponseEntity().getMessage())
             .isEqualTo(String.format("Unable to get access control with identity '%s' for user with identity '%s'.", notExistingIdentity, userIdentity));
         soft.assertAll();
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        Customer newCustomer = casTestUtil.createCustomer().getResponseEntity();
+        customerIdentity = newCustomer.getIdentity();
+
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        siteIdentity = site.getResponseEntity().getIdentity();
+
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        String deploymentIdentity = response.getResponseEntity().getIdentity();
+
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApProIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> ciaLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, ciaIdentity);
+        licensedCiaIdentity = ciaLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> cirLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, cirIdentity);
+        licensedCirIdentity = cirLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> acsLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, acsIdentity);
+        licensedAcsIdentity = acsLicensed.getResponseEntity().getIdentity();
+
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, ciaIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, cirIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, acsIdentity, siteIdentity);
+
+        ResponseWrapper<User> user = casTestUtil.createUser(newCustomer);
+        userIdentity = user.getResponseEntity().getIdentity();
     }
 }

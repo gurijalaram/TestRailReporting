@@ -58,6 +58,15 @@ public class Constants {
     }
 
     /**
+     * Get identity ACS application
+     *
+     * @return string
+     */
+    public static String getACSAppIdentity() {
+        return PropertiesContext.get("cds.acs_application_identity");
+    }
+
+    /**
      * Builds the service url
      *
      * @return string
