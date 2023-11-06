@@ -11,6 +11,9 @@ import com.apriori.shared.util.models.response.ErrorMessage;
 
 import software.amazon.awssdk.http.HttpStatusCode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DigitalFactoryUtil {
 
     /**
@@ -105,4 +108,32 @@ public class DigitalFactoryUtil {
         return HTTPRequest.build(requestEntity).get();
     }
 
+    /**
+     * Update or Insert a DigitalFactory
+     *
+     * @return DigitalFactory object
+     */
+    public ResponseWrapper<DigitalFactory> upsertDigitalFactory(Map<String, Object> requestBody) {
+        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactory.class)
+                .body(requestBody)
+                .expectedResponseCode(HttpStatusCode.CREATED);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Update or Insert a DigitalFactory with Invalid Request
+     *
+     * @return ErrorMessage object
+     */
+    public ResponseWrapper<ErrorMessage> upsertDigitalFactoryWithInvalidRequest(Map<String, Object> requestBody, Integer expectedResponseCode, String inlineVariables, String contentType) {
+        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, ErrorMessage.class)
+                .body(requestBody)
+                .inlineVariables(inlineVariables)
+                .expectedResponseCode(expectedResponseCode);
+
+        requestEntity.headers().put("Content-Type", contentType);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
 }
