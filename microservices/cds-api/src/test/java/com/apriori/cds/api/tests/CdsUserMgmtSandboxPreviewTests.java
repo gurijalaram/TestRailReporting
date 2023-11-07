@@ -28,6 +28,7 @@ public class CdsUserMgmtSandboxPreviewTests {
     private final String appIdentity = Constants.getApProApplicationIdentity();
     private final String ciaIdentity = Constants.getCiaApplicationIdentity();
     private final String cirIdentity = Constants.getCirAppIdentity();
+    private final String acsIdentity = Constants.getACSAppIdentity();
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
@@ -36,11 +37,10 @@ public class CdsUserMgmtSandboxPreviewTests {
     private String licensedApProIdentity;
     private String licensedCiaIdentity;
     private String licensedCirIdentity;
+    private String licensedAcsIdentity;
     private String installationIdentity;
     private String previewInstallationIdentity;
     private String sandboxInstallationIdentity;
-    private ResponseWrapper<User> user;
-    private String userName;
     private String userIdentity;
     private final String customerAssignedRole = "APRIORI_DEVELOPER";
 
@@ -60,6 +60,9 @@ public class CdsUserMgmtSandboxPreviewTests {
         }
         if (licensedCiaIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCiaIdentity);
+        }
+        if (licensedAcsIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedAcsIdentity);
         }
         if (customerIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
@@ -209,13 +212,16 @@ public class CdsUserMgmtSandboxPreviewTests {
         licensedCiaIdentity = ciaLicensed.getResponseEntity().getIdentity();
         ResponseWrapper<LicensedApplications> cirLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, cirIdentity);
         licensedCirIdentity = cirLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> ascLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, acsIdentity);
+        licensedAcsIdentity = ascLicensed.getResponseEntity().getIdentity();
 
         cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
         cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, ciaIdentity, siteIdentity);
         cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, cirIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, acsIdentity, siteIdentity);
 
-        userName = generateStringUtil.generateUserName();
-        user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 

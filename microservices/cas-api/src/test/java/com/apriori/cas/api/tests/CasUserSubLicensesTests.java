@@ -6,47 +6,25 @@ import com.apriori.cas.api.models.response.AssociationUser;
 import com.apriori.cas.api.models.response.CasErrorMessage;
 import com.apriori.cas.api.models.response.Customer;
 import com.apriori.cas.api.models.response.LicenseResponse;
-import com.apriori.cas.api.models.response.Site;
 import com.apriori.cas.api.models.response.SubLicenses;
 import com.apriori.cas.api.models.response.SublicenseAssociation;
 import com.apriori.cas.api.models.response.UserLicensing;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cas.api.utils.Constants;
 import com.apriori.cds.api.enums.CDSAPIEnum;
+import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.Deployment;
+import com.apriori.shared.util.models.response.LicensedApplications;
+import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
-import com.apriori.cas.enums.CASAPIEnum;
-import com.apriori.cas.models.IdentityHolder;
-import com.apriori.cas.models.response.AssociationUser;
-import com.apriori.cas.models.response.CasErrorMessage;
-import com.apriori.cas.models.response.Customer;
-import com.apriori.cas.models.response.LicenseResponse;
-import com.apriori.cas.models.response.Site;
-import com.apriori.cas.models.response.SubLicenses;
-import com.apriori.cas.models.response.SublicenseAssociation;
-import com.apriori.cas.models.response.UserLicensing;
-import com.apriori.cas.utils.CasTestUtil;
-import com.apriori.cas.utils.Constants;
-import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.models.response.InstallationItems;
-import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.cds.utils.RandomCustomerData;
-import com.apriori.http.utils.RequestEntityUtil;
-import com.apriori.http.utils.ResponseWrapper;
-import com.apriori.models.response.Deployment;
-import com.apriori.models.response.LicensedApplications;
-import com.apriori.models.response.User;
-import com.apriori.reader.file.user.UserCredentials;
-import com.apriori.reader.file.user.UserUtil;
-import com.apriori.rules.TestRulesAPI;
-import com.apriori.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -61,10 +39,10 @@ import java.util.UUID;
 
 @ExtendWith(TestRulesAPI.class)
 public class CasUserSubLicensesTests {
-    private final String appIdentity = com.apriori.cds.utils.Constants.getApProApplicationIdentity();
-    private final String ciaIdentity = com.apriori.cds.utils.Constants.getCiaApplicationIdentity();
-    private final String cirIdentity = com.apriori.cds.utils.Constants.getCirAppIdentity();
-    private final String acsIdentity = com.apriori.cds.utils.Constants.getACSAppIdentity();
+    private final String appIdentity = Constants.getApProApplicationIdentity();
+    private final String ciaIdentity = Constants.getCiaApplicationIdentity();
+    private final String cirIdentity = Constants.getCirAppIdentity();
+    private final String acsIdentity = Constants.getACSAppIdentity();
     private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder deleteIdentityHolder;
     private String customerIdentity;
@@ -129,7 +107,7 @@ public class CasUserSubLicensesTests {
         setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(com.apriori.cas.api.utils.Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
         LocalDate expireDate = licenseResponse.getResponseEntity().getSubLicenses().get(0).getExpiresAt();
@@ -260,7 +238,7 @@ public class CasUserSubLicensesTests {
         customerIdentity = newCustomer.getIdentity();
         customerName = newCustomer.getName();
 
-        ResponseWrapper<com.apriori.models.response.Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();
         siteId = site.getResponseEntity().getSiteId();
 

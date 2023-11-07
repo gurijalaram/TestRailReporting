@@ -6,6 +6,7 @@ import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
@@ -20,57 +21,28 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsIdentityProvidersTests {
+    private final String appIdentity = Constants.getApProApplicationIdentity();
+    private final String ciaIdentity = Constants.getCiaApplicationIdentity();
+    private final String cirIdentity = Constants.getCirAppIdentity();
+    private final String acsIdentity = Constants.getACSAppIdentity();
     private String customerIdentity;
     private String userIdentity;
     private String idpIdentity;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private String customerName;
-    private String cloudRef;
-    private String salesForceId;
-    private String emailPattern;
-    private ResponseWrapper<Customer> customer;
-    private String userName;
     private ResponseWrapper<User> user;
     private SoftAssertions soft = new SoftAssertions();
     private String siteIdentity;
-    private String deploymentIdentity;
-    private String licensedApplicationIdentity;
+    private String licensedApProIdentity;
+    private String licensedCiaIdentity;
+    private String licensedCirIdentity;
+    private String licensedAcsIdentity;
     private String installationIdentity;
-
-    @BeforeEach
-    public void setDetails() {
-        customerName = generateStringUtil.generateCustomerName();
-        userName = generateStringUtil.generateUserName();
-        cloudRef = generateStringUtil.generateCloudReference();
-        salesForceId = generateStringUtil.generateSalesForceId();
-        emailPattern = "\\S+@".concat(customerName);
-        String customerType = Constants.CLOUD_CUSTOMER;
-
-        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        siteIdentity = site.getResponseEntity().getIdentity();
-        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
-        deploymentIdentity = deployment.getResponseEntity().getIdentity();
-        String realmKey = generateStringUtil.generateRealmKey();
-        String appIdentity = Constants.getApProApplicationIdentity();
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
-        installationIdentity = installation.getResponseEntity().getIdentity();
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
-        user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        userIdentity = user.getResponseEntity().getIdentity();
-    }
 
     @AfterEach
     public void cleanUp() {
@@ -80,8 +52,17 @@ public class CdsIdentityProvidersTests {
         if (installationIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
         }
-        if (licensedApplicationIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApplicationIdentity);
+        if (licensedApProIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApProIdentity);
+        }
+        if (licensedCiaIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCiaIdentity);
+        }
+        if (licensedCirIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCirIdentity);
+        }
+        if (licensedAcsIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedAcsIdentity);
         }
         if (customerIdentity != null && userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
@@ -95,6 +76,7 @@ public class CdsIdentityProvidersTests {
     @TestRail(id = {5824, 5961})
     @Description("Create an Identity provider for a customer")
     public void postCustomerIdentityProviders() {
+        setCustomerData();
         String customerName = generateStringUtil.generateCustomerName();
 
         ResponseWrapper<IdentityProviderResponse> samlResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
@@ -108,6 +90,7 @@ public class CdsIdentityProvidersTests {
     @TestRail(id = {5963})
     @Description("Update Identity provider for a customer")
     public void patchCustomerIdentityProviders() {
+        setCustomerData();
         String customerName = generateStringUtil.generateCustomerName();
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
@@ -122,6 +105,7 @@ public class CdsIdentityProvidersTests {
     @TestRail(id = {5962})
     @Description("getIDP details by Identity")
     public void getIDPbyIdentity() {
+        setCustomerData();
         String customerName = generateStringUtil.generateCustomerName();
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
@@ -142,6 +126,7 @@ public class CdsIdentityProvidersTests {
     @TestRail(id = {5960})
     @Description("getIDP list for customer")
     public void getListOfIDPsForCustomer() {
+        setCustomerData();
         String customerName = generateStringUtil.generateCustomerName();
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
@@ -161,6 +146,7 @@ public class CdsIdentityProvidersTests {
     @TestRail(id = {5961})
     @Description("Deletes identity provider")
     public void deleteCustomerIdentityProvider() {
+        setCustomerData();
         String userName = generateStringUtil.generateUserName();
 
         ResponseWrapper<IdentityProviderResponse> identityProviderResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, userName);
@@ -170,5 +156,38 @@ public class CdsIdentityProvidersTests {
             customerIdentity,
             identityProviderIdentity
         );
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(rcd.getCustomerName(), rcd.getCustomerType(), rcd.getCloudRef(), rcd.getSalesForceId(), rcd.getEmailPattern());
+        customerIdentity = customer.getResponseEntity().getIdentity();
+
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        siteIdentity = site.getResponseEntity().getIdentity();
+
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        String deploymentIdentity = response.getResponseEntity().getIdentity();
+
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApProIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> ciaLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, ciaIdentity);
+        licensedCiaIdentity = ciaLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> cirLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, cirIdentity);
+        licensedCirIdentity = cirLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> ascLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, acsIdentity);
+        licensedAcsIdentity = ascLicensed.getResponseEntity().getIdentity();
+
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, ciaIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, cirIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, acsIdentity, siteIdentity);
+
+        String userName = generateStringUtil.generateUserName();
+        user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        userIdentity = user.getResponseEntity().getIdentity();
     }
 }

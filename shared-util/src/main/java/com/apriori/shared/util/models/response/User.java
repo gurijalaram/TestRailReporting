@@ -1,10 +1,8 @@
 package com.apriori.shared.util.models.response;
 
 import com.apriori.serialization.util.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.shared.util.annotations.CreatableModel;
 import com.apriori.shared.util.annotations.Schema;
-import com.apriori.annotations.CreatableModel;
-import com.apriori.annotations.Schema;
-import com.apriori.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
