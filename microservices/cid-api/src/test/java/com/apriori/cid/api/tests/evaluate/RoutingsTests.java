@@ -153,8 +153,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing",
@@ -177,8 +178,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Single Station Thermoforming", "Shuttle Station Thermoforming",
@@ -200,8 +202,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         assertThat(routings.getItems().size()).isEqualTo(0);
     }
@@ -219,8 +222,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Stretch Form Transverse", "Stretch Form Longitudinal");
@@ -241,8 +245,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         assertThat(routings.getItems().size()).isEqualTo(0);
     }
@@ -260,8 +265,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Laser Cut - Fluid Cell Routing", "Router Cut - Fluid Cell Routing",
@@ -283,8 +289,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("[CTL]/Laser/[Bend]", "[CTL]/Fiber Laser/[Bend]", "[CTL]/Laser Punch/[Bend]",
@@ -308,8 +315,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Blow Molding", "Rotational Molding");
@@ -330,8 +338,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("3D Printing", "Selective Laser Sintering", "Stereolithography");
@@ -352,8 +361,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         assertThat(routings.getItems().size()).isEqualTo(0);
     }
@@ -371,8 +381,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Injection Mold", "Reaction Injection Mold", "Structural Foam Mold", "Compression Mold");
@@ -393,8 +404,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Closed Die Forging", "Ring Rolled Forging");
@@ -415,8 +427,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("VerticalAutomatic", "HorizontalAutomatic", "ManualStd", "ManualFloor", "ManualPit");
@@ -437,8 +450,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Band Saw", "Abrasive Wheel Cut");
@@ -459,8 +473,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("High Pressure Die Cast", "Gravity Die Cast");
@@ -481,8 +496,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("SandCasting", "DieCasting", "Permanent Mold");
@@ -503,8 +519,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         assertThat(routings.getItems().size()).isEqualTo(0);
     }
@@ -522,8 +539,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
         ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
 
         assertThat(routings.getItems().size()).isEqualTo(0);
     }
@@ -547,8 +565,9 @@ public class RoutingsTests {
         CostingTemplate costingTemplate2 = CostingTemplate.builder().processGroupName(processGroupEnum2.getProcessGroup()).twoModelSourceScenarioIdentity(scenarioResponse1.getIdentity()).build();
         ScenarioResponse scenarioResponse2 = new DataCreationUtil(componentName2, scenarioName, processGroupEnum2, resourceFile2, costingTemplate2, currentUser).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class, new CssComponent().findFirst(componentName2, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse2.getIdentity()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
+            new CssComponent().findFirst(componentName2, scenarioName, currentUser).getComponentIdentity(),
+            scenarioResponse2.getIdentity(), costingTemplate2.getVpeName(), processGroupEnum2.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "2AL+3AM Routing",
@@ -598,7 +617,7 @@ public class RoutingsTests {
 
         AnalysisOfScenario analysisOfScenarioWithRouting = componentIterationResponseWithRouting.getResponseEntity().getAnalysisOfScenario();
 
-        softAssertions.assertThat(analysisOfScenarioWithRouting.getProcessRoutingName()).isEqualTo("Material Stock / Laser Punch / Bend Brake");
+        softAssertions.assertThat(analysisOfScenarioWithRouting.getProcessRoutingName()).isEqualTo("Material Stock / Laser Punch / Bend Brake / 3 Axis Mill");
 
         softAssertions.assertAll();
     }
