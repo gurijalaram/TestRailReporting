@@ -8,6 +8,7 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.ErrorMessage;
+
 import org.apache.commons.lang3.StringUtils;
 import software.amazon.awssdk.http.HttpStatusCode;
 
@@ -144,7 +145,6 @@ public class DigitalFactoryUtil {
      * @param identity Identity of Digital Factory to delete
      * @param sharedSecret Shared secret for authentication (in form: "?key=...")
      * @return Response object
-     * @param <T> Type of object parsed from HTTP response
      */
     public <T> ResponseWrapper<T> deleteDigitalFactory(Integer expectedResponseCode, Class<T> expectedType, String identity, String sharedSecret) {
         final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, expectedType)
