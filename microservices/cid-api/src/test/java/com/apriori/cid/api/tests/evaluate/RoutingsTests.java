@@ -42,34 +42,6 @@ public class RoutingsTests {
     private final IterationsUtil iterationsUtil = new IterationsUtil();
 
     @Test
-    @TestRail(id = {14983})
-    @Description("Verify Get available routings API does not return routings when scenario is in NOT_COSTED status")
-    public void testAvailableRoutingForUncostedPart() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
-        final String componentName = "sheet_plastic";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".STEP");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        ComponentInfoBuilder scenarioItem = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
-
-        ErrorRequestResponse errorRequestResponse = scenariosUtil.getRoutings(currentUser, ErrorRequestResponse.class, new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioItem.getScenarioIdentity()).getResponseEntity();
-
-        String expectedMessage = String.format("Scenario '%s' was not costed, or was costed with invalid cost inputs, available routings not found", scenarioName);
-
-        softAssertions.assertThat(errorRequestResponse.getMessage()).isEqualTo(expectedMessage);
-        softAssertions.assertThat(errorRequestResponse.getStatus()).isEqualTo("409");
-
-        softAssertions.assertAll();
-    }
-
-    @Test
     @TestRail(id = {14982})
     @Description("Verify Get latest iteration API does not return scenarioRoutings upon costing to COSTING_FAILED")
     public void testLatestIterationDoesNotReturnScenarioRoutingsForCostingFailedState() {

@@ -23,7 +23,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/iterations/latest"),
 
     //ROUTINGS
-    ROUTINGS("components/%s/scenarios/%s/available-routings"),
+    ROUTINGS("components/%s/scenarios/%s/digital-factories/%s/process-groups/%s/available-routings"),
 
     //SCENARIO
     COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/cost"),
