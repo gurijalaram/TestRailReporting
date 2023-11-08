@@ -56,9 +56,8 @@ public class LargeGroupEditAssemblies extends TestBaseUI {
         componentsTablePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView();
-
-        componentsTablePage.multiSelectSubcomponents(CENTRE_BOLT.getPartName() + ", " + scenarioName,
+            .selectTableView()
+            .multiSelectSubcomponents(CENTRE_BOLT.getPartName() + ", " + scenarioName,
             CENTRE_WASHER.getPartName() + ", " + scenarioName,
             DISPLAY.getPartName() + ", " + scenarioName,
             GASKET.getPartName() + ", " + scenarioName,
