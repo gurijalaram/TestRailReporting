@@ -29,7 +29,6 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class LargeGroupEditAssemblies extends TestBaseUI {
@@ -43,59 +42,37 @@ public class LargeGroupEditAssemblies extends TestBaseUI {
     private ComponentsTablePage componentsTablePage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
-    @BeforeEach
-    public void setupAssembly() {
-        final String assemblyName = "Gym Bike";
-        final String assemblyExtension = ".iam";
-
-        List<String> subComponentNames = Arrays.asList(CENTRE_BOLT.getPartName(), CENTRE_WASHER.getPartName(), DISPLAY.getPartName(), GASKET.getPartName(), HANDLE.getPartName(), LEFT_PADDLE.getPartName(),
-            LEG_COVER.getPartName(), LEG.getPartName(), MECHANISM_BODY.getPartName(), PADDLE_BAR.getPartName(), PIN.getPartName(), RIGHT_PADDLE.getPartName(), SEAT_LOCK.getPartName(), SEAT.getPartName(),
-            STEER_WHEEL_SUPPORT.getPartName(), WASHER.getPartName());
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String subComponentExtension = ".ipt";
-
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-        scenarioName2 = new GenerateStringUtil().generateScenarioName();
-
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
-            assemblyExtension,
-            ASSEMBLY,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
-    }
-
     @Test
     @TestRail(id = {10883, 10884, 10885, 10894, 11140})
     @Description("group Edit sub Components")
     public void editButtonUnavailable() {
+        componentAssembly = new AssemblyDTORequest().getAssembly("Gym Bike");
+
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(currentUser)
+        componentsTablePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
-            .multiSelectSubcomponents(
-                CENTRE_BOLT.getPartName() + ", " + scenarioName + "",
-                CENTRE_WASHER.getPartName() + ", " + scenarioName + "",
-                DISPLAY.getPartName() + ", " + scenarioName + "",
-                GASKET.getPartName() + ", " + scenarioName + "",
-                HANDLE.getPartName() + ", " + scenarioName + "",
-                LEFT_PADDLE.getPartName() + ", " + scenarioName + "",
-                LEG_COVER.getPartName() + "," + scenarioName + "",
-                LEG.getPartName() + "," + scenarioName + "",
-                MECHANISM_BODY.getPartName() + "," + scenarioName + "",
-                PADDLE_BAR.getPartName() + "," + scenarioName + "",
-                PIN.getPartName() + "," + scenarioName + "");
+            .selectTableView();
+
+        componentsTablePage.multiSelectSubcomponents(CENTRE_BOLT.getPartName() + ", " + scenarioName,
+            CENTRE_WASHER.getPartName() + ", " + scenarioName,
+            DISPLAY.getPartName() + ", " + scenarioName,
+            GASKET.getPartName() + ", " + scenarioName,
+            HANDLE.getPartName() + ", " + scenarioName,
+            LEFT_PADDLE.getPartName() + ", " + scenarioName,
+            LEG_COVER.getPartName() + "," + scenarioName,
+            LEG.getPartName() + "," + scenarioName,
+            MECHANISM_BODY.getPartName() + "," + scenarioName,
+            PADDLE_BAR.getPartName() + "," + scenarioName,
+            PIN.getPartName() + "," + scenarioName);
 
         softAssertions.assertThat(componentsTablePage.isEditButtonDisabled()).isEqualTo(true);
 
-        componentsTablePage.multiSelectSubcomponents("centre bolt, " + scenarioName + "")
+        componentsTablePage.multiSelectSubcomponents(CENTRE_BOLT.getPartName() + ", " + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
             .enterScenarioName(scenarioName2)
