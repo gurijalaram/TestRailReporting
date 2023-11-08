@@ -11,12 +11,9 @@ import static com.apriori.cid.ui.utils.PartNamesEnum.LEG_COVER;
 import static com.apriori.cid.ui.utils.PartNamesEnum.MECHANISM_BODY;
 import static com.apriori.cid.ui.utils.PartNamesEnum.PADDLE_BAR;
 import static com.apriori.cid.ui.utils.PartNamesEnum.PIN;
-import static com.apriori.cid.ui.utils.PartNamesEnum.RIGHT_PADDLE;
 import static com.apriori.cid.ui.utils.PartNamesEnum.SEAT;
-import static com.apriori.cid.ui.utils.PartNamesEnum.SEAT_LOCK;
 import static com.apriori.cid.ui.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
 import static com.apriori.cid.ui.utils.PartNamesEnum.WASHER;
-import static com.apriori.shared.util.enums.ProcessGroupEnum.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTablePage;
@@ -25,10 +22,8 @@ import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.dto.AssemblyDTORequest;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -36,9 +31,6 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class LargeGroupEditAssemblies extends TestBaseUI {
 

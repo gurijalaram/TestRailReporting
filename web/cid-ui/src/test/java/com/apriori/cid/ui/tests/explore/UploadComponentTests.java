@@ -11,8 +11,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cid.api.models.dto.AssemblyDTORequest;
-import com.apriori.cid.api.models.dto.ComponentDTORequest;
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
@@ -27,6 +25,8 @@ import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.cid.ui.utils.UploadStatusEnum;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.AssemblyDTORequest;
+import com.apriori.shared.util.dto.ComponentDTORequest;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
@@ -51,9 +51,9 @@ import java.util.stream.Collectors;
 
 public class UploadComponentTests extends TestBaseUI {
 
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ComponentInfoBuilder componentAssembly;
     private ComponentInfoBuilder component;
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private File resourceFile;
     private File resourceFile1;
     private ExplorePage explorePage;

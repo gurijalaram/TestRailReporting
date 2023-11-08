@@ -11,11 +11,11 @@ import static com.apriori.cid.ui.utils.PartNamesEnum.MECHANISM_BODY;
 import static com.apriori.cid.ui.utils.PartNamesEnum.PADDLE_BAR;
 import static com.apriori.cid.ui.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
 
-import com.apriori.cid.api.models.dto.AssemblyDTORequest;
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTablePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.AssemblyDTORequest;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
