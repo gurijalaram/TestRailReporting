@@ -75,9 +75,9 @@ pipeline {
                     password = params.PASSWORD
 
                     if ((username != null || username != "none") && (password != null || password != "none")) {
-                        javaOpts = javaOpts + " -Dglobal.use_default_user=true"
-                        javaOpts = javaOpts + " -Dglobal.default_user_name=${username}"
-                        javaOpts = javaOpts + " -Dglobal.default_password=${password}"
+                        javaOpts = javaOpts + " -Dglobal_use_default_user=true"
+                        javaOpts = javaOpts + " -Dglobal_default_user_name=${username}"
+                        javaOpts = javaOpts + " -Dglobal_default_password=${password}"
                     }
 
 
