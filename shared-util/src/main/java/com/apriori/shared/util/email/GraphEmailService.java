@@ -3,7 +3,7 @@ package com.apriori.shared.util.email;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.models.response.EmailMessage;
 import com.apriori.shared.util.models.response.EmailResponse;
 import com.apriori.shared.util.utils.KeyValueUtil;
@@ -30,7 +30,7 @@ public class GraphEmailService {
     public static EmailMessage searchEmailMessageWithAttachments(String searchText) {
         String[] emailParamValues = {"$search, \"" + searchText + "\"", "hasAttachments[eq], true"};
 
-        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class)
             .queryParams(new KeyValueUtil().keyValue(emailParamValues, ","))
             .headers(new HashMap<String, String>() {
                 {

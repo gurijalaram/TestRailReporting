@@ -17,7 +17,7 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -55,7 +55,7 @@ public class CasUserSubLicensesTests {
 
     @BeforeEach
     public void getToken() {
-        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
+        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         email = customerName.toLowerCase();

@@ -23,7 +23,7 @@ import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.request.component.GroupItems;
 import com.apriori.shared.util.models.request.component.Options;
@@ -136,7 +136,7 @@ public class ScenariosUtil {
     public ResponseWrapper<ScenarioResponse> getScenario(ComponentInfoBuilder componentInfo) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .token(componentInfo.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
@@ -157,7 +157,7 @@ public class ScenariosUtil {
         String scenarioId = componentInfo.getScenarioIdentity();
         ResponseWrapper<Object> response;
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null)
                 .inlineVariables(componentId, scenarioId)
                 .token(componentInfo.getUser().getToken())
                 .followRedirection(false)
@@ -178,7 +178,7 @@ public class ScenariosUtil {
         CostingTemplate costingTemplate = postCostingTemplate(componentInfo);
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body("costingInputs", costingTemplate);
@@ -196,7 +196,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body("scenario",
@@ -217,7 +217,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfo, ForkRequest forkRequest) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body("scenario", ForkRequest.builder()
                     .scenarioName(forkRequest.getScenarioName())
@@ -255,7 +255,7 @@ public class ScenariosUtil {
         });
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, ScenarioSuccessesFailures.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.EDIT_SCENARIOS, ScenarioSuccessesFailures.class)
                 .body(ForkRequest.builder()
                     .scenarioName(forkRequest.getScenarioName())
                     .override(forkRequest.getOverride())
@@ -294,7 +294,7 @@ public class ScenariosUtil {
     public <T> ResponseWrapper<T> postSimpleEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, Class<T> klass) {
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, klass)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.EDIT_SCENARIOS, klass)
                 .body(ForkRequest.builder()
                     .scenarioName(forkRequest.getScenarioName())
                     .override(forkRequest.getOverride())
@@ -329,7 +329,7 @@ public class ScenariosUtil {
             .get()));
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)
                 .body(GroupCostRequest.builder()
                     .costingTemplateIdentity(postCostingTemplate(componentInfo.getSubComponents().get(0)).getIdentity())
                     .groupItems(subComponentInfo
@@ -355,7 +355,7 @@ public class ScenariosUtil {
     public ResponseWrapper<ErrorMessage> postGroupCostNullScenarios(ComponentInfoBuilder componentInfo) {
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, ErrorMessage.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, ErrorMessage.class)
                 .body(GroupCostRequest.builder()
                     .costingTemplateIdentity("")
                     .groupItems(Collections.singletonList(GroupItems.builder()
@@ -388,7 +388,7 @@ public class ScenariosUtil {
         }
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, ErrorMessage.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, ErrorMessage.class)
                 .body(GroupCostRequest.builder()
                     .costingTemplateIdentity(componentInfo.getCostingTemplate().getIdentity())
                     .groupItems(groupItems)
@@ -406,7 +406,7 @@ public class ScenariosUtil {
      */
     public CostingTemplate postCostingTemplate(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplate.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplate.class)
                 .token(componentInfo.getUser().getToken())
                 .body("costingTemplate", componentInfo.getCostingTemplate());
 
@@ -443,7 +443,7 @@ public class ScenariosUtil {
      */
     public CostingTemplate getCostingTemplateIdentity(UserCredentials userCredentials, String... inlineVariables) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES_ID, CostingTemplate.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COSTING_TEMPLATES_ID, CostingTemplate.class)
                 .inlineVariables(inlineVariables)
                 .token(userCredentials.getToken());
 
@@ -460,7 +460,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<CostingTemplates> getCostingTemplates(UserCredentials userCredentials) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplates.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplates.class)
                 .token(userCredentials.getToken());
 
         return HTTPRequest.build(requestEntity).get();
@@ -493,7 +493,7 @@ public class ScenariosUtil {
             .build());
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body("scenario", componentInfo.getPublishRequest())
@@ -529,7 +529,7 @@ public class ScenariosUtil {
         });
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
                 .body(PublishRequest.builder()
                     .groupItems(subComponentInfo
                         .stream()
@@ -563,7 +563,7 @@ public class ScenariosUtil {
     public ResponseWrapper<ScenarioSuccessesFailures> postSimplePublishGroupScenarios(PublishRequest publishRequest) {
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
                 .body(PublishRequest.builder()
                     .groupItems(publishRequest.getGroupItems()
                         .stream()
@@ -655,7 +655,7 @@ public class ScenariosUtil {
     }
 
     private <T> RequestEntity genericDeleteRequest(CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId, UserCredentials userCredentials) {
-        return RequestEntityUtil.init(endPoint, klass)
+        return RequestEntityUtil_Old.init(endPoint, klass)
             .token(userCredentials.getToken())
             .inlineVariables(componentId, scenarioId)
             .socketTimeout(SOCKET_TIMEOUT);
@@ -669,7 +669,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<ScenarioManifest> getScenarioManifest(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.MANIFEST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, ScenarioManifest.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.MANIFEST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, ScenarioManifest.class)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity());
 
@@ -715,7 +715,7 @@ public class ScenariosUtil {
         }
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, AssociationSuccessesFailures.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, AssociationSuccessesFailures.class)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body(ScenarioAssociationsRequest.builder()
                     .groupItems(scenarioAssociationsRequests
@@ -743,7 +743,7 @@ public class ScenariosUtil {
     public <T> ResponseWrapper<T> patchAssociations(ComponentInfoBuilder componentInfo, List<ScenarioAssociationGroupItems> scenarioManifestSubcomponents, Class<T> klass) {
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, klass)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, klass)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body(ScenarioAssociationsRequest.builder()
                     .groupItems(scenarioManifestSubcomponents
@@ -783,7 +783,7 @@ public class ScenariosUtil {
      */
     public <T> ResponseWrapper<T> getRoutings(UserCredentials currentUser, Class<T> klass, String... inlineVariables) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.ROUTINGS, klass)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.ROUTINGS, klass)
                 .inlineVariables(inlineVariables)
                 .token(currentUser.getToken());
 
@@ -814,7 +814,7 @@ public class ScenariosUtil {
      */
     public <T> ResponseWrapper<T> getReports(String componentId, String scenarioId, UserCredentials currentUser) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.REPORTS, null)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.REPORTS, null)
                 .inlineVariables(componentId, scenarioId)
                 .token(currentUser.getToken())
                 .expectedResponseCode(HttpStatus.SC_OK);

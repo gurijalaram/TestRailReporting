@@ -13,7 +13,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.properties.PropertiesContext;
 
@@ -211,7 +211,7 @@ public class AgentService {
         String group = "/" + PropertiesContext.get("ci-connect.nexus_group") + "/" + PropertiesContext.get("ci-connect.nexus_version");
         String credential = PropertiesContext.get("global.nexus.username") + ":" + PropertiesContext.get("global.nexus.password");
         try {
-            requestEntity = RequestEntityUtil.init(NexusAPIEnum.NEXUS_CIC_AGENT_SEARCH_BY_GROUP, NexusAgentResponse.class)
+            requestEntity = RequestEntityUtil_Old.init(NexusAPIEnum.NEXUS_CIC_AGENT_SEARCH_BY_GROUP, NexusAgentResponse.class)
                 .inlineVariables(PropertiesContext.get("ci-connect.nexus_repository"), group)
                 .headers(new HashMap<String, String>() {
                     {
@@ -228,7 +228,7 @@ public class AgentService {
         try {
             while (nexusAgentResponse.getContinuationToken() != null) {
                 paramMap.put("continuationToken", nexusAgentResponse.getContinuationToken());
-                requestEntity = RequestEntityUtil.init(NexusAPIEnum.NEXUS_CIC_AGENT_SEARCH_BY_GROUP, NexusAgentResponse.class)
+                requestEntity = RequestEntityUtil_Old.init(NexusAPIEnum.NEXUS_CIC_AGENT_SEARCH_BY_GROUP, NexusAgentResponse.class)
                     .inlineVariables(PropertiesContext.get("ci-connect.nexus_repository"), group)
                     .headers(new HashMap<String, String>() {
                         {

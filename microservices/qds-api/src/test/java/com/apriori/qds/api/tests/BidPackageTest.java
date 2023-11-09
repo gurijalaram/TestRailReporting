@@ -13,7 +13,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.ErrorMessage;
@@ -59,7 +59,7 @@ public class BidPackageTest extends TestUtil {
     public void createBidPackageWithExistingName() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
         BidPackageRequest bidPackageRequest = QdsApiTestUtils.getBidPackageRequest(userIdentity, bidPackageName, bidPackageName);
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -74,7 +74,7 @@ public class BidPackageTest extends TestUtil {
     public void createBidPackageNameMoreThan64() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
         BidPackageRequest bidPackageRequest = QdsApiTestUtils.getBidPackageRequest(userIdentity, RandomStringUtils.randomAlphabetic(70), "descripton");
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -90,7 +90,7 @@ public class BidPackageTest extends TestUtil {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
         BidPackageRequest bidPackageRequest = QdsApiTestUtils.getBidPackageRequest(userIdentity, RandomStringUtils.randomAlphabetic(64), "descripton");
         ResponseWrapper<BidPackageResponse> bidPackageCreatedResponse = HTTPRequest.build(
-                RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, BidPackageResponse.class)
+                RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGES, BidPackageResponse.class)
                     .body(bidPackageRequest)
                     .headers(QdsApiTestUtils.setUpHeader())
                     .apUserContext(userContext)
@@ -101,7 +101,7 @@ public class BidPackageTest extends TestUtil {
         ResponseWrapper<String> deleteBidResponse = BidPackageResources.deleteBidPackage(bidPackageCreatedResponse.getResponseEntity()
             .getIdentity(), currentUser);
         ResponseWrapper<ErrorMessage> bidPackageResponse = HTTPRequest.build(
-                RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, ErrorMessage.class)
+                RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE, ErrorMessage.class)
                     .inlineVariables(bidPackageCreatedResponse.getResponseEntity().getIdentity())
                     .headers(QdsApiTestUtils.setUpHeader())
                     .apUserContext(userContext)
@@ -119,7 +119,7 @@ public class BidPackageTest extends TestUtil {
     public void createBidPackageNameEqualTo254() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
         BidPackageRequest bidPackageRequest = QdsApiTestUtils.getBidPackageRequest(userIdentity,RandomStringUtils.randomAlphabetic(15),RandomStringUtils.randomAlphabetic(254));
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, BidPackageResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGES, BidPackageResponse.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -135,7 +135,7 @@ public class BidPackageTest extends TestUtil {
     public void createBidPackageNameGreaterThan254() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
         BidPackageRequest bidPackageRequest = QdsApiTestUtils.getBidPackageRequest(userIdentity, bidPackageName, RandomStringUtils.randomAlphabetic(260));
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -156,7 +156,7 @@ public class BidPackageTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -179,7 +179,7 @@ public class BidPackageTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -202,7 +202,7 @@ public class BidPackageTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGES, ErrorMessage.class)
             .body(bidPackageRequest)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -217,7 +217,7 @@ public class BidPackageTest extends TestUtil {
     @TestRail(id = {13326})
     @Description("Updated existing Bid Package status")
     public void updateBidPackageStatus() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
             .inlineVariables(bidPackageResponse.getIdentity())
             .body(BidPackageRequest.builder()
                 .bidPackage(BidPackageParameters.builder()
@@ -241,7 +241,7 @@ public class BidPackageTest extends TestUtil {
     @Description("Updated existing Bid Package description")
     public void updateBidPackageDescription() {
         String bpDesc = RandomStringUtils.randomAlphabetic(15);
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
             .inlineVariables(bidPackageResponse.getIdentity())
             .body(BidPackageRequest.builder()
                 .bidPackage(BidPackageParameters.builder()
@@ -265,7 +265,7 @@ public class BidPackageTest extends TestUtil {
     @Description("Updated existing Bid Package name")
     public void updateBidPackageAssigned() {
         String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
             .inlineVariables(bidPackageResponse.getIdentity())
             .body(BidPackageRequest.builder()
                 .bidPackage(BidPackageParameters.builder()
@@ -289,7 +289,7 @@ public class BidPackageTest extends TestUtil {
     @Description("Find List of bid packages, pagination from the user for same customer")
     public void getBidPackages() {
         String otherUserContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGES, BidPackagesResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGES, BidPackagesResponse.class)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(otherUserContext)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -306,7 +306,7 @@ public class BidPackageTest extends TestUtil {
     @Description("Find bid package from other customer identity")
     public void getBidPackagesFromAnotherCustomer() {
         String otherUserContext = new AuthUserContextUtil().getAuthUserContext("testUser1@widgets.aprioritest.com");
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE, ErrorMessage.class)
             .headers(QdsApiTestUtils.setUpHeader())
             .inlineVariables(bidPackageResponse.getIdentity())
             .apUserContext(otherUserContext)
@@ -322,7 +322,7 @@ public class BidPackageTest extends TestUtil {
     @Description("Get bid package")
     public void getBidPackage() {
         String otherUserContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE, BidPackageResponse.class)
             .inlineVariables(bidPackageResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(otherUserContext)
@@ -337,7 +337,7 @@ public class BidPackageTest extends TestUtil {
     @TestRail(id = {13333})
     @Description("Get bid package with invalid identity")
     public void getBidPackageWithInvalidIdentity() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE, ErrorMessage.class)
             .inlineVariables("INVALID IDENTITY")
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)

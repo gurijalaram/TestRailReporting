@@ -6,6 +6,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.properties.PropertiesContext;
@@ -17,6 +18,7 @@ import com.apriori.vds.api.models.response.digital.factories.DigitalFactory;
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.util.List;
 
@@ -26,18 +28,20 @@ public abstract class VDSTestUtil extends TestUtil {
     protected static UserCredentials testingUser = UserUtil.getUser();
     protected static String testingApUserContext =  new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail());
 
+    protected static RequestEntityUtil requestEntityUtil = new RequestEntityUtil();
+
 
     private static DigitalFactory digitalFactory;
     private static String digitalFactoryIdentity;
 
-    // TODO z: fix thread safe
-    //    @BeforeAll
-    //    public static  void init() {
-    //        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
-    //    }
+    @BeforeAll
+    public static  void init() {
+        requestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
+        //RequestEntityUtil_Old.useApUserContextForRequests(testingUser = UserUtil.getUser());
+    }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class)
             .apUserContext(testingApUserContext)
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -61,7 +65,7 @@ public abstract class VDSTestUtil extends TestUtil {
     }
 
     protected static List<AccessControlGroup> getAccessControlGroupsResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<AccessControlGroupItems> accessControlGroupsResponse = HTTPRequest.build(requestEntity).get();

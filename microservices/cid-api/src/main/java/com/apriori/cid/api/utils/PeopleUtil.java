@@ -7,7 +7,7 @@ import com.apriori.cus.api.enums.CusAppAPIEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.User;
 
@@ -20,7 +20,7 @@ public class PeopleUtil {
      * @return user object
      */
     public User getCurrentUser(UserCredentials userCredentials) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.CURRENT_USER, User.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CusAppAPIEnum.CURRENT_USER, User.class)
             .token(userCredentials.getToken());
 
         ResponseWrapper<User> userResponse = HTTPRequest.build(requestEntity).get();
@@ -34,7 +34,7 @@ public class PeopleUtil {
      * @return person object
      */
     public PersonResponse getCurrentPerson(UserCredentials userCredentials) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.CURRENT_PERSON, PeopleResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.CURRENT_PERSON, PeopleResponse.class)
             .token(userCredentials.getToken())
             .inlineVariables(userCredentials.getUsername());
 

@@ -11,7 +11,7 @@ import com.apriori.cic.api.utils.WorkflowDataUtil;
 import com.apriori.cic.api.utils.WorkflowTestUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -199,7 +199,7 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
             .getWorkflowId()
             .invokeRestWorkflow();
 
-        AgentErrorMessage agentErrorMessage = (AgentErrorMessage) HTTPRequest.build(RequestEntityUtil.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_RESULT, AgentErrorMessage.class)
+        AgentErrorMessage agentErrorMessage = (AgentErrorMessage) HTTPRequest.build(RequestEntityUtil_Old.init(CICAPIEnum.CIC_AGENT_WORKFLOW_JOB_RESULT, AgentErrorMessage.class)
             .inlineVariables(this.agentWorkflowResponse.getId(), this.agentWorkflowJobRunResponse.getJobId())
             .expectedResponseCode(HttpStatus.SC_FORBIDDEN)
             .headers(new HashMap<String, String>() {

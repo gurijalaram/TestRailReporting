@@ -5,7 +5,7 @@ import com.apriori.sds.api.models.response.CostingTemplate;
 import com.apriori.sds.api.util.SDSTestUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -29,7 +29,7 @@ public class CostingTemplatesTest extends SDSTestUtil {
     @Description("Get the current representation of a costing template.")
     public void testGetCostingTemplateByIdentity() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATE_SINGLE_BY_IDENTITY_ID, CostingTemplate.class)
+            RequestEntityUtil_Old.init(SDSAPIEnum.GET_COSTING_TEMPLATE_SINGLE_BY_IDENTITY_ID, CostingTemplate.class)
                 .inlineVariables(this.getFirstCostingTemplate().getIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 

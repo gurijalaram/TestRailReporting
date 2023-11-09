@@ -10,7 +10,7 @@ import com.apriori.shared.util.file.InitFileData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.Users;
@@ -51,7 +51,7 @@ public class CasCustomersUsersTests {
 
     @BeforeEach
     public void getToken() {
-        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
+        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
         newCustomer = casTestUtil.createCustomer().getResponseEntity();
         customerIdentity = newCustomer.getIdentity();
     }

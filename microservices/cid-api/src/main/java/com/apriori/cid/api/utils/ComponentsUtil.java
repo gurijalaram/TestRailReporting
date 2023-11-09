@@ -18,7 +18,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.request.component.Successes;
 import com.apriori.shared.util.models.response.component.PostComponentResponse;
@@ -84,7 +84,7 @@ public class ComponentsUtil {
      */
     private ResponseWrapper<CadFilesResponse> postCadFile(ComponentInfoBuilder componentBuilder, List<File> files) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("cadFiles", files))
                 .token(componentBuilder.getUser().getToken());
 
@@ -102,7 +102,7 @@ public class ComponentsUtil {
             .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
                 .body("groupItems",
                     Collections.singletonList(ComponentRequest.builder()
                         .filename(componentInfo.getResourceFile().getName())
@@ -209,7 +209,7 @@ public class ComponentsUtil {
     public List<ScenarioItem> postMultiComponentsQueryCSS(ComponentInfoBuilder componentInfo) {
         List<CadFile> resources = postCadFiles(componentInfo);
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
             .body("groupItems", componentInfo.getResourceFiles()
                 .stream()
                 .map(resourceFile ->
@@ -245,7 +245,7 @@ public class ComponentsUtil {
     public List<ComponentIdentityResponse> postMultiComponentsQueryCID(ComponentInfoBuilder componentInfo) {
         List<CadFile> resources = postCadFiles(componentInfo);
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
             .body("groupItems", componentInfo.getResourceFiles()
                 .stream()
                 .map(resourceFile ->
@@ -309,7 +309,7 @@ public class ComponentsUtil {
      */
     public ResponseWrapper<GetComponentResponse> getComponents() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS, GetComponentResponse.class);
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS, GetComponentResponse.class);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -355,7 +355,7 @@ public class ComponentsUtil {
      */
     public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity())
                 .token(componentInfo.getUser().getToken())
                 .followRedirection(true);
@@ -377,7 +377,7 @@ public class ComponentsUtil {
         final LocalDateTime methodStartTime = LocalDateTime.now();
         String componentId = componentInfo.getComponentIdentity();
         ResponseWrapper<Object> response;
-        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
             .inlineVariables(componentId)
             .token(componentInfo.getUser().getToken())
             .followRedirection(false)
@@ -397,7 +397,7 @@ public class ComponentsUtil {
     // TODO: 21/12/2022 why is this method needed or even used here? check IterationsUtil for duplication
     public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .token(componentInfo.getUser().getToken());
 
@@ -420,7 +420,7 @@ public class ComponentsUtil {
         String scenarioId = componentInfo.getScenarioIdentity();
         ResponseWrapper<Object> response;
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, null)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, null)
                 .inlineVariables(componentId, scenarioId)
                 .token(componentInfo.getUser().getToken())
                 .followRedirection(false)

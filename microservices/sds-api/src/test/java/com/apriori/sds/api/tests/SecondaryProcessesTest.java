@@ -6,7 +6,7 @@ import com.apriori.sds.api.util.SDSTestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -31,7 +31,7 @@ public class SecondaryProcessesTest extends SDSTestUtil {
 
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_SECONDARY_PROCESS_BY_COMPONENT_SCENARIO_IDS_VPE_PG_NAMES, SecondaryProcessesItems.class)
+            RequestEntityUtil_Old.init(SDSAPIEnum.GET_SECONDARY_PROCESS_BY_COMPONENT_SCENARIO_IDS_VPE_PG_NAMES, SecondaryProcessesItems.class)
                 .inlineVariables(
                     testingComponent.getComponentIdentity(),
                     testingComponent.getScenarioIdentity(),

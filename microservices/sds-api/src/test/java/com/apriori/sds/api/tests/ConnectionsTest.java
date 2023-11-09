@@ -7,7 +7,7 @@ import com.apriori.sds.api.models.response.ConnectionsItemsResponse;
 import com.apriori.sds.api.util.SDSTestUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -41,7 +41,7 @@ public class ConnectionsTest extends SDSTestUtil {
 
     private static List<Connection> getConnections() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_CONNECTIONS, ConnectionsItemsResponse.class)
+            RequestEntityUtil_Old.init(SDSAPIEnum.GET_CONNECTIONS, ConnectionsItemsResponse.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ConnectionsItemsResponse> response = HTTPRequest.build(requestEntity).get();
@@ -77,7 +77,7 @@ public class ConnectionsTest extends SDSTestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.PATCH_CONNECTIONS_BY_ID, Connection.class)
+            RequestEntityUtil_Old.init(SDSAPIEnum.PATCH_CONNECTIONS_BY_ID, Connection.class)
                 .inlineVariables(postConnection().getIdentity())
                 .body("connection", connectionRequest)
                 .expectedResponseCode(HttpStatus.SC_OK);
@@ -99,7 +99,7 @@ public class ConnectionsTest extends SDSTestUtil {
         }
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.POST_CONNECTIONS, Connection.class)
+            RequestEntityUtil_Old.init(SDSAPIEnum.POST_CONNECTIONS, Connection.class)
                 .body("connection", connectionRequest)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
@@ -128,7 +128,7 @@ public class ConnectionsTest extends SDSTestUtil {
 
     private static String deleteConnection(String identityToDelete) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.DELETE_CONNECTIONS_BY_ID, null)
+            RequestEntityUtil_Old.init(SDSAPIEnum.DELETE_CONNECTIONS_BY_ID, null)
                 .inlineVariables(identityToDelete)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 

@@ -17,7 +17,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.ApwErrorMessage;
@@ -184,7 +184,7 @@ public class QmsBidPackageTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGES, ApwErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGES, ApwErrorMessage.class)
             .body(bidPackageRequest)
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
@@ -346,7 +346,7 @@ public class QmsBidPackageTest extends TestUtil {
     public void getBidPackagesFromAnotherCustomer() {
         String otherUserContext = new AuthUserContextUtil().getAuthUserContext(QmsApiTestUtils.getCustomerUser()
             .getEmail());
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE, ApwErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE, ApwErrorMessage.class)
             .inlineVariables(bidPackageResponse.getIdentity())
             .apUserContext(otherUserContext)
             .expectedResponseCode(HttpStatus.SC_NOT_FOUND);
@@ -402,7 +402,7 @@ public class QmsBidPackageTest extends TestUtil {
     @TestRail(id = {13370})
     @Description("Get bid package with invalid identity")
     public void getBidPackageWithInvalidIdentity() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.BID_PACKAGE, ApwErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE, ApwErrorMessage.class)
             .inlineVariables("INVALID IDENTITY")
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);

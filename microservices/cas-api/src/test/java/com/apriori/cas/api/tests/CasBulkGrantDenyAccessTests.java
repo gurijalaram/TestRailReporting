@@ -13,7 +13,7 @@ import com.apriori.cds.api.utils.Constants;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.LicensedApplications;
@@ -55,7 +55,7 @@ public class CasBulkGrantDenyAccessTests {
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
+        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
         aPrioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
         sourceCustomer = casTestUtil.createCustomer().getResponseEntity();
         customerIdentity = sourceCustomer.getIdentity();

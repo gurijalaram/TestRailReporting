@@ -7,10 +7,10 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
-public class IterationController extends RequestEntityUtil {
+public class IterationController extends RequestEntityUtil_Old {
 
     private static UserCredentials testingUser = UserUtil.getUser();
 

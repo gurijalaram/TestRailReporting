@@ -5,28 +5,32 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.entity.UserAuthenticationEntity;
 import com.apriori.shared.util.interfaces.EndpointEnum;
 
-public class RequestEntityUtil {
+@Deprecated
+public class RequestEntityUtil_Old {
 
-    private String token;
-    private String apUserContext;
+    private static String token;
+    private static String apUserContext;
 
-    public String useTokenForRequests(final String tokenForRequests) {
+    @Deprecated
+    public static String useTokenForRequests(final String tokenForRequests) {
         return token = tokenForRequests;
     }
 
-    public String useApUserContextForRequests(final UserCredentials userForAppUserContext) {
+    @Deprecated
+    public static String useApUserContextForRequests(final UserCredentials userForAppUserContext) {
         return apUserContext = new AuthUserContextUtil().getAuthUserContext(userForAppUserContext.getEmail());
     }
 
-//    public RequestEntity.RequestEntityBuilder initBuilder(EndpointEnum endpoint, Class<?> returnType) {
-//        return RequestEntity.builder()
-//            .endpoint(endpoint)
-//            .returnType(returnType)
-//            .token(token)
-//            .apUserContext(apUserContext);
-//    }
+    public static RequestEntity.RequestEntityBuilder initBuilder(EndpointEnum endpoint, Class<?> returnType) {
+        return RequestEntity.builder()
+            .endpoint(endpoint)
+            .returnType(returnType)
+            .token(token)
+            .apUserContext(apUserContext);
+    }
 
-    public RequestEntity init(EndpointEnum endpoint, Class<?> returnType) {
+    @Deprecated
+    public static RequestEntity init(EndpointEnum endpoint, Class<?> returnType) {
         return new RequestEntity()
             .endpoint(endpoint)
             .returnType(returnType)
@@ -34,7 +38,8 @@ public class RequestEntityUtil {
             .apUserContext(apUserContext);
     }
 
-    public RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
+    @Deprecated
+    public static RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
         return new RequestEntity()
             .userAuthenticationEntity(new UserAuthenticationEntity(userCredentials.getEmail(), userCredentials.getPassword()))
             .returnType(returnType)

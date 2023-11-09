@@ -13,7 +13,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -50,7 +50,7 @@ public class LayoutTest extends TestUtil {
 
     @Test
     public void getLayout() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT, LayoutResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.LAYOUT, LayoutResponse.class)
             .inlineVariables(layoutResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -71,7 +71,7 @@ public class LayoutTest extends TestUtil {
                 .published(true)
                 .build())
             .build();
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT, LayoutResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.LAYOUT, LayoutResponse.class)
             .inlineVariables(layoutResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .body(layoutRequest)
@@ -85,7 +85,7 @@ public class LayoutTest extends TestUtil {
     @Test
     public void getLayouts() {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUTS, LayoutsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.LAYOUTS, LayoutsResponse.class)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_OK);

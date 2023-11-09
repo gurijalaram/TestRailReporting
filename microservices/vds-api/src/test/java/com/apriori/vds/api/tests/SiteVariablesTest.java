@@ -3,7 +3,6 @@ package com.apriori.vds.api.tests;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -45,7 +44,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @Description("Get a site variable for a customer.")
     public void getSiteVariablesByIdentity() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLE_BY_ID, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLE_BY_ID, SiteVariable.class)
                 .inlineVariables(
                     this.getFirstSiteVariable().getIdentity()
                 )
@@ -76,7 +75,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         siteVariableIdsToDelete.add(siteVariableBeforeUpdate.getIdentity());
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.PATCH_SITE_VARIABLES_BY_ID, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.PATCH_SITE_VARIABLES_BY_ID, SiteVariable.class)
                 .inlineVariables(siteVariableBeforeUpdate.getIdentity())
                 .body(initUpdateRequestBody(siteVariableBeforeUpdate))
                 .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -93,7 +92,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         SiteVariable siteVariable = getFirstSiteVariable();
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
                 .body(initUpdateRequestBody(siteVariable))
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
@@ -104,7 +103,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private static void deleteSiteVariableById(final String identity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.DELETE_SITE_VARIABLE_BY_ID, null)
+            requestEntityUtil.init(VDSAPIEnum.DELETE_SITE_VARIABLE_BY_ID, null)
                 .inlineVariables(identity)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
@@ -122,7 +121,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     }
 
     private List<SiteVariable> getSiteVariablesResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<SiteVariablesItems> siteVariablesResponse = HTTPRequest.build(requestEntity).get();
@@ -132,7 +131,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private SiteVariable postSiteVariables() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.POST_SITE_VARIABLE, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.POST_SITE_VARIABLE, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
                     .name(new GenerateStringUtil().generateSiteName())
                     .type("DOUBLE")

@@ -5,7 +5,7 @@ import com.apriori.cis.api.models.request.bidpackage.AssignedComponentRequest;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 
 /**
  * The type Cis component resources.
@@ -23,7 +23,7 @@ public class CisComponentResources {
      * @return response class
      */
     public static <T> T postToGetAssignedComponents(UserCredentials currentUser, AssignedComponentRequest assignedComponentRequest, Class<T> responseClass, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.USER_ASSIGNED_COMPONENTS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.USER_ASSIGNED_COMPONENTS, responseClass)
             .body(assignedComponentRequest)
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
