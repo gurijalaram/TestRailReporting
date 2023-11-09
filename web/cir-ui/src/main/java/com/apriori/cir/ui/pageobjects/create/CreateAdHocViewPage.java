@@ -47,10 +47,10 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
     @FindBy(id = "changeVisualizationButton")
     private WebElement changeVisualizationButton;
 
-    @FindBy(xpath = "//li[@data-chart-type='Table']")
+    @FindBy(xpath = "//div[contains(@class, 'iconTable')]")
     private WebElement visualizationTableOptionButton;
 
-    @FindBy(xpath = "//button[@class='jr-mButton jr-mButtonText jr-mButtonPrimary jr']")
+    @FindBy(xpath = "//span[contains(text(), 'Apply and Close')]/..")
     private WebElement applyAndCloseVisualizationButton;
 
     @FindBy(xpath = "//div[@id='fields']//div[contains(@class, 'primary')]//input")
@@ -257,6 +257,7 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
     public CreateAdHocViewPage addFilterToTable() {
         Actions actions = new Actions(driver);
 
+        pageUtils.waitForSteadinessOfElement(By.xpath("//div[@id='fields']//div[contains(@class, 'primary')]//input"));
         pageUtils.setValueOfElement(
             fieldsInput,
             "Latest Export Set Name",
@@ -265,6 +266,7 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
 
         pageUtils.waitForElementToAppear(firstDataPostSearchField);
 
+        pageUtils.waitForElementToAppear(firstDataPostSearchField);
         actions.contextClick(firstDataPostSearchField)
             .build()
             .perform();
@@ -282,6 +284,11 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(By.xpath(String.format(dropdownSelectionGenericLocator, "a")));
 
         pageUtils.waitForElementAndClick(By.xpath("//fieldset[@id='applyFilter']/button"));
+        return this;
+    }
+
+    public CreateAdHocViewPage waitForValuesToLoad() {
+        pageUtils.waitForElementToAppear(By.xpath(""));
 
         return this;
     }
@@ -294,13 +301,13 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
      * @return String of value retrieved
      */
     public String getTableCellValue(String columnIndex, String rowIndex) {
-        return driver.findElement(
-                By.xpath(
-                    String.format(
-                        "//tbody[@id='tableDetails']/tr[%s]/td[%s]/span",
-                        columnIndex,
-                        rowIndex)))
-            .getText();
+        By locator = By.xpath(
+            String.format(
+                "//table[@class='jr-mDatatable jr jr-jTableBody']/tbody/tr[%s]/td[%s]/div/div",
+                columnIndex,
+                rowIndex));
+        pageUtils.waitForSteadinessOfElement(locator);
+        return driver.findElement(locator).getText();
     }
 
     /**
@@ -334,11 +341,13 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
 
         pageUtils.waitForElementAndClick(fieldsInput);
 
+        pageUtils.waitForSteadinessOfElement(By.xpath("//div[@id='fields']//div[contains(@class, 'primary')]//input"));
         pageUtils.setValueOfElement(fieldsInput, fieldsTextToInput, Keys.ENTER);
 
         pageUtils.waitForElementToAppear(firstDataPostSearchField);
 
         WebElement buttonToClick = fieldsTextToInput.equals("Scenario Name") ? secondDataPostSearchField : firstDataPostSearchField;
+        pageUtils.waitForElementToAppear(buttonToClick);
         actions.contextClick(buttonToClick).build().perform();
         pageUtils.waitForElementAndClick(addAsColumnMenuOption);
     }
