@@ -25,10 +25,12 @@ global:
   different_parts: true
   different_users: true
   schema_base_path: schemas/
+  number_of_parts: 1
+
+  use_default_user: false
   default_access_level: admin
   default_user_name: admin@apriori.com
   default_password: admin
-  number_of_parts: 1
 
   nexus:
     api_url: https://nexus.apriori.com/
