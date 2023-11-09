@@ -2,18 +2,22 @@ package com.apriori.cic.ui.tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.apriori.cic.api.enums.MappingRule;
+import com.apriori.cic.api.enums.PlmPartDataType;
+import com.apriori.cic.api.enums.PlmTypeAttributes;
+import com.apriori.cic.api.models.request.AgentPort;
 import com.apriori.cic.api.models.request.JobDefinition;
 import com.apriori.cic.api.utils.CicApiTestUtil;
+import com.apriori.cic.api.utils.PlmPartsUtil;
+import com.apriori.cic.ui.enums.RuleOperatorEnum;
 import com.apriori.cic.ui.enums.SortedOrderType;
 import com.apriori.cic.ui.enums.WorkflowListColumns;
-import com.apriori.cic.ui.features.WorkFlowFeatures;
 import com.apriori.cic.ui.pagedata.WorkFlowData;
 import com.apriori.cic.ui.pageobjects.login.CicLoginPage;
 import com.apriori.cic.ui.pageobjects.workflows.WorkflowHome;
 import com.apriori.cic.ui.pageobjects.workflows.history.HistoryPage;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.SchedulePage;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.details.DetailsPart;
-import com.apriori.cic.ui.pageobjects.workflows.schedule.querydefinitions.QueryDefinitions;
 import com.apriori.shared.util.dataservice.TestDataService;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -30,9 +34,11 @@ import org.junit.jupiter.api.Test;
 public class WorkflowTests extends TestBaseUI {
     private static WorkFlowData workFlowData;
     private static JobDefinition jobDefinitionData;
-    WorkflowHome workflowHome;
-    SoftAssertions softAssertions;
-    private UserCredentials currentUser = UserUtil.getUser();
+    private WorkflowHome workflowHome;
+    private SoftAssertions softAssertions;
+    private UserCredentials currentUser;
+    private AgentPort agentPort;
+    private String scenarioName;
 
     public WorkflowTests() {
         super();
@@ -42,31 +48,52 @@ public class WorkflowTests extends TestBaseUI {
     public void setup() {
         softAssertions = new SoftAssertions();
         jobDefinitionData = CicApiTestUtil.getJobDefinitionData();
+        currentUser = UserUtil.getUser();
+        agentPort = CicApiTestUtil.getAgentPortData();
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
+        scenarioName = "AUTO_SN" + new GenerateStringUtil().getRandomNumbers();
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
+        workFlowData.getQueryDefinitionsData().get(0).setFieldName(PlmTypeAttributes.PLM_PART_NUMBER.getCicGuiField());
+        workFlowData.getQueryDefinitionsData().get(0).setFieldOperator(RuleOperatorEnum.EQUAL.getRuleOperator());
+        workFlowData.getQueryDefinitionsData().get(0).setFieldValue(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber());
+
     }
 
     @Test
     @TestRail(id = {4109, 3586, 3588, 3587, 3591, 3961})
     @Description("Test creating, editing and deletion of a workflow")
     public void testCreateEditAndDeleteWorkflow() {
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
-        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
         // CREATE WORK FLOW
-        WorkFlowFeatures workFlowFeatures = new CicLoginPage(driver)
+        workflowHome = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
             .selectScheduleTab()
-            .clickNewWorkflowBtn();
-        workflowHome = workFlowFeatures.createWorkflow();
+            .clickNewButton()
+            .enterWorkflowNameField(workFlowData.getWorkflowName())
+            .selectWorkflowConnector(agentPort.getConnector())
+            .selectEnabledCheckbox("off")
+            .clickNextBtnInDetailsTab()
+            .addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber())
+            .clickWFQueryDefNextBtn()
+            .addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, scenarioName)
+            .clickCINextBtn()
+            .clickCINotificationNextBtn()
+            .clickSaveButton();
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition created");
         workflowHome.closeMessageAlertBox();
 
         // EDIT WORK FLOW
-        workflowHome.selectScheduleTab()
+        DetailsPart detailsPart = workflowHome.selectScheduleTab()
             .selectWorkflow(workFlowData.getWorkflowName())
-            .clickEditButton();
+            .clickEditWorkflowBtn();
         workFlowData.setWorkflowName(GenerateStringUtil.saltString("- - - 0 0 Auto_Upd"));
-        workflowHome = workFlowFeatures.editWorkflow();
+        workflowHome = detailsPart.enterWorkflowNameField(workFlowData.getWorkflowName())
+            .clickNextBtnInDetailsTab()
+            .clickWFQueryDefNextBtn()
+            .clickCINextBtn()
+            .clickCINotificationNextBtn()
+            .clickSaveButton();
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition updated!");
         workflowHome.closeMessageAlertBox();
         workFlowData.setWorkflowName(workFlowData.getWorkflowName());
@@ -82,61 +109,41 @@ public class WorkflowTests extends TestBaseUI {
     @Description("Test the state of the edit, delete and invoke buttons on the WF schedule screen. With a WF selected" +
         "and with no WF selected")
     public void testButtonState() {
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
-        workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFBS"));
         // CREATE WORK FLOW
-        QueryDefinitions queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)
+        SchedulePage schedulePage = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
-            .selectScheduleTab()
-            .clickNewButton()
-            .enterWorkflowNameField(workFlowData.getWorkflowName())
-            .selectWorkflowConnector(workFlowData.getConnectorName())
-            .clickWFDetailsNextBtn();
-
-        workflowHome = queryDefinitions.addRule(workFlowData, this.workFlowData.getQueryDefinitionsData().size())
-            .clickWFQueryDefNextBtn()
-            .clickCINextBtn()
-            .clickCINotificationNextBtn()
-            .clickSaveButton();
-
-        softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition created");
-
-        SchedulePage schedulePage = workflowHome.selectScheduleTab();
+            .selectScheduleTab();
 
         //Verify Schedule Page -> WorkFlow Edit and Delete button is in disabled mode
-        softAssertions.assertThat(schedulePage.getEditWorkflowButton().isEnabled()).isEqualTo(false);
-        softAssertions.assertThat(schedulePage.getDeleteWorkflowButton().isEnabled()).isEqualTo(false);
+        softAssertions.assertThat(schedulePage.getEditWorkflowButton().isEnabled()).isFalse();
+        softAssertions.assertThat(schedulePage.getDeleteWorkflowButton().isEnabled()).isFalse();
 
-        schedulePage.selectWorkflow(workFlowData.getWorkflowName());
+        schedulePage.selectWorkflowByRow(2);
 
         //Verify Schedule Page -> WorkFlow Edit and Delete button is in enabled mode
-        softAssertions.assertThat(schedulePage.getEditWorkflowButton().isEnabled()).isEqualTo(true);
-        softAssertions.assertThat(schedulePage.getDeleteWorkflowButton().isEnabled()).isEqualTo(true);
-        jobDefinitionData.setJobDefinition(CicApiTestUtil.getMatchedWorkflowId(workFlowData.getWorkflowName()).getId() + "_Job");
-        CicApiTestUtil.deleteWorkFlow(workflowHome.getJsessionId(), jobDefinitionData);
+        softAssertions.assertThat(schedulePage.getEditWorkflowButton().isEnabled()).isTrue();
+        softAssertions.assertThat(schedulePage.getDeleteWorkflowButton().isEnabled()).isTrue();
     }
 
     @Test
     @TestRail(id = {3809, 3944})
     @Description("Test default sorting, ascending and descending of workflows by name in the schedule table")
     public void testSortedByName() {
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
-        workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFS"));
-        // CREATE WORK FLOW
-        QueryDefinitions queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)
+        workflowHome = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
             .selectScheduleTab()
             .clickNewButton()
             .enterWorkflowNameField(workFlowData.getWorkflowName())
-            .selectWorkflowConnector(workFlowData.getConnectorName())
-            .clickWFDetailsNextBtn();
-
-        workflowHome = queryDefinitions.addRule(workFlowData, this.workFlowData.getQueryDefinitionsData().size())
+            .selectWorkflowConnector(agentPort.getConnector())
+            .selectEnabledCheckbox("off")
+            .clickNextBtnInDetailsTab()
+            .addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber())
             .clickWFQueryDefNextBtn()
+            .addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, scenarioName)
             .clickCINextBtn()
             .clickCINotificationNextBtn()
             .clickSaveButton();
@@ -193,9 +200,6 @@ public class WorkflowTests extends TestBaseUI {
         "Job status and Status Details are as expected when cancelled from CIC App, " +
         "Cancel button is not enabled for a job in a terminal state")
     public void testCreateInvokeCancelWorkflow() {
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
-        workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFC"));
-        // CREATE WORK FLOW
         workflowHome = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
@@ -203,10 +207,12 @@ public class WorkflowTests extends TestBaseUI {
             .selectScheduleTab()
             .clickNewButton()
             .enterWorkflowNameField(workFlowData.getWorkflowName())
-            .selectWorkflowConnector(workFlowData.getConnectorName())
+            .selectWorkflowConnector(agentPort.getConnector())
+            .selectEnabledCheckbox("off")
             .clickNextBtnInDetailsTab()
-            .addRule(workFlowData, this.workFlowData.getQueryDefinitionsData().size())
+            .addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber())
             .clickWFQueryDefNextBtn()
+            .addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, scenarioName)
             .clickCINextBtn()
             .clickCINotificationNextBtn()
             .clickSaveButton();

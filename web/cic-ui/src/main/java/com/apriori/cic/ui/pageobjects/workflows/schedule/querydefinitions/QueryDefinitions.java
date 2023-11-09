@@ -1,12 +1,13 @@
 package com.apriori.cic.ui.pageobjects.workflows.schedule.querydefinitions;
 
+import com.apriori.cic.api.enums.PlmTypeAttributes;
 import com.apriori.cic.ui.enums.CheckboxState;
-import com.apriori.cic.ui.pagedata.WorkFlowData;
+import com.apriori.cic.ui.enums.RuleOperatorEnum;
 import com.apriori.cic.ui.pageobjects.CICBasePage;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.details.DetailsPart;
-import com.apriori.cic.ui.utils.Constants;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -15,12 +16,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Query Definitions part during workflow creation or modification process
@@ -28,60 +26,24 @@ import java.util.Map;
 @Slf4j
 public class QueryDefinitions extends CICBasePage {
 
-    private static final Logger logger = LoggerFactory.getLogger(QueryDefinitions.class);
-
-    @FindBy(css = "div[class='rules-list'] div[class='rule-container']")
-    private WebElement ciQDRulesRowAttrib;
-
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110']")
-    private WebElement queryOperatorDropdown;
-
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_rule_[ID]'] > div.rule-value-container > input")
-    private WebElement queryValueField;
-
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_rule_[ID]'] > div.rule-header > div > button")
-    private WebElement deleteRuleButton;
-
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_button-104'] > button")
-    private WebElement queryNextButton;
-
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_checkbox-393'] > label > span")
-    public WebElement workflowQDReturnOnlyCheckbox;
-
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_group_0'] > div.rules-group-header > div.btn-group.pull-right.group-actions > button[data-add='rule']")
-    private WebElement addRuleButton;
-
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_group_0'] > div.rules-group-body > div")
+    @FindBy(css = "div[tab-number='2'] div[class='rules-list']")
     private WebElement rulesList;
 
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id*='-popup_QueryBuilder-110_group'] > div.rules-group-body > div")
-    private WebElement groupsList;
+    @FindBy(css = "div[tab-number='2'] div[class^='rules-group-container'] div[class='rules-group-header']")
+    private WebElement rulesGroupHeader;
 
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_button-103'] > button > span.widget-button-text")
+    @FindBy(xpath = "//div[@tab-number='2']//button[.='Previous']")
     private WebElement qdPreviousButton;
 
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_textbox-148'] > table > tbody > tr > td > input")
-    private WebElement worflowNameField;
+    @FindBy(xpath = "//div[@tab-number='2']//button[.='Cancel']")
+    private WebElement qdCancelButton;
 
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_group_0'] > div.rules-group-header > div.btn-group.pull-right.group-actions > button[data-add='group']")
-    private WebElement addGroupButton;
-
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id*='-popup_QueryBuilder-110_group_'] > div.rules-group-header")
-    private WebElement addGroupRuleHeader;
-
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_rule_0'] > div.rules-group-header > div.btn-group.pull-right.group-actions > button[data-delete='rule']")
-    private WebElement deleteRuleLineButton;
-
-    private String queryDropdownCss = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_rule_[ID]'] > div.rule-filter-container > select";
-    private String queryOperatorDropdownCss = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_rule_[ID]'] > div.rule-operator-container > select";
-    private String queryValueTxtCss = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_rule_[ID]'] > div.rule-value-container > input";
-    private String deleteRuleButtonCss = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_rule_[ID]'] > div.rule-header > div > button";
-    private String queryGroupButtonCss = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_group_[ID]'] > div.rules-group-header > div > button";
-    private String deleteRuleLineButtonCss = PARENT_ELEMENT_CSS + "[id$='-popup_QueryBuilder-110_rule_[ID]'] > div.rule-header > div > button[data-delete='rule']";
+    @FindBy(xpath = "//div[@tab-number='2']//button[.='Next']")
+    private WebElement qdNextButton;
 
     public QueryDefinitions(WebDriver driver) {
         super(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -92,44 +54,103 @@ public class QueryDefinitions extends CICBasePage {
 
     @Override
     protected void isLoaded() {
-        pageUtils.waitForElementToAppear(workflowQDReturnOnlyCheckbox);
+        pageUtils.waitForElementToAppear(revisionLatestCheckBoxLblElement);
     }
 
 
     /**
-     * Add default Rule
+     * click Add Rule button
      *
-     * @param workFlowData
-     * @param numOfRules
-     * @return
+     * @return QueryDefinitions
      */
-
-
-    public QueryDefinitions addRule(WorkFlowData workFlowData, int numOfRules) {
-        String str = ciQDRulesRowAttrib.getAttribute("id");
-        String initialFieldRow = str.substring(str.length() - 1).trim();
-        for (int row = 0; row < numOfRules; row++) {
-            Integer rowID = Integer.parseInt(initialFieldRow) + row;
-            WebElement ciRuleDropdownElement = driver.findElement(By.cssSelector(queryDropdownCss.replace("[ID]", rowID.toString())));
-            pageUtils.waitForElementToBeClickable(ciRuleDropdownElement);
-            Select optFilter = new Select(ciRuleDropdownElement);
-            optFilter.selectByValue(workFlowData.getQueryDefinitionsData().get(row).getFieldName());
-            if (workFlowData.getQueryDefinitionsData().get(row).getFieldOperator() != "") {
-                WebElement ciRuleOperatorDropdownElement = driver.findElement(By.cssSelector(queryOperatorDropdownCss.replace("[ID]", rowID.toString())));
-                pageUtils.waitForElementToBeClickable(ciRuleOperatorDropdownElement);
-                Select optOperator = new Select(ciRuleOperatorDropdownElement);
-                optOperator.selectByValue(workFlowData.getQueryDefinitionsData().get(row).getFieldOperator());
-            }
-            if (workFlowData.getQueryDefinitionsData().get(row).getFieldValue() != "") {
-                WebElement ciRuleValueTxtElement = driver.findElement(By.cssSelector(queryValueTxtCss.replace("[ID]", rowID.toString())));
-                pageUtils.waitForElementAndClick(ciRuleValueTxtElement);
-                ciRuleValueTxtElement.sendKeys(workFlowData.getQueryDefinitionsData().get(row).getFieldValue() + Keys.TAB);
-            }
-            if (row != numOfRules - 1) {
-                pageUtils.waitForElementAndClick(addRuleButton);
-            }
-        }
+    public QueryDefinitions clickAddRuleButton() {
+        pageUtils.waitForElementAndClick(getAddRuleBtnElement());
         return this;
+    }
+
+    /**
+     * click Add Rule button
+     *
+     * @return QueryDefinitions
+     */
+    public QueryDefinitions clickAddGroupButton() {
+        pageUtils.waitForElementAndClick(getAddGroupBtnElement());
+        return this;
+    }
+
+    /**
+     * delete rule
+     *
+     * @return current class object
+     */
+    public QueryDefinitions deleteRule() {
+        pageUtils.waitForElementAndClick(getDeleteRuleBtnElement());
+        return this;
+    }
+
+    /**
+     * select Rule name during addition of rule
+     *
+     * @param filterName fieldName
+     * @return current Class object
+     */
+    public QueryDefinitions selectRuleFilter(PlmTypeAttributes filterName) {
+        pageUtils.selectDropdownOption(getRuleFilterNameDdlElement(), filterName.getCicGuiField());
+        //pageUtils.waitFor(Constants.DEFAULT_WAIT);
+        return this;
+    }
+
+    /**
+     * select rule operation
+     *
+     * @param ruleOperatorEnum - RuleOperatorEnum
+     * @return current class object
+     */
+    public QueryDefinitions selectRuleOperator(RuleOperatorEnum ruleOperatorEnum) {
+        pageUtils.selectDropdownOption(getRuleOperatorDdlElement(), ruleOperatorEnum.getRuleOperator());
+        return this;
+    }
+
+    /**
+     * select rule value
+     *
+     * @param ruleValue - value of rule name
+     * @return current class object
+     */
+    public QueryDefinitions enterRuleValue(String ruleValue) {
+        pageUtils.clearValueOfElement(getRuleValueTxtElement());
+        getRuleValueTxtElement().sendKeys(ruleValue);
+        return this;
+    }
+
+    /**
+     * Add Rule in Query Definitions
+     *
+     * @param ruleFilterName - PlmTypeAttributes
+     * @param ruleOperator   - RuleOperatorEnum
+     * @param ruleValue      value of rule filter name
+     * @return current Class object
+     */
+    public QueryDefinitions addRule(PlmTypeAttributes ruleFilterName, RuleOperatorEnum ruleOperator, String ruleValue) {
+        this.selectRuleFilter(ruleFilterName);
+        this.selectRuleOperator(ruleOperator);
+        this.enterRuleValue(ruleValue + Keys.TAB);
+        return this;
+    }
+
+    /**
+     * Click New Workflow button
+     *
+     * @return WFQueryDefinitions page object
+     */
+    public CostingInputsPart clickWFQueryDefNextBtn() {
+        pageUtils.waitForElementToBeClickable(qdNextButton);
+        if (qdNextButton.isEnabled()) {
+            pageUtils.waitForElementAndClick(qdNextButton);
+            return new CostingInputsPart(this.driver);
+        } else {
+            throw new RuntimeException("Next Button in Query Definitions sections is in disabled mode");
+        }
     }
 
     /**
@@ -139,158 +160,14 @@ public class QueryDefinitions extends CICBasePage {
      */
     public DetailsPart clickPreviousBtn() {
         pageUtils.waitForElementToBeClickable(qdPreviousButton);
-        pageUtils.waitForElementToAppear(qdPreviousButton);
         if (!qdPreviousButton.isEnabled()) {
-            logger.warn("Next button in Query Definitions Page is not enabled");
-            return null;
+            log.warn("Next button in Query Definitions Page is not enabled");
         }
         pageUtils.waitForElementAndClick(qdPreviousButton);
-        if (!pageUtils.isElementDisplayed(worflowNameField)) {
-            return null;
+        if (!pageUtils.isElementDisplayed(getNameTextFieldElement())) {
+            log.warn("Next button in Query Definitions Page is not enabled");
         }
         return new DetailsPart(driver);
-    }
-
-    /**
-     * Click New Workflow button
-     *
-     * @return WFQueryDefinitions page object
-     */
-    public CostingInputsPart clickWFQueryDefNextBtn() {
-        pageUtils.waitForElementToAppear(queryNextButton);
-        if (queryNextButton.isEnabled()) {
-            pageUtils.waitForElementAndClick(queryNextButton);
-            return new CostingInputsPart(this.driver);
-        }
-        return null;
-    }
-
-    /**
-     * Delete the last rule
-     *
-     * @return Number of rules
-     */
-    public int deleteRule() {
-        Integer ruleNumber = getNumberOfRules() - 1;
-        String deleteRule = deleteRuleButtonCss.replace("[ID]", ruleNumber.toString());
-        WebElement deleteButton = driver.findElement(By.cssSelector(deleteRule));
-        pageUtils.waitForElementAndClick(deleteButton);
-        return getNumberOfRules();
-    }
-
-
-    /**
-     * Get the number of rules displayed on the Query Definition tab
-     *
-     * @return Number of Rules
-     */
-    public int getNumberOfRules() {
-        pageUtils.waitForElementToBeClickable(rulesList);
-        return rulesList.findElements(By.cssSelector("div.rule-container")).size();
-    }
-
-    /**
-     * Get the number of groups displayed on the Query Definition tab
-     *
-     * @return Number of Groups
-     */
-    public int getNumberOfGroups() {
-        pageUtils.waitForElementToBeClickable(groupsList);
-        return groupsList.findElements(By.cssSelector("div.rules-group-container")).size();
-    }
-
-    /**
-     * Verify add group button is displayed
-     *
-     * @return boolean
-     */
-    public boolean isGroupButtonDisplayed() {
-        return pageUtils.waitForWebElement(addGroupButton);
-    }
-
-    public WebElement getQueryDefinitionRuleNameDdl(Integer index) {
-        return driver.findElement(By.cssSelector(queryDropdownCss.replace("[ID]", index.toString())));
-    }
-
-    public WebElement getQueryDefinitionRuleOperatorDdl(Integer index) {
-        return driver.findElement(By.cssSelector(queryOperatorDropdownCss.replace("[ID]", index.toString())));
-    }
-
-    public WebElement getQueryDefinitionRuleValueTxt(Integer index) {
-        return driver.findElement(By.cssSelector(queryValueTxtCss.replace("[ID]", index.toString())));
-    }
-
-    /**
-     * select rule name
-     *
-     * @param fieldName field name
-     * @return QueryDefinitions
-     */
-    public QueryDefinitions selectRuleNameFromDdl(String fieldName) {
-        WebElement ciRuleDropdownElement = this.getQueryDefinitionRuleNameDdl(0);
-        pageUtils.waitForElementToBeClickable(ciRuleDropdownElement);
-        Select optFilter = new Select(ciRuleDropdownElement);
-        optFilter.selectByValue(fieldName);
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
-        return this;
-    }
-
-    /**
-     * click Add Rule button
-     *
-     * @return QueryDefinitions
-     */
-    public QueryDefinitions clickAddRuleButton() {
-        pageUtils.waitForElementAndClick(addRuleButton);
-        return this;
-    }
-
-    /**
-     * click delete rule button
-     *
-     * @return QueryDefinitions
-     */
-    public QueryDefinitions clickDeleteRuleButton() {
-        pageUtils.waitForElementAndClick(deleteRuleButton);
-        return this;
-    }
-
-    /**
-     * click add group button
-     *
-     * @return QueryDefinitions
-     */
-    public QueryDefinitions clickAddGroupButton() {
-        pageUtils.waitForElementAndClick(addGroupButton);
-        return this;
-    }
-
-    /**
-     * verify operator rule value drop down
-     *
-     * @param index
-     * @return
-     */
-    public Boolean verifyQueryDefinitionRuleOperatorDdl(Integer index) {
-        try {
-            return pageUtils.waitForWebElement(driver.findElement(By.cssSelector(queryOperatorDropdownCss.replace("[ID]", index.toString()))));
-        } catch (NoSuchElementException e) {
-            return false;
-        }
-    }
-
-    /**
-     * verify operator rule value text field
-     *
-     * @param index
-     * @return
-     */
-    public Boolean verifyQueryDefinitionRuleValueTxt(Integer index) {
-        try {
-            return pageUtils.waitForWebElement(driver.findElement(By.cssSelector(queryValueTxtCss.replace("[ID]", index.toString()))));
-        } catch (NoSuchElementException e) {
-            return false;
-        }
     }
 
     /**
@@ -317,30 +194,165 @@ public class QueryDefinitions extends CICBasePage {
     }
 
     /**
-     * return page objects based on rule number
+     * get rule filter name dropdown element
      *
-     * @param ruleNumber     The row number of the rule, if new rule then last rule number + 1
-     * @param filterSelected True if a filter for this rule number has been selected
-     * @return Filter, Operator and Value elements
+     * @return WebElement
      */
-    private Map<String, WebElement> getQueryElements(Integer ruleNumber, boolean filterSelected) {
-        Map<String, WebElement> elements = new HashMap<>();
-        String filterSelectString = queryDropdownCss.replace("[ID]", ruleNumber.toString());
-        String operatorSelectString = queryOperatorDropdownCss.replace("[ID]", ruleNumber.toString());
-        String valueFieldString = queryValueTxtCss.replace("[ID]", ruleNumber.toString());
+    public WebElement getRuleFilterNameDdlElement() {
+        return getRulesList()
+            .get(getRulesList().size() - 1)
+            .findElement(By.cssSelector("div[class='rule-filter-container'] select"));
+    }
 
-        WebElement filterSelectEle = driver.findElement(By.cssSelector(filterSelectString));
+    /**
+     * get rule operator element
+     *
+     * @return Current Class object
+     */
+    public WebElement getRuleOperatorDdlElement() {
+        return getRulesList()
+            .get(getRulesList().size() - 1)
+            .findElement(By.cssSelector("div[class='rule-operator-container'] select"));
+    }
 
-        WebElement operatorSelectEle = null;
-        WebElement valueFieldEle = null;
-        if (filterSelected) {
-            operatorSelectEle = driver.findElement(By.cssSelector(operatorSelectString));
-            valueFieldEle = driver.findElement(By.cssSelector(valueFieldString));
+    /**
+     * get rule value text element
+     *
+     * @return WebElement
+     */
+    public WebElement getRuleValueTxtElement() {
+        return getRulesList()
+            .get(getRulesList().size() - 1)
+            .findElement(By.cssSelector("div[class='rule-value-container'] input"));
+    }
+
+    /**
+     * wait until all the rows are loaded in standard mappings
+     */
+    @SneakyThrows
+    private void waitUntilRulesLoaded() {
+        int retries = 0;
+        int maxRetries = 12;
+        Exception ex = null;
+
+        while (retries < maxRetries) {
+            if (getRules().size() >= 1) {
+                log.info("Query Definition Rules are loaded!!");
+                break;
+            }
+            TimeUnit.SECONDS.sleep(DEFAULT_WAIT_TIME);
+            retries++;
+            if (retries == maxRetries) {
+                throw new RuntimeException(String.format("Query Definition Rules are not loaded !! : %s", ex.getMessage()));
+            }
         }
+    }
 
-        elements.put("filter", filterSelectEle);
-        elements.put("operator", operatorSelectEle);
-        elements.put("value", valueFieldEle);
-        return elements;
+    /**
+     * get GroupList element
+     *
+     * @return list of groups
+     */
+    private List<WebElement> getGroupsList() {
+        return driver.findElements(By.cssSelector("div[tab-number='2'] div[class^='rules-group-container']"));
+    }
+
+    /**
+     * get rules list
+     *
+     * @return get list of rules
+     */
+    private List<WebElement> getRules() {
+        return getGroupsList().get(getGroupsList().size() - 1).findElements(By.cssSelector("div[class='rules-list']"));
+    }
+
+    /**
+     * get header names of group
+     *
+     * @return get the list of group header for each group
+     */
+    private List<WebElement> getGroupHeaders() {
+        return getGroupsList().get(getGroupsList().size() - 1).findElements(By.cssSelector("div[class='rules-group-header']"));
+    }
+
+    /**
+     * get list of rules for each group of rules
+     *
+     * @return list of rules under each group-rule section
+     */
+    public List<WebElement> getRulesList() {
+        return getRules().get(getRules().size() - 1).findElements(By.cssSelector("div[class^='rule-container']"));
+    }
+
+    /**
+     * get Add rule button element
+     *
+     * @return WebElement
+     */
+    private WebElement getAddRuleBtnElement() {
+        return getGroupHeaders()
+            .get(getGroupHeaders().size() - 1)
+            .findElement(By.cssSelector("button[data-add='rule']"));
+    }
+
+    /**
+     * get Add Group button Element
+     *
+     * @return WebElement
+     */
+    private WebElement getAddGroupBtnElement() {
+        return getGroupHeaders()
+            .get(getGroupHeaders().size() - 1)
+            .findElement(By.cssSelector("button[data-add='group']"));
+    }
+
+    /**
+     * get delete rule button element
+     *
+     * @return WebElement
+     */
+    private WebElement getDeleteRuleBtnElement() {
+        return getRulesList()
+            .get(getRulesList().size() - 1)
+            .findElement(By.cssSelector("div[class='rule-header'] button"));
+    }
+
+    /**
+     * Verify add group button is displayed
+     *
+     * @return boolean
+     */
+    public Boolean isGroupButtonDisplayed() {
+        try {
+            return pageUtils.waitForWebElement(getAddGroupBtnElement());
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /**
+     * verify operator rule value drop down
+     *
+     * @return
+     */
+    public Boolean verifyQueryDefinitionRuleOperatorDdl() {
+        try {
+            return pageUtils.waitForWebElement(getRuleOperatorDdlElement());
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    /**
+     * verify operator rule value text field
+     *
+     * @return
+     */
+    public Boolean verifyQueryDefinitionRuleValueTxt() {
+        try {
+            return pageUtils.waitForWebElement(getRuleValueTxtElement());
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 }
