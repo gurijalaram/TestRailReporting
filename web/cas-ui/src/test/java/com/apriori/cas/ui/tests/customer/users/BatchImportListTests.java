@@ -11,13 +11,19 @@ import com.apriori.cas.ui.pageobjects.customer.users.ImportPage;
 import com.apriori.cas.ui.pageobjects.customer.users.UsersListPage;
 import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
+import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
+import com.apriori.shared.util.models.response.Deployment;
+import com.apriori.shared.util.models.response.LicensedApplications;
+import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -36,25 +42,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BatchImportListTests extends TestBaseUI {
-
+public class   BatchImportListTests extends TestBaseUI {
+    private final String appIdentity = Constants.getApProApplicationIdentity();
+    private final String ciaIdentity = Constants.getCiaApplicationIdentity();
+    private final String cirIdentity = Constants.getCirAppIdentity();
+    private final String acsIdentity = Constants.getACSAppIdentity();
     private final String fileName = "testUsersBatch.csv";
-    private String cloudRef;
-    private String customerName;
     private ImportPage importPage;
     private String email;
     private SoftAssertions soft = new SoftAssertions();
     private Customer targetCustomer;
-    private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
     private String invalidDataFile = "invalidUsersData.csv";
     private UserCredentials currentUser = UserUtil.getUser();
+    private String licensedApProIdentity;
+    private String licensedCiaIdentity;
+    private String licensedCirIdentity;
+    private String licensedAcsIdentity;
+    private String installationIdentity;
+    private String siteIdentity;
 
     @BeforeEach
     public void setup() {
-        customerName = new GenerateStringUtil().generateCustomerName();
-        cloudRef = new GenerateStringUtil().generateCloudReference();
+        String customerName = new GenerateStringUtil().generateCustomerName();
+        String cloudRef = new GenerateStringUtil().generateCloudReference();
         email = customerName.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
@@ -70,6 +82,21 @@ public class BatchImportListTests extends TestBaseUI {
 
     @AfterEach
     public void teardown() {
+        if (installationIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
+        }
+        if (licensedApProIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApProIdentity);
+        }
+        if (licensedCiaIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCiaIdentity);
+        }
+        if (licensedCirIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCirIdentity);
+        }
+        if (licensedAcsIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedAcsIdentity);
+        }
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
@@ -149,6 +176,7 @@ public class BatchImportListTests extends TestBaseUI {
     @Description("Users can be loaded from CSV by Load button")
     @TestRail(id = {5598, 5599, 4360, 4353, 4358, 4359})
     public void testLoadUsersFromFile() {
+        setCustomerData();
         cdsTestUtil.addCASBatchFile(Constants.USERS_BATCH, email, customerIdentity, currentUser);
 
         ImportPage uploadUsers = importPage.refreshBatchFilesList();
@@ -195,7 +223,7 @@ public class BatchImportListTests extends TestBaseUI {
         importPage.clickRemoveButton()
             .clickOkConfirmRemove(fileName);
 
-        sourceUsers = collectUsers(customerIdentity);
+        List<User> sourceUsers = collectUsers(customerIdentity);
         sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
     }
 
@@ -203,6 +231,7 @@ public class BatchImportListTests extends TestBaseUI {
     @Description("Upload user csv with invalid users data")
     @TestRail(id = {4348})
     public void testCsvInvalidUsersData() {
+        setCustomerData();
         cdsTestUtil.addInvalidBatchFile(customerIdentity, invalidDataFile, currentUser);
         importPage.refreshBatchFilesList();
 
@@ -226,5 +255,31 @@ public class BatchImportListTests extends TestBaseUI {
 
         importPage.clickRemoveButton()
             .clickOkConfirmRemove(fileName);
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        siteIdentity = site.getResponseEntity().getIdentity();
+
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        String deploymentIdentity = response.getResponseEntity().getIdentity();
+
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApProIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> ciaLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, ciaIdentity);
+        licensedCiaIdentity = ciaLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> cirLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, cirIdentity);
+        licensedCirIdentity = cirLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> ascLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, acsIdentity);
+        licensedAcsIdentity = ascLicensed.getResponseEntity().getIdentity();
+
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, ciaIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, cirIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, acsIdentity, siteIdentity);
     }
 }

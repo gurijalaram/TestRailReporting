@@ -857,9 +857,11 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<PostBatch> addCASBatchFile(String users, String email, String customerIdentity, UserCredentials currentUser) {
 
         StringBuilder sb = new StringBuilder(users);
-        String userRecord = "User%s,user%s@%s.com,Test%s,User%s,,,,,,,,,,,,,,,,,,,,,,,,,";
+        sb.append("\r\n");
+        String userRecord = "User%sTest,user%s@%s.com,Test%s,User%s,,,,,,,,,,,,,,,,,,,,,,,,,,";
         for (int i = 0; i < 23; i++) {
             sb.append(String.format(userRecord, i, i, email, i, i));
+            sb.append("\r\n");
         }
 
         InputStream usersBatch = new ByteArrayInputStream(sb.toString().getBytes(StandardCharsets.UTF_8));

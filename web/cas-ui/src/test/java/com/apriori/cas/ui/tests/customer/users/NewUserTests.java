@@ -9,12 +9,19 @@ import com.apriori.cas.ui.pageobjects.customer.users.profile.NewUserPage;
 import com.apriori.cas.ui.pageobjects.customer.users.profile.UserProfilePage;
 import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
+import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
+import com.apriori.shared.util.models.response.Deployment;
+import com.apriori.shared.util.models.response.LicensedApplications;
+import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -29,26 +36,26 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NewUserTests extends TestBaseUI {
-
-    private Customer targetCustomer;
-    private CdsTestUtil cdsTestUtil;
+    private final String appIdentity = Constants.getApProApplicationIdentity();
+    private final String ciaIdentity = Constants.getCiaApplicationIdentity();
+    private final String cirIdentity = Constants.getCirAppIdentity();
+    private final String acsIdentity = Constants.getACSAppIdentity();
+    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private String customerIdentity;
     private String userIdentity;
     private NewUserPage newUserPage;
     private String email;
     private UserCredentials currentUser = UserUtil.getUser();
+    private String licensedApProIdentity;
+    private String licensedCiaIdentity;
+    private String licensedCirIdentity;
+    private String licensedAcsIdentity;
+    private String installationIdentity;
+    private String siteIdentity;
 
     @BeforeEach
     public void setup() {
-        String customerName = new GenerateStringUtil().generateCustomerName();
-        String cloudRef = new GenerateStringUtil().generateCloudReference();
-        email = customerName.toLowerCase();
-
-        cdsTestUtil = new CdsTestUtil();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
-
-        customerIdentity = targetCustomer.getIdentity();
-
+        setCustomerData();
         newUserPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
             .openCustomer(customerIdentity)
@@ -59,6 +66,21 @@ public class NewUserTests extends TestBaseUI {
 
     @AfterEach
     public void teardown() {
+        if (installationIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
+        }
+        if (licensedApProIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApProIdentity);
+        }
+        if (licensedCiaIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCiaIdentity);
+        }
+        if (licensedCirIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCirIdentity);
+        }
+        if (licensedAcsIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedAcsIdentity);
+        }
         if (userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
@@ -130,5 +152,35 @@ public class NewUserTests extends TestBaseUI {
             .cancel(UsersListPage.class);
         soft.assertThat(actual).isNotNull();
         soft.assertAll();
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        String customerName = new GenerateStringUtil().generateCustomerName();
+        email = customerName.toLowerCase();
+        Customer targetCustomer = cdsTestUtil.addCASCustomer(customerName, rcd.getCloudRef(), email, currentUser).getResponseEntity();
+        customerIdentity = targetCustomer.getIdentity();
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        siteIdentity = site.getResponseEntity().getIdentity();
+
+        ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
+        String deploymentIdentity = response.getResponseEntity().getIdentity();
+
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        installationIdentity = installation.getResponseEntity().getIdentity();
+
+        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        licensedApProIdentity = licensedApp.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> ciaLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, ciaIdentity);
+        licensedCiaIdentity = ciaLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> cirLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, cirIdentity);
+        licensedCirIdentity = cirLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> ascLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, acsIdentity);
+        licensedAcsIdentity = ascLicensed.getResponseEntity().getIdentity();
+
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, ciaIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, cirIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, acsIdentity, siteIdentity);
     }
 }

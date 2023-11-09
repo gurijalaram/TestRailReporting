@@ -98,7 +98,7 @@ public class CdsAccessControlsTests {
     @TestRail(id = {3290})
     @Description("Get Access controls by Customer and User")
     public void getAccessControl() {
-       setCustomerData();
+        setCustomerData();
         ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getIdentity();
 
@@ -118,7 +118,7 @@ public class CdsAccessControlsTests {
     @TestRail(id = {3292})
     @Description("Get access control by Control ID")
     public void getAccessControlById() {
-        setCustomerData();;
+        setCustomerData();
         ResponseWrapper<AccessControlResponse> accessControl = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControl.getResponseEntity().getIdentity();
 
