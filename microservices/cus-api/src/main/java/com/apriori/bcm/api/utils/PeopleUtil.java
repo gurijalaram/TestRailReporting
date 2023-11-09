@@ -2,11 +2,11 @@ package com.apriori.bcm.api.utils;
 
 import static org.apache.http.HttpStatus.SC_BAD_REQUEST;
 
-import com.apriori.bcm.api.models.response.ErrorResponse;
-import com.apriori.bcm.api.models.response.PreferenceItemsResponse;
 import com.apriori.bcm.api.enums.CusAppAPIEnum;
 import com.apriori.bcm.api.models.request.UpdateUserPrefRequest;
 import com.apriori.bcm.api.models.request.UpdateUserRequest;
+import com.apriori.bcm.api.models.response.ErrorResponse;
+import com.apriori.bcm.api.models.response.PreferenceItemsResponse;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;

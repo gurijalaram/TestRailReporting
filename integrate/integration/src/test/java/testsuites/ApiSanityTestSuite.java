@@ -5,6 +5,7 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SAN
 import com.apriori.ach.api.tests.AchCurrentUserTests;
 import com.apriori.acs.api.tests.AllMaterialStocksInfoTests;
 import com.apriori.ats.api.tests.AtsAuthorization;
+import com.apriori.bcm.api.tests.WorksheetTests;
 import com.apriori.bcs.api.tests.BatchPartTest;
 import com.apriori.cas.api.tests.CasCustomersTests;
 import com.apriori.cas.api.tests.CasUsersTests;
@@ -16,7 +17,6 @@ import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.sheetmeta
 import com.apriori.cis.api.tests.CisBidPackageProjectsTest;
 import com.apriori.cmp.api.tests.CmpComparisonTests;
 import com.apriori.css.api.tests.CssSearchTests;
-import com.apriori.bcm.api.tests.WorksheetTests;
 import com.apriori.dds.api.tests.CommentsTest;
 import com.apriori.dds.api.tests.DiscussionTest;
 import com.apriori.dms.api.tests.DmsCommentsTest;

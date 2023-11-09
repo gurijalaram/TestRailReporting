@@ -38,6 +38,27 @@ public class ComponentDTORequest {
     }
 
     /**
+     * Gets a component specified by name
+     *
+     * @param componentName - the part name
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getComponent(String componentName) {
+
+        component = DTO_READER.getComponents()
+            .stream()
+            .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
+
+        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setUser(UserUtil.getUser());
+
+        return component;
+    }
+
+    /**
      * Gets a number of components
      *
      * @param noOfComponents - the number of components
@@ -58,27 +79,6 @@ public class ComponentDTORequest {
         });
 
         return components;
-    }
-
-    /**
-     * Gets a component specified by name
-     *
-     * @param componentName - the part name
-     * @return component builder object
-     */
-    public ComponentInfoBuilder getComponent(String componentName) {
-
-        component = DTO_READER.getComponents()
-            .stream()
-            .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
-            .findFirst()
-            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
-
-        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
-        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
-        component.setUser(UserUtil.getUser());
-
-        return component;
     }
 
     /**

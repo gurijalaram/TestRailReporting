@@ -24,7 +24,7 @@ public class BcmUtil extends TestUtil {
     protected static UserCredentials testingUser = UserUtil.getUser("admin");
     protected static String testingApUserContext =  new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail());
 
-    public  ResponseWrapper<WorkSheetResponse> createWorksheet(String name){
+    public  ResponseWrapper<WorkSheetResponse> createWorksheet(String name) {
 
         WorksheetRequest body = WorksheetRequest
             .builder()
@@ -42,7 +42,7 @@ public class BcmUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-    public  ResponseWrapper<ErrorResponse> createWorksheetAlreadyExists(String name){
+    public  ResponseWrapper<ErrorResponse> createWorksheetAlreadyExists(String name) {
 
         WorksheetRequest body = WorksheetRequest
             .builder()
