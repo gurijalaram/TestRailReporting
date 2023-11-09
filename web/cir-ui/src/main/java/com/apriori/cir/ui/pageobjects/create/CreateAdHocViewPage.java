@@ -287,12 +287,6 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
         return this;
     }
 
-    public CreateAdHocViewPage waitForValuesToLoad() {
-        pageUtils.waitForElementToAppear(By.xpath(""));
-
-        return this;
-    }
-
     /**
      * Gets specified table cell value
      *
