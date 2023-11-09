@@ -2,7 +2,7 @@ package com.apriori.cid.api.utils;
 
 import com.apriori.cid.api.models.response.preferences.PreferenceItemsResponse;
 import com.apriori.cid.api.models.response.preferences.PreferenceResponse;
-import com.apriori.cus.api.enums.CusAppAPIEnum;
+import com.apriori.bcm.api.enums.CusAppAPIEnum;
 import com.apriori.shared.util.enums.ColourEnum;
 import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.DecimalPlaceEnum;
