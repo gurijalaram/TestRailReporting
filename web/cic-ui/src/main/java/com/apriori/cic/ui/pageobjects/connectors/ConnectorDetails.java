@@ -176,8 +176,8 @@ public class ConnectorDetails extends CICBasePage {
      * @return String
      */
     public String getTypeErrorMsg() {
-        pageUtils.waitForElementAppear(nameLblErrorMsgElement);
-        return nameLblErrorMsgElement.getText();
+        pageUtils.waitForElementAppear(typeLblErrorMsgElement);
+        return typeLblErrorMsgElement.getText();
     }
 
     /**
