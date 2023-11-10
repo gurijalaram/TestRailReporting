@@ -29,6 +29,7 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
@@ -272,11 +273,10 @@ public abstract class SDSTestUtil extends TestUtil {
         ResponseWrapper<Customers> customersResponse = HTTPRequest.build(
             RequestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customers.class)
                 .token(testingUser.getToken())
-
+                .queryParams(new QueryParams().use("cloudReference[EQ]", PropertiesContext.get("${customer}.cloud_reference_name")))
         ).get();
 
-        Customer customer = customersResponse.getResponseEntity().getItems().stream()
-            .filter(o -> o.getCloudReference().equalsIgnoreCase(PropertiesContext.get("${customer}.cloud_reference_name"))).findFirst().orElse(null);
+        Customer customer = customersResponse.getResponseEntity().getItems().get(0);
 
         ResponseWrapper<Applications> responseApplications = HTTPRequest.build(
             RequestEntityUtil.init(CDSAPIEnum.CUSTOMERS_APPLICATION_BY_CUSTOMER_ID, Applications.class)
