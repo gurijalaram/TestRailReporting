@@ -1,13 +1,13 @@
 package com.apriori.cic.ui.features;
 
+import com.apriori.cic.api.enums.PlmTypeAttributes;
 import com.apriori.cic.ui.enums.ConnectorComponentEnum;
+import com.apriori.cic.ui.enums.RuleOperatorEnum;
 import com.apriori.cic.ui.pageobjects.CICBasePage;
 import com.apriori.cic.ui.pageobjects.workflows.WorkflowHome;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.details.DetailsPart;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.details.WorkflowSchedule;
-import com.apriori.cic.ui.pageobjects.workflows.schedule.notifications.NotificationsPart;
-import com.apriori.cic.ui.pageobjects.workflows.schedule.publishresults.PublishResultsPart;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.querydefinitions.QueryDefinitions;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 
@@ -19,35 +19,9 @@ public class WorkFlowFeatures extends CICBasePage {
 
     private QueryDefinitions queryDefinitions;
     private CostingInputsPart costingInputsPart;
-    private NotificationsPart notificationsPart;
-    private PublishResultsPart publishResultsPart;
-    private WorkflowHome workflowHome;
 
     public WorkFlowFeatures(WebDriver driver) {
         super(driver);
-    }
-
-    /**
-     * Creates a basic workflow.
-     *
-     * @return WorkflowHome page object
-     */
-    public WorkflowHome createWorkflow() {
-        if (workFlowData.getComponentName().equals(ConnectorComponentEnum.QUERY_DEFINITION.getConnectorComponentName())) {
-            this.queryDefinitions = (QueryDefinitions) new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName())
-                .selectWorkflowConnector(workFlowData.getConnectorName())
-                .clickWFDetailsNextBtn();
-        } else {
-            this.costingInputsPart = (CostingInputsPart) new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName())
-                .selectWorkflowConnector(workFlowData.getConnectorName())
-                .clickWFDetailsNextBtn();
-        }
-        if (this.queryDefinitions != null) {
-            this.costingInputsPart = this.queryDefinitions.addRule(workFlowData, workFlowData.getQueryDefinitionsData().size()).clickWFQueryDefNextBtn();
-        }
-        this.notificationsPart = this.costingInputsPart.addCostingInputFields(workFlowData.getCostingInputsData().size()).clickCINextBtn();
-        this.publishResultsPart = notificationsPart.selectEmailTab().selectEmailTemplate().selectRecipient().clickCINotificationNextBtn();
-        return this.publishResultsPart.selectAttachReportTab().selectReportName().selectCurrencyCode().selectCostRounding().clickSaveButton();
     }
 
     /**
@@ -70,32 +44,13 @@ public class WorkFlowFeatures extends CICBasePage {
                     .clickWFDetailsNextBtn();
             }
             if (this.queryDefinitions != null) {
-                this.costingInputsPart = this.queryDefinitions.addRule(workFlowData, workFlowData.getQueryDefinitionsData().size()).clickWFQueryDefNextBtn();
+                this.costingInputsPart = this.queryDefinitions.addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, workFlowData.getQueryDefinitionsData().get(0).getFieldValue()).clickWFQueryDefNextBtn();
             }
             return this.costingInputsPart.clickCINextBtn().clickCINotificationNextBtn().clickSaveButton();
         } catch (Exception e) {
             log.error("FAILED TO CREATE WORKFLOW!!!");
             throw new IllegalArgumentException(e);
         }
-    }
-
-    /**
-     * Edit workflow name
-     *
-     * @return WorkflowHome page object
-     */
-    public WorkflowHome editWorkflow() {
-        if (workFlowData.getComponentName().equals(ConnectorComponentEnum.QUERY_DEFINITION.getConnectorComponentName())) {
-            this.queryDefinitions = (QueryDefinitions) new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName()).clickWFDetailsNextBtn();
-        } else {
-            this.costingInputsPart = (CostingInputsPart) new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName()).clickWFDetailsNextBtn();
-        }
-        if (this.queryDefinitions != null) {
-            this.costingInputsPart = this.queryDefinitions.clickWFQueryDefNextBtn();
-        }
-        this.notificationsPart = this.costingInputsPart.clickCINextBtn();
-        this.publishResultsPart = notificationsPart.clickCINotificationNextBtn();
-        return this.publishResultsPart.clickSaveButton();
     }
 }
 

@@ -32,7 +32,7 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
     @FindBy(xpath = "//span[text()='Edit Workflow']")
     protected WebElement popUpEditWorkflowLbl;
 
-    @FindBy(xpath = "//span[.='Return only the latest revision of each part from the PLM system']")
+    @FindBy(xpath = "//div[contains(@class, 'widget-checkbox')]//span[.='Return only the latest revision of each part from the PLM system']")
     protected WebElement revisionLatestCheckBoxLblElement;
 
     @FindBy(css = "div[class$='modalTitle']")
@@ -118,7 +118,7 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
 
     protected WebElement getQDReturnOnlyCheckboxElement() {
         pageUtils.waitForElementToAppear(workflowPopUpActiveTabElement);
-        return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//input[@type='checkbox']", workflowPopUpActiveTabElement.getText())));
+        return driver.findElement(By.xpath(String.format("//div[@tab-number='%s']//input[@type='checkbox']", workflowPopUpActiveTabElement.getText())));
     }
 
     /**
