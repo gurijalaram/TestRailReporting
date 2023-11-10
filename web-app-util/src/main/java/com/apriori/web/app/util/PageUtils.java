@@ -1156,6 +1156,18 @@ public class PageUtils {
     }
 
     /**
+     * Waits for web element attribute value to be matched
+     *
+     * @param locator        - the locator
+     * @param attributeName  - attribute name
+     * @param attributeValue - attribute value
+     */
+    public void waitForElementAttributeToAppear(WebElement locator, String attributeName, String attributeValue) {
+        new WebDriverWait(this.driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS / 2))
+            .until(ExpectedConditions.attributeToBe(locator, attributeName, attributeValue));
+    }
+
+    /**
      * Moves the scroller up
      *
      * @param scroller           - the scroller
@@ -1184,6 +1196,7 @@ public class PageUtils {
 
     /**
      * Switch to a window
+     *
      * @param windowIndex - the window number
      * @return webdriver
      */
@@ -1426,6 +1439,7 @@ public class PageUtils {
 
     /**
      * Get property value from browser local storage.
+     *
      * @param propertyName - the property name located in local storage
      * @return - the value of property
      */
@@ -1433,4 +1447,6 @@ public class PageUtils {
         WebStorage webStorage = (WebStorage) new Augmenter().augment(driver);
         return webStorage.getLocalStorage().getItem(propertyName);
     }
+
+
 }

@@ -5,8 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.apriori.cic.api.enums.PlmPartDataType;
+import com.apriori.cic.api.enums.PlmTypeAttributes;
 import com.apriori.cic.api.enums.ReportsEnum;
+import com.apriori.cic.api.models.request.AgentPort;
+import com.apriori.cic.api.utils.CicApiTestUtil;
+import com.apriori.cic.api.utils.PlmPartsUtil;
 import com.apriori.cic.api.utils.WorkflowTestUtil;
+import com.apriori.cic.ui.enums.RuleOperatorEnum;
 import com.apriori.cic.ui.pagedata.WorkFlowData;
 import com.apriori.cic.ui.pageobjects.login.CicLoginPage;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.costinginputs.CostingInputsPart;
@@ -17,6 +23,7 @@ import com.apriori.cic.ui.pageobjects.workflows.schedule.notifications.Notificat
 import com.apriori.cic.ui.pageobjects.workflows.schedule.querydefinitions.QueryDefinitions;
 import com.apriori.shared.util.dataservice.TestDataService;
 import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -31,11 +38,15 @@ import java.util.List;
 public class NotificationTests extends WorkflowTestUtil {
 
     private static WorkFlowData workFlowData;
+    private AgentPort agentPort;
+    private String plmPartNumber;
 
     @BeforeEach
     public void setup() {
         currentUser = UserUtil.getUser();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
+        plmPartNumber = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber();
+        agentPort = CicApiTestUtil.getAgentPortData();
     }
 
     @Test
@@ -43,6 +54,8 @@ public class NotificationTests extends WorkflowTestUtil {
     @TestRail(id = {3951, 4875})
     @Description("Test email Tab on the Add New Workflow Dialog")
     public void testNotificationsEmailTab() {
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFC"));
+        String plmPartNumber = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber();
         DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
@@ -54,7 +67,7 @@ public class NotificationTests extends WorkflowTestUtil {
             .selectWorkflowConnector(workFlowData.getConnectorName())
             .clickWFDetailsNextBtn();
 
-        CostingInputsPart costingInputsPart = queryDefinitions.addRule(workFlowData, this.workFlowData.getQueryDefinitionsData().size())
+        CostingInputsPart costingInputsPart = queryDefinitions.addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, plmPartNumber)
             .clickWFQueryDefNextBtn();
 
         NotificationsPart notificationsPart = costingInputsPart.clickCINextBtn();
@@ -84,7 +97,7 @@ public class NotificationTests extends WorkflowTestUtil {
             .selectWorkflowConnector(workFlowData.getConnectorName())
             .clickWFDetailsNextBtn();
 
-        CostingInputsPart costingInputsPart = queryDefinitions.addRule(workFlowData, this.workFlowData.getQueryDefinitionsData().size())
+        CostingInputsPart costingInputsPart = queryDefinitions.addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, plmPartNumber)
             .clickWFQueryDefNextBtn();
 
         NotificationsPart notificationsPart = costingInputsPart.clickCINextBtn();
@@ -118,7 +131,7 @@ public class NotificationTests extends WorkflowTestUtil {
             .selectWorkflowConnector(workFlowData.getConnectorName())
             .clickWFDetailsNextBtn();
 
-        CostingInputsPart costingInputsPart = queryDefinitions.addRule(workFlowData, this.workFlowData.getQueryDefinitionsData().size())
+        CostingInputsPart costingInputsPart = queryDefinitions.addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, plmPartNumber)
             .clickWFQueryDefNextBtn();
 
         NotificationsPart notificationsPart = costingInputsPart.clickCINextBtn();
@@ -181,7 +194,7 @@ public class NotificationTests extends WorkflowTestUtil {
             .selectWorkflowConnector(workFlowData.getConnectorName())
             .clickWFDetailsNextBtn();
 
-        CostingInputsPart costingInputsPart = queryDefinitions.addRule(workFlowData, this.workFlowData.getQueryDefinitionsData().size())
+        CostingInputsPart costingInputsPart = queryDefinitions.addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, plmPartNumber)
             .clickWFQueryDefNextBtn();
         NotificationsPart notificationsPart = costingInputsPart.clickCINextBtn();
         FilterTab filterTab = notificationsPart.selectEmailTab().selectEmailTemplate().selectFilterTab();
