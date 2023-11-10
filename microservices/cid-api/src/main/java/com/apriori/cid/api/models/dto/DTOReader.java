@@ -41,6 +41,22 @@ public class DTOReader {
     }
 
     /**
+     * Gets an assembly specified by name
+     *
+     * @param assembly - the assembly
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getAssembly(String assembly) {
+        ComponentDTO componentDTO = readFile();
+
+        return componentDTO.getAssemblies()
+            .stream()
+            .filter(o -> o.getComponentName().equalsIgnoreCase(assembly))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("The assembly '%s' was not defined in the '%s' file", assembly, jsonFile)));
+    }
+
+    /**
      * Gets a random medium assembly
      *
      * @return component builder object
@@ -66,22 +82,6 @@ public class DTOReader {
         Collections.shuffle(listOfComponents);
 
         return listOfComponents.stream().findFirst().orElseThrow(() -> new RuntimeException("No 'large' assembly was found"));
-    }
-
-    /**
-     * Gets an assembly specified by name
-     *
-     * @param assembly - the assembly
-     * @return component builder object
-     */
-    public ComponentInfoBuilder getAssembly(String assembly) {
-        ComponentDTO componentDTO = readFile();
-
-        return componentDTO.getAssemblies()
-            .stream()
-            .filter(o -> o.getComponentName().equalsIgnoreCase(assembly))
-            .findFirst()
-            .orElseThrow(() -> new NoSuchElementException(String.format("The assembly '%s' was not defined in the '%s' file", assembly, jsonFile)));
     }
 
     /**

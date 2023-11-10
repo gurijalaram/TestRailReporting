@@ -1,9 +1,9 @@
 package com.apriori.cid.api.utils;
 
+import com.apriori.bcm.api.enums.CusAppAPIEnum;
 import com.apriori.cid.api.enums.CidAppAPIEnum;
 import com.apriori.cid.api.models.response.PeopleResponse;
 import com.apriori.cid.api.models.response.PersonResponse;
-import com.apriori.cus.api.enums.CusAppAPIEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
