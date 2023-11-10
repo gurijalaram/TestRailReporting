@@ -186,6 +186,20 @@ public class SchedulePage extends CICBasePage {
     }
 
     /**
+     * Select workflow in table
+     *
+     *  @param rowNum - name of workflow to select
+     * @return new Schedule page object
+     */
+    public SchedulePage selectWorkflowByRow(Integer rowNum) {
+        pageUtils.waitForElementAppear(workflowList);
+        tableUtils.selectRowByIndex(workflowList, rowNum);
+        pageUtils.waitForElementToBeClickable(invokeWorkflowBtn);
+        pageUtils.waitFor(Constants.DEFAULT_WAIT);
+        return new SchedulePage(driver);
+    }
+
+    /**
      * select workflow name in schedule page and click invoke button
      *
      * @param worflowName - work flow name
@@ -230,6 +244,7 @@ public class SchedulePage extends CICBasePage {
      * @return True if the workflow exists
      */
     public Boolean isWorkflowExists(String name) {
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         pageUtils.waitForElementToBeClickable(workflowList);
         try {
             return tableUtils.itemExistsInTable(workflowList, name);
@@ -415,7 +430,7 @@ public class SchedulePage extends CICBasePage {
      * @return WebElement
      */
     public WebElement getDeleteWorkflowButton() {
-        return deleteWorkflowButton;
+        return deleteWorkflowButton.findElement(By.xpath(".."));
     }
 
     private WebElement getScheduleTabRefreshElement() {

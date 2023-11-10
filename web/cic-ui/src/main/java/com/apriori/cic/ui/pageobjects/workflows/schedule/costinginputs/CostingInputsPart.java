@@ -1,5 +1,7 @@
 package com.apriori.cic.ui.pageobjects.workflows.schedule.costinginputs;
 
+import com.apriori.cic.api.enums.MappingRule;
+import com.apriori.cic.api.enums.PlmTypeAttributes;
 import com.apriori.cic.ui.pageobjects.CICBasePage;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.details.DetailsPart;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.notifications.NotificationsPart;
@@ -7,6 +9,7 @@ import com.apriori.cic.ui.pageobjects.workflows.schedule.querydefinitions.QueryD
 import com.apriori.cic.ui.utils.Constants;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -17,6 +20,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -25,14 +29,20 @@ import java.util.List;
 @Slf4j
 public class CostingInputsPart extends CICBasePage {
 
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_button-189'] > button")
-    private WebElement ciAddRowButton;
+    @FindBy(xpath = "//div[@tab-number='3']//button[.='Add Row']")
+    private WebElement addRowBtn;
 
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_button-108'] > button")
+    @FindBy(xpath = "//div[@tab-number='3']//button[.='Previous']")
+    private WebElement ciPreviousButton;
+
+    @FindBy(xpath = "//div[@tab-number='3']//button[.='Cancel']")
+    private WebElement ciCancelButton;
+
+    @FindBy(xpath = "//div[@tab-number='3']//button[.='Next']")
     private WebElement ciNextButton;
 
-    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_button-107'] > button")
-    private WebElement ciPreviousButton;
+    @FindBy(css = PARENT_ELEMENT_CSS + "[id$='-popup_button-189'] > button")
+    private WebElement ciAddRowButton;
 
     @FindBy(css = "div[class='BMCollectionViewCellWrapper BMCollectionViewCellEditing'] div[class='BMCollectionViewCell BMCollectionViewCellHoverable']")
     private WebElement ciConnectFieldInitialRowElement;
@@ -60,6 +70,9 @@ public class CostingInputsPart extends CICBasePage {
     private String connectFieldDDCss = "div[class^='ss-content ss-'][class$='ss-open'] div[class='ss-list']";
     private String deleteRowButtonCss = "#CIC_CostingInputCell_MU-[ID]_button-6";
     private String customDateValuePickerCss = "#CIC_CostingInputCell_MU-[ID]_datetimepicker-19";
+    private String cssColumnSelector = "div[class*='cic-input']";
+    private String cssTextboxSelector = "input[type='text']";
+    private WebElement selectedRow;
 
 
     public CostingInputsPart(WebDriver driver) {
@@ -75,6 +88,7 @@ public class CostingInputsPart extends CICBasePage {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
     }
 
     /**
@@ -275,6 +289,124 @@ public class CostingInputsPart extends CICBasePage {
         }
     }
 
+    /**
+     * add Costing Input Row
+     *
+     * @param plmTypeAttributes - Costing input field
+     * @param mappingRule       - MappingRuleEnum
+     * @param fieldValue        - field value
+     * @return CostingInputsPart
+     */
+    public CostingInputsPart addCostingInputRow(PlmTypeAttributes plmTypeAttributes, MappingRule mappingRule, String fieldValue) {
+        this.clickAddRowBtn();
+        List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
+        selectCiConnectField(ciStandardFieldFieldCols.get(0), plmTypeAttributes);
+        selectMappingRule(ciStandardFieldFieldCols.get(1), mappingRule);
+        if (plmTypeAttributes.getCicGuiField().equals("Process Group") || plmTypeAttributes.getCicGuiField().equals("Machining Mode")) {
+            pageUtils.waitForElementAndClick(ciStandardFieldFieldCols.get(2));
+            this.selectValueFromDDL(fieldValue);
+        }
+        if (plmTypeAttributes.getCicGuiField().contains("Date")) {
+            selectDateForRuleValue(ciStandardFieldFieldCols.get(2));
+        }
+        enterRuleValue(ciStandardFieldFieldCols.get(2).findElement(By.cssSelector(cssTextboxSelector)), fieldValue);
+        return this;
+    }
+
+    /**
+     * get the list of standard mappings rows
+     *
+     * @return list of standard mappings rows
+     */
+    public List<WebElement> getCostingInputRows() {
+        return driver.findElements(By.xpath("//div[@tab-number='3']//div[contains(@class, 'BMCollectionViewCellEditing')]//div[contains(@class, 'tw-flex-row')]"));
+    }
+
+
+    /**
+     * click add row button in standard mappings tab
+     */
+    public CostingInputsPart clickAddRowBtn() {
+        pageUtils.waitForElementAndClick(addRowBtn);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        waitUntilRowsLoaded();
+        return this;
+    }
+
+    /**
+     * select CI Connect field in Standard mappings rows
+     *
+     * @param webElement        - selected row element
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     */
+    private void selectCiConnectField(WebElement webElement, PlmTypeAttributes plmTypeAttributes) {
+        pageUtils.waitForElementToBeClickable(webElement);
+        pageUtils.waitForElementAndClick(webElement);
+
+        this.selectValueFromDDL(plmTypeAttributes.getCicGuiField());
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+    }
+
+    /**
+     * Select Usage Rule
+     *
+     * @param webElement  - selected row element
+     * @param mappingRule - MappingRule
+     */
+    private void selectMappingRule(WebElement webElement, MappingRule mappingRule) {
+        WebElement mappingRuleElement = webElement.findElement(By.tagName("div")).findElement(By.tagName("div")).findElement(By.tagName("div"));
+        pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
+        pageUtils.waitForElementToBeClickable(webElement);
+        pageUtils.waitForElementAndClick(webElement);
+        this.selectValueFromDDL(mappingRule.getMappingRule());
+    }
+
+    /**
+     * Select Date
+     *
+     * @param ruleValueElement
+     */
+    private void selectDateForRuleValue(WebElement ruleValueElement) {
+        pageUtils.waitForElementAndClick(ruleValueElement);
+        pageUtils.waitForElementToAppear(customDateCalenderTodayButton);
+        pageUtils.waitForElementAndClick(customDateCalenderDoneButton);
+    }
+
+    /**
+     * enter Rule Value
+     *
+     * @param webElement - selected row element
+     * @param ruleValue  - MappingRule
+     */
+    private void enterRuleValue(WebElement webElement, String ruleValue) {
+        pageUtils.waitForElementToBeClickable(webElement);
+        pageUtils.clearValueOfElement(webElement);
+        pageUtils.setValueOfElement(webElement, ruleValue);
+        pageUtils.waitForElementToBeClickable(webElement);
+    }
+
+    /**
+     * wait until all the rows are loaded in standard mappings
+     */
+    @SneakyThrows
+    private void waitUntilRowsLoaded() {
+        int retries = 0;
+        int maxRetries = 12;
+        Exception ex = null;
+
+        do {
+            TimeUnit.SECONDS.sleep(DEFAULT_WAIT_TIME);
+            if (getCostingInputRows().size() >= 1) {
+                log.info("Costing Input rows are loaded!!");
+                break;
+            }
+            if (retries == maxRetries) {
+                throw new RuntimeException(String.format("Costing Input rows are not loaded !! : %s", ex.getMessage()));
+            }
+            retries++;
+        } while (retries < maxRetries);
+    }
+
     private void selectCostingInputRow(int dataRowNum, Integer cssRowNum, String valueFieldType) {
         this.selectValueFromDDL(workFlowData.getCostingInputsData().get(dataRowNum).getFieldName());
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
@@ -312,4 +444,5 @@ public class CostingInputsPart extends CICBasePage {
                 break;
         }
     }
+
 }
