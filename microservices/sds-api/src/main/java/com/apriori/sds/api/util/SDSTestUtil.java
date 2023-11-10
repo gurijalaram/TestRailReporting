@@ -393,6 +393,7 @@ public abstract class SDSTestUtil extends TestUtil {
     protected List<CostingTemplate> getCostingTemplates() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
+                .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<CostingTemplatesItems> response = HTTPRequest.build(requestEntity).get();
@@ -497,6 +498,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
+                .apUserContext(testingApUserContext)
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", shallowPublishRequest)
                 .expectedResponseCode(expectedResponseCode);
