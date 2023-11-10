@@ -8,6 +8,7 @@ import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.BooleanNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -35,12 +36,12 @@ class CdsUpdateUserTests {
 
         String userName = generateStringUtil.generateUserName();
 
-        Customer aPrioriInternal = cdsTestUtil.getAprioriInternal();
-        String pattern = aPrioriInternal.getEmailRegexPatterns().stream().findFirst().orElseThrow();
+        Customer aprioriInternal = cdsTestUtil.getAprioriInternal();
+        String pattern = aprioriInternal.getEmailRegexPatterns().stream().findFirst().orElseThrow();
         String domain = pattern.replace("\\S+@", "").replace(".com", "");
 
         ResponseWrapper<User> added = cdsTestUtil.addUser(
-            aPrioriInternal.getIdentity(),
+            aprioriInternal.getIdentity(),
             userName,
             domain
         );

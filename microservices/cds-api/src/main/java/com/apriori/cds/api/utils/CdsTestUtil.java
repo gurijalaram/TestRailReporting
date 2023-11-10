@@ -1,5 +1,9 @@
 package com.apriori.cds.api.utils;
 
+
+import static org.apache.http.HttpStatus.SC_CREATED;
+import static org.apache.http.HttpStatus.SC_NOT_FOUND;
+
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
@@ -52,6 +56,7 @@ import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
 import com.apriori.shared.util.properties.PropertiesContext;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.http.HttpStatus;
 
@@ -62,9 +67,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import static org.apache.http.HttpStatus.SC_CREATED;
-import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
 public class CdsTestUtil extends TestUtil {
 
