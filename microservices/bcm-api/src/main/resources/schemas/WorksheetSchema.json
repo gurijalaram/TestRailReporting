@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "inputRowIds": {
+          "type": "array"
+        },
+        "costingEventIds": {
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "identity",
+        "customerIdentity",
+        "createdAt",
+        "createdBy",
+        "name",
+        "inputRowIds",
+        "costingEventIds"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

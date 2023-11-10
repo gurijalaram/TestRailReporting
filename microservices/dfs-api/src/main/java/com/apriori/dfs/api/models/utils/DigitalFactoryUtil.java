@@ -9,9 +9,9 @@ import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.ErrorMessage;
 
+import org.apache.commons.lang3.StringUtils;
 import software.amazon.awssdk.http.HttpStatusCode;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class DigitalFactoryUtil {
@@ -135,5 +135,22 @@ public class DigitalFactoryUtil {
         requestEntity.headers().put("Content-Type", contentType);
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * DELETE digital factory by identity
+     *
+     * @param expectedResponseCode Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @param identity Identity of Digital Factory to delete
+     * @param sharedSecret Shared secret for authentication (in form: "?key=...")
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> deleteDigitalFactory(Integer expectedResponseCode, Class<T> expectedType, String identity, String sharedSecret) {
+        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, expectedType)
+            .inlineVariables(StringUtils.join(identity, sharedSecret))
+            .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).delete();
     }
 }
