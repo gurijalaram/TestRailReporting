@@ -102,6 +102,6 @@ public class UserCommonService {
 
     private static UserCredentials createDefaultUser() {
         log.info(String.format("Creating default user %s/%s/%s", DEFAULT_USER_NAME, DEFAULT_PASSWORD, DEFAULT_ACCESS_LEVEL));
-        return new UserCredentials(DEFAULT_PASSWORD, DEFAULT_USER_NAME, DEFAULT_ACCESS_LEVEL);
+        return new UserCredentials(DEFAULT_USER_NAME, DEFAULT_PASSWORD, DEFAULT_ACCESS_LEVEL);
     }
 }
