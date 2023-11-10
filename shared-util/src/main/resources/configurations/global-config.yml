@@ -39,7 +39,7 @@ global:
 ######################################################## DEFAULT VALUES ########################################################
 default:
   aws_region: na-1
-  users_csv_file: common-users.csv
+  users_csv_file: my-users.csv
   customer_aws_account_type: dev
 ###########################
 #  Core services

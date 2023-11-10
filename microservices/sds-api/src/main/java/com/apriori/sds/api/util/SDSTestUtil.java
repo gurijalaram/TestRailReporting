@@ -38,6 +38,7 @@ import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Customers;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
+import com.apriori.shared.util.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -130,6 +131,7 @@ public abstract class SDSTestUtil extends TestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
                 .inlineVariables(componentId, scenarioId)
+                .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         HTTPRequest.build(requestEntity).delete();
@@ -235,6 +237,7 @@ public abstract class SDSTestUtil extends TestUtil {
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .headers(getContextHeaders())
                 .token(testingUser.getToken())
+                .apUserContext(testingApUserContext)
                 .body("component", postComponentRequest)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
@@ -272,7 +275,8 @@ public abstract class SDSTestUtil extends TestUtil {
 
         ).get();
 
-        Customer customer = customersResponse.getResponseEntity().getItems().get(0);
+        Customer customer = customersResponse.getResponseEntity().getItems().stream()
+            .filter(o -> o.getCloudReference().equalsIgnoreCase(PropertiesContext.get("${customer}.cloud_reference_name"))).findFirst().orElse(null);
 
         ResponseWrapper<Applications> responseApplications = HTTPRequest.build(
             RequestEntityUtil.init(CDSAPIEnum.CUSTOMERS_APPLICATION_BY_CUSTOMER_ID, Applications.class)
@@ -297,6 +301,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+                .apUserContext(testingApUserContext)
                 .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .token(userCredentials.getToken());
 
@@ -417,6 +422,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+                .apUserContext(testingApUserContext)
                 .inlineVariables(
                     componentIdentity, scenarioIdentity
                 )
