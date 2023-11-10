@@ -16,5 +16,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonRootName("response")
 public class Worksheet {
-    String name;
+    private String name;
 }

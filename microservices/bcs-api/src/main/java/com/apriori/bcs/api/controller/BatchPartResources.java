@@ -388,14 +388,14 @@ public class BatchPartResources {
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static RequestEntity batchPartRequestEntity(QueryParams queryParameter, File partFile, String batchIdentity) {
-        Map<String, String> header = new HashMap<>();
         requestEntity = RequestEntityUtil.init(
                 BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED);
-        header.put("Accept", "*/*");
-        header.put("Content-Type", "multipart/form-data");
-        requestEntity.headers(header)
+        requestEntity.headers(new HashMap<String, String>() {{
+                put("Accept", "*/*");
+                put("Content-Type", "multipart/form-data");
+            }})
             .multiPartFiles(new MultiPartFiles()
                 .use(PartFieldsEnum.DATA.getPartFieldName(), partFile))
             .queryParams(queryParameter);

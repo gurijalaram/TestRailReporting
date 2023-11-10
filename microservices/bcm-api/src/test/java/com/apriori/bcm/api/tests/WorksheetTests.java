@@ -20,6 +20,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesAPI.class)
 public class WorksheetTests extends  BcmUtil {
     private final BcmUtil bcmUtil = new BcmUtil();
     private static SoftAssertions softAssertions = new SoftAssertions();
@@ -28,9 +29,7 @@ public class WorksheetTests extends  BcmUtil {
     @TestRail(id = 28963)
     @Description("Verify worksheet creation")
     public void verifyWorksheetCreation() {
-
-        GenerateStringUtil gen = new GenerateStringUtil();
-        String name = gen.saltString("name");
+        String name =  new GenerateStringUtil().saltString("name");
 
         ResponseWrapper<WorkSheetResponse> response = bcmUtil.createWorksheet(name);
         softAssertions.assertThat(response.getResponseEntity().getName()).isEqualTo(name);
@@ -40,9 +39,7 @@ public class WorksheetTests extends  BcmUtil {
     @TestRail(id = 29156)
     @Description("Verify worksheet creation - already exists error")
     public void verifyWorksheetCreationAlreadyExistError() {
-
-        GenerateStringUtil gen = new GenerateStringUtil();
-        String name = gen.saltString("name");
+        String name =  new GenerateStringUtil().saltString("name");
 
         ResponseWrapper<WorkSheetResponse> response = bcmUtil.createWorksheet(name);
         softAssertions.assertThat(response.getResponseEntity().getName()).isEqualTo(name);
