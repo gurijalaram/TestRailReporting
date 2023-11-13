@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.apriori.cic.api.enums.PlmTypeAttributes;
 import com.apriori.cic.ui.pagedata.WorkFlowData;
 import com.apriori.cic.ui.pageobjects.login.CicLoginPage;
 import com.apriori.cic.ui.pageobjects.workflows.WorkflowHome;
@@ -54,13 +55,13 @@ public class QueryDefinitionTests extends TestBaseUI {
             .selectWorkflowConnector(workFlowData.getConnectorName())
             .clickWFDetailsNextBtn();
 
-        assertFalse(queryDefinitions.verifyQueryDefinitionRuleOperatorDdl(0), "Verify Operator Value drop down doesn't displayed");
-        assertFalse(queryDefinitions.verifyQueryDefinitionRuleValueTxt(0), "Verify rule field doesn't displayed");
+        assertFalse(queryDefinitions.verifyQueryDefinitionRuleOperatorDdl(), "Verify Operator Value drop down doesn't displayed");
+        assertFalse(queryDefinitions.verifyQueryDefinitionRuleValueTxt(), "Verify rule field doesn't displayed");
 
-        assertTrue(queryDefinitions.getQueryDefinitionRuleNameDdl(0).isDisplayed(), "Verify Rule Name drop down");
-        queryDefinitions.selectRuleNameFromDdl(workFlowData.getQueryDefinitionsData().get(0).getFieldName());
-        assertTrue(queryDefinitions.getQueryDefinitionRuleOperatorDdl(0).isDisplayed(), "Verify Operator Name drop down displayed");
-        assertTrue(queryDefinitions.getQueryDefinitionRuleValueTxt(0).isDisplayed(), "Verify Operator Value drop down displayed");
+        assertTrue(queryDefinitions.getRuleFilterNameDdlElement().isDisplayed(), "Verify Rule Name drop down");
+        queryDefinitions.selectRuleFilter(PlmTypeAttributes.PLM_PART_NUMBER);
+        assertTrue(queryDefinitions.getRuleOperatorDdlElement().isDisplayed(), "Verify Operator Name drop down displayed");
+        assertTrue(queryDefinitions.getRuleValueTxtElement().isDisplayed(), "Verify Operator Value drop down displayed");
     }
 
     @Test
@@ -80,7 +81,7 @@ public class QueryDefinitionTests extends TestBaseUI {
         DetailsPart detailsPart = queryDefinitions.clickPreviousBtn();
         assertTrue(detailsPart.getNameTextFieldElement().isDisplayed(), "Verify previous button in query definitions");
         queryDefinitions = (QueryDefinitions) detailsPart.clickWFDetailsNextBtn();
-        assertTrue(queryDefinitions.getQueryDefinitionRuleNameDdl(0).isDisplayed(), "Verify next button is displayed in Query definitions");
+        assertTrue(queryDefinitions.getRuleFilterNameDdlElement().isDisplayed(), "Verify next button is displayed in Query definitions");
 
     }
 
@@ -98,17 +99,16 @@ public class QueryDefinitionTests extends TestBaseUI {
             .selectWorkflowConnector(workFlowData.getConnectorName())
             .clickWFDetailsNextBtn();
 
-        assertEquals(1, queryDefinitions.getNumberOfRules(), "rule wasn't added");
+        assertEquals(1, queryDefinitions.getRulesList().size(), "rule wasn't added");
         queryDefinitions.clickAddRuleButton();
-        assertEquals(2, queryDefinitions.getNumberOfRules(), "rule was added");
+        assertEquals(2, queryDefinitions.getRulesList().size(), "rule was added");
         queryDefinitions.deleteRule();
-        assertEquals(1, queryDefinitions.getNumberOfRules(), "rule was deleted");
+        assertEquals(1, queryDefinitions.getRulesList().size(), "rule was deleted");
         assertTrue(queryDefinitions.isGroupButtonDisplayed(), "Add Group button is displayed");
 
         DetailsPart detailsPart = queryDefinitions.clickPreviousBtn();
         detailsPart.selectWorkflowConnector("Teamcenter");
         queryDefinitions = (QueryDefinitions) detailsPart.clickWFDetailsNextBtn();
         assertFalse(queryDefinitions.isGroupButtonDisplayed(), "Add Group button is not displayed for teamcenter");
-
     }
 }

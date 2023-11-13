@@ -1,10 +1,6 @@
 package com.apriori.bcs.api.tests;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.bcs.api.controller.BatchPartResources;
@@ -30,7 +26,9 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,14 +41,17 @@ public class BatchPartTest {
     private static Batch batch;
     private static Part part = null;
     private static Integer number_of_parts = Integer.parseInt(PropertiesContext.get("bcs.number_of_parts"));
+    private SoftAssertions softAssertions;
 
     @BeforeAll
-    public static void testSetup() {
+    public static void beforeClass() {
         batch = BatchResources.createBatch().getResponseEntity();
-        assertThat(batch.getState(), is(equalTo(BCSState.CREATED.toString())));
-
         part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
-        assertThat(part.getState(), is(equalTo(BCSState.CREATED.toString())));
+    }
+
+    @BeforeEach
+    public void setupTest() {
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -67,8 +68,8 @@ public class BatchPartTest {
         MultiPartResources.addPartsToBatch(partDataList, batch.getIdentity());
         softAssertions.assertThat(MultiPartResources.waitUntilBatchPartsCostingAreCompleted(batch.getIdentity())).isTrue();
         Parts parts = BatchPartResources.getBatchPartById(batch.getIdentity()).getResponseEntity();
-        MultiPartResources.summarizeAndLogPartsCostingInfo(parts);
-        softAssertions.assertAll();
+        MultiPartResources.summarizeAndLogPartsCostingInfo(parts)
+            .stream().forEach(part -> softAssertions.assertThat(part.getState()).isEqualTo(BCSState.COMPLETED.toString()));
     }
 
     @Test
@@ -78,10 +79,10 @@ public class BatchPartTest {
     public void createBatchPart() {
         ResponseWrapper<Batch> batchResponse = BatchResources.createBatch();
         Batch batchObject = batchResponse.getResponseEntity();
-        assertThat(batchObject.getState(), is(equalTo(BCSState.CREATED.toString())));
+        softAssertions.assertThat(batchObject.getState()).isEqualTo(BCSState.CREATED.toString());
 
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(batchObject.getIdentity());
-        assertThat(partResponse.getResponseEntity().getState(), is(equalTo(BCSState.CREATED.toString())));
+        softAssertions.assertThat(partResponse.getResponseEntity().getState()).isEqualTo(BCSState.CREATED.toString());
     }
 
     @Test
@@ -91,14 +92,14 @@ public class BatchPartTest {
         assertTrue(BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), part.getIdentity(), BCSState.COMPLETED), "Track and verify Batch Part Costing is completed");
         ResponseWrapper<Results> resultsResponse = HTTPRequest.build(
             BatchPartResources.getBatchPartRequestEntity(
-                BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS,
-                batch.getIdentity(),
-                part.getIdentity(),
-                Results.class)
-            .expectedResponseCode(HttpStatus.SC_OK)
+                    BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS,
+                    batch.getIdentity(),
+                    part.getIdentity(),
+                    Results.class)
+                .expectedResponseCode(HttpStatus.SC_OK)
         ).get();
 
-        assertThat(resultsResponse.getResponseEntity().getCostingStatus(), is(equalTo("COST_COMPLETE")));
+        softAssertions.assertThat(resultsResponse.getResponseEntity().getCostingStatus()).isEqualTo("COST_COMPLETE");
     }
 
     @Test
@@ -106,15 +107,15 @@ public class BatchPartTest {
     @Description("Create 2 Batches, Add Part to a batch1, get the part for batch2 and verify error")
     public void createBatchPartFromMismatchedBatch() {
         Batch batch2 = BatchResources.createBatch().getResponseEntity();
-        assertThat(batch2.getState(), is(equalTo(BCSState.CREATED.toString())));
+        softAssertions.assertThat(batch2.getState()).isEqualTo(BCSState.CREATED.toString());
 
         HTTPRequest.build(
             BatchPartResources.getBatchPartRequestEntity(
-                BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS,
-                batch2.getIdentity(),
-                part.getIdentity(),
-                ErrorMessage.class)
-            .expectedResponseCode(HttpStatus.SC_NOT_FOUND)
+                    BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS,
+                    batch2.getIdentity(),
+                    part.getIdentity(),
+                    ErrorMessage.class)
+                .expectedResponseCode(HttpStatus.SC_NOT_FOUND)
         ).get();
     }
 
@@ -123,7 +124,7 @@ public class BatchPartTest {
     @Description("Get part to a batch")
     public void getBatchParts() {
         ResponseWrapper<Parts> partsResponse = BatchPartResources.getBatchPartById(batch.getIdentity());
-        assertNotEquals(partsResponse.getResponseEntity().getItems().size(), 0);
+        softAssertions.assertThat(partsResponse.getResponseEntity().getItems().size()).isEqualTo(0);
     }
 
     @Test
@@ -134,7 +135,7 @@ public class BatchPartTest {
         newPartRequest.setAnnualVolume(123);
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
 
-        assertThat(partResponse.getResponseEntity().getState(), is(equalTo(BCSState.CREATED.toString())));
+        softAssertions.assertThat(partResponse.getResponseEntity().getState()).isEqualTo(BCSState.CREATED.toString());
     }
 
     @Test
@@ -142,12 +143,16 @@ public class BatchPartTest {
     @Description("Create part with Valid UDA Field in form data")
     public void createBatchPartWithValidUDAField() {
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartWithValidUDA(batch.getIdentity());
+        softAssertions.assertThat(partResponse.getResponseEntity().getState()).isEqualTo(BCSState.CREATED.toString());
+    }
 
-        assertThat(partResponse.getResponseEntity().getState(), is(equalTo(BCSState.CREATED.toString())));
+    @AfterEach
+    public void tearTest() {
+        softAssertions.assertAll();
     }
 
     @AfterAll
-    public static void testCleanup() {
+    public static void afterClass() {
         BatchResources.checkAndCancelBatch(batch);
     }
 }

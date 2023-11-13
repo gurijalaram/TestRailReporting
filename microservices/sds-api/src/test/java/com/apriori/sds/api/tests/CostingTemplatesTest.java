@@ -30,6 +30,7 @@ public class CostingTemplatesTest extends SDSTestUtil {
     public void testGetCostingTemplateByIdentity() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATE_SINGLE_BY_IDENTITY_ID, CostingTemplate.class)
+                .apUserContext(testingApUserContext)
                 .inlineVariables(this.getFirstCostingTemplate().getIdentity())
                 .expectedResponseCode(HttpStatus.SC_OK);
 

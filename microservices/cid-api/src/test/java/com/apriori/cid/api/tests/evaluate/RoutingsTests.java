@@ -10,12 +10,9 @@ import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.ComponentDTORequest;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.request.component.RoutingNodeOptions;
 import com.apriori.shared.util.models.response.ErrorRequestResponse;
@@ -30,7 +27,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,36 +36,16 @@ public class RoutingsTests {
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
     private final IterationsUtil iterationsUtil = new IterationsUtil();
+    private ComponentInfoBuilder component;
+    private Routings routings;
 
     @Test
     @TestRail(id = {14982})
     @Description("Verify Get latest iteration API does not return scenarioRoutings upon costing to COSTING_FAILED")
     public void testLatestIterationDoesNotReturnScenarioRoutingsForCostingFailedState() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_ROLLFORMING;
-        final String componentName = "Casting";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_ROLLFORMING);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .costingTemplate(costingTemplate)
-            .build());
-
-        scenariosUtil.postCostScenario(componentResponse);
-
-        ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(componentResponse);
-
-        softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(NewCostingLabelEnum.COSTING_FAILED.name());
-
-        ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(componentResponse);
-
-        softAssertions.assertThat(componentIterationResponse.getResponseEntity().getScenarioRoutings().size()).isEqualTo(0);
+        softAssertions.assertThat(getIterationLatest(component, NewCostingLabelEnum.COSTING_FAILED).getResponseEntity().getScenarioRoutings().size()).isEqualTo(0);
 
         softAssertions.assertAll();
     }
@@ -78,31 +54,9 @@ public class RoutingsTests {
     @TestRail(id = {14981})
     @Description("Verify Get latest iteration API contains scenarioRoutings upon costing to COST_INCOMPLETE")
     public void testLatestIterationReturnsScenarioRoutingsForCostIncompleteState() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
-        final String componentName = "DTCCastingIssues";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .costingTemplate(costingTemplate)
-            .build());
-
-        scenariosUtil.postCostScenario(componentResponse);
-
-        ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(componentResponse);
-
-        softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_INCOMPLETE.name());
-
-        ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(componentResponse);
-
-        softAssertions.assertThat(componentIterationResponse.getResponseEntity().getScenarioRoutings().size()).isGreaterThan(0);
+        softAssertions.assertThat(getIterationLatest(component, NewCostingLabelEnum.COST_INCOMPLETE).getResponseEntity().getScenarioRoutings().size()).isGreaterThan(0);
 
         softAssertions.assertAll();
     }
@@ -111,31 +65,35 @@ public class RoutingsTests {
     @TestRail(id = {14961})
     @Description("Verify Get latest iteration API contains scenarioRoutings upon costing to COST_COMPLETE")
     public void testLatestIterationReturnsScenarioRoutingsForCostCompleteState() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
-        final String componentName = "5d51749fig01";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        softAssertions.assertThat(getIterationLatest(component, NewCostingLabelEnum.COST_COMPLETE).getResponseEntity().getScenarioRoutings().size()).isGreaterThan(0);
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .costingTemplate(costingTemplate)
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {14983})
+    @Description("Verify Get available routings API does not return routings when scenario is in NOT_COSTED status")
+    public void testAvailableRoutingForUncostedPart() {
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
+
+        ComponentInfoBuilder scenarioItem = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(component.getComponentName())
+            .scenarioName(component.getScenarioName())
+            .resourceFile(component.getResourceFile())
+            .user(component.getUser())
             .build());
 
-        scenariosUtil.postCostScenario(componentResponse);
+        ErrorRequestResponse errorRequestResponse = scenariosUtil.getRoutings(component.getUser(), ErrorRequestResponse.class,
+            new CssComponent().findFirst(component.getComponentName(), component.getScenarioName(), component.getUser())
+                .getComponentIdentity(),
+            scenarioItem.getScenarioIdentity()).getResponseEntity();
 
-        ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(componentResponse);
+        String expectedMessage = String.format("Scenario '%s' was not costed, or was costed with invalid cost inputs, available routings not found", component.getScenarioName());
 
-        softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
-
-        ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(componentResponse);
-
-        softAssertions.assertThat(componentIterationResponse.getResponseEntity().getScenarioRoutings().size()).isGreaterThan(0);
+        softAssertions.assertThat(errorRequestResponse.getMessage()).isEqualTo(expectedMessage);
+        softAssertions.assertThat(errorRequestResponse.getStatus()).isEqualTo("409");
 
         softAssertions.assertAll();
     }
@@ -144,18 +102,9 @@ public class RoutingsTests {
     @TestRail(id = {14980})
     @Description("Verify Get available routings API returns appropriate routings for Stock Machining")
     public void testAvailableRoutingForStockMachining() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "bracket_basic";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing",
@@ -169,18 +118,9 @@ public class RoutingsTests {
     @TestRail(id = {14979})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Plastic")
     public void testAvailableRoutingForSheetPlastic() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
-        final String componentName = "5d51749fig01";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Single Station Thermoforming", "Shuttle Station Thermoforming",
@@ -193,18 +133,9 @@ public class RoutingsTests {
     @TestRail(id = {14978})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Metal - Transfer Die")
     public void testAvailableRoutingForSheetMetalTransferDie() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
-        final String componentName = "bracket_basic";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         assertThat(routings.getItems().size()).isEqualTo(0);
     }
@@ -213,18 +144,9 @@ public class RoutingsTests {
     @TestRail(id = {14977})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Metal - Stretch Forming")
     public void testAvailableRoutingForSheetMetalStretchForming() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING;
-        final String componentName = "Hydroforming";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Stretch Form Transverse", "Stretch Form Longitudinal");
@@ -236,18 +158,9 @@ public class RoutingsTests {
     @TestRail(id = {14976})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Metal - Roll Forming")
     public void testAvailableRoutingForSheetMetalRollForming() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_ROLLFORMING;
-        final String componentName = "angle_bar";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         assertThat(routings.getItems().size()).isEqualTo(0);
     }
@@ -256,18 +169,9 @@ public class RoutingsTests {
     @TestRail(id = {14975})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Metal - Hydroforming")
     public void testAvailableRoutingForSheetMetalHydroforming() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_HYDROFORMING;
-        final String componentName = "Hydroforming";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Laser Cut - Fluid Cell Routing", "Router Cut - Fluid Cell Routing",
@@ -280,18 +184,9 @@ public class RoutingsTests {
     @TestRail(id = {14974})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Metal")
     public void testAvailableRoutingForSheetMetal() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        final String componentName = "bracket_basic";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("[CTL]/Laser/[Bend]", "[CTL]/Fiber Laser/[Bend]", "[CTL]/Laser Punch/[Bend]",
@@ -306,18 +201,9 @@ public class RoutingsTests {
     @TestRail(id = {14973})
     @Description("Verify Get available routings API returns appropriate routings for Roto & Blow Molding")
     public void testAvailableRoutingForRotoAndBlowMolding() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ROTO_BLOW_MOLDING;
-        final String componentName = "Rapid Prototyping";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Blow Molding", "Rotational Molding");
@@ -329,18 +215,9 @@ public class RoutingsTests {
     @TestRail(id = {14972})
     @Description("Verify Get available routings API returns appropriate routings for Rapid Prototyping")
     public void testAvailableRoutingForRapidPrototyping() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.RAPID_PROTOTYPING;
-        final String componentName = "Rapid Prototyping";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("3D Printing", "Selective Laser Sintering", "Stereolithography");
@@ -352,18 +229,9 @@ public class RoutingsTests {
     @TestRail(id = {14971})
     @Description("Verify Get available routings API returns appropriate routings for Powder Metal")
     public void testAvailableRoutingForPowderMetal() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-        final String componentName = "Powder Metal";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         assertThat(routings.getItems().size()).isEqualTo(0);
     }
@@ -372,18 +240,9 @@ public class RoutingsTests {
     @TestRail(id = {14970})
     @Description("Verify Get available routings API returns appropriate routings for Plastic Molding")
     public void testAvailableRoutingForPlasticMolding() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentName = "titan charger lead";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Injection Mold", "Reaction Injection Mold", "Structural Foam Mold", "Compression Mold");
@@ -395,18 +254,9 @@ public class RoutingsTests {
     @TestRail(id = {14969})
     @Description("Verify Get available routings API returns appropriate routings for Forging")
     public void testAvailableRoutingForForging() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentName = "small ring";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Closed Die Forging", "Ring Rolled Forging");
@@ -418,18 +268,9 @@ public class RoutingsTests {
     @TestRail(id = {14968})
     @Description("Verify Get available routings API returns appropriate routings for Casting - Sand")
     public void testAvailableRoutingForCastingSand() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
-        final String componentName = "Casting";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("VerticalAutomatic", "HorizontalAutomatic", "ManualStd", "ManualFloor", "ManualPit");
@@ -441,18 +282,9 @@ public class RoutingsTests {
     @TestRail(id = {14967})
     @Description("Verify Get available routings API returns appropriate routings for Casting - Investment")
     public void testAvailableRoutingForCastingInvestment() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_INVESTMENT;
-        final String componentName = "piston_model1";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("Band Saw", "Abrasive Wheel Cut");
@@ -464,18 +296,9 @@ public class RoutingsTests {
     @TestRail(id = {14966})
     @Description("Verify Get available routings API returns appropriate routings for Casting - Die")
     public void testAvailableRoutingForCastingDie() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-        final String componentName = "DTCCastingIssues";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("High Pressure Die Cast", "Gravity Die Cast");
@@ -487,18 +310,9 @@ public class RoutingsTests {
     @TestRail(id = {14965})
     @Description("Verify Get available routings API returns appropriate routings for Casting")
     public void testAvailableRoutingForCasting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
-        final String componentName = "CurvedWall";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("SandCasting", "DieCasting", "Permanent Mold");
@@ -510,18 +324,9 @@ public class RoutingsTests {
     @TestRail(id = {14964})
     @Description("Verify Get available routings API returns appropriate routings for Bar & Tube Fab")
     public void testAvailableRoutingForBarAndTubeFab() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.BAR_TUBE_FAB;
-        final String componentName = "B&T-LOW-001";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         assertThat(routings.getItems().size()).isEqualTo(0);
     }
@@ -530,18 +335,9 @@ public class RoutingsTests {
     @TestRail(id = {14963})
     @Description("Verify Get available routings API returns appropriate routings for Additive Manufacturing")
     public void testAvailableRoutingForAdditiveManufacturing() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
-        final String componentName = "testpart-4";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse.getIdentity(), costingTemplate.getVpeName(), processGroupEnum.getProcessGroup()).getResponseEntity();
+        routings = getRoutings(component);
 
         assertThat(routings.getItems().size()).isEqualTo(0);
     }
@@ -550,24 +346,19 @@ public class RoutingsTests {
     @TestRail(id = {14962})
     @Description("Verify Get available routings API returns appropriate routings for 2-Model Machining")
     public void testAvailableRoutingForTwoModelMachining() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-        final String componentName = "casting_BEFORE_machining";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.TWO_MODEL_MACHINING;
-        final String componentName2 = "casting_AFTER_machining";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".stp");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponent("casting_BEFORE_machining");
+        ComponentInfoBuilder component2 = new ComponentDTORequest().getComponent("casting_AFTER_machining");
 
-        CostingTemplate costingTemplate1 = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
-        ScenarioResponse scenarioResponse1 = new DataCreationUtil(componentName, scenarioName, processGroupEnum, resourceFile, costingTemplate1, currentUser).createCostComponent();
+        CostingTemplate costingTemplate1 = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build();
+        ScenarioResponse scenarioResponse1 = new DataCreationUtil(component.getComponentName(), component.getScenarioName(), component.getProcessGroup(),
+            component.getResourceFile(), costingTemplate1, component.getUser()).createCostComponent();
 
-        CostingTemplate costingTemplate2 = CostingTemplate.builder().processGroupName(processGroupEnum2.getProcessGroup()).twoModelSourceScenarioIdentity(scenarioResponse1.getIdentity()).build();
-        ScenarioResponse scenarioResponse2 = new DataCreationUtil(componentName2, scenarioName, processGroupEnum2, resourceFile2, costingTemplate2, currentUser).createCostComponent();
+        CostingTemplate costingTemplate2 = CostingTemplate.builder().processGroupName(component2.getProcessGroup().getProcessGroup()).twoModelSourceScenarioIdentity(scenarioResponse1.getIdentity()).build();
+        ScenarioResponse scenarioResponse2 = new DataCreationUtil(component2.getComponentName(), component.getScenarioName(), component2.getProcessGroup(), component2.getResourceFile(), costingTemplate2,
+            component.getUser()).createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(currentUser, Routings.class,
-            new CssComponent().findFirst(componentName2, scenarioName, currentUser).getComponentIdentity(),
-            scenarioResponse2.getIdentity(), costingTemplate2.getVpeName(), processGroupEnum2.getProcessGroup()).getResponseEntity();
+        Routings routings = scenariosUtil.getRoutings(component.getUser(), Routings.class, new CssComponent().findFirst(component2.getComponentName(), component.getScenarioName(), component.getUser()).getComponentIdentity(),
+            scenarioResponse2.getIdentity()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "2AL+3AM Routing",
@@ -580,19 +371,15 @@ public class RoutingsTests {
     @TestRail(id = {15821})
     @Description("Verify save routing with costing template through API")
     public void testSaveRouting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        final String componentName = "bracket_basic";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
-        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).build();
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build();
 
         ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
+            .componentName(component.getComponentName())
+            .scenarioName(component.getScenarioName())
+            .resourceFile(component.getResourceFile())
+            .user(component.getUser())
             .costingTemplate(costingTemplate)
             .build());
 
@@ -608,7 +395,7 @@ public class RoutingsTests {
         List<RoutingNodeOptions> routingNodeOptions = new ArrayList<>();
         routingNodeOptions.add(option);
 
-        CostingTemplate costingTemplateWithRouting = CostingTemplate.builder().processGroupName(processGroupEnum.getProcessGroup()).routingNodeOptions(routingNodeOptions).build();
+        CostingTemplate costingTemplateWithRouting = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).routingNodeOptions(routingNodeOptions).build();
 
         componentResponse.setCostingTemplate(costingTemplateWithRouting);
         scenariosUtil.postCostScenario(componentResponse);
@@ -617,8 +404,41 @@ public class RoutingsTests {
 
         AnalysisOfScenario analysisOfScenarioWithRouting = componentIterationResponseWithRouting.getResponseEntity().getAnalysisOfScenario();
 
-        softAssertions.assertThat(analysisOfScenarioWithRouting.getProcessRoutingName()).isEqualTo("Material Stock / Laser Punch / Bend Brake / 3 Axis Mill");
+        softAssertions.assertThat(analysisOfScenarioWithRouting.getProcessRoutingName()).isEqualTo("Material Stock / Laser Punch / Bend Brake");
 
         softAssertions.assertAll();
+    }
+
+    private Routings getRoutings(ComponentInfoBuilder component) {
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build();
+        ScenarioResponse scenarioResponse = new DataCreationUtil(component.getComponentName(), component.getScenarioName(), component.getProcessGroup(),
+            component.getResourceFile(), costingTemplate, component.getUser())
+            .createCostComponent();
+
+        return scenariosUtil.getRoutings(component.getUser(), Routings.class, new CssComponent().findFirst(component.getComponentName(), component.getScenarioName(),
+                    component.getUser())
+                .getComponentIdentity(),
+            scenarioResponse.getIdentity()).getResponseEntity();
+    }
+
+    private ResponseWrapper<ComponentIteration> getIterationLatest(ComponentInfoBuilder component, NewCostingLabelEnum costingLabel) {
+
+        CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build();
+
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+            .componentName(component.getComponentName())
+            .scenarioName(component.getScenarioName())
+            .resourceFile(component.getResourceFile())
+            .user(component.getUser())
+            .costingTemplate(costingTemplate)
+            .build());
+
+        scenariosUtil.postCostScenario(componentResponse);
+
+        ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(componentResponse);
+
+        softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(costingLabel.name());
+
+        return iterationsUtil.getComponentIterationLatest(componentResponse);
     }
 }

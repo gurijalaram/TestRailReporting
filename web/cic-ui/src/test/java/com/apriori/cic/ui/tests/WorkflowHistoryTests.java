@@ -1,7 +1,13 @@
 package com.apriori.cic.ui.tests;
 
+import com.apriori.cic.api.enums.MappingRule;
+import com.apriori.cic.api.enums.PlmPartDataType;
+import com.apriori.cic.api.enums.PlmTypeAttributes;
+import com.apriori.cic.api.models.request.AgentPort;
 import com.apriori.cic.api.utils.CicApiTestUtil;
+import com.apriori.cic.api.utils.PlmPartsUtil;
 import com.apriori.cic.ui.enums.JobDetailsListHeaders;
+import com.apriori.cic.ui.enums.RuleOperatorEnum;
 import com.apriori.cic.ui.enums.WorkflowListColumns;
 import com.apriori.cic.ui.pagedata.WorkFlowData;
 import com.apriori.cic.ui.pageobjects.home.CIConnectHome;
@@ -29,10 +35,12 @@ import org.junit.jupiter.api.Test;
 public class WorkflowHistoryTests extends TestBaseUI {
 
     private static WorkFlowData workFlowData;
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser;
     private WorkflowHome workflowHome;
     private SoftAssertions softAssertions;
     private CIConnectHome ciConnectHome;
+    private AgentPort agentPort;
+    private String plmPartNumber;
 
     public WorkflowHistoryTests() {
         super();
@@ -41,15 +49,22 @@ public class WorkflowHistoryTests extends TestBaseUI {
     @BeforeEach
     public void setup() {
         softAssertions = new SoftAssertions();
+        currentUser = UserUtil.getUser();
         ciConnectHome = new CicLoginPage(driver).login(currentUser);
+        agentPort = CicApiTestUtil.getAgentPortData();
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
+        plmPartNumber = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber();
     }
 
     @Test
     @TestRail(id = {3589})
     @Description("Test creating, editing and deletion of a worflow")
     public void testStartAndTrackJob() {
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
         workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFC"));
+        workFlowData.getQueryDefinitionsData().get(0).setFieldValue(plmPartNumber);
+        String scenarioName = "AUTO_SN" + new GenerateStringUtil().getRandomNumbers();
+        String plmPartNumber = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber();
+
         // CREATE WORK FLOW
         workflowHome = ciConnectHome
             .clickWorkflowMenu()
@@ -57,10 +72,11 @@ public class WorkflowHistoryTests extends TestBaseUI {
             .selectScheduleTab()
             .clickNewButton()
             .enterWorkflowNameField(workFlowData.getWorkflowName())
-            .selectWorkflowConnector(workFlowData.getConnectorName())
+            .selectWorkflowConnector(agentPort.getConnector())
             .clickNextBtnInDetailsTab()
-            .addRule(workFlowData, this.workFlowData.getQueryDefinitionsData().size())
+            .addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, plmPartNumber)
             .clickWFQueryDefNextBtn()
+            .addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, scenarioName)
             .clickCINextBtn()
             .clickCINotificationNextBtn()
             .clickSaveButton();
@@ -81,19 +97,23 @@ public class WorkflowHistoryTests extends TestBaseUI {
         "Test Job Details list control panel " +
         "Test the Job Details Dialog")
     public void testVerifyJobDetailsOfWorkflow() {
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
         workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFC"));
+        String scenarioName = "AUTO_SN" + new GenerateStringUtil().getRandomNumbers();
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
         String date = DateUtil.getCurrentDate(DateFormattingUtils.dtf_MMddyyyyHHmmss_hyphen);
-        workflowHome = ciConnectHome.clickWorkflowMenu()
+        workflowHome = new CicLoginPage(driver)
+            .login(currentUser)
+            .clickWorkflowMenu()
             .setTestData(workFlowData)
             .selectScheduleTab()
             .clickNewButton()
             .enterWorkflowNameField(workFlowData.getWorkflowName())
-            .selectWorkflowConnector(workFlowData.getConnectorName())
+            .selectWorkflowConnector(agentPort.getConnector())
             .selectEnabledCheckbox("off")
             .clickNextBtnInDetailsTab()
-            .addRule(workFlowData, this.workFlowData.getQueryDefinitionsData().size())
+            .addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber())
             .clickWFQueryDefNextBtn()
+            .addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, scenarioName)
             .clickCINextBtn()
             .clickCINotificationNextBtn()
             .clickSaveButton();
@@ -131,7 +151,6 @@ public class WorkflowHistoryTests extends TestBaseUI {
     @Description("Test column selection dialog" +
         "Test persistence of column selection")
     public void testVerifyJobDetailsHeaders() {
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
         JobDetails jobDetails = ciConnectHome.clickWorkflowMenu().selectViewHistoryTab().clickViewDetailsButton();
         softAssertions.assertThat(jobDetails.getExportBtn().isEnabled()).isTrue();
         softAssertions.assertThat(jobDetails.getIdElement().getText()).isNotEmpty();

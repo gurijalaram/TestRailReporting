@@ -1,7 +1,7 @@
 package testsuites;
 
-import com.apriori.cus.api.tests.UserPreferencesTests;
-import com.apriori.cus.api.tests.UserTests;
+import com.apriori.bcm.api.tests.UserPreferencesTests;
+import com.apriori.bcm.api.tests.UserTests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;

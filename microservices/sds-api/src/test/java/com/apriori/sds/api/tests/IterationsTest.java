@@ -24,6 +24,7 @@ public class IterationsTest extends SDSTestUtil {
     public void getIterations() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
+                .apUserContext(testingApUserContext)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 )
@@ -38,6 +39,7 @@ public class IterationsTest extends SDSTestUtil {
     public void getIterationLatest() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ScenarioIteration.class)
+                .apUserContext(testingApUserContext)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 )
@@ -52,6 +54,7 @@ public class IterationsTest extends SDSTestUtil {
     public void getIterationsByIdentity() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
+                .apUserContext(testingApUserContext)
                 .inlineVariables(
                     getComponentId(), getScenarioId(), getIterationId()
                 )

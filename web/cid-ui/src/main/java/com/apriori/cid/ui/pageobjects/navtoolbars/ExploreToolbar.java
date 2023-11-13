@@ -151,6 +151,17 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
+     * Uploads a component through the API and opens it via url
+     *
+     * @param componentInfo - the component info builder
+     * @return new page object
+     */
+    public EvaluatePage uploadComponentAndOpen(ComponentInfoBuilder componentInfo) {
+        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCID(componentInfo);
+        return navigateToScenario(component);
+    }
+
+    /**
      * Checks a component has been deleted
      *
      * @param component - the component object

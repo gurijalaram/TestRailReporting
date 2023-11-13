@@ -38,6 +38,7 @@ dependencies {
     implementation project(':microservices:ach-api')
     implementation project(':microservices:gcd-api')
     implementation project(':microservices:cmp-api')
+    implementation project(':microservices:bcm-api')
 
 
     // web
@@ -78,6 +79,7 @@ dependencies {
     testImplementation project(path: ':microservices:ach-api', configuration: 'testArtifacts')
     testImplementation project(path: ':microservices:gcd-api', configuration: 'testArtifacts')
     testImplementation project(path: ':microservices:cmp-api', configuration: 'testArtifacts')
+    testImplementation project(path: ':microservices:bcm-api', configuration: 'testArtifacts')
 
     testImplementation project(path: ':web:ach-ui', configuration: 'testArtifacts')
     testImplementation project(path: ':web:cir-ui', configuration: 'testArtifacts')

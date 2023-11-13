@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "required": [
+    "licensedModules"
+  ],
+  "properties": {
+    "licensedModules": {
+      "type": "object",
+      "required": [
+        "worksheet"
+      ],
+      "properties": {
+        "worksheet": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

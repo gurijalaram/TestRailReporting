@@ -1,5 +1,8 @@
 package com.integration.tests;
 
+import com.apriori.cic.api.enums.PlmPartDataType;
+import com.apriori.cic.api.enums.PlmTypeAttributes;
+import com.apriori.cic.api.models.request.AgentPort;
 import com.apriori.cic.api.models.request.JobDefinition;
 import com.apriori.cic.api.models.response.AgentWorkflow;
 import com.apriori.cic.api.models.response.AgentWorkflowJobRun;
@@ -7,6 +10,8 @@ import com.apriori.cic.api.models.response.AgentWorkflowReportTemplates;
 import com.apriori.cic.api.models.response.ReportTemplatesRow;
 import com.apriori.cic.api.utils.CicApiTestUtil;
 import com.apriori.cic.api.utils.CicLoginUtil;
+import com.apriori.cic.api.utils.PlmPartsUtil;
+import com.apriori.cic.ui.enums.RuleOperatorEnum;
 import com.apriori.cic.ui.enums.SortedOrderType;
 import com.apriori.cic.ui.enums.WorkflowListColumns;
 import com.apriori.cic.ui.pagedata.WorkFlowData;
@@ -52,7 +57,9 @@ public class CICIntegrationTests extends TestBaseUI {
     private static SoftAssertions softAssertions;
     private static AgentWorkflowReportTemplates reportTemplateNames;
     private static ReportTemplatesRow reportTemplateName;
-    UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser;
+    private AgentPort agentPort;
+    private String plmPartNumber;
 
     public CICIntegrationTests() {
         super();
@@ -62,9 +69,12 @@ public class CICIntegrationTests extends TestBaseUI {
     public void setup() {
         softAssertions = new SoftAssertions();
         jobDefinitionData = new TestDataService().getTestData("CicGuiDeleteJobDefData.json", JobDefinition.class);
+        currentUser = UserUtil.getUser();
+        agentPort = CicApiTestUtil.getAgentPortData();
         String randomNumber = RandomStringUtils.randomNumeric(6);
         workflowName = "CIC_REPORT" + randomNumber;
         scenarioName = PropertiesContext.get("customer") + randomNumber;
+        plmPartNumber = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber();
     }
 
     @Test
@@ -86,7 +96,7 @@ public class CICIntegrationTests extends TestBaseUI {
             .selectWorkflowConnector(workFlowData.getConnectorName())
             .clickWFDetailsNextBtn();
 
-        CostingInputsPart costingInputsPart = queryDefinitions.addRule(workFlowData, workFlowData.getQueryDefinitionsData().size())
+        CostingInputsPart costingInputsPart = queryDefinitions.addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, plmPartNumber)
             .clickWFQueryDefNextBtn();
 
         NotificationsPart notificationsPart = costingInputsPart.addCostingInputFields(workFlowData.getCostingInputsData().size()).clickCINextBtn();
@@ -110,6 +120,7 @@ public class CICIntegrationTests extends TestBaseUI {
         loginSession = new CicLoginUtil(driver).login(currentUser).navigateToUserMenu().getWebSession();
         workflowData = String.format(CicApiTestUtil.getWorkflowData("WatchPointReportData.json"), CicApiTestUtil.getCustomerName(),
             CicApiTestUtil.getAgent(loginSession), workflowName, scenarioName);
+        workflowData.replace("<PART_NUMBER>", plmPartNumber);
         // Create WorkFlow
         PartsCost xlsWatchPointReportExpectedData = new TestDataService().getReportData("PartCostReport.json", PartsCost.class);
         ResponseWrapper<String> responseWrapper = CicApiTestUtil.createWorkflow(loginSession, workflowData);

@@ -1,12 +1,5 @@
 package com.apriori.bcs.api.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.apriori.bcs.api.controller.BatchPartResources;
 import com.apriori.bcs.api.controller.BatchResources;
 import com.apriori.bcs.api.enums.BCSAPIEnum;
@@ -26,24 +19,27 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class BatchPartNegativeTest {
     private static Batch batch;
+    private SoftAssertions softAssertions;
 
     @BeforeAll
-    public static void testSetup() {
+    public static void beforeClass() {
         batch = BatchResources.createBatch().getResponseEntity();
-        assertThat(batch.getState(), is(equalTo(BCSState.CREATED.toString())));
     }
 
-    @AfterAll
-    public static void testCleanup() {
-        BatchResources.checkAndCancelBatch(batch);
+    @BeforeEach
+    public void setupTest() {
+        softAssertions = new SoftAssertions();
     }
 
     @Test
@@ -53,11 +49,10 @@ public class BatchPartNegativeTest {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         newPartRequest.setDigitalFactory("Invalid VPE");
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
-        assertTrue(BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), partResponse.getResponseEntity().getIdentity(), BCSState.ERRORED), "Track and wait until part is errored");
+        softAssertions.assertThat(BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), partResponse.getResponseEntity().getIdentity(), BCSState.ERRORED)).isTrue();
         partResponse = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), partResponse.getResponseEntity().getIdentity());
 
-        assertEquals("Verify the error when part is created with invalid VPE",
-            "Unable to find active digital factory with name 'Invalid VPE'", partResponse.getResponseEntity().getErrors());
+        softAssertions.assertThat(partResponse.getResponseEntity().getErrors()).isEqualTo("Unable to find active digital factory with name 'Invalid VPE'");
     }
 
     @Test
@@ -68,13 +63,10 @@ public class BatchPartNegativeTest {
         RequestEntity requestEntity = BatchPartResources.batchPartRequestEntity(newPartRequest, batch.getIdentity());
         requestEntity.queryParams(requestEntity.queryParams().use("ProcessGroup", ProcessGroupEnum.INVALID_PG.toString()));
         ResponseWrapper<Part> partResponse = HTTPRequest.build(requestEntity).postMultipart();
-
-        assertTrue(BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), partResponse.getResponseEntity().getIdentity(), BCSState.ERRORED), "Track and wait until part is completed");
+        softAssertions.assertThat(BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), partResponse.getResponseEntity().getIdentity(), BCSState.ERRORED)).isTrue();
 
         partResponse = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), partResponse.getResponseEntity().getIdentity());
-
-        assertEquals("Verify the error when part is created with invalid Process Group",
-            "Unable to find process group with name 'INVALID_PG'", partResponse.getResponseEntity().getErrors());
+        softAssertions.assertThat(partResponse.getResponseEntity().getErrors()).isEqualTo("Unable to find process group with name 'INVALID_PG'");
     }
 
     @Test
@@ -85,15 +77,10 @@ public class BatchPartNegativeTest {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         ResponseWrapper<ErrorMessage> errorMessageResponse;
         errorMessageResponse = BatchPartResources.createBatchPartWithInvalidData(newPartRequest, batch.getIdentity(), FileType.TXT);
-
-        assertEquals("Verify the error when part is created with text file",
-            "Invalid file type, file type 'txt' is not permitted", errorMessageResponse.getResponseEntity().getMessage());
-
+        softAssertions.assertThat(errorMessageResponse.getResponseEntity().getMessage()).isEqualTo("Invalid file type, file type 'txt' is not permitted");
         // Test with PDF file
         errorMessageResponse = BatchPartResources.createBatchPartWithInvalidData(newPartRequest, batch.getIdentity(), FileType.PDF);
-
-        assertEquals("Verify the error when part is created with PDF file",
-            "Invalid file type, file type 'pdf' is not permitted", errorMessageResponse.getResponseEntity().getMessage());
+        softAssertions.assertThat(errorMessageResponse.getResponseEntity().getMessage()).isEqualTo("Invalid file type, file type 'pdf' is not permitted");
     }
 
     @Test
@@ -103,10 +90,9 @@ public class BatchPartNegativeTest {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         newPartRequest.setUdas("{\"ProjectName\":\"Invalid Project Name for negative automation test\"}");
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
-        assertTrue(BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), partResponse.getResponseEntity().getIdentity(), BCSState.ERRORED), "Track and wait until part is errored");
+        softAssertions.assertThat(BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), partResponse.getResponseEntity().getIdentity(), BCSState.ERRORED)).isTrue();
         partResponse = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), partResponse.getResponseEntity().getIdentity());
-
-        assertTrue(partResponse.getResponseEntity().getErrors().contains("Custom attribute with name 'ProjectName' was not found"), "Verify the error when part is created with invalid UDA");
+        softAssertions.assertThat(partResponse.getResponseEntity().getErrors().contains("Custom attribute with name 'ProjectName' was not found")).isTrue();
     }
 
     @Test
@@ -115,8 +101,7 @@ public class BatchPartNegativeTest {
     public void createBatchPartWithInvalidBatch() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         ResponseWrapper<ErrorMessage> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, "INVALIDBATCHID", ErrorMessage.class);
-
-        assertThat(partResponse.getResponseEntity().getMessage(), is(equalTo("'batchIdentity' is not a valid identity.")));
+        softAssertions.assertThat(partResponse.getResponseEntity().getMessage()).isEqualTo("'batchIdentity' is not a valid identity.");
     }
 
     @Test
@@ -124,8 +109,7 @@ public class BatchPartNegativeTest {
     @Description("Invalid Customer Identity")
     public void createBatchWithInvalidCustomerID() {
         ResponseWrapper<ErrorMessage> batchResponse = BatchResources.createBatch("INVALIDCUSTOMER", ErrorMessage.class);
-
-        assertThat(batchResponse.getResponseEntity().getMessage(), is(equalTo("'customerIdentity' is not a valid identity.")));
+        softAssertions.assertThat(batchResponse.getResponseEntity().getMessage()).isEqualTo("'customerIdentity' is not a valid identity.");
     }
 
     @Test
@@ -135,8 +119,8 @@ public class BatchPartNegativeTest {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         newPartRequest.setExternalId("");
         ResponseWrapper<ErrorMessage> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity(), ErrorMessage.class);
-
-        assertThat(partResponse.getResponseEntity().getMessage(), is(containsString("'externalId' should not be empty")));
+        softAssertions.assertThat(partResponse.getResponseEntity().getMessage().contains("'externalId' should not be empty")).isTrue();
+        softAssertions.assertThat(partResponse.getResponseEntity().getMessage().contains("'externalId' should not be blank")).isTrue();
     }
 
     @Test
@@ -149,7 +133,7 @@ public class BatchPartNegativeTest {
                 .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
         ).get();
 
-        assertThat(batchResponse.getResponseEntity().getMessage(), is(equalTo("'customerIdentity' is not a valid identity.")));
+        softAssertions.assertThat(batchResponse.getResponseEntity().getMessage()).isEqualTo("'customerIdentity' is not a valid identity.");
     }
 
     @Test
@@ -215,7 +199,7 @@ public class BatchPartNegativeTest {
                 .expectedResponseCode(HttpStatus.SC_CONFLICT)
         ).get();
 
-        assertThat(batchResponse.getResponseEntity().getMessage(), is(equalTo("Can't get cost results. Invalid state.")));
+        softAssertions.assertThat(batchResponse.getResponseEntity().getMessage()).isEqualTo("Can't get cost results. Invalid state.");
     }
 
     @Test
@@ -261,7 +245,8 @@ public class BatchPartNegativeTest {
                 .expectedResponseCode(HttpStatus.SC_CONFLICT)
         ).get();
 
-        assertThat(batchResponse.getResponseEntity().getError(), is(equalTo("Conflict")));
+        softAssertions.assertThat(batchResponse.getResponseEntity().getMessage())
+            .isEqualTo(String.format("Part with identity '%s' could not have a watchpoint report generated. Costing Result is 'null'.", part.getIdentity()));
     }
 
     @Test
@@ -302,8 +287,7 @@ public class BatchPartNegativeTest {
                 .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
         ).get();
 
-        assertThat(batchResponse.getResponseEntity().getMessage(), is(containsString("'batchIdentity' should not be blank")));
-
+        softAssertions.assertThat(batchResponse.getResponseEntity().getMessage().contains("'batchIdentity' should not be blank")).isTrue();
     }
 
     @Test
@@ -319,7 +303,7 @@ public class BatchPartNegativeTest {
                 .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
         ).get();
 
-        assertThat(batchResponse.getResponseEntity().getMessage(), is(containsString("'identity' should not be blank")));
+        softAssertions.assertThat(batchResponse.getResponseEntity().getMessage().contains("'identity' should not be blank")).isTrue();
     }
 
     @Test
@@ -336,7 +320,7 @@ public class BatchPartNegativeTest {
                 .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
         ).get();
 
-        assertThat(batchResponse.getResponseEntity().getMessage(), is(containsString("'batchIdentity' should not be blank")));
+        softAssertions.assertThat(batchResponse.getResponseEntity().getMessage().contains("'batchIdentity' should not be blank")).isTrue();
     }
 
     @Test
@@ -369,5 +353,15 @@ public class BatchPartNegativeTest {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         newPartRequest.setProductionLife("abc");
         BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity(), ErrorMessage.class);
+    }
+
+    @AfterEach
+    public void tearTest() {
+        softAssertions.assertAll();
+    }
+
+    @AfterAll
+    public static void afterClass() {
+        BatchResources.checkAndCancelBatch(batch);
     }
 }

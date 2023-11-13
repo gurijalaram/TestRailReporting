@@ -2,7 +2,11 @@ package com.apriori.cic.ui.tests;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
+import com.apriori.cic.api.enums.PlmPartDataType;
+import com.apriori.cic.api.enums.PlmTypeAttributes;
 import com.apriori.cic.api.utils.CicApiTestUtil;
+import com.apriori.cic.api.utils.PlmPartsUtil;
+import com.apriori.cic.ui.enums.RuleOperatorEnum;
 import com.apriori.cic.ui.features.WorkFlowFeatures;
 import com.apriori.cic.ui.pagedata.WorkFlowData;
 import com.apriori.cic.ui.pageobjects.home.CIConnectHome;
@@ -42,6 +46,10 @@ public class WorkflowScheduleTests extends TestBaseUI {
     public void setup() {
         softAssertions = new SoftAssertions();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
+        String scenarioName = "AUTO_SN" + new GenerateStringUtil().getRandomNumbers();
+        workFlowData.getQueryDefinitionsData().get(0).setFieldName(PlmTypeAttributes.PLM_PART_NUMBER.getCicGuiField());
+        workFlowData.getQueryDefinitionsData().get(0).setFieldOperator(RuleOperatorEnum.EQUAL.getRuleOperator());
+        workFlowData.getQueryDefinitionsData().get(0).setFieldValue(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber());
         ciConnectHome = new CicLoginPage(driver).login(currentUser);
         workFlowFeatures = ciConnectHome.clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -83,7 +91,7 @@ public class WorkflowScheduleTests extends TestBaseUI {
             .setSchedule(workflowSchedule)
             .clickWFDetailsNextBtn();
 
-        workflowHome = queryDefinitions.addRule(workFlowData, workFlowData.getQueryDefinitionsData().size())
+        workflowHome = queryDefinitions.addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber())
             .clickWFQueryDefNextBtn()
             .clickCINextBtn()
             .clickCINotificationNextBtn()

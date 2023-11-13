@@ -29,6 +29,7 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
@@ -38,6 +39,7 @@ import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Customers;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
+import com.apriori.shared.util.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -130,6 +132,7 @@ public abstract class SDSTestUtil extends TestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
                 .inlineVariables(componentId, scenarioId)
+                .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         HTTPRequest.build(requestEntity).delete();
@@ -235,6 +238,7 @@ public abstract class SDSTestUtil extends TestUtil {
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .headers(getContextHeaders())
                 .token(testingUser.getToken())
+                .apUserContext(testingApUserContext)
                 .body("component", postComponentRequest)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
@@ -269,7 +273,7 @@ public abstract class SDSTestUtil extends TestUtil {
         ResponseWrapper<Customers> customersResponse = HTTPRequest.build(
             RequestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customers.class)
                 .token(testingUser.getToken())
-
+                .queryParams(new QueryParams().use("cloudReference[EQ]", PropertiesContext.get("${customer}.cloud_reference_name")))
         ).get();
 
         Customer customer = customersResponse.getResponseEntity().getItems().get(0);
@@ -297,6 +301,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+                .apUserContext(testingApUserContext)
                 .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .token(userCredentials.getToken());
 
@@ -388,6 +393,7 @@ public abstract class SDSTestUtil extends TestUtil {
     protected List<CostingTemplate> getCostingTemplates() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
+                .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<CostingTemplatesItems> response = HTTPRequest.build(requestEntity).get();
@@ -417,6 +423,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+                .apUserContext(testingApUserContext)
                 .inlineVariables(
                     componentIdentity, scenarioIdentity
                 )
@@ -491,6 +498,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
+                .apUserContext(testingApUserContext)
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", shallowPublishRequest)
                 .expectedResponseCode(expectedResponseCode);
