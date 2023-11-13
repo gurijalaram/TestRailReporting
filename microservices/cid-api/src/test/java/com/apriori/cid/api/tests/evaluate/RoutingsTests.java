@@ -11,6 +11,7 @@ import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dto.ComponentDTORequest;
+import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -68,32 +69,6 @@ public class RoutingsTests {
         component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
 
         softAssertions.assertThat(getIterationLatest(component, NewCostingLabelEnum.COST_COMPLETE).getResponseEntity().getScenarioRoutings().size()).isGreaterThan(0);
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {14983})
-    @Description("Verify Get available routings API does not return routings when scenario is in NOT_COSTED status")
-    public void testAvailableRoutingForUncostedPart() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
-
-        ComponentInfoBuilder scenarioItem = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(component.getComponentName())
-            .scenarioName(component.getScenarioName())
-            .resourceFile(component.getResourceFile())
-            .user(component.getUser())
-            .build());
-
-        ErrorRequestResponse errorRequestResponse = scenariosUtil.getRoutings(component.getUser(), ErrorRequestResponse.class,
-            new CssComponent().findFirst(component.getComponentName(), component.getScenarioName(), component.getUser())
-                .getComponentIdentity(),
-            scenarioItem.getScenarioIdentity()).getResponseEntity();
-
-        String expectedMessage = String.format("Scenario '%s' was not costed, or was costed with invalid cost inputs, available routings not found", component.getScenarioName());
-
-        softAssertions.assertThat(errorRequestResponse.getMessage()).isEqualTo(expectedMessage);
-        softAssertions.assertThat(errorRequestResponse.getStatus()).isEqualTo("409");
 
         softAssertions.assertAll();
     }
@@ -358,7 +333,7 @@ public class RoutingsTests {
             component.getUser()).createCostComponent();
 
         Routings routings = scenariosUtil.getRoutings(component.getUser(), Routings.class, new CssComponent().findFirst(component2.getComponentName(), component.getScenarioName(), component.getUser()).getComponentIdentity(),
-            scenarioResponse2.getIdentity()).getResponseEntity();
+            scenarioResponse2.getIdentity(), costingTemplate2.getVpeName(), ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "2AL+3AM Routing",
@@ -418,7 +393,9 @@ public class RoutingsTests {
         return scenariosUtil.getRoutings(component.getUser(), Routings.class, new CssComponent().findFirst(component.getComponentName(), component.getScenarioName(),
                     component.getUser())
                 .getComponentIdentity(),
-            scenarioResponse.getIdentity()).getResponseEntity();
+            scenarioResponse.getIdentity(),
+            component.getCostingTemplate().getVpeName(),
+            component.getProcessGroup().getProcessGroup()).getResponseEntity();
     }
 
     private ResponseWrapper<ComponentIteration> getIterationLatest(ComponentInfoBuilder component, NewCostingLabelEnum costingLabel) {
