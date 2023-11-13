@@ -1,6 +1,6 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
-def timeStamp = new Date().format('yyyyMMddHHssSSS')
+def timeStamp = new Date().format('yyyyMMddHHmmssSSS')
 def javaOpts = ""
 def url
 def threadCount
