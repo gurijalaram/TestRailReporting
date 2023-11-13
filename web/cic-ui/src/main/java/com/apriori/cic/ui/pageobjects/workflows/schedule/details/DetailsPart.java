@@ -37,6 +37,9 @@ public class DetailsPart extends CICBasePage {
     @FindBy(xpath = "//div[@sub-widget-container-id='tabsv2-79' and @tab-number='2']//button[@data-add='group']")
     private WebElement addRuleGroupElement;
 
+    @FindBy(xpath = "//div[@tab-number='1']//span[@class='ss-arrow']//span[@class='arrow-up']")
+    private WebElement openDdlElement;
+
     @FindBy(css = "#msMinutesTab")
     private WebElement minutesTab;
     @FindBy(css = "#MinutesInput")
@@ -209,6 +212,9 @@ public class DetailsPart extends CICBasePage {
      * @return NewEditWorkflow page object
      */
     public Object clickWFDetailsNextBtn() {
+        if (pageUtils.isElementDisplayed(openDdlElement)) {
+            pageUtils.waitForElementAndClick(openDdlElement);
+        }
         pageUtils.waitForElementToBeClickable(this.getNextButtonElement());
         Object object = null;
         if (!this.getNextButtonElement().isEnabled()) {
@@ -559,6 +565,4 @@ public class DetailsPart extends CICBasePage {
     private WebElement getCostingInputAddRowButton() {
         return driver.findElement(By.xpath(String.format("//div[@sub-widget-container-id='tabsv2-79'][@tab-number='%s']//button[.='Add Row']", workflowPopUpActiveTabElement.getText())));
     }
-
-
 }

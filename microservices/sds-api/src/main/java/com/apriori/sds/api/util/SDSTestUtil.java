@@ -29,6 +29,7 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
@@ -38,6 +39,7 @@ import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Customers;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
+import com.apriori.shared.util.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -272,7 +274,7 @@ public abstract class SDSTestUtil extends TestUtil {
         ResponseWrapper<Customers> customersResponse = HTTPRequest.build(
             requestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customers.class)
                 .token(testingUser.getToken())
-
+                .queryParams(new QueryParams().use("cloudReference[EQ]", PropertiesContext.get("${customer}.cloud_reference_name")))
         ).get();
 
         Customer customer = customersResponse.getResponseEntity().getItems().get(0);

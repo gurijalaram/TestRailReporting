@@ -101,11 +101,12 @@ public class HistoryPage extends CICBasePage {
      */
     private Boolean trackJobStatus(String workflowName) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
-        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
+        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus = StringUtils.EMPTY;
         WebElement tableRow;
         tableRow = tableUtils.findTableItemByName(historyJobListTable, workflowName, tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.WORKFLOW_NAME.getColumnName()));
-        finalJobStatus = tableUtils.getItemNameFromTable(tableRow, tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.JOB_STATUS.getColumnName()))
+        Integer tableColIndex = tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.JOB_STATUS.getColumnName()) + 1;
+        finalJobStatus = tableUtils.getItemNameFromTable(tableRow, tableColIndex)
             .getText();
         while (!jobStatusList.contains(finalJobStatus)) {
             if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
@@ -114,10 +115,7 @@ public class HistoryPage extends CICBasePage {
             try {
                 pageUtils.waitForElementAndClick(refreshButton);
                 TimeUnit.SECONDS.sleep(WAIT_TIME);
-                finalJobStatus = tableUtils.getItemNameFromTable(tableUtils.findTableItemByName(historyJobListTable, workflowName,
-                            tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.WORKFLOW_NAME.getColumnName())),
-                        tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.JOB_STATUS.getColumnName()))
-                    .getText();
+                finalJobStatus = tableUtils.getItemNameFromTable(tableUtils.findTableItemByName(historyJobListTable, workflowName, tableUtils.getColumnIndx(historyJobListHeaders, ViewHistoryListHeaders.WORKFLOW_NAME.getColumnName())), tableColIndex).getText();
                 log.debug(String.format("WorkFlowName  >>%s<< ::: Job Status  >>%s<<", workflowName, finalJobStatus));
             } catch (InterruptedException e) {
                 log.error(e.getMessage());

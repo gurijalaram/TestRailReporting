@@ -1,6 +1,7 @@
 package com.apriori.cid.ui.tests.evaluate;
 
 import static com.apriori.shared.util.enums.ProcessGroupEnum.ASSEMBLY;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.SHEET_METAL;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
@@ -23,6 +24,7 @@ import com.apriori.cid.ui.utils.DecimalPlaceEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.ComponentDTORequest;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
@@ -61,6 +63,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     private GuidanceIssuesPage guidanceIssuesPage;
     private AdvancedPage advancedPage;
     private CssComponent cssComponent = new CssComponent();
+    private ComponentInfoBuilder component;
 
     private File resourceFile;
     private File twoModelFile;
@@ -86,17 +89,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14404, 15002, 15816, 14408})
     @Description("Validate the user can Change the process routing in CI Design")
     public void testAlternateRoutingSelection() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponent("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -118,15 +116,11 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14392, 14395, 14397, 14398, 14400, 14406, 7845, 16093})
     @Description("Validate routings UI features")
     public void testRoutingSelectionUI() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+        component = new ComponentDTORequest().getComponentByProcessGroup(SHEET_METAL);
 
-        String componentName = "bracket_form";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
         loginPage = new CidAppLoginPage(driver);
-        advancedPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        advancedPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .goToAdvancedTab();
 
         softAssertions.assertThat(advancedPage.isRoutingSelectionButtonEnabled()).isEqualTo(false);
@@ -166,16 +160,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15817, 15817, 15820})
     @Description("Validate routings availability in regards to scenario cost status")
     public void costStatusAndRouting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+        component = new ComponentDTORequest().getComponentByProcessGroup(SHEET_METAL);
 
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
@@ -212,17 +202,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14992, 15806, 7835})
     @Description("Validate the user can Change the process routing")
     public void changeRouting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.POLYURETHANE_POLYMERIC_MDI.getMaterialName())
@@ -246,17 +231,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7854, 12379, 12381, 12382})
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testLetAprioriDecide() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "plasticLid";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -297,17 +277,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15012, 14401, 15050, 15988, 7851, 7852})
     @Description("Validate the information updates in the routing modal box")
     public void testLastRouting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "CastedPart";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
-        routingSelectionPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        routingSelectionPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection();
@@ -337,17 +312,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7855, 14985, 15799})
     @Description("Validate behaviour when forcing a material that will fail costing within CID")
     public void failCostingRouting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
-
-        String componentName = "CastedPart";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -369,17 +339,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7844, 7290, 7291, 7292})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "HoleProximityTest";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(1.56), Offset.offset(5.0));
@@ -413,17 +378,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7846})
     @Description("Validate materials selected are appropriate for selected routing.")
     public void routingMaterials() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "plasticLid";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
-        materialSelectorPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialSelectorPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -444,17 +404,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7850})
     @Description("Validate behaviour when selecting a PG that auto triggers a secondary process")
     public void routingSecondaryPG() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
-
-        String componentName = "CastedPart";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.VISIJET_M3_BLACK.getMaterialName())
@@ -484,17 +439,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7848})
     @Description("Validate a variety of secondary processes can be added for newly selected routings")
     public void secondaryProcessesRoutings() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "PMI_AllTolTypesCatia";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection()
@@ -520,17 +470,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7859})
     @Description("Validate user cannot select a routing that does not belong to a certain Process Group")
     public void routingPGs() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "plasticLid";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
-        routingSelectionPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        routingSelectionPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection();
@@ -543,17 +488,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {16132, 7841})
     @Description("Be able to see basic breakdown of cycle time by process for problem identification.")
     public void routingCycleTime() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialProcessPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Band Saw");
@@ -635,17 +575,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14987, 15801})
     @Description("Validate routings Casting")
     public void routingsCasting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
-
-        String componentName = "Casting";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
@@ -669,17 +604,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14988, 15802})
     @Description("Validate routings Die Cast")
     public void routingsDieCasting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "SandCast";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".x_t");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
@@ -703,17 +633,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14989, 15803})
     @Description("Validate routings Investment Cast")
     public void routingsInvestmentCasting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_INVESTMENT;
-
-        String componentName = "case_012_009-0020647_hinge_2";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
@@ -735,17 +660,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14990, 15804, 7843})
     @Description("Validate routings Sand Cast")
     public void routingsSandCasting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
-
-        String componentName = "SandCast";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".x_t");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Vertical Automatic");
@@ -766,17 +686,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14991, 15805})
     @Description("Validate routings Forging")
     public void routingsForging() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-
-        String componentName = "ap_blow_molding_excerise_EL0000";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".STEP");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
@@ -799,17 +714,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14994, 15808})
     @Description("Validate routings Rapid Prototyping")
     public void routingsRapidPrototyping() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.RAPID_PROTOTYPING;
-
-        String componentName = "Rapid Prototyping";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
@@ -833,17 +743,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14995, 15809})
     @Description("Validate routings Roto & Blow Molding")
     public void routingsRotoBlowMold() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ROTO_BLOW_MOLDING;
-
-        String componentName = "Rapid Prototyping";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
@@ -867,17 +772,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14996, 15810})
     @Description("Validate routings Sheet Metal")
     public void routingsSheetMetal() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "700-33770-01_A0";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
@@ -903,17 +803,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14997, 15811})
     @Description("Validate routings Sheet Metal - Hydroforming")
     public void routingsHydroforming() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_HYDROFORMING;
-
-        String componentName = "Hydroforming";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
@@ -943,17 +838,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14999, 15813})
     @Description("Validate routings Sheet Metal - Stretchforming")
     public void routingsStretchforming() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING;
-
-        String componentName = "Hydroforming";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(22.73), Offset.offset(3.0));
@@ -974,17 +864,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15001, 15815})
     @Description("Validate routings Sheet Plastic")
     public void routingsSheetPlastic() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
-
-        String componentName = "5d51749fig01";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
@@ -1008,17 +893,12 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {16383})
     @Description("Validate routings are disabled")
     public void routingsDisabled() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
-
-        String componentName = "116-5809";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
 
         loginPage = new CidAppLoginPage(driver);
-        advancedPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        advancedPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .goToAdvancedTab();
 
@@ -1058,21 +938,16 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7857})
     @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
     public void routingTolerances() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "DTCCastingIssues";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Melting / High Pressure Die Casting / Trim / 5 Axis Mill");
@@ -1243,17 +1118,11 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14409})
     @Description("Validate routings and user preferences")
     public void routingsAndUserPreferences() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
-
-        String componentName = "5d51749fig01";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
 
         loginPage = new CidAppLoginPage(driver);
-        routingSelectionPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        routingSelectionPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection();

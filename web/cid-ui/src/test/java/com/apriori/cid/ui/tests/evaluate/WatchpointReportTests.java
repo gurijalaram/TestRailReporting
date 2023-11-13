@@ -42,6 +42,7 @@ public class WatchpointReportTests extends TestBaseUI {
     }
 
     @Test
+    @Disabled("Ticket has been pulled from release")
     @Tag(SMOKE)
     @Issue("BA-2962")
     @TestRail(id = {21933, 21934, 21940})
@@ -79,7 +80,7 @@ public class WatchpointReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("Has been pulled from release")
+    @Disabled("Ticket has been pulled from release")
     @Tag(SMOKE)
     @Issue("BA-2962")
     @TestRail(id = {28525, 28526})

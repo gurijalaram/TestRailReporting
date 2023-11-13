@@ -63,8 +63,9 @@ public class SustainabilityScenarioTest extends SDSTestUtil {
 
         List<ScenarioIteration> scenarios = new ArrayList<>();
 
-        scenarios.add((ScenarioIteration) HTTPRequest.build(initRequestToGetIteration(0, testingScenarios)).get().getResponseEntity());
-        scenarios.add((ScenarioIteration) HTTPRequest.build(initRequestToGetIteration(1, testingScenarios)).get().getResponseEntity());
+        for (int i = 0; i < testingScenarios.size(); i++) {
+            scenarios.add((ScenarioIteration) HTTPRequest.build(initRequestToGetIteration(i, testingScenarios)).get().getResponseEntity());
+        }
 
         return scenarios.stream()
             .filter(p -> (!p.getScenarioProcesses().isEmpty()))

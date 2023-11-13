@@ -7,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.StringContains.containsString;
 
-import com.apriori.cid.api.models.dto.AssemblyDTORequest;
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
@@ -26,6 +25,7 @@ import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.AssemblyDTORequest;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;

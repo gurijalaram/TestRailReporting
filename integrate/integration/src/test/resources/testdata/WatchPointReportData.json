@@ -7,7 +7,7 @@
         {
           "fieldName": "partNumber",
           "type": "EQ",
-          "value": "0000001040"
+          "value": "<PART_NUMBER>"
         }
       ]
     }
