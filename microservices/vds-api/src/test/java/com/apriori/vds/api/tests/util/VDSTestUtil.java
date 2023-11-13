@@ -37,7 +37,6 @@ public abstract class VDSTestUtil extends TestUtil {
     @BeforeAll
     public static  void init() {
         requestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
-        //RequestEntityUtil_Old.useApUserContextForRequests(testingUser = UserUtil.getUser());
     }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
