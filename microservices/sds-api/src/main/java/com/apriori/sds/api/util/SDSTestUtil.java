@@ -29,7 +29,7 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.Application;
@@ -42,6 +42,7 @@ import com.apriori.shared.util.models.response.component.ScenarioItem;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
 import java.util.Collections;
@@ -61,12 +62,14 @@ public abstract class SDSTestUtil extends TestUtil {
     protected static Set<ScenarioItem> scenariosToDelete = new HashSet<>();
     private static ScenarioItem testingComponent;
 
-    // TODO z: fix thread safe
-    //    @BeforeAll
-    //    public static void init() {
-    //        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser("admin"));
-    //        RequestEntityUtil.useTokenForRequests(testingUser.getToken());
-    //    }
+    protected static RequestEntityUtil requestEntityUtil = new RequestEntityUtil();
+
+
+    @BeforeAll
+    public static void init() {
+        requestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser("admin"));
+        requestEntityUtil.useTokenForRequests(testingUser.getToken());
+    }
 
     @AfterAll
     public static void clearTestingData() {
@@ -128,7 +131,7 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     protected static void removeTestingScenario(final String componentId, final String scenarioId) {
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
+            requestEntityUtil.init(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
                 .inlineVariables(componentId, scenarioId)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
@@ -232,7 +235,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest, final String componentName) {
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
+            requestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .headers(getContextHeaders())
                 .token(testingUser.getToken())
                 .body("component", postComponentRequest)
@@ -267,7 +270,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     private static String initApApplicationContext() {
         ResponseWrapper<Customers> customersResponse = HTTPRequest.build(
-            RequestEntityUtil_Old.init(CDSAPIEnum.CUSTOMERS, Customers.class)
+            requestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customers.class)
                 .token(testingUser.getToken())
 
         ).get();
@@ -275,7 +278,7 @@ public abstract class SDSTestUtil extends TestUtil {
         Customer customer = customersResponse.getResponseEntity().getItems().get(0);
 
         ResponseWrapper<Applications> responseApplications = HTTPRequest.build(
-            RequestEntityUtil_Old.init(CDSAPIEnum.CUSTOMERS_APPLICATION_BY_CUSTOMER_ID, Applications.class)
+            requestEntityUtil.init(CDSAPIEnum.CUSTOMERS_APPLICATION_BY_CUSTOMER_ID, Applications.class)
                 .inlineVariables(customer.getIdentity())
                 .token(testingUser.getToken())
         ).get();
@@ -296,7 +299,7 @@ public abstract class SDSTestUtil extends TestUtil {
     protected static ResponseWrapper<Scenario> getScenarioRepresentation(ScenarioItem scenarioItem, UserCredentials userCredentials) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+            requestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
                 .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .token(userCredentials.getToken());
 
@@ -324,7 +327,7 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     public static List<ScenarioItem> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            requestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("costingInputs",
@@ -356,7 +359,7 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     private static Scenario postCostingTemplate(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(CidAppAPIEnum.COSTING_TEMPLATES, Scenario.class)
+            requestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
                 .body("costingTemplate", componentInfoBuilder.getCostingTemplate());
 
@@ -387,7 +390,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     protected List<CostingTemplate> getCostingTemplates() {
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
+            requestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<CostingTemplatesItems> response = HTTPRequest.build(requestEntity).get();
@@ -416,7 +419,7 @@ public abstract class SDSTestUtil extends TestUtil {
         }
 
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+            requestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
                 .inlineVariables(
                     componentIdentity, scenarioIdentity
                 )
@@ -490,7 +493,7 @@ public abstract class SDSTestUtil extends TestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
+            requestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", shallowPublishRequest)
                 .expectedResponseCode(expectedResponseCode);

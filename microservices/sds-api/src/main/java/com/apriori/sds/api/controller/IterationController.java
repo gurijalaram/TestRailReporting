@@ -7,10 +7,10 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
-public class IterationController extends RequestEntityUtil_Old {
+public class IterationController {
 
     private static UserCredentials testingUser = UserUtil.getUser();
 
@@ -23,7 +23,7 @@ public class IterationController extends RequestEntityUtil_Old {
      */
     public static String getMaterialMode(String scenario, String component) {
         final RequestEntity requestEntity =
-            init(SDSAPIEnum.GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS,
+            new RequestEntityUtil().init(SDSAPIEnum.GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS,
                 ScenarioCostingDefaultsResponse.class)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail()))
                 .inlineVariables(

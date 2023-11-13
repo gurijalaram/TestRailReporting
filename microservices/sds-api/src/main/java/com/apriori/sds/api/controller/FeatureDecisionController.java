@@ -7,10 +7,10 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
-public class FeatureDecisionController extends RequestEntityUtil_Old {
+public class FeatureDecisionController {
 
     private static UserCredentials testingUser = UserUtil.getUser();
 
@@ -21,7 +21,7 @@ public class FeatureDecisionController extends RequestEntityUtil_Old {
      */
     public ResponseWrapper<FeatureDecisionsResponse> getFeatureDecisions() {
         final RequestEntity requestEntity =
-            init(SDSAPIEnum.FEATURE_DECISIONS,
+            new RequestEntityUtil().init(SDSAPIEnum.FEATURE_DECISIONS,
                 FeatureDecisionsResponse.class)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail()));
 

@@ -4,7 +4,6 @@ import com.apriori.sds.api.enums.SDSAPIEnum;
 import com.apriori.sds.api.util.SDSTestUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -23,7 +22,7 @@ public class ScenarioIterationsTest extends SDSTestUtil {
     @Disabled
     public void testCreateScenarioIterations() {
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.POST_SCENARIO_ITERATIONS, null)
+            requestEntityUtil.init(SDSAPIEnum.POST_SCENARIO_ITERATIONS, null)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
         HTTPRequest.build(requestEntity).post();

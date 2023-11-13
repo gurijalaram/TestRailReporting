@@ -6,7 +6,6 @@ import com.apriori.sds.api.util.SDSTestUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -28,7 +27,7 @@ public class ApFilesTest  extends SDSTestUtil {
     @Disabled
     public void testPostApFile() {
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.POST_AP_FILES, null)
+            requestEntityUtil.init(SDSAPIEnum.POST_AP_FILES, null)
                 .multiPartFiles(new MultiPartFiles()
                     .use("data", new File("C:\\Users\\vzarovnyi\\Downloads\\test.Initial (1).ap"))
                 );

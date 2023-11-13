@@ -6,7 +6,6 @@ import com.apriori.sds.api.models.response.ScenarioIterationItemsResponse;
 import com.apriori.sds.api.util.SDSTestUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -23,7 +22,7 @@ public class IterationsTest extends SDSTestUtil {
     @Description("Find iterations for a given scenario matching a specified query.")
     public void getIterations() {
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
+            requestEntityUtil.init(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 )
@@ -37,7 +36,7 @@ public class IterationsTest extends SDSTestUtil {
     @Description("Get the latest iteration.")
     public void getIterationLatest() {
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.GET_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ScenarioIteration.class)
+            requestEntityUtil.init(SDSAPIEnum.GET_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ScenarioIteration.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 )
@@ -51,7 +50,7 @@ public class IterationsTest extends SDSTestUtil {
     @Description("Get the current representation of a iteration.")
     public void getIterationsByIdentity() {
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
+            requestEntityUtil.init(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId(), getIterationId()
                 )
