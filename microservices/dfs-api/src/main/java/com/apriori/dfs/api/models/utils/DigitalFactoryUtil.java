@@ -147,7 +147,7 @@ public class DigitalFactoryUtil {
      * @return Response object
      */
     public <T> ResponseWrapper<T> deleteDigitalFactory(Integer expectedResponseCode, Class<T> expectedType, String identity, String sharedSecret) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, expectedType)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, expectedType)
             .inlineVariables(StringUtils.join(identity, sharedSecret))
             .expectedResponseCode(expectedResponseCode);
 

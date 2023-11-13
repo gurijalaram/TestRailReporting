@@ -35,7 +35,7 @@ public class BcmUtil extends TestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)
+            RequestEntityUtil_Old.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)
                 .body(body)
                 .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -53,7 +53,7 @@ public class BcmUtil extends TestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, ErrorResponse.class)
+            RequestEntityUtil_Old.init(BcmAppAPIEnum.WORKSHEETS, ErrorResponse.class)
                 .body(body)
                 .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);

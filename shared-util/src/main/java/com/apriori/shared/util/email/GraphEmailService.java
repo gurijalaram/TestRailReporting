@@ -52,7 +52,7 @@ public class GraphEmailService {
     public static synchronized EmailMessage searchEmailMessage(String... emailParamValues) {
         QueryParams emailParamValue = new KeyValueUtil().keyValue(emailParamValues, ",");
 
-        // RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class)
+        // RequestEntity requestEntity = RequestEntityUtil_Old.init(EmailEnum.EMAIL_MESSAGES, EmailResponse.class)
 
         RequestEntity requestEntity = new RequestEntity()
             .endpoint(EmailEnum.EMAIL_MESSAGES)
