@@ -716,32 +716,33 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {6207, 6208})
     @Description("Validate users can select rows in a sequence by using shift/ctrl buttons")
     public void shiftControlHighlightScenarios() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "BasicScenario_Forging";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-        String scenarioName3 = new GenerateStringUtil().generateScenarioName();
-        String scenarioName4 = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder component2 = component;
+        component2.setScenarioName(new GenerateStringUtil().generateScenarioName());
 
-        explorePage = new CidAppLoginPage(driver).login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName3, resourceFile, currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName4, resourceFile, currentUser)
+        ComponentInfoBuilder component3 = component;
+        component3.setScenarioName(new GenerateStringUtil().generateScenarioName());
+
+        ComponentInfoBuilder component4 = component;
+        component4.setScenarioName(new GenerateStringUtil().generateScenarioName());
+
+        explorePage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .uploadComponentAndOpen(component2)
+            .uploadComponentAndOpen(component3)
+            .uploadComponentAndOpen(component4)
             .clickExplore()
             .selectFilter("Private")
-            .shiftHighlightScenario(componentName, scenarioName)
-            .controlHighlightScenario(componentName, scenarioName2)
-            .shiftHighlightScenario(componentName, scenarioName3)
-            .controlHighlightScenario(componentName, scenarioName4);
+            .shiftHighlightScenario(component.getComponentName(), component.getScenarioName())
+            .controlHighlightScenario(component2.getComponentName(), component2.getScenarioName())
+            .shiftHighlightScenario(component3.getComponentName(), component3.getScenarioName())
+            .controlHighlightScenario(component4.getComponentName(), component4.getScenarioName());
 
-        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
-        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName2)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
-        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName3)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
-        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName4)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(component.getComponentName(), component.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(component2.getComponentName(), component2.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(component3.getComponentName(), component3.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(component4.getComponentName(), component4.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
 
         softAssertions.assertAll();
     }
