@@ -103,7 +103,7 @@ class CdsUpdateUserTests {
     }
 
     @Test
-    @TestRail(id = 3295)
+    @TestRail(id = 29190)
     @Description("API updates user enablements")
     void patch_shouldSetEnablementsAlone() {
 
@@ -127,7 +127,7 @@ class CdsUpdateUserTests {
     }
 
     @Test
-    @TestRail(id = 3295)
+    @TestRail(id = 29189)
     @Description("API updates user profile")
     void patch_shouldSetProfileInformationAlone() {
 
@@ -147,7 +147,7 @@ class CdsUpdateUserTests {
     }
 
     @Test
-    @TestRail(id = 3295)
+    @TestRail(id = 29191)
     @Description("API updates user profile and enablements")
     void patch_ShouldUpdateProfileAndEnablements() {
 
