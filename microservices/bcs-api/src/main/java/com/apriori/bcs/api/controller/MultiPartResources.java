@@ -1,7 +1,5 @@
 package com.apriori.bcs.api.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.apriori.bcs.api.enums.BCSState;
 import com.apriori.bcs.api.models.response.Batch;
 import com.apriori.bcs.api.models.response.Part;
@@ -216,7 +214,7 @@ public class MultiPartResources {
      *
      * @param parts
      */
-    public static void summarizeAndLogPartsCostingInfo(Parts parts) {
+    public static List<PartData> summarizeAndLogPartsCostingInfo(Parts parts) {
         StringBuilder logInfoBuilder = new StringBuilder();
         parts.getItems().forEach(part -> {
             PartData benchData = partsCollector.get(part.getIdentity());
@@ -245,8 +243,6 @@ public class MultiPartResources {
         logInfoBuilder.append(line);
         log.info(logInfoBuilder.toString());
 
-        for (PartData partDTO : partsReport) {
-            assertEquals("Verify Part State", BCSState.COMPLETED.toString(), partDTO.getState());
-        }
+        return partsReport;
     }
 }
