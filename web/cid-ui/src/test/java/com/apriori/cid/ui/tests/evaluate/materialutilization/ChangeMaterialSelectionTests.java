@@ -6,7 +6,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cid.api.models.dto.ComponentDTORequest;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
@@ -14,6 +13,7 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.ComponentDTORequest;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
