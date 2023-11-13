@@ -9,6 +9,7 @@ import com.apriori.cic.api.enums.PlmPartDataType;
 import com.apriori.cic.api.enums.PlmTypeAttributes;
 import com.apriori.cic.api.enums.PublishResultsWriteRule;
 import com.apriori.cic.api.enums.ReportsEnum;
+import com.apriori.cic.api.models.request.AgentPort;
 import com.apriori.cic.api.models.request.PlmFieldDefinitions;
 import com.apriori.cic.api.models.response.AgentWorkflowJobResults;
 import com.apriori.cic.api.models.response.PlmPartResponse;
@@ -17,6 +18,7 @@ import com.apriori.cic.api.utils.PlmApiTestUtil;
 import com.apriori.cic.api.utils.PlmPartsUtil;
 import com.apriori.cic.api.utils.WorkflowDataUtil;
 import com.apriori.cic.api.utils.WorkflowTestUtil;
+import com.apriori.cic.ui.enums.RuleOperatorEnum;
 import com.apriori.cic.ui.pagedata.WorkFlowData;
 import com.apriori.cic.ui.pageobjects.login.CicLoginPage;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.costinginputs.CostingInputsPart;
@@ -51,6 +53,8 @@ public class PublishResultsTests extends WorkflowTestUtil {
     private static PlmSearchPart plmPart;
     private static PlmApiTestUtil plmApiTestUtil;
     private static PlmFieldDefinitions plmFieldDefinitions;
+    private static AgentPort agentPort;
+    private static String plmPartNumber;
 
     @BeforeEach
     public void setUpAndLogin() {
@@ -58,6 +62,8 @@ public class PublishResultsTests extends WorkflowTestUtil {
         currentUser = UserUtil.getUser();
         plmApiTestUtil = new PlmApiTestUtil();
         plmFieldDefinitions = new PlmFieldDefinitions();
+        plmPartNumber = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber();
+        agentPort = new AgentPort();
     }
 
     @Test
@@ -65,6 +71,8 @@ public class PublishResultsTests extends WorkflowTestUtil {
     @Description("Test Reports Tab on the publish results tab during workflow creation")
     public void testPublishResultsAttachReportTab() {
         WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
+        workFlowData.setConnectorName(agentPort.getConnector());
+        workFlowData.getQueryDefinitionsData().get(0).setFieldValue("000001042");
         softAssertions = new SoftAssertions();
         DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
@@ -77,7 +85,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
             .selectWorkflowConnector(workFlowData.getConnectorName())
             .clickWFDetailsNextBtn();
 
-        CostingInputsPart costingInputsPart = queryDefinitions.addRule(workFlowData, workFlowData.getQueryDefinitionsData().size())
+        CostingInputsPart costingInputsPart = queryDefinitions.addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, plmPartNumber)
             .clickWFQueryDefNextBtn();
 
         NotificationsPart notificationsPart = costingInputsPart.clickCINextBtn();

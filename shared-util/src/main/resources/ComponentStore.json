@@ -51,6 +51,11 @@
       "processGroup": "RAPID_PROTOTYPING"
     },
     {
+      "componentName": "Rapid Prototyping",
+      "extension": ".stp",
+      "processGroup": "ROTO_BLOW_MOLDING"
+    },
+    {
       "componentName": "SheetMetal",
       "extension": ".prt",
       "processGroup": "SHEET_METAL_TRANSFER_DIE"
@@ -189,6 +194,81 @@
       "componentName": "SandCastBox",
       "extension": ".SLDPRT",
       "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "sheet_plastic",
+      "extension": ".STEP",
+      "processGroup": "SHEET_PLASTIC"
+    },
+    {
+      "componentName": "Hydroforming",
+      "extension": ".stp",
+      "processGroup": "SHEET_METAL_STRETCH_FORMING"
+    },
+    {
+      "componentName": "angle_bar",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_METAL_ROLLFORMING"
+    },
+    {
+      "componentName": "5d51749fig01",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_PLASTIC"
+    },
+    {
+      "componentName": "Hydroforming",
+      "extension": ".stp",
+      "processGroup": "SHEET_METAL_HYDROFORMING"
+    },
+    {
+      "componentName": "piston_model1",
+      "extension": ".prt",
+      "processGroup": "CASTING_INVESTMENT"
+    },
+    {
+      "componentName": "B&T-LOW-001",
+      "extension": ".SLDPRT",
+      "processGroup": "BAR_TUBE_FAB"
+    },
+    {
+      "componentName": "casting_BEFORE_machining",
+      "extension": ".stp",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "casting_AFTER_machining",
+      "extension": ".stp",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "testpart-4",
+      "extension": ".prt",
+      "processGroup": "ADDITIVE_MANUFACTURING"
+    },
+    {
+      "componentName": "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "PMI_AllTolTypesCatia",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "case_012_009-0020647_hinge_2",
+      "extension": ".prt.1",
+      "processGroup": "CASTING_INVESTMENT"
+    },
+    {
+      "componentName": "700-33770-01_A0",
+      "extension": ".stp",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "116-5809",
+      "extension": ".prt.1",
+      "processGroup": "ADDITIVE_MANUFACTURING"
     }
   ]
 }

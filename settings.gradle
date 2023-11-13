@@ -14,7 +14,7 @@ include(':db')
 final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cid-api", "cir-api", "css-api",
                                        "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api",
                                        "cic-api","qds-api", "dds-api", "qms-api", "dms-api", "cus-api", "ach-api",
-                                       "gcd-api", "cmp-api", "dfs-api"]
+                                       "gcd-api", "cmp-api", "dfs-api", "bcm-api"]
 final String[] webModules = ["ach-ui", "auth-ui", "cas-ui", "cia-ui", "cic-ui", "cid-ui", "cir-ui", "edc-ui", "cis-ui"]
 final String[] intModules = ["integration"]
 final String[] agentModules = ["cic-agent"]
@@ -66,6 +66,7 @@ if (configuration != null) {
     include(':microservices:gcd-api')
     include(':microservices:cmp-api')
     include(':microservices:dfs-api')
+    include(':microservices:bcm-api')
 
     //Web
     include ':web:ach-ui'

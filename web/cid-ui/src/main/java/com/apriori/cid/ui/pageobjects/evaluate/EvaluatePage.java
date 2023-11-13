@@ -311,7 +311,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public boolean isMaterialInfoDisplayed(String material) {
         By materialsInfo = By.xpath(String.format("//div[@id='qa-material-modal-select-field']//div[.='%s']", material));
-        return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
+        return pageUtils.isElementDisplayed(materialsInfo);
     }
 
     /**

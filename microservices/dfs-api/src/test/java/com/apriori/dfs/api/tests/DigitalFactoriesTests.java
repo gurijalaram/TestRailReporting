@@ -29,6 +29,8 @@ public class DigitalFactoriesTests {
     private static final String NO_SHARED_SECRET = "";
     private static final String VALID_CONTENT_TYPE = "application/json";
     private static final String INVALID_CONTENT_TYPE = "application/text";
+    private static final String VALID_DIGITAL_FACTORY_ID = "123456789012";
+    private static final String INVALID_DIGITAL_FACTORY_ID = "1234567890";
 
     @Test
     @TestRail(id = {28958})
@@ -71,13 +73,14 @@ public class DigitalFactoriesTests {
     @Description("Gets a digital factory by identity when shared secret/identity are valid")
     public void getDigitalFactoryByIdentityTest() {
 
-        ResponseWrapper<DigitalFactory> responseWrapper = digitalFactoryUtil.getDigitalFactory("123456789012");
+        ResponseWrapper<DigitalFactory> responseWrapper = digitalFactoryUtil.getDigitalFactory(VALID_DIGITAL_FACTORY_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isNotNull();
         softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isEqualTo("aPriori USA");
         softAssertions.assertAll();
     }
 
+    // TODO: This test is currently testing the 'find' operation, not 'get', because it's not passing a DF id
     @Test
     @TestRail(id = {28962})
     @Description("Get Unauthorized Error when shared secret value is invalid")
@@ -91,6 +94,7 @@ public class DigitalFactoriesTests {
         softAssertions.assertAll();
     }
 
+    // TODO: This test is currently testing the 'find' operation, not 'get', because it's not passing a DF id
     @Test
     @TestRail(id = {28977})
     @Description("Get Unauthorized Error when shared secret parameter is not provided")
@@ -103,6 +107,7 @@ public class DigitalFactoriesTests {
         softAssertions.assertAll();
     }
 
+    // TODO: This test is currently testing the 'find' operation, not 'get', because it's not passing a DF id
     @Test
     @TestRail(id = {28976})
     @Description("Get Unauthorized Error when shared secret value is not provided")
@@ -119,7 +124,7 @@ public class DigitalFactoriesTests {
     @TestRail(id = {28978})
     @Description("Get Unauthorized Error when identity is invalid")
     public void getDigitalFactoryWithBadIdentityTest() {
-        ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.getDigitalFactory(HttpStatusCode.BAD_REQUEST,"1234567890");
+        ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.getDigitalFactory(HttpStatusCode.BAD_REQUEST, INVALID_DIGITAL_FACTORY_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getStatus()).isEqualTo(400);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo("Bad Request");
@@ -183,6 +188,50 @@ public class DigitalFactoriesTests {
         softAssertions.assertThat(responseWrapper.getResponseEntity().getStatus()).isEqualTo(401);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo("Unauthorized");
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo("Invalid credential");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29150})
+    @Description("Delete a digital factory by identity when shared secret/identity are valid")
+    public void deleteDigitalFactoryByIdentityTest() {
+        ResponseWrapper<Void> responseWrapper = digitalFactoryUtil.deleteDigitalFactory(204, null, VALID_DIGITAL_FACTORY_ID, VALID_SHARED_SECRET);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity()).isNull();
+        softAssertions.assertThat(responseWrapper.getBody()).isEmpty();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29151})
+    @Description("Delete Unauthorized Error when shared secret value is invalid")
+    public void deleteDigitalFactoryWithInvalidSharedSecretTest() {
+        ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.deleteDigitalFactory(401, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, INVALID_SHARED_SECRET);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo("Unauthorized");
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo("Invalid or missing credential");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29152})
+    @Description("Delete Unauthorized Error when shared secret value is not provided")
+    public void deleteDigitalFactoryWithEmptySharedSecretTest() {
+        ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.deleteDigitalFactory(401, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, EMPTY_SHARED_SECRET);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo("Unauthorized");
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo("Invalid credential");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29153})
+    @Description("Delete Bad Request Error when identity is invalid")
+    public void deleteDigitalFactoryWithBadIdentityTest() {
+        ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.deleteDigitalFactory(400, ErrorMessage.class, INVALID_DIGITAL_FACTORY_ID, VALID_SHARED_SECRET);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo("'identity' is not a valid identity.");
         softAssertions.assertAll();
     }
 
