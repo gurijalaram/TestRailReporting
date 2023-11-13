@@ -78,7 +78,7 @@ public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
     public void testWorkflowQueryDefRealGreaterThan() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.NOT_EQUAL, 1.4)
+            .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.GREATER_THAN, 1.4)
             .setQueryFilters("AND")
             .build();
 
@@ -95,7 +95,7 @@ public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
     public void testWorkflowQueryDefRealGreaterThanEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
-            .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.NOT_EQUAL, 1.4)
+            .setQueryFilter(QueryDefinitionFields.REAL_NUMBER1, QueryDefinitionFieldType.GREATER_THAN_EQUAL, 1.4)
             .setQueryFilters("AND")
             .build();
 

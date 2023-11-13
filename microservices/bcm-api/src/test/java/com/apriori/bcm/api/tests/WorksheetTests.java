@@ -33,6 +33,7 @@ public class WorksheetTests extends  BcmUtil {
 
         ResponseWrapper<WorkSheetResponse> response = bcmUtil.createWorksheet(name);
         softAssertions.assertThat(response.getResponseEntity().getName()).isEqualTo(name);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -46,5 +47,6 @@ public class WorksheetTests extends  BcmUtil {
 
         ResponseWrapper<ErrorResponse> responseError = bcmUtil.createWorksheetAlreadyExists(name);
         softAssertions.assertThat((responseError.getResponseEntity().getMessage()).contains("already exists"));
+        softAssertions.assertAll();
     }
 }
