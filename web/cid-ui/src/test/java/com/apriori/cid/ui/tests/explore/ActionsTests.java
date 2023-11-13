@@ -748,7 +748,7 @@ public class ActionsTests extends TestBaseUI {
 
     @Test
     @TestRail(id = {5440})
-    @Description("User can not update the 3D CAD with a differently named 3D CAD file")
+    @Description("User cannot update the 3D CAD with a differently named 3D CAD file")
     public void updateWithDifferentCADFile() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
