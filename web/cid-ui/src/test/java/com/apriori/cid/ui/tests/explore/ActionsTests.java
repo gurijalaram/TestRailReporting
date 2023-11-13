@@ -726,7 +726,7 @@ public class ActionsTests extends TestBaseUI {
         String scenarioName4 = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        explorePage = new CidAppLoginPage(driver).login(component.getUser())
+        explorePage = new CidAppLoginPage(driver).login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
             .uploadComponentAndOpen(componentName, scenarioName3, resourceFile, currentUser)
