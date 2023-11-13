@@ -18,14 +18,6 @@ public class RequestEntityUtil {
         return apUserContext = new AuthUserContextUtil().getAuthUserContext(userForAppUserContext.getEmail());
     }
 
-//    public RequestEntity.RequestEntityBuilder initBuilder(EndpointEnum endpoint, Class<?> returnType) {
-//        return RequestEntity.builder()
-//            .endpoint(endpoint)
-//            .returnType(returnType)
-//            .token(token)
-//            .apUserContext(apUserContext);
-//    }
-
     public RequestEntity init(EndpointEnum endpoint, Class<?> returnType) {
         return new RequestEntity()
             .endpoint(endpoint)
