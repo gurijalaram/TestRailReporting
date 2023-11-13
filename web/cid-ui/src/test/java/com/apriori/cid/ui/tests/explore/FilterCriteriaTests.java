@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.cid.api.models.dto.ComponentDTORequest;
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.common.FilterPage;
@@ -21,6 +20,7 @@ import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.TimeEnum;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.ComponentDTORequest;
 import com.apriori.shared.util.enums.OperationEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;

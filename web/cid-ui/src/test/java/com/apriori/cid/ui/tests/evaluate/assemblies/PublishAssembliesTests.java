@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cid.api.models.dto.AssemblyDTORequest;
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.api.utils.UserPreferencesUtil;
@@ -20,6 +19,7 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.PublishScenarioPage;
 import com.apriori.cid.ui.utils.ButtonTypeEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.AssemblyDTORequest;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;

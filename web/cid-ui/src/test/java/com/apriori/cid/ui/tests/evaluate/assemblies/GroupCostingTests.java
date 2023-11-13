@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
-import com.apriori.cid.api.models.dto.AssemblyDTORequest;
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
@@ -8,6 +7,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.components.inputs.ComponentBasicP
 import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.AssemblyDTORequest;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -125,7 +125,7 @@ public class GroupCostingTests extends TestBaseUI {
             componentsTreePage.multiSelectSubcomponents(subComponent.getComponentName().toUpperCase() + "," + subComponent.getScenarioName());
         });
 
-        componentAssembly.getSubComponents().forEach(subComponent  -> componentsTreePage.checkSubcomponentState(componentAssembly, subComponent.getComponentName()));
+        componentAssembly.getSubComponents().forEach(subComponent -> componentsTreePage.checkSubcomponentState(componentAssembly, subComponent.getComponentName()));
         evaluatePage.refresh();
         componentsTreePage = evaluatePage.openComponents();
 

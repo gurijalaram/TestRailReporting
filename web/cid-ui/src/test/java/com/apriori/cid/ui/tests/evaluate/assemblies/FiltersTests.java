@@ -2,7 +2,6 @@ package com.apriori.cid.ui.tests.evaluate.assemblies;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.apriori.cid.api.models.dto.AssemblyDTORequest;
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.common.FilterPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
@@ -14,6 +13,7 @@ import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.AssemblyDTORequest;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.OperationEnum;
@@ -37,9 +37,9 @@ import java.util.stream.Collectors;
 
 public class FiltersTests extends TestBaseUI {
 
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ComponentInfoBuilder componentAssembly;
     private SoftAssertions softAssertions = new SoftAssertions();
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ComponentsTablePage componentsTablePage;
