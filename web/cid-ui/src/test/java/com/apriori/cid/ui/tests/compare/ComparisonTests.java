@@ -245,7 +245,7 @@ public class ComparisonTests extends TestBaseUI {
             .expand("Material & Utilization")
             .expand("Design Guidance")
             .expand("Process")
-            .expand("Cost Result");
+            .expand("Cost Results");
 
         softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Description")).isEqualTo(true);
         softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass")).isEqualTo(true);
@@ -298,19 +298,19 @@ public class ComparisonTests extends TestBaseUI {
             .collapse("Material & Utilization")
             .collapse("Design Guidance")
             .collapse("Process")
-            .collapse("Cost Result");
+            .collapse("Cost Results");
 
         softAssertions.assertThat(comparePage.isSectionExpanded("Info & Inputs")).isEqualTo(false);
         softAssertions.assertThat(comparePage.isSectionExpanded("Material & Utilization")).isEqualTo(false);
         softAssertions.assertThat(comparePage.isSectionExpanded("Design Guidance")).isEqualTo(false);
         softAssertions.assertThat(comparePage.isSectionExpanded("Process")).isEqualTo(false);
-        softAssertions.assertThat(comparePage.isSectionExpanded("Cost Result")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Cost Results")).isEqualTo(false);
 
         comparePage.expand("Info & Inputs")
             .expand("Material & Utilization")
             .expand("Design Guidance")
             .expand("Process")
-            .expand("Cost Result");
+            .expand("Cost Results");
 
         softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Description")).isEqualTo(true);
         softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass")).isEqualTo(true);
@@ -529,12 +529,12 @@ public class ComparisonTests extends TestBaseUI {
             .selectManualComparison();
 
         softAssertions.assertThat(comparePage.getCardHeader()).containsExactly(
-            "Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Sustainability", "Cost Result");
+            "Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Sustainability", "Cost Results");
 
         comparePage.dragDropCard("Material & Utilization", "Info & Inputs");
 
         softAssertions.assertThat(comparePage.getCardHeader()).containsExactly(
-            "Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Sustainability", "Cost Result");
+            "Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Sustainability", "Cost Results");
 
         softAssertions.assertAll();
     }
@@ -956,21 +956,21 @@ public class ComparisonTests extends TestBaseUI {
             .collapse("Material & Utilization")
             .collapse("Design Guidance")
             .collapse("Process")
-            .collapse("Cost Result");
+            .collapse("Cost Results");
 
         softAssertions.assertThat(comparePage.isSectionExpanded("Info & Inputs")).isEqualTo(false);
         softAssertions.assertThat(comparePage.isSectionExpanded("Assembly Info")).isEqualTo(false);
         softAssertions.assertThat(comparePage.isSectionExpanded("Material & Utilization")).isEqualTo(false);
         softAssertions.assertThat(comparePage.isSectionExpanded("Design Guidance")).isEqualTo(false);
         softAssertions.assertThat(comparePage.isSectionExpanded("Process")).isEqualTo(false);
-        softAssertions.assertThat(comparePage.isSectionExpanded("Cost Result")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Cost Results")).isEqualTo(false);
 
         comparePage.expand("Info & Inputs")
             .expand("Assembly Info")
             .expand("Material & Utilization")
             .expand("Design Guidance")
             .expand("Process")
-            .expand("Cost Result");
+            .expand("Cost Results");
 
         softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Description")).isEqualTo(true);
         softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Components Cost")).isEqualTo(true);
