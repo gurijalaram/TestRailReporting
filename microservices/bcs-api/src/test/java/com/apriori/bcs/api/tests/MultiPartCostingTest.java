@@ -54,7 +54,8 @@ public class MultiPartCostingTest {
         ResponseWrapper<Batch> batchResponse = BatchResources.getBatchWithNoLogInfo(batch.getIdentity());
         Parts parts = BatchPartResources.getPartsByBatchId(batch.getIdentity()).getResponseEntity();
         MultiPartResources.summarizeBatchCostingInfo(batchResponse);
-        MultiPartResources.summarizeAndLogPartsCostingInfo(parts);
+        MultiPartResources.summarizeAndLogPartsCostingInfo(parts)
+            .stream().forEach(part -> softAssertions.assertThat(part.getState()).isEqualTo(BCSState.COMPLETED.toString()));
         softAssertions.assertAll();
     }
 }
