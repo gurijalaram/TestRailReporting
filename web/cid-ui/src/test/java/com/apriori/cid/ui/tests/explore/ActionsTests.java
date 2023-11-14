@@ -63,6 +63,7 @@ public class ActionsTests extends TestBaseUI {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private ComponentInfoBuilder cidComponentItem;
+    private ComponentInfoBuilder component;
     private SoftAssertions softAssertions = new SoftAssertions();
     private UpdateCadFilePage updateCadFilePage;
 
@@ -74,30 +75,22 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7185, 7257, 7264, 7263, 7268, 6342})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "M3CapScrew";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        infoPage = new CidAppLoginPage(driver).login(currentUser)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .highlightScenario(componentName, scenarioName)
-            .clickSearch(componentName)
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
+            .clickSearch(component.getComponentName())
             .clickActions()
             .info()
             .selectStatus("New")
@@ -107,8 +100,8 @@ public class ActionsTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(componentName)
-            .openScenario(componentName, scenarioName)
+            .clickSearch(component.getComponentName())
+            .openScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info();
 
@@ -123,19 +116,11 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7197, 7198, 7200})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "M3CapScrew";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        explorePage = new CidAppLoginPage(driver).login(currentUser)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
@@ -145,8 +130,8 @@ public class ActionsTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(componentName)
-            .highlightScenario(componentName, scenarioName)
+            .clickSearch(component.getComponentName())
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info()
             .selectStatus("Analysis")
@@ -174,13 +159,10 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7902, 5436})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
-        ComponentInfoBuilder component = new ComponentDTORequest().getComponent();
+        component = new ComponentDTORequest().getComponent();
 
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(component.getUser())
-            .uploadComponent(component.getComponentName(), component.getScenarioName(), component.getResourceFile(), component.getUser());
-
-        previewPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+        previewPage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
@@ -188,7 +170,7 @@ public class ActionsTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -217,22 +199,17 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7259, 7265, 7269, 7272, 7189})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "case_002_006-8611543_prt";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
         final String bulletPointNotes = "• Automation notes 1" +
             "• Automation notes 2" +
             "• Automation notes 3" +
             "• Automation notes 4";
 
-        loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        component = new ComponentDTORequest().getComponent();
+
+        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
@@ -267,16 +244,11 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7258, 7263, 7267, 7270})
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "BasicScenario_Forging";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .selectProcessGroup(ProcessGroupEnum.FORGING)
             .clickActions()
             .info()
@@ -303,36 +275,29 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7172, 7175, 5437})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
     public void actionsAssign() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(cidComponentItem).getCreatedByName();
-
-        infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        assignPage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .highlightScenario(componentName, scenarioName)
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
-            .assign()
-            .selectAssignee(scenarioCreatedByName)
+            .assign();
+
+        String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(component).getCreatedByName();
+
+        infoPage = assignPage.selectAssignee(scenarioCreatedByName)
             .submit(ExplorePage.class)
-            .openScenario(componentName, scenarioName)
+            .openScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info();
 
@@ -343,21 +308,11 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7174, 7173})
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(cidComponentItem).getCreatedByName();
-
-        assignPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        assignPage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
@@ -367,10 +322,13 @@ public class ActionsTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario("PowderMetalShaft", scenarioName)
+            .openScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
-            .assign()
-            .selectAssignee(scenarioCreatedByName)
+            .assign();
+
+        String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(component).getCreatedByName();
+
+        assignPage.selectAssignee(scenarioCreatedByName)
             .submit(EvaluatePage.class)
             .clickActions()
             .assign();
@@ -382,22 +340,13 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7178, 7262, 7910})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
 
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        component = new ComponentDTORequest().getComponent();
 
-        String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(cidComponentItem).getCreatedByName();
-
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        explorePage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
@@ -411,30 +360,23 @@ public class ActionsTests extends TestBaseUI {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
+            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenariosUtil.getScenarioCompleted(component).getCreatedByName())
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("Push Pin", scenarioName), equalTo(1));
+        assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()), equalTo(1));
     }
 
     @Test
     @TestRail(id = {7187, 7271, 6199, 6339, 5438})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-
-        String componentName = "BasicScenario_Forging";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
         final String editedNotes = "Testing QA notes validating the ability to edit notes";
 
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        component = new ComponentDTORequest().getComponent();
 
-        infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName())
@@ -445,7 +387,7 @@ public class ActionsTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .highlightScenario(componentName, scenarioName)
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info()
             .selectStatus("New")
@@ -453,10 +395,10 @@ public class ActionsTests extends TestBaseUI {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .getCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, LAST_ACTION_EQ.getKey() + "UPDATE",
+            .getCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(), SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), LAST_ACTION_EQ.getKey() + "UPDATE",
                 SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE)
             .refresh()
-            .highlightScenario(componentName, scenarioName)
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info();
 
@@ -467,10 +409,10 @@ public class ActionsTests extends TestBaseUI {
             .info()
             .inputCostMaturity("Medium")
             .submit(ExplorePage.class)
-            .getCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, LAST_ACTION_EQ.getKey() + " UPDATE",
+            .getCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(), SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), LAST_ACTION_EQ.getKey() + " UPDATE",
                 SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE)
             .refresh()
-            .highlightScenario(componentName, scenarioName)
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info();
 
@@ -479,7 +421,7 @@ public class ActionsTests extends TestBaseUI {
         infoPage.cancel(ExplorePage.class)
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario(componentName, scenarioName)
+            .openScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info()
             .editNotes(editedNotes)
@@ -496,19 +438,11 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = 7188)
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "BasicScenario_Forging";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName())
@@ -519,8 +453,8 @@ public class ActionsTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .enterKeySearch(componentName.toUpperCase())
-            .highlightScenario(componentName, scenarioName)
+            .enterKeySearch(component.getComponentName().toUpperCase())
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info()
             .selectStatus("New")
@@ -530,8 +464,8 @@ public class ActionsTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .enterKeySearch(componentName.toUpperCase())
-            .openScenario(componentName, scenarioName)
+            .enterKeySearch(component.getComponentName().toUpperCase())
+            .openScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info()
             .editNotes("Validating the ability to edit notes")
@@ -546,19 +480,11 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7186, 7191})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
@@ -568,8 +494,8 @@ public class ActionsTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .enterKeySearch(componentName.toUpperCase())
-            .highlightScenario(componentName, scenarioName)
+            .enterKeySearch(component.getComponentName().toUpperCase())
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info()
             .selectStatus("New")
@@ -579,8 +505,8 @@ public class ActionsTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .enterKeySearch(componentName.toUpperCase())
-            .openScenario(componentName, scenarioName)
+            .enterKeySearch(component.getComponentName().toUpperCase())
+            .openScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info()
             .editNotes("")
@@ -595,21 +521,11 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7911})
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        UserCredentials testUser1 = UserUtil.getUser();
-        UserCredentials testUser2 = UserUtil.getUser();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
@@ -619,8 +535,8 @@ public class ActionsTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .enterKeySearch(componentName.toUpperCase())
-            .highlightScenario(componentName, scenarioName)
+            .enterKeySearch(component.getComponentName().toUpperCase())
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info()
             .selectStatus("New")
@@ -629,11 +545,11 @@ public class ActionsTests extends TestBaseUI {
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
             .logout()
-            .login(testUser2)
+            .login(UserUtil.getUser())
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .enterKeySearch(componentName.toUpperCase())
-            .openScenario(componentName, scenarioName)
+            .enterKeySearch(component.getComponentName().toUpperCase())
+            .openScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info();
 
@@ -644,21 +560,14 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7199, 7912})
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.RAPID_PROTOTYPING;
-
-        String componentName = "Rapid Prototyping";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
-        currentUser = UserUtil.getUser();
 
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        component = new ComponentDTORequest().getComponent();
 
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        explorePage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("Default")
             .submit(EvaluatePage.class)
@@ -666,7 +575,7 @@ public class ActionsTests extends TestBaseUI {
             .publishScenario(PublishPage.class)
             .selectStatus("Complete")
             .selectCostMaturity("Medium")
-            .selectAssignee(currentUser)
+            .selectAssignee(component.getUser())
             .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .filter()
@@ -676,7 +585,7 @@ public class ActionsTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        softAssertions.assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", component.getScenarioName())).isEqualTo(1);
 
         explorePage.filter()
             .newFilter()
@@ -685,7 +594,7 @@ public class ActionsTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        softAssertions.assertThat(explorePage.getListOfScenarios("Rapid Prototyping", scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios("Rapid Prototyping", component.getScenarioName())).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -694,19 +603,11 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7266, 7913})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
@@ -716,8 +617,8 @@ public class ActionsTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .enterKeySearch(componentName)
-            .highlightScenario(componentName, scenarioName)
+            .enterKeySearch(component.getComponentName())
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info()
             .selectStatus("New")
@@ -727,8 +628,8 @@ public class ActionsTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .enterKeySearch(componentName.toUpperCase())
-            .openScenario(componentName, scenarioName)
+            .enterKeySearch(component.getComponentName().toUpperCase())
+            .openScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .info()
             .editDescription("")
@@ -743,21 +644,11 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7177})
     @Description("Validate assignee is displayed in the explore view")
     public void actionsAssignValidateAssignee() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        String scenarioCreatedByName = scenariosUtil.getScenarioCompleted(cidComponentItem).getCreatedByName();
-
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        explorePage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
@@ -766,7 +657,7 @@ public class ActionsTests extends TestBaseUI {
             .publish(cidComponentItem, EvaluatePage.class)
             .clickActions()
             .assign()
-            .selectAssignee(scenarioCreatedByName)
+            .selectAssignee(scenariosUtil.getScenarioCompleted(component).getCreatedByName())
             .submit(EvaluatePage.class)
             .clickExplore()
             .configure()
@@ -787,21 +678,14 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7190})
     @Description("Validate notes can be read by different users")
     public void notesReadOtherUsers() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-
-        String componentName = "BasicScenario_Forging";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
         final String testDescription = "QA Notes to be read by different user";
         final String testNotes = "Testing QA notes notes to be read by different user";
 
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        component = new ComponentDTORequest().getComponent();
 
-        infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Cold Worked, AISI 1010")
@@ -832,40 +716,40 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {6207, 6208})
     @Description("Validate users can select rows in a sequence by using shift/ctrl buttons")
     public void shiftControlHighlightScenarios() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        component = new ComponentDTORequest().getComponent();
 
-        String componentName = "BasicScenario_Forging";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-        String scenarioName3 = new GenerateStringUtil().generateScenarioName();
-        String scenarioName4 = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder component2 = component;
+        component2.setScenarioName(new GenerateStringUtil().generateScenarioName());
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName3, resourceFile, currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName4, resourceFile, currentUser)
+        ComponentInfoBuilder component3 = component;
+        component3.setScenarioName(new GenerateStringUtil().generateScenarioName());
+
+        ComponentInfoBuilder component4 = component;
+        component4.setScenarioName(new GenerateStringUtil().generateScenarioName());
+
+        explorePage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .uploadComponentAndOpen(component2)
+            .uploadComponentAndOpen(component3)
+            .uploadComponentAndOpen(component4)
             .clickExplore()
             .selectFilter("Private")
-            .shiftHighlightScenario(componentName, scenarioName)
-            .controlHighlightScenario(componentName, scenarioName2)
-            .shiftHighlightScenario(componentName, scenarioName3)
-            .controlHighlightScenario(componentName, scenarioName4);
+            .shiftHighlightScenario(component.getComponentName(), component.getScenarioName())
+            .controlHighlightScenario(component2.getComponentName(), component2.getScenarioName())
+            .shiftHighlightScenario(component3.getComponentName(), component3.getScenarioName())
+            .controlHighlightScenario(component4.getComponentName(), component4.getScenarioName());
 
-        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
-        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName2)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
-        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName3)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
-        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName4)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(component.getComponentName(), component.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(component2.getComponentName(), component2.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(component3.getComponentName(), component3.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(component4.getComponentName(), component4.getScenarioName())).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
 
         softAssertions.assertAll();
     }
 
     @Test
     @TestRail(id = {5440})
-    @Description("User can not update the 3D CAD with a differently named 3D CAD file")
+    @Description("User cannot update the 3D CAD with a differently named 3D CAD file")
     public void updateWithDifferentCADFile() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
