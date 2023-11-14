@@ -12,38 +12,72 @@ public class RequestEntityUtil {
     private String token;
     private String apUserContext;
 
+
+    /**
+     * Use a random user received by {@link UserUtil#getUser()}
+     * in all requests initialized by the current RequestEntityUtil object
+     * @return current RequestEntityUtil object
+     */
     public RequestEntityUtil useRandomUser() {
         this.userCredentials = UserUtil.getUser();
         return this;
     }
 
+    /**
+     * Use a random user received by {@link UserUtil#getUser(String)}
+     * in all requests initialized by the current RequestEntityUtil object
+     * @return current RequestEntityUtil object
+     */
     public RequestEntityUtil useRandomUser(final String accessLevel) {
         this.userCredentials = UserUtil.getUser(accessLevel);
         return this;
     }
 
+    /**
+     * Use a custom user
+     * in all requests initialized by the current RequestEntityUtil object
+     * @return current RequestEntityUtil object
+     */
+    public RequestEntityUtil useCustomUser(final UserCredentials userCredentials) {
+        this.userCredentials = userCredentials;
+        return this;
+    }
+
+    /**
+     * Automatically insert token of initialized user
+     * into all requests initialized by the current RequestEntityUtil object
+     * @return current RequestEntityUtil object
+     */
     public RequestEntityUtil useTokenInRequests() {
         this.token = this.getEmbeddedUser().getToken();
         return this;
     }
 
+    /**
+     * Automatically insert apUserContext of initialized user
+     * into all requests initialized by the current RequestEntityUtil object
+     * @return current RequestEntityUtil object
+     */
     public RequestEntityUtil useApUserContextInRequests() {
         this.apUserContext = new AuthUserContextUtil().getAuthUserContext(this.getEmbeddedUser().getEmail());
         return this;
     }
 
+    /**
+     * Get the current embedded user, used in the requests.
+     * @return
+     */
     public UserCredentials getEmbeddedUser() {
         return userCredentials != null ? this.userCredentials : this.useRandomUser().userCredentials;
     }
 
-//    public String useTokenForRequests(final String tokenForRequests) {
-//        return token = tokenForRequests;
-//    }
-//
-//    public String useApUserContextForRequests(final UserCredentials userForAppUserContext) {
-//        return apUserContext = new AuthUserContextUtil().getAuthUserContext(userForAppUserContext.getEmail());
-//    }
 
+    /**
+     * Init HTTP request with a RequestEntityUtil configurations and embedded user
+     * @param endpoint
+     * @param returnType
+     * @return
+     */
     public RequestEntity init(EndpointEnum endpoint, Class<?> returnType) {
         return new RequestEntity()
             .endpoint(endpoint)
@@ -52,12 +86,17 @@ public class RequestEntityUtil {
             .apUserContext(apUserContext);
     }
 
-    public RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
+    /**
+     * Init HTTP request with a RequestEntityUtil configurations and another, custom user.
+     * @param endpoint
+     * @param returnType
+     * @return
+     */
+    public RequestEntity init( final UserCredentials userCredentials, EndpointEnum endpoint, Class<?> returnType) {
         return new RequestEntity()
-            .userAuthenticationEntity(new UserAuthenticationEntity(userCredentials.getEmail(), userCredentials.getPassword()))
             .returnType(returnType)
             .endpoint(endpoint)
-            .token(token)
-            .apUserContext(apUserContext);
+            .token(token != null ? userCredentials.getToken() : null)
+            .apUserContext(apUserContext != null ? new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()) : null);
     }
 }

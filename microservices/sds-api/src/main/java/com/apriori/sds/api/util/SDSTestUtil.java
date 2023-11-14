@@ -45,6 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.io.File;
 import java.util.Collections;
@@ -58,7 +59,9 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public abstract class SDSTestUtil extends TestUtil {
 
-    protected static UserCredentials testingUser = UserUtil.getUser("admin");
+    protected static UserCredentials testingUser;
+    protected  UserCredentials testingUserThread;
+
     protected static String testingApUserContext =  new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail());
     protected static String appApplicationContext;
     protected static Set<ScenarioItem> scenariosToDelete = new HashSet<>();
@@ -69,8 +72,34 @@ public abstract class SDSTestUtil extends TestUtil {
 
     @BeforeAll
     public static void init() {
-        requestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser("admin"));
-        requestEntityUtil.useTokenForRequests(testingUser.getToken());
+        //TODO z: example of usage
+    //        requestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser("admin"));
+    //        requestEntityUtil.useTokenForRequests(testingUser.getToken());
+
+        testingUser = requestEntityUtil.useRandomUser("admin")
+            .useApUserContextInRequests()
+            .useTokenInRequests()
+            .getEmbeddedUser();
+
+        RequestEntityUtil requestEntityUtilForUser1 = new RequestEntityUtil().useCustomUser(UserUtil.getUser())
+            .useTokenInRequests()
+            .useApUserContextInRequests();
+
+
+        RequestEntity requestWithUser1 = requestEntityUtilForUser1.init(null, null);
+        RequestEntity requestWithUser2 = requestEntityUtilForUser1.init(null, null);
+
+
+        RequestEntity requestWithCustomUser2 = requestEntityUtil.init(UserUtil.getUser(), null, null);
+        RequestEntity requestWithCustomUser3 = requestEntityUtil.init(UserUtil.getUser(), null, null);
+    }
+
+    @BeforeEach
+    public void setUp() {
+        testingUserThread = requestEntityUtil.useRandomUser("admin")
+            .useApUserContextInRequests()
+            .useTokenInRequests()
+            .getEmbeddedUser();
     }
 
     @AfterAll
