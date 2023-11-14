@@ -15,19 +15,22 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
-import com.apriori.shared.util.models.response.Site;
+import com.apriori.shared.util.models.response.Sites;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.web.app.util.PageUtils;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,31 +43,22 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class CustomerStaffTests extends TestBaseUI {
-
+    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
+    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private UsersListPage usersListPage;
-    private Customer targetCustomer;
-    private List<User> sourceUsers;
-    private CdsTestUtil cdsTestUtil;
     private String customerName;
+    private List<User> sourceUsers;
     private String customerIdentity;
-    private UserCreation userCreation;
     private IdentityHolder deleteIdentityHolder;
     private SoftAssertions soft = new SoftAssertions();
     private UserCredentials currentUser = UserUtil.getUser();
+    private String siteIdentity;
+    private String siteId;
+    private String siteName;
 
     @BeforeEach
     public void setup() {
-        customerName = new GenerateStringUtil().generateCustomerName();
-        String cloudRef = new GenerateStringUtil().generateCloudReference();
-        String email = customerName.toLowerCase();
-
-        cdsTestUtil = new CdsTestUtil();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
-
-        customerIdentity = targetCustomer.getIdentity();
-        userCreation = new UserCreation();
-        sourceUsers = userCreation.populateStaffTestUsers(11, customerIdentity, email);
-
+        setCustomerData();
         usersListPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
             .openCustomer(customerIdentity)
@@ -83,8 +77,9 @@ public class CustomerStaffTests extends TestBaseUI {
                 deleteIdentityHolder.userIdentity()
             );
         }
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
-        cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
+        cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
     }
 
     @Test
@@ -199,10 +194,6 @@ public class CustomerStaffTests extends TestBaseUI {
     @Description("Validate license details panel")
     @TestRail(id = {13101, 13102, 13103, 13104})
     public void licenseDetailsTest() {
-        String siteName = new GenerateStringUtil().generateSiteName();
-        String siteId = new GenerateStringUtil().generateSiteID();
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
-        String siteIdentity = site.getResponseEntity().getIdentity();
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
@@ -352,5 +343,22 @@ public class CustomerStaffTests extends TestBaseUI {
         soft.assertThat(deletedUsers)
             .overridingErrorMessage("Expected soft deleted users are displayed")
             .isEqualTo(1L);
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        customerName = new GenerateStringUtil().generateCustomerName();
+        String email = customerName.toLowerCase();
+        Customer targetCustomer = cdsTestUtil.addCASCustomer(customerName, rcd.getCloudRef(), email, currentUser).getResponseEntity();
+        customerIdentity = targetCustomer.getIdentity();
+
+        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
+        ResponseWrapper<Sites> customerSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customerIdentity);
+        siteIdentity = customerSites.getResponseEntity().getItems().get(0).getIdentity();
+        siteId = customerSites.getResponseEntity().getItems().get(0).getSiteId();
+        siteName = customerSites.getResponseEntity().getItems().get(0).getName();
+
+        UserCreation userCreation = new UserCreation();
+        sourceUsers = userCreation.populateStaffTestUsers(11, customerIdentity, email);
     }
 }

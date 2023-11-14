@@ -4,15 +4,12 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.AccessControlResponse;
 import com.apriori.cds.api.models.response.AccessControls;
-import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
-import com.apriori.shared.util.models.response.Deployment;
-import com.apriori.shared.util.models.response.LicensedApplications;
-import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -21,7 +18,6 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -29,45 +25,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class CdsAccessControlsTests {
     private IdentityHolder accessControlIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private ResponseWrapper<Customer> customer;
-    private String customerName;
-    private String cloudRef;
-    private String salesForceId;
-    private String emailPattern;
-    private String customerType;
     private String customerIdentity;
     private String userIdentity;
     private SoftAssertions soft = new SoftAssertions();
-    private String siteIdentity;
-    private String deploymentIdentity;
-    private String licensedApplicationIdentity;
-    private String installationIdentity;
-
-    @BeforeEach
-    public void setDetails() {
-        customerName = generateStringUtil.generateCustomerName();
-        customerType = Constants.CLOUD_CUSTOMER;
-        cloudRef = generateStringUtil.generateCloudReference();
-        salesForceId = generateStringUtil.generateSalesForceId();
-        emailPattern = "\\S+@".concat(customerName);
-
-        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        siteIdentity = site.getResponseEntity().getIdentity();
-        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
-        deploymentIdentity = deployment.getResponseEntity().getIdentity();
-        String realmKey = generateStringUtil.generateRealmKey();
-        String appIdentity = Constants.getApProApplicationIdentity();
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
-        installationIdentity = installation.getResponseEntity().getIdentity();
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
-    }
 
     @AfterEach
     public void cleanUp() {
@@ -78,12 +40,7 @@ public class CdsAccessControlsTests {
                 accessControlIdentityHolder.accessControlIdentity()
             );
         }
-        if (installationIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
-        }
-        if (licensedApplicationIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApplicationIdentity);
-        }
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         if (customerIdentity != null && userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
@@ -96,11 +53,7 @@ public class CdsAccessControlsTests {
     @TestRail(id = {3294})
     @Description("Adding out of context access control")
     public void postAccessControl() {
-        String userName = generateStringUtil.generateUserName();
-
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        userIdentity = user.getResponseEntity().getIdentity();
-
+        setCustomerData();
         ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getIdentity();
 
@@ -118,11 +71,7 @@ public class CdsAccessControlsTests {
     @TestRail(id = {3290})
     @Description("Get Access controls by Customer and User")
     public void getAccessControl() {
-        String userName = generateStringUtil.generateUserName();
-
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        userIdentity = user.getResponseEntity().getIdentity();
-
+        setCustomerData();
         ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getIdentity();
 
@@ -142,11 +91,7 @@ public class CdsAccessControlsTests {
     @TestRail(id = {3292})
     @Description("Get access control by Control ID")
     public void getAccessControlById() {
-        String userName = generateStringUtil.generateUserName();
-
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        userIdentity = user.getResponseEntity().getIdentity();
-
+        setCustomerData();
         ResponseWrapper<AccessControlResponse> accessControl = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControl.getResponseEntity().getIdentity();
 
@@ -160,5 +105,17 @@ public class CdsAccessControlsTests {
 
         soft.assertThat(accessControlResponse.getResponseEntity().getUserIdentity()).isEqualTo(userIdentity);
         soft.assertAll();
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        customerIdentity = customer.getResponseEntity().getIdentity();
+
+        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
+
+        String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        userIdentity = user.getResponseEntity().getIdentity();
     }
 }

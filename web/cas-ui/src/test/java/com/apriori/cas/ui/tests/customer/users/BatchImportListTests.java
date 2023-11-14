@@ -13,6 +13,8 @@ import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -36,16 +38,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BatchImportListTests extends TestBaseUI {
-
+public class   BatchImportListTests extends TestBaseUI {
+    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
     private final String fileName = "testUsersBatch.csv";
-    private String cloudRef;
-    private String customerName;
     private ImportPage importPage;
     private String email;
     private SoftAssertions soft = new SoftAssertions();
     private Customer targetCustomer;
-    private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
     private String invalidDataFile = "invalidUsersData.csv";
@@ -53,8 +52,8 @@ public class BatchImportListTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
-        customerName = new GenerateStringUtil().generateCustomerName();
-        cloudRef = new GenerateStringUtil().generateCloudReference();
+        String customerName = new GenerateStringUtil().generateCustomerName();
+        String cloudRef = new GenerateStringUtil().generateCloudReference();
         email = customerName.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
@@ -70,6 +69,7 @@ public class BatchImportListTests extends TestBaseUI {
 
     @AfterEach
     public void teardown() {
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
@@ -149,6 +149,7 @@ public class BatchImportListTests extends TestBaseUI {
     @Description("Users can be loaded from CSV by Load button")
     @TestRail(id = {5598, 5599, 4360, 4353, 4358, 4359})
     public void testLoadUsersFromFile() {
+        setCustomerData();
         cdsTestUtil.addCASBatchFile(Constants.USERS_BATCH, email, customerIdentity, currentUser);
 
         ImportPage uploadUsers = importPage.refreshBatchFilesList();
@@ -195,7 +196,7 @@ public class BatchImportListTests extends TestBaseUI {
         importPage.clickRemoveButton()
             .clickOkConfirmRemove(fileName);
 
-        sourceUsers = collectUsers(customerIdentity);
+        List<User> sourceUsers = collectUsers(customerIdentity);
         sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
     }
 
@@ -203,6 +204,7 @@ public class BatchImportListTests extends TestBaseUI {
     @Description("Upload user csv with invalid users data")
     @TestRail(id = {4348})
     public void testCsvInvalidUsersData() {
+        setCustomerData();
         cdsTestUtil.addInvalidBatchFile(customerIdentity, invalidDataFile, currentUser);
         importPage.refreshBatchFilesList();
 
@@ -226,5 +228,10 @@ public class BatchImportListTests extends TestBaseUI {
 
         importPage.clickRemoveButton()
             .clickOkConfirmRemove(fileName);
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
     }
 }
