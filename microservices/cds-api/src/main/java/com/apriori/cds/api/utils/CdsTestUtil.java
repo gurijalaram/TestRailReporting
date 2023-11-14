@@ -99,6 +99,16 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
+     * Creates customer with random data
+     *
+     * @param rcd random customer data
+     * @return new object
+     */
+    public ResponseWrapper<Customer> createCustomer(RandomCustomerData rcd) {
+        return addCustomer(rcd.getCustomerName(), rcd.getCustomerType(), rcd.getCloudRef(), rcd.getSalesForceId(), rcd.getEmailPattern());
+    }
+
+    /**
      * Gets the special customer "aPriori Internal"
      *
      * @return The customer representing aPriori Internal

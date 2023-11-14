@@ -152,7 +152,7 @@ public class CdsUserManagementHighMemTests {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(rcd.getCustomerName(), rcd.getCustomerType(), rcd.getCloudRef(), rcd.getSalesForceId(), rcd.getEmailPattern());
+        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
