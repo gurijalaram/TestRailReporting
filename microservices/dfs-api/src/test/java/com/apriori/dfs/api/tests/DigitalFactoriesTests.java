@@ -208,7 +208,7 @@ public class DigitalFactoriesTests {
     public void deleteDigitalFactoryByIdentityTest() {
 
         ResponseWrapper<Void> responseWrapper = digitalFactoryUtil.deleteDigitalFactory(
-            204, null, VALID_DIGITAL_FACTORY_ID);
+            HttpStatusCode.NO_CONTENT, null, VALID_DIGITAL_FACTORY_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity()).isNull();
         softAssertions.assertThat(responseWrapper.getBody()).isEmpty();
@@ -221,7 +221,7 @@ public class DigitalFactoriesTests {
     public void deleteDigitalFactoryWithInvalidSharedSecretTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.deleteDigitalFactory(
-            401, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, INVALID_SHARED_SECRET);
+            HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, INVALID_SHARED_SECRET);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(UNAUTHORIZED_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(INVALID_OR_MISSING_CREDENTIAL_MSG);
@@ -234,7 +234,7 @@ public class DigitalFactoriesTests {
     public void deleteDigitalFactoryWithEmptySharedSecretTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.deleteDigitalFactory(
-            401, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, NO_SHARED_SECRET);
+            HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, NO_SHARED_SECRET);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(UNAUTHORIZED_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(INVALID_CREDENTIAL_MSG);
@@ -247,7 +247,7 @@ public class DigitalFactoriesTests {
     public void deleteDigitalFactoryWithBadIdentityTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.deleteDigitalFactory(
-            400, ErrorMessage.class, INVALID_DIGITAL_FACTORY_ID);
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, INVALID_DIGITAL_FACTORY_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG);
