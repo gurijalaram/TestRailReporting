@@ -2,17 +2,14 @@ package com.apriori.cds.api.tests;
 
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
-import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.models.response.UserPreference;
 import com.apriori.cds.api.models.response.UserPreferences;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
-import com.apriori.shared.util.models.response.Deployment;
-import com.apriori.shared.util.models.response.LicensedApplications;
-import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -21,7 +18,6 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -30,48 +26,10 @@ public class CdsUserPreferencesTests {
     private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder userPreferenceIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private ResponseWrapper<Customer> customer;
-    private ResponseWrapper<User> user;
-    private String customerName;
-    private String userName;
-    private String cloudRef;
-    private String salesForceId;
-    private String emailPattern;
     private String customerIdentity;
     private String userIdentity;
-    private String siteIdentity;
-    private String deploymentIdentity;
-    private String licensedApplicationIdentity;
-    private String installationIdentity;
-
-    @BeforeEach
-    public void setDetails() {
-        customerName = generateStringUtil.generateCustomerName();
-        userName = generateStringUtil.generateUserName();
-        cloudRef = generateStringUtil.generateCloudReference();
-        salesForceId = generateStringUtil.generateSalesForceId();
-        emailPattern = "\\S+@".concat(customerName);
-        String customerType = Constants.CLOUD_CUSTOMER;
-
-        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        siteIdentity = site.getResponseEntity().getIdentity();
-        ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
-        deploymentIdentity = deployment.getResponseEntity().getIdentity();
-        String realmKey = generateStringUtil.generateRealmKey();
-        String appIdentity = Constants.getApProApplicationIdentity();
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
-        installationIdentity = installation.getResponseEntity().getIdentity();
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
-        user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        userIdentity = user.getResponseEntity().getIdentity();
-    }
 
     @AfterEach
     public void deletePreferences() {
@@ -82,12 +40,7 @@ public class CdsUserPreferencesTests {
                 userPreferenceIdentityHolder.userPreferenceIdentity()
             );
         }
-        if (installationIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
-        }
-        if (licensedApplicationIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApplicationIdentity);
-        }
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         if (customerIdentity != null && userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
@@ -100,6 +53,7 @@ public class CdsUserPreferencesTests {
     @TestRail(id = {12397})
     @Description("Returns a paged set of UserPreferences for a specific user.")
     public void getUserPreferences() {
+        setCustomerData();
         ResponseWrapper<UserPreferences> userPreferences = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_PREFERENCES, UserPreferences.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
         soft.assertThat(userPreferences.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
@@ -110,6 +64,7 @@ public class CdsUserPreferencesTests {
     @TestRail(id = {12398, 12399})
     @Description("Creates a user preference for a user and gets it by identity")
     public void addUserPreference() {
+        setCustomerData();
         ResponseWrapper<UserPreference> newPreference = cdsTestUtil.addUserPreference(customerIdentity, userIdentity);
         String preferenceIdentity = newPreference.getResponseEntity().getIdentity();
 
@@ -129,6 +84,7 @@ public class CdsUserPreferencesTests {
     @TestRail(id = {12400})
     @Description("Updates an existing user preference by identity")
     public void updateUserPreference() {
+        setCustomerData();
         String updatedPreference = generateStringUtil.getRandomString();
 
         ResponseWrapper<UserPreference> newPreference = cdsTestUtil.addUserPreference(customerIdentity, userIdentity);
@@ -150,6 +106,7 @@ public class CdsUserPreferencesTests {
     @TestRail(id = {12401, 12402})
     @Description("Adds or Replaces a UserPreference for a user")
     public void putUserPreference() {
+        setCustomerData();
         String preferenceName = generateStringUtil.getRandomString();
 
         ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.putUserPreference(customerIdentity, userIdentity, preferenceName);
@@ -160,5 +117,17 @@ public class CdsUserPreferencesTests {
         String preferenceIdentity = preferenceResponse.getResponseEntity().getIdentity();
 
         cdsTestUtil.delete(CDSAPIEnum.PREFERENCE_BY_ID, customerIdentity, userIdentity, preferenceIdentity);
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        customerIdentity = customer.getResponseEntity().getIdentity();
+
+        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
+
+        String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        userIdentity = user.getResponseEntity().getIdentity();
     }
 }

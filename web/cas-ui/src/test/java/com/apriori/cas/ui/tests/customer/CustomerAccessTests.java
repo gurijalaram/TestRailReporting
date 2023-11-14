@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class CustomerAccessTests extends TestBaseUI {
-
     SoftAssertions soft = new SoftAssertions();
     private Customer targetCustomer;
     private String cloudRef;

@@ -1,6 +1,7 @@
 package com.apriori.shared.util.models.response;
 
 import com.apriori.serialization.util.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.shared.util.annotations.CreatableModel;
 import com.apriori.shared.util.annotations.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
+@CreatableModel("user")
 @JsonRootName("response")
 public class User {
     protected Boolean isSystemUser;

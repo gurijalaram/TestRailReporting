@@ -109,6 +109,16 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
+     * Creates customer with random data
+     *
+     * @param rcd random customer data
+     * @return new object
+     */
+    public ResponseWrapper<Customer> createCustomer(RandomCustomerData rcd) {
+        return addCustomer(rcd.getCustomerName(), rcd.getCustomerType(), rcd.getCloudRef(), rcd.getSalesForceId(), rcd.getEmailPattern());
+    }
+
+    /**
      * Gets the special customer "aPriori Internal"
      *
      * @return The customer representing aPriori Internal
@@ -1072,9 +1082,11 @@ public class CdsTestUtil extends TestUtil {
         UserCredentials currentUser) {
 
         StringBuilder sb = new StringBuilder(users);
-        String userRecord = "User%s,user%s@%s.com,Test%s,User%s,,,,,,,,,,,,,,,,,,,,,,,,,";
+        sb.append("\r\n");
+        String userRecord = "User%sTest,user%s@%s.com,Test%s,User%s,,,,,,,,,,,,,,,,,,,,,,,,,,";
         for (int i = 0; i < 23; i++) {
             sb.append(String.format(userRecord, i, i, email, i, i));
+            sb.append("\r\n");
         }
 
         InputStream usersBatch = new ByteArrayInputStream(sb.toString().getBytes(StandardCharsets.UTF_8));
