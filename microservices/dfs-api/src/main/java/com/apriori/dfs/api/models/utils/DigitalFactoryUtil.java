@@ -1,107 +1,29 @@
 package com.apriori.dfs.api.models.utils;
 
 import com.apriori.dfs.api.enums.DFSApiEnum;
-import com.apriori.dfs.api.models.response.DigitalFactories;
-import com.apriori.dfs.api.models.response.DigitalFactory;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.response.ErrorMessage;
-
-import org.apache.commons.lang3.StringUtils;
-import software.amazon.awssdk.http.HttpStatusCode;
-
-import java.util.Map;
 
 public class DigitalFactoryUtil {
 
     /**
-     * GET digital factories
-     *
-     * @param expectedResponseCode - expected response code
-     * @return user object
-     */
-    public ResponseWrapper<ErrorMessage> getDigitalFactories(Integer expectedResponseCode) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, ErrorMessage.class)
-            .expectedResponseCode(expectedResponseCode);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
      * FIND digital factories
      *
-     * @return user object
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType - Expected type from body of HTTP response
+     * @param inlineVariables - secret
+     * @return Response object
      */
-    public ResponseWrapper<DigitalFactories> findDigitalFactories() {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactories.class)
-            .expectedResponseCode(HttpStatusCode.OK);
+    public <T> ResponseWrapper<T> findDigitalFactories(Integer expectedResponseCode,
+                                                       Class<T> expectedType,
+                                                       String... inlineVariables) {
 
-        return HTTPRequest.build(requestEntity).get();
-    }
+        DFSApiEnum path = inlineVariables.length == 0
+            ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
 
-    /**
-     * FIND digital factories with Invalid or without Shared Secret
-     *
-     * @param expectedResponseCode - expected response code
-     * @return ErrorMessage Object
-     */
-    public ResponseWrapper<ErrorMessage> findDigitalFactoriesWithInvalidSharedSecret(Integer expectedResponseCode, String inlineVariables) {
-
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, ErrorMessage.class)
-                .inlineVariables(inlineVariables)
-                .expectedResponseCode(expectedResponseCode);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
-     * POST digital factories
-     *
-     * @return user object
-     */
-    public ResponseWrapper<DigitalFactories> postDigitalFactories() {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactories.class)
-            .expectedResponseCode(HttpStatusCode.OK);
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * GET digital factories by identity
-     *
-     * @return user object
-     */
-    public ResponseWrapper<DigitalFactories> getDigitalFactoriesIdentity(String identity) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactories.class)
-            .inlineVariables(identity)
-            .expectedResponseCode(HttpStatusCode.OK);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
-     * GET digital factory by identity
-     *
-     * @return DigitalFactory object
-     */
-    public ResponseWrapper<DigitalFactory> getDigitalFactory(String identity) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, DigitalFactory.class)
-            .inlineVariables(identity)
-            .expectedResponseCode(HttpStatusCode.OK);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
-     * GET digital factory by identity with Invalid or without Shared Secret
-     *
-     * @param expectedResponseCode - expected response code
-     * @return ErrorMessage object
-     */
-    public ResponseWrapper<ErrorMessage> getDigitalFactory(Integer expectedResponseCode, String inlineVariables) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, ErrorMessage.class)
+        final RequestEntity requestEntity = RequestEntityUtil.init(path, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
 
@@ -109,30 +31,81 @@ public class DigitalFactoryUtil {
     }
 
     /**
-     * Update or Insert a DigitalFactory
+     * GET digital factory
      *
-     * @return DigitalFactory object
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @param inlineVariables - identity or identity/secret
+     * @return Response object
      */
-    public ResponseWrapper<DigitalFactory> upsertDigitalFactory(Map<String, Object> requestBody) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES, DigitalFactory.class)
-                .body(requestBody)
-                .expectedResponseCode(HttpStatusCode.CREATED);
+    public <T> ResponseWrapper<T> getDigitalFactory(Integer expectedResponseCode,
+                                                    Class<T> expectedType,
+                                                    String... inlineVariables) {
 
-        return HTTPRequest.build(requestEntity).post();
+        return HTTPRequest.build(getRequestEntity(expectedResponseCode, expectedType, inlineVariables)).get();
     }
 
     /**
-     * Update or Insert a DigitalFactory with Invalid Request
+     * GET digital factory
      *
-     * @return ErrorMessage object
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @param identity - identity
+     * @return Response object
      */
-    public ResponseWrapper<ErrorMessage> upsertDigitalFactoryWithInvalidRequest(Map<String, Object> requestBody, Integer expectedResponseCode, String inlineVariables, String contentType) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, ErrorMessage.class)
+    public <T> ResponseWrapper<T> getDigitalFactoryWithoutKeyParameter(Integer expectedResponseCode,
+                                                                       Class<T> expectedType,
+                                                                       String identity) {
+
+        final RequestEntity requestEntity =  RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH, expectedType)
+            .inlineVariables(new String[]{ identity, ""}) // hack - add one more empty variable to skip auto adding shared secret
+            .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+
+    /**
+     * Update or Insert a DigitalFactory
+     *
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType - Expected type from body of HTTP response
+     * @param requestBody - Request body
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> upsertDigitalFactory(Integer expectedResponseCode,
+                                                       Class<T> expectedType,
+                                                       Object requestBody) {
+
+        return upsertDigitalFactory(expectedResponseCode, expectedType, requestBody, null);
+    }
+
+    /**
+     * Update or Insert a DigitalFactory
+     *
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType - Expected type from body of HTTP response
+     * @param requestBody - Request body
+     * @param contentType - Content type
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> upsertDigitalFactory(Integer expectedResponseCode,
+                                                       Class<T> expectedType,
+                                                       Object requestBody,
+                                                       String contentType,
+                                                       String... inlineVariables) {
+
+        DFSApiEnum path = inlineVariables.length == 0
+            ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
+
+        final RequestEntity requestEntity = RequestEntityUtil.init(path, expectedType)
                 .body(requestBody)
                 .inlineVariables(inlineVariables)
                 .expectedResponseCode(expectedResponseCode);
 
-        requestEntity.headers().put("Content-Type", contentType);
+        if (contentType != null) {
+            requestEntity.headers().put("Content-Type", contentType);
+        }
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -140,17 +113,27 @@ public class DigitalFactoryUtil {
     /**
      * DELETE digital factory by identity
      *
-     * @param expectedResponseCode Expected HTTP status code
-     * @param expectedType Expected type from body of HTTP response
-     * @param identity Identity of Digital Factory to delete
-     * @param sharedSecret Shared secret for authentication (in form: "?key=...")
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType - Expected type from body of HTTP response
+     * @param inlineVariables - identity or identity/secret
      * @return Response object
      */
-    public <T> ResponseWrapper<T> deleteDigitalFactory(Integer expectedResponseCode, Class<T> expectedType, String identity, String sharedSecret) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_PARAMETER, expectedType)
-            .inlineVariables(StringUtils.join(identity, sharedSecret))
-            .expectedResponseCode(expectedResponseCode);
+    public <T> ResponseWrapper<T> deleteDigitalFactory(Integer expectedResponseCode,
+                                                       Class<T> expectedType,
+                                                       String... inlineVariables) {
 
-        return HTTPRequest.build(requestEntity).delete();
+        return HTTPRequest.build(getRequestEntity(expectedResponseCode, expectedType, inlineVariables)).delete();
+    }
+
+    private <T> RequestEntity getRequestEntity(Integer expectedResponseCode,
+                                               Class<T> expectedType,
+                                               String... inlineVariables) {
+
+        DFSApiEnum path = inlineVariables.length == 1
+            ? DFSApiEnum.DIGITAL_FACTORIES_BY_PATH : DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM;
+
+        return RequestEntityUtil.init(path, expectedType)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(expectedResponseCode);
     }
 }
