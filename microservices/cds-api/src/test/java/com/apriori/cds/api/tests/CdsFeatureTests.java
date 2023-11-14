@@ -150,7 +150,7 @@ public class CdsFeatureTests {
         setAllCustomerData();
 
         cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, true, false);
-        ResponseWrapper<FeatureResponse> updateFeature = cdsTestUtil.updateFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
+        ResponseWrapper<FeatureResponse> updateFeature = cdsTestUtil.updateFeature(customerIdentity, deploymentIdentity, installationIdentity, false, false);
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
             FeatureResponse.class,

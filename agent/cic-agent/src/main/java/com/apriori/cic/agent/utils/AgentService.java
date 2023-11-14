@@ -478,16 +478,15 @@ public class AgentService {
 
     /**
      * Install certificates after installation of agent
-     *
-     * @return current class object
+     *Amazing i
      */
     public AgentService installCertificates() {
         String jreBinDirectory = StringUtils.EMPTY;
         jreBinDirectory = this.getInstallFolder() + File.separator + "jre/bin/";
         try {
             channelSftp.cd(jreBinDirectory);
-            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc-consvdc02-CA-2026.cer -alias fbc-consvdc02-2026 -keystore \"" + this.getInstallFolder() + "/jre/jre/lib/security/cacerts\" -storepass changeit -noprompt");
-            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc1-2040.cer -alias fbc1-2040 -keystore \"" + this.getInstallFolder() + "/jre/jre/lib/security/cacerts\" -storepass changeit -noprompt");
+            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc-consvdc02-CA-2026.cer -alias fbc-consvdc02-2026 -keystore \"" + this.getInstallFolder() + "/jre/lib/security/cacerts\" -storepass changeit -noprompt");
+            execute(jreBinDirectory + "keytool -importcert -file " + AgentConstants.REMOTE_CERTIFICATE_FOLDER + "/fbc1-2040.cer -alias fbc1-2040 -keystore \"" + this.getInstallFolder() + "/jre/lib/security/cacerts\" -storepass changeit -noprompt");
         } catch (Exception e) {
             log.error("FAILED TO IMPORT CERTIFICATES");
             throw new IllegalArgumentException(e);

@@ -3,12 +3,12 @@ package com.apriori.cid.ui.tests.evaluate.assemblies;
 import static com.apriori.cid.ui.utils.PartNamesEnum.PIN;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 
-import com.apriori.cid.api.models.dto.AssemblyDTORequest;
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.ButtonTypeEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.AssemblyDTORequest;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
 
 public class LargeGroupAssemblyTests extends TestBaseUI {
 
-    private CidAppLoginPage loginPage;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static ComponentInfoBuilder componentAssembly;
+    private CidAppLoginPage loginPage;
     private ComponentsTreePage componentsTreePage;
     private SoftAssertions softAssertions = new SoftAssertions();
 

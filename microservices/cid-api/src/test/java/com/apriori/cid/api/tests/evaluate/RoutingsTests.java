@@ -2,7 +2,6 @@ package com.apriori.cid.api.tests.evaluate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.apriori.cid.api.models.dto.ComponentDTORequest;
 import com.apriori.cid.api.models.response.scenarios.Routings;
 import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.cid.api.utils.ComponentsUtil;
@@ -11,6 +10,7 @@ import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.ComponentDTORequest;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.utils.ResponseWrapper;

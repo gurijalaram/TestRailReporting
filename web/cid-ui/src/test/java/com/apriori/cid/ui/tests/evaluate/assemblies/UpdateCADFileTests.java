@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
-import com.apriori.cid.api.models.dto.AssemblyDTORequest;
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -10,6 +9,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.AssemblyDTORequest;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.utils.FileResourceUtil;

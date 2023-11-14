@@ -1,4 +1,4 @@
-package com.apriori.cid.api.models.dto;
+package com.apriori.shared.util.dto;
 
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.file.user.UserCredentials;
