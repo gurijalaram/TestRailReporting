@@ -1,0 +1,274 @@
+{
+  "components": [
+    {
+      "componentName": "Case_17",
+      "extension": ".stp",
+      "processGroup": "CASTING"
+    },
+    {
+      "componentName": "bracket_basic",
+      "extension": ".prt",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "PowderMetalShaft",
+      "extension": ".stp",
+      "processGroup": "POWDER_METAL"
+    },
+    {
+      "componentName": "Push Pin",
+      "extension": ".stp",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Locker_bottom_panel",
+      "extension": ".prt",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "225_gasket-1-solid1",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "M3CapScrew",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "case_002_006-8611543_prt",
+      "extension": ".stp",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "BasicScenario_Forging",
+      "extension": ".stp",
+      "processGroup": "FORGING"
+    },
+    {
+      "componentName": "Rapid Prototyping",
+      "extension": ".stp",
+      "processGroup": "RAPID_PROTOTYPING"
+    },
+    {
+      "componentName": "Rapid Prototyping",
+      "extension": ".stp",
+      "processGroup": "ROTO_BLOW_MOLDING"
+    },
+    {
+      "componentName": "SheetMetal",
+      "extension": ".prt",
+      "processGroup": "SHEET_METAL_TRANSFER_DIE"
+    },
+    {
+      "componentName": "Casting",
+      "extension": ".prt",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "FlangedRound",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL_HYDROFORMING"
+    },
+    {
+      "componentName": "Machined Box AMERICAS",
+      "extension": ".SLDPRT",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Machined Box AMERICAS IronCast",
+      "extension": ".SLDPRT",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Plastic moulded cap DFM",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Casting-Die",
+      "extension": ".stp",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "SandCast",
+      "extension": ".x_t",
+      "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "plasticLid",
+      "extension": ".SLDPRT",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "testpart-4",
+      "extension": ".prt",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "PlasticMoulding",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "DTCCastingIssues",
+      "extension": ".catpart",
+      "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "SandCastIssues",
+      "extension": ".SLDPRT",
+      "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "Plastic moulded cap noDraft",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Plastic moulded cap thinPart",
+      "extension": ".SLDPRT",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Plastic moulded cap edge radius",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "PlasticMoulded-Special Tooling Sliders Lifters",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "DTCPlasticIssues",
+      "extension": ".SLDPRT",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "bracketdfm",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "gs515625_gt077_high",
+      "extension": ".prt.2",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "9856874Medium",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "bar_test1",
+      "extension": ".prt",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "manifold2",
+      "extension": ".prt.1",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "1379344",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "1271576_CRITICAL",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "3571050_cad",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "SandCast",
+      "extension": ".x_t",
+      "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "SandCastBox",
+      "extension": ".SLDPRT",
+      "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "sheet_plastic",
+      "extension": ".STEP",
+      "processGroup": "SHEET_PLASTIC"
+    },
+    {
+      "componentName": "Hydroforming",
+      "extension": ".stp",
+      "processGroup": "SHEET_METAL_STRETCH_FORMING"
+    },
+    {
+      "componentName": "angle_bar",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_METAL_ROLLFORMING"
+    },
+    {
+      "componentName": "5d51749fig01",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_PLASTIC"
+    },
+    {
+      "componentName": "Hydroforming",
+      "extension": ".stp",
+      "processGroup": "SHEET_METAL_HYDROFORMING"
+    },
+    {
+      "componentName": "piston_model1",
+      "extension": ".prt",
+      "processGroup": "CASTING_INVESTMENT"
+    },
+    {
+      "componentName": "B&T-LOW-001",
+      "extension": ".SLDPRT",
+      "processGroup": "BAR_TUBE_FAB"
+    },
+    {
+      "componentName": "casting_BEFORE_machining",
+      "extension": ".stp",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "casting_AFTER_machining",
+      "extension": ".stp",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "testpart-4",
+      "extension": ".prt",
+      "processGroup": "ADDITIVE_MANUFACTURING"
+    },
+    {
+      "componentName": "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "PMI_AllTolTypesCatia",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "case_012_009-0020647_hinge_2",
+      "extension": ".prt.1",
+      "processGroup": "CASTING_INVESTMENT"
+    },
+    {
+      "componentName": "700-33770-01_A0",
+      "extension": ".stp",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "116-5809",
+      "extension": ".prt.1",
+      "processGroup": "ADDITIVE_MANUFACTURING"
+    }
+  ]
+}

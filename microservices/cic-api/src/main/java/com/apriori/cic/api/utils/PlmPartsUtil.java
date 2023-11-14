@@ -35,18 +35,6 @@ public class PlmPartsUtil {
     }
 
     /**
-     * get plm parts from cloud
-     *
-     * @param numOfParts
-     * @return list<PartData>
-     */
-    public List<PartData> getPlmPartsFromCloud(Integer numOfParts) {
-        return IntStream.range(0, numOfParts)
-            .mapToObj(i -> getPlmPartData())
-            .collect(Collectors.toList());
-    }
-
-    /**
      * get plm part data from plm test parts csv file from cloud
      *
      * @return PartData
@@ -63,6 +51,18 @@ public class PlmPartsUtil {
         } catch (Exception e) {
             throw new IllegalArgumentException("MATCHED PLM PART NOT FOUND IN DATA FILE!!");
         }
+    }
+
+    /**
+     * get plm parts from cloud
+     *
+     * @param numOfParts
+     * @return list PartData
+     */
+    public List<PartData> getPlmPartsFromCloud(Integer numOfParts) {
+        return IntStream.range(0, numOfParts)
+            .mapToObj(i -> getPlmPartData())
+            .collect(Collectors.toList());
     }
 
     /**

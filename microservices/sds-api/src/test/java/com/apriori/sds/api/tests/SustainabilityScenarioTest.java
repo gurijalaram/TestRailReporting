@@ -64,8 +64,9 @@ public class SustainabilityScenarioTest extends SDSTestUtil {
 
         List<ScenarioIteration> scenarios = new ArrayList<>();
 
-        scenarios.add((ScenarioIteration) HTTPRequest.build(initRequestToGetIteration(0, testingScenarios)).get().getResponseEntity());
-        scenarios.add((ScenarioIteration) HTTPRequest.build(initRequestToGetIteration(1, testingScenarios)).get().getResponseEntity());
+        for (int i = 0; i < testingScenarios.size(); i++) {
+            scenarios.add((ScenarioIteration) HTTPRequest.build(initRequestToGetIteration(i, testingScenarios)).get().getResponseEntity());
+        }
 
         return scenarios.stream()
             .filter(p -> (!p.getScenarioProcesses().isEmpty()))
@@ -75,6 +76,7 @@ public class SustainabilityScenarioTest extends SDSTestUtil {
 
     public RequestEntity initRequestToGetIteration(Integer itemNumber, List<ScenarioItem> testingScenarios) {
         return RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
+            .apUserContext(testingApUserContext)
             .inlineVariables(testingScenarios.get(itemNumber).getComponentIdentity(), testingScenarios.get(itemNumber).getScenarioIdentity(),
                 testingScenarios.get(itemNumber).getIterationIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
