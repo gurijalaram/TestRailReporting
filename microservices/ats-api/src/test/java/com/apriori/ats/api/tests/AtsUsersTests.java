@@ -4,17 +4,12 @@ import com.apriori.ats.api.models.response.AtsErrorMessage;
 import com.apriori.ats.api.utils.AtsTestUtil;
 import com.apriori.ats.api.utils.enums.ATSAPIEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
-import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.Constants;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
-import com.apriori.shared.util.models.response.Deployment;
-import com.apriori.shared.util.models.response.LicensedApplications;
-import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -32,26 +27,14 @@ public class AtsUsersTests {
     private AtsTestUtil atsTestUtil = new AtsTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private ResponseWrapper<Customer> customer;
+    private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
     private ResponseWrapper<User> user;
     private String customerIdentity;
     private String userIdentity;
-    private UserCredentials currentUser = UserUtil.getUser();
-    private ResponseWrapper<Site> site;
-    private String siteIdentity;
-    private ResponseWrapper<Deployment> deployment;
-    private String deploymentIdentity;
-    private String licensedApplicationIdentity;
-    private String installationIdentity;
 
     @AfterEach
     public void cleanUp() {
-        if (installationIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
-        }
-        if (licensedApplicationIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApplicationIdentity);
-        }
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         if (userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,
                 customerIdentity,
@@ -90,32 +73,7 @@ public class AtsUsersTests {
     @TestRail(id = {22086, 22087})
     @Description("Reset the MFA configuration for a user.")
     public void resetUserMFA() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String userName = generateStringUtil.generateUserName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
-        String emailPattern = "\\S+@".concat(customerName);
-        String customerType = Constants.CLOUD_CUSTOMER;
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-        String realmKey = generateStringUtil.generateRealmKey();
-        String appIdentity = Constants.getApProApplicationIdentity();
-
-        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-        site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        siteIdentity = site.getResponseEntity().getIdentity();
-        deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
-        deploymentIdentity = deployment.getResponseEntity().getIdentity();
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
-        installationIdentity = installation.getResponseEntity().getIdentity();
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
-
-        user = cdsTestUtil.addUser(customerIdentity, userName, emailPattern);
-        userIdentity = user.getResponseEntity().getIdentity();
-
+        setCustomerData();
         atsTestUtil.resetUserMFA(ATSAPIEnum.CUSTOMER_USERS_MFA, customerIdentity, HttpStatus.SC_ACCEPTED);
         atsTestUtil.resetUserMFA(ATSAPIEnum.USER_MFA, userIdentity, HttpStatus.SC_NO_CONTENT);
     }
@@ -124,31 +82,21 @@ public class AtsUsersTests {
     @TestRail(id = {3579})
     @Description("Update/change the password of a user identified by their email")
     public void changeUserPassword() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String userName = generateStringUtil.generateUserName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String email = customerName.toLowerCase();
-        String siteName = generateStringUtil.generateSiteName();
-        String siteID = generateStringUtil.generateSiteID();
-        String realmKey = generateStringUtil.generateRealmKey();
-        String appIdentity = Constants.getApProApplicationIdentity();
-
-        customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-        site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        siteIdentity = site.getResponseEntity().getIdentity();
-        deployment = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
-        deploymentIdentity = deployment.getResponseEntity().getIdentity();
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
-        licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
-        installationIdentity = installation.getResponseEntity().getIdentity();
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
-
-        user = cdsTestUtil.addUser(customerIdentity, userName, email);
-        userIdentity = user.getResponseEntity().getIdentity();
+        setCustomerData();
         String userEmail = user.getResponseEntity().getEmail();
 
         atsTestUtil.changePassword(userEmail);
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        customerIdentity = customer.getResponseEntity().getIdentity();
+
+        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
+        String userName = generateStringUtil.generateUserName();
+
+        user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        userIdentity = user.getResponseEntity().getIdentity();
     }
 }
