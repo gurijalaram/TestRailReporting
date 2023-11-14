@@ -19,15 +19,17 @@ public interface ExternalEndpointEnum extends EndpointEnum {
             querySymbol = "&";
         }
 
-        String secretKey;
+        return querySymbol + "key=" + getSecretKey();
+    }
 
+    default String getSecretKey() {
+        String secretKey;
         try {
             //TODO : should be removed from config file when work with staging
             secretKey = PropertiesContext.get("secret_key");
         } catch (IllegalArgumentException e) {
             secretKey = AwsParameterStoreUtil.getSystemParameter("/" + PropertiesContext.get("aws_parameter_store_name") + "/shared/environment-secret-key");
         }
-
-        return querySymbol + "key=" + secretKey;
+        return secretKey;
     }
 }
