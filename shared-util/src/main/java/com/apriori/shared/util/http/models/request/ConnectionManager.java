@@ -200,11 +200,15 @@ class ConnectionManager<T> {
                 responseEntity = extractedResponse.as((Type) returnType, objectMapper);
 
             } catch (Exception e) {
-                log.error("Response contains MappingException. \n ***Exception message: {} \n ***Response: {}", e.getMessage(), extractedResponse.asPrettyString());
-                responseEntity = extractedResponse.as((Type) returnType, new Jackson2Mapper(((type, charset) ->
-                        new com.apriori.shared.util.http.models.request.ObjectMapper()
-                                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                )));
+                if (IS_JENKINS_BUILD) {
+                    log.error("Response contains MappingException. \n ***Exception message: {} \n ***Response: {}", e.getMessage(), extractedResponse.asPrettyString());
+                    responseEntity = extractedResponse.as((Type) returnType, new Jackson2Mapper(((type, charset) ->
+                            new com.apriori.shared.util.http.models.request.ObjectMapper()
+                                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                    )));
+                } else {
+                    throw new IllegalArgumentException(e.getMessage());
+                }
             }
 
             return ResponseWrapper.build(responseCode, responseHeaders, responseBody, responseEntity);
