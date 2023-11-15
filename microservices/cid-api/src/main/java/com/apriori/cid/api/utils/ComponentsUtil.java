@@ -160,12 +160,11 @@ public class ComponentsUtil {
      * Feeder method for postComponentQueryCID to allow users to upload parts
      * without creating one-shot ComponentInfoBuilders
      *
-     * @param componentName - String of components name
-     * @param scenarioName - String with chosen name for scenario
+     * @param componentName    - String of components name
+     * @param scenarioName     - String with chosen name for scenario
      * @param processGroupEnum - Enum of components Process Group
-     * @param resourceFile - File to be uploaded
-     * @param currentUser - Current user performing upload
-     *
+     * @param resourceFile     - File to be uploaded
+     * @param currentUser      - Current user performing upload
      * @return - ComponentInfoBuilder of created scenario
      */
     public ComponentInfoBuilder postComponentCID(String componentName, String scenarioName, ProcessGroupEnum processGroupEnum, File resourceFile, UserCredentials currentUser) {
@@ -329,9 +328,18 @@ public class ComponentsUtil {
 
                 ComponentIdentityResponse componentIdentityResponse = getComponentIdentity(componentInfo);
 
-                if (componentIdentityResponse != null && !componentIdentityResponse.getComponentType().equalsIgnoreCase("unknown")) {
+                if (componentIdentityResponse != null) {
+                    //fail fast
+                    if (componentIdentityResponse.getComponentType().equalsIgnoreCase("unknown") &&
+                        new ScenariosUtil().getScenario(componentInfo).getScenarioState().equalsIgnoreCase(ScenarioStateEnum.PROCESSING_FAILED.getState())) {
 
-                    return componentIdentityResponse;
+                        throw new RuntimeException(String.format("Processing has failed for component name: '%s', component id: '%s', scenario name: '%s'",
+                            componentInfo.getComponentName(), componentInfo.getComponentIdentity(), componentInfo.getScenarioName()));
+                    }
+
+                    if (!componentIdentityResponse.getComponentType().equalsIgnoreCase("unknown")) {
+                        return componentIdentityResponse;
+                    }
                 }
             } catch (InterruptedException e) {
                 log.error(e.getMessage());
