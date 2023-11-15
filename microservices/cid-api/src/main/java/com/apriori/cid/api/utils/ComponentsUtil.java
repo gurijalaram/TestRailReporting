@@ -327,7 +327,7 @@ public class ComponentsUtil {
             try {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ComponentIdentityResponse componentIdentityResponse = getComponentIdentity(componentInfo).getResponseEntity();
+                ComponentIdentityResponse componentIdentityResponse = getComponentIdentity(componentInfo);
 
                 if (componentIdentityResponse != null && !componentIdentityResponse.getComponentType().equalsIgnoreCase("unknown")) {
 
@@ -353,14 +353,15 @@ public class ComponentsUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo) {
+    public ComponentIdentityResponse getComponentIdentity(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity())
                 .token(componentInfo.getUser().getToken())
                 .followRedirection(true);
 
-        return HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<ComponentIdentityResponse> response = HTTPRequest.build(requestEntity).get();
+        return response.getResponseEntity();
     }
 
     /**
