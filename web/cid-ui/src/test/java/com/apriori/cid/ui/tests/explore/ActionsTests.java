@@ -76,7 +76,7 @@ public class ActionsTests extends TestBaseUI {
     public void addScenarioNotes() {
         component = new ComponentDTORequest().getComponent();
 
-        infoPage = new CidAppLoginPage(driver).login(currentUser)
+        infoPage = new CidAppLoginPage(driver).login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
