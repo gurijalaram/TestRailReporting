@@ -23,6 +23,10 @@ public class UserCommonService {
     public static final String DEFAULT_USER_NAME = PropertiesContext.get("global.default_user_name");
     public static final String DEFAULT_PASSWORD = PropertiesContext.get("global.default_password");
     public static final String DEFAULT_ACCESS_LEVEL = PropertiesContext.get("global.default_access_level");
+
+    public static final Boolean IS_DIFFERENT_USERS = Boolean.valueOf(PropertiesContext.get("global.different_users"));
+    public static final Boolean USE_DEFAULT_USER = Boolean.valueOf(PropertiesContext.get("global.use_default_user"));
+
     private static UserCredentials globalUser;
     private static ConcurrentLinkedQueue<UserCredentials> usersQueue = initCommonUsers();
 
@@ -37,7 +41,7 @@ public class UserCommonService {
         String tokenEmail = System.getProperty("token_email");
 
         if (tokenEmail == null) {
-            return PropertiesContext.get("global.different_users").equals("true") ? getNewUser() : getGlobalUser();
+            return IS_DIFFERENT_USERS ? getNewUser() : getGlobalUser();
         }
         return UserCredentials.init(tokenEmail, System.getProperty("password"));
     }
@@ -46,7 +50,7 @@ public class UserCommonService {
         List<String> users;
         String csvFileName = PropertiesContext.get("users_csv_file");
         users = InitFileData.initRows(csvFileName);
-        if (users == null) {
+        if (users == null || USE_DEFAULT_USER) {
             return Collections.singletonList(createDefaultUser());
         }
         return parseUsersToUsersCredentialsList(users);
@@ -98,6 +102,6 @@ public class UserCommonService {
 
     private static UserCredentials createDefaultUser() {
         log.info(String.format("Creating default user %s/%s/%s", DEFAULT_USER_NAME, DEFAULT_PASSWORD, DEFAULT_ACCESS_LEVEL));
-        return new UserCredentials(DEFAULT_PASSWORD, DEFAULT_USER_NAME, DEFAULT_ACCESS_LEVEL);
+        return new UserCredentials(DEFAULT_USER_NAME, DEFAULT_PASSWORD, DEFAULT_ACCESS_LEVEL);
     }
 }

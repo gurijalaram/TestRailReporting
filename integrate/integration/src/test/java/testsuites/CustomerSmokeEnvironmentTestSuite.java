@@ -11,5 +11,5 @@ import org.junit.platform.suite.api.Suite;
     AchMainPageUITest.class,
     AchMainPageAPITestAPI.class
 })
-public class CustomerEnvironmentTestSuite {
+public class CustomerSmokeEnvironmentTestSuite {
 }
