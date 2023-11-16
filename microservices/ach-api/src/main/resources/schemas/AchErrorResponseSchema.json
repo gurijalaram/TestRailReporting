@@ -4,7 +4,8 @@
     "status",
     "error",
     "message",
-    "path"
+    "path",
+    "method"
   ],
   "properties": {
     "status": {
@@ -17,6 +18,9 @@
       "type": "string"
     },
     "path": {
+      "type": "string"
+    },
+    "method": {
       "type": "string"
     }
   }
