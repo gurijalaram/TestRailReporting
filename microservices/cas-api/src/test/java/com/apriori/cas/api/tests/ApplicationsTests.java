@@ -25,7 +25,7 @@ public class ApplicationsTests {
 
     @BeforeEach
     public void getToken() {
-        RequestEntityUtil.useTokenForRequests(UserUtil.getUser().getToken());
+        RequestEntityUtil.useTokenForRequests(UserUtil.getUser("admin").getToken());
     }
 
     @Test

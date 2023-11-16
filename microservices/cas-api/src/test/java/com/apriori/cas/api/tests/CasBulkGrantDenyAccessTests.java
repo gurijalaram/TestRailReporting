@@ -40,7 +40,7 @@ public class CasBulkGrantDenyAccessTests {
     private final String ciaIdentity = Constants.getCiaApplicationIdentity();
     private final String cirIdentity = Constants.getCirAppIdentity();
     private final String acsIdentity = Constants.getACSAppIdentity();
-    private final UserCredentials currentUser = UserUtil.getUser();
+    private final UserCredentials currentUser = UserUtil.getUser("admin");
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private SoftAssertions soft = new SoftAssertions();

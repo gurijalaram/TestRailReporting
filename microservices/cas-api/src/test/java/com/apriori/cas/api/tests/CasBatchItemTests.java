@@ -32,7 +32,7 @@ public class CasBatchItemTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    public final UserCredentials currentUser = UserUtil.getUser();
+    public final UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void getToken() {

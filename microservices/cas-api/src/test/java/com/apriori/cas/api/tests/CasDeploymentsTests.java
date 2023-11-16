@@ -27,7 +27,7 @@ public class CasDeploymentsTests {
     private Customer aprioriInternal;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private String customerIdentity;
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void setup() {

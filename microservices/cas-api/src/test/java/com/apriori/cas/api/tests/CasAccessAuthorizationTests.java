@@ -16,7 +16,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.properties.PropertiesContext;
+import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -44,7 +44,7 @@ public class CasAccessAuthorizationTests {
     private String associationIdentity;
     private String aPStaffIdentity;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser("admin");
 
 
     @BeforeEach
@@ -52,7 +52,7 @@ public class CasAccessAuthorizationTests {
         url = Constants.getServiceUrl();
         RequestEntityUtil.useTokenForRequests(currentUser.getToken());
         aPCustomerIdentity = casTestUtil.getAprioriInternal().getIdentity();
-        aPStaffIdentity = PropertiesContext.get("user_identity");
+        aPStaffIdentity = casTestUtil.getCommonRequest(CASAPIEnum.CURRENT_USER, User.class, HttpStatus.SC_OK).getResponseEntity().getIdentity();
         customer = casTestUtil.createCustomer().getResponseEntity();
         customerIdentity = customer.getIdentity();
         customerAssociationToAprioriInternal = casTestUtil.findCustomerAssociation(casTestUtil.getAprioriInternal(), customer);

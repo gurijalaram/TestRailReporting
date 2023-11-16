@@ -38,7 +38,7 @@ public class CasCustomerUserAccessControlsTests {
     private IdentityHolder accessControlIdentityHolder;
     private String customerIdentity;
     private String userIdentity;
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void setDetails() {

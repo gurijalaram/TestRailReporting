@@ -33,4 +33,5 @@ public class CustomAttributes {
     private String accessGroup;
     private String assemblyOperationType;
     private List<Object> roles;
+    private String manager;
 }
