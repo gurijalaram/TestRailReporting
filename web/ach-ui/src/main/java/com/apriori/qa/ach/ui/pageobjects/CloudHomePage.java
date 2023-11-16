@@ -5,6 +5,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.web.app.util.PageUtils;
 import com.apriori.web.app.util.login.UserProfilePage;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +17,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     @FindBy(css = "img[alt='Application Logo']")
@@ -104,7 +106,17 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     }
 
     public <T> T clickWebApplicationByNameAndCloseAfterLoad(String applicationName, Class<T> webPageType) {
-        T responsePage = clickWebApplicationByName(applicationName, webPageType);
+        T responsePage = null;
+
+        try {
+            responsePage = clickWebApplicationByName(applicationName, webPageType);
+        } catch (Exception e) {
+            final String errorText = String.format("Failed to load application with the name %s and class type %s", applicationName, webPageType);
+
+            log.info(errorText);
+            throw new IllegalArgumentException(errorText + "\n" + e);
+        }
+
         driver.close();
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
 
