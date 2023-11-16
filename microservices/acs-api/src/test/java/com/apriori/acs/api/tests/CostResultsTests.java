@@ -230,7 +230,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsCastingInvestment() {
         String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "AP-000-506.prt.1", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "piston_model1.prt", workorderAPITests.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Casting - Investment");

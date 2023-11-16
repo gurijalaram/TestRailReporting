@@ -268,7 +268,7 @@ public class GcdPropertiesTests {
 
         String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "AP-000-506.prt.1", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "piston_model1.prt", workorderAPITests.setupProductionInfoInputs());
 
         PropertiesToSet propertiesToSet = PropertiesToSet.builder()
             .parallelism("0.5")
