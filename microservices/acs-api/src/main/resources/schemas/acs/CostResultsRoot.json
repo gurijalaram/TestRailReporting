@@ -65,6 +65,30 @@
                 "otherDirectCosts": {
                   "type": "number"
                 },
+                "hardToolingCarbon": {
+                  "type": "number"
+                },
+                "amortizedHardToolingMaterialCarbon": {
+                  "type": "number"
+                },
+                "amortizedHardToolingProcessCarbon": {
+                  "type": "number"
+                },
+                "totalCapitalCarbon": {
+                  "type": "number"
+                },
+                "hardToolingMaterialCarbon": {
+                  "type": "number"
+                },
+                "totalAmortizedCapitalCarbon": {
+                  "type": "number"
+                },
+                "amortizedHardToolingCarbon": {
+                  "type": "number"
+                },
+                "variableCarbon": {
+                  "type": "number"
+                },
                 "extraCosts": {
                   "type": "number"
                 },
