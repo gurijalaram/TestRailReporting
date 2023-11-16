@@ -13,7 +13,6 @@ public class PropertyValueMap {
     private Double extraCosts;
     private Integer gcdWithTolerancesCount;
     private Double pieceCost;
-    private Double additionalAmortizedInvestment;
     private Double indirectMachinePower;
     private Double lifetimeCost;
     private Double totalCarbon;
