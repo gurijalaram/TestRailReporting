@@ -47,7 +47,7 @@ public class CasUserSubLicensesTests {
     private String siteId;
     private CasTestUtil casTestUtil = new CasTestUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void getToken() {

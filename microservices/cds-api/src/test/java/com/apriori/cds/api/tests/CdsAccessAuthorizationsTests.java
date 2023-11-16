@@ -50,7 +50,7 @@ public class CdsAccessAuthorizationsTests {
     private ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
     private ResponseWrapper<AssociationUserItems> associationUser;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void setDetails() {

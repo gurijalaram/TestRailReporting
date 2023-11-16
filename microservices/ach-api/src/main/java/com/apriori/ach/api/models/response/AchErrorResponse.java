@@ -11,6 +11,7 @@ import lombok.Data;
 @Schema(location = "AchErrorResponseSchema.json")
 public class AchErrorResponse {
     private Integer status;
+    private String method;
     private String error;
     private String message;
     private String path;

@@ -31,7 +31,7 @@ public class CasCustomerServiceAccountsTests {
     private Customer onPremCustomer;
     private String customerIdentity;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void setup() {
