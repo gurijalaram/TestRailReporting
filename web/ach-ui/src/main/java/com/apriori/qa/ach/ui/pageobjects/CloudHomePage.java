@@ -40,6 +40,8 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     @FindBy(xpath = "//div[@class='apriori-select searchable switch-deployment-dialog-deployments css-1xzq4gn-container']")
     private WebElement deploymentSelector;
 
+    private StringBuilder loadApplicationsErrors = new StringBuilder();
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -105,22 +107,20 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return PageFactory.initElements(driver, webPageType);
     }
 
-    public <T> T clickWebApplicationByNameAndCloseAfterLoad(String applicationName, Class<T> webPageType) {
-        T responsePage = null;
-
+    public <T> void clickWebApplicationByNameAndCloseAfterLoad(String applicationName, Class<T> webPageType) {
         try {
-            responsePage = clickWebApplicationByName(applicationName, webPageType);
+            T responsePage  = clickWebApplicationByName(applicationName, webPageType);
         } catch (Exception e) {
-            final String errorText = String.format("Failed to load application with the name %s and class type %s", applicationName, webPageType);
+            final String errorText = String.format("Failed to load application with the name %s and class type %s \n " +
+                "Error message: %s", applicationName, webPageType, e);
 
             log.info(errorText);
-            throw new IllegalArgumentException(errorText + "\n" + e);
+            loadApplicationsErrors.append(errorText)
+                .append("\n");
         }
 
         driver.close();
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
-
-        return responsePage;
     }
 
     public CloudHomePage clickUserPanel() {
@@ -156,5 +156,9 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         }
 
         return userTokenFromBrowser;
+    }
+
+    public String getLoadApplicationsErrors() {
+        return loadApplicationsErrors.toString();
     }
 }
