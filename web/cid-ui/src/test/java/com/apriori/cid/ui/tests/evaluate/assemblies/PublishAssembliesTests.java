@@ -523,7 +523,7 @@ public class PublishAssembliesTests extends TestBaseUI {
             .publishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        publishScenarioPage = loginPage.login(componentAssembly.getUser())
+        publishPage = loginPage.login(componentAssembly.getUser())
             .selectFilter("Public")
             .clickSearch(componentAssembly.getComponentName())
             .multiSelectScenarios(componentAssembly.getComponentName() + "," + componentAssembly.getScenarioName())
@@ -539,7 +539,7 @@ public class PublishAssembliesTests extends TestBaseUI {
             .selectFilter("Private")
             .clickSearch(componentAssembly.getComponentName())
             .multiSelectScenarios(componentAssembly.getComponentName() + "," + componentAssembly.getScenarioName())
-            .publishScenario(PublishScenarioPage.class);
+            .publishScenario(PublishPage.class);
 
         assertThat(publishPage.getConflictMessage(), is(equalTo(publishingWarning)));
     }

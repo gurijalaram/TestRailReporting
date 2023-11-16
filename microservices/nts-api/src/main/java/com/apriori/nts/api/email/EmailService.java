@@ -25,7 +25,7 @@ import java.util.Map;
 @Slf4j
 public class EmailService {
 
-    private final String cloudContext = new AuthorizationUtil().getAuthTargetCloudContext(UserUtil.getUser());
+    private final String cloudContext = new AuthorizationUtil().getAuthTargetCloudContext(UserUtil.getUser("admin"));
     private Map<String, String> headers = new HashMap<String, String>() {{
             put("ap-cloud-context", cloudContext);
         }};

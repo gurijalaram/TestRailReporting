@@ -269,6 +269,11 @@
       "componentName": "116-5809",
       "extension": ".prt.1",
       "processGroup": "ADDITIVE_MANUFACTURING"
+    },
+    {
+      "componentName": "plasticLid",
+      "extension": ".SLDPRT",
+      "processGroup": "PLASTIC_MOLDING"
     }
   ]
 }
