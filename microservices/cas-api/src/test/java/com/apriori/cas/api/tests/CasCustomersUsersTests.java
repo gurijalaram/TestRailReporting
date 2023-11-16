@@ -50,7 +50,7 @@ public class CasCustomersUsersTests {
     private String customerIdentity;
     private String userIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void getToken() {
