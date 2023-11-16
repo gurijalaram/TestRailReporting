@@ -95,6 +95,13 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return applicationsDTO;
     }
 
+    /**
+     * Click on web application on CloudHomePage by application name in UI
+     * @param applicationName
+     * @param webPageType
+     * @return
+     * @param <T>
+     */
     public <T> T clickWebApplicationByName(String applicationName, Class<T> webPageType) {
         By byApplicationTitle = By.xpath(String.format("//div[@data-application='%s']//div[@class='card-header']", applicationName));
         By byLoadingTitle = By.xpath("//div[@class='loader large-loader opaque full-screen']");
@@ -107,6 +114,13 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return PageFactory.initElements(driver, webPageType);
     }
 
+    /**
+     * Do click on web application wait until application page is loaded and close application tab
+     * @param applicationName
+     * @param webPageType
+     * @return
+     * @param <T>
+     */
     public <T> void clickWebApplicationByNameAndCloseAfterLoad(String applicationName, Class<T> webPageType) {
         try {
             T responsePage  = clickWebApplicationByName(applicationName, webPageType);
@@ -123,11 +137,19 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
     }
 
+    /**
+     * Click userPanel
+     * @return
+     */
     public CloudHomePage clickUserPanel() {
         pageUtils.waitForElementAndClick(userElement);
         return this;
     }
 
+    /**
+     * Click switch deployment button
+     * @return
+     */
     public SwitchDeploymentPopUpPage clickSwitchDeploymentButton() {
         pageUtils.waitForElementAndClick(switchDeploymentButton);
         return new SwitchDeploymentPopUpPage(driver);
@@ -158,6 +180,10 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return userTokenFromBrowser;
     }
 
+    /**
+     * Get string of load errors, if there are present
+     * @return
+     */
     public String getLoadApplicationsErrors() {
         return loadApplicationsErrors.toString();
     }
