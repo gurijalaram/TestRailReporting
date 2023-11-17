@@ -25,16 +25,13 @@ import com.apriori.cir.ui.tests.ootbreports.newreportstests.scenariocomparison.S
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostTrendReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
-import com.apriori.shared.util.testconfig.TestSuiteType;
 
-import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@IncludeTags(TestSuiteType.TestSuite.REPORTS_1)
 @SelectClasses({
-    /*AssemblyDetailsReportTests.class,
+    AssemblyDetailsReportTests.class,
     AssemblyCostReportTests.class,
     CastingDtcComparisonReportTests.class,
     CastingDtcDetailsReportTests.class,
@@ -54,11 +51,11 @@ import org.junit.platform.suite.api.Suite;
     PlasticDtcReportTests.class,
     ScenarioComparisonReportTests.class,
     SheetMetalDtcComparisonReportTests.class,
-    SheetMetalDtcDetailsReportTests.class,*/
-    SheetMetalDtcReportTests.class
-    /*TargetAndQuotedCostTrendReportTests.class,
+    SheetMetalDtcDetailsReportTests.class,
+    SheetMetalDtcReportTests.class,
+    TargetAndQuotedCostTrendReportTests.class,
     TargetAndQuotedCostValueTrackingDetailsReportTests.class,
-    TargetAndQuotedCostValueTrackingReportTests.class*/
+    TargetAndQuotedCostValueTrackingReportTests.class
 })
 public class ReportingSuite {
 }

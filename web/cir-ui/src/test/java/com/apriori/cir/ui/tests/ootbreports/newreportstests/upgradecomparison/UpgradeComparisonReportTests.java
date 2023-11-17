@@ -13,6 +13,7 @@ import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +32,7 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("13952")
     @TestRail(id = 13952)
     @Description("Input controls - Currency code")
     public void testCurrency() {

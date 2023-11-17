@@ -10,6 +10,7 @@ import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("3305")
     @TestRail(id = 3305)
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {

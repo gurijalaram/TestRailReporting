@@ -9,6 +9,7 @@ import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +27,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     }
 
     @Test
+    @TmsLink("26909")
     @TestRail(id = 26909)
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricFbcFunctionality() {
@@ -35,6 +37,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     }
 
     @Test
+    @TmsLink("26910")
     @TestRail(id = 26910)
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricPpcFunctionality() {
