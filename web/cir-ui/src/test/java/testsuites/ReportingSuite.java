@@ -32,7 +32,7 @@ import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@IncludeTags(TestSuiteType.TestSuite.REPORTS)
+@IncludeTags(TestSuiteType.TestSuite.REPORTS_1)
 @SelectClasses({
     /*AssemblyDetailsReportTests.class,
     AssemblyCostReportTests.class,
