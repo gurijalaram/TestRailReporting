@@ -2,6 +2,7 @@ package com.apriori.cir.ui.tests.ootbreports.dtcmetrics.sheetmetaldtc;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_1;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,6 +27,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -56,8 +58,9 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(REPORTS)
+    @Tag(REPORTS_1)
     @TestRail(id = {7315})
+    @TmsLink("7315")
     @Description("Validate report is available by library - Sheet Metal DTC Report")
     public void testReportAvailabilityByLibrary() {
         commonReportTests = new CommonReportTests(driver);
