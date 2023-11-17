@@ -23,12 +23,12 @@ public class DeleteScenariosTests {
     @Test
     public void deleteScenarios() {
         UserUtil.getUsers().forEach(user -> {
-            List<ScenarioItem> components = cssComponent.getBaseCssComponents(user, SCENARIO_OWNED_BY_EQ.getKey() + new PeopleUtil().getCurrentUser(user).getIdentity(),
+            List<ScenarioItem> scenarios = cssComponent.getBaseCssComponents(user, SCENARIO_OWNED_BY_EQ.getKey() + new PeopleUtil().getCurrentUser(user).getIdentity(),
                 COMPONENT_TYPE_EQ.getKey() + " PART", "pageSize, 1000");
 
-            List<ScenarioItem> componentsToDelete = components.stream().filter(o -> o.getScenarioCreatedAt().until(LocalDateTime.now(), ChronoUnit.DAYS) > MAX_DAYS).collect(Collectors.toList());
+            List<ScenarioItem> scenariosToDelete = scenarios.stream().filter(o -> o.getScenarioCreatedAt().until(LocalDateTime.now(), ChronoUnit.DAYS) > MAX_DAYS).collect(Collectors.toList());
 
-            componentsToDelete.forEach(scenario -> new ScenariosUtil().deleteScenario(scenario.getComponentIdentity(), scenario.getScenarioIdentity(), user));
+            scenariosToDelete.forEach(scenario -> new ScenariosUtil().deleteScenario(scenario.getComponentIdentity(), scenario.getScenarioIdentity(), user));
         });
     }
 }
