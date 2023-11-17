@@ -25,8 +25,8 @@ import com.apriori.cir.ui.tests.ootbreports.newreportstests.scenariocomparison.S
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostTrendReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
-
 import com.apriori.shared.util.testconfig.TestSuiteType;
+
 import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
