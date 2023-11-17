@@ -12,6 +12,7 @@ import com.apriori.shared.util.models.AuthorizationUtil;
 import com.apriori.shared.util.testrail.TestRail;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -75,7 +76,6 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
      * @param userApplicationsFromUI
      */
     private void validateApplicationsAreLaunchedSuccessfully(List<ApplicationDTO> userApplicationsFromUI) {
-
         userApplicationsFromUI.forEach(application -> {
             log.debug("*********************** Testing application name: {}  **********************", application.getApplicationName());
 
@@ -83,5 +83,9 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
                     getPageObjectTypeByApplicationName(application.getApplicationName())
             );
         });
+
+        Assertions.assertTrue(cloudHomePage.getLoadApplicationsErrors().isEmpty(),
+            cloudHomePage.getLoadApplicationsErrors()
+        );
     }
 }
