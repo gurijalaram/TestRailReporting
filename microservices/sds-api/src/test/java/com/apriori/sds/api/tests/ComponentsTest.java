@@ -27,7 +27,6 @@ public class ComponentsTest extends SDSTestUtil {
     public void getComponents() {
         final RequestEntity requestEntity =
             requestEntityUtil.init(SDSAPIEnum.GET_COMPONENTS, ComponentsItemsResponse.class)
-                .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();
@@ -39,7 +38,6 @@ public class ComponentsTest extends SDSTestUtil {
     public void getComponentByIdentity() {
         final RequestEntity requestEntity =
             requestEntityUtil.init(SDSAPIEnum.GET_COMPONENT_SINGLE_BY_IDENTITY, Component.class)
-                .apUserContext(testingApUserContext)
                 .inlineVariables(getComponentId())
                 .expectedResponseCode(HttpStatus.SC_OK);
 

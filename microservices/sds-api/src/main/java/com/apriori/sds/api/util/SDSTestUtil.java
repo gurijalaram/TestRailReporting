@@ -31,6 +31,7 @@ import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.Application;
@@ -60,45 +61,21 @@ import java.util.concurrent.TimeUnit;
 public abstract class SDSTestUtil extends TestUtil {
 
     protected static UserCredentials testingUser;
-    protected  UserCredentials testingUserThread;
 
-    protected static String testingApUserContext =  new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail());
     protected static String appApplicationContext;
     protected static Set<ScenarioItem> scenariosToDelete = new HashSet<>();
     private static ScenarioItem testingComponent;
 
-    protected static RequestEntityUtil requestEntityUtil = new RequestEntityUtil();
+    protected static RequestEntityUtil requestEntityUtil;
 
 
     @BeforeAll
     public static void init() {
-        //TODO z: example of usage
-    //        requestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser("admin"));
-    //        requestEntityUtil.useTokenForRequests(testingUser.getToken());
-
-        testingUser = requestEntityUtil.useRandomUser("admin")
+        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser("admin")
             .useApUserContextInRequests()
-            .useTokenInRequests()
-            .getEmbeddedUser();
+            .useTokenInRequests();
 
-        RequestEntityUtil requestEntityUtilForUser1 = new RequestEntityUtil().useCustomUser(UserUtil.getUser())
-            .useTokenInRequests()
-            .useApUserContextInRequests();
-
-
-        RequestEntity requestWithUser1 = requestEntityUtilForUser1.init(null, null);
-        RequestEntity requestWithUser2 = requestEntityUtilForUser1.init(null, null);
-
-
-        RequestEntity requestWithCustomUser2 = requestEntityUtil.init(UserUtil.getUser(), null, null);
-        RequestEntity requestWithCustomUser3 = requestEntityUtil.init(UserUtil.getUser(), null, null);
-    }
-
-    @BeforeEach
-    public void setUp() {
-        testingUserThread = requestEntityUtil.useRandomUser("admin")
-            .useApUserContextInRequests()
-            .useTokenInRequests()
+        testingUser = requestEntityUtil
             .getEmbeddedUser();
     }
 

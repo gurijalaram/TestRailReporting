@@ -6,6 +6,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
@@ -28,7 +29,7 @@ public abstract class VDSTestUtil extends TestUtil {
     protected static UserCredentials testingUser = UserUtil.getUser();
     protected static String testingApUserContext =  new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail());
 
-    protected static RequestEntityUtil requestEntityUtil = new RequestEntityUtil();
+    protected static RequestEntityUtil requestEntityUtil;
 
 
     private static DigitalFactory digitalFactory;
@@ -36,7 +37,12 @@ public abstract class VDSTestUtil extends TestUtil {
 
     @BeforeAll
     public static  void init() {
-        requestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
+        requestEntityUtil = RequestEntityUtilBuilder
+            .useRandomUser()
+            .useTokenInRequests()
+            .useApUserContextInRequests();
+
+        testingUser = requestEntityUtil.getEmbeddedUser();
     }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {

@@ -1,46 +1,20 @@
 package com.apriori.shared.util.http.utils;
 
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
-import com.apriori.shared.util.http.models.entity.UserAuthenticationEntity;
 import com.apriori.shared.util.interfaces.EndpointEnum;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class RequestEntityUtil {
 
-    private UserCredentials userCredentials;
+    private final UserCredentials userCredentials;
     private String token;
     private String apUserContext;
 
-
-    /**
-     * Use a random user received by {@link UserUtil#getUser()}
-     * in all requests initialized by the current RequestEntityUtil object
-     * @return current RequestEntityUtil object
-     */
-    public RequestEntityUtil useRandomUser() {
-        this.userCredentials = UserUtil.getUser();
-        return this;
-    }
-
-    /**
-     * Use a random user received by {@link UserUtil#getUser(String)}
-     * in all requests initialized by the current RequestEntityUtil object
-     * @return current RequestEntityUtil object
-     */
-    public RequestEntityUtil useRandomUser(final String accessLevel) {
-        this.userCredentials = UserUtil.getUser(accessLevel);
-        return this;
-    }
-
-    /**
-     * Use a custom user
-     * in all requests initialized by the current RequestEntityUtil object
-     * @return current RequestEntityUtil object
-     */
-    public RequestEntityUtil useCustomUser(final UserCredentials userCredentials) {
+    public RequestEntityUtil(final UserCredentials userCredentials) {
         this.userCredentials = userCredentials;
-        return this;
     }
 
     /**
@@ -68,9 +42,17 @@ public class RequestEntityUtil {
      * @return
      */
     public UserCredentials getEmbeddedUser() {
-        return userCredentials != null ? this.userCredentials : this.useRandomUser().userCredentials;
+        this.validateIsUserPresenceThrowExceptionIfNot();
+        return this.userCredentials;
     }
 
+    private void validateIsUserPresenceThrowExceptionIfNot() {
+        if(this.userCredentials == null) {
+            final String error = "User for the request was not initialized. Use RequestEntityUtilBuilder to initialize user.";
+            log.error(error);
+            throw new IllegalArgumentException(error);
+        }
+    }
 
     /**
      * Init HTTP request with a RequestEntityUtil configurations and embedded user
