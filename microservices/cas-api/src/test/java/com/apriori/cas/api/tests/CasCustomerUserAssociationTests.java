@@ -42,7 +42,7 @@ public class CasCustomerUserAssociationTests {
 
     @BeforeAll
     public static void globalSetup() {
-        RequestEntityUtil_Old.useTokenForRequests(UserUtil.getUser().getToken());
+        RequestEntityUtil_Old.useTokenForRequests(UserUtil.getUser("admin").getToken());
     }
 
     @BeforeEach

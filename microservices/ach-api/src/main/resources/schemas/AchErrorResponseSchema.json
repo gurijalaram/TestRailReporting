@@ -1,16 +1,13 @@
 {
   "type": "object",
   "required": [
-    "timestamp",
     "status",
     "error",
     "message",
-    "path"
+    "path",
+    "method"
   ],
   "properties": {
-    "timestamp": {
-      "type": "string"
-    },
     "status": {
       "type": "integer"
     },
@@ -21,6 +18,9 @@
       "type": "string"
     },
     "path": {
+      "type": "string"
+    },
+    "method": {
       "type": "string"
     }
   }

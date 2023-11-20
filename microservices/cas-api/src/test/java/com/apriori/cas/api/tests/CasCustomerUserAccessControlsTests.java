@@ -9,9 +9,10 @@ import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.User;
@@ -32,24 +33,16 @@ import java.util.stream.Collectors;
 public class CasCustomerUserAccessControlsTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final SoftAssertions soft = new SoftAssertions();
-    private final GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
     private IdentityHolder accessControlIdentityHolder;
-    private ResponseWrapper<Customer> customer;
     private String customerIdentity;
     private String userIdentity;
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void setDetails() {
         RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String email = customerName.toLowerCase();
-        String description = customerName + " Description";
-        customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
-        customerIdentity = customer.getResponseEntity().getIdentity();
-
     }
 
     @AfterEach
@@ -61,6 +54,7 @@ public class CasCustomerUserAccessControlsTests {
                 accessControlIdentityHolder.accessControlIdentity()
             );
         }
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         if (customerIdentity != null && userIdentity != null) {
             casTestUtil.delete(CASAPIEnum.USER, customerIdentity, userIdentity);
         }
@@ -73,10 +67,7 @@ public class CasCustomerUserAccessControlsTests {
     @Description("POSTs a new access control for a user.")
     @TestRail(id = {16144})
     public void postAccessControl() {
-        String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
-        userIdentity = user.getResponseEntity().getIdentity();
-
+        setCustomerData();
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
 
         soft.assertThat(accessControl.getResponseEntity().getOutOfContext())
@@ -96,10 +87,7 @@ public class CasCustomerUserAccessControlsTests {
     @Description("Returns a list of access controls for the customer user")
     @TestRail(id = {16145})
     public void getUserAccessControls() {
-        String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
-        userIdentity = user.getResponseEntity().getIdentity();
-
+        setCustomerData();
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlId = accessControl.getResponseEntity().getIdentity();
 
@@ -124,9 +112,7 @@ public class CasCustomerUserAccessControlsTests {
     @Description("Get a specific access control for a customer user identified by its identity")
     @TestRail(id = {16146})
     public void getAccessControlByIdentity() {
-        String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
-        userIdentity = user.getResponseEntity().getIdentity();
+        setCustomerData();
 
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlId = accessControl.getResponseEntity().getIdentity();
@@ -151,9 +137,7 @@ public class CasCustomerUserAccessControlsTests {
     @Description("Delete an access control for a user")
     @TestRail(id = 16147)
     public void deleteAccessControl() {
-        String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
-        userIdentity = user.getResponseEntity().getIdentity();
+        setCustomerData();
 
         ResponseWrapper<AccessControl> accessControl = casTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlId = accessControl.getResponseEntity().getIdentity();
@@ -169,10 +153,7 @@ public class CasCustomerUserAccessControlsTests {
     @TestRail(id = {16150})
     public void getAccessControlThatNotExists() {
         String notExistingIdentity = "000000000000";
-        String userName = generateStringUtil.generateUserName();
-
-        ResponseWrapper<User> user = CasTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
-        userIdentity = user.getResponseEntity().getIdentity();
+        setCustomerData();
 
         ResponseWrapper<CasErrorMessage> response = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROL_BY_ID,
             CasErrorMessage.class,
@@ -184,5 +165,16 @@ public class CasCustomerUserAccessControlsTests {
         soft.assertThat(response.getResponseEntity().getMessage())
             .isEqualTo(String.format("Unable to get access control with identity '%s' for user with identity '%s'.", notExistingIdentity, userIdentity));
         soft.assertAll();
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        Customer newCustomer = casTestUtil.createCustomer().getResponseEntity();
+        customerIdentity = newCustomer.getIdentity();
+
+        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
+
+        ResponseWrapper<User> user = casTestUtil.createUser(newCustomer);
+        userIdentity = user.getResponseEntity().getIdentity();
     }
 }

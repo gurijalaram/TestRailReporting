@@ -28,6 +28,7 @@ qa-test:
     cia_application_identity: 1J8M416FBJCD
     ap_workspace_application_identity: H337GKD0M01A
     cir_application_identity: 1J8M416FBJDE
+    acs_application_identity: DD4356A476DC
     automation_user_identity02: AKC81M50KGFE
     automation_user_identity03: AFMMDK0IJHG4
     identity_role: 67J517C9L763
@@ -102,6 +103,8 @@ staging:
     apriori_core_services_installation_identity: 2GIKI57NE7M4
     appro_application_identity: 1J8M416FBJ94
     cia_application_identity: 1J8M416FBJCD
+    cir_application_identity: 1J8M416FBJDE
+    acs_application_identity: DD4356A476DC
     apriori_production_deployment_identity: 7G0JGBE2N4GN
     apriori_cloud_home_identity: 1J8M416FBJDE
     automation_user_identity02: 6AHL3EHF264K
@@ -232,6 +235,8 @@ development:
     appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity: N6LFCKE8GL94
     cia_application_identity: 1J8M416FBJCD
+    cir_application_identity: 1J8M416FBJDE
+    acs_application_identity: DD4356A476DC
     automation_user_identity02: 4N8BBMII4MM4
     automation_user_identity03: 4N8BIL9AC4DH
     identity_role: 67J517C9L763

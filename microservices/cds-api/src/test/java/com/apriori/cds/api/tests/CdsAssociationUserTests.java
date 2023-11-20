@@ -37,7 +37,7 @@ public class CdsAssociationUserTests {
     private String customerIdentity;
     private String url;
     private String customerIdentityEndpoint;
-    private String aPCustomerIdentity;
+    private String apCustomerIdentity;
     private String associationIdentity;
     private ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
     private SoftAssertions soft = new SoftAssertions();
@@ -56,9 +56,9 @@ public class CdsAssociationUserTests {
         customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
-        aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
+        apCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
-        customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, HttpStatus.SC_OK, aPCustomerIdentity);
+        customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, HttpStatus.SC_OK, apCustomerIdentity);
         associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
 
     }
@@ -67,7 +67,7 @@ public class CdsAssociationUserTests {
     public void cleanUp() {
         if (customerAssociationUserIdentityEndpoint != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
-                aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity);
+                apCustomerIdentity, associationIdentity, customerAssociationUserIdentity);
         }
         if (customerIdentityEndpoint != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
@@ -78,26 +78,26 @@ public class CdsAssociationUserTests {
     @TestRail(id = {5959})
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
-        String aPStaffIdentity = PropertiesContext.get("user_identity");
+        String apStaffIdentity = PropertiesContext.get("user_identity");
 
-        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
+        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
-        customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
+        customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", apCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
     }
 
     @Test
     @TestRail(id = {5965})
     @Description("Get users associated for customer")
     public void getAssociationUsers() {
-        String aPStaffIdentity = PropertiesContext.get("cds.automation_user_identity02");
+        String apStaffIdentity = PropertiesContext.get("cds.automation_user_identity02");
 
-        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
+        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
 
         ResponseWrapper<AssociationUserResponse> associationUsers = cdsTestUtil.getCommonRequest(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS,
             AssociationUserResponse.class,
             HttpStatus.SC_OK,
-            aPCustomerIdentity,
+            apCustomerIdentity,
             associationIdentity
         );
 
@@ -106,7 +106,7 @@ public class CdsAssociationUserTests {
         ResponseWrapper<AssociationUserItems> users = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
             AssociationUserItems.class,
             HttpStatus.SC_OK,
-            aPCustomerIdentity,
+            apCustomerIdentity,
             associationIdentity,
             customerAssociationUserIdentity
         );
@@ -118,20 +118,20 @@ public class CdsAssociationUserTests {
     @TestRail(id = {5964})
     @Description("Get user details for association")
     public void getAssociationByUserIdentity() {
-        String aPStaffIdentity = PropertiesContext.get("cds.automation_user_identity03");
+        String apStaffIdentity = PropertiesContext.get("cds.automation_user_identity03");
 
-        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
+        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
 
         ResponseWrapper<AssociationUserItems> associationUserIdentity = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
             AssociationUserItems.class,
             HttpStatus.SC_OK,
-            aPCustomerIdentity,
+            apCustomerIdentity,
             associationIdentity,
             customerAssociationUserIdentity
         );
 
-        soft.assertThat(associationUserIdentity.getResponseEntity().getUserIdentity()).isEqualTo(aPStaffIdentity);
+        soft.assertThat(associationUserIdentity.getResponseEntity().getUserIdentity()).isEqualTo(apStaffIdentity);
         soft.assertAll();
     }
 }

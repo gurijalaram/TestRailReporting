@@ -48,7 +48,7 @@ public class AtsTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(ATSAPIEnum.SAML_PROVIDERS, User.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(CreateSamlUserRequest.builder()
-                .email(userName + email + ".com")
+                .email(userName + "@" + email + ".com")
                 .given_name(generator.getRandomStringSpecLength(5))
                 .family_name(generator.getRandomStringSpecLength(5))
                 .name(userName)

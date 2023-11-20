@@ -6,6 +6,8 @@ import com.apriori.cas.api.models.response.UsersData;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.InitFileData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -42,22 +44,22 @@ import java.util.stream.Collectors;
 @ExtendWith(TestRulesAPI.class)
 public class CasCustomersUsersTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
+    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
     private SoftAssertions soft = new SoftAssertions();
     private Customer newCustomer;
     private String customerIdentity;
     private String userIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void getToken() {
         RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
-        newCustomer = casTestUtil.createCustomer().getResponseEntity();
-        customerIdentity = newCustomer.getIdentity();
     }
 
     @AfterEach
     public void cleanUp() {
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         if (userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,
                 customerIdentity,
@@ -74,7 +76,7 @@ public class CasCustomersUsersTests {
     @TestRail(id = {5661, 5662, 5663})
     @Description("Add a user to a customer, return a list of users for the customer, get the User identified by its identity.")
     public void addCustomerUsers() {
-
+        setCustomerData();
         ResponseWrapper<User> user = casTestUtil.createUser(newCustomer);
         soft.assertThat(user.getResponseEntity().getCustomerIdentity())
             .isEqualTo(customerIdentity);
@@ -95,6 +97,7 @@ public class CasCustomersUsersTests {
     @TestRail(id = {5664})
     @Description("Update the User.")
     public void updateUsers() {
+        setCustomerData();
         ResponseWrapper<User> userResponse = casTestUtil.createUser(newCustomer);
         User user = userResponse.getResponseEntity();
         userIdentity = user.getIdentity();
@@ -110,6 +113,7 @@ public class CasCustomersUsersTests {
     @TestRail(id = {5667})
     @Description("Reset the MFA configuration for a user.")
     public void resettingUserMfa() {
+        setCustomerData();
         ResponseWrapper<User> user = casTestUtil.createUser(newCustomer);
         userIdentity = user.getResponseEntity().getIdentity();
 
@@ -137,6 +141,8 @@ public class CasCustomersUsersTests {
     @TestRail(id = {16379})
     @Description("Export users template")
     public void exportUsersTemplate() {
+        newCustomer = casTestUtil.createCustomer().getResponseEntity();
+        customerIdentity = newCustomer.getIdentity();
         List<String> headers = Arrays.asList(
             "loginID", "email", "firstName", "lastName", "fullName", "isAdmin", "isVPEAdmin", "isJasperAdmin", "AppStream", "ReportUser", "defaultPassword", "resetPassword",
             "userLicenseName", "preferredCurrency", "schemaPrivileges", "defaultSchema", "roles", "defaultRole", "roleName", "applicationList", "prefix", "suffix", "jobTitle",
@@ -155,6 +161,7 @@ public class CasCustomersUsersTests {
     @TestRail(id = {16378})
     @Description("Export customer users")
     public void exportUsers() {
+        setCustomerData();
         ResponseWrapper<User> user = casTestUtil.createUser(newCustomer);
         String cloudRef = newCustomer.getCloudReference();
         String userName = user.getResponseEntity().getUsername();
@@ -163,11 +170,19 @@ public class CasCustomersUsersTests {
         InputStream usersResponse = new ByteArrayInputStream(users.getBody().getBytes(StandardCharsets.UTF_8));
         ConcurrentLinkedQueue<UsersData> usersData = new InitFileData().initRows(UsersData.class, FileResourceUtil.copyIntoTempFile(usersResponse, null, "users.csv"));
 
-        soft.assertThat(usersData.poll().getLoginID()).isEqualTo(cloudRef + ".service-account.1");
-        soft.assertThat(usersData.poll().getLoginID()).isEqualTo(cloudRef + ".service-account.2");
-        soft.assertThat(usersData.poll().getLoginID()).isEqualTo(cloudRef + ".service-account.3");
-        soft.assertThat(usersData.poll().getLoginID()).isEqualTo(cloudRef + ".service-account.4");
-        soft.assertThat(usersData.poll().getLoginID()).isEqualTo(userName);
+        soft.assertThat(usersData.stream().filter(exportU -> exportU.getLoginID().equals(userName)).collect(Collectors.toList())).isNotEmpty();
+        soft.assertThat(usersData.stream().filter(exportU -> exportU.getLoginID().equals(cloudRef + ".service-account.1")).collect(Collectors.toList())).isNotEmpty();
+        soft.assertThat(usersData.stream().filter(exportU -> exportU.getLoginID().equals(cloudRef + ".service-account.2")).collect(Collectors.toList())).isNotEmpty();
+        soft.assertThat(usersData.stream().filter(exportU -> exportU.getLoginID().equals(cloudRef + ".service-account.3")).collect(Collectors.toList())).isNotEmpty();
+        soft.assertThat(usersData.stream().filter(exportU -> exportU.getLoginID().equals(cloudRef + ".service-account.4")).collect(Collectors.toList())).isNotEmpty();
         soft.assertAll();
+    }
+
+    private void setCustomerData() {
+        RandomCustomerData rcd = new RandomCustomerData();
+        newCustomer = casTestUtil.createCustomer().getResponseEntity();
+        customerIdentity = newCustomer.getIdentity();
+
+        customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
     }
 }

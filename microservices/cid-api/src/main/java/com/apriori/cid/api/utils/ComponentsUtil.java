@@ -160,12 +160,11 @@ public class ComponentsUtil {
      * Feeder method for postComponentQueryCID to allow users to upload parts
      * without creating one-shot ComponentInfoBuilders
      *
-     * @param componentName - String of components name
-     * @param scenarioName - String with chosen name for scenario
+     * @param componentName    - String of components name
+     * @param scenarioName     - String with chosen name for scenario
      * @param processGroupEnum - Enum of components Process Group
-     * @param resourceFile - File to be uploaded
-     * @param currentUser - Current user performing upload
-     *
+     * @param resourceFile     - File to be uploaded
+     * @param currentUser      - Current user performing upload
      * @return - ComponentInfoBuilder of created scenario
      */
     public ComponentInfoBuilder postComponentCID(String componentName, String scenarioName, ProcessGroupEnum processGroupEnum, File resourceFile, UserCredentials currentUser) {
@@ -327,11 +326,19 @@ public class ComponentsUtil {
             try {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ComponentIdentityResponse componentIdentityResponse = getComponentIdentity(componentInfo).getResponseEntity();
+                ComponentIdentityResponse componentIdentityResponse = getComponentIdentity(componentInfo);
 
-                if (componentIdentityResponse != null && !componentIdentityResponse.getComponentType().equalsIgnoreCase("unknown")) {
+                if (componentIdentityResponse != null) {
 
-                    return componentIdentityResponse;
+                    //fail fast
+                    if (new ScenariosUtil().getScenario(componentInfo).getScenarioState().equalsIgnoreCase(ScenarioStateEnum.PROCESSING_FAILED.getState())) {
+                        throw new RuntimeException(String.format("Processing has failed for component name: '%s', component id: '%s', scenario name: '%s'",
+                            componentInfo.getComponentName(), componentInfo.getComponentIdentity(), componentInfo.getScenarioName()));
+                    }
+
+                    if (!componentIdentityResponse.getComponentType().equalsIgnoreCase("unknown")) {
+                        return componentIdentityResponse;
+                    }
                 }
             } catch (InterruptedException e) {
                 log.error(e.getMessage());
@@ -353,14 +360,15 @@ public class ComponentsUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo) {
+    public ComponentIdentityResponse getComponentIdentity(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity())
                 .token(componentInfo.getUser().getToken())
                 .followRedirection(true);
 
-        return HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<ComponentIdentityResponse> response = HTTPRequest.build(requestEntity).get();
+        return response.getResponseEntity();
     }
 
     /**

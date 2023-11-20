@@ -47,7 +47,7 @@ public class RequestEntityUtil {
     }
 
     private void validateIsUserPresenceThrowExceptionIfNot() {
-        if(this.userCredentials == null) {
+        if (this.userCredentials == null) {
             final String error = "User for the request was not initialized. Use RequestEntityUtilBuilder to initialize user.";
             log.error(error);
             throw new IllegalArgumentException(error);
@@ -74,7 +74,7 @@ public class RequestEntityUtil {
      * @param returnType
      * @return
      */
-    public RequestEntity init( final UserCredentials userCredentials, EndpointEnum endpoint, Class<?> returnType) {
+    public RequestEntity init(final UserCredentials userCredentials, EndpointEnum endpoint, Class<?> returnType) {
         return new RequestEntity()
             .returnType(returnType)
             .endpoint(endpoint)

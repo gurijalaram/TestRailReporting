@@ -11,7 +11,7 @@ import lombok.Data;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "UserSchema.json")
+@Schema(location = "SubLicenseAssociationSchema.json")
 @Data
 @JsonRootName("response")
 public class SublicenseAssociation extends Pagination {

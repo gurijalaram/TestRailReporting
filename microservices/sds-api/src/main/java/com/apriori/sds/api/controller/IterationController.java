@@ -2,6 +2,7 @@ package com.apriori.sds.api.controller;
 
 import com.apriori.sds.api.enums.SDSAPIEnum;
 import com.apriori.sds.api.models.response.ScenarioCostingDefaultsResponse;
+import com.apriori.sds.api.util.SDSTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -10,9 +11,7 @@ import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
-public class IterationController {
-
-    private static UserCredentials testingUser = UserUtil.getUser();
+public class IterationController extends SDSTestUtil {
 
     /**
      * Retrieves the materialMode value from SDS Costing Defaults
@@ -23,7 +22,7 @@ public class IterationController {
      */
     public static String getMaterialMode(String scenario, String component) {
         final RequestEntity requestEntity =
-            new RequestEntityUtil().init(SDSAPIEnum.GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS,
+            requestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_COSTING_DEFAULTS_BY_COMPONENT_SCENARIO_IDS,
                 ScenarioCostingDefaultsResponse.class)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail()))
                 .inlineVariables(

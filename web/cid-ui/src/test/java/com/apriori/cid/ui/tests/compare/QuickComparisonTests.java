@@ -148,7 +148,7 @@ public class QuickComparisonTests extends TestBaseUI {
             .isEqualTo(1));
 
         List<LocalDateTime> comparisonScenarioTimes = comparisonScenarios.stream().map(comparison ->
-            scenarioUtil.getScenario(comparison).getResponseEntity().getUpdatedAt()).collect(Collectors.toList());
+            scenarioUtil.getScenario(comparison).getUpdatedAt()).collect(Collectors.toList());
 
         softAssertions.assertThat(comparisonScenarioTimes).isSortedAccordingTo(Comparator.reverseOrder());
 
@@ -202,7 +202,7 @@ public class QuickComparisonTests extends TestBaseUI {
             .isEqualTo(1));
 
         List<LocalDateTime> comparisonScenarioTimes = comparisonScenarios.stream().map(comparison ->
-            scenarioUtil.getScenario(comparison).getResponseEntity().getUpdatedAt()).collect(Collectors.toList());
+            scenarioUtil.getScenario(comparison).getUpdatedAt()).collect(Collectors.toList());
 
         softAssertions.assertThat(comparisonScenarioTimes).isSortedAccordingTo(Comparator.reverseOrder());
 

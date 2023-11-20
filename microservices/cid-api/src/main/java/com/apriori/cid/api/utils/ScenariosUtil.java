@@ -70,7 +70,7 @@ public class ScenariosUtil {
             try {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ScenarioResponse scenarioRepresentation = getScenario(componentInfo).getResponseEntity();
+                ScenarioResponse scenarioRepresentation = getScenario(componentInfo);
 
                 if (scenarioRepresentation != null &&
 
@@ -133,7 +133,7 @@ public class ScenariosUtil {
      * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenario(ComponentInfoBuilder componentInfo) {
+    public ScenarioResponse getScenario(ComponentInfoBuilder componentInfo) {
 
         RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
@@ -141,7 +141,8 @@ public class ScenariosUtil {
                 .token(componentInfo.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
 
-        return HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<ScenarioResponse> response =  HTTPRequest.build(requestEntity).get();
+        return response.getResponseEntity();
     }
 
     /**

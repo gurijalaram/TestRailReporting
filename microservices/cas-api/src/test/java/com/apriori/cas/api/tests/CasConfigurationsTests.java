@@ -22,7 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class CasConfigurationsTests extends TestUtil {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void getToken() {

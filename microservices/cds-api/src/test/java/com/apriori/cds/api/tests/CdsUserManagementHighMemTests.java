@@ -29,6 +29,10 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsUserManagementHighMemTests {
+    private final String appIdentity = Constants.getApProApplicationIdentity();
+    private final String ciaIdentity = Constants.getCiaApplicationIdentity();
+    private final String cirIdentity = Constants.getCirAppIdentity();
+    private final String acsIdentity = Constants.getACSAppIdentity();
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
@@ -38,11 +42,9 @@ public class CdsUserManagementHighMemTests {
     private String licensedApProIdentity;
     private String licensedCiaIdentity;
     private String licensedCirIdentity;
+    private String licensedAcsIdentity;
     private String installationIdentityReg;
     private String installationIdentityHighMem;
-    private String appIdentity;
-    private ResponseWrapper<User> user;
-    private String userName;
     private String userIdentity;
     private final String customerAssignedRole = "APRIORI_DEVELOPER";
 
@@ -57,11 +59,14 @@ public class CdsUserManagementHighMemTests {
         if (licensedApProIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedApProIdentity);
         }
+        if (licensedCiaIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCiaIdentity);
+        }
         if (licensedCirIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCirIdentity);
         }
-        if (licensedCiaIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedCiaIdentity);
+        if (licensedAcsIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedAcsIdentity);
         }
         if (customerIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
@@ -147,7 +152,7 @@ public class CdsUserManagementHighMemTests {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(rcd.getCustomerName(), rcd.getCustomerType(), rcd.getCloudRef(), rcd.getSalesForceId(), rcd.getEmailPattern());
+        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
@@ -159,20 +164,19 @@ public class CdsUserManagementHighMemTests {
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentityReg = installation.getResponseEntity().getIdentity();
 
-        appIdentity = Constants.getApProApplicationIdentity();
-        String ciaIdentity = Constants.getCiaApplicationIdentity();
-        String cirIdentity = Constants.getCirAppIdentity();
-
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         licensedApProIdentity = licensedApp.getResponseEntity().getIdentity();
         ResponseWrapper<LicensedApplications> ciaLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, ciaIdentity);
         licensedCiaIdentity = ciaLicensed.getResponseEntity().getIdentity();
         ResponseWrapper<LicensedApplications> cirLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, cirIdentity);
         licensedCirIdentity = cirLicensed.getResponseEntity().getIdentity();
+        ResponseWrapper<LicensedApplications> ascLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, acsIdentity);
+        licensedAcsIdentity = ascLicensed.getResponseEntity().getIdentity();
 
         cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentityReg, appIdentity, siteIdentity);
         cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentityReg, ciaIdentity, siteIdentity);
         cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentityReg, cirIdentity, siteIdentity);
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentityReg, acsIdentity, siteIdentity);
 
         String realmKey2 = generateStringUtil.generateRealmKey();
         String cloudRefHighMem = generateStringUtil.generateCloudReference();
@@ -181,8 +185,8 @@ public class CdsUserManagementHighMemTests {
         installationIdentityHighMem = installationHighMem.getResponseEntity().getIdentity();
         cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentityHighMem, appIdentity, siteIdentity);
 
-        userName = generateStringUtil.generateUserName();
-        user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }

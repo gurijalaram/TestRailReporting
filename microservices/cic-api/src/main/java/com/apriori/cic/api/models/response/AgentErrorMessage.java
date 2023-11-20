@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-@Schema(location = "ErrorMessageSchema.json")
+@Schema(location = "AgentErrorMessageSchema.json")
 @Getter
 @Data
 @Builder
