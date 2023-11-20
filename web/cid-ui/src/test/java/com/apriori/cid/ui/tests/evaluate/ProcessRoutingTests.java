@@ -1,6 +1,7 @@
 package com.apriori.cid.ui.tests.evaluate;
 
 import static com.apriori.shared.util.enums.ProcessGroupEnum.ASSEMBLY;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.SHEET_METAL;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
@@ -19,6 +20,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.MaterialProcessPa
 import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.cid.ui.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.DecimalPlaceEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
@@ -1137,6 +1139,55 @@ public class ProcessRoutingTests extends TestBaseUI {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.isCostDifference("Single Station Thermoforming", "$9.83841")).isTrue();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29132, 29133, 29134, 29135, 29136, 29137})
+    @Description("Validate routings availability when scenario is uncosted or cost failed")
+    public void validateRoutingsUncostedorCostFailed() {
+        component = new ComponentDTORequest().getComponentByProcessGroup(FORGING);
+
+        loginPage = new CidAppLoginPage(driver);
+        routingSelectionPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection();
+
+        softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Closed Die Forging", "Ring Rolled Forging");
+
+        routingSelectionPage.cancel(EvaluatePage.class)
+            .goToCustomTab()
+            .goToBasicTab()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_GERMANY)
+            .goToAdvancedTab()
+            .openRoutingSelection();
+
+        softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Closed Die Forging", "Ring Rolled Forging");
+
+        routingSelectionPage.cancel(EvaluatePage.class)
+            .goToCustomTab()
+            .goToBasicTab()
+            .selectProcessGroup(SHEET_METAL)
+            .goToAdvancedTab()
+            .openRoutingSelection();
+
+        softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("[CTL]/2 Axis Router/[Bend]", "[CTL]/[Bend]", "[CTL]/Fiber Laser/[Bend]");
+
+        routingSelectionPage.cancel(EvaluatePage.class)
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .expandSecondaryProcessTree("Anodize, Anodizing Tank")
+            .selectSecondaryProcess("Anodize:Anodize Type I")
+            .submit(EvaluateToolbar.class)
+            .costScenario()
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
+            .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection();
+
+        softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Closed Die Forging", "Ring Rolled Forging");
         softAssertions.assertAll();
     }
 }
