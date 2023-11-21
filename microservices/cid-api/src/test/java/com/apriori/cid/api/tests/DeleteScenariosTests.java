@@ -1,54 +1,47 @@
 package com.apriori.cid.api.tests;
 
 import static com.apriori.css.api.enums.CssSearch.COMPONENT_TYPE_EQ;
-import static com.apriori.css.api.enums.CssSearch.SCENARIO_OWNED_BY_EQ;
+import static com.apriori.css.api.enums.CssSearch.PAGE_SIZE;
+import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_GT;
+import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_CN;
+import static com.apriori.css.api.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
 
-import com.apriori.cid.api.models.response.scenarios.ScenarioManifest;
-import com.apriori.cid.api.utils.PeopleUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
-import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.serialization.util.DateFormattingUtils;
+import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DeleteScenariosTests {
+    private static final int MAX_DAYS = 300;
+    private static final int CHUNK_SIZE = 10;
+    private static final int PAGE = 10;
     private final CssComponent cssComponent = new CssComponent();
-    private final PeopleUtil peopleUtil = new PeopleUtil();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private final SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
     public void deleteScenarios() {
         UserUtil.getUsers().forEach(user -> {
-            List<ScenarioItem> scenarios = cssComponent.getBaseCssComponents(user, SCENARIO_OWNED_BY_EQ.getKey() + peopleUtil.getCurrentUser(user).getIdentity(),
-                COMPONENT_TYPE_EQ.getKey() + " PART", "pageSize, 1000");
+            List<ScenarioItem> assemblies = searchComponentType("ASSEMBLY", user);
 
-            List<ScenarioItem> scenariosToDelete = scenarios.stream().filter(o -> o.getScenarioCreatedAt().until(LocalDateTime.now(), ChronoUnit.DAYS) > MAX_DAYS).collect(Collectors.toList());
 
-            scenariosToDelete.forEach(scenario -> scenariosUtil.deleteScenario(scenario.getComponentIdentity(), scenario.getScenarioIdentity(), user));
+            List<ScenarioItem> scenarios = searchComponentType("PART", user);
 
-            List<ScenarioItem> assemblies = cssComponent.getBaseCssComponents(user, SCENARIO_OWNED_BY_EQ.getKey() + new PeopleUtil().getCurrentUser(user).getIdentity(),
-                COMPONENT_TYPE_EQ.getKey() + " ASSEMBLY", "pageSize, 1000");
-
-            List<ScenarioItem> assembliesToDelete = assemblies.stream().filter(o -> o.getScenarioCreatedAt().until(LocalDateTime.now(), ChronoUnit.DAYS) > MAX_DAYS).collect(Collectors.toList());
-
-            assembliesToDelete.forEach(assemblyToDelete -> {
-                ScenarioManifest assemblyManifest = scenariosUtil.getScenarioManifest(ComponentInfoBuilder.builder()
-                        .componentIdentity(assemblyToDelete.getComponentIdentity()).scenarioIdentity(assemblyToDelete.getScenarioIdentity())
-                        .user(user)
-                        .build())
-                    .getResponseEntity();
-
-                scenariosUtil.deleteScenario(assemblyManifest.getComponentIdentity(), assemblyManifest.getScenarioIdentity(), user);
-
-                assemblyManifest.getSubcomponents().forEach(subcomponent -> scenariosUtil.deleteScenario(subcomponent.getComponentIdentity(), subcomponent.getScenarioIdentity(), user));
-            });
+            softAssertions.assertAll();
         });
+    }
+
+    private List<ScenarioItem> searchComponentType(String componentType, UserCredentials currentUser) {
+        cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + false,
+            COMPONENT_TYPE_EQ.getKey() + componentType, SCENARIO_NAME_CN.getKey() + "AutoScenario", PAGE_SIZE.getKey() + PAGE,
+            SCENARIO_CREATED_AT_GT + LocalDateTime.now().minusDays(MAX_DAYS).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
     }
 }

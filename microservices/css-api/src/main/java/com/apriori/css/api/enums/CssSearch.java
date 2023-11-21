@@ -15,7 +15,8 @@ public enum CssSearch {
     SCENARIO_LOCKED_EQ("scenarioLocked[EQ],"),
     SCENARIO_OWNED_BY_EQ("scenarioOwnedBy[EQ],"),
     SCENARIO_PUBLISHED_EQ("scenarioPublished[EQ],"),
-    SCENARIO_CREATED_AT_GT("scenarioCreatedAt[GT],");
+    SCENARIO_CREATED_AT_GT("scenarioCreatedAt[GT],"),
+    PAGE_SIZE("pageSize,");
 
     private final String key;
 
