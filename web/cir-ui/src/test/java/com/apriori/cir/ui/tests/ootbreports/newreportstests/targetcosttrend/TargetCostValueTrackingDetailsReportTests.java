@@ -7,6 +7,7 @@ import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,7 @@ public class TargetCostValueTrackingDetailsReportTests extends JasperApiAuthenti
     }
 
     @Test
+    @TmsLink("13889")
     @TestRail(id = 13889)
     @Description("Input Controls - Currency Code - Target Cost Value Tracking Details Report")
     public void testCurrencyCodeInputControl() {

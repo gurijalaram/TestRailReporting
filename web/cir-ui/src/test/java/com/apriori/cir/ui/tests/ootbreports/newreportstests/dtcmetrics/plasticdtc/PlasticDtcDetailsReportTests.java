@@ -11,6 +11,7 @@ import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +31,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7406")
     @TestRail(id = 7406)
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Details Report ")
     public void testCostMetricInputControlPpc() {
@@ -40,6 +42,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7407")
     @TestRail(id = 7407)
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Details Report ")
     public void testCostMetricInputControlFbc() {
@@ -50,6 +53,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7381")
     @TestRail(id = 7381)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
@@ -60,6 +64,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7382")
     @TestRail(id = 7382)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Details Report ")
     public void testMassMetricInputControlRoughMass() {

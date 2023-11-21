@@ -27,6 +27,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7325")
     @TestRail(id = {7325})
     @Description("Validate report is available by navigation - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityByNavigation() {
@@ -54,6 +56,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7327")
     @TestRail(id = {7327})
     @Description("Validate report available by library - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityByLibrary() {
@@ -65,6 +68,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7329")
     @TestRail(id = {7329})
     @Description("Validate report is available by search - Target and Quoted Cost Trend Details Report")
     public void testReportAvailabilityBySearch() {
@@ -76,6 +80,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3364")
     @TestRail(id = {3364})
     @Description("Validate Cost Metric Input Control - PPC - Target and Quoted Cost Value Tracking Report")
     public void testCostMetricInputControlPpc() {
@@ -88,6 +93,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7424")
     @TestRail(id = {7424})
     @Description("Validate Cost Metric Input Control - FBC - Target and Quoted Cost Value Tracking Report")
     public void testCostMetricInputControlFbc() {
@@ -100,6 +106,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3365")
     @TestRail(id = {3365})
     @Description("Validate Currency Code Input Control Functionality")
     public void testCurrencyCodeInputControl() {
@@ -128,6 +135,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3368")
     @TestRail(id = {3368})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 1")
     public void testLinksToMilestoneProjectOne() {
@@ -136,6 +144,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7669")
     @TestRail(id = {7669})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 2")
     public void testLinksToMilestoneProjectTwo() {
@@ -144,6 +153,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7670")
     @TestRail(id = {7670})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 3")
     public void testLinksToMilestoneProjectThree() {
@@ -152,6 +162,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7671")
     @TestRail(id = {7671})
     @Description("Validate sub-report hyperlinks to Target Cost Value Tracking details report - Milestone 4")
     public void testLinksToMilestoneProjectFour() {
@@ -160,6 +171,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3366")
     @TestRail(id = {3366})
     @Description("Export date lists all available versions from selected export set rollup")
     public void testExportDateListFunctionality() {
@@ -183,6 +195,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3367")
     @TestRail(id = {3367})
     @Description("Validate Target Cost Value Tracking report aligns to CID values")
     public void testDataIntegrityAgainstCID() {

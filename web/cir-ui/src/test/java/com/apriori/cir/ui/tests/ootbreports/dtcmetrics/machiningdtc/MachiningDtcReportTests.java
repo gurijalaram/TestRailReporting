@@ -27,6 +27,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -45,6 +46,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("2024")
     @TestRail(id = {2024})
     @Description("Validate report is available by navigation - Machining DTC Report")
     public void testReportAvailabilityByNavigation() {
@@ -57,6 +59,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3415")
     @TestRail(id = {3415})
     @Description("Validate report is available by library - Machining DTC Report")
     public void testReportAvailabilityByLibrary() {
@@ -66,6 +69,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3416")
     @TestRail(id = {3416})
     @Description("Validate report is available by search - Machining DTC Report")
     public void testReportAvailabilityBySearch() {
@@ -75,6 +79,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3026")
     @TestRail(id = {3026})
     @Description("Verify currency code input control functions correctly")
     public void testCurrencyChange() {
@@ -88,6 +93,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3567")
     @TestRail(id = {3567})
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
     public void testExportSetDateInputInvalidCharacters() {
@@ -97,6 +103,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3566")
     @TestRail(id = {3566})
     @Description("Verify export date filters correctly filters export sets - Picker - Machining DTC Report")
     public void testBothExportDatesUsingDatePicker() {
@@ -106,6 +113,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3565")
     @TestRail(id = {3565})
     @Description("Verify export date filters correctly filters export sets - Input - Machining DTC Report ")
     public void testBothExportDatesUsingInputField() {
@@ -117,6 +125,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3020")
     @TestRail(id = {3020})
     @Description("Verify Export Set list controls function correctly")
     public void testExportSetListControlFunctionality() {
@@ -126,6 +135,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7330")
     @TestRail(id = {7330})
     @Description("Verify apply button functionality - Machining DTC Report")
     public void testApplyButton() {
@@ -139,6 +149,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7333")
     @TestRail(id = {7333})
     @Description("Verify cancel button functionality - Machining DTC Report")
     public void testCancelButton() {
@@ -148,6 +159,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7336")
     @TestRail(id = {7336})
     @Description("Verify reset button functionality - Machining DTC Report")
     public void testResetButton() {
@@ -160,6 +172,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Disabled("not applicable due to reports configuration")
+    @TmsLink("7339")
     @TestRail(id = {7339})
     @Description("Verify save button functionality - Machining DTC Report")
     public void testSaveButtons() {
@@ -172,6 +185,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("2026")
     @TestRail(id = {2026})
     @Description("Verify Export Sets are available for selection")
     public void testExportSetSelectionAndAvailability() {
@@ -185,6 +199,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3022")
     @TestRail(id = {3022})
     @Description("Verify Roll-up input control functions correctly")
     public void testRollupDropdown() {
@@ -197,6 +212,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("1690")
     @TestRail(id = {1690})
     @Description("Verify export sets are available for selection")
     public void testExportSetAvailability() {
@@ -206,6 +222,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3023")
     @TestRail(id = {3023})
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Report")
     public void testCostMetricInputControlPpc() {
@@ -219,6 +236,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7413")
     @TestRail(id = {7413})
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Report")
     public void testCostMetricInputControlFbc() {
@@ -232,6 +250,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3024")
     @TestRail(id = {3024})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Report")
     public void testMassMetricInputControlFinishMass() {
@@ -245,6 +264,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7393")
     @TestRail(id = {7393})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Report")
     public void testMassMetricInputControlRoughMass() {
@@ -258,6 +278,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7452")
     @TestRail(id = {7452})
     @Description("Verify process group input control functionality - Stock Machining - Machining DTC Report")
     public void testProcessGroupStockMachiningOnly() {
@@ -271,6 +292,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7451")
     @TestRail(id = {7451})
     @Description("Verify process group input control functionality - 2 Model Machining - Machining DTC Report")
     public void testProcessGroupTwoModelMachiningOnly() {
@@ -284,6 +306,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7456")
     @TestRail(id = {7456})
     @Description("Verify process group input control functionality - 2 Model and Stock Machining - Machining DTC Report")
     public void testProcessGroupSandAndDieCasting() {
@@ -293,6 +316,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7457")
     @TestRail(id = {7457})
     @Description("Verify DTC Score Input Control - No Selection - Machining DTC Report")
     public void testDtcScoreNoSelection() {
@@ -305,6 +329,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7460")
     @TestRail(id = {7460})
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Report")
     public void testDtcScoreLow() {
@@ -318,6 +343,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7498")
     @TestRail(id = {7498})
     @Description("Verify DTC Score Input Control - Medium Selection - Machining DTC Report")
     public void testDtcScoreMedium() {
@@ -331,6 +357,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7501")
     @TestRail(id = {7501})
     @Description("Verify DTC Score Input Control - High Selection - Machining DTC Report")
     public void testDtcScoreHigh() {
@@ -345,6 +372,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("2039")
     @TestRail(id = {2039})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
@@ -378,6 +406,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3572")
     @TestRail(id = {3572})
     @Description("Verify that hours value greater than hours in day in both earliest and latest export date field fails")
     public void testInvalidHourValueExportSetFilter() {
@@ -391,6 +420,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3573")
     @TestRail(id = {3573})
     @Description("Verify that minutes value greater than 60 minutes in both earliest and latest export date field fails")
     public void testInvalidMinuteValueExportSetFilter() {
@@ -404,6 +434,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3575")
     @TestRail(id = {3575})
     @Description("Verify that invalid date (year) fails in both earliest and latest export date field")
     public void testInvalidYearValueExportSetFilter() {
@@ -417,6 +448,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3576")
     @TestRail(id = {3576})
     @Description("Verify that invalid date (month) fails in both earliest and latest export date field")
     public void testInvalidMonthValueExportSetFilter() {
@@ -430,6 +462,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3577")
     @TestRail(id = {3577})
     @Description("Verify that invalid date (day) fails in both earliest and latest export date field")
     public void testInvalidDayValueExportSetFilter() {
@@ -442,6 +475,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3031")
     @TestRail(id = {3031})
     @Description("Verify Select Parts list controls function correctly")
     public void testPartListInputControls() {
@@ -455,6 +489,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3027")
     @TestRail(id = {3027})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -467,6 +502,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7658")
     @TestRail(id = {7658})
     @Description("Verify Select Parts list is correctly filtered by input control - Export Dates - Machining DTC Report ")
     public void testPartListFilterByInputControlsExportDates() {
@@ -487,6 +523,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7659")
     @TestRail(id = {7659})
     @Description("Verify Select Parts list is correctly filtered by input control - Export Set - Machining DTC Report")
     public void testPartListFilterByInputControlsExportSets() {
@@ -505,6 +542,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7660")
     @TestRail(id = {7660})
     @Description("Verify Select Parts list is correctly filtered by input control - Rollup - Machining DTC Report")
     public void testPartListFilterByInputControlsRollup() {
@@ -523,6 +561,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7661")
     @TestRail(id = {7661})
     @Description("Verify Select Parts list is correctly filtered by input control - Min. Annual Spend - Machining DTC Report")
     public void testPartListFilterByInputControlsMinimumAnnualSpend() {
@@ -548,8 +587,9 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7662")
     @TestRail(id = {7662})
-    @Description("\tVerify Select Parts list is correctly filtered by input control - Process Group - Machining DTC Report")
+    @Description("Verify Select Parts list is correctly filtered by input control - Process Group - Machining DTC Report")
     public void testPartListFilterByInputControlsProcessGroup() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
@@ -567,6 +607,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7663")
     @TestRail(id = {7663})
     @Description("Verify Select Parts list is correctly filtered by input control - DTC Score - Machining DTC Report")
     public void testPartListFilterByInputControlsDtcScore() {

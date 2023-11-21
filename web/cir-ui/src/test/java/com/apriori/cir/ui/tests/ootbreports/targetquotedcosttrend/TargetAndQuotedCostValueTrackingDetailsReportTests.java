@@ -11,6 +11,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7324")
     @TestRail(id = {7324})
     @Description("Validate report is available by navigation - Target and Quoted Cost Trend Report")
     public void testReportAvailabilityByNavigation() {
@@ -37,6 +39,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7326")
     @TestRail(id = {7326})
     @Description("Validate report is available by library - Target and Quoted Cost Trend Report")
     public void testReportAvailabilityByLibrary() {
@@ -48,6 +51,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7328")
     @TestRail(id = {7328})
     @Description("Validate report is available by search - Target and Quoted Cost Trend Report")
     public void testReportAvailabilityBySearch() {
@@ -60,6 +64,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7425")
     @TestRail(id = {7425})
     @Description("Validate Cost Metric Input Control - PPC - Target and Quoted Cost Value Tracking Details Report")
     public void testCostMetricInputControlPpc() {
@@ -73,6 +78,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7426")
     @TestRail(id = {7426})
     @Description("Validate Cost Metric Input Control - FBC - Target and Quoted Cost Value Tracking Details Report")
     public void testCostMetricInputControlFbc() {

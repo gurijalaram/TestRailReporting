@@ -17,6 +17,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import com.google.common.base.Stopwatch;
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,6 +40,7 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @TmsLink("14000")
     @TestRail(id = 14000)
     @Description("Input controls - Test Process Groups")
     public void testProcessGroupSheetMetal() {
