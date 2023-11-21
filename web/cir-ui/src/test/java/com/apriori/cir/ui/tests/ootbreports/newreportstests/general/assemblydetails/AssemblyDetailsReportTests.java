@@ -8,6 +8,7 @@ import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("1922")
     @TestRail(id = 1922)
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {

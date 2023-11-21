@@ -15,4 +15,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ServiceAccount extends User {
     private String serviceAccount;
+    private String status;
 }

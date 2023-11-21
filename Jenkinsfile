@@ -71,6 +71,17 @@ pipeline {
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
                     javaOpts = javaOpts + " -DROOT_LOG_LEVEL=${root_log_level}"
 
+                    username = params.USERNAME
+                    password = params.PASSWORD
+
+                    if (username != null && password != null) {
+                        javaOpts = javaOpts + " -Dglobal_use_default_user=true"
+                        javaOpts = javaOpts + " -Dglobal_default_user_name=${username}"
+                        javaOpts = javaOpts + " -Dglobal_default_password=${password}"
+                    }
+
+
+
                     folder = params.MODULE_TYPE
                     if (!folder && "${MODULE}".contains("-ui")) {
                         folder = "web"

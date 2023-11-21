@@ -12,6 +12,7 @@ import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +36,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @TmsLink("7409")
     @TestRail(id = 7409)
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Comparison Report")
     public void testCostMetricInputControlPpc() {
@@ -45,6 +47,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @TmsLink("7410")
     @TestRail(id = 7410)
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Comparison Report")
     public void testCostMetricInputControlFbc() {
@@ -55,6 +58,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @TmsLink("7489")
     @TestRail(id = 7489)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
@@ -65,6 +69,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @TmsLink("7390")
     @TestRail(id = 7390)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {
@@ -75,6 +80,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @TmsLink("7509")
     @TestRail(id = 7509)
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Comparison Report")
     public void testDtcScoreLow() {
@@ -91,6 +97,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @TmsLink("7512")
     @TestRail(id = 7512)
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Comparison Report")
     public void testDtcScoreMedium() {
@@ -107,6 +114,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @TmsLink("7515")
     @TestRail(id = 7515)
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Comparison Report")
     public void testDtcScoreHigh() {
@@ -123,6 +131,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @TmsLink("7544")
     @TestRail(id = 7544)
     @Description("Verify DTC Score Input Control - All Selection - Casting DTC Comparison Report")
     public void testDtcScoreAll() {
@@ -134,6 +143,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @TmsLink("7656")
     @TestRail(id = 7656)
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Comparison Report")
     public void testMinimumAnnualSpend() {

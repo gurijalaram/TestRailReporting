@@ -5,6 +5,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.web.app.util.PageUtils;
 import com.apriori.web.app.util.login.UserProfilePage;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +17,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     @FindBy(css = "img[alt='Application Logo']")
@@ -37,6 +39,8 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     @FindBy(xpath = "//div[@class='apriori-select searchable switch-deployment-dialog-deployments css-1xzq4gn-container']")
     private WebElement deploymentSelector;
+
+    private StringBuilder loadApplicationsErrors = new StringBuilder();
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -91,6 +95,13 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return applicationsDTO;
     }
 
+    /**
+     * Click on web application on CloudHomePage by application name in UI
+     * @param applicationName
+     * @param webPageType
+     * @return
+     * @param <T>
+     */
     public <T> T clickWebApplicationByName(String applicationName, Class<T> webPageType) {
         By byApplicationTitle = By.xpath(String.format("//div[@data-application='%s']//div[@class='card-header']", applicationName));
         By byLoadingTitle = By.xpath("//div[@class='loader large-loader opaque full-screen']");
@@ -103,19 +114,42 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         return PageFactory.initElements(driver, webPageType);
     }
 
-    public <T> T clickWebApplicationByNameAndCloseAfterLoad(String applicationName, Class<T> webPageType) {
-        T responsePage = clickWebApplicationByName(applicationName, webPageType);
+    /**
+     * Do click on web application wait until application page is loaded and close application tab
+     * @param applicationName
+     * @param webPageType
+     * @return
+     * @param <T>
+     */
+    public <T> void clickWebApplicationByNameAndCloseAfterLoad(String applicationName, Class<T> webPageType) {
+        try {
+            T responsePage  = clickWebApplicationByName(applicationName, webPageType);
+        } catch (Exception e) {
+            final String errorText = String.format("Failed to load application with the name %s and class type %s \n " +
+                "Error message: %s", applicationName, webPageType, e);
+
+            log.info(errorText);
+            loadApplicationsErrors.append(errorText)
+                .append("\n");
+        }
+
         driver.close();
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
-
-        return responsePage;
     }
 
+    /**
+     * Click userPanel
+     * @return
+     */
     public CloudHomePage clickUserPanel() {
         pageUtils.waitForElementAndClick(userElement);
         return this;
     }
 
+    /**
+     * Click switch deployment button
+     * @return
+     */
     public SwitchDeploymentPopUpPage clickSwitchDeploymentButton() {
         pageUtils.waitForElementAndClick(switchDeploymentButton);
         return new SwitchDeploymentPopUpPage(driver);
@@ -144,5 +178,13 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         }
 
         return userTokenFromBrowser;
+    }
+
+    /**
+     * Get string of load errors, if there are present
+     * @return
+     */
+    public String getLoadApplicationsErrors() {
+        return loadApplicationsErrors.toString();
     }
 }

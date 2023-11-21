@@ -16,8 +16,12 @@ public class PropertyInfoMap {
     private PropertyInfoMapItem skillLevel;
     private PropertyInfoMapItem extraCosts;
     private PropertyInfoMapItem gcdWithTolerancesCount;
+    private PropertyInfoMapItem hardToolingProcessCarbon;
+    private PropertyInfoMapItem hardToolingCarbon;
     private PropertyInfoMapItem productionDaysPerYear;
     private PropertyInfoMapItem lossInsuranceCost;
+    private PropertyInfoMapItem amortizedHardToolingMaterialCarbon;
+    private PropertyInfoMapItem additionalAmortizedInvestment;
     private PropertyInfoMapItem numScrapPartsDownStream;
     private PropertyInfoMapItem machineLife;
     private PropertyInfoMapItem materialOverheadPercent;
@@ -25,9 +29,14 @@ public class PropertyInfoMap {
     private PropertyInfoMapItem toolCribSupportAllocation;
     private PropertyInfoMapItem pieceCost;
     private PropertyInfoMapItem indirectMachinePower;
-    private PropertyInfoMapItem additionalAmortizedInvestment;
     private PropertyInfoMapItem totalCarbon;
+    private PropertyInfoMapItem amortizedHardToolingProcessCarbon;
+    private PropertyInfoMapItem totalCapitalCarbon;
     private PropertyInfoMapItem lifetimeCost;
+    private PropertyInfoMapItem hardToolingMaterialCarbon;
+    private PropertyInfoMapItem totalAmortizedCapitalCarbon;
+    private PropertyInfoMapItem amortizedHardToolingCarbon;
+    private PropertyInfoMapItem variableCarbon;
     private PropertyInfoMapItem height;
     private PropertyInfoMapItem addFacilityCostToDirOverhead;
     private PropertyInfoMapItem margin;

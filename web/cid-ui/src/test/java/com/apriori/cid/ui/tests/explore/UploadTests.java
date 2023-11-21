@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 
+import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
@@ -13,8 +14,10 @@ import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.AssemblyDTORequest;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
+import com.apriori.shared.util.enums.PreferencesEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -38,6 +41,7 @@ public class UploadTests extends TestBaseUI {
     private File resourceFile;
     private UserCredentials currentUser;
     private ComponentInfoBuilder cidComponentItem;
+    private ComponentInfoBuilder assembly;
 
     @Test
     @TestRail(id = {5422, 12167})
@@ -60,24 +64,24 @@ public class UploadTests extends TestBaseUI {
     @TestRail(id = 10558)
     @Description("Successful creation of new scenario from existing scenario")
     public void testUploadAssemblyAndRenameScenario() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-
-        String filename = "oldham.asm.1";
-        String componentName = "OLDHAM";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
-        currentUser = UserUtil.getUser();
+        UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
+
+        assembly = new AssemblyDTORequest().getAssembly();
+
+        userPreferencesUtil.setSpecificPreference(assembly.getUser(), PreferencesEnum.ASSEMBLY_STRATEGY, "PREFER_PUBLIC");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        evaluatePage = loginPage.login(assembly.getUser())
+            .uploadComponentAndOpen(assembly)
             .copyScenario()
             .enterScenarioName(newScenarioName)
             .submit(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED)).isEqualTo(true);
-        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(newScenarioName);
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(newScenarioName)).isTrue();
+
+        userPreferencesUtil.resetSpecificPreference(assembly.getUser(), PreferencesEnum.ASSEMBLY_STRATEGY, "");
 
         softAssertions.assertAll();
     }
@@ -116,20 +120,20 @@ public class UploadTests extends TestBaseUI {
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("AISI 1010")
-                .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .publish(cidComponentItem,  EvaluatePage.class)
-                .logout()
-                .login(UserUtil.getUser())
-                .selectFilter("Public")
-                .clickSearch(componentName)
-                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-                .openScenario(componentName, scenarioName);
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .logout()
+            .login(UserUtil.getUser())
+            .selectFilter("Public")
+            .clickSearch(componentName)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
     }

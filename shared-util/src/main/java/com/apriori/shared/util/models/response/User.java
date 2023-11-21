@@ -58,4 +58,5 @@ public class User {
     protected String createdByName;
     protected String updatedByName;
     protected List<Object> licenseAssignments = null;
+    protected String awsRole;
 }

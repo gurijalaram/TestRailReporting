@@ -18,6 +18,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("6179")
     @TestRail(id = {6179})
     @Description("Validate report is available by navigation - Design Outlier Identification Details Report")
     public void testReportAvailableByMenu() {
@@ -45,6 +47,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("6181")
     @TestRail(id = {6181})
     @Description("Validate report is available by library - Design Outlier Identification Details Report")
     public void testReportAvailableByLibrary() {
@@ -56,6 +59,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("6180")
     @TestRail(id = {6180})
     @Description("Validate report is available by search - Design Outlier Identification Details Report")
     public void testReportAvailableBySearch() {
@@ -67,6 +71,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7387")
     @TestRail(id = {7387})
     @Description("Verify mass metric - finish mass - Design Outlier Identification Details Report")
     public void testMassMetricFinishMass() {
@@ -80,6 +85,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7386")
     @TestRail(id = {7386})
     @Description("Verify mass metric - rough mass - Design Outlier Identification Details Report")
     public void testMassMetricRoughMass() {
@@ -93,6 +99,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("1988")
     @TestRail(id = {1988})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateCalendar() {
@@ -104,6 +111,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("1988")
     @TestRail(id = {1988})
     @Description("Export date calendar widgets")
     public void testExportSetFilterByDateInputField() {
@@ -116,6 +124,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("1995")
     @TestRail(id = {1995})
     @Description("Export date lists all available versions from selected export set(s)")
     public void testExportDateAvailability() {
@@ -138,6 +147,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("6249")
     @TestRail(id = 6249)
     @Description("Min and max cost filter works")
     public void testMinAndMaxCostFilter() {
@@ -150,6 +160,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("6261")
     @TestRail(id = 6261)
     @Description("Min and max cost filter - junk value test")
     public void testMinAndMaxCostFilterJunkValue() {
@@ -162,6 +173,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("6250")
     @TestRail(id = 6250)
     @Description("Min and max mass filter works")
     public void testMinAndMaxMassFilter() {
@@ -174,6 +186,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("6264")
     @TestRail(id = 6264)
     @Description("Min and max mass filter - junk value test")
     public void testMinAndMaxMassFilterJunkValue() {

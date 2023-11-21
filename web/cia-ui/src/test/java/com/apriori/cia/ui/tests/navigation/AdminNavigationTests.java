@@ -13,6 +13,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +32,7 @@ public class AdminNavigationTests extends TestBaseUI {
     }
 
     @Test
+    @TmsLink("2980")
     @TestRail(id = {2980})
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
@@ -44,6 +46,7 @@ public class AdminNavigationTests extends TestBaseUI {
     }
 
     @Test
+    @TmsLink("2981")
     @TestRail(id = {2981})
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
@@ -57,6 +60,7 @@ public class AdminNavigationTests extends TestBaseUI {
     }
 
     @Test
+    @TmsLink("2982")
     @TestRail(id = {2982})
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() {
@@ -72,6 +76,7 @@ public class AdminNavigationTests extends TestBaseUI {
     }
 
     @Test
+    @TmsLink("2983")
     @TestRail(id = {2983})
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
@@ -88,6 +93,7 @@ public class AdminNavigationTests extends TestBaseUI {
     }
 
     @Test
+    @TmsLink("2984")
     @TestRail(id = {2984})
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
@@ -104,6 +110,7 @@ public class AdminNavigationTests extends TestBaseUI {
     }
 
     @Test
+    @TmsLink("2985")
     @TestRail(id = {2985})
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
@@ -118,6 +125,7 @@ public class AdminNavigationTests extends TestBaseUI {
     }
 
     @Test
+    @TmsLink("2966")
     @TestRail(id = {2966})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {

@@ -12,6 +12,7 @@ import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ public class ScenarioActivityProcessActivityReportTests extends JasperApiAuthent
     }
 
     @Test
+    @TmsLink("28004")
     @TestRail(id = 28004)
     @Description("Input Controls - Trending period - Process Activity Report")
     public void testTrendingPeriod() {

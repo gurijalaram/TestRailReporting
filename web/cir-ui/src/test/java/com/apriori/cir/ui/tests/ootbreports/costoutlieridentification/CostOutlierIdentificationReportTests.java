@@ -24,6 +24,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("1944")
     @TestRail(id = {1944})
     @Description("Validate report is available by navigation - menu")
     public void testReportAvailableByMenu() {
@@ -55,6 +57,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("6182")
     @TestRail(id = {6182})
     @Description("Validate report is available by library")
     public void testReportAvailableByLibrary() {
@@ -64,6 +67,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("1945")
     @TestRail(id = {1945})
     @Description("Validate report is available by search")
     public void testReportAvailableBySearch() {
@@ -74,6 +78,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("1954")
     @TestRail(id = {1954})
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricFbcFunctionality() {
@@ -87,6 +92,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("1954")
     @TestRail(id = {1954})
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
     public void testCostMetricPpcFunctionality() {
@@ -100,6 +106,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("1956")
     @TestRail(id = {1956})
     @Description("Min & Max costs filter works")
     public void testMinMaxAprioriCost() {
@@ -113,6 +120,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("6253")
     @TestRail(id = {6253})
     @Description("Min and max cost filter - junk value test")
     public void testMinAndMaxCostFilterJunkValues() {
@@ -125,6 +133,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("1959")
     @TestRail(id = {1959})
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Main Report")
     public void testDataIntegrityAgainstCID() {
@@ -159,6 +168,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("1947")
     @TestRail(id = {1947})
     @Description("Export date range presents correctly filtered export sets")
     public void testExportSetFilterByDateCalendarWidget() {
@@ -171,6 +181,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("6986")
     @TestRail(id = {6986})
     @Description("Percent difference threshold filter - main report - junk value")
     public void testPercentDifferenceFilterJunkValue() {
@@ -183,6 +194,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("6991")
     @TestRail(id = {6991})
     @Description("Annualised potential savings threshold filter - main report - junk value")
     public void testAnnualisedFilterJunkValue() {
@@ -195,6 +207,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("6987")
     @TestRail(id = {6987})
     @Description("Percent difference threshold filter - main report - decimal places")
     public void testPercentDifferenceFilterDecimalPlaces() {
@@ -208,6 +221,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7023")
     @TestRail(id = {7023})
     @Description("Annualised potential savings threshold filter - main report - no data available")
     public void testAnnualisedPotentialSavingsNoDataAvailable() {
@@ -220,6 +234,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7025")
     @TestRail(id = {7025})
     @Description("Percent difference threshold filter - main report - no data available")
     public void testPercentDifferenceThresholdNoDataAvailable() {
@@ -232,6 +247,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("1958")
     @TestRail(id = {1958})
     @Description("Percent difference threshold filter works - main report")
     public void testPercentDifferenceThresholdFilter() {
@@ -281,6 +297,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("1957")
     @TestRail(id = {1957})
     @Description("Annualised potential savings threshold filter - main report")
     public void testAnnualisedPotentialSavingsThresholdFilter() {
