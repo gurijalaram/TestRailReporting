@@ -1,8 +1,10 @@
 package com.apriori.cid.api.utils;
 
 import com.apriori.bcm.api.enums.CusAppAPIEnum;
+import com.apriori.cid.api.enums.CidAppAPIEnum;
 import com.apriori.cid.api.models.response.preferences.PreferenceItemsResponse;
 import com.apriori.cid.api.models.response.preferences.PreferenceResponse;
+import com.apriori.cid.api.models.response.preferences.PreferencesResponse;
 import com.apriori.shared.util.enums.ColourEnum;
 import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.DecimalPlaceEnum;
@@ -59,11 +61,10 @@ public class UserPreferencesUtil {
      * Put/update preferences
      *
      * @param userCredentials - the user credentials
-     * @param preferences      - the preferences to be updated
-     *
+     * @param preferences     - the preferences to be updated
      * @return response object
      */
-    public ResponseWrapper<String> updatePreferences(UserCredentials userCredentials, Map<PreferencesEnum, String> preferences) {
+    public PreferencesResponse updatePreferences(UserCredentials userCredentials, Map<PreferencesEnum, String> preferences) {
         StringBuilder updatePreferences = new StringBuilder();
         String userID = new AuthUserContextUtil().getAuthUserIdentity(userCredentials.getEmail());
         PreferenceResponse preference;
@@ -94,18 +95,18 @@ public class UserPreferencesUtil {
             }
         }
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, PreferencesResponse.class)
             .token(userCredentials.getToken())
             .customBody("{\"userPreferences\": [ " + updatePreferences + " ]}");
 
-        return HTTPRequest.build(requestEntity).put();
+        ResponseWrapper<PreferencesResponse> response = HTTPRequest.build(requestEntity).put();
+        return response.getResponseEntity();
     }
 
     /**
      * Get the list of current preferences
      *
      * @param userCredentials - the user credentials
-     *
      * @return List of preferences
      */
     public List<PreferenceResponse> getPreferences(UserCredentials userCredentials) {
@@ -122,7 +123,6 @@ public class UserPreferencesUtil {
      * Get the list of current preferences
      *
      * @param userCredentials - the user credentials
-     *
      * @return List of preferences
      */
     public PreferenceResponse getPreference(UserCredentials userCredentials, PreferencesEnum preference) {
@@ -199,9 +199,8 @@ public class UserPreferencesUtil {
     /**
      * Resets specified settings in Cidapp
      *
-     * @param userCredentials - the user credentials
+     * @param userCredentials    - the user credentials
      * @param preferencesToReset - Map of preferences to be reset with the value to reset to
-     *
      * @return response object
      */
     public ResponseWrapper<String> resetSpecificSettings(UserCredentials userCredentials, Map<PreferencesEnum, String> preferencesToReset) {
@@ -242,5 +241,33 @@ public class UserPreferencesUtil {
         preferencesItems.forEach(x -> mappedResponse.put(x.getName(), x.getIdentity()));
 
         return mappedResponse;
+    }
+
+    /**
+     * Set specific preferences
+     *
+     * @param userCredentials -the user credentials
+     * @param preferencesEnum - the preference enum
+     * @param value           - the value to set
+     */
+    public void setSpecificPreference(UserCredentials userCredentials, PreferencesEnum preferencesEnum, String value) {
+        Map<PreferencesEnum, String> updateStrategy = new HashMap<>();
+        updateStrategy.put(preferencesEnum, value);
+
+        updatePreferences(userCredentials, updateStrategy);
+    }
+
+    /**
+     * Resets specified settings
+     *
+     * @param userCredentials     -the user credentials
+     * @param preferencesEnum-the preference enum
+     *                            * @param value - the value to set
+     */
+    public void resetSpecificPreference(UserCredentials userCredentials, PreferencesEnum preferencesEnum, String value) {
+        Map<PreferencesEnum, String> updateStrategy = new HashMap<>();
+        updateStrategy.put(preferencesEnum, value);
+
+        resetSpecificSettings(userCredentials, updateStrategy);
     }
 }
