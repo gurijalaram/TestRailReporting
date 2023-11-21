@@ -6,6 +6,7 @@ import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_LT;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_CN;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
 
+import com.apriori.cid.api.models.response.scenarios.ScenariosDeleteResponse;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.serialization.util.DateFormattingUtils;
