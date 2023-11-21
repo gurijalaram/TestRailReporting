@@ -6,6 +6,7 @@ import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_GT;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_CN;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
 
+import com.apriori.cid.api.models.response.scenarios.ScenariosDeleteResponse;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.serialization.util.DateFormattingUtils;
@@ -20,8 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class DeleteScenariosTests {
-    private static final int MAX_DAYS = 300;
-    private static final int CHUNK_SIZE = 10;
+    private static final int MAX_DAYS = 7;
     private static final int PAGE = 10;
     private final CssComponent cssComponent = new CssComponent();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
@@ -30,18 +30,25 @@ public class DeleteScenariosTests {
     @Test
     public void deleteScenarios() {
         UserUtil.getUsers().forEach(user -> {
-            List<ScenarioItem> assemblies = searchComponentType("ASSEMBLY", user);
+            List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", user);
 
+            ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenarios(assembliesToDelete, user);
 
-            List<ScenarioItem> scenarios = searchComponentType("PART", user);
+            softAssertions.assertThat(deletedAssemblies.getSuccesses().size()).isEqualTo(assembliesToDelete.size());
+
+            List<ScenarioItem> scenariosToDelete = searchComponentType("PART", user);
+
+            ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenarios(scenariosToDelete, user);
+
+            softAssertions.assertThat(deletedScenarios.getSuccesses().size()).isEqualTo(scenariosToDelete.size());
 
             softAssertions.assertAll();
         });
     }
 
     private List<ScenarioItem> searchComponentType(String componentType, UserCredentials currentUser) {
-        cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + false,
+        return cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + false,
             COMPONENT_TYPE_EQ.getKey() + componentType, SCENARIO_NAME_CN.getKey() + "AutoScenario", PAGE_SIZE.getKey() + PAGE,
-            SCENARIO_CREATED_AT_GT + LocalDateTime.now().minusDays(MAX_DAYS).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
+            SCENARIO_CREATED_AT_GT.getKey() + LocalDateTime.now().minusDays(MAX_DAYS).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
     }
 }

@@ -4,6 +4,7 @@ import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 
 import com.apriori.cid.api.enums.CidAppAPIEnum;
+import com.apriori.cid.api.models.request.ComponentRequest;
 import com.apriori.cid.api.models.request.ForkRequest;
 import com.apriori.cid.api.models.request.GroupPublishRequest;
 import com.apriori.cid.api.models.request.ScenarioAssociationGroupItems;
@@ -16,6 +17,7 @@ import com.apriori.cid.api.models.response.ScenarioSuccessesFailures;
 import com.apriori.cid.api.models.response.scenarios.ScenarioManifest;
 import com.apriori.cid.api.models.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
+import com.apriori.cid.api.models.response.scenarios.ScenariosDeleteResponse;
 import com.apriori.css.api.enums.CssSearch;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
@@ -412,7 +414,7 @@ public class ScenariosUtil {
 
         ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).post();
 
-        CostingTemplate template =  response.getResponseEntity();
+        CostingTemplate template = response.getResponseEntity();
         template.setCostingTemplateIdentity(template.getIdentity());
         template.setDeleteTemplateAfterUse(template.getDeleteTemplateAfterUse());
 
@@ -613,6 +615,25 @@ public class ScenariosUtil {
         HTTPRequest.build(deleteRequest).delete();
 
         return checkComponentDeleted(componentIdentity, scenarioIdentity, userCredentials);
+    }
+
+    public ScenariosDeleteResponse deleteScenarios(List<ScenarioItem> scenarios, UserCredentials userCredentials) {
+        final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.DELETE_SCENARIOS, ScenariosDeleteResponse.class)
+            .body("groupItems", scenarios.stream()
+                .map(scenario ->
+                    ComponentRequest.builder()
+                    .componentIdentity(scenario.getComponentIdentity())
+                    .scenarioIdentity(scenario.getScenarioIdentity())
+                    .build())
+                .collect(Collectors.toList()))
+            .token(userCredentials.getToken())
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<ScenariosDeleteResponse> deleteResponse = HTTPRequest.build(requestEntity).post();
+
+        scenarios.forEach(scenario -> checkComponentDeleted(scenario.getComponentIdentity(), scenario.getScenarioIdentity(), userCredentials));
+
+        return deleteResponse.getResponseEntity();
     }
 
     /**
