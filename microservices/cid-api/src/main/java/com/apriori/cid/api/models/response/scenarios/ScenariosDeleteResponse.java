@@ -1,7 +1,6 @@
 package com.apriori.cid.api.models.response.scenarios;
 
 import com.apriori.shared.util.annotations.Schema;
-import com.apriori.shared.util.models.request.component.Successes;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;
@@ -18,6 +17,6 @@ import java.util.List;
 @Builder
 @JsonRootName("response")
 public class ScenariosDeleteResponse {
-    List<Successes> successes;
+    List<DeleteSuccesses> successes;
     List<DeleteFailures> failures;
 }
