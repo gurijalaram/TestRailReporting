@@ -2,11 +2,10 @@ package com.apriori.cid.api.tests;
 
 import static com.apriori.css.api.enums.CssSearch.COMPONENT_TYPE_EQ;
 import static com.apriori.css.api.enums.CssSearch.PAGE_SIZE;
-import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_GT;
+import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_LT;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_CN;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
 
-import com.apriori.cid.api.models.response.scenarios.ScenariosDeleteResponse;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.serialization.util.DateFormattingUtils;
@@ -49,6 +48,6 @@ public class DeleteScenariosTests {
     private List<ScenarioItem> searchComponentType(String componentType, UserCredentials currentUser) {
         return cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + false,
             COMPONENT_TYPE_EQ.getKey() + componentType, SCENARIO_NAME_CN.getKey() + "AutoScenario", PAGE_SIZE.getKey() + SIZE_OF_PAGE,
-            SCENARIO_CREATED_AT_GT.getKey() + LocalDateTime.now().minusDays(MAX_DAYS).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
+            SCENARIO_CREATED_AT_LT.getKey() + LocalDateTime.now().minusDays(MAX_DAYS).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
     }
 }
