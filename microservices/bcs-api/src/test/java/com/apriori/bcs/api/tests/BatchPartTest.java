@@ -124,7 +124,7 @@ public class BatchPartTest {
     @Description("Get part to a batch")
     public void getBatchParts() {
         ResponseWrapper<Parts> partsResponse = BatchPartResources.getBatchPartById(batch.getIdentity());
-        softAssertions.assertThat(partsResponse.getResponseEntity().getItems().size()).isEqualTo(0);
+        softAssertions.assertThat(partsResponse.getResponseEntity().getItems().size()).isGreaterThan(0);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.apriori.bcs.api.tests;
 
 import com.apriori.bcs.api.controller.BatchPartResources;
+import com.apriori.bcs.api.enums.MachiningMode;
 import com.apriori.bcs.api.enums.PartFieldsEnum;
 import com.apriori.bcs.api.models.response.Part;
 import com.apriori.bcs.api.models.response.Results;
@@ -85,7 +86,6 @@ public class AdditionalMappingsTest {
         Results assemblyResults = bcsTestUtil.getAssemblyResult();
         softAssertions.assertThat(assemblyResults.getTargetCost()).isEqualTo(2.0);
         softAssertions.assertThat(assemblyResults.getTargetMass()).isEqualTo(2.5);
-        softAssertions.assertAll();
     }
 
     @Test
@@ -187,7 +187,7 @@ public class AdditionalMappingsTest {
             .use(PartFieldsEnum.SCENARIO_NAME.getPartFieldName(), scenarioName)
             .use(PartFieldsEnum.VPE_NAME.getPartFieldName(), DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .use(PartFieldsEnum.FILE_NAME.getPartFieldName(), partName)
-            .use(PartFieldsEnum.MACHINING_MODE.getPartFieldName(), com.apriori.bcs.enums.MachiningMode.MAY_BE_MACHINED.getMachiningMode());
+            .use(PartFieldsEnum.MACHINING_MODE.getPartFieldName(), MachiningMode.MAY_BE_MACHINED.getMachiningMode());
 
         BcsTestUtil bcsTestUtil = new BcsTestUtil()
             .createBatch()
@@ -195,8 +195,7 @@ public class AdditionalMappingsTest {
             .startCosting();
 
         Results partResults = bcsTestUtil.getPartResult();
-        softAssertions.assertThat(partResults.getMachiningMode()).isEqualTo(com.apriori.bcs.enums.MachiningMode.MAY_BE_MACHINED.getMachiningMode());
-        softAssertions.assertAll();
+        softAssertions.assertThat(partResults.getMachiningMode()).isEqualTo(MachiningMode.MAY_BE_MACHINED.getMachiningMode());
     }
 
     @Test
@@ -217,7 +216,7 @@ public class AdditionalMappingsTest {
             .use(PartFieldsEnum.SCENARIO_NAME.getPartFieldName(), scenarioName)
             .use(PartFieldsEnum.VPE_NAME.getPartFieldName(), DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .use(PartFieldsEnum.FILE_NAME.getPartFieldName(), partName)
-            .use(PartFieldsEnum.MACHINING_MODE.getPartFieldName(), com.apriori.bcs.enums.MachiningMode.NOT_MACHINED.getMachiningMode());
+            .use(PartFieldsEnum.MACHINING_MODE.getPartFieldName(), MachiningMode.NOT_MACHINED.getMachiningMode());
 
         BcsTestUtil bcsTestUtil = new BcsTestUtil()
             .createBatch()
@@ -225,8 +224,7 @@ public class AdditionalMappingsTest {
             .startCosting();
 
         Results partResults = bcsTestUtil.getPartResult();
-        softAssertions.assertThat(partResults.getMachiningMode()).isEqualTo(com.apriori.bcs.enums.MachiningMode.NOT_MACHINED.getMachiningMode());
-        softAssertions.assertAll();
+        softAssertions.assertThat(partResults.getMachiningMode()).isEqualTo(MachiningMode.NOT_MACHINED.getMachiningMode());
     }
 
     @Test
@@ -247,7 +245,7 @@ public class AdditionalMappingsTest {
             .use(PartFieldsEnum.SCENARIO_NAME.getPartFieldName(), scenarioName)
             .use(PartFieldsEnum.VPE_NAME.getPartFieldName(), DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .use(PartFieldsEnum.FILE_NAME.getPartFieldName(), partName)
-            .use(PartFieldsEnum.MACHINING_MODE.getPartFieldName(), com.apriori.bcs.enums.MachiningMode.MAY_BE_MACHINED.getMachiningMode());
+            .use(PartFieldsEnum.MACHINING_MODE.getPartFieldName(), MachiningMode.MAY_BE_MACHINED.getMachiningMode());
 
         BcsTestUtil bcsTestUtil = new BcsTestUtil()
             .createBatch()
@@ -259,7 +257,6 @@ public class AdditionalMappingsTest {
 
         Results partResults = bcsTestUtil.getPartResult();
         softAssertions.assertThat(partResults.getMachiningMode()).isNull();
-        softAssertions.assertAll();
     }
 
     @Test
@@ -288,8 +285,7 @@ public class AdditionalMappingsTest {
             .startCosting();
 
         Results partResults = bcsTestUtil.getPartResult();
-        softAssertions.assertThat(partResults.getMachiningMode()).isEqualTo(com.apriori.bcs.enums.MachiningMode.MAY_BE_MACHINED.getMachiningMode());
-        softAssertions.assertAll();
+        softAssertions.assertThat(partResults.getMachiningMode()).isEqualTo(MachiningMode.MAY_BE_MACHINED.getMachiningMode());
     }
 
     @Test
@@ -321,11 +317,11 @@ public class AdditionalMappingsTest {
         softAssertions.assertThat(partInfo.getErrors()).contains("Ignoring costing input 'Machining Mode' due to invalid value");
 
         Results partResults = bcsTestUtil.getPartResult();
-        softAssertions.assertThat(partResults.getMachiningMode()).isEqualTo(com.apriori.bcs.enums.MachiningMode.MAY_BE_MACHINED.getMachiningMode());
-        softAssertions.assertAll();
+        softAssertions.assertThat(partResults.getMachiningMode()).isEqualTo(MachiningMode.MAY_BE_MACHINED.getMachiningMode());
     }
 
     @AfterEach
     public void testCleanup() {
+        softAssertions.assertAll();
     }
 }
