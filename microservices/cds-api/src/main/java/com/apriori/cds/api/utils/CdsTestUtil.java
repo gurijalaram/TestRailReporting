@@ -211,24 +211,14 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<User> addUser(String customerIdentity, String userName, String domain) {
 
+        User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserData.json").getPath(), User.class);
+        requestBody.setUsername(userName);
+        requestBody.setEmail(userName + "@" + domain + ".com");
+        requestBody.getUserProfile().setGivenName(userName);
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "user",
-                User.builder().username(userName)
-                    .email(userName + "@" + domain + ".com")
-                    .createdBy("#SYSTEM00000")
-                    .active(true)
-                    .userType("AP_CLOUD_USER")
-                    .userProfile(UserProfile.builder().givenName(userName)
-                        .familyName("Automater")
-                        .jobTitle("Automation Engineer")
-                        .department("Automation")
-                        .supervisor("Ciene Frith")
-                        .createdBy("#SYSTEM00000").build())
-                    .build()
-            );
+            .body("user", requestBody);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -243,33 +233,16 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<User> addUserWithEnablements(String customerIdentity, String userName, String domain, String customerAssignedRole) {
+
+        User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserWithEnablementsData.json").getPath(), User.class);
+        requestBody.setUsername(userName);
+        requestBody.setEmail(userName + "@" + domain + ".com");
+        requestBody.getUserProfile().setGivenName(userName);
+        requestBody.getEnablements().setCustomerAssignedRole(customerAssignedRole);
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "user",
-                User.builder().username(userName)
-                    .email(userName + "@" + domain + ".com")
-                    .createdBy("#SYSTEM00000")
-                    .active(true)
-                    .userType("AP_CLOUD_USER")
-                    .userProfile(UserProfile.builder().givenName(userName)
-                        .familyName("Automater")
-                        .jobTitle("Automation Engineer")
-                        .department("Automation")
-                        .supervisor("Ciene Frith")
-                        .createdBy("#SYSTEM00000").build())
-                    .enablements(Enablements.builder()
-                        .customerAssignedRole(customerAssignedRole)
-                        .userAdminEnabled(true)
-                        .highMemEnabled(false)
-                        .sandboxEnabled(false)
-                        .previewEnabled(false)
-                        .connectAdminEnabled(false)
-                        .exportAdminEnabled(false)
-                        .createdBy("#SYSTEM00000").build())
-                    .build()
-            );
+            .body("user", requestBody);
 
         return HTTPRequest.build(requestEntity).post();
     }
