@@ -617,14 +617,21 @@ public class ScenariosUtil {
         return checkComponentDeleted(componentIdentity, scenarioIdentity, userCredentials);
     }
 
+    /**
+     * Calls an api with the POST verb.
+     *
+     * @param scenarios       - the list of scenarios to delete
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
     public ScenariosDeleteResponse deleteScenarios(List<ScenarioItem> scenarios, UserCredentials userCredentials) {
         final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.DELETE_SCENARIOS, ScenariosDeleteResponse.class)
             .body("groupItems", scenarios.stream()
                 .map(scenario ->
                     ComponentRequest.builder()
-                    .componentIdentity(scenario.getComponentIdentity())
-                    .scenarioIdentity(scenario.getScenarioIdentity())
-                    .build())
+                        .componentIdentity(scenario.getComponentIdentity())
+                        .scenarioIdentity(scenario.getScenarioIdentity())
+                        .build())
                 .collect(Collectors.toList()))
             .token(userCredentials.getToken())
             .expectedResponseCode(HttpStatus.SC_OK);
