@@ -234,6 +234,47 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
+     * Creates user with set of enablements
+     *
+     * @param customerIdentity - the customer id
+     * @param userName - the username
+     * @param domain - the customer name
+     * @param customerAssignedRole - the customer assigned role
+     * @return new object
+     */
+    public ResponseWrapper<User> addUserWithEnablements(String customerIdentity, String userName, String domain, String customerAssignedRole) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
+            .inlineVariables(customerIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(
+                "user",
+                User.builder().username(userName)
+                    .email(userName + "@" + domain + ".com")
+                    .createdBy("#SYSTEM00000")
+                    .active(true)
+                    .userType("AP_CLOUD_USER")
+                    .userProfile(UserProfile.builder().givenName(userName)
+                        .familyName("Automater")
+                        .jobTitle("Automation Engineer")
+                        .department("Automation")
+                        .supervisor("Ciene Frith")
+                        .createdBy("#SYSTEM00000").build())
+                    .enablements(Enablements.builder()
+                        .customerAssignedRole(customerAssignedRole)
+                        .userAdminEnabled(true)
+                        .highMemEnabled(false)
+                        .sandboxEnabled(false)
+                        .previewEnabled(false)
+                        .connectAdminEnabled(false)
+                        .exportAdminEnabled(false)
+                        .createdBy("#SYSTEM00000").build())
+                    .build()
+            );
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * PATCH call to update a user
      *
      * @param user - the user
