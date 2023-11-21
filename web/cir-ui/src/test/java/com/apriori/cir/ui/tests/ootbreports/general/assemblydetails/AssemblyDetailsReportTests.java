@@ -34,6 +34,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -63,6 +64,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1915")
     @TestRail(id = {1915})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigationAssemblyDetails() {
@@ -77,6 +79,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("3060")
     @TestRail(id = {3060})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibraryAssemblyDetails() {
@@ -89,6 +92,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1916")
     @TestRail(id = {1916})
     @Description("Validate report is available by search")
     public void testReportAvailableBySearchAssemblyDetails() {
@@ -102,6 +106,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1922")
     @TestRail(id = {1922})
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
@@ -138,6 +143,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("3205")
     @TestRail(id = {3205})
     @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
@@ -189,6 +195,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("3067")
+    @TmsLink("1929")
     @TestRail(id = {3067, 1929})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
@@ -235,6 +243,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
+    @TmsLink("3068")
+    @TmsLink("1929")
     @TestRail(id = {3068, 1929})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
@@ -290,6 +300,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1934")
+    @TmsLink("1929")
     @TestRail(id = {1934, 1929})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
@@ -343,6 +355,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("3231")
+    @TmsLink("1929")
     @TestRail(id = {3231, 1929})
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
@@ -395,6 +409,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("3232")
+    @TmsLink("1929")
     @TestRail(id = {3232, 1929})
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
@@ -450,6 +466,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
+    @TmsLink("3233")
+    @TmsLink("1929")
     @TestRail(id = {3233, 1929})
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
@@ -505,6 +523,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1919")
     @TestRail(id = {1919})
     @Description("Ensuring latest export date filter works properly (uses date input field)")
     public void testLatestExportDateFilterUsingInput() {
@@ -520,6 +539,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
+    @TmsLink("3244")
     @TestRail(id = {3244})
     @Description("Ensuring latest export date filter works properly (using date picker)")
     public void testLatestExportDateFilterUsingDatePicker() {
@@ -532,6 +552,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1930")
     @TestRail(id = {1930})
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
@@ -623,6 +644,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1918")
     @TestRail(id = {1918})
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
@@ -659,6 +681,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1920")
     @TestRail(id = {1920})
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
@@ -672,6 +695,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1931")
     @TestRail(id = {1931})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testLinksToComponentCostReport() {
@@ -709,6 +733,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1921")
     @TestRail(id = {1921})
     @Description("Export Set search function works - Assembly Details Report")
     public void testExportSetSearch() {
@@ -730,6 +755,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("7683")
     @TestRail(id = {7683})
     @Description("Verify Created By Filter Search")
     public void testCreatedByFilterSearch() {
@@ -745,6 +771,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("7684")
     @TestRail(id = {7684})
     @Description("Verify Created By Filter Operation")
     public void testCreatedByFilterOperation() {
@@ -796,6 +823,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("7685")
     @TestRail(id = {7685})
     @Description("Verify Created By Filter Buttons")
     public void testCreatedByFilterButtons() {
@@ -812,6 +840,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("7686")
     @TestRail(id = {7686})
     @Description("Verify Last Modified By Filter Search")
     public void testLastModifiedFilterSearch() {
@@ -827,6 +856,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("7687")
     @TestRail(id = {7687})
     @Description("Verify Last Modified By Filter Operation")
     public void testLastModifiedFilterOperation() {
@@ -866,6 +896,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("7688")
     @TestRail(id = {7688})
     @Description("Verify Last Modified By Filter Buttons")
     public void testLastModifiedFilterButtons() {
@@ -883,6 +914,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
+    @TmsLink("7689")
+    @TmsLink("1921")
     @TestRail(id = {7689, 1921})
     @Description("Verify Assembly Number Search Criteria")
     public void testAssemblyNumberSearchCriteria() {
@@ -895,6 +928,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     //@Tag(REPORTS)
+    @TmsLink("1924")
     @TestRail(id = {1924})
     @Description("Verify report figures from CI Design")
     public void testDataIntegrity() {
@@ -943,6 +977,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1928")
     @TestRail(id = {1928})
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
     public void testLevelsInsideBOM() {
@@ -978,6 +1013,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
+    @TmsLink("1933")
     @TestRail(id = {1933})
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
@@ -1007,6 +1043,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     //@Tag(REPORTS)
+    @TmsLink("1927")
     @TestRail(id = {1927})
     @Description("Validate multiple VPE usage aligns to CID usage")
     public void testMultiVPEAgainstCID() {

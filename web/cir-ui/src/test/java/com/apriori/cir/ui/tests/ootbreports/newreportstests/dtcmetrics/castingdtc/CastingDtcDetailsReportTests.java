@@ -13,6 +13,7 @@ import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,6 +38,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7411")
     @TestRail(id = 7411)
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testCostMetricInputControlPpc() {
@@ -47,6 +49,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7412")
     @TestRail(id = 7412)
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Details Report")
     public void testCostMetricInputControlFbc() {
@@ -57,6 +60,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7411")
     @TestRail(id = 7411)
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
@@ -67,6 +71,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7411")
     @TestRail(id = 7411)
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
@@ -77,6 +82,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7510")
     @TestRail(id = 7510)
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Details Report")
     public void testDtcScoreLow() {
@@ -92,6 +98,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7513")
     @TestRail(id = 7513)
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Details Report")
     public void testDtcScoreMedium() {
@@ -107,6 +114,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7516")
     @TestRail(id = 7516)
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Details Report")
     public void testDtcScoreHigh() {
@@ -122,6 +130,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7657")
     @TestRail(id = 7657)
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Details Report")
     public void testMinimumAnnualSpend() {
@@ -129,6 +138,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7629")
     @TestRail(id = 7629)
     @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Casting DTC Details Report")
     public void testSortOrderInputControlManufacturingCasting() {
@@ -150,6 +160,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7630")
     @TestRail(id = 7630)
     @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Details Report")
     public void testSortOrderInputControlManufacturingMachining() {
@@ -170,6 +181,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7631")
     @TestRail(id = 7631)
     @Description("Verify Sort Order input control functions correctly - Material Scrap - Casting DTC Details Report")
     public void testSortOrderInputControlMaterialScrap() {
@@ -190,6 +202,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7632")
     @TestRail(id = 7632)
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Details Report")
     public void testSortOrderInputControlTolerances() {
@@ -210,6 +223,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7633")
     @TestRail(id = 7633)
     @Description("Verify Sort Order input control functions correctly - Slow Operations - Casting DTC Details Report")
     public void testSortOrderInputControlSlowOperations() {
@@ -230,6 +244,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7634")
     @TestRail(id = 7634)
     @Description("Verify Sort Order input control functions correctly - Special Tooling - Casting DTC Details Report")
     public void testSortOrderInputControlSpecialTooling() {
@@ -250,6 +265,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7635")
     @TestRail(id = 7635)
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Casting DTC Details Report")
     public void testSortOrderInputControlAnnualSpend() {
@@ -270,6 +286,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @TmsLink("7636")
     @TestRail(id = 7636)
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Casting DTC Details Report")
     public void testSortOrderInputControlDtcRank() {

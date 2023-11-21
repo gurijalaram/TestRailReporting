@@ -21,6 +21,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -38,6 +39,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7305")
     @TestRail(id = {7305})
     @Description("Validate report is available by navigation - Plastic DTC Details Report")
     public void testPlasticDtcReportAvailabilityByNavigation() {
@@ -50,6 +52,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7308")
     @TestRail(id = {7308})
     @Description("Validate report is available by library - Plastic DTC Details Report")
     public void testPlasticDtcReportAvailabilityByLibrary() {
@@ -61,6 +64,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7311")
     @TestRail(id = {7311})
     @Description("Validate report is available by search - Plastic DTC Details")
     public void testPlasticDtcReportAvailabilityBySearch() {
@@ -72,6 +76,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7356")
     @TestRail(id = {7356})
     @Description("Verify apply button functionality - Plastic DTC Details Report")
     public void testApplyButton() {
@@ -86,6 +91,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7359")
     @TestRail(id = {7359})
     @Description("Verify cancel button functionality - Plastic DTC Details Report")
     public void testCancelButton() {
@@ -95,6 +101,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7362")
     @TestRail(id = {7362})
     @Description("Verify reset button functionality - Plastic DTC Details Report")
     public void testResetButton() {
@@ -107,6 +114,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
     @Test
     @Disabled("not applicable due to reports configuration")
+    @TmsLink("7365")
     @TestRail(id = {7365})
     @Description("Verify save button functionality - Plastic DTC Details Report")
     public void testSaveAndRemoveButtons() {
@@ -119,6 +127,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7406")
     @TestRail(id = {7406})
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Details Report ")
     public void testCostMetricInputControlPpc() {
@@ -133,6 +142,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7407")
     @TestRail(id = {7407})
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Details Report ")
     public void testCostMetricInputControlFbc() {
@@ -147,6 +157,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7381")
     @TestRail(id = {7381})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
@@ -160,6 +171,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7382")
     @TestRail(id = {7382})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Details Report ")
     public void testMassMetricInputControlRoughMass() {
@@ -174,6 +186,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7519")
     @TestRail(id = {7519})
     @Description("Verify DTC Score Input Control - No Selection - Plastic DTC Details Report")
     public void testDtcScoreNoSelection() {
@@ -186,6 +199,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7522")
     @TestRail(id = {7522})
     @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Details Report")
     public void testDtcScoreLow() {
@@ -199,6 +213,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7525")
     @TestRail(id = {7525})
     @Description("Verify DTC Score Input Control - Medium Selection - Plastic DTC Details Report")
     public void testDtcScoreMedium() {
@@ -213,6 +228,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7528")
     @TestRail(id = {7528})
     @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Details Report")
     public void testDtcScoreHigh() {
@@ -227,6 +243,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("1371")
     @TestRail(id = {1371})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -240,6 +257,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("1369")
     @TestRail(id = {1369})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
@@ -259,6 +277,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
     @Test
     //@Tag(REPORTS)
+    @TmsLink("1378")
     @TestRail(id = {1378})
     @Description("Verify DTC issue counts are correct")
     public void testDtcIssueCountsAreCorrect() {

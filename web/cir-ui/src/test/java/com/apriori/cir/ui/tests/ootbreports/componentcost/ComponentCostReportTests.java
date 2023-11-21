@@ -20,6 +20,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,7 @@ public class ComponentCostReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3323")
     @TestRail(id = {3323})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -49,6 +51,7 @@ public class ComponentCostReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7134")
     @TestRail(id = {7134})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
@@ -59,6 +62,7 @@ public class ComponentCostReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7133")
     @TestRail(id = {7133})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityBySearch() {
@@ -68,6 +72,7 @@ public class ComponentCostReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3324")
     @TestRail(id = {3324})
     @Description("Verify Export Set drop-down functions correctly")
     public void testExportSetSelection() {
@@ -92,6 +97,7 @@ public class ComponentCostReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3325")
     @TestRail(id = {3325})
     @Description("Verify Component Select drop-down functions correctly")
     public void testComponentSelectDropdown() {
@@ -123,6 +129,7 @@ public class ComponentCostReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3326")
     @TestRail(id = {3326})
     @Description("Verify Component Type drop-down functions correctly")
     public void testComponentTypeDropdown() {
@@ -150,6 +157,7 @@ public class ComponentCostReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3327")
     @TestRail(id = {3327})
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -176,6 +184,7 @@ public class ComponentCostReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3329")
     @TestRail(id = {3329})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
@@ -205,6 +214,7 @@ public class ComponentCostReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3328")
     @TestRail(id = {3328})
     @Description("Verify latest export date input control functions correctly")
     public void testLatestExportDateFilter() {

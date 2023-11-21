@@ -23,6 +23,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3245")
     @TestRail(id = {3245})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -53,6 +55,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7321")
     @TestRail(id = {7321})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
@@ -63,6 +66,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3245")
     @TestRail(id = {3245})
     @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
@@ -73,6 +77,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3246")
     @TestRail(id = {3246})
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
@@ -107,6 +112,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3305")
     @TestRail(id = {3305})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
@@ -143,6 +149,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3249")
     @TestRail(id = {3249})
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -166,6 +173,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7665")
     @TestRail(id = {7665})
     @Description("Verify Created By input control search works - Scenario Comparison Report")
     public void testCreatedByFilterSearch() {
@@ -178,6 +186,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3307")
     @TestRail(id = {3307})
     @Description("Verify created by input control works correctly - Filter Operation - Scenario Comparison Report")
     public void testCreatedByFilterOperation() {
@@ -219,6 +228,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7667")
     @TestRail(id = {7667})
     @Description("Verify Created By input control buttons work - Scenario Comparison Report")
     public void testCreatedByFilterButtons() {
@@ -232,6 +242,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7664")
     @TestRail(id = {7664})
     @Description("Verify Last Modified By input control search works - Scenario Comparison Report")
     public void testLastModifiedByFilterSearch() {
@@ -244,6 +255,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3349")
     @TestRail(id = {3349})
     @Description("Verify Last Modified By input control works correctly - Filter Operation - Scenario Comparison Report")
     public void testLastModifiedByFilterOperation() {
@@ -278,6 +290,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7666")
     @TestRail(id = {7666})
     @Description("Verify Last Modified By input control buttons work - Scenario Comparison Report")
     public void testLastModifiedByFilterButtons() {
@@ -291,6 +304,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3247")
     @TestRail(id = {3247})
     @Description("Verify Scenarios to Compare input control functions correctly")
     public void testScenariosToCompareInputControlFunctionality() {
@@ -328,6 +342,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3248")
     @TestRail(id = {3248})
     @Description("Verify Component Type input control functions correctly")
     public void testPartNumberSearchCriteriaInputControl() {
@@ -353,6 +368,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3304")
     @TestRail(id = {3304})
     @Description("Verify export date input controls functions correctly")
     public void testExportSetInputControlEarliestDateFilterFunctionality() {
@@ -380,6 +396,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3306")
     @TestRail(id = {3306})
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {
