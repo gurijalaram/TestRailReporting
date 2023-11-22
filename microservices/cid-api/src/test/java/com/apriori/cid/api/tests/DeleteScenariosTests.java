@@ -36,11 +36,15 @@ public class DeleteScenariosTests {
 
             ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenarios(assembliesToDelete, user);
 
+            log.info("Number of 'ASSEMBLY(S)' deleted '{}'", deletedAssemblies.getSuccesses().size());
+
             softAssertions.assertThat(deletedAssemblies.getSuccesses().size()).isEqualTo(assembliesToDelete.size());
 
             List<ScenarioItem> scenariosToDelete = searchComponentType("PART", user);
 
             ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenarios(scenariosToDelete, user);
+
+            log.info("Number of 'PART(S)' deleted '{}'", deletedScenarios.getSuccesses().size());
 
             softAssertions.assertThat(deletedScenarios.getSuccesses().size()).isEqualTo(scenariosToDelete.size());
 
