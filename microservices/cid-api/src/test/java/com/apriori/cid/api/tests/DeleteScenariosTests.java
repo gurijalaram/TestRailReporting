@@ -34,15 +34,11 @@ public class DeleteScenariosTests {
         UserUtil.getUsers().forEach(user -> {
             List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", user);
 
-            log.info("Number of assemblies found:- {}", assembliesToDelete.size());
-
             ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenarios(assembliesToDelete, user);
 
             softAssertions.assertThat(deletedAssemblies.getSuccesses().size()).isEqualTo(assembliesToDelete.size());
 
             List<ScenarioItem> scenariosToDelete = searchComponentType("PART", user);
-
-            log.info("Number of scenarios found:- {}", scenariosToDelete.size());
 
             ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenarios(scenariosToDelete, user);
 
@@ -57,8 +53,16 @@ public class DeleteScenariosTests {
         final int pageSize = Integer.parseInt(PropertiesContext.get("global.page_size"));
         final String scenarioPartName = PropertiesContext.get("global.scenario_name_prefix");
 
-        return cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + false,
+        List<ScenarioItem> scenarioItems = cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + false,
             COMPONENT_TYPE_EQ.getKey() + componentType, SCENARIO_NAME_CN.getKey() + scenarioPartName, PAGE_SIZE.getKey() + pageSize,
             SCENARIO_CREATED_AT_LT.getKey() + LocalDateTime.now().minusDays(maxDays).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
+
+        log.info("Number of '{}' found for deletion '{}'", componentType, scenarioItems.size());
+
+        if (scenarioItems.isEmpty()) {
+            throw new RuntimeException("No scenarios found for deletion");
+        }
+
+        return scenarioItems;
     }
 }
