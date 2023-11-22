@@ -49,7 +49,7 @@ public class DeleteScenariosTests {
     private List<ScenarioItem> searchComponentType(String componentType, UserCredentials currentUser) {
         final int maxDays = Integer.parseInt(PropertiesContext.get("global.max_days"));
         final int pageSize = Integer.parseInt(PropertiesContext.get("global.page_size"));
-        final String scenarioPartName = PropertiesContext.get("global.number_of_parts");
+        final String scenarioPartName = PropertiesContext.get("global.scenario_name_prefix");
 
         return cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + false,
             COMPONENT_TYPE_EQ.getKey() + componentType, SCENARIO_NAME_CN.getKey() + scenarioPartName, PAGE_SIZE.getKey() + pageSize,
