@@ -21,8 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class DeleteScenariosTests {
-    private static final int MAX_DAYS = 7;
-    private static final int SIZE_OF_PAGE = 1000;
+
     private final CssComponent cssComponent = new CssComponent();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private final SoftAssertions softAssertions = new SoftAssertions();
@@ -47,8 +46,12 @@ public class DeleteScenariosTests {
     }
 
     private List<ScenarioItem> searchComponentType(String componentType, UserCredentials currentUser) {
+        final int maxDays = 7;
+        final int pageSize = 1000;
+        final String scenarioPartName = "AutoScenario";
+
         return cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + false,
-            COMPONENT_TYPE_EQ.getKey() + componentType, SCENARIO_NAME_CN.getKey() + "AutoScenario", PAGE_SIZE.getKey() + SIZE_OF_PAGE,
-            SCENARIO_CREATED_AT_LT.getKey() + LocalDateTime.now().minusDays(MAX_DAYS).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
+            COMPONENT_TYPE_EQ.getKey() + componentType, SCENARIO_NAME_CN.getKey() + scenarioPartName, PAGE_SIZE.getKey() + pageSize,
+            SCENARIO_CREATED_AT_LT.getKey() + LocalDateTime.now().minusDays(maxDays).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
     }
 }
