@@ -1,4 +1,4 @@
-package com.apriori.bcs.enums;
+package com.apriori.bcs.api.enums;
 
 public enum MachiningMode {
     MAY_BE_MACHINED("MAY_BE_MACHINED"),

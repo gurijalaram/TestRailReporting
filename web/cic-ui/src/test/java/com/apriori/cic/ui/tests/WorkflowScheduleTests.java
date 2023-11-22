@@ -30,8 +30,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class WorkflowScheduleTests extends TestBaseUI {
-    private static final UserCredentials currentUser = UserUtil.getUser();
     private static WorkFlowData workFlowData;
+    private UserCredentials currentUser;
     private WorkflowSchedule workflowSchedule;
     private WorkFlowFeatures workFlowFeatures;
     private CIConnectHome ciConnectHome;
@@ -45,6 +45,7 @@ public class WorkflowScheduleTests extends TestBaseUI {
     @BeforeEach
     public void setup() {
         softAssertions = new SoftAssertions();
+        currentUser = UserUtil.getUser();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
         String scenarioName = "AUTO_SN" + new GenerateStringUtil().getRandomNumbers();
         workFlowData.getQueryDefinitionsData().get(0).setFieldName(PlmTypeAttributes.PLM_PART_NUMBER.getCicGuiField());
@@ -389,7 +390,7 @@ public class WorkflowScheduleTests extends TestBaseUI {
 
     @AfterEach
     public void cleanup() {
-        CicApiTestUtil.deleteWorkFlow(ciConnectHome.getSession(), CicApiTestUtil.getMatchedWorkflowId(workFlowData.getWorkflowName()));
         softAssertions.assertAll();
+        CicApiTestUtil.deleteWorkFlow(ciConnectHome.getSession(), CicApiTestUtil.getMatchedWorkflowId(workFlowData.getWorkflowName()));
     }
 }
