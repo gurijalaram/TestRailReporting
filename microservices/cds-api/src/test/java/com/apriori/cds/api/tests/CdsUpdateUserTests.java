@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
-class CdsUpdateUserTests {
+public class CdsUpdateUserTests {
 
     private final GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private final SoftAssertions soft = new SoftAssertions();
