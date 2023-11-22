@@ -61,7 +61,7 @@ public class DeleteScenariosTests {
             COMPONENT_TYPE_EQ.getKey() + componentType, SCENARIO_NAME_CN.getKey() + scenarioPartName, PAGE_SIZE.getKey() + pageSize,
             SCENARIO_CREATED_AT_LT.getKey() + LocalDateTime.now().minusDays(maxDays).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
 
-        log.info("Number of '{}' found for deletion '{}'", componentType, scenarioItems.size());
+        log.info("Number of '{}(S)' found for deletion '{}'", componentType, scenarioItems.size());
 
         if (scenarioItems.isEmpty()) {
             throw new RuntimeException("No scenarios found for deletion");
