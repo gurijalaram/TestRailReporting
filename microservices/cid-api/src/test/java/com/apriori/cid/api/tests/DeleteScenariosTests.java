@@ -15,12 +15,14 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 public class DeleteScenariosTests {
 
     private final CssComponent cssComponent = new CssComponent();
@@ -32,11 +34,15 @@ public class DeleteScenariosTests {
         UserUtil.getUsers().forEach(user -> {
             List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", user);
 
+            log.info("Number of assemblies found:- {}", assembliesToDelete.size());
+
             ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenarios(assembliesToDelete, user);
 
             softAssertions.assertThat(deletedAssemblies.getSuccesses().size()).isEqualTo(assembliesToDelete.size());
 
             List<ScenarioItem> scenariosToDelete = searchComponentType("PART", user);
+
+            log.info("Number of scenarios found:- {}", scenariosToDelete.size());
 
             ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenarios(scenariosToDelete, user);
 
