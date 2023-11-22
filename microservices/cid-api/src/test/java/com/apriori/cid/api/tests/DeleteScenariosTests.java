@@ -30,34 +30,40 @@ public class DeleteScenariosTests {
     private final SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
-    public void deleteScenarios() {
-        UserUtil.getUsers().forEach(user -> {
-            List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", user);
-
-            ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenarios(assembliesToDelete, user);
-
-            log.info("Number of 'ASSEMBLY(S)' deleted '{}'", deletedAssemblies.getSuccesses().size());
-
-            softAssertions.assertThat(deletedAssemblies.getSuccesses().size()).isEqualTo(assembliesToDelete.size());
-
-            List<ScenarioItem> scenariosToDelete = searchComponentType("PART", user);
-
-            ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenarios(scenariosToDelete, user);
-
-            log.info("Number of 'PART(S)' deleted '{}'", deletedScenarios.getSuccesses().size());
-
-            softAssertions.assertThat(deletedScenarios.getSuccesses().size()).isEqualTo(scenariosToDelete.size());
-
-            softAssertions.assertAll();
-        });
+    public void deletePrivateScenarios() {
+        UserUtil.getUsers().forEach(user -> deleteScenarios(false, user));
     }
 
-    private List<ScenarioItem> searchComponentType(String componentType, UserCredentials currentUser) {
+    @Test void deletePublicScenarios() {
+        deleteScenarios(true, UserCredentials.init("cfrith@apriori.com","TestEvent2025!"));
+    }
+
+    private void deleteScenarios(Boolean scenarioPublished, UserCredentials user) {
+        List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", scenarioPublished, user);
+
+        ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenarios(assembliesToDelete, user);
+
+        log.info("Number of 'ASSEMBLY(S)' deleted '{}'", deletedAssemblies.getSuccesses().size());
+
+        softAssertions.assertThat(deletedAssemblies.getSuccesses().size()).isEqualTo(assembliesToDelete.size());
+
+        List<ScenarioItem> scenariosToDelete = searchComponentType("PART", scenarioPublished, user);
+
+        ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenarios(scenariosToDelete, user);
+
+        log.info("Number of 'PART(S)' deleted '{}'", deletedScenarios.getSuccesses().size());
+
+        softAssertions.assertThat(deletedScenarios.getSuccesses().size()).isEqualTo(scenariosToDelete.size());
+
+        softAssertions.assertAll();
+    }
+
+    private List<ScenarioItem> searchComponentType(String componentType, Boolean scenarioPublished, UserCredentials currentUser) {
         final int maxDays = Integer.parseInt(PropertiesContext.get("global.max_days"));
         final int pageSize = Integer.parseInt(PropertiesContext.get("global.page_size"));
         final String scenarioPartName = PropertiesContext.get("global.scenario_name_prefix");
 
-        List<ScenarioItem> scenarioItems = cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + false,
+        List<ScenarioItem> scenarioItems = cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + scenarioPublished,
             COMPONENT_TYPE_EQ.getKey() + componentType, SCENARIO_NAME_CN.getKey() + scenarioPartName, PAGE_SIZE.getKey() + pageSize,
             SCENARIO_CREATED_AT_LT.getKey() + LocalDateTime.now().minusDays(maxDays).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
 
