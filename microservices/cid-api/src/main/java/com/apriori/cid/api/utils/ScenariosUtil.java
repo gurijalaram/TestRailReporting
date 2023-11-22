@@ -34,6 +34,7 @@ import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -55,6 +56,7 @@ public class ScenariosUtil {
     private final int WAIT_TIME = 570;
     private final int SOCKET_TIMEOUT = 240000;
     private final int METHOD_TIMEOUT = 30;
+    ResponseWrapper<ScenariosDeleteResponse> deleteResponse;
     @Getter
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private CssComponent cssComponent = new CssComponent();
@@ -143,7 +145,7 @@ public class ScenariosUtil {
                 .token(componentInfo.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
 
-        ResponseWrapper<ScenarioResponse> response =  HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<ScenarioResponse> response = HTTPRequest.build(requestEntity).get();
         return response.getResponseEntity();
     }
 
@@ -626,20 +628,24 @@ public class ScenariosUtil {
      * @return response object
      */
     public ScenariosDeleteResponse deleteScenarios(List<ScenarioItem> scenarios, UserCredentials userCredentials) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.DELETE_SCENARIOS, ScenariosDeleteResponse.class)
-            .body("groupItems", scenarios.stream()
-                .map(scenario ->
-                    ComponentRequest.builder()
-                        .componentIdentity(scenario.getComponentIdentity())
-                        .scenarioIdentity(scenario.getScenarioIdentity())
-                        .build())
-                .collect(Collectors.toList()))
-            .token(userCredentials.getToken())
-            .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<ScenariosDeleteResponse> deleteResponse = HTTPRequest.build(requestEntity).post();
+        Lists.partition(scenarios, 10).forEach(partitionedScenario -> {
 
-        scenarios.forEach(scenario -> checkComponentDeleted(scenario.getComponentIdentity(), scenario.getScenarioIdentity(), userCredentials));
+            final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.DELETE_SCENARIOS, ScenariosDeleteResponse.class)
+                .body("groupItems", partitionedScenario.stream()
+                    .map(scenarioItem ->
+                        ComponentRequest.builder()
+                            .componentIdentity(scenarioItem.getComponentIdentity())
+                            .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                            .build())
+                    .collect(Collectors.toList()))
+                .token(userCredentials.getToken())
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+            deleteResponse = HTTPRequest.build(requestEntity).post();
+
+            scenarios.forEach(deletedScenario -> checkComponentDeleted(deletedScenario.getComponentIdentity(), deletedScenario.getScenarioIdentity(), userCredentials));
+        });
 
         return deleteResponse.getResponseEntity();
     }
