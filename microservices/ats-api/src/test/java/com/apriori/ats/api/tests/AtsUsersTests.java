@@ -51,7 +51,7 @@ public class AtsUsersTests {
     @TestRail(id = {3578})
     @Description("Get the current representation of a user identified by their email.")
     public void getUserByEmailTest() {
-        String userEmail = "qa-automation-01@apriori.com";
+        String userEmail = "qa-automation-012222@apriori.com";
         ResponseWrapper<User> user = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, userEmail);
 
         soft.assertThat(user.getResponseEntity().getEmail()).isEqualTo(userEmail);
