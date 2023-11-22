@@ -147,7 +147,7 @@ public class PlmIntegrationTests extends WorkflowTestUtil {
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getAnnualVolume()).isEqualTo(3100);
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getBatchSize()).isEqualTo(2100);
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getProductionLife()).isEqualTo(1.0);
-        softAssertions.assertThat(agentWorkflowJobPartsResult.getScenarioName()).isEqualTo("scenario name 1234");
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getScenarioName()).isEqualTo("3924 scenario name");
     }
 
     @Test
@@ -179,7 +179,7 @@ public class PlmIntegrationTests extends WorkflowTestUtil {
 
         softAssertions.assertThat(agentWorkflowJobPartsResult.getDescription()).isEqualTo("description 1234");
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getProcessGroupName()).isEqualTo(ProcessGroupEnum.SHEET_METAL.getProcessGroup());
-        softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getMaterialName()).isEqualTo(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName());
+        softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getMaterialName()).isEqualTo("C22 CR");
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getVpeName()).isEqualTo(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory());
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getAnnualVolume()).isEqualTo(3100);
         softAssertions.assertThat(agentWorkflowJobPartsResult.getInput().getBatchSize()).isEqualTo(2100);

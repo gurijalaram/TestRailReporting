@@ -53,6 +53,9 @@ public class ConnectorDetails extends CICBasePage {
     @FindBy(css = "div[class$='modalTitleBar']")
     protected WebElement connectorPopUpTitleElement;
 
+    @FindBy(xpath = "//div[@tab-number='1']//span[@class='ss-arrow']//span[@class='arrow-up']")
+    private WebElement openDdlElement;
+
     public ConnectorDetails(WebDriver driver) {
         super(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -100,6 +103,9 @@ public class ConnectorDetails extends CICBasePage {
      * @return ConnectorMappings page object
      */
     public ConnectorMappings clickNextBtn() {
+        if (pageUtils.isElementDisplayed(openDdlElement)) {
+            pageUtils.waitForElementAndClick(openDdlElement);
+        }
         pageUtils.waitForElementAndClick(connectorDetailsNextBtn);
         pageUtils.waitForElementAppear(activeTabElement);
         return new ConnectorMappings(driver);
