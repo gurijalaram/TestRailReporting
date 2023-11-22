@@ -13,6 +13,7 @@ import com.apriori.serialization.util.DateFormattingUtils;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
+import com.apriori.shared.util.properties.PropertiesContext;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
@@ -46,9 +47,9 @@ public class DeleteScenariosTests {
     }
 
     private List<ScenarioItem> searchComponentType(String componentType, UserCredentials currentUser) {
-        final int maxDays = 7;
-        final int pageSize = 1000;
-        final String scenarioPartName = "AutoScenario";
+        final int maxDays = Integer.parseInt(PropertiesContext.get("global.max_days"));
+        final int pageSize = Integer.parseInt(PropertiesContext.get("global.page_size"));
+        final String scenarioPartName = PropertiesContext.get("global.number_of_parts");
 
         return cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + false,
             COMPONENT_TYPE_EQ.getKey() + componentType, SCENARIO_NAME_CN.getKey() + scenarioPartName, PAGE_SIZE.getKey() + pageSize,
