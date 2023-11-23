@@ -119,7 +119,6 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
      * @param applicationName
      * @param webPageType
      * @return
-     * @param <T>
      */
     public <T> void clickWebApplicationByNameAndCloseAfterLoad(String applicationName, Class<T> webPageType) {
         try {
