@@ -26,7 +26,7 @@ import com.apriori.cid.ui.utils.DecimalPlaceEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.ComponentDTORequest;
+import com.apriori.shared.util.dto.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
@@ -91,7 +91,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14404, 15002, 15816, 14408})
     @Description("Validate the user can Change the process routing in CI Design")
     public void testAlternateRoutingSelection() {
-        component = new ComponentDTORequest().getComponent("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface");
+        component = new ComponentRequestUtil().getComponent("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -118,7 +118,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14392, 14395, 14397, 14398, 14400, 14406, 7845, 16093})
     @Description("Validate routings UI features")
     public void testRoutingSelectionUI() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         advancedPage = loginPage.login(component.getUser())
@@ -162,7 +162,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15817, 15817, 15820})
     @Description("Validate routings availability in regards to scenario cost status")
     public void costStatusAndRouting() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -204,7 +204,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14992, 15806, 7835})
     @Description("Validate the user can Change the process routing")
     public void changeRouting() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -233,7 +233,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7854, 12379, 12381, 12382})
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testLetAprioriDecide() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -279,7 +279,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15012, 14401, 15050, 15988, 7851, 7852})
     @Description("Validate the information updates in the routing modal box")
     public void testLastRouting() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         routingSelectionPage = loginPage.login(component.getUser())
@@ -314,7 +314,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7855, 14985, 15799})
     @Description("Validate behaviour when forcing a material that will fail costing within CID")
     public void failCostingRouting() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -341,7 +341,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7844, 7290, 7291, 7292})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -380,7 +380,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7846})
     @Description("Validate materials selected are appropriate for selected routing.")
     public void routingMaterials() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         materialSelectorPage = loginPage.login(component.getUser())
@@ -406,7 +406,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7850})
     @Description("Validate behaviour when selecting a PG that auto triggers a secondary process")
     public void routingSecondaryPG() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -441,7 +441,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7848})
     @Description("Validate a variety of secondary processes can be added for newly selected routings")
     public void secondaryProcessesRoutings() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -472,7 +472,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7859})
     @Description("Validate user cannot select a routing that does not belong to a certain Process Group")
     public void routingPGs() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         routingSelectionPage = loginPage.login(component.getUser())
@@ -490,7 +490,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {16132, 7841})
     @Description("Be able to see basic breakdown of cycle time by process for problem identification.")
     public void routingCycleTime() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
         materialProcessPage = loginPage.login(component.getUser())
@@ -577,7 +577,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14987, 15801})
     @Description("Validate routings Casting")
     public void routingsCasting() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -606,7 +606,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14988, 15802})
     @Description("Validate routings Die Cast")
     public void routingsDieCasting() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -635,7 +635,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14989, 15803})
     @Description("Validate routings Investment Cast")
     public void routingsInvestmentCasting() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -662,7 +662,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14990, 15804, 7843})
     @Description("Validate routings Sand Cast")
     public void routingsSandCasting() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -688,7 +688,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14991, 15805})
     @Description("Validate routings Forging")
     public void routingsForging() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -716,7 +716,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14994, 15808})
     @Description("Validate routings Rapid Prototyping")
     public void routingsRapidPrototyping() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -745,7 +745,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14995, 15809})
     @Description("Validate routings Roto & Blow Molding")
     public void routingsRotoBlowMold() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -774,7 +774,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14996, 15810})
     @Description("Validate routings Sheet Metal")
     public void routingsSheetMetal() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -805,7 +805,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14997, 15811})
     @Description("Validate routings Sheet Metal - Hydroforming")
     public void routingsHydroforming() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -840,7 +840,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14999, 15813})
     @Description("Validate routings Sheet Metal - Stretchforming")
     public void routingsStretchforming() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -866,7 +866,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15001, 15815})
     @Description("Validate routings Sheet Plastic")
     public void routingsSheetPlastic() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -895,7 +895,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {16383})
     @Description("Validate routings are disabled")
     public void routingsDisabled() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
 
         loginPage = new CidAppLoginPage(driver);
         advancedPage = loginPage.login(component.getUser())
@@ -940,7 +940,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7857})
     @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
     public void routingTolerances() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -1120,7 +1120,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14409})
     @Description("Validate routings and user preferences")
     public void routingsAndUserPreferences() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
 
         loginPage = new CidAppLoginPage(driver);
         routingSelectionPage = loginPage.login(component.getUser())
@@ -1146,7 +1146,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {29132, 29133, 29134, 29135, 29136, 29137})
     @Description("Validate routings availability when scenario is uncosted or cost failed")
     public void validateRoutingsUncostedorCostFailed() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(FORGING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(FORGING);
 
         loginPage = new CidAppLoginPage(driver);
         routingSelectionPage = loginPage.login(component.getUser())

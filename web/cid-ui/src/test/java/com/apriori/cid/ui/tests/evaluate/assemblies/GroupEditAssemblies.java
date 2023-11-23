@@ -10,7 +10,7 @@ import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -41,7 +41,7 @@ public class GroupEditAssemblies extends TestBaseUI {
         final String PIN = "Pin";
         final String SMALL_RING = "small ring";
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("Hinge assembly");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -78,7 +78,7 @@ public class GroupEditAssemblies extends TestBaseUI {
         final String PIN = "Pin";
         final String SMALL_RING = "small ring";
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("Hinge assembly");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -113,7 +113,7 @@ public class GroupEditAssemblies extends TestBaseUI {
         final String FLANGE = "flange";
         final String NUT = "nut";
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("flange c");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);

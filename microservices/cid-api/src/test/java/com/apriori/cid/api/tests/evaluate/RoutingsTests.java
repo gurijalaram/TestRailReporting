@@ -10,13 +10,11 @@ import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.ComponentDTORequest;
-import com.apriori.shared.util.enums.DigitalFactoryEnum;
+import com.apriori.shared.util.dto.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.request.component.RoutingNodeOptions;
-import com.apriori.shared.util.models.response.ErrorRequestResponse;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.componentiteration.AnalysisOfScenario;
 import com.apriori.shared.util.models.response.component.componentiteration.ComponentIteration;
@@ -44,7 +42,7 @@ public class RoutingsTests {
     @TestRail(id = {14982})
     @Description("Verify Get latest iteration API does not return scenarioRoutings upon costing to COSTING_FAILED")
     public void testLatestIterationDoesNotReturnScenarioRoutingsForCostingFailedState() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_ROLLFORMING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_ROLLFORMING);
 
         softAssertions.assertThat(getIterationLatest(component, NewCostingLabelEnum.COSTING_FAILED).getResponseEntity().getScenarioRoutings().size()).isEqualTo(0);
 
@@ -55,7 +53,7 @@ public class RoutingsTests {
     @TestRail(id = {14981})
     @Description("Verify Get latest iteration API contains scenarioRoutings upon costing to COST_INCOMPLETE")
     public void testLatestIterationReturnsScenarioRoutingsForCostIncompleteState() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
 
         softAssertions.assertThat(getIterationLatest(component, NewCostingLabelEnum.COST_INCOMPLETE).getResponseEntity().getScenarioRoutings().size()).isGreaterThan(0);
 
@@ -66,7 +64,7 @@ public class RoutingsTests {
     @TestRail(id = {14961})
     @Description("Verify Get latest iteration API contains scenarioRoutings upon costing to COST_COMPLETE")
     public void testLatestIterationReturnsScenarioRoutingsForCostCompleteState() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
 
         softAssertions.assertThat(getIterationLatest(component, NewCostingLabelEnum.COST_COMPLETE).getResponseEntity().getScenarioRoutings().size()).isGreaterThan(0);
 
@@ -77,7 +75,7 @@ public class RoutingsTests {
     @TestRail(id = {14980})
     @Description("Verify Get available routings API returns appropriate routings for Stock Machining")
     public void testAvailableRoutingForStockMachining() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
 
         routings = getRoutings(component);
 
@@ -93,7 +91,7 @@ public class RoutingsTests {
     @TestRail(id = {14979})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Plastic")
     public void testAvailableRoutingForSheetPlastic() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
 
         routings = getRoutings(component);
 
@@ -108,7 +106,7 @@ public class RoutingsTests {
     @TestRail(id = {14978})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Metal - Transfer Die")
     public void testAvailableRoutingForSheetMetalTransferDie() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE);
 
         routings = getRoutings(component);
 
@@ -119,7 +117,7 @@ public class RoutingsTests {
     @TestRail(id = {14977})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Metal - Stretch Forming")
     public void testAvailableRoutingForSheetMetalStretchForming() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING);
 
         routings = getRoutings(component);
 
@@ -133,7 +131,7 @@ public class RoutingsTests {
     @TestRail(id = {14976})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Metal - Roll Forming")
     public void testAvailableRoutingForSheetMetalRollForming() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
 
         routings = getRoutings(component);
 
@@ -144,7 +142,7 @@ public class RoutingsTests {
     @TestRail(id = {14975})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Metal - Hydroforming")
     public void testAvailableRoutingForSheetMetalHydroforming() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
 
         routings = getRoutings(component);
 
@@ -159,7 +157,7 @@ public class RoutingsTests {
     @TestRail(id = {14974})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Metal")
     public void testAvailableRoutingForSheetMetal() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         routings = getRoutings(component);
 
@@ -176,7 +174,7 @@ public class RoutingsTests {
     @TestRail(id = {14973})
     @Description("Verify Get available routings API returns appropriate routings for Roto & Blow Molding")
     public void testAvailableRoutingForRotoAndBlowMolding() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING);
 
         routings = getRoutings(component);
 
@@ -190,7 +188,7 @@ public class RoutingsTests {
     @TestRail(id = {14972})
     @Description("Verify Get available routings API returns appropriate routings for Rapid Prototyping")
     public void testAvailableRoutingForRapidPrototyping() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING);
 
         routings = getRoutings(component);
 
@@ -204,7 +202,7 @@ public class RoutingsTests {
     @TestRail(id = {14971})
     @Description("Verify Get available routings API returns appropriate routings for Powder Metal")
     public void testAvailableRoutingForPowderMetal() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
 
         routings = getRoutings(component);
 
@@ -215,7 +213,7 @@ public class RoutingsTests {
     @TestRail(id = {14970})
     @Description("Verify Get available routings API returns appropriate routings for Plastic Molding")
     public void testAvailableRoutingForPlasticMolding() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         routings = getRoutings(component);
 
@@ -229,7 +227,7 @@ public class RoutingsTests {
     @TestRail(id = {14969})
     @Description("Verify Get available routings API returns appropriate routings for Forging")
     public void testAvailableRoutingForForging() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
 
         routings = getRoutings(component);
 
@@ -243,7 +241,7 @@ public class RoutingsTests {
     @TestRail(id = {14968})
     @Description("Verify Get available routings API returns appropriate routings for Casting - Sand")
     public void testAvailableRoutingForCastingSand() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
 
         routings = getRoutings(component);
 
@@ -257,7 +255,7 @@ public class RoutingsTests {
     @TestRail(id = {14967})
     @Description("Verify Get available routings API returns appropriate routings for Casting - Investment")
     public void testAvailableRoutingForCastingInvestment() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT);
 
         routings = getRoutings(component);
 
@@ -271,7 +269,7 @@ public class RoutingsTests {
     @TestRail(id = {14966})
     @Description("Verify Get available routings API returns appropriate routings for Casting - Die")
     public void testAvailableRoutingForCastingDie() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         routings = getRoutings(component);
 
@@ -285,7 +283,7 @@ public class RoutingsTests {
     @TestRail(id = {14965})
     @Description("Verify Get available routings API returns appropriate routings for Casting")
     public void testAvailableRoutingForCasting() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.CASTING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING);
 
         routings = getRoutings(component);
 
@@ -299,7 +297,7 @@ public class RoutingsTests {
     @TestRail(id = {14964})
     @Description("Verify Get available routings API returns appropriate routings for Bar & Tube Fab")
     public void testAvailableRoutingForBarAndTubeFab() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB);
 
         routings = getRoutings(component);
 
@@ -310,7 +308,7 @@ public class RoutingsTests {
     @TestRail(id = {14963})
     @Description("Verify Get available routings API returns appropriate routings for Additive Manufacturing")
     public void testAvailableRoutingForAdditiveManufacturing() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
 
         routings = getRoutings(component);
 
@@ -321,8 +319,8 @@ public class RoutingsTests {
     @TestRail(id = {14962})
     @Description("Verify Get available routings API returns appropriate routings for 2-Model Machining")
     public void testAvailableRoutingForTwoModelMachining() {
-        component = new ComponentDTORequest().getComponent("casting_BEFORE_machining");
-        ComponentInfoBuilder component2 = new ComponentDTORequest().getComponent("casting_AFTER_machining");
+        component = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
+        ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponent("casting_AFTER_machining");
 
         CostingTemplate costingTemplate1 = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build();
         ScenarioResponse scenarioResponse1 = new DataCreationUtil(component.getComponentName(), component.getScenarioName(), component.getProcessGroup(),
@@ -346,7 +344,7 @@ public class RoutingsTests {
     @TestRail(id = {15821})
     @Description("Verify save routing with costing template through API")
     public void testSaveRouting() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build();
 

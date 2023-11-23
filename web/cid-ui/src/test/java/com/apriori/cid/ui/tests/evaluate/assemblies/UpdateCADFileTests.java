@@ -9,7 +9,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -70,7 +70,7 @@ public class UpdateCADFileTests extends TestBaseUI {
         final File autoHelmFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHelm + componentExtension);
         final File modifiedAutoHeadFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHead + modifiedComponentExtension);
 
-        assemblyInfo = new AssemblyDTORequest().getAssembly(autoBotAsm);
+        assemblyInfo = new AssemblyRequestUtil().getAssembly(autoBotAsm);
 
         assemblyUtils.uploadSubComponents(assemblyInfo);
         assemblyUtils.uploadAssembly(assemblyInfo);
@@ -134,7 +134,7 @@ public class UpdateCADFileTests extends TestBaseUI {
     @TestRail(id = {10928, 10929, 10933, 11967})
     @Description("Verify enabled/disabled behaviour of Update CAD button in Assembly Explorer Table")
     public void verifyUpdateCADButtonAsmExplorerTableTest() {
-        assemblyInfo = new AssemblyDTORequest().getAssembly("autoBotAsm");
+        assemblyInfo = new AssemblyRequestUtil().getAssembly("autoBotAsm");
 
         assemblyUtils.uploadSubComponents(assemblyInfo)
             .uploadAssembly(assemblyInfo);
@@ -167,8 +167,8 @@ public class UpdateCADFileTests extends TestBaseUI {
         final File autoSwordFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoSword + originalAsmExtension);
         final File autoHandleFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHandle + componentExtension);
 
-        assemblyInfo = new AssemblyDTORequest().getAssembly(autoBotAsm);
-        subAssemblyInfo = new AssemblyDTORequest().getAssembly(autoBotAsm).getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(autoSword)).findFirst().get();
+        assemblyInfo = new AssemblyRequestUtil().getAssembly(autoBotAsm);
+        subAssemblyInfo = new AssemblyRequestUtil().getAssembly(autoBotAsm).getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(autoSword)).findFirst().get();
 
         assemblyUtils.uploadSubComponents(subAssemblyInfo);
 
@@ -235,7 +235,7 @@ public class UpdateCADFileTests extends TestBaseUI {
         final File modifiedAutoHeadFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoHead + modifiedComponentExtension);
         final File autoArmFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, autoArm + componentExtension);
 
-        assemblyInfo = new AssemblyDTORequest().getAssembly(autoBotAsm);
+        assemblyInfo = new AssemblyRequestUtil().getAssembly(autoBotAsm);
 
         assemblyUtils.uploadSubComponents(assemblyInfo);
         assemblyUtils.uploadAssembly(assemblyInfo);

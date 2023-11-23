@@ -19,7 +19,7 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.PublishScenarioPage;
 import com.apriori.cid.ui.utils.ButtonTypeEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -68,7 +68,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     public void shallowPublishAssemblyTest() {
         String preferPublic = "Prefer Public Scenarios";
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("titan battery ass");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("titan battery ass");
         ComponentInfoBuilder subComponentA = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("titan battery release")).findFirst().get();
         ComponentInfoBuilder subComponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("titan battery")).findFirst().get();
 
@@ -116,7 +116,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         String publishModalMessage = "Public scenarios will be created for each scenario in your selection." +
             " If you wish to retain existing public scenarios, change the scenario name, otherwise they will be overridden.";
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("flange c");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
         ComponentInfoBuilder flangeSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(FLANGE)).findFirst().get();
         ComponentInfoBuilder nutSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(NUT)).findFirst().get();
         ComponentInfoBuilder boltSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(BOLT)).findFirst().get();
@@ -147,7 +147,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         final String NUT = "nut";
         final String BOLT = "bolt";
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("flange c");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
         ComponentInfoBuilder flangeSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(FLANGE)).findFirst().get();
         ComponentInfoBuilder nutSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(NUT)).findFirst().get();
         ComponentInfoBuilder boltSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(BOLT)).findFirst().get();
@@ -182,7 +182,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         final String BIG_RING = "big ring";
         final String SMALL_RING = "small ring";
 
-        ComponentInfoBuilder preExistingComponentAssembly = new AssemblyDTORequest().getAssembly("Hinge assembly");
+        ComponentInfoBuilder preExistingComponentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(preExistingComponentAssembly)
             .uploadAssembly(preExistingComponentAssembly);
@@ -191,7 +191,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         assemblyUtils.publishSubComponents(preExistingComponentAssembly)
             .publishAssembly(preExistingComponentAssembly);
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("Hinge assembly");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
         ComponentInfoBuilder bigRingSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(BIG_RING)).findFirst().get();
         ComponentInfoBuilder smallRingSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(SMALL_RING)).findFirst().get();
 
@@ -225,7 +225,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         final String BOLT = "bolt";
         String publishingMessage = "All scenarios are publishing...Close";
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("flange c");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
         ComponentInfoBuilder flangeSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(FLANGE)).findFirst().get();
         ComponentInfoBuilder nutSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(NUT)).findFirst().get();
         ComponentInfoBuilder boltSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(BOLT)).findFirst().get();
@@ -256,7 +256,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         final String PIN = "Pin";
         final String SMALL_RING = "small ring";
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("Hinge assembly");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
         ComponentInfoBuilder bigRingSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(BIG_RING)).findFirst().get();
         ComponentInfoBuilder smallRingSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(SMALL_RING)).findFirst().get();
         ComponentInfoBuilder pinSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(PIN)).findFirst().get();
@@ -303,7 +303,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     @TestRail(id = {10773, 10775})
     @Description("Shallow Publish correctly publishes to Public Workspace")
     public void testShallowPublishInPublicWorkspace() {
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -343,7 +343,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     @TestRail(id = {10771, 10772, 10776, 10777, 10778, 6746, 6615, 6616, 6617, 6056, 6057})
     @Description("Modify the Status/ Cost Maturity/ Assignee/ Lock during a Shallow Publish")
     public void testShallowPublishWithModifiedFeatures() {
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -416,7 +416,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     @TestRail(id = 10770)
     @Description("Retain the Status/ Cost Maturity/ Lock during a Shallow Publish")
     public void testShallowPublishWithRetainedFeatures() {
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -466,7 +466,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     @Description("Shallow Publish over existing Public Scenarios")
     public void testShallowPublishOverExistingPublicScenario() {
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -513,7 +513,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         String publishingWarning = "A public scenario with this name already exists." +
             " The public scenario is locked and cannot be overridden, please supply a different scenario name or cancel the operation.";
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -552,7 +552,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         final String NUT = "nut";
         final String BOLT = "bolt";
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("flange c");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
         ComponentInfoBuilder flangeSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(FLANGE)).findFirst().get();
         ComponentInfoBuilder nutSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(NUT)).findFirst().get();
         ComponentInfoBuilder boltSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(BOLT)).findFirst().get();
@@ -599,7 +599,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         final String STAND = "stand";
         final String JOINT = "joint";
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("oldham");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("oldham");
         ComponentInfoBuilder standSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(STAND)).findFirst().get();
         ComponentInfoBuilder jointSubcomponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(JOINT)).findFirst().get();
 
@@ -638,7 +638,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("titan charger ass");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("titan charger ass");
         ComponentInfoBuilder baseComponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(BASE)).findFirst().get();
         ComponentInfoBuilder leadComponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(LEAD)).findFirst().get();
 

@@ -20,7 +20,7 @@ import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.TimeEnum;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.ComponentDTORequest;
+import com.apriori.shared.util.dto.ComponentRequestUtil;
 import com.apriori.shared.util.enums.OperationEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
@@ -267,7 +267,7 @@ public class FilterCriteriaTests extends TestBaseUI {
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
 
-        ComponentInfoBuilder component = new ComponentDTORequest().getComponent();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(component.getUser())
