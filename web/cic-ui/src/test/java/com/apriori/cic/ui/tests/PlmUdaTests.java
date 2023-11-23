@@ -40,8 +40,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class PlmUdaTests extends WorkflowTestUtil {
-    private static SoftAssertions softAssertions;
-    private static PartData plmPartData;
+    private SoftAssertions softAssertions;
+    private PartData plmPartData;
     private final IterationsUtil iterationsUtil = new IterationsUtil();
 
     @BeforeEach
