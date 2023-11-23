@@ -118,9 +118,8 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
     }
 
     private void deleteCreatedUser(String email) {
-        String userEmail = email;
         CdsTestUtil cdsTestUtil = new CdsTestUtil();
-        ResponseWrapper<User> response = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, userEmail);
+        ResponseWrapper<User> response = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, email);
 
         String customerIdentity = response.getResponseEntity().getCustomerIdentity();
         String userIdentity = response.getResponseEntity().getIdentity();
