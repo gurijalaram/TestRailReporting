@@ -1,6 +1,10 @@
 package com.apriori.ach.ui.tests;
 
 import com.apriori.ach.api.utils.AchEnvironmentAPIUtil;
+import com.apriori.ats.api.utils.AtsTestUtil;
+import com.apriori.ats.api.utils.enums.ATSAPIEnum;
+import com.apriori.cds.api.enums.CDSAPIEnum;
+import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.qa.ach.ui.pageobjects.UserManagementPage;
 import com.apriori.qa.ach.ui.utils.AchEnvironmentUIUtil;
@@ -8,10 +12,15 @@ import com.apriori.qa.ach.ui.utils.enums.AdditionalProperties;
 import com.apriori.qa.ach.ui.utils.enums.Roles;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.User;
+import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.web.app.util.login.LoginService;
 
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -24,6 +33,8 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
     private CloudHomePage cloudHomePage;
     private UserManagementPage userManagementPage;
     private LoginService aprioriLoginService;
+    private AtsTestUtil atsTestUtil = new AtsTestUtil();
+
 
     @Test
     @TestRail(id = {28492, 28502})
@@ -70,6 +81,12 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
                 .clickFinishButton();
 
         softAssertions.assertThat(userManagementPage.ifOnUserManagementPage()).isTrue();
+
+        userManagementPage.findUser(username);
+
+        softAssertions.assertThat(userManagementPage.getUsernameFromSearching()).isEqualTo(username);
+        softAssertions.assertAll();
+        deleteCreatedUser(email);
     }
 
     @Test
@@ -98,5 +115,14 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
             .clickFinishButton();
 
         softAssertions.assertThat(userManagementPage.ifOnUserManagementPage()).isTrue();
+    }
+
+    private void deleteCreatedUser(String email) {
+        CdsTestUtil cdsTestUtil = new CdsTestUtil();
+        ResponseWrapper<User> response = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, email);
+
+        String customerIdentity = response.getResponseEntity().getCustomerIdentity();
+        String userIdentity = response.getResponseEntity().getIdentity();
+        cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
     }
 }
