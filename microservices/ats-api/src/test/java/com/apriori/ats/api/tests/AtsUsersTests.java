@@ -7,6 +7,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
@@ -51,7 +52,7 @@ public class AtsUsersTests {
     @TestRail(id = {3578})
     @Description("Get the current representation of a user identified by their email.")
     public void getUserByEmailTest() {
-        String userEmail = "qa-automation-01@apriori.com";
+        String userEmail = UserUtil.getUser().getEmail();
         ResponseWrapper<User> user = atsTestUtil.getCommonRequest(ATSAPIEnum.USER_BY_EMAIL, User.class, HttpStatus.SC_OK, userEmail);
 
         soft.assertThat(user.getResponseEntity().getEmail()).isEqualTo(userEmail);

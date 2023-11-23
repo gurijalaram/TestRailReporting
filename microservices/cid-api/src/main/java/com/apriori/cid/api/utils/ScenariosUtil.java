@@ -4,6 +4,7 @@ import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 
 import com.apriori.cid.api.enums.CidAppAPIEnum;
+import com.apriori.cid.api.models.request.ComponentRequest;
 import com.apriori.cid.api.models.request.ForkRequest;
 import com.apriori.cid.api.models.request.GroupPublishRequest;
 import com.apriori.cid.api.models.request.ScenarioAssociationGroupItems;
@@ -16,6 +17,7 @@ import com.apriori.cid.api.models.response.ScenarioSuccessesFailures;
 import com.apriori.cid.api.models.response.scenarios.ScenarioManifest;
 import com.apriori.cid.api.models.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
+import com.apriori.cid.api.models.response.scenarios.ScenariosDeleteResponse;
 import com.apriori.css.api.enums.CssSearch;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
@@ -32,6 +34,7 @@ import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -53,6 +56,7 @@ public class ScenariosUtil {
     private final int WAIT_TIME = 570;
     private final int SOCKET_TIMEOUT = 240000;
     private final int METHOD_TIMEOUT = 30;
+    ResponseWrapper<ScenariosDeleteResponse> deleteResponse;
     @Getter
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private CssComponent cssComponent = new CssComponent();
@@ -141,7 +145,7 @@ public class ScenariosUtil {
                 .token(componentInfo.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
 
-        ResponseWrapper<ScenarioResponse> response =  HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<ScenarioResponse> response = HTTPRequest.build(requestEntity).get();
         return response.getResponseEntity();
     }
 
@@ -413,7 +417,7 @@ public class ScenariosUtil {
 
         ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).post();
 
-        CostingTemplate template =  response.getResponseEntity();
+        CostingTemplate template = response.getResponseEntity();
         template.setCostingTemplateIdentity(template.getIdentity());
         template.setDeleteTemplateAfterUse(template.getDeleteTemplateAfterUse());
 
@@ -614,6 +618,36 @@ public class ScenariosUtil {
         HTTPRequest.build(deleteRequest).delete();
 
         return checkComponentDeleted(componentIdentity, scenarioIdentity, userCredentials);
+    }
+
+    /**
+     * Calls an api with the POST verb.
+     *
+     * @param scenarios       - the list of scenarios to delete
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public ScenariosDeleteResponse deleteScenarios(List<ScenarioItem> scenarios, UserCredentials userCredentials) {
+
+        Lists.partition(scenarios, 10).forEach(partitionedScenario -> {
+
+            final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.DELETE_SCENARIOS, ScenariosDeleteResponse.class)
+                .body("groupItems", partitionedScenario.stream()
+                    .map(scenarioItem ->
+                        ComponentRequest.builder()
+                            .componentIdentity(scenarioItem.getComponentIdentity())
+                            .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                            .build())
+                    .collect(Collectors.toList()))
+                .token(userCredentials.getToken())
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+            deleteResponse = HTTPRequest.build(requestEntity).post();
+
+            scenarios.forEach(deletedScenario -> checkComponentDeleted(deletedScenario.getComponentIdentity(), deletedScenario.getScenarioIdentity(), userCredentials));
+        });
+
+        return deleteResponse.getResponseEntity();
     }
 
     /**
