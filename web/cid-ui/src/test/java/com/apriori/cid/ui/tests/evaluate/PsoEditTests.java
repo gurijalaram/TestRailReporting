@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate;
 
+import static com.apriori.shared.util.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,6 +10,8 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.ComponentDTORequest;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -34,6 +37,7 @@ public class PsoEditTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private MaterialProcessPage materialProcessPage;
+    private ComponentInfoBuilder component;
 
     private File resourceFile;
     private UserCredentials currentUser;
@@ -43,17 +47,12 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7286, 7287, 7288, 7289, 6634, 6635})
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        component = new ComponentDTORequest().getComponentByProcessGroup(PLASTIC_MOLDING);
 
-        String componentName = "Plastic moulded cap DFM";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialProcessPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario(3)
             .openMaterialProcess()
             .selectBarChart("Injection Molding")
@@ -217,17 +216,13 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {8972})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "plasticLid";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentDTORequest().getComponentByProcessGroup(PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialProcessPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Injection Molding")
@@ -299,7 +294,7 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {16707})
     @Description("Validate user can make iterative PSO changes and then re-cost to original defaults")
     public void multiplePSOEdits() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final ProcessGroupEnum processGroupEnum = PLASTIC_MOLDING;
 
         String componentName = "plasticLid";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
