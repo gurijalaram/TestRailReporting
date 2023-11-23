@@ -302,10 +302,12 @@ public class FilterCriteriaTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6169, 6170})
-    @Description("Check that user cannot Delete Preset Filters")
-    public void testDeleteButtonDisabledForPresetFilters() {
+    @TestRail(id = {6169, 6170, 6100})
+    @Description("Validate that user can cancel action New, Rename, Save As before saving")
+    public void testCancelNewSaveRename() {
         currentUser = UserUtil.getUser();
+        String filterName = generateStringUtil.generateFilterName();
+
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser);
 
@@ -316,19 +318,7 @@ public class FilterCriteriaTests extends TestBaseUI {
         softAssertion.assertThat(filterPage.isDeleteButtonEnabled()).isFalse();
         softAssertion.assertThat(filterPage.isRenameButtonEnabled()).isFalse();
 
-        softAssertion.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {6100})
-    @Description("Validate that user can cancel action New, Rename, Save As before saving")
-    public void testCancelNewSaveRename() {
-        currentUser = UserUtil.getUser();
-        String filterName = generateStringUtil.generateFilterName();
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser);
-
-        filterPage = new ExplorePage(driver)
+        filterPage.cancel(ExplorePage.class)
             .filter()
             .newFilter()
             .inputName(filterName)
