@@ -259,7 +259,6 @@ public class FilterCriteriaTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("BA-2610")
     @Tag(SMOKE)
     @TestRail(id = {6221, 6532})
     @Description("Test multiple attributes")
