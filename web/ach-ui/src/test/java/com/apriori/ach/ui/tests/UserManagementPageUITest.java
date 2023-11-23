@@ -125,6 +125,5 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
         String customerIdentity = response.getResponseEntity().getCustomerIdentity();
         String userIdentity = response.getResponseEntity().getIdentity();
         cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
-
     }
 }
