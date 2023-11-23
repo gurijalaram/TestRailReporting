@@ -18,7 +18,6 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dto.ComponentDTORequest;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -30,17 +29,12 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class PsoEditTests extends TestBaseUI {
 
-    private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private MaterialProcessPage materialProcessPage;
     private ComponentInfoBuilder component;
 
-    private File resourceFile;
-    private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
@@ -198,7 +192,6 @@ public class PsoEditTests extends TestBaseUI {
     public void routingPSOs() {
         component = new ComponentDTORequest().getComponentByProcessGroup(PLASTIC_MOLDING);
 
-        loginPage = new CidAppLoginPage(driver);
         materialProcessPage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
