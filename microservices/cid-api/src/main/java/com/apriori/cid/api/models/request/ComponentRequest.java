@@ -16,4 +16,6 @@ public class ComponentRequest {
     private Boolean override;
     private String resourceName;
     private String scenarioName;
+    private String componentIdentity;
+    private String scenarioIdentity;
 }

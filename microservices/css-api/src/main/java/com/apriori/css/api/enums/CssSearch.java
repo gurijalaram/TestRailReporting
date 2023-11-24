@@ -13,8 +13,11 @@ public enum CssSearch {
     LATEST_EQ("latest[EQ],"),
     ITERATION_EQ("iteration[EQ],"),
     SCENARIO_LOCKED_EQ("scenarioLocked[EQ],"),
+    SCENARIO_OWNED_BY_EQ("scenarioOwnedBy[EQ],"),
     SCENARIO_PUBLISHED_EQ("scenarioPublished[EQ],"),
-    SCENARIO_CREATED_AT_GT("scenarioCreatedAt[GT],");
+    SCENARIO_CREATED_AT_GT("scenarioCreatedAt[GT],"),
+    SCENARIO_CREATED_AT_LT("scenarioCreatedAt[LT],"),
+    PAGE_SIZE("pageSize,");
 
     private final String key;
 
