@@ -29,7 +29,7 @@ public class AssemblyDTORequest {
         componentAssembly.setUser(user);
         componentAssembly.setScenarioName(scenarioName);
         componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
-        return iterateSetAssembly(componentAssembly);
+        return iterateSetSubcomponents(componentAssembly);
     }
 
     /**
@@ -48,7 +48,7 @@ public class AssemblyDTORequest {
         componentAssembly.setScenarioName(scenarioName);
         componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
 
-        return iterateSetAssembly(componentAssembly);
+        return iterateSetSubcomponents(componentAssembly);
     }
 
     /**
@@ -74,7 +74,7 @@ public class AssemblyDTORequest {
         componentAssembly.setUser(user);
         componentAssembly.setScenarioName(scenarioName);
         componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
-        return iterateSetAssembly(componentAssembly);
+        return iterateSetSubcomponents(componentAssembly);
     }
 
     /**
@@ -95,7 +95,7 @@ public class AssemblyDTORequest {
         return DTO_READER.getLargeAssembly();
     }
 
-    private ComponentInfoBuilder iterateSetAssembly(ComponentInfoBuilder componentAssembly) {
+    private ComponentInfoBuilder iterateSetSubcomponents(ComponentInfoBuilder componentAssembly) {
         componentAssembly.getSubComponents().forEach(o -> {
             o.setUser(componentAssembly.getUser());
             o.setScenarioName(componentAssembly.getScenarioName());
