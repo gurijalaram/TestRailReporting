@@ -15,7 +15,6 @@ import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.InfoPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
-import com.apriori.cid.ui.pageobjects.navtoolbars.PublishScenarioPage;
 import com.apriori.cid.ui.utils.ButtonTypeEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
@@ -39,12 +38,8 @@ public class PublishAssembliesTests extends TestBaseUI {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private ComponentInfoBuilder cidComponentItem;
-    private ComponentInfoBuilder cidComponentItemB;
-    private ComponentInfoBuilder cidComponentItemC;
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private PublishPage publishPage;
-    private PublishScenarioPage publishScenarioPage;
     private ComponentsTablePage componentsTablePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private ExplorePage explorePage;
@@ -74,34 +69,24 @@ public class PublishAssembliesTests extends TestBaseUI {
 
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(componentAssembly.getUser())
+        evaluatePage = loginPage.login(componentAssembly.getUser())
             .openSettings()
             .goToAssemblyDefaultsTab()
             .selectAssemblyStrategy(preferPublic)
             .submit(EvaluatePage.class)
-            .uploadComponent(subComponentA.getComponentName(), subComponentA.getScenarioName(), subComponentA.getResourceFile(), subComponentA.getUser());
-
-        cidComponentItemB = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+            .uploadComponentAndOpen(subComponentA)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(subComponentA, EvaluatePage.class)
             .clickExplore()
-            .uploadComponent(subComponentB.getComponentName(), subComponentB.getScenarioName(), subComponentB.getResourceFile(), subComponentB.getUser());
-
-        cidComponentItemC = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
+            .uploadComponentAndOpen(subComponentB)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
             .costScenario(4)
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, EvaluatePage.class)
+            .publish(subComponentB, EvaluatePage.class)
             .clickExplore()
-            .uploadComponent(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getResourceFile(), componentAssembly.getUser());
-
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemC)
-            .selectProcessGroup(ProcessGroupEnum.ASSEMBLY)
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .publish(cidComponentItemC, EvaluatePage.class);
+            .uploadComponentAndOpen(componentAssembly);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
     }
