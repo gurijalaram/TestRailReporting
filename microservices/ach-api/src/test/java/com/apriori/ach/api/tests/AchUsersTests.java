@@ -4,6 +4,7 @@ import com.apriori.ach.api.enums.ACHAPIEnum;
 import com.apriori.ach.api.models.response.AchErrorResponse;
 import com.apriori.ach.api.utils.AchTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
+import com.apriori.cds.api.models.response.CdsErrorResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.enums.TokenEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -115,6 +116,11 @@ public class AchUsersTests {
         String userIdentity = newUser.getResponseEntity().getIdentity();
 
         achTestUtil.delete(ACHAPIEnum.USER_BY_ID, customerIdentity, userIdentity);
+
+        ResponseWrapper<CdsErrorResponse> getDeletedUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, CdsErrorResponse.class, HttpStatus.SC_NOT_FOUND, customerIdentity, userIdentity);
+
+        soft.assertThat(getDeletedUser.getResponseEntity().getMessage()).isEqualTo(String.format("Unable to get user with identity '%s' for customer with identity '%s'.", userIdentity, customerIdentity));
+        soft.assertAll();
     }
 
     @Test
@@ -132,6 +138,7 @@ public class AchUsersTests {
         ResponseWrapper<AchErrorResponse> errorResponse = HTTPRequest.build(deleteRequest).delete();
 
         soft.assertThat(errorResponse.getResponseEntity().getMessage()).isEqualTo("This user can not be deleted through self service");
+        soft.assertAll();
     }
 
     @Test
@@ -149,6 +156,7 @@ public class AchUsersTests {
         ResponseWrapper<AchErrorResponse> errorResponse = HTTPRequest.build(deleteRequest).delete();
 
         soft.assertThat(errorResponse.getResponseEntity().getMessage()).isEqualTo("This user can not be deleted through self service");
+        soft.assertAll();
     }
 
     @Test
