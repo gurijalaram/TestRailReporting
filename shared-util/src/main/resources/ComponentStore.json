@@ -96,11 +96,6 @@
       "processGroup": "CASTING_SAND"
     },
     {
-      "componentName": "plasticLid",
-      "extension": ".SLDPRT",
-      "processGroup": "PLASTIC_MOLDING"
-    },
-    {
       "componentName": "testpart-4",
       "extension": ".prt",
       "processGroup": "STOCK_MACHINING"
@@ -269,11 +264,6 @@
       "componentName": "116-5809",
       "extension": ".prt.1",
       "processGroup": "ADDITIVE_MANUFACTURING"
-    },
-    {
-      "componentName": "plasticLid",
-      "extension": ".SLDPRT",
-      "processGroup": "PLASTIC_MOLDING"
     }
   ]
 }
