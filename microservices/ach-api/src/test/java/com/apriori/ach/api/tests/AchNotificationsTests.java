@@ -27,7 +27,7 @@ public class AchNotificationsTests {
     @BeforeEach
     public void getToken() {
         RequestEntityUtil.useTokenForRequests(currentUser.getToken());
-        apInternal = achTestUtil.getAprioriInternal();
+        apInternal = achTestUtil.getCustomer("aPriori Internal");
     }
 
     @Test
