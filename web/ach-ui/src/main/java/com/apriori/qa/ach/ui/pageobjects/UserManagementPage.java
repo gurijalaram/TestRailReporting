@@ -54,6 +54,10 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
     @FindBy(xpath = "//div[contains(.,'User Management')][@class = 'apriori-source-list-title mr-2']")
     private WebElement userManagementHeader;
 
+    @FindBy(xpath = "//div[contains(@data-header-id,'username')][contains(@role,'cell')]")
+    private WebElement searchedUsernameResult;
+
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -98,7 +102,7 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
     /**
      * get all additional properties from check boxes
      *
-     * @return this object
+     * @return list of string
      */
     public List<String> getAdditionalProperties() {
         List<String> list = new LinkedList<>(Arrays.asList(additionalProperties.getText().split("\n")));
@@ -155,6 +159,17 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
         pageUtils.waitForElementAndClick(finishButton);
         return this;
     }
+    /**
+     * get username from result table (after performing search)
+     * (it will only work for single result)
+     *
+     * @return string
+     */
+
+    public String getUsernameFromSearching() {
+        pageUtils.waitForElementAppear(searchedUsernameResult);
+        return searchedUsernameResult.getText();
+    }
 
     /**
      * click on search form, paste a searching string, click on search and edit user
@@ -167,6 +182,18 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
         pageUtils.waitForElementAndClick(loopIconOnSearch);
         pageUtils.waitForElementAndClick(threeDotsOnSearchedRow);
         pageUtils.waitForElementAndClick(editButtonOnTheRow);
+        return this;
+    }
+
+    /**
+     * click on search form, paste a searching string, click on search
+     *
+     * @return this object
+     */
+    public UserManagementPage findUser(String input) {
+        pageUtils.waitForElementAndClick(searchInput);
+        searchInput.sendKeys(input);
+        pageUtils.waitForElementAndClick(loopIconOnSearch);
         return this;
     }
 

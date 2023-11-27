@@ -67,7 +67,7 @@ pipeline {
                     }
 
                     // Set run time parameters
-                    javaOpts = javaOpts + "-Dmode=${params.TEST_MODE}"
+                    javaOpts = javaOpts + " -Dmode=${params.TEST_MODE}"
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
                     javaOpts = javaOpts + " -DROOT_LOG_LEVEL=${root_log_level}"
 
@@ -79,8 +79,6 @@ pipeline {
                         javaOpts = javaOpts + " -Dglobal_default_user_name=${username}"
                         javaOpts = javaOpts + " -Dglobal_default_password=${password}"
                     }
-
-
 
                     folder = params.MODULE_TYPE
                     if (!folder && "${MODULE}".contains("-ui")) {

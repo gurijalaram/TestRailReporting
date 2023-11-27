@@ -44,4 +44,9 @@ public class AnalysisOfScenarioAndChildren {
     private Double sgaCost;
     private Double totalCost;
     private Double otherDirectCosts;
+    private Double annualManufacturingCarbon;
+    private Double logisticsCarbon;
+    private Double materialCarbon;
+    private Double processCarbon;
+    private Double totalCarbon;
 }
