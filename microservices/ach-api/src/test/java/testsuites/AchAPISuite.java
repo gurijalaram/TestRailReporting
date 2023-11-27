@@ -8,6 +8,7 @@ import com.apriori.ach.api.tests.AchEnablementsSupportTests;
 import com.apriori.ach.api.tests.AchNotificationsTests;
 import com.apriori.ach.api.tests.AchPeopleTests;
 import com.apriori.ach.api.tests.AchUserPreferencesTests;
+import com.apriori.ach.api.tests.AchUsersTests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.SelectPackages;
@@ -23,7 +24,8 @@ import org.junit.platform.suite.api.Suite;
     AchEnablementsSupportTests.class,
     AchNotificationsTests.class,
     AchPeopleTests.class,
-    AchUserPreferencesTests.class
+    AchUserPreferencesTests.class,
+    AchUsersTests.class
 })
 public class AchAPISuite {
 }
