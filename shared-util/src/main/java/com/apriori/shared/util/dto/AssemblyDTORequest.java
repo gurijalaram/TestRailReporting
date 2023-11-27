@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AssemblyDTORequest {
-    private ComponentInfoBuilder componentAssembly;
     private static final String ASSEMBLY_STORE = "AssemblyStore.json";
     private static final DTOReader DTO_READER = new DTOReader(ASSEMBLY_STORE);
+    private ComponentInfoBuilder componentAssembly;
 
     /**
      * Gets a random small assembly
@@ -29,12 +29,7 @@ public class AssemblyDTORequest {
         componentAssembly.setUser(user);
         componentAssembly.setScenarioName(scenarioName);
         componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
-        componentAssembly.getSubComponents().forEach(o -> {
-            o.setUser(user);
-            o.setScenarioName(scenarioName);
-            o.setResourceFile(FileResourceUtil.getCloudFile(o.getProcessGroup(), o.getComponentName() + o.getExtension()));
-        });
-        return componentAssembly;
+        return iterateSetAssembly(componentAssembly);
     }
 
     /**
@@ -52,12 +47,8 @@ public class AssemblyDTORequest {
         componentAssembly.setUser(user);
         componentAssembly.setScenarioName(scenarioName);
         componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
-        componentAssembly.getSubComponents().forEach(o -> {
-            o.setUser(user);
-            o.setScenarioName(scenarioName);
-            o.setResourceFile(FileResourceUtil.getCloudFile(o.getProcessGroup(), o.getComponentName() + o.getExtension()));
-        });
-        return componentAssembly;
+
+        return iterateSetAssembly(componentAssembly);
     }
 
     /**
@@ -83,12 +74,7 @@ public class AssemblyDTORequest {
         componentAssembly.setUser(user);
         componentAssembly.setScenarioName(scenarioName);
         componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
-        componentAssembly.getSubComponents().forEach(o -> {
-            o.setUser(user);
-            o.setScenarioName(scenarioName);
-            o.setResourceFile(FileResourceUtil.getCloudFile(o.getProcessGroup(), o.getComponentName() + o.getExtension()));
-        });
-        return componentAssembly;
+        return iterateSetAssembly(componentAssembly);
     }
 
     /**
@@ -107,5 +93,21 @@ public class AssemblyDTORequest {
      */
     public ComponentInfoBuilder getLargeAssembly() {
         return DTO_READER.getLargeAssembly();
+    }
+
+    private ComponentInfoBuilder iterateSetAssembly(ComponentInfoBuilder componentAssembly) {
+        componentAssembly.getSubComponents().forEach(o -> {
+            o.setUser(componentAssembly.getUser());
+            o.setScenarioName(componentAssembly.getScenarioName());
+            o.setResourceFile(FileResourceUtil.getCloudFile(o.getProcessGroup(), o.getComponentName() + o.getExtension()));
+            if (o.getSubComponents() != null) {
+                o.getSubComponents().forEach(p -> {
+                    p.setUser(o.getUser());
+                    p.setScenarioName(o.getScenarioName());
+                    p.setResourceFile(FileResourceUtil.getCloudFile(p.getProcessGroup(), p.getComponentName() + p.getExtension()));
+                });
+            }
+        });
+        return componentAssembly;
     }
 }
