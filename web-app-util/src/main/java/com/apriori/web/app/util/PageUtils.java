@@ -1051,7 +1051,7 @@ public class PageUtils {
         try {
 
             textPresent = new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
-                .withMessage("Expected: " + text.replace("", " ") + "Found: " + waitForElementToAppear(locator).getText())
+                .withMessage("Expected: " + text.replace("", " ").trim() + "Found: " + waitForElementToAppear(locator).getText())
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text));
 

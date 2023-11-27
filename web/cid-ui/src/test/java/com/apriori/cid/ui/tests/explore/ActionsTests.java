@@ -76,7 +76,8 @@ public class ActionsTests extends TestBaseUI {
     public void addScenarioNotes() {
         component = new ComponentRequestUtil().getComponent();
 
-        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+        infoPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -117,7 +118,8 @@ public class ActionsTests extends TestBaseUI {
     public void addStatusColumn() {
         component = new ComponentRequestUtil().getComponent();
 
-        explorePage = new CidAppLoginPage(driver).login(currentUser)
+        explorePage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -160,7 +162,8 @@ public class ActionsTests extends TestBaseUI {
     public void lockUnlockScenario() {
         component = new ComponentRequestUtil().getComponent();
 
-        previewPage = new CidAppLoginPage(driver).login(component.getUser())
+        previewPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -205,7 +208,8 @@ public class ActionsTests extends TestBaseUI {
 
         component = new ComponentRequestUtil().getComponent();
 
-        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+        infoPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .selectProcessGroup(component.getProcessGroup())
@@ -245,7 +249,8 @@ public class ActionsTests extends TestBaseUI {
     public void infoNotesPanel() {
         component = new ComponentRequestUtil().getComponent();
 
-        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+        infoPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .selectProcessGroup(ProcessGroupEnum.FORGING)
@@ -276,7 +281,8 @@ public class ActionsTests extends TestBaseUI {
     public void actionsAssign() {
         component = new ComponentRequestUtil().getComponent();
 
-        assignPage = new CidAppLoginPage(driver).login(component.getUser())
+        assignPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -309,7 +315,8 @@ public class ActionsTests extends TestBaseUI {
     public void actionsAssignEvaluatePage() {
         component = new ComponentRequestUtil().getComponent();
 
-        assignPage = new CidAppLoginPage(driver).login(component.getUser())
+        assignPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -343,7 +350,8 @@ public class ActionsTests extends TestBaseUI {
 
         component = new ComponentRequestUtil().getComponent();
 
-        explorePage = new CidAppLoginPage(driver).login(component.getUser())
+        explorePage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -353,7 +361,7 @@ public class ActionsTests extends TestBaseUI {
             .publishScenario(PublishPage.class)
             .selectStatus("New")
             .selectCostMaturity("Low")
-            .selectAssignee(currentUser)
+            .selectAssignee(component.getUser())
             .publish(component, EvaluatePage.class)
             .clickExplore()
             .filter()
@@ -373,7 +381,8 @@ public class ActionsTests extends TestBaseUI {
 
         component = new ComponentRequestUtil().getComponent();
 
-        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+        infoPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -394,8 +403,8 @@ public class ActionsTests extends TestBaseUI {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .getCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(), SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), LAST_ACTION_EQ.getKey() + "UPDATE",
-                SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE)
+            .getCssComponents(component.getUser(), COMPONENT_NAME_EQ.getKey() + component.getComponentName(), SCENARIO_NAME_EQ.getKey() + component.getScenarioName(),
+                LAST_ACTION_EQ.getKey() + "UPDATE", SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE)
             .refresh()
             .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
@@ -408,8 +417,8 @@ public class ActionsTests extends TestBaseUI {
             .info()
             .inputCostMaturity("Medium")
             .submit(ExplorePage.class)
-            .getCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(), SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), LAST_ACTION_EQ.getKey() + " UPDATE",
-                SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE)
+            .getCssComponents(component.getUser(), COMPONENT_NAME_EQ.getKey() + component.getComponentName(), SCENARIO_NAME_EQ.getKey() + component.getScenarioName(),
+                LAST_ACTION_EQ.getKey() + " UPDATE",                SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE)
             .refresh()
             .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
@@ -439,7 +448,8 @@ public class ActionsTests extends TestBaseUI {
     public void cancelEditNotes() {
         component = new ComponentRequestUtil().getComponent();
 
-        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+        infoPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -481,7 +491,8 @@ public class ActionsTests extends TestBaseUI {
     public void deleteNotes() {
         component = new ComponentRequestUtil().getComponent();
 
-        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+        infoPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -522,7 +533,8 @@ public class ActionsTests extends TestBaseUI {
     public void readUsersNotes() {
         component = new ComponentRequestUtil().getComponent();
 
-        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+        infoPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -564,7 +576,8 @@ public class ActionsTests extends TestBaseUI {
 
         component = new ComponentRequestUtil().getComponent();
 
-        explorePage = new CidAppLoginPage(driver).login(component.getUser())
+        explorePage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -604,7 +617,8 @@ public class ActionsTests extends TestBaseUI {
     public void deleteDescription() {
         component = new ComponentRequestUtil().getComponent();
 
-        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+        infoPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -645,7 +659,8 @@ public class ActionsTests extends TestBaseUI {
     public void actionsAssignValidateAssignee() {
         component = new ComponentRequestUtil().getComponent();
 
-        explorePage = new CidAppLoginPage(driver).login(component.getUser())
+        explorePage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
@@ -682,7 +697,8 @@ public class ActionsTests extends TestBaseUI {
 
         component = new ComponentRequestUtil().getComponent();
 
-        infoPage = new CidAppLoginPage(driver).login(component.getUser())
+        infoPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
