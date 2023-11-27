@@ -1,0 +1,14 @@
+{
+  "email": "",
+  "username": "",
+  "createdBy": "#SYSTEM00000",
+  "active": true,
+  "userType": "AP_CLOUD_USER",
+  "userProfile": {
+    "givenName": "",
+    "familyName": "Automater",
+    "jobTitle": "Automation Engineer",
+    "department": "Automation",
+    "createdBy": "#SYSTEM00000"
+  }
+}
