@@ -1,5 +1,10 @@
 package com.apriori.cid.ui.tests.evaluate;
 
+import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING_DIE;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING_SAND;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.PLASTIC_MOLDING;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.POWDER_METAL;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,13 +14,10 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dto.ComponentDTORequest;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -27,33 +29,24 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class PsoEditTests extends TestBaseUI {
 
-    private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private MaterialProcessPage materialProcessPage;
+    private ComponentInfoBuilder component;
 
-    private File resourceFile;
-    private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
     @TestRail(id = {7286, 7287, 7288, 7289, 6634, 6635})
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        component = new ComponentDTORequest().getComponentByProcessGroup(PLASTIC_MOLDING);
 
-        String componentName = "Plastic moulded cap DFM";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialProcessPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario(3)
             .openMaterialProcess()
             .selectBarChart("Injection Molding")
@@ -81,17 +74,12 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7269, 7297, 7289, 7296})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+        component = new ComponentDTORequest().getComponentByProcessGroup(CASTING_DIE);
 
-        String componentName = "Casting-Die";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialProcessPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario(7)
             .openMaterialProcess()
             .selectBarChart("High Pressure Die Casting")
@@ -124,17 +112,12 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7294, 7295})
     @Description("Sand Casting edit PSO")
     public void sandCastPSO() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
+        component = new ComponentDTORequest().getComponentByProcessGroup(CASTING_SAND);
 
-        String componentName = "SandCast";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".x_t");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialProcessPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario(3)
             .openMaterialProcess()
             // TODO: 18/08/2021 cn - bar chart showing as double
@@ -160,17 +143,12 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7293})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        component = new ComponentDTORequest().getComponentByProcessGroup(STOCK_MACHINING);
 
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialProcessPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Band Saw")
@@ -188,17 +166,12 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7299})
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void powderMetalPSO() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
+        component = new ComponentDTORequest().getComponentByProcessGroup(POWDER_METAL);
 
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialProcessPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Compaction Pressing")
@@ -217,17 +190,12 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {8972})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        component = new ComponentDTORequest().getComponentByProcessGroup(PLASTIC_MOLDING);
 
-        String componentName = "plasticLid";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialProcessPage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Injection Molding")
@@ -272,17 +240,12 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7275})
     @Description("Validate PSO Cannot be a junk value")
     public void junkPSO() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        component = new ComponentDTORequest().getComponentByProcessGroup(STOCK_MACHINING);
 
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialProcessPage =  new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Band Saw")
@@ -299,17 +262,12 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {16707})
     @Description("Validate user can make iterative PSO changes and then re-cost to original defaults")
     public void multiplePSOEdits() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        component = new ComponentDTORequest().getComponentByProcessGroup(PLASTIC_MOLDING);
 
-        String componentName = "plasticLid";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
             .openMaterialSelectorTable()
             .search("ABS")
