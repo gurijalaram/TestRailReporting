@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 public class AssemblyDTORequest {
     private static final String ASSEMBLY_STORE = "AssemblyStore.json";
     private static final DTOReader DTO_READER = new DTOReader(ASSEMBLY_STORE);
-    private ComponentInfoBuilder componentAssembly;
 
     /**
      * Gets a random small assembly
@@ -21,8 +20,7 @@ public class AssemblyDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssembly() {
-
-        componentAssembly = DTO_READER.getAssembly();
+        ComponentInfoBuilder componentAssembly = DTO_READER.getAssembly();
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -39,8 +37,7 @@ public class AssemblyDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssembly(String assembly) {
-
-        componentAssembly = DTO_READER.getAssembly(assembly);
+        ComponentInfoBuilder componentAssembly = DTO_READER.getAssembly(assembly);
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -59,8 +56,7 @@ public class AssemblyDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssemblySubcomponents(String assembly, String... subcomponentNames) {
-
-        componentAssembly = DTO_READER.getAssembly(assembly);
+        ComponentInfoBuilder componentAssembly = DTO_READER.getAssembly(assembly);
 
         List<String> componentNames = Arrays.stream(subcomponentNames).collect(Collectors.toList());
 
@@ -83,7 +79,15 @@ public class AssemblyDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getMediumAssembly() {
-        return DTO_READER.getMediumAssembly();
+        ComponentInfoBuilder componentAssembly = DTO_READER.getMediumAssembly();
+
+        final UserCredentials user = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        componentAssembly.setUser(user);
+        componentAssembly.setScenarioName(scenarioName);
+        componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
+
+        return iterateSetSubcomponents(componentAssembly);
     }
 
     /**
@@ -92,7 +96,15 @@ public class AssemblyDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getLargeAssembly() {
-        return DTO_READER.getLargeAssembly();
+        ComponentInfoBuilder componentAssembly = DTO_READER.getLargeAssembly();
+
+        final UserCredentials user = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        componentAssembly.setUser(user);
+        componentAssembly.setScenarioName(scenarioName);
+        componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
+
+        return iterateSetSubcomponents(componentAssembly);
     }
 
     private ComponentInfoBuilder iterateSetSubcomponents(ComponentInfoBuilder componentAssembly) {
