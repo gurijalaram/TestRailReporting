@@ -29,7 +29,7 @@ import com.apriori.cid.ui.utils.DirectionEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.ComponentDTORequest;
+import com.apriori.shared.util.dto.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.OperationEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -74,7 +74,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7185, 7257, 7264, 7263, 7268, 6342})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -116,7 +116,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7197, 7198, 7200})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -160,7 +160,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7902, 5436})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         previewPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -206,7 +206,7 @@ public class ActionsTests extends TestBaseUI {
             "• Automation notes 3" +
             "• Automation notes 4";
 
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -247,7 +247,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7258, 7263, 7267, 7270})
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -279,7 +279,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7172, 7175, 5437})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
     public void actionsAssign() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         assignPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -313,7 +313,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7174, 7173})
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         assignPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -348,7 +348,7 @@ public class ActionsTests extends TestBaseUI {
     public void filterAssignee() {
         String filterName = generateStringUtil.generateFilterName();
 
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -379,7 +379,7 @@ public class ActionsTests extends TestBaseUI {
     public void editNotes() {
         final String editedNotes = "Testing QA notes validating the ability to edit notes";
 
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -446,7 +446,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = 7188)
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -489,7 +489,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7186, 7191})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -531,7 +531,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7911})
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -574,7 +574,7 @@ public class ActionsTests extends TestBaseUI {
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
 
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -615,7 +615,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7266, 7913})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -657,7 +657,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7177})
     @Description("Validate assignee is displayed in the explore view")
     public void actionsAssignValidateAssignee() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -695,7 +695,7 @@ public class ActionsTests extends TestBaseUI {
         final String testDescription = "QA Notes to be read by different user";
         final String testNotes = "Testing QA notes notes to be read by different user";
 
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -731,7 +731,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {6207, 6208})
     @Description("Validate users can select rows in a sequence by using shift/ctrl buttons")
     public void shiftControlHighlightScenarios() {
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         ComponentInfoBuilder component2 = component;
         component2.setScenarioName(new GenerateStringUtil().generateScenarioName());

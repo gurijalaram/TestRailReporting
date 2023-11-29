@@ -14,7 +14,7 @@ import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.PreferencesEnum;
@@ -67,7 +67,7 @@ public class UploadTests extends TestBaseUI {
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
         UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
 
-        assembly = new AssemblyDTORequest().getAssembly();
+        assembly = new AssemblyRequestUtil().getAssembly();
 
         userPreferencesUtil.setSpecificPreference(assembly.getUser(), PreferencesEnum.ASSEMBLY_STRATEGY, "PREFER_PUBLIC");
 

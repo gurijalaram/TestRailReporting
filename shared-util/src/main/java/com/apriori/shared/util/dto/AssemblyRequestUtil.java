@@ -10,9 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class AssemblyDTORequest {
+public class AssemblyRequestUtil {
     private static final String ASSEMBLY_STORE = "AssemblyStore.json";
-    private static final DTOReader DTO_READER = new DTOReader(ASSEMBLY_STORE);
+    private static final FileRequestManager DTO_READER = new FileRequestManager(ASSEMBLY_STORE);
 
     /**
      * Gets a random small assembly

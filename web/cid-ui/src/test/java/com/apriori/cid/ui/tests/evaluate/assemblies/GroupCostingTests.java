@@ -7,7 +7,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.components.inputs.ComponentBasicP
 import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -39,7 +39,7 @@ public class GroupCostingTests extends TestBaseUI {
 
         String blob = "500mmBlob";
 
-        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("RandomShapeAsm");
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("RandomShapeAsm");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -88,7 +88,7 @@ public class GroupCostingTests extends TestBaseUI {
         fullyBurdenedCosts.put(smallRing, 3.97);
         fullyBurdenedCosts.put(pin, 3.31);
 
-        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("Hinge assembly");
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
