@@ -20,57 +20,59 @@ public class AssemblyDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssembly() {
-        ComponentInfoBuilder componentAssembly = DTO_READER.getAssembly();
+        ComponentInfoBuilder assembly = DTO_READER.getAssembly();
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        componentAssembly.setUser(user);
-        componentAssembly.setScenarioName(scenarioName);
-        componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
-        return iterateSetSubcomponents(componentAssembly);
+        assembly.setUser(user);
+        assembly.setScenarioName(scenarioName);
+        assembly.setResourceFile(FileResourceUtil.getCloudFile(assembly.getProcessGroup(), assembly.getComponentName() + assembly.getExtension()));
+
+        return iterateSetSubcomponents(assembly);
     }
 
     /**
      * Gets an assembly specified by name
      *
-     * @param assembly - the assembly
+     * @param assemblyName - the assembly
      * @return component builder object
      */
-    public ComponentInfoBuilder getAssembly(String assembly) {
-        ComponentInfoBuilder componentAssembly = DTO_READER.getAssembly(assembly);
+    public ComponentInfoBuilder getAssembly(String assemblyName) {
+        ComponentInfoBuilder assembly = DTO_READER.getAssembly(assemblyName);
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        componentAssembly.setUser(user);
-        componentAssembly.setScenarioName(scenarioName);
-        componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
+        assembly.setUser(user);
+        assembly.setScenarioName(scenarioName);
+        assembly.setResourceFile(FileResourceUtil.getCloudFile(assembly.getProcessGroup(), assembly.getComponentName() + assembly.getExtension()));
 
-        return iterateSetSubcomponents(componentAssembly);
+        return iterateSetSubcomponents(assembly);
     }
 
     /**
      * Gets an assembly and subcomponent(s) by name
      *
-     * @param assembly          - the assembly
+     * @param assemblyName      - the assembly
      * @param subcomponentNames - the subcomponent names
      * @return component builder object
      */
-    public ComponentInfoBuilder getAssemblySubcomponents(String assembly, String... subcomponentNames) {
-        ComponentInfoBuilder componentAssembly = DTO_READER.getAssembly(assembly);
+    public ComponentInfoBuilder getAssemblySubcomponents(String assemblyName, String... subcomponentNames) {
+        ComponentInfoBuilder assembly = DTO_READER.getAssembly(assemblyName);
 
         List<String> componentNames = Arrays.stream(subcomponentNames).collect(Collectors.toList());
 
-        componentAssembly.setSubComponents(componentAssembly.getSubComponents()
+        assembly.setSubComponents(assembly.getSubComponents()
             .stream()
             .filter(subassembly -> componentNames.contains(subassembly.getComponentName()))
             .collect(Collectors.toList()));
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        componentAssembly.setUser(user);
-        componentAssembly.setScenarioName(scenarioName);
-        componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
-        return iterateSetSubcomponents(componentAssembly);
+        assembly.setUser(user);
+        assembly.setScenarioName(scenarioName);
+        assembly.setResourceFile(FileResourceUtil.getCloudFile(assembly.getProcessGroup(), assembly.getComponentName() + assembly.getExtension()));
+
+        return iterateSetSubcomponents(assembly);
     }
 
     /**
@@ -79,15 +81,15 @@ public class AssemblyDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getMediumAssembly() {
-        ComponentInfoBuilder componentAssembly = DTO_READER.getMediumAssembly();
+        ComponentInfoBuilder assembly = DTO_READER.getMediumAssembly();
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        componentAssembly.setUser(user);
-        componentAssembly.setScenarioName(scenarioName);
-        componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
+        assembly.setUser(user);
+        assembly.setScenarioName(scenarioName);
+        assembly.setResourceFile(FileResourceUtil.getCloudFile(assembly.getProcessGroup(), assembly.getComponentName() + assembly.getExtension()));
 
-        return iterateSetSubcomponents(componentAssembly);
+        return iterateSetSubcomponents(assembly);
     }
 
     /**
@@ -96,30 +98,27 @@ public class AssemblyDTORequest {
      * @return component builder object
      */
     public ComponentInfoBuilder getLargeAssembly() {
-        ComponentInfoBuilder componentAssembly = DTO_READER.getLargeAssembly();
+        ComponentInfoBuilder assembly = DTO_READER.getLargeAssembly();
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        componentAssembly.setUser(user);
-        componentAssembly.setScenarioName(scenarioName);
-        componentAssembly.setResourceFile(FileResourceUtil.getCloudFile(componentAssembly.getProcessGroup(), componentAssembly.getComponentName() + componentAssembly.getExtension()));
+        assembly.setUser(user);
+        assembly.setScenarioName(scenarioName);
+        assembly.setResourceFile(FileResourceUtil.getCloudFile(assembly.getProcessGroup(), assembly.getComponentName() + assembly.getExtension()));
 
-        return iterateSetSubcomponents(componentAssembly);
+        return iterateSetSubcomponents(assembly);
     }
 
-    private ComponentInfoBuilder iterateSetSubcomponents(ComponentInfoBuilder componentAssembly) {
-        componentAssembly.getSubComponents().forEach(o -> {
-            o.setUser(componentAssembly.getUser());
-            o.setScenarioName(componentAssembly.getScenarioName());
-            o.setResourceFile(FileResourceUtil.getCloudFile(o.getProcessGroup(), o.getComponentName() + o.getExtension()));
-            if (o.getSubComponents() != null) {
-                o.getSubComponents().forEach(p -> {
-                    p.setUser(o.getUser());
-                    p.setScenarioName(o.getScenarioName());
-                    p.setResourceFile(FileResourceUtil.getCloudFile(p.getProcessGroup(), p.getComponentName() + p.getExtension()));
-                });
+    private ComponentInfoBuilder iterateSetSubcomponents(ComponentInfoBuilder assembly) {
+        assembly.getSubComponents().forEach(subcomponent -> {
+            subcomponent.setUser(assembly.getUser());
+            subcomponent.setScenarioName(assembly.getScenarioName());
+            subcomponent.setResourceFile(FileResourceUtil.getCloudFile(subcomponent.getProcessGroup(), subcomponent.getComponentName() + subcomponent.getExtension()));
+
+            if (subcomponent.getSubComponents() != null) {
+                iterateSetSubcomponents(subcomponent);
             }
         });
-        return componentAssembly;
+        return assembly;
     }
 }
