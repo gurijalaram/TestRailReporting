@@ -15,7 +15,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.ComponentDTORequest;
+import com.apriori.shared.util.dto.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -41,7 +41,7 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7286, 7287, 7288, 7289, 6634, 6635})
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(PLASTIC_MOLDING);
 
         materialProcessPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -74,7 +74,7 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7269, 7297, 7289, 7296})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(CASTING_DIE);
 
         materialProcessPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -112,7 +112,7 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7294, 7295})
     @Description("Sand Casting edit PSO")
     public void sandCastPSO() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(CASTING_SAND);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(CASTING_SAND);
 
         materialProcessPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -143,7 +143,7 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7293})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(STOCK_MACHINING);
 
         materialProcessPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -166,7 +166,7 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7299})
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void powderMetalPSO() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(POWDER_METAL);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(POWDER_METAL);
 
         materialProcessPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -190,7 +190,7 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {8972})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(PLASTIC_MOLDING);
 
         materialProcessPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -240,7 +240,7 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {7275})
     @Description("Validate PSO Cannot be a junk value")
     public void junkPSO() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(STOCK_MACHINING);
 
         materialProcessPage =  new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -262,7 +262,7 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {16707})
     @Description("Validate user can make iterative PSO changes and then re-cost to original defaults")
     public void multiplePSOEdits() {
-        component = new ComponentDTORequest().getComponentByProcessGroup(PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(PLASTIC_MOLDING);
 
         evaluatePage = new CidAppLoginPage(driver)
             .login(component.getUser())

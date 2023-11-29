@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ComponentDTO {
+public class ComponentRequest {
     private List<ComponentInfoBuilder> assemblies;
     private List<ComponentInfoBuilder> components;
 }

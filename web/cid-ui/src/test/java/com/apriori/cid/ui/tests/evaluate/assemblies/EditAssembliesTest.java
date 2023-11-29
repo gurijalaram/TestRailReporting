@@ -25,7 +25,7 @@ import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -53,7 +53,7 @@ public class EditAssembliesTest extends TestBaseUI {
     private static ComponentInfoBuilder componentAssembly2;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private AssemblyDTORequest assemblyDTORequest = new AssemblyDTORequest();
+    private AssemblyRequestUtil assemblyRequestUtil = new AssemblyRequestUtil();
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
@@ -74,7 +74,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @TestRail(id = 10768)
     @Description("Shallow Publish assembly and scenarios costed in CI Design")
     public void testShallowPublishCostedCID() {
-        componentAssembly = assemblyDTORequest.getAssembly();
+        componentAssembly = assemblyRequestUtil.getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
@@ -111,7 +111,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testShallowEditCostedCID() {
 
-        componentAssembly = assemblyDTORequest.getAssembly();
+        componentAssembly = assemblyRequestUtil.getAssembly();
 
         assemblyUtils.shallowPublishAssembly(componentAssembly);
 
@@ -139,7 +139,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Retain the Status/Cost Maturity/Assignee/Lock during a Shallow Edit")
     public void testShallowEditRetainStatus() {
 
-        componentAssembly = assemblyDTORequest.getAssembly();
+        componentAssembly = assemblyRequestUtil.getAssembly();
 
         assemblyUtils.shallowPublishAssembly(componentAssembly);
 
@@ -173,7 +173,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Modify the Status/Cost Maturity/Lock after a Shallow Edit and ensure subcomponents are associated")
     public void testShallowEditModifyStatusCheckAssociationSmallSetSubcomponents() {
 
-        componentAssembly = assemblyDTORequest.getAssembly();
+        componentAssembly = assemblyRequestUtil.getAssembly();
 
         assemblyUtils.shallowPublishAssembly(componentAssembly);
 
@@ -215,7 +215,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Shallow Edit keeps original assembly intact on Public Workspace")
     public void testShallowEditCheckDuplicate() {
 
-        componentAssembly = assemblyDTORequest.getAssembly();
+        componentAssembly = assemblyRequestUtil.getAssembly();
 
         assemblyUtils.shallowPublishAssembly(componentAssembly);
 
@@ -242,7 +242,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Shallow Edited assemblies and scenarios can be published into Public Workspace and can also add notes and lock/unlock scenario")
     public void testShallowEditPublishPublicWorkspaceLockNotes() {
 
-        componentAssembly = assemblyDTORequest.getAssembly();
+        componentAssembly = assemblyRequestUtil.getAssembly();
 
         assemblyUtils.shallowPublishAssembly(componentAssembly);
 
@@ -290,7 +290,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Shallow Edit an assembly with larger set of sub-components ")
     public void testUploadCostPublishAssemblyLargeSetSubcomponents() {
 
-        componentAssembly = assemblyDTORequest.getAssembly("FUSELAGE_SUBASSEMBLY");
+        componentAssembly = assemblyRequestUtil.getAssembly("FUSELAGE_SUBASSEMBLY");
 
         assemblyUtils.uploadAssembly(componentAssembly);
         assemblyUtils.costAssembly(componentAssembly);
@@ -317,7 +317,7 @@ public class EditAssembliesTest extends TestBaseUI {
         final String pin = "Pin";
         final String smallRing = "small ring";
 
-        componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
+        componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -347,7 +347,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
         String refreshMessage = "This assembly has uncosted changes. If you continue, these changes will be lost.";
 
-        componentAssembly = assemblyDTORequest.getAssembly();
+        componentAssembly = assemblyRequestUtil.getAssembly();
 
         assemblyUtils.shallowPublishAssembly(componentAssembly);
 
@@ -386,7 +386,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Shallow Edit over existing Private scenarios with override")
     public void testShallowEditPrivateOverride() {
 
-        componentAssembly = assemblyDTORequest.getAssembly();
+        componentAssembly = assemblyRequestUtil.getAssembly();
 
         assemblyUtils.shallowPublishAssembly(componentAssembly);
 
@@ -419,7 +419,7 @@ public class EditAssembliesTest extends TestBaseUI {
         final String BIG_RING = "big ring";
         final String SMALL_RING = "small ring";
 
-        componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
+        componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -465,7 +465,7 @@ public class EditAssembliesTest extends TestBaseUI {
         final String BIG_RING = "big ring";
         final String SMALL_RING = "small ring";
 
-        componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
+        componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -502,7 +502,7 @@ public class EditAssembliesTest extends TestBaseUI {
         final String NUT = "nut";
         final String BOLT = "bolt";
 
-        componentAssembly = assemblyDTORequest.getAssembly("flange c");
+        componentAssembly = assemblyRequestUtil.getAssembly("flange c");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -548,7 +548,7 @@ public class EditAssembliesTest extends TestBaseUI {
         final String NUT = "nut";
         final String BOLT = "bolt";
 
-        componentAssembly = assemblyDTORequest.getAssembly("flange c");
+        componentAssembly = assemblyRequestUtil.getAssembly("flange c");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -650,7 +650,7 @@ public class EditAssembliesTest extends TestBaseUI {
         final String PIN = "Pin";
         final String SMALL_RING = "small ring";
 
-        componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
+        componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -687,7 +687,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
         final String BOLT = "bolt";
 
-        componentAssembly = assemblyDTORequest.getAssembly("flange c");
+        componentAssembly = assemblyRequestUtil.getAssembly("flange c");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -746,7 +746,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
         final String PIN = "Pin";
 
-        componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
+        componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -808,8 +808,8 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Validate the edit button will only be enabled when top level sub components are selected")
     public void testEditButtonSubAssembly() {
 
-        componentAssembly = assemblyDTORequest.getAssembly("assy03A");
-        componentAssembly2 = assemblyDTORequest.getAssembly("assy03");
+        componentAssembly = assemblyRequestUtil.getAssembly("assy03A");
+        componentAssembly2 = assemblyRequestUtil.getAssembly("assy03");
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
@@ -843,7 +843,7 @@ public class EditAssembliesTest extends TestBaseUI {
         final String NUT = "nut";
         final String BOLT = "bolt";
 
-        componentAssembly = assemblyDTORequest.getAssembly("flange c");
+        componentAssembly = assemblyRequestUtil.getAssembly("flange c");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -876,7 +876,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
         final String PIN = "Pin";
 
-        componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
+        componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -929,7 +929,7 @@ public class EditAssembliesTest extends TestBaseUI {
         final String pin = "Pin";
         final String small_ring = "small ring";
 
-        componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
+        componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costAssembly(componentAssembly);
@@ -983,7 +983,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
+        componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costAssembly(componentAssembly);
@@ -1058,7 +1058,7 @@ public class EditAssembliesTest extends TestBaseUI {
         final String BIG_RING = "big ring";
         final String PIN = "Pin";
 
-        componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
+        componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -1125,7 +1125,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
         final String SMALL_RING = "small ring";
 
-        componentAssembly = assemblyDTORequest.getAssembly("Hinge assembly");
+        componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);

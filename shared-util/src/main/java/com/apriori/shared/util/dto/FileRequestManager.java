@@ -10,10 +10,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DTOReader {
+public class FileRequestManager {
     private final String jsonFile;
 
-    public DTOReader(String jsonFile) {
+    public FileRequestManager(String jsonFile) {
         this.jsonFile = jsonFile;
     }
 
@@ -22,8 +22,8 @@ public class DTOReader {
      *
      * @return component object
      */
-    private ComponentDTO readFile() {
-        return JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), ComponentDTO.class);
+    private ComponentRequest readFile() {
+        return JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(jsonFile), ComponentRequest.class);
     }
 
     /**
@@ -32,9 +32,7 @@ public class DTOReader {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssembly() {
-        ComponentDTO componentDTO = readFile();
-
-        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("small")).collect(Collectors.toList());
+        List<ComponentInfoBuilder> listOfComponents = readFile().getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("small")).collect(Collectors.toList());
         Collections.shuffle(listOfComponents);
 
         return listOfComponents.stream().findFirst().orElseThrow(() -> new RuntimeException("No 'small' assembly was found"));
@@ -47,9 +45,7 @@ public class DTOReader {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssembly(String assembly) {
-        ComponentDTO componentDTO = readFile();
-
-        return componentDTO.getAssemblies()
+        return readFile().getAssemblies()
             .stream()
             .filter(o -> o.getComponentName().equalsIgnoreCase(assembly))
             .findFirst()
@@ -62,9 +58,7 @@ public class DTOReader {
      * @return component builder object
      */
     public ComponentInfoBuilder getMediumAssembly() {
-        ComponentDTO componentDTO = readFile();
-
-        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("medium")).collect(Collectors.toList());
+        List<ComponentInfoBuilder> listOfComponents = readFile().getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("medium")).collect(Collectors.toList());
         Collections.shuffle(listOfComponents);
 
         return listOfComponents.stream().findFirst().orElseThrow(() -> new RuntimeException("No 'medium' assembly was found"));
@@ -76,9 +70,7 @@ public class DTOReader {
      * @return component builder object
      */
     public ComponentInfoBuilder getLargeAssembly() {
-        ComponentDTO componentDTO = readFile();
-
-        List<ComponentInfoBuilder> listOfComponents = componentDTO.getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("large")).collect(Collectors.toList());
+        List<ComponentInfoBuilder> listOfComponents = readFile().getAssemblies().stream().filter(o -> o.getMetadata().getCategory().equalsIgnoreCase("large")).collect(Collectors.toList());
         Collections.shuffle(listOfComponents);
 
         return listOfComponents.stream().findFirst().orElseThrow(() -> new RuntimeException("No 'large' assembly was found"));

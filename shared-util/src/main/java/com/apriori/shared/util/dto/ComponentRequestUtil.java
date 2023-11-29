@@ -13,10 +13,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ComponentDTORequest {
+public class ComponentRequestUtil {
     private ComponentInfoBuilder component;
     private static final String COMPONENT_STORE = "ComponentStore.json";
-    private static final DTOReader DTO_READER = new DTOReader(COMPONENT_STORE);
+    private static final FileRequestManager DTO_READER = new FileRequestManager(COMPONENT_STORE);
 
     /**
      * Gets a random component

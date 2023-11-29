@@ -22,7 +22,7 @@ import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -46,7 +46,7 @@ public class LargeGroupEditAssemblies extends TestBaseUI {
     @TestRail(id = {10883, 10884, 10885, 10894, 11140})
     @Description("group Edit sub Components")
     public void editButtonUnavailable() {
-        componentAssembly = new AssemblyDTORequest().getAssembly("Gym Bike");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Gym Bike");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);

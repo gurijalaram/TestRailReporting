@@ -13,7 +13,7 @@ import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.OperationEnum;
@@ -56,7 +56,7 @@ public class FiltersTests extends TestBaseUI {
 
         String filterName = generateStringUtil.generateFilterName();
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -81,7 +81,7 @@ public class FiltersTests extends TestBaseUI {
     @Description("Verify that newly created filter is displayed in filters dropdown in my filter section")
     public void newlyCreatedFilterIsDisplayedInFiltersTest() {
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -106,7 +106,7 @@ public class FiltersTests extends TestBaseUI {
     @Description("Verify Cancel button closes the Scenario filter table")
     public void cancelBtnCloseFilterTableTest() {
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -129,7 +129,7 @@ public class FiltersTests extends TestBaseUI {
     public void canClearAddedCriteriaTest() {
 
         String filterName = generateStringUtil.generateFilterName();
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -157,7 +157,7 @@ public class FiltersTests extends TestBaseUI {
 
         String filterName = generateStringUtil.generateFilterName();
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -183,7 +183,7 @@ public class FiltersTests extends TestBaseUI {
 
         String filterName = generateStringUtil.generateFilterName();
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -210,7 +210,7 @@ public class FiltersTests extends TestBaseUI {
 
         String filterName = generateStringUtil.generateFilterName();
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -238,7 +238,7 @@ public class FiltersTests extends TestBaseUI {
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -271,7 +271,7 @@ public class FiltersTests extends TestBaseUI {
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -306,7 +306,7 @@ public class FiltersTests extends TestBaseUI {
 
         String filterName = generateStringUtil.generateFilterName();
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -353,7 +353,7 @@ public class FiltersTests extends TestBaseUI {
     @Description("Validate user can select Uncosted scenarios")
     public void ableToSelectUncostedScenarioTest() {
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -377,7 +377,7 @@ public class FiltersTests extends TestBaseUI {
     @Description("Validate user can select Assigned to Me scenarios")
     public void ableToSelectAssignedToMeScenarioTest() {
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         loginPage = new CidAppLoginPage(driver);
         componentsTablePage = loginPage.login(componentAssembly.getUser())
@@ -397,7 +397,7 @@ public class FiltersTests extends TestBaseUI {
     @Description("Validate user can select Missing scenarios")
     public void ableToSelectMissingScenarioTest() {
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
@@ -419,7 +419,7 @@ public class FiltersTests extends TestBaseUI {
     @Description("Validate user can select All scenarios")
     public void ableToSelectAllScenarioTest() {
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         loginPage = new CidAppLoginPage(driver);
         componentsTablePage = loginPage.login(componentAssembly.getUser())
@@ -559,19 +559,19 @@ public class FiltersTests extends TestBaseUI {
 
         String filterName = new GenerateStringUtil().generateFilterName();
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
 
-        ComponentInfoBuilder componentAssembly2 = new AssemblyDTORequest().getAssembly();
+        ComponentInfoBuilder componentAssembly2 = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly2)
             .uploadAssembly(componentAssembly2);
 
-        ComponentInfoBuilder componentAssembly3 = new AssemblyDTORequest().getAssembly();
+        ComponentInfoBuilder componentAssembly3 = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly3)
             .uploadAssembly(componentAssembly3);

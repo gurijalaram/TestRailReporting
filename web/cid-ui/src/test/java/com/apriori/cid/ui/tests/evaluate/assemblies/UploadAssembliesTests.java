@@ -23,7 +23,7 @@ import com.apriori.cid.ui.utils.DirectionEnum;
 import com.apriori.cid.ui.utils.MultiUpload;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.UnitsEnum;
@@ -84,7 +84,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {6511, 10510})
     @Description("Upload Assembly file with no missing sub-components")
     public void uploadAssemblyTest() {
-        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("Hinge assembly");
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
         ComponentInfoBuilder subcomponentA = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("big ring")).findFirst().get();
         ComponentInfoBuilder subcomponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("Pin")).findFirst().get();
         ComponentInfoBuilder subcomponentC = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("small ring")).findFirst().get();
@@ -132,7 +132,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11902, 10762, 11861})
     @Description("Upload Assembly with sub-components from Catia")
     public void testCatiaMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("flange c");
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -146,7 +146,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11903, 10767, 6562, 11909})
     @Description("Upload Assembly with sub-components from Creo")
     public void testCreoMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("piston_assembly");
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("piston_assembly");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -160,7 +160,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = 11904)
     @Description("Upload Assembly with sub-components from Solidworks")
     public void testSolidworksMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("Hinge assembly");
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -174,7 +174,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11905, 10764, 11867})
     @Description("Upload Assembly with sub-components from SolidEdge")
     public void testSolidEdgeMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("oldham");
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("oldham");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -198,7 +198,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11906, 10765, 11868})
     @Description("Upload Assembly with sub-components from NX")
     public void testNxMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("v6 piston assembly_asm1");
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("v6 piston assembly_asm1");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -223,7 +223,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11907, 10766})
     @Description("Upload Assembly with sub-components from Inventor")
     public void testInventorMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("Assembly01");
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("Assembly01");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -619,7 +619,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {6564})
     @Description("Assembly costs with multiple quantity of parts")
     public void costAssemblyWithMultipleQuantityOfParts() {
-        ComponentInfoBuilder componentAssembly = new AssemblyDTORequest().getAssembly("flange c");
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
         ComponentInfoBuilder subcomponentA = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("flange")).findFirst().get();
         ComponentInfoBuilder subcomponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("nut")).findFirst().get();
         ComponentInfoBuilder subcomponentC = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("bolt")).findFirst().get();
