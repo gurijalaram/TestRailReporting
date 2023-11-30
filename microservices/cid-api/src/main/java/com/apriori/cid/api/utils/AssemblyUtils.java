@@ -1,11 +1,14 @@
 package com.apriori.cid.api.utils;
 
+import com.apriori.cid.api.models.response.CadFilesResponse;
+import com.apriori.cid.api.models.response.ComponentIdentityResponse;
 import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.ErrorMessage;
+import com.apriori.shared.util.models.response.component.PostComponentResponse;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -88,12 +91,24 @@ public class AssemblyUtils {
      * @return current object
      */
     public AssemblyUtils uploadSubComponents(ComponentInfoBuilder componentAssembly) {
+        CadFilesResponse cadFilesResponse = componentsUtil.postSubcomponentsCadFiles(componentAssembly.getSubComponents());
+        PostComponentResponse postComponentResponse = componentsUtil.postSubcomponent(componentAssembly, cadFilesResponse);
 
-        componentAssembly.getSubComponents().forEach(subComponent -> {
-            ComponentInfoBuilder subComponentScenarioItem = componentsUtil.setFilePostComponentQueryCID(subComponent);
-            subComponent.setComponentIdentity(subComponentScenarioItem.getComponentIdentity());
-            subComponent.setScenarioIdentity(subComponentScenarioItem.getScenarioIdentity());
-        });
+        componentAssembly.getSubComponents()
+            .forEach(subcomponent -> postComponentResponse.getSuccesses()
+                .forEach(success -> {
+                    if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.getFilename())) {
+                        subcomponent.setComponentIdentity(success.getComponentIdentity());
+                        subcomponent.setScenarioIdentity(subcomponent.getScenarioIdentity());
+
+                        ComponentIdentityResponse componentIdentityResponse = componentsUtil.getComponentIdentityPart(subcomponent);
+                        subcomponent.setComponentIdentity(componentIdentityResponse.getIdentity());
+
+                        scenariosUtil.getScenarioCompleted(subcomponent);
+                    }
+                })
+            );
+
         return this;
     }
 
@@ -289,7 +304,7 @@ public class AssemblyUtils {
      * Get the ComponentInfoBuilder object of a specified subcomponent
      *
      * @param componentAssembly - The Component Assembly
-     * @param subComponentName - The name of the desired subcomponent
+     * @param subComponentName  - The name of the desired subcomponent
      * @return ComponentInfoBuilder object of desired subcomponent
      */
     public ComponentInfoBuilder getSubComponent(ComponentInfoBuilder componentAssembly, String subComponentName) {

@@ -91,6 +91,36 @@ public class ComponentsUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    public CadFilesResponse postSubcomponentsCadFiles(List<ComponentInfoBuilder> componentBuilder) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
+                .multiPartFiles(new MultiPartFiles().use("cadFiles", componentBuilder.stream()
+                    .map(ComponentInfoBuilder::getResourceFile)
+                    .collect(Collectors.toList())))
+                .token(componentBuilder.stream().findFirst().get().getUser().getToken());
+
+        ResponseWrapper<CadFilesResponse> cadFilesResponse =  HTTPRequest.build(requestEntity).post();
+        return cadFilesResponse.getResponseEntity();
+    }
+
+    public PostComponentResponse postSubcomponent(ComponentInfoBuilder componentInfo, CadFilesResponse cadFilesResponse) {
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+                .body("groupItems", cadFilesResponse.getCadFiles().stream()
+                        .map(o -> ComponentRequest.builder()
+                        .filename(o.getFilename())
+                        .override(componentInfo.getOverrideScenario())
+                        .resourceName(o.getResourceName())
+                        .scenarioName(componentInfo.getScenarioName())
+                        .build())
+                    .collect(Collectors.toList()))
+                .token(componentInfo.getUser().getToken());
+
+        ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
+        return postComponentResponse.getResponseEntity();
+    }
+
     /**
      * POST new component
      *
