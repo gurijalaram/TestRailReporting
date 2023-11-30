@@ -21,10 +21,10 @@ import com.apriori.cir.ui.tests.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalD
 import com.apriori.cir.ui.tests.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsReportTests;
 import com.apriori.cir.ui.tests.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.apriori.cir.ui.tests.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
-import com.apriori.cir.ui.tests.ootbreports.newreportstests.scenariocomparison.ScenarioComparisonReportTests;
-import com.apriori.cir.ui.tests.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostTrendReportTests;
-import com.apriori.cir.ui.tests.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
-import com.apriori.cir.ui.tests.ootbreports.newreportstests.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
+import com.apriori.cir.ui.tests.ootbreports.scenariocomparison.ScenarioComparisonReportTests;
+import com.apriori.cir.ui.tests.ootbreports.targetquotedcosttrend.TargetAndQuotedCostTrendReportTests;
+import com.apriori.cir.ui.tests.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
+import com.apriori.cir.ui.tests.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
