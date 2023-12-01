@@ -9,7 +9,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyRequestUtil;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.utils.FileResourceUtil;

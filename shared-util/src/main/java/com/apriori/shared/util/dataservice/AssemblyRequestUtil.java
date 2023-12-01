@@ -1,4 +1,4 @@
-package com.apriori.shared.util.dto;
+package com.apriori.shared.util.dataservice;
 
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class AssemblyRequestUtil {
     private static final String ASSEMBLY_STORE = "AssemblyStore.json";
-    private static final FileRequestManager DTO_READER = new FileRequestManager(ASSEMBLY_STORE);
+    private static final PartRequestManager ASSEMBLY_REQUEST = new PartRequestManager(ASSEMBLY_STORE);
 
     /**
      * Gets a random small assembly
@@ -20,7 +20,7 @@ public class AssemblyRequestUtil {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssembly() {
-        ComponentInfoBuilder assembly = DTO_READER.getAssembly();
+        ComponentInfoBuilder assembly = ASSEMBLY_REQUEST.getAssembly();
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -38,7 +38,7 @@ public class AssemblyRequestUtil {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssembly(String assemblyName) {
-        ComponentInfoBuilder assembly = DTO_READER.getAssembly(assemblyName);
+        ComponentInfoBuilder assembly = ASSEMBLY_REQUEST.getAssembly(assemblyName);
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -57,7 +57,7 @@ public class AssemblyRequestUtil {
      * @return component builder object
      */
     public ComponentInfoBuilder getAssemblySubcomponents(String assemblyName, String... subcomponentNames) {
-        ComponentInfoBuilder assembly = DTO_READER.getAssembly(assemblyName);
+        ComponentInfoBuilder assembly = ASSEMBLY_REQUEST.getAssembly(assemblyName);
 
         List<String> componentNames = Arrays.stream(subcomponentNames).collect(Collectors.toList());
 
@@ -81,7 +81,7 @@ public class AssemblyRequestUtil {
      * @return component builder object
      */
     public ComponentInfoBuilder getMediumAssembly() {
-        ComponentInfoBuilder assembly = DTO_READER.getMediumAssembly();
+        ComponentInfoBuilder assembly = ASSEMBLY_REQUEST.getMediumAssembly();
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -98,7 +98,7 @@ public class AssemblyRequestUtil {
      * @return component builder object
      */
     public ComponentInfoBuilder getLargeAssembly() {
-        ComponentInfoBuilder assembly = DTO_READER.getLargeAssembly();
+        ComponentInfoBuilder assembly = ASSEMBLY_REQUEST.getLargeAssembly();
 
         final UserCredentials user = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();

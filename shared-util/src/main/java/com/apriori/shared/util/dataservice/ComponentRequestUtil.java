@@ -1,4 +1,4 @@
-package com.apriori.shared.util.dto;
+package com.apriori.shared.util.dataservice;
 
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class ComponentRequestUtil {
     private ComponentInfoBuilder component;
     private static final String COMPONENT_STORE = "ComponentStore.json";
-    private static final FileRequestManager DTO_READER = new FileRequestManager(COMPONENT_STORE);
+    private static final PartRequestManager COMPONENT_REQUEST = new PartRequestManager(COMPONENT_STORE);
 
     /**
      * Gets a random component
@@ -25,7 +25,7 @@ public class ComponentRequestUtil {
      */
     public ComponentInfoBuilder getComponent() {
 
-        List<ComponentInfoBuilder> listOfComponents = DTO_READER.getComponents();
+        List<ComponentInfoBuilder> listOfComponents = COMPONENT_REQUEST.getComponents();
         Collections.shuffle(listOfComponents);
 
         component = listOfComponents.stream().findFirst().get();
@@ -45,7 +45,7 @@ public class ComponentRequestUtil {
      */
     public ComponentInfoBuilder getComponent(String componentName) {
 
-        component = DTO_READER.getComponents()
+        component = COMPONENT_REQUEST.getComponents()
             .stream()
             .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
             .findFirst()
@@ -66,7 +66,7 @@ public class ComponentRequestUtil {
      */
     public List<ComponentInfoBuilder> getComponents(int noOfComponents) {
 
-        List<ComponentInfoBuilder> listOfComponents = DTO_READER.getComponents();
+        List<ComponentInfoBuilder> listOfComponents = COMPONENT_REQUEST.getComponents();
         Collections.shuffle(listOfComponents);
 
         List<ComponentInfoBuilder> components = listOfComponents.subList(0, noOfComponents);
@@ -90,7 +90,7 @@ public class ComponentRequestUtil {
      */
     public ComponentInfoBuilder getComponentByExtension(String extension) {
 
-        List<ComponentInfoBuilder> componentExtension = DTO_READER.getComponents()
+        List<ComponentInfoBuilder> componentExtension = COMPONENT_REQUEST.getComponents()
             .stream()
             .filter(component -> component.getExtension().equalsIgnoreCase("." + extension)).collect(Collectors.toList());
         Collections.shuffle(componentExtension);
@@ -112,7 +112,7 @@ public class ComponentRequestUtil {
      */
     public ComponentInfoBuilder getComponentByProcessGroup(ProcessGroupEnum processGroup) {
 
-        List<ComponentInfoBuilder> componentPG = DTO_READER.getComponents()
+        List<ComponentInfoBuilder> componentPG = COMPONENT_REQUEST.getComponents()
             .stream()
             .filter(component -> component.getProcessGroup().equals(processGroup)).collect(Collectors.toList());
         Collections.shuffle(componentPG);
