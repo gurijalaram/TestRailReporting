@@ -5,12 +5,12 @@ import com.apriori.bcm.api.models.request.Worksheet;
 import com.apriori.bcm.api.models.request.WorksheetRequest;
 import com.apriori.bcm.api.models.response.ErrorResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
+import com.apriori.bcm.api.models.response.WorkSheets;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
@@ -58,5 +58,13 @@ public class BcmUtil extends TestUtil {
                 .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    public ResponseWrapper<WorkSheets> getWorksheetsList() {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheets.class)
+                .apUserContext(testingApUserContext)
+                .expectedResponseCode(HttpStatus.SC_OK);
+        return HTTPRequest.build(requestEntity).get();
     }
 }
