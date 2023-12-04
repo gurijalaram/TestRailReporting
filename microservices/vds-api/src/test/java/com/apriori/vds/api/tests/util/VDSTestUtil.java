@@ -27,7 +27,6 @@ public abstract class VDSTestUtil extends TestUtil {
     protected static final String customerId =  PropertiesContext.get("customer_identity");
     protected static final String userId = PropertiesContext.get("user_identity");
     protected static UserCredentials testingUser = UserUtil.getUser();
-    protected static String testingApUserContext =  new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail());
 
     protected static RequestEntityUtil requestEntityUtil;
 
@@ -47,7 +46,6 @@ public abstract class VDSTestUtil extends TestUtil {
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
         RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class)
-            //            .apUserContext(testingApUserContext)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
