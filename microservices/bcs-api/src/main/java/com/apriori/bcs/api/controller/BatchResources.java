@@ -10,7 +10,7 @@ import com.apriori.bcs.api.models.response.Cancel;
 import com.apriori.bcs.api.utils.BcsBase;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.properties.PropertiesContext;
 
@@ -54,7 +54,7 @@ public class BatchResources extends BcsBase {
                 .rollupScenarioName("auto-Scenario-" + currentMillis)
                 .build())
             .build();
-        final RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCHES, Batch.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCHES, Batch.class)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .headers(headerInfo)
             .body(newBatchRequest)
@@ -79,7 +79,7 @@ public class BatchResources extends BcsBase {
                 .rollupScenarioName("auto-Scenario-" + currentMillis)
                 .build())
             .build();
-        final RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCHES, klass)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCHES, klass)
             .inlineVariables(customerIdentity)
             .headers(headerInfo)
             .body(newBatchRequest)
@@ -93,7 +93,7 @@ public class BatchResources extends BcsBase {
      * @return Response Object
      */
     public static ResponseWrapper<Batches> getBatches() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCHES, Batches.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCHES, Batches.class)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).get();
@@ -106,7 +106,7 @@ public class BatchResources extends BcsBase {
      * @return - response
      */
     public static ResponseWrapper<Batch> getBatchRepresentation(String identity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), identity)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).get();
@@ -119,7 +119,7 @@ public class BatchResources extends BcsBase {
      * @return - response
      */
     public static ResponseWrapper<Batch> getBatchWithNoLogInfo(String identity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), identity);
         return HTTPRequest.build(requestEntity).get();
     }
@@ -131,7 +131,7 @@ public class BatchResources extends BcsBase {
      * @return - response
      */
     public static ResponseWrapper<String> startBatchCosting(Batch batch) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.START_COSTING_BY_ID, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.START_COSTING_BY_ID, null)
             .inlineVariables(PropertiesContext.get("customer_identity"), batch.getIdentity())
             .customBody("{}")
             .expectedResponseCode(HttpStatus.SC_ACCEPTED);
@@ -146,7 +146,7 @@ public class BatchResources extends BcsBase {
      */
     public static ResponseWrapper<Cancel> cancelBatchProcessing(String batchIdentity) {
         log.info("Started cancelling the batch id " + batchIdentity);
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.CANCEL_COSTING_BY_ID, Cancel.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.CANCEL_COSTING_BY_ID, Cancel.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity)
             .customBody("{}")
             .expectedResponseCode(HttpStatus.SC_ACCEPTED);
@@ -182,7 +182,7 @@ public class BatchResources extends BcsBase {
         RequestEntity requestEntity;
         Batch batch;
         do {
-            requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
+            requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity, batchIdentity);
             batch = (Batch) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {
@@ -229,6 +229,6 @@ public class BatchResources extends BcsBase {
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static <T> RequestEntity getBatchRequestEntity(BCSAPIEnum endPoint, String batchIdentity, Class<T> klass) {
-        return RequestEntityUtil.init(endPoint, klass).inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity);
+        return RequestEntityUtil_Old.init(endPoint, klass).inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity);
     }
 }

@@ -15,7 +15,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 
@@ -65,7 +65,7 @@ public class ViewElementTest extends TestUtil {
                     .build())
                 .build())
             .build();
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENT, ViewElementsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENT, ViewElementsResponse.class)
             .inlineVariables(viewElementResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .body(viewElementRequest)
@@ -79,7 +79,7 @@ public class ViewElementTest extends TestUtil {
     @Test
     public void getLayoutViewElements() {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENTS, ViewElementsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENTS, ViewElementsResponse.class)
             .inlineVariables(layoutResponse.getIdentity())
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)

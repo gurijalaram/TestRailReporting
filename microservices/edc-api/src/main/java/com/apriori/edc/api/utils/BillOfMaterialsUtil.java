@@ -10,7 +10,7 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 
@@ -29,7 +29,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      */
     public static ResponseWrapper<BillOfMaterialsResponse> postBillOfMaterials(String fileName) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS, BillOfMaterialsResponse.class)
+            RequestEntityUtil_Old.init(EDCAPIEnum.BILL_OF_MATERIALS, BillOfMaterialsResponse.class)
                 .multiPartFiles(new MultiPartFiles()
                     .use("multiPartFile", FileResourceUtil.getResourceAsFile(fileName)))
                 .queryParams(new QueryParams()
@@ -80,7 +80,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      */
     protected static List<BillOfMaterialsResponse> getAllBillOfMaterials() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS, BillOfMaterialsItemsResponse.class)
+            RequestEntityUtil_Old.init(EDCAPIEnum.BILL_OF_MATERIALS, BillOfMaterialsItemsResponse.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<BillOfMaterialsItemsResponse> getAllResponse = HTTPRequest.build(requestEntity).get();
@@ -146,7 +146,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @return response object
      */
     protected static RequestEntity genericRequest(String identity, EDCAPIEnum edcApiEnum, Class klass) {
-        return RequestEntityUtil.init(edcApiEnum, klass)
+        return RequestEntityUtil_Old.init(edcApiEnum, klass)
             .inlineVariables(identity);
     }
 }

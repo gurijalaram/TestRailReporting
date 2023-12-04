@@ -14,7 +14,7 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.ErrorMessage;
@@ -70,7 +70,7 @@ public class DiscussionTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, ErrorMessage.class)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .headers(DdsApiTestUtils.setUpHeader())
             .body(discussionsRequest)
@@ -86,7 +86,7 @@ public class DiscussionTest extends TestUtil {
     @TestRail(id = {12406})
     @Description("Get all discussions")
     public void getDiscussions() {
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, DiscussionsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, DiscussionsResponse.class)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .headers(DdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -108,7 +108,7 @@ public class DiscussionTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION, DiscussionResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION, DiscussionResponse.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), discussionResponse.getResponseEntity().getIdentity())
             .headers(DdsApiTestUtils.setUpHeader())
             .body(discussionsRequest)
@@ -130,7 +130,7 @@ public class DiscussionTest extends TestUtil {
                 .build())
             .build();
 
-        ResponseWrapper<ErrorMessage> discussionResponse = HTTPRequest.build(RequestEntityUtil
+        ResponseWrapper<ErrorMessage> discussionResponse = HTTPRequest.build(RequestEntityUtil_Old
                 .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), "FDAEINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
@@ -152,7 +152,7 @@ public class DiscussionTest extends TestUtil {
         ResponseWrapper<String> discussionDeletedResponse = DdsApiTestUtils.deleteDiscussion(discussionCreatedResponse.getResponseEntity().getIdentity(), userContext);
         softAssertions.assertThat(discussionDeletedResponse.getStatusCode()).isEqualTo(HttpStatus.SC_NO_CONTENT);
 
-        ResponseWrapper<ErrorMessage> discussionResponse = HTTPRequest.build(RequestEntityUtil
+        ResponseWrapper<ErrorMessage> discussionResponse = HTTPRequest.build(RequestEntityUtil_Old
                 .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), discussionCreatedResponse.getResponseEntity().getIdentity())
                 .headers(DdsApiTestUtils.setUpHeader())
@@ -172,7 +172,7 @@ public class DiscussionTest extends TestUtil {
     @TestRail(id = {12413})
     @Description("delete a invalid discussion")
     public void deleteInvalidDiscussion() {
-        ResponseWrapper<ErrorMessage> discussionDeletedResponse = HTTPRequest.build(RequestEntityUtil
+        ResponseWrapper<ErrorMessage> discussionDeletedResponse = HTTPRequest.build(RequestEntityUtil_Old
                 .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), "FDWXINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
@@ -194,7 +194,7 @@ public class DiscussionTest extends TestUtil {
                 .build())
             .build();
 
-        ResponseWrapper<ErrorMessage> errorMessageResponseWrapper = HTTPRequest.build(RequestEntityUtil
+        ResponseWrapper<ErrorMessage> errorMessageResponseWrapper = HTTPRequest.build(RequestEntityUtil_Old
                 .init(DDSApiEnum.CUSTOMER_DISCUSSIONS, ErrorMessage.class)
                 .inlineVariables("INVALIDCUSTOMER")
                 .headers(DdsApiTestUtils.setUpHeader())
@@ -210,7 +210,7 @@ public class DiscussionTest extends TestUtil {
     @TestRail(id = {14328})
     @Description("Get Discussion with invalid Discussion Identity")
     public void getDiscussionWithInvalidIdentity() {
-        ResponseWrapper<ErrorMessage> discussionErrorResponse = HTTPRequest.build(RequestEntityUtil
+        ResponseWrapper<ErrorMessage> discussionErrorResponse = HTTPRequest.build(RequestEntityUtil_Old
                 .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), "FDAEINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
@@ -229,7 +229,7 @@ public class DiscussionTest extends TestUtil {
     public void searchDiscussions() {
         SearchDiscussionsRequest searchDiscussionsRequest = SearchDiscussionsRequest.builder()
             .discussionIds(Collections.singletonList(discussionResponse.getResponseEntity().getIdentity())).build();
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_SEARCH_DISCUSSIONS, DiscussionsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_SEARCH_DISCUSSIONS, DiscussionsResponse.class)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .headers(DdsApiTestUtils.setUpHeader())
             .body(searchDiscussionsRequest)

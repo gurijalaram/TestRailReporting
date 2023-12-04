@@ -4,7 +4,7 @@ import com.apriori.edc.api.enums.EDCAPIEnum;
 import com.apriori.edc.api.models.response.users.Users;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 
@@ -19,7 +19,7 @@ public class UsersUtil extends TestUtil {
      */
     public Users getCurrentUser() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.CURRENT_USER, Users.class)
+            RequestEntityUtil_Old.init(EDCAPIEnum.CURRENT_USER, Users.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Users> getUserResponse = HTTPRequest.build(requestEntity).get();

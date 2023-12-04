@@ -101,7 +101,7 @@ public class TestUtil {
             throw new IllegalArgumentException("The body is not a CreatableModel.  Did you forget a @CreatableModel(kind) annotation?");
         }
 
-        RequestEntity requestEntity = RequestEntityUtil.init(apiEnum, klass).body(model.value(), body).inlineVariables(inlineVariables).expectedResponseCode(expectedResponseCode);
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(apiEnum, klass).body(model.value(), body).inlineVariables(inlineVariables).expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -132,7 +132,7 @@ public class TestUtil {
         pagination.put("pageNumber", String.format("%d", pageNumber));
         pagination.put("pageSize", String.format("%d", pageSize));
 
-        RequestEntity request = RequestEntityUtil.init(apiEnum, klass)
+        RequestEntity request = RequestEntityUtil_Old.init(apiEnum, klass)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_OK)
             .urlParams(Arrays.asList(filter, sort, pagination));
@@ -151,7 +151,7 @@ public class TestUtil {
      * @return The response wrapper that contains the response data.
      */
     public final <E extends EndpointEnum, T> ResponseWrapper<T> getCommonRequest(E apiEnum, Class<T> klass, Integer expectedResponseCode, String... inlineVariables) {
-        RequestEntity request = RequestEntityUtil.init(apiEnum, klass).inlineVariables(inlineVariables).expectedResponseCode(expectedResponseCode);
+        RequestEntity request = RequestEntityUtil_Old.init(apiEnum, klass).inlineVariables(inlineVariables).expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(request).get();
     }
 
@@ -161,6 +161,6 @@ public class TestUtil {
      * @return The response of what was deleted
      */
     public final <E extends EndpointEnum> ResponseWrapper<String> delete(E apiEnum, String... inlineVariables) {
-        return HTTPRequest.build(RequestEntityUtil.init(apiEnum, null).inlineVariables(inlineVariables).expectedResponseCode(HttpStatus.SC_NO_CONTENT)).delete();
+        return HTTPRequest.build(RequestEntityUtil_Old.init(apiEnum, null).inlineVariables(inlineVariables).expectedResponseCode(HttpStatus.SC_NO_CONTENT)).delete();
     }
 }

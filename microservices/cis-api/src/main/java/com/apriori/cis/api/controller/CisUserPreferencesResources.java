@@ -7,7 +7,7 @@ import com.apriori.cis.api.models.response.userpreferences.CurrentExtendedUserPr
 import com.apriori.cis.api.models.response.userpreferences.ExtendedUserPreferencesResponse;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 
@@ -22,7 +22,7 @@ public class CisUserPreferencesResources extends TestUtil {
      */
     protected static CurrentExtendedUserPreferencesResponse getCurrentExtendedUserPreferences() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CisAPIEnum.USERS_CURRENT_EXTENDED_PREFERENCES, CurrentExtendedUserPreferencesResponse.class)
+            RequestEntityUtil_Old.init(CisAPIEnum.USERS_CURRENT_EXTENDED_PREFERENCES, CurrentExtendedUserPreferencesResponse.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<CurrentExtendedUserPreferencesResponse> getAllResponses = HTTPRequest.build(requestEntity)
@@ -38,7 +38,7 @@ public class CisUserPreferencesResources extends TestUtil {
      */
     protected static ExtendedUserPreferencesResponse getLoggedExtendedUserPreferences() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CisAPIEnum.USERS_EXTENDED_PREFERENCES, ExtendedUserPreferencesResponse.class)
+            RequestEntityUtil_Old.init(CisAPIEnum.USERS_EXTENDED_PREFERENCES, ExtendedUserPreferencesResponse.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<ExtendedUserPreferencesResponse> getAllResponses = HTTPRequest.build(requestEntity).get();
@@ -56,7 +56,7 @@ public class CisUserPreferencesResources extends TestUtil {
             .userPreferences(CurrentUserPreferenceParameters.builder().avatarColor(avatarColor).build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.USERS_CURRENT_EXTENDED_PREFERENCES, CurrentExtendedUserPreferencesResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.USERS_CURRENT_EXTENDED_PREFERENCES, CurrentExtendedUserPreferencesResponse.class)
             .body(currentUserPreferenceRequestBuilder)
             .expectedResponseCode(HttpStatus.SC_OK);
 

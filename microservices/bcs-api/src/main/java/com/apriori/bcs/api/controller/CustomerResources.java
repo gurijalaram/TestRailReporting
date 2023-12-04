@@ -6,7 +6,7 @@ import com.apriori.bcs.api.models.response.UserPreferences;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.properties.PropertiesContext;
@@ -31,7 +31,7 @@ public class CustomerResources {
                 FileResourceUtil.getResourceFileStream("schemas/testdata/UpdateCostingPreferences.json"), PatchCostingPreferenceRequest.class);
         request.setCadToleranceReplacement(100.00);
         request.setMinCadToleranceThreshold(new Random().nextDouble());
-        RequestEntity requestEntity = RequestEntityUtil
+        RequestEntity requestEntity = RequestEntityUtil_Old
             .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, UserPreferences.class)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .body(request)
@@ -46,7 +46,7 @@ public class CustomerResources {
      * @return response  - Object of responseWrapper
      */
     public static ResponseWrapper<UserPreferences> patchCostingPreferences(PatchCostingPreferenceRequest patchCostingPreferenceRequest) {
-        RequestEntity requestEntity = RequestEntityUtil
+        RequestEntity requestEntity = RequestEntityUtil_Old
             .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, UserPreferences.class)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .body(patchCostingPreferenceRequest);
@@ -61,7 +61,7 @@ public class CustomerResources {
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static <T> RequestEntity getCustomerRequestEntity(BCSAPIEnum endPoint, Class<T> klass) {
-        return RequestEntityUtil.init(endPoint, klass)
+        return RequestEntityUtil_Old.init(endPoint, klass)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .expectedResponseCode(HttpStatus.SC_OK);
     }
