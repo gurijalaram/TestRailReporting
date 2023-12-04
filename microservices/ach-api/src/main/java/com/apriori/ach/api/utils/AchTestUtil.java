@@ -144,7 +144,7 @@ public class AchTestUtil extends TestUtil {
         requestBody.setUsername(userName);
         requestBody.setEmail(userName + "@" + domain + ".com");
         requestBody.getUserProfile().setGivenName(userName);
-        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.CUSTOMER_USERS, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ACHAPIEnum.CUSTOMER_USERS, klass)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(expectedResponseCode)
             .body("user", requestBody);
@@ -162,7 +162,7 @@ public class AchTestUtil extends TestUtil {
      * @return ResponseWrapper T
      */
     public <T> ResponseWrapper<T> patchUser(Class<T> klass, User user, String updatedJobTitle, Integer expectedResponseCode) {
-        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.USER_BY_ID, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ACHAPIEnum.USER_BY_ID, klass)
             .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
             .expectedResponseCode(expectedResponseCode)
             .body("user",
