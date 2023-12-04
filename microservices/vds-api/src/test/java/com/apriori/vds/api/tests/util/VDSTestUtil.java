@@ -40,12 +40,12 @@ public abstract class VDSTestUtil extends TestUtil {
 
     @BeforeAll
     public static  void init() {
-//        requestEntityUtil = RequestEntityUtilBuilder
-//            .useRandomUser()
-//            .useTokenInRequests()
-//            .useApUserContextInRequests();
+    //        requestEntityUtil = RequestEntityUtilBuilder
+    //            .useRandomUser()
+    //            .useTokenInRequests()
+    //            .useApUserContextInRequests();
 
-//        testingUser = requestEntityUtil.getEmbeddedUser();
+    //        testingUser = requestEntityUtil.getEmbeddedUser();
     }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
