@@ -26,23 +26,26 @@ import java.util.List;
 public abstract class VDSTestUtil extends TestUtil {
     protected static final String customerId =  PropertiesContext.get("customer_identity");
     protected static final String userId = PropertiesContext.get("user_identity");
-    protected static UserCredentials testingUser = UserUtil.getUser();
     protected static String testingApUserContext =  new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail());
 
-    protected static RequestEntityUtil requestEntityUtil;
+    protected static RequestEntityUtil requestEntityUtil = RequestEntityUtilBuilder
+        .useRandomUser()
+        .useTokenInRequests()
+        .useApUserContextInRequests();
 
+    protected static UserCredentials  testingUser = requestEntityUtil.getEmbeddedUser();
 
     private static DigitalFactory digitalFactory;
     private static String digitalFactoryIdentity;
 
     @BeforeAll
     public static  void init() {
-        requestEntityUtil = RequestEntityUtilBuilder
-            .useRandomUser()
-            .useTokenInRequests()
-            .useApUserContextInRequests();
+//        requestEntityUtil = RequestEntityUtilBuilder
+//            .useRandomUser()
+//            .useTokenInRequests()
+//            .useApUserContextInRequests();
 
-        testingUser = requestEntityUtil.getEmbeddedUser();
+//        testingUser = requestEntityUtil.getEmbeddedUser();
     }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
