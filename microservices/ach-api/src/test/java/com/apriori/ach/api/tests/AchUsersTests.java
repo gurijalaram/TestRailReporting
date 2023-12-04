@@ -163,7 +163,7 @@ public class AchUsersTests {
     @TestRail(id = {29180})
     @Description("Error when non admin user trying to create user")
     public void notAdminCreateUser() {
-        RequestEntityUtil.useTokenForRequests(getWidgetsUserToken(NOT_ADMIN_USER));
+        RequestEntityUtil_Old.useTokenForRequests(getWidgetsUserToken(NOT_ADMIN_USER));
 
         String userName = new GenerateStringUtil().generateUserName();
 

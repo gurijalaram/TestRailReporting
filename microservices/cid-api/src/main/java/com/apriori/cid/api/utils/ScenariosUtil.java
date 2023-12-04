@@ -631,7 +631,7 @@ public class ScenariosUtil {
 
         Lists.partition(scenarios, 10).forEach(partitionedScenario -> {
 
-            final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.DELETE_SCENARIOS, ScenariosDeleteResponse.class)
+            final RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.DELETE_SCENARIOS, ScenariosDeleteResponse.class)
                 .body("groupItems", partitionedScenario.stream()
                     .map(scenarioItem ->
                         ComponentRequest.builder()
