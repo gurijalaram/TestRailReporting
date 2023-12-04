@@ -91,7 +91,15 @@ public class AssemblyUtils {
      * @return current object
      */
     public AssemblyUtils uploadSubComponents(ComponentInfoBuilder componentAssembly) {
-        CadFilesResponse cadFilesResponse = componentsUtil.postSubcomponentsCadFiles(componentAssembly.getSubComponents());
+
+        componentAssembly.getSubComponents()
+            .forEach(subcomponent -> {
+                if (subcomponent.getSubComponents() != null) {
+                    uploadSubComponents(subcomponent);
+                }
+            });
+
+        CadFilesResponse cadFilesResponse = componentsUtil.postSubcomponentsCadFiles(componentAssembly);
         PostComponentResponse postComponentResponse = componentsUtil.postSubcomponent(componentAssembly, cadFilesResponse);
 
         componentAssembly.getSubComponents()
@@ -99,7 +107,7 @@ public class AssemblyUtils {
                 .forEach(success -> {
                     if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.getFilename())) {
                         subcomponent.setComponentIdentity(success.getComponentIdentity());
-                        subcomponent.setScenarioIdentity(subcomponent.getScenarioIdentity());
+                        subcomponent.setScenarioIdentity(success.getScenarioIdentity());
 
                         ComponentIdentityResponse componentIdentityResponse = componentsUtil.getComponentIdentityPart(subcomponent);
                         subcomponent.setComponentIdentity(componentIdentityResponse.getIdentity());

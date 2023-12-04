@@ -41,10 +41,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ComponentsUtil {
 
-    private final int MAX_FILES = 20;
-    private final int CHUNK_SIZE = 10;
-    private final int POLL_TIME = 1;
-    private final int WAIT_TIME = 570;
+    private static final int MAX_FILES = 20;
+    private static final int CHUNK_SIZE = 10;
+    private static final int POLL_TIME = 1;
+    private static final int WAIT_TIME = 570;
 
     /**
      * POST cad files
@@ -54,7 +54,7 @@ public class ComponentsUtil {
      */
     public List<CadFile> postCadFiles(ComponentInfoBuilder componentInfo) {
         if (componentInfo.getResourceFiles().size() > MAX_FILES) {
-            throw new RuntimeException("Attempted to upload '" + componentInfo.getResourceFiles().size() + "' files. A maximum of '" + MAX_FILES + "' CAD files can be uploaded at the same time");
+            throw new RuntimeException("Attempted to upload '" + componentInfo.getResourceFiles().size() + "' files. Only a maximum of '" + MAX_FILES + "' CAD files can be uploaded at the same time");
         }
 
         List<CadFile> cadFiles = new ArrayList<>();
@@ -78,40 +78,53 @@ public class ComponentsUtil {
     /**
      * POST cad files
      *
-     * @param componentBuilder - the component object
-     * @param files            - the list of files
+     * @param componentInfo - the component object
+     * @param files         - the list of files
      * @return cad file response object
      */
-    private ResponseWrapper<CadFilesResponse> postCadFile(ComponentInfoBuilder componentBuilder, List<File> files) {
+    private ResponseWrapper<CadFilesResponse> postCadFile(ComponentInfoBuilder componentInfo, List<File> files) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("cadFiles", files))
-                .token(componentBuilder.getUser().getToken());
+                .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
     }
 
-    public CadFilesResponse postSubcomponentsCadFiles(List<ComponentInfoBuilder> componentBuilder) {
+    /**
+     * POST subcomponents cad files
+     *
+     * @param componentInfo - the component object
+     * @return cad files response object
+     */
+    public CadFilesResponse postSubcomponentsCadFiles(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
-                .multiPartFiles(new MultiPartFiles().use("cadFiles", componentBuilder.stream()
+                .multiPartFiles(new MultiPartFiles().use("cadFiles", componentInfo.getSubComponents().stream()
                     .map(ComponentInfoBuilder::getResourceFile)
                     .collect(Collectors.toList())))
-                .token(componentBuilder.stream().findFirst().get().getUser().getToken());
+                .token(componentInfo.getUser().getToken());
 
-        ResponseWrapper<CadFilesResponse> cadFilesResponse =  HTTPRequest.build(requestEntity).post();
+        ResponseWrapper<CadFilesResponse> cadFilesResponse = HTTPRequest.build(requestEntity).post();
         return cadFilesResponse.getResponseEntity();
     }
 
+    /**
+     * POST subcomponents
+     *
+     * @param componentInfo    - the component object
+     * @param cadFilesResponse - the cad file response
+     * @return component response object
+     */
     public PostComponentResponse postSubcomponent(ComponentInfoBuilder componentInfo, CadFilesResponse cadFilesResponse) {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
                 .body("groupItems", cadFilesResponse.getCadFiles().stream()
-                        .map(o -> ComponentRequest.builder()
-                        .filename(o.getFilename())
+                    .map(cadFileResponse -> ComponentRequest.builder()
+                        .filename(cadFileResponse.getFilename())
                         .override(componentInfo.getOverrideScenario())
-                        .resourceName(o.getResourceName())
+                        .resourceName(cadFileResponse.getResourceName())
                         .scenarioName(componentInfo.getScenarioName())
                         .build())
                     .collect(Collectors.toList()))
