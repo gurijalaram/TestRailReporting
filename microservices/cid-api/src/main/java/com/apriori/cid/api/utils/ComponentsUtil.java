@@ -117,7 +117,7 @@ public class ComponentsUtil {
      * @param cadFilesResponse - the cad files
      * @return component response object
      */
-    public PostComponentResponse postSubcomponents(ComponentInfoBuilder componentInfo, CadFilesResponse cadFilesResponse) {
+    public PostComponentResponse postComponents(List<ComponentInfoBuilder> componentInfo, CadFilesResponse cadFilesResponse) {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
@@ -125,12 +125,20 @@ public class ComponentsUtil {
                     .stream()
                     .map(cadFileResponse -> ComponentRequest.builder()
                         .filename(cadFileResponse.getFilename())
-                        .override(componentInfo.getOverrideScenario())
+                        .override(componentInfo.stream()
+                            .filter(x -> x.getComponentName().concat(x.getExtension()).equals(cadFileResponse.getFilename()))
+                            .map(ComponentInfoBuilder::getOverrideScenario)
+                            .collect(Collectors.toList())
+                            .get(0))
                         .resourceName(cadFileResponse.getResourceName())
-                        .scenarioName(componentInfo.getScenarioName())
+                        .scenarioName(componentInfo.stream()
+                            .filter(x -> x.getComponentName().concat(x.getExtension()).equals(cadFileResponse.getFilename()))
+                            .map(ComponentInfoBuilder::getScenarioName)
+                            .collect(Collectors.toList())
+                            .get(0))
                         .build())
                     .collect(Collectors.toList()))
-                .token(componentInfo.getUser().getToken());
+                .token(componentInfo.get(0).getUser().getToken());
 
         ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
         return postComponentResponse.getResponseEntity();
