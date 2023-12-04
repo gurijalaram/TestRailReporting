@@ -100,7 +100,8 @@ public class ComponentsUtil {
     public CadFilesResponse postSubcomponentsCadFiles(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
-                .multiPartFiles(new MultiPartFiles().use("cadFiles", componentInfo.getSubComponents().stream()
+                .multiPartFiles(new MultiPartFiles().use("cadFiles", componentInfo.getSubComponents()
+                    .stream()
                     .map(ComponentInfoBuilder::getResourceFile)
                     .collect(Collectors.toList())))
                 .token(componentInfo.getUser().getToken());
@@ -120,7 +121,8 @@ public class ComponentsUtil {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
-                .body("groupItems", cadFilesResponse.getCadFiles().stream()
+                .body("groupItems", cadFilesResponse.getCadFiles()
+                    .stream()
                     .map(cadFileResponse -> ComponentRequest.builder()
                         .filename(cadFileResponse.getFilename())
                         .override(componentInfo.getOverrideScenario())
