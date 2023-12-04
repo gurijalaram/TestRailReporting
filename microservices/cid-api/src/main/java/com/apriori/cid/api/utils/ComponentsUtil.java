@@ -114,10 +114,10 @@ public class ComponentsUtil {
      * POST subcomponents
      *
      * @param componentInfo    - the component object
-     * @param cadFilesResponse - the cad file response
+     * @param cadFilesResponse - the cad files
      * @return component response object
      */
-    public PostComponentResponse postSubcomponent(ComponentInfoBuilder componentInfo, CadFilesResponse cadFilesResponse) {
+    public PostComponentResponse postSubcomponents(ComponentInfoBuilder componentInfo, CadFilesResponse cadFilesResponse) {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
