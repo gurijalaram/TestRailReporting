@@ -32,6 +32,10 @@ global:
   default_user_name: admin@apriori.com
   default_password: admin
 
+  max_days: 7
+  page_size: 1000
+  scenario_name_prefix: AutoScenario
+
   nexus:
     api_url: https://nexus.apriori.com/
     username: 1W_7fYw7

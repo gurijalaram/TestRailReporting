@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.explore;
 
+import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING_DIE;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -20,39 +21,32 @@ import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.TimeEnum;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.ComponentDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
+import com.apriori.shared.util.dto.ComponentRequestUtil;
 import com.apriori.shared.util.enums.OperationEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
 import com.apriori.shared.util.enums.UnitsEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-
 public class FilterCriteriaTests extends TestBaseUI {
 
-    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private File resourceFile;
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder cidComponentItem;
+    private ComponentInfoBuilder component;
+    private ComponentInfoBuilder assembly;
     private FilterPage filterPage;
     private SoftAssertions softAssertion = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();
@@ -63,8 +57,11 @@ public class FilterCriteriaTests extends TestBaseUI {
 
     @AfterEach
     public void resetAllSettings() {
-        if (currentUser != null) {
-            new UserPreferencesUtil().resetSettings(currentUser);
+        if (assembly != null) {
+            new UserPreferencesUtil().resetSettings(assembly.getUser());
+        }
+        if (component != null) {
+            new UserPreferencesUtil().resetSettings(component.getUser());
         }
     }
 
@@ -72,143 +69,96 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6213})
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
-
-        String componentName = "SheetMetal";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        component = new ComponentRequestUtil().getComponent();
+
+        explorePage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
             .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "SheetMetal")
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, component.getComponentName())
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()), is(equalTo(1)));
     }
 
     @Test
-    @TestRail(id = {6214})
+    @TestRail(id = {6214, 6215})
     @Description("Test private criteria attribute")
     public void testPrivateCriteriaAttribute() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "Casting";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
+        String filterName2 = generateStringUtil.generateFilterName();
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        component = new ComponentRequestUtil().getComponentByProcessGroup(CASTING_DIE);
+
+        explorePage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteria(PropertyEnum.PROCESS_GROUP, OperationEnum.IN, ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .addCriteria(PropertyEnum.PROCESS_GROUP, OperationEnum.IN, CASTING_DIE.getProcessGroup())
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
-    }
+        softAssertion.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName())).isEqualTo(1);
 
-    @Test
-    @TestRail(id = {6215})
-    @Description("Test private criteria part contains")
-    public void testPrivateCriteriaContains() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "CurvedWall";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-        String filterName = generateStringUtil.generateFilterName();
-
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .clickExplore()
-            .filter()
+        explorePage.filter()
             .saveAs()
-            .inputName(filterName)
-            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "Wall")
+            .inputName(filterName2)
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, component.getComponentName().substring(component.getComponentName().length() / 2))
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
+        softAssertion.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName())).isEqualTo(1);
+
+        softAssertion.assertAll();
     }
 
     @Test
     @TestRail(id = {6216})
     @Description("Test private criteria assembly")
     public void testPrivateCriteriaAssembly() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-
-        String filename = "oldham.asm.1";
-        String componentName = "OLDHAM";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
         String filterName = generateStringUtil.generateFilterName();
-        currentUser = UserUtil.getUser();
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .clickExplore()
+        assembly = new AssemblyRequestUtil().getAssembly();
+
+        assemblyUtils.uploadAssembly(assembly);
+
+        explorePage = new CidAppLoginPage(driver)
+            .login(assembly.getUser())
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "oldham")
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, assembly.getComponentName().substring(assembly.getComponentName().length() / 2))
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("oldham", scenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios(assembly.getComponentName(), assembly.getScenarioName()), is(equalTo(1)));
     }
 
     @Test
     @TestRail(id = {6217})
     @Description("Test public criteria assembly status")
     public void testPublicCriteriaAssemblyStatus() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final String BIG_RING = "big ring";
-        final String PIN = "Pin";
-        final String SMALL_RING = "small ring";
-
-        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-        final String subComponentExtension = ".SLDPRT";
         String filterName = generateStringUtil.generateFilterName();
 
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        assembly = new AssemblyRequestUtil().getAssembly();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly)
-            .costAssembly(componentAssembly);
+        assemblyUtils.uploadSubComponents(assembly)
+            .uploadAssembly(assembly);
+        assemblyUtils.publishSubComponents(assembly)
+            .costAssembly(assembly);
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
+        explorePage = new CidAppLoginPage(driver).login(assembly.getUser())
+            .navigateToScenario(assembly)
             .clickActions()
             .info()
             .selectStatus("Analysis")
@@ -217,7 +167,7 @@ public class FilterCriteriaTests extends TestBaseUI {
             .inputNotes("Test Notes")
             .submit(EvaluatePage.class)
             .publishScenario(PublishPage.class)
-            .publish(componentAssembly, EvaluatePage.class)
+            .publish(assembly, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -225,41 +175,34 @@ public class FilterCriteriaTests extends TestBaseUI {
             .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), is(greaterThanOrEqualTo(1)));
+        assertThat(explorePage.getListOfScenarios(assembly.getComponentName(), assembly.getScenarioName()), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
     @TestRail(id = {6218})
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
         String filterName = generateStringUtil.generateFilterName();
 
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        component = new ComponentRequestUtil().getComponent();
 
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+        explorePage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .navigateToScenario(component)
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "Push Pin")
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, component.getComponentName().substring(0, component.getComponentName().length() / 2))
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("Push Pin", scenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()), is(equalTo(1)));
     }
 
     @Test
-    @Issue("BA-2610")
     @Tag(SMOKE)
     @TestRail(id = {6221, 6532})
     @Description("Test multiple attributes")
@@ -267,7 +210,7 @@ public class FilterCriteriaTests extends TestBaseUI {
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
 
-        ComponentInfoBuilder component = new ComponentDTORequest().getComponent();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(component.getUser())
@@ -304,33 +247,23 @@ public class FilterCriteriaTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6169, 6170})
-    @Description("Check that user cannot Delete Preset Filters")
-    public void testDeleteButtonDisabledForPresetFilters() {
-        currentUser = UserUtil.getUser();
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser);
+    @TestRail(id = {6169, 6170, 6100, 9108, 9109})
+    @Description("Validate that user can cancel action New, Rename, Save As before saving")
+    public void testCancelNewSaveRename() {
+        String filterName = generateStringUtil.generateFilterName();
+        String filterName2 = generateStringUtil.generateFilterName();
+        String filterName3 = generateStringUtil.generateFilterName();
+        String filterName4 = generateStringUtil.generateFilterName();
 
-        filterPage = new ExplorePage(driver)
+        filterPage = new CidAppLoginPage(driver)
+            .login(UserUtil.getUser())
             .filter()
             .selectFilter("Private");
 
         softAssertion.assertThat(filterPage.isDeleteButtonEnabled()).isFalse();
         softAssertion.assertThat(filterPage.isRenameButtonEnabled()).isFalse();
 
-        softAssertion.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {6100})
-    @Description("Validate that user can cancel action New, Rename, Save As before saving")
-    public void testCancelNewSaveRename() {
-        currentUser = UserUtil.getUser();
-        String filterName = generateStringUtil.generateFilterName();
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser);
-
-        filterPage = new ExplorePage(driver)
+        filterPage.cancel(ExplorePage.class)
             .filter()
             .newFilter()
             .inputName(filterName)
@@ -356,23 +289,10 @@ public class FilterCriteriaTests extends TestBaseUI {
 
         softAssertion.assertThat(filterPage.isElementDisplayed(filterName, "text-overflow")).isTrue();
 
-        softAssertion.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {9108})
-    @Description("Verify that filter values for cost results are converted after changing unit preferences")
-    public void testFilterValuesAfterChangingUnitPreferencesToEUR() {
-        currentUser = UserUtil.getUser();
-        String filterName = generateStringUtil.generateFilterName();
-
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser);
-
-        explorePage = new ExplorePage(driver)
+        filterPage.cancel(ExplorePage.class)
             .filter()
             .newFilter()
-            .inputName(filterName)
+            .inputName(filterName2)
             .addCriteria(PropertyEnum.TOTAL_CAPITAL_INVESTMENT, OperationEnum.LESS_THAN, "1")
             .save(FilterPage.class)
             .submit(ExplorePage.class);
@@ -383,23 +303,12 @@ public class FilterCriteriaTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .filter();
 
-        assertThat(filterPage.getFilterValue(PropertyEnum.TOTAL_CAPITAL_INVESTMENT), equalTo("0.847946"));
-    }
+        softAssertion.assertThat(filterPage.getFilterValue(PropertyEnum.TOTAL_CAPITAL_INVESTMENT)).isEqualTo("0.847946");
 
-    @Test
-    @TestRail(id = {9109})
-    @Description("Verify that filter value for Finish Mass is converted after changing unit preferences")
-    public void testFilterValuesAfterChangingUnitPreferencesToGram() {
-        currentUser = UserUtil.getUser();
-        String filterName = generateStringUtil.generateFilterName();
-
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser);
-
-        explorePage = new ExplorePage(driver)
+        filterPage.cancel(ExplorePage.class)
             .filter()
             .newFilter()
-            .inputName(filterName)
+            .inputName(filterName3)
             .addCriteria(PropertyEnum.FINISH_MASS, OperationEnum.GREATER_THAN, "1")
             .save(FilterPage.class)
             .submit(ExplorePage.class);
@@ -410,23 +319,12 @@ public class FilterCriteriaTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .filter();
 
-        assertThat(filterPage.getFilterValue(PropertyEnum.FINISH_MASS), equalTo("1000"));
-    }
+        softAssertion.assertThat(filterPage.getFilterValue(PropertyEnum.FINISH_MASS)).isEqualTo("1000");
 
-    @Test
-    @TestRail(id = {9110})
-    @Description("Verify that filter value for Cycle Time is converted after changing unit preferences")
-    public void testFilterValuesAfterChangingUnitPreferencesForCycleTime() {
-        currentUser = UserUtil.getUser();
-        String filterName = generateStringUtil.generateFilterName();
-
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser);
-
-        explorePage = new ExplorePage(driver)
+        filterPage.cancel(ExplorePage.class)
             .filter()
             .newFilter()
-            .inputName(filterName)
+            .inputName(filterName4)
             .addCriteria(PropertyEnum.CYCLE_TIME, OperationEnum.GREATER_THAN, "60")
             .save(FilterPage.class)
             .submit(ExplorePage.class);
@@ -437,6 +335,8 @@ public class FilterCriteriaTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .filter();
 
-        assertThat(filterPage.getFilterValue(PropertyEnum.CYCLE_TIME), equalTo("1"));
+        softAssertion.assertThat(filterPage.getFilterValue(PropertyEnum.CYCLE_TIME)).isEqualTo("1");
+
+        softAssertion.assertAll();
     }
 }

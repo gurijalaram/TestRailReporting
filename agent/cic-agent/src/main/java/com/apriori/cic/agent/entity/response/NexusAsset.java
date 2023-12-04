@@ -18,4 +18,9 @@ public class NexusAsset {
     private NexusCheckSum checksum;
     private String contentType;
     private String lastModified;
+    public Object lastDownloaded;
+    public String uploader;
+    public String uploaderIp;
+    public Integer fileSize;
+    public Object blobCreated;
 }

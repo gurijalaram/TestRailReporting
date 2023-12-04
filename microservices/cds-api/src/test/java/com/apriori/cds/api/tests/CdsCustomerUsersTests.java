@@ -47,7 +47,7 @@ public class CdsCustomerUsersTests {
     }
 
     @Test
-    @TestRail(id = {3293})
+    @TestRail(id = {3293, 29195})
     @Description("Add a user to a customer")
     public void addCustomerUsers() {
         setCustomerData();
@@ -57,6 +57,7 @@ public class CdsCustomerUsersTests {
         userIdentity = user.getResponseEntity().getIdentity();
 
         soft.assertThat(user.getResponseEntity().getUsername()).isEqualTo(userName);
+        soft.assertThat(user.getResponseEntity().getEnablements()).isNotNull();
         soft.assertAll();
     }
 
@@ -159,6 +160,19 @@ public class CdsCustomerUsersTests {
         soft.assertThat(requiredUserProperties.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         soft.assertThat(requiredUserProperties.getResponseEntity().getItems().get(0).getName()).isNotEmpty();
         soft.assertThat(requiredUserProperties.getResponseEntity().getItems().get(0).getSource()).isNotEmpty();
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29194})
+    @Description("Create user with the set of enablements")
+    public void createUserWithEnablements() {
+        setCustomerData();
+        String customerAssignedRole = "APRIORI_DEVELOPER";
+        ResponseWrapper<User> user = cdsTestUtil.addUserWithEnablements(customerIdentity, generateStringUtil.generateUserName(), customerName, customerAssignedRole);
+        userIdentity = user.getResponseEntity().getIdentity();
+
+        soft.assertThat(user.getResponseEntity().getEnablements().getCustomerAssignedRole()).isEqualTo(customerAssignedRole);
         soft.assertAll();
     }
 

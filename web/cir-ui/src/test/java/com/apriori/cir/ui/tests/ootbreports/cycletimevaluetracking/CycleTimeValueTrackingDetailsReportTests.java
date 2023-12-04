@@ -22,6 +22,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7325")
     @TestRail(id = {7325})
     @Description("Validate report available by navigation - Cycle Time Value Tracking Details Report")
     public void testReportAvailabilityByNavigation() {
@@ -49,6 +51,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7327")
     @TestRail(id = {7327})
     @Description("Verify report availability by library")
     public void testReportAvailabilityByLibrary() {
@@ -60,6 +63,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7329")
     @TestRail(id = {7239})
     @Description("Verify report availability by search - Cycle Time Value Tracking Details Report")
     public void testReportAvailabilityBySearch() {
@@ -71,6 +75,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7628")
     @TestRail(id = {7628})
     @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Details Report")
     public void testProjectRollupDropdownList() {
@@ -92,6 +97,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("7627")
     @TestRail(id = {7627})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Details Report")
     public void testExportDateFilterFunctionality() {
@@ -116,6 +122,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("2334")
     @TestRail(id = {2334})
     @Description("Validate Cycle Time Value Tracking Details report aligns to CID values (where appropriate)")
     public void testValueIntegrityAgainstCID() {

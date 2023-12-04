@@ -25,8 +25,8 @@ import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.cid.ui.utils.UploadStatusEnum;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyDTORequest;
-import com.apriori.shared.util.dto.ComponentDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
+import com.apriori.shared.util.dto.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
@@ -71,7 +71,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Test uploading a component")
     public void testUploadComponent() {
 
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -92,7 +92,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate messaging upon successful upload of multiple files")
     public void testMultiUploadSuccessMessage() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(3);
+        List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(3);
 
         importCadFilePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
@@ -110,7 +110,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate that user can apply unique names to all multiple uploads")
     public void testUniqueScenarioNamesMultiUpload() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(3);
+        List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(3);
 
         explorePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
@@ -131,7 +131,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate multi-upload through explorer menu")
     public void testMultiUploadWithSameScenarioName() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(3);
+        List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(3);
 
         explorePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
@@ -177,7 +177,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate that user can delete components from the Import CAD File modal")
     public void testDeleteCadFiles() {
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("Hinge Assembly");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge Assembly");
 
         List<String> componentsToDelete = componentAssembly.getSubComponents().stream().map(ComponentInfoBuilder::getComponentName).collect(Collectors.toList());
 
@@ -196,7 +196,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Upload 20 different components through the explorer modal")
     public void testTwentyCadFilesMultiUpload() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(20);
+        List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(20);
 
         importCadFilePage = new CidAppLoginPage(driver)
             .login(components.stream().findAny().get().getUser())
@@ -224,7 +224,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate override existing scenario leads to processing failure if unchecked and there are duplicate scenarios")
     public void testOverrideExistingScenarioFailure() {
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         explorePage = new CidAppLoginPage(driver)
             .login(componentAssembly.getUser())
@@ -261,7 +261,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate that user is blocked from adding to a list of 20 uploads")
     public void testExceedingMaximumUpload() {
 
-        List<ComponentInfoBuilder> components = new ComponentDTORequest().getComponents(21);
+        List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(21);
         List<ComponentInfoBuilder> componentsToUpload = components.subList(0, 20);
 
         importCadFilePage = new CidAppLoginPage(driver)
@@ -279,7 +279,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate override existing scenario is successful through multiple uploads when checked")
     public void testOverrideExistingScenarioSuccess() {
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("flange c");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -311,7 +311,7 @@ public class UploadComponentTests extends TestBaseUI {
 
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
-        componentAssembly = new AssemblyDTORequest().getAssembly();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         explorePage = new CidAppLoginPage(driver)
             .login(componentAssembly.getUser())
@@ -338,7 +338,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Create a New Component.Scenario - user does not have a pre existing private Component.Scenario of that name")
     public void testUploadThenCheckAvailabilityWithNewUser() {
 
-        component = new ComponentDTORequest().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         cidComponentItem = new CidAppLoginPage(driver)
             .login(component.getUser())

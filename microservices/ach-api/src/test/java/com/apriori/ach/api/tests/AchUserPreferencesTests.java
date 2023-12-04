@@ -84,7 +84,7 @@ public class AchUserPreferencesTests {
         soft.assertAll();
 
         userPreferenceIdentityHolder = IdentityHolder.builder()
-            .customerIdentity(achTestUtil.getAprioriInternal().getIdentity())
+            .customerIdentity(achTestUtil.getCustomer("aPriori Internal").getIdentity())
             .userIdentity(newPreference.getResponseEntity().getSuccesses().get(0).getCreatedBy())
             .userPreferenceIdentity(prefIdentity)
             .build();
@@ -105,7 +105,7 @@ public class AchUserPreferencesTests {
         soft.assertAll();
 
         userPreferenceIdentityHolder = IdentityHolder.builder()
-            .customerIdentity(achTestUtil.getAprioriInternal().getIdentity())
+            .customerIdentity(achTestUtil.getCustomer("aPriori Internal").getIdentity())
             .userIdentity(newPreference.getResponseEntity().getSuccesses().get(0).getCreatedBy())
             .userPreferenceIdentity(prefIdentity)
             .build();
@@ -126,7 +126,7 @@ public class AchUserPreferencesTests {
         soft.assertAll();
 
         userPreferenceIdentityHolder = IdentityHolder.builder()
-            .customerIdentity(achTestUtil.getAprioriInternal().getIdentity())
+            .customerIdentity(achTestUtil.getCustomer("aPriori Internal").getIdentity())
             .userIdentity(successResponse.getCreatedBy())
             .userPreferenceIdentity(successResponse.getIdentity())
             .build();

@@ -8,6 +8,7 @@ import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.ContentParams;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -15,7 +16,9 @@ import com.apriori.shared.util.models.response.component.ComponentResponse;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.utils.KeyValueUtil;
 
+import com.google.common.net.HttpHeaders;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.core5.http.ContentType;
 import org.apache.http.HttpStatus;
 
 import java.util.Collections;
@@ -143,13 +146,14 @@ public class CssComponent {
      * @return the response wrapper that contains the response data
      */
     private ResponseWrapper<ComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS, ComponentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
+            .headers(new ContentParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
             .queryParams(queryParams)
             .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT)
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        return HTTPRequest.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -162,11 +166,8 @@ public class CssComponent {
     public ResponseWrapper<ComponentResponse> postSearchRequest(UserCredentials userCredentials, String componentType) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
             .token(userCredentials.getToken())
-            .headers(new HashMap<>() {
-                {
-                    put("content-type", "application/x-www-form-urlencoded");
-                }
-            }).xwwwwFormUrlEncodeds(Collections.singletonList(new HashMap<String, String>() {
+            .headers(new ContentParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
+            .xwwwwFormUrlEncodeds(Collections.singletonList(new HashMap<String, String>() {
                 {
                     put("pageNumber", "1");
                     put("pageSize", "10");

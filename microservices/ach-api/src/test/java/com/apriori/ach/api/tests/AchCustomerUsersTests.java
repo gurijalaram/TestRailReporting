@@ -28,7 +28,7 @@ public class AchCustomerUsersTests {
     @BeforeEach
     public void getToken() {
         RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
-        customerIdentity = achTestUtil.getAprioriInternal().getIdentity();
+        customerIdentity = achTestUtil.getCustomer("aPriori Internal").getIdentity();
     }
 
     @Test

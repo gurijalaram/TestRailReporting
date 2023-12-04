@@ -17,4 +17,10 @@ public class ProcessSetupOptions {
     public Object sheetMetal;
     @JsonProperty("Plastic Molding")
     public Object plasticMolding;
+    @JsonProperty("Heat Treatment")
+    public Object heatTreatment;
+    @JsonProperty("Surface Treatment")
+    public Object surfaceTreatment;
+    @JsonProperty("Powder Metal")
+    public Object powderMetal;
 }

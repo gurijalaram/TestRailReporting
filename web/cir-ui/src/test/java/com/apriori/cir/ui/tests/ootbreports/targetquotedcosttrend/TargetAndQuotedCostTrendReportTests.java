@@ -20,6 +20,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3352")
     @TestRail(id = {3352})
     @Description("Validate report is available by navigation")
     public void testReportAvailabilityByNavigation() {
@@ -47,6 +49,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7323")
     @TestRail(id = {7323})
     @Description("Validate report is available by library")
     public void testReportAvailabilityByLibrary() {
@@ -58,6 +61,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3354")
     @TestRail(id = {3354})
     @Description("Validate report is available by search")
     public void testReportAvailabilityBySearch() {
@@ -69,6 +73,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3355")
     @TestRail(id = {3355})
     @Description("Validate Projects Rollup drop-down Input Control functionality")
     public void testProjectRollupDropdown() {
@@ -87,6 +92,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3356")
     @TestRail(id = {3356})
     @Description("Validate Project Name drop-down Input Control functionality")
     public void testProjectNameDropdown() {
@@ -114,6 +120,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3357")
     @TestRail(id = {3357})
     @Description("Validate Export Date drop-down Input Control")
     public void testExportDateDropdown() {
@@ -133,6 +140,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3358")
     @TestRail(id = {3358})
     @Description("Validate Cost Metric Input Control - PPC")
     public void testCostMetricFbc() {
@@ -146,6 +154,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7423")
     @TestRail(id = {7423})
     @Description("Validate Cost Metric Input Control - FBC")
     public void testCostMetricPpc() {
@@ -159,6 +168,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("3359")
     @TestRail(id = {3359})
     @Description("Validate Currency drop-down Input Control")
     public void testCurrencyCodeInputControl() {
@@ -186,6 +196,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     //@Tag(REPORTS)
+    @TmsLink("3360")
     @TestRail(id = {3360})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidBase() {
@@ -195,6 +206,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     //@Tag(REPORTS)
+    @TmsLink("3360")
     @TestRail(id = {3360})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
     public void testDataIntegrityInCidFinal() {
@@ -204,6 +216,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7688")
     @TestRail(id = {7668})
     @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking report - Base Milestone")
     public void testHyperlinksToDetailsReportBaseMilestone() {
@@ -214,6 +227,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("3361")
     @TestRail(id = {3361})
     @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking report - Final Milestone")
     public void testHyperlinksToDetailsReportFinalMilestone() {

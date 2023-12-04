@@ -15,7 +15,7 @@ import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTablePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyDTORequest;
+import com.apriori.shared.util.dto.AssemblyRequestUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -37,7 +37,7 @@ public class LargeGroupEditAssemblies2 extends TestBaseUI {
     @Description("group Edit private sub Components disallowed")
     public void cannotEditPrivateComponents() {
 
-        componentAssembly = new AssemblyDTORequest().getAssembly("Gym Bike");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Gym Bike");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);

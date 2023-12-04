@@ -10,6 +10,7 @@ import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,6 +33,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
+    @TmsLink("1997")
     @TestRail(id = 1997)
     @Description("Verify mass metric - finish mass - Design Outlier Identification Report")
     public void testMassMetricFinishMass() {
@@ -42,6 +44,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
+    @TmsLink("7385")
     @TestRail(id = 7385)
     @Description("Verify mass metric - rough mass - Design Outlier Identification Report")
     public void testMassMetricRoughMass() {

@@ -36,7 +36,7 @@ public class AchCurrentUserTests {
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
         SoftAssertions soft = new SoftAssertions();
-        String customerIdentity = achTestUtil.getAprioriInternal().getIdentity();
+        String customerIdentity = achTestUtil.getCustomer("aPriori Internal").getIdentity();
         ResponseWrapper<User> user = achTestUtil.getCommonRequest(ACHAPIEnum.USER, User.class, HttpStatus.SC_OK);
 
         soft.assertThat(user.getResponseEntity().getIdentity()).isNotEmpty();

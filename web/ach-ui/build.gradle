@@ -3,6 +3,8 @@ dependencies {
     implementation project(':web-app-util')
 
     implementation project(':microservices:ach-api')
+    implementation project(':microservices:cds-api')
+    implementation project(':microservices:ats-api')
     implementation project(':web:cas-ui')
     implementation project(':web:cia-ui')
     implementation project(':web:cir-ui')

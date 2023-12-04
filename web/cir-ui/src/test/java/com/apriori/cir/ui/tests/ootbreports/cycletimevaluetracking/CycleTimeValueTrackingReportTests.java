@@ -17,6 +17,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("2325")
     @TestRail(id = {2325})
     @Description("Validate report is available by navigation - Cycle Time Value Tracking Report")
     public void testReportAvailabilityByNavigation() {
@@ -44,6 +46,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7236")
     @TestRail(id = {7236})
     @Description("Verify report availability by library - Cycle Time Value Tracking Report")
     public void testReportAvailabilityByLibrary() {
@@ -53,6 +56,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("7238")
     @TestRail(id = {7238})
     @Description("Verify report availability by search - Cycle Time Value Tracking Report")
     public void testReportAvailabilityBySearch() {
@@ -62,6 +66,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
+    @TmsLink("2331")
     @TestRail(id = {2331})
     @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Report")
     public void testProjectRollupDropdownList() {
@@ -86,6 +91,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("2332")
     @TestRail(id = {2332})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Report")
     public void testExportDateFilterFunctionality() {
@@ -108,6 +114,7 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
     @Issue("AP-66960")
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
+    @TmsLink("2335")
     @TestRail(id = {2335})
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")
     public void testReportHyperlinks() {
