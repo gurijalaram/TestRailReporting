@@ -11,7 +11,7 @@ import com.apriori.bcs.api.models.response.Part;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -128,7 +128,7 @@ public class BatchPartNegativeTest {
     @Description("Get single batch with invalid customer identity")
     public void getBatchWithInvalidCustomerID() {
         ResponseWrapper<ErrorMessage> batchResponse = HTTPRequest.build(
-            RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, ErrorMessage.class)
+            RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_BY_ID, ErrorMessage.class)
                 .inlineVariables("INVALIDCUSTOMER", batch.getIdentity())
                 .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
         ).get();

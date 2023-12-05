@@ -4,7 +4,7 @@ import com.apriori.shared.util.email.EmailConnection;
 import com.apriori.shared.util.email.EmailEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -74,7 +74,7 @@ public class EmailMessage {
      * Delete email using email message id
      */
     public void deleteEmailMessage() {
-        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGE, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(EmailEnum.EMAIL_MESSAGE, null)
             .inlineVariables(this.id)
             .headers(new HashMap<>() {
                 {
@@ -91,7 +91,7 @@ public class EmailMessage {
      * @return EmailMessageAttachments
      */
     public EmailMessageAttachments emailMessageAttachments() {
-        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_MESSAGE_ATTACHMENTS, EmailMessageAttachments.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(EmailEnum.EMAIL_MESSAGE_ATTACHMENTS, EmailMessageAttachments.class)
             .inlineVariables(this.id)
             .headers(new HashMap<>() {
                 {

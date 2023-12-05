@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import com.apriori.bcs.api.models.response.ProcessGroup;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.vds.api.enums.VDSAPIEnum;
@@ -62,7 +61,7 @@ public class ProcessGroupsTest extends ProcessGroupUtil {
         List<ProcessGroup> processGroups = ProcessGroupUtil.getProcessGroupsResponse();
         assertNotEquals(0, processGroups.size(), "To get Process Group, response should contain it.");
 
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_BY_IDENTITY, ProcessGroup.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_BY_IDENTITY, ProcessGroup.class)
             .inlineVariables(processGroups.get(0).getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 

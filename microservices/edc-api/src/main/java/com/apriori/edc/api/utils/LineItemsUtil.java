@@ -5,7 +5,7 @@ import com.apriori.edc.api.models.response.line.items.LineItemsItemsResponse;
 import com.apriori.edc.api.models.response.line.items.LineItemsResponse;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 
@@ -22,7 +22,7 @@ public class LineItemsUtil extends TestUtil {
      * @return response object
      */
     public List<LineItemsResponse> getAllLineItems(String identity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(EDCAPIEnum.LINE_ITEMS, LineItemsItemsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(EDCAPIEnum.LINE_ITEMS, LineItemsItemsResponse.class)
             .inlineVariables(identity)
             .expectedResponseCode(HttpStatus.SC_OK);
 

@@ -15,7 +15,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.ErrorMessage;
@@ -185,7 +185,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectItemResponse.getIdentity(),
             currentUser);
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ErrorMessage.class)
             .inlineVariables(bidPackageResponse.getIdentity(),
                 bidPackageProjectResponse.getIdentity(),
                 bidPackageProjectItemResponse.getIdentity())
@@ -234,7 +234,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     @TestRail(id = {13428})
     @Description("Delete project Item by incorrect project Identity")
     public void deleteProjectItemWithInvalidIdentity() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ErrorMessage.class)
             .inlineVariables(bidPackageResponse.getIdentity(),
                 "INVALIDPROJECTIDENTITY",
                 bidPackageProjectItemResponse.getIdentity())

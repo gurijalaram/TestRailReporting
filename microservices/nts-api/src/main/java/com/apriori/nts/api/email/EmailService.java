@@ -11,7 +11,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.AuthorizationUtil;
 import com.apriori.shared.util.models.response.EmailMessage;
@@ -68,7 +68,7 @@ public class EmailService {
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.POST_EMAIL, SendEmail.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(NTSAPIEnum.POST_EMAIL, SendEmail.class)
             .headers(headers)
             .multiPartFiles(new MultiPartFiles()
                 .use("data", FileResourceUtil.getResourceAsFile(filename))
@@ -91,7 +91,7 @@ public class EmailService {
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.POST_EMAIL, SendEmail.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(NTSAPIEnum.POST_EMAIL, SendEmail.class)
             .headers(headers)
             .multiPartFiles(new MultiPartFiles()
                 .use("recipientAddress", emailSetup.getUsername())
@@ -108,14 +108,14 @@ public class EmailService {
      * @return Service response
      */
     public ResponseWrapper<EmailsItems> getEmails() {
-        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_EMAILS, EmailsItems.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(NTSAPIEnum.GET_EMAILS, EmailsItems.class)
             .headers(headers);
 
         return HTTPRequest.build(requestEntity).get();
     }
 
     public ResponseWrapper<EmailsItems> getEmailsByIdentity(String identity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_EMAILS_BY_ID, EmailsItems.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(NTSAPIEnum.GET_EMAILS_BY_ID, EmailsItems.class)
             .inlineVariables(identity)
             .headers(headers)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -130,7 +130,7 @@ public class EmailService {
      * @return Service response
      */
     public ResponseWrapper<Email> getEmail(String identity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_EMAIL_BY_ID, Email.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(NTSAPIEnum.GET_EMAIL_BY_ID, Email.class)
             .inlineVariables(identity)
             .headers(headers)
             .expectedResponseCode(HttpStatus.SC_OK);

@@ -2,7 +2,6 @@ package com.apriori.vds.api.tests;
 
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.vds.api.enums.VDSAPIEnum;
@@ -28,7 +27,7 @@ public class AccessControlsTest extends VDSTestUtil {
     @TestRail(id = {7753})
     @Description("Get a list of Access Control Permissions for a specific customer.")
     public void getPermissions() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PERMISSIONS, AccessControlPermissionItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_PERMISSIONS, AccessControlPermissionItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();
@@ -38,7 +37,7 @@ public class AccessControlsTest extends VDSTestUtil {
     @TestRail(id = {7754})
     @Description("Post synchronize the access controls for this customer. ")
     public void postSynchronize() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.POST_SYNCHRONIZE, null)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.POST_SYNCHRONIZE, null)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
         HTTPRequest.build(requestEntity).post();

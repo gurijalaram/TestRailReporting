@@ -6,6 +6,8 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.properties.PropertiesContext;
@@ -17,6 +19,7 @@ import com.apriori.vds.api.models.response.digital.factories.DigitalFactory;
 
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.util.List;
 
@@ -24,21 +27,25 @@ public abstract class VDSTestUtil extends TestUtil {
     protected static final String customerId =  PropertiesContext.get("customer_identity");
     protected static final String userId = PropertiesContext.get("user_identity");
     protected static UserCredentials testingUser = UserUtil.getUser();
-    protected static String testingApUserContext =  new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail());
+
+    protected static RequestEntityUtil requestEntityUtil;
 
 
     private static DigitalFactory digitalFactory;
     private static String digitalFactoryIdentity;
 
-    // TODO z: fix thread safe
-    //    @BeforeAll
-    //    public static  void init() {
-    //        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
-    //    }
+    @BeforeAll
+    public static  void init() {
+        requestEntityUtil = RequestEntityUtilBuilder
+            .useRandomUser()
+            .useTokenInRequests()
+            .useApUserContextInRequests();
+
+        testingUser = requestEntityUtil.getEmbeddedUser();
+    }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class)
-            .apUserContext(testingApUserContext)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
@@ -61,7 +68,7 @@ public abstract class VDSTestUtil extends TestUtil {
     }
 
     protected static List<AccessControlGroup> getAccessControlGroupsResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<AccessControlGroupItems> accessControlGroupsResponse = HTTPRequest.build(requestEntity).get();

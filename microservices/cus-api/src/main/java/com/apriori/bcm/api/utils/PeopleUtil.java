@@ -11,7 +11,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.User;
 
@@ -29,7 +29,7 @@ public class PeopleUtil {
      * @return user object
      */
     public User getCurrentUser(UserCredentials userCredentials) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.CURRENT_USER, User.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CusAppAPIEnum.CURRENT_USER, User.class)
             .token(userCredentials.getToken());
 
         ResponseWrapper<User> userResponse = HTTPRequest.build(requestEntity).get();
@@ -43,7 +43,7 @@ public class PeopleUtil {
      * @return user object
      */
     public User updateCurrentUser(UserCredentials userCredentials, UpdateUserRequest updateUserRequest) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.CURRENT_USER, User.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CusAppAPIEnum.CURRENT_USER, User.class)
             .token(userCredentials.getToken())
             .body("user", updateUserRequest);
 
@@ -58,7 +58,7 @@ public class PeopleUtil {
      * @return ErrorResponse object
      */
     public ErrorResponse updateCurrentUserBadRequest(UserCredentials userCredentials, UpdateUserRequest updateUserRequest) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.CURRENT_USER, ErrorResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CusAppAPIEnum.CURRENT_USER, ErrorResponse.class)
             .token(userCredentials.getToken())
             .body("user", updateUserRequest)
             .expectedResponseCode(SC_BAD_REQUEST);
@@ -73,7 +73,7 @@ public class PeopleUtil {
      * @return user object
      */
     public PreferenceItemsResponse getCurrentUserPref(UserCredentials userCredentials) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CusAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
             .token(userCredentials.getToken());
 
         ResponseWrapper<PreferenceItemsResponse> userResponse = HTTPRequest.build(requestEntity).get();
@@ -88,7 +88,7 @@ public class PeopleUtil {
      */
     public PreferenceItemsResponse getCurrentUserPrefParams(UserCredentials userCredentials, String queryName, String queryValue) {
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CusAppAPIEnum.PREFERENCES, PreferenceItemsResponse.class)
             .queryParams(new QueryParams().use(queryName, queryValue))
             .token(userCredentials.getToken());
 
@@ -104,7 +104,7 @@ public class PeopleUtil {
      * @return user object
      */
     public void updateCurrentUserPref(UserCredentials userCredentials, UpdateUserPrefRequest updateUserPrefRequest) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CusAppAPIEnum.PREFERENCES, null)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CusAppAPIEnum.PREFERENCES, null)
             .token(userCredentials.getToken())
             .body(updateUserPrefRequest)
             .expectedResponseCode(HttpStatus.SC_OK);

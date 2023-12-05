@@ -10,7 +10,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
 
@@ -31,7 +31,7 @@ public class CisProjectResources {
      */
     public static <T> T createProject(HashMap<String, String> projectAttributesMap, List<BidPackageItemRequest> itemsList, List<BidPackageProjectUserParameters> usersList, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         BidPackageProjectRequest projectRequest = getProjectRequestBuilder(projectAttributesMap, itemsList, usersList);
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.PROJECTS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.PROJECTS, responseClass)
             .body(projectRequest)
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);

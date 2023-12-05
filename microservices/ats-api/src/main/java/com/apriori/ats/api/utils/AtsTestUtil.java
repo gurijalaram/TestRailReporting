@@ -8,7 +8,7 @@ import com.apriori.ats.api.utils.enums.ATSAPIEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.interfaces.EndpointEnum;
@@ -26,7 +26,7 @@ public class AtsTestUtil extends TestUtil {
      * @return ResponseWrapper <UserByEmail>
      */
     public ResponseWrapper<User> authenticateUser(String email, String password) {
-        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.AUTHENTICATE, User.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ATSAPIEnum.AUTHENTICATE, User.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(AuthenticateRequest.builder()
                 .email(email)
@@ -45,7 +45,7 @@ public class AtsTestUtil extends TestUtil {
     public ResponseWrapper<User> putSAMLProviders(String email) {
         GenerateStringUtil generator = new GenerateStringUtil();
         String userName = generator.generateUserName();
-        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.SAML_PROVIDERS, User.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ATSAPIEnum.SAML_PROVIDERS, User.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(CreateSamlUserRequest.builder()
                 .email(userName + "@" + email + ".com")
@@ -67,7 +67,7 @@ public class AtsTestUtil extends TestUtil {
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> resetUserMFA(EndpointEnum endpoint, String identity, Integer status) {
-        RequestEntity requestEntity = RequestEntityUtil.init(endpoint, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(endpoint, null)
             .inlineVariables(identity)
             .expectedResponseCode(status)
             .body(ResetMFA.builder()
@@ -84,7 +84,7 @@ public class AtsTestUtil extends TestUtil {
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> changePassword(String email) {
-        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.USER_PASSWORD_BY_EMAIL, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ATSAPIEnum.USER_PASSWORD_BY_EMAIL, null)
             .inlineVariables(email)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT)
             .body(ResetAutoUsers.builder()

@@ -66,6 +66,21 @@
                     },
                     "lastModified": {
                       "type": "string"
+                    },
+                    "lastDownloaded": {
+                      "type": ["string","null"]
+                    },
+                    "uploader": {
+                      "type": "string"
+                    },
+                    "uploaderIp": {
+                      "type": "string"
+                    },
+                    "fileSize": {
+                      "type": "integer"
+                    },
+                    "blobCreated": {
+                      "type": ["string","null"]
                     }
                   },
                   "required": [
@@ -77,7 +92,14 @@
                     "checksum",
                     "contentType",
                     "lastModified"
-                  ]
+                  ],
+                  "optional": [
+                  "lastDownloaded",
+                   "uploader",
+                   "uploaderIp",
+                    "fileSize",
+                    "blobCreated"
+                    ]
                 }
               ]
             },
