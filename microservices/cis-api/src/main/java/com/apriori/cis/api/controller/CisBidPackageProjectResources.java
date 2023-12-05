@@ -10,7 +10,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
 
@@ -38,7 +38,7 @@ public class CisBidPackageProjectResources {
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         projectRequest.getProject().setItems(bidPackageProjectItemRequestList);
         projectRequest.getProject().setUsers(usersList);
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECTS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECTS, responseClass)
             .inlineVariables(bidPackageIdentity)
             .body(projectRequest)
             .token(currentUser.getToken())
@@ -75,7 +75,7 @@ public class CisBidPackageProjectResources {
      * @return klass object
      */
     public static <T> T getBidPackageProjects(String bidPackageIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECTS, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECTS, klass)
             .inlineVariables(bidPackageIdentity)
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
@@ -93,7 +93,7 @@ public class CisBidPackageProjectResources {
      * @param currentUser               - UserCredentials
      */
     public static void deleteBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT, null)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
@@ -113,7 +113,7 @@ public class CisBidPackageProjectResources {
      * @return klass object
      */
     public static <T> T getBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, Class<T> klass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT, klass)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
@@ -135,7 +135,7 @@ public class CisBidPackageProjectResources {
      * @return - response klass
      */
     public static <T> T updateBidPackageProject(BidPackageProjectRequest bidPackageProjectRequestBuilder, String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT, klass)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .body(bidPackageProjectRequestBuilder)
             .token(currentUser.getToken())
@@ -158,7 +158,7 @@ public class CisBidPackageProjectResources {
      * @return the response entity
      */
     public static <T> T createBidPackageProjectUser(BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder, String bidPackageIdentity, String projectIdentity, Class<T> responseClass, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT_USERS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT_USERS, responseClass)
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(bidPackageProjectUserRequestBuilder)
             .token(currentUser.getToken())
@@ -182,7 +182,7 @@ public class CisBidPackageProjectResources {
             .projectUsers(userIdList)
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT_USERS_DELETE, BidPackageProjectUsersDeleteResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT_USERS_DELETE, BidPackageProjectUsersDeleteResponse.class)
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(deleteRequest)
             .token(currentUser.getToken())

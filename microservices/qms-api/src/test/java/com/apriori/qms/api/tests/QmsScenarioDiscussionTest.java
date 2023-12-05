@@ -22,7 +22,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.ApwErrorMessage;
@@ -106,7 +106,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(id = {14609})
     @Description("Get list of all Scenario Discussions")
     public void getScenarioDiscussions() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSIONS, ScenarioDiscussionsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSIONS, ScenarioDiscussionsResponse.class)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -185,7 +185,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(id = {15473})
     @Description("Verify that user can GET discussion's comment by identity")
     public void getDiscussionComment() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENT, DiscussionCommentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENT, DiscussionCommentResponse.class)
             .inlineVariables(scenarioDiscussionResponse.getIdentity(), discussionCommentResponse.getIdentity())
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -199,7 +199,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
     @TestRail(id = {14677})
     @Description("Verify that user can FIND list of discussion's comment")
     public void getDiscussionComments() {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENTS, DiscussionCommentsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSION_COMMENTS, DiscussionCommentsResponse.class)
             .inlineVariables(scenarioDiscussionResponse.getIdentity())
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -456,7 +456,7 @@ public class QmsScenarioDiscussionTest extends TestUtil {
         softAssertions.assertThat(createResponseWrapper.getMentionedUsers().get(0).getIdentity())
             .isEqualTo(new AuthUserContextUtil().getAuthUserIdentity(mentionedUser.getEmail()));
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.SCENARIO_DISCUSSION, ScenarioDiscussionResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.SCENARIO_DISCUSSION, ScenarioDiscussionResponse.class)
             .inlineVariables(scenarioDiscussionResponse.getIdentity())
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))

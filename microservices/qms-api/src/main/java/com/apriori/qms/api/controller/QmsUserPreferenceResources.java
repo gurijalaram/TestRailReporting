@@ -7,7 +7,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 /**
@@ -24,7 +24,7 @@ public class QmsUserPreferenceResources {
      * @return the user preference
      */
     public static <T> T getUserPreference(Class<T> responseClass, UserCredentials currentUser, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.USER_PREFERENCE, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.USER_PREFERENCE, responseClass)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
@@ -44,7 +44,7 @@ public class QmsUserPreferenceResources {
      * @return the response entity
      */
     public static <T> T updateUserPreference(UserPreferenceRequest userPreferenceRequestBuilder, Class<T> responseClass, UserCredentials currentUser, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.USER_PREFERENCE, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.USER_PREFERENCE, responseClass)
             .body(userPreferenceRequestBuilder)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
@@ -60,7 +60,7 @@ public class QmsUserPreferenceResources {
      * @param httpStatus  the http status
      */
     public static void deleteUserPreference(UserCredentials currentUser, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.USER_PREFERENCE, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.USER_PREFERENCE, null)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(httpStatus);
 

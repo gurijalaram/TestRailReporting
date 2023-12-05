@@ -8,7 +8,7 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
@@ -27,7 +27,7 @@ public class AccountsUtil extends TestUtil {
      */
     public static List<AccountsResponse> getAllAccounts() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.ACCOUNTS, AccountsItemsResponse.class)
+            RequestEntityUtil_Old.init(EDCAPIEnum.ACCOUNTS, AccountsItemsResponse.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<AccountsItemsResponse> getAllAccountsResponse = HTTPRequest.build(requestEntity).get();
@@ -66,7 +66,7 @@ public class AccountsUtil extends TestUtil {
      */
     public ResponseWrapper<AccountsResponse> postCreateNewAccount() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.ACCOUNTS, AccountsResponse.class)
+            RequestEntityUtil_Old.init(EDCAPIEnum.ACCOUNTS, AccountsResponse.class)
                 .body(postBodyInformation())
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
@@ -103,7 +103,7 @@ public class AccountsUtil extends TestUtil {
      */
     public ResponseWrapper<AccountsResponse> patchUpdateAccountByIdentity(String identity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.ACCOUNT_BY_IDENTITY, AccountsResponse.class)
+            RequestEntityUtil_Old.init(EDCAPIEnum.ACCOUNT_BY_IDENTITY, AccountsResponse.class)
                 .inlineVariables(identity)
                 .body(postBodyInformation())
                 .expectedResponseCode(HttpStatus.SC_OK);
@@ -119,7 +119,7 @@ public class AccountsUtil extends TestUtil {
      */
     public ResponseWrapper<AccountsResponse> postActivateAnAccount(String identity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.ACTIVATE_ACCOUNT_BY_IDENTITY, AccountsResponse.class)
+            RequestEntityUtil_Old.init(EDCAPIEnum.ACTIVATE_ACCOUNT_BY_IDENTITY, AccountsResponse.class)
                 .inlineVariables(identity);
 
         return HTTPRequest.build(requestEntity).post();
@@ -133,7 +133,7 @@ public class AccountsUtil extends TestUtil {
      */
     public ResponseWrapper<AccountsResponse> postRefreshLicense(String identity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.REFRESH_LICENSE_BY_IDENTITY, AccountsResponse.class)
+            RequestEntityUtil_Old.init(EDCAPIEnum.REFRESH_LICENSE_BY_IDENTITY, AccountsResponse.class)
                 .inlineVariables(identity)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -147,7 +147,7 @@ public class AccountsUtil extends TestUtil {
      */
     public ResponseWrapper<AccountsResponse> getActiveAccount() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.CURRENT_ACTIVE_ACCOUNT, AccountsResponse.class)
+            RequestEntityUtil_Old.init(EDCAPIEnum.CURRENT_ACTIVE_ACCOUNT, AccountsResponse.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();

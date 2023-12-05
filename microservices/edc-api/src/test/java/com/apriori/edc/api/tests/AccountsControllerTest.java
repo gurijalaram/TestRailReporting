@@ -7,7 +7,7 @@ import static org.hamcrest.core.Is.is;
 
 import com.apriori.edc.api.models.response.accounts.AccountsResponse;
 import com.apriori.edc.api.utils.AccountsUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -37,7 +37,7 @@ public class AccountsControllerTest extends AccountsUtil {
 
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
+        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
         if (identity == null) {
             identity = postCreateNewAccount().getResponseEntity().getIdentity();
         }

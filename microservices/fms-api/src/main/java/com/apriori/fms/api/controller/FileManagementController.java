@@ -11,7 +11,7 @@ import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.AuthorizationUtil;
 
@@ -30,7 +30,7 @@ public class FileManagementController {
      * @return ResponseWrapper of type FilesResponse instance (api response)
      */
     public static ResponseWrapper<FilesResponse> getFiles(UserCredentials userCredentials) {
-        RequestEntity requestEntity = RequestEntityUtil.init(FMSAPIEnum.FILES, FilesResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(FMSAPIEnum.FILES, FilesResponse.class)
             .headers(initHeaders(userCredentials, false))
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -45,7 +45,7 @@ public class FileManagementController {
      * @return ResponseWrapper of type FilesResponse instance (api response)
      */
     public static ResponseWrapper<FileResponse> getFileByIdentity(UserCredentials userCredentials, String fileIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(FMSAPIEnum.FILE_BY_ID, FileResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(FMSAPIEnum.FILE_BY_ID, FileResponse.class)
             .headers(initHeaders(userCredentials, false))
             .inlineVariables(fileIdentity);
 
@@ -90,7 +90,7 @@ public class FileManagementController {
             requestQueryParams.use("resourceName", resourceName);
         }
 
-        RequestEntity requestEntity = RequestEntityUtil.init(FMSAPIEnum.FILES, FileResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(FMSAPIEnum.FILES, FileResponse.class)
             .headers(initHeaders(userCredentials, true))
             .multiPartFiles(new MultiPartFiles().use("data", fileToUpload))
             .queryParams(requestQueryParams)

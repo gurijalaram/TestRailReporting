@@ -10,7 +10,7 @@ import com.apriori.cis.api.controller.CisUserPreferencesResources;
 import com.apriori.cis.api.models.response.userpreferences.CurrentExtendedUserPreferencesResponse;
 import com.apriori.cis.api.models.response.userpreferences.ExtendedUserPreferencesResponse;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -24,7 +24,7 @@ public class CisUserPreferencesTest extends CisUserPreferencesResources {
 
     @BeforeEach
     public void testSetup() {
-        RequestEntityUtil.useTokenForRequests(UserUtil.getUser().getToken());
+        RequestEntityUtil_Old.useTokenForRequests(UserUtil.getUser().getToken());
     }
 
     @Test

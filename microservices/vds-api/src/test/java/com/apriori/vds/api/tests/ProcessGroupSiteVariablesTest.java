@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -48,7 +47,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
     @Description("GET a site variable for a customer. ")
     public void getSiteVariablesByIdentity() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs, SiteVariable.class)
                 .inlineVariables(
                     ProcessGroupUtil.getProcessGroupIdentity(),
                     this.getFirstProcessGroupSiteVariable().getIdentity()
@@ -80,7 +79,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
         siteVariableIdsToDelete.add(siteVariableBeforeUpdate.getIdentity());
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.PATCH_PROCESS_GROUP_SITE_VARIABLES_BY_PG_SITE_IDs, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.PATCH_PROCESS_GROUP_SITE_VARIABLES_BY_PG_SITE_IDs, SiteVariable.class)
                 .inlineVariables(ProcessGroupUtil.getProcessGroupIdentity(), siteVariableBeforeUpdate.getIdentity())
                 .body(initUpdateRequestBody(siteVariableBeforeUpdate))
                 .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -98,7 +97,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
         siteVariableIdsToDelete.add(siteVariableBeforeUpdate.getIdentity());
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.PUT_PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.PUT_PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID, SiteVariable.class)
                 .inlineVariables(ProcessGroupUtil.getProcessGroupIdentity())
                 .body(initUpdateRequestBody(siteVariableBeforeUpdate))
                 .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -109,7 +108,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
 
     private static void deleteProcessGroupSiteVariableById(final String identity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.DELETE_PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs, null)
+            requestEntityUtil.init(VDSAPIEnum.DELETE_PROCESS_GROUP_SITE_VARIABLE_BY_PG_SITE_IDs, null)
                 .inlineVariables(ProcessGroupUtil.getProcessGroupIdentity(), identity)
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
@@ -124,7 +123,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
     }
 
     private List<SiteVariable> getProcessGroupSiteVariablesResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_SITE_VARIABLES_BY_PG_ID, SiteVariablesItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_SITE_VARIABLES_BY_PG_ID, SiteVariablesItems.class)
             .inlineVariables(ProcessGroupUtil.getProcessGroupIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -135,7 +134,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
 
     private SiteVariable postProcessGroupSiteVariables() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(VDSAPIEnum.POST_PROCESS_GROUP_SITE_VARIABLES_BY_PG_ID, SiteVariable.class)
+            requestEntityUtil.init(VDSAPIEnum.POST_PROCESS_GROUP_SITE_VARIABLES_BY_PG_ID, SiteVariable.class)
                 .inlineVariables(ProcessGroupUtil.getProcessGroupIdentity())
                 .body(SiteVariableRequest.builder()
                     .name(new GenerateStringUtil().generateSiteName())

@@ -6,7 +6,7 @@ import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.User;
@@ -29,7 +29,7 @@ public class CasUsersTests extends TestUtil {
     // TODO z: fix it threads
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil.useTokenForRequests(userToken);
+        RequestEntityUtil_Old.useTokenForRequests(userToken);
     }
 
     @Test
