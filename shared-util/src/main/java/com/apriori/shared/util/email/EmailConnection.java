@@ -4,7 +4,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.EncryptionUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.EmailTokenResponse;
@@ -26,7 +26,7 @@ public class EmailConnection {
      */
     private static String connectEmailServer() {
         Credentials graphClient = getCredentials();
-        RequestEntity requestEntity = RequestEntityUtil.init(EmailEnum.EMAIL_TOKEN, EmailTokenResponse.class).inlineVariables(graphClient.getTenantId()).headers(new HashMap<String, String>() {
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(EmailEnum.EMAIL_TOKEN, EmailTokenResponse.class).inlineVariables(graphClient.getTenantId()).headers(new HashMap<String, String>() {
             {
                 put("Accept", "*/*");
                 put("Content-Type", "application/x-www-form-urlencoded");

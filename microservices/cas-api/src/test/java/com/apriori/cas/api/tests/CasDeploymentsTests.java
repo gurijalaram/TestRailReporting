@@ -7,7 +7,7 @@ import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -31,7 +31,7 @@ public class CasDeploymentsTests {
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
+        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
         aprioriInternal = cdsTestUtil.getAprioriInternal();
         customerIdentity = aprioriInternal.getIdentity();
     }

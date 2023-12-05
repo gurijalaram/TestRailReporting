@@ -2,31 +2,65 @@ package com.apriori.shared.util.http.utils;
 
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
-import com.apriori.shared.util.http.models.entity.UserAuthenticationEntity;
 import com.apriori.shared.util.interfaces.EndpointEnum;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class RequestEntityUtil {
 
-    private static String token;
-    private static String apUserContext;
+    private final UserCredentials userCredentials;
+    private String token;
+    private String apUserContext;
 
-    public static String useTokenForRequests(final String tokenForRequests) {
-        return token = tokenForRequests;
+    public RequestEntityUtil(final UserCredentials userCredentials) {
+        this.userCredentials = userCredentials;
     }
 
-    public static String useApUserContextForRequests(final UserCredentials userForAppUserContext) {
-        return apUserContext = new AuthUserContextUtil().getAuthUserContext(userForAppUserContext.getEmail());
+    /**
+     * Automatically insert token of initialized user
+     * into all requests initialized by the current RequestEntityUtil object
+     * @return current RequestEntityUtil object
+     */
+    public RequestEntityUtil useTokenInRequests() {
+        this.token = this.getEmbeddedUser().getToken();
+        return this;
     }
 
-    public static RequestEntity.RequestEntityBuilder initBuilder(EndpointEnum endpoint, Class<?> returnType) {
-        return RequestEntity.builder()
-            .endpoint(endpoint)
-            .returnType(returnType)
-            .token(token)
-            .apUserContext(apUserContext);
+    /**
+     * Automatically insert apUserContext of initialized user
+     * into all requests initialized by the current RequestEntityUtil object
+     * @return current RequestEntityUtil object
+     */
+    public RequestEntityUtil useApUserContextInRequests() {
+        this.apUserContext = new AuthUserContextUtil().getAuthUserContext(this.getEmbeddedUser().getEmail());
+        return this;
     }
 
-    public static RequestEntity init(EndpointEnum endpoint, Class<?> returnType) {
+    /**
+     * Get the current embedded user, used in the requests.
+     * @return
+     */
+    public UserCredentials getEmbeddedUser() {
+        this.validateIsUserPresenceThrowExceptionIfNot();
+        return this.userCredentials;
+    }
+
+    private void validateIsUserPresenceThrowExceptionIfNot() {
+        if (this.userCredentials == null) {
+            final String error = "User for the request was not initialized. Use RequestEntityUtilBuilder to initialize user.";
+            log.error(error);
+            throw new IllegalArgumentException(error);
+        }
+    }
+
+    /**
+     * Init HTTP request with a RequestEntityUtil configurations and embedded user
+     * @param endpoint
+     * @param returnType
+     * @return
+     */
+    public RequestEntity init(EndpointEnum endpoint, Class<?> returnType) {
         return new RequestEntity()
             .endpoint(endpoint)
             .returnType(returnType)
@@ -34,12 +68,17 @@ public class RequestEntityUtil {
             .apUserContext(apUserContext);
     }
 
-    public static RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
+    /**
+     * Init HTTP request with a RequestEntityUtil configurations and another, custom user.
+     * @param endpoint
+     * @param returnType
+     * @return
+     */
+    public RequestEntity init(final UserCredentials userCredentials, EndpointEnum endpoint, Class<?> returnType) {
         return new RequestEntity()
-            .userAuthenticationEntity(new UserAuthenticationEntity(userCredentials.getEmail(), userCredentials.getPassword()))
             .returnType(returnType)
             .endpoint(endpoint)
-            .token(token)
-            .apUserContext(apUserContext);
+            .token(token != null ? userCredentials.getToken() : null)
+            .apUserContext(apUserContext != null ? new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()) : null);
     }
 }

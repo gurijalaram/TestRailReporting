@@ -147,16 +147,16 @@ Get user functionality has reference to `{environment}.properties` file.
 
 - To init default RequestEntity use `com.apriori.shared.util.utils.http.utils.RequestEntityUtil` :
 - You may add special parameters e.g.: 
-    - `RequestEntityUtil.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsWrapper.class)
+    - `RequestEntityUtil_Old.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsWrapper.class)
           .body("")
           .apUserContext("")
           .inlineVariables("");`
 - If you don't want to validate and map response body, _returnType_ should be null e.g.:
-    - `RequestEntityUtil.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, null);`
+    - `RequestEntityUtil_Old.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, null);`
 
 - To validate a response code automatically `RequestEntity` contain `expectedResponseCode` property.
  - To insert expected code use `.expectedResponseCode(<expected response code>)` e.g.
-    - `RequestEntityUtil.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsWrapper.class)
+    - `RequestEntityUtil_Old.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsWrapper.class)
         .expectedResponseCode(HttpStatus.SC_OK)`
 
     
@@ -176,7 +176,7 @@ _ResponseWrapper_ fields: <br>
 ### Final example of HTTP request: 
 ```
 final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
+            RequestEntityUtil_Old.init(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );

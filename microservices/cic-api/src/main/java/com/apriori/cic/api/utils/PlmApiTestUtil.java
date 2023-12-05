@@ -10,7 +10,7 @@ import com.apriori.cic.api.models.response.PlmSearchPart;
 import com.apriori.cic.api.models.response.PlmSearchResponse;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import lombok.SneakyThrows;
@@ -35,7 +35,7 @@ public class PlmApiTestUtil {
      * @return PlmApiTestUtil
      */
     public PlmApiTestUtil getPartInfoFromPlm(String plmPartId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(PlmApiEnum.PLM_WC_PROD_MGMT_PARTS, PlmPartResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(PlmApiEnum.PLM_WC_PROD_MGMT_PARTS, PlmPartResponse.class)
             .inlineVariables(plmPartId)
             .headers(setupHeader())
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -88,7 +88,7 @@ public class PlmApiTestUtil {
      * @return PlmApiTestUtil class object
      */
     public PlmApiTestUtil plmCsrfToken() {
-        RequestEntity requestEntity = RequestEntityUtil.init(PlmApiEnum.PLM_WC_CSRF_TOKEN, PlmCsrfToken.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(PlmApiEnum.PLM_WC_CSRF_TOKEN, PlmCsrfToken.class)
             .headers(new HashMap<String, String>() {
                 {
                     put("Authorization", "Basic " + PropertiesContext.get("ci-connect.${ci-connect.agent_type}.host_token"));
@@ -135,7 +135,7 @@ public class PlmApiTestUtil {
      * @return current class object
      */
     private PlmApiTestUtil patchPartToPlm(PlmFieldDefinitions plmFieldData) {
-        RequestEntity requestEntity = RequestEntityUtil.init(PlmApiEnum.PLM_WC_PROD_MGMT_PARTS, PlmPartResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(PlmApiEnum.PLM_WC_PROD_MGMT_PARTS, PlmPartResponse.class)
             .inlineVariables(plmPartResponse.getVersionID())
             .headers(setupHeader())
             .body(plmFieldData)
@@ -154,7 +154,7 @@ public class PlmApiTestUtil {
      * @return current class object
      */
     private PlmApiTestUtil plmPartCheckin(String checkInNote) {
-        RequestEntity requestEntity = RequestEntityUtil.init(PlmApiEnum.PLM_WC_PROD_MGMT_PART_CHECKIN, PlmPartResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(PlmApiEnum.PLM_WC_PROD_MGMT_PART_CHECKIN, PlmPartResponse.class)
             .inlineVariables(plmPartResponse.getVersionID())
             .headers(setupHeader())
             .customBody(String.format("{\"CheckInNote\" : \"%s\"}", checkInNote))
@@ -176,7 +176,7 @@ public class PlmApiTestUtil {
         if (plmPartResponse.getCheckoutState().contains("out")) {
             plmPartCheckin(note);
         }
-        RequestEntity requestEntity = RequestEntityUtil.init(PlmApiEnum.PLM_WC_PROD_MGMT_PART_CHECKOUT, PlmPartResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(PlmApiEnum.PLM_WC_PROD_MGMT_PART_CHECKOUT, PlmPartResponse.class)
             .inlineVariables((plmPartResponse.getVersionID() == null) ? plmPartResponse.getId() : plmPartResponse.getVersionID())
             .headers(setupHeader())
             .customBody(String.format("{\"CheckOutNote\" : \"%s\"}", note))

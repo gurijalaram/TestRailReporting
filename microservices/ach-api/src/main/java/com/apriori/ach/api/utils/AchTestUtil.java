@@ -11,7 +11,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
@@ -52,7 +52,7 @@ public class AchTestUtil extends TestUtil {
      * @return new object
      */
     public <T> ResponseWrapper<T> putUserPreference(String prefName, String value, Class<T> klass) {
-        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.USER_PREFERENCES, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ACHAPIEnum.USER_PREFERENCES, klass)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(UserPreferencesRequest.builder()
                 .userPreferences(Collections.singletonList(UserPreference.builder()
@@ -73,7 +73,7 @@ public class AchTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<String> updatePreferencesByPatch(String identity, String value) {
-        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.USER_PREFERENCES, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ACHAPIEnum.USER_PREFERENCES, null)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body("userPreferences",
                 Collections.singletonMap(identity, value));
@@ -89,7 +89,7 @@ public class AchTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<SuccessUpdatePreferencesResponse> updatePreferencesByPut(String prefName, String value) {
-        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.USER_PREFERENCES, SuccessUpdatePreferencesResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ACHAPIEnum.USER_PREFERENCES, SuccessUpdatePreferencesResponse.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(UserPreferencesRequest.builder()
                 .userPreferences(Collections.singletonList(UserPreference.builder()
@@ -110,7 +110,7 @@ public class AchTestUtil extends TestUtil {
      * @return object ResponseWrapper
      */
     public ResponseWrapper<Users> getUsersWithParams(String param, String value, String... inlineVariables) {
-        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.CUSTOMER_USERS, Users.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ACHAPIEnum.CUSTOMER_USERS, Users.class)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_OK)
             .queryParams(new QueryParams().use(param, value));
@@ -123,7 +123,7 @@ public class AchTestUtil extends TestUtil {
      * @return object ResponseWrapper
      */
     public ResponseWrapper<UserPreferences> getSortedUserPreferences() {
-        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.USER_PREFERENCES, UserPreferences.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ACHAPIEnum.USER_PREFERENCES, UserPreferences.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .queryParams(new QueryParams().use("sortBy[DESC]", "createdAt"));
         return HTTPRequest.build(requestEntity).get();
@@ -144,7 +144,7 @@ public class AchTestUtil extends TestUtil {
         requestBody.setUsername(userName);
         requestBody.setEmail(userName + "@" + domain + ".com");
         requestBody.getUserProfile().setGivenName(userName);
-        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.CUSTOMER_USERS, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ACHAPIEnum.CUSTOMER_USERS, klass)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(expectedResponseCode)
             .body("user", requestBody);
@@ -162,7 +162,7 @@ public class AchTestUtil extends TestUtil {
      * @return ResponseWrapper T
      */
     public <T> ResponseWrapper<T> patchUser(Class<T> klass, User user, String updatedJobTitle, Integer expectedResponseCode) {
-        RequestEntity requestEntity = RequestEntityUtil.init(ACHAPIEnum.USER_BY_ID, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(ACHAPIEnum.USER_BY_ID, klass)
             .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
             .expectedResponseCode(expectedResponseCode)
             .body("user",

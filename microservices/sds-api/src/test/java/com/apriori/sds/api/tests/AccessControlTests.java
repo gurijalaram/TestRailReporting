@@ -10,7 +10,6 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -32,7 +31,7 @@ public class AccessControlTests extends SDSTestUtil {
         final UserCredentials userCredentials = UserUtil.getUser("common");
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class)
+            requestEntityUtil.init(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class)
                 .token(userCredentials.getToken())
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
                 .inlineVariables(
@@ -62,7 +61,7 @@ public class AccessControlTests extends SDSTestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.PATCH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
+            requestEntityUtil.init(SDSAPIEnum.PATCH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
                 .token(userCredentials.getToken())
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
                 .inlineVariables(scenarioForUpdate.getComponentIdentity(), scenarioForUpdate.getScenarioIdentity())
@@ -80,7 +79,7 @@ public class AccessControlTests extends SDSTestUtil {
         final UserCredentials userCredentials = UserUtil.getUser("common");
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
+            requestEntityUtil.init(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
                 .token(userCredentials.getToken())
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
                 .inlineVariables(componentToDeleteForTestingUser.getComponentIdentity(),
@@ -106,7 +105,7 @@ public class AccessControlTests extends SDSTestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
+            requestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
                 .token(userCredentials.getToken())
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
                 .inlineVariables(testingComponent.getComponentIdentity(), testingComponent.getScenarioIdentity())

@@ -4,7 +4,7 @@ import com.apriori.ats.api.models.request.ResetAutoUsers;
 import com.apriori.ats.api.utils.enums.ATSAPIEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
 
@@ -39,7 +39,7 @@ public class ResetAutomationUsers {
 
             this.automationUser = String.format(automationUser, userIndex);
 
-            RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.USER_PASSWORD_BY_EMAIL, null)
+            RequestEntity requestEntity = RequestEntityUtil_Old.init(ATSAPIEnum.USER_PASSWORD_BY_EMAIL, null)
                 .inlineVariables(this.automationUser)
                 .urlEncodingEnabled(false)
                 .body(ResetAutoUsers.builder()
