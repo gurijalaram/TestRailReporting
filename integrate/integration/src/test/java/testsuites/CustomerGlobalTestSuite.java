@@ -5,7 +5,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({
-    SanityTestSuite.class, // aP Design
+    SanityTestSuite.class,
     CustomerSmokeEnvironmentTestSuite.class,
     CustomerTagTestSuite.class
 })
