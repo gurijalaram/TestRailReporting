@@ -99,7 +99,7 @@ public class ComponentsUtil {
      */
     public CadFilesResponse postSubcomponentsCadFiles(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("cadFiles", componentInfo.getSubComponents()
                     .stream()
                     .map(ComponentInfoBuilder::getResourceFile)
@@ -120,7 +120,7 @@ public class ComponentsUtil {
     public PostComponentResponse postComponents(List<ComponentInfoBuilder> componentInfo, CadFilesResponse cadFilesResponse) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
                 .body("groupItems", cadFilesResponse.getCadFiles()
                     .stream()
                     .map(cadFileResponse -> ComponentRequest.builder()

@@ -100,7 +100,7 @@ public class AssemblyUtils {
             });
 
         CadFilesResponse cadFilesResponse = componentsUtil.postSubcomponentsCadFiles(componentAssembly);
-        PostComponentResponse postComponentResponse = componentsUtil.postSubcomponents(componentAssembly, cadFilesResponse);
+        PostComponentResponse postComponentResponse = componentsUtil.postComponents(componentAssembly.getSubComponents(), cadFilesResponse);
 
         componentAssembly.getSubComponents()
             .forEach(subcomponent -> postComponentResponse.getSuccesses()
