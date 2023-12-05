@@ -66,22 +66,6 @@ public class ComponentsUtil {
     }
 
     /**
-     * POST cad files
-     *
-     * @param componentInfo - the component object
-     * @param files         - the list of files
-     * @return cad file response object
-     */
-    private ResponseWrapper<CadFilesResponse> postCadFile(ComponentInfoBuilder componentInfo, List<File> files) {
-        RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
-                .multiPartFiles(new MultiPartFiles().use("cadFiles", files))
-                .token(componentInfo.getUser().getToken());
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
      * POST subcomponents cad files
      *
      * @param componentInfo - the component object
@@ -249,7 +233,7 @@ public class ComponentsUtil {
      * @return response object
      */
     public List<ScenarioItem> postMultiComponentsQueryCSS(ComponentInfoBuilder componentInfo) {
-        List<CadFile> resources = postCadFiles(componentInfo);
+        CadFilesResponse resources = postSubcomponentsCadFiles(List.of(componentInfo));
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
             .body("groupItems", componentInfo.getResourceFiles()
@@ -258,7 +242,7 @@ public class ComponentsUtil {
                     ComponentRequest.builder()
                         .filename(resourceFile.getName())
                         .override(false)
-                        .resourceName(resources.stream()
+                        .resourceName(resources.getCadFiles().stream()
                             .filter(x -> x.getFilename().equals(resourceFile.getName()))
                             .map(CadFile::getResourceName)
                             .collect(Collectors.toList())
@@ -285,7 +269,7 @@ public class ComponentsUtil {
      * @return response object
      */
     public List<ComponentIdentityResponse> postMultiComponentsQueryCID(ComponentInfoBuilder componentInfo) {
-        List<CadFile> resources = postCadFiles(componentInfo);
+        CadFilesResponse resources = postSubcomponentsCadFiles(List.of(componentInfo));
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
             .body("groupItems", componentInfo.getResourceFiles()
@@ -294,7 +278,7 @@ public class ComponentsUtil {
                     ComponentRequest.builder()
                         .filename(resourceFile.getName())
                         .override(false)
-                        .resourceName(resources.stream()
+                        .resourceName(resources.getCadFiles().stream()
                             .filter(x -> x.getFilename().equals(resourceFile.getName()))
                             .map(CadFile::getResourceName)
                             .collect(Collectors.toList())

@@ -23,10 +23,8 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
@@ -46,7 +44,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.io.File;
 import java.util.Collections;
@@ -180,7 +177,8 @@ public abstract class SDSTestUtil extends TestUtil {
             .build();
 
         String uploadedComponentResourceName = new ComponentsUtil()
-            .postCadFiles(componentInfo)
+            .postSubcomponentsCadFiles(List.of(componentInfo))
+            .getCadFiles()
             .get(0)
             .getResourceName();
 
