@@ -10,22 +10,31 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.BeforeAll;
 
 @Slf4j
 public class BcmUtil extends TestUtil {
 
     protected static UserCredentials testingUser = UserUtil.getUser("admin");
-    protected static String testingApUserContext =  new AuthUserContextUtil().getAuthUserContext(testingUser.getEmail());
+    protected static RequestEntityUtil requestEntityUtil;
 
-    public  ResponseWrapper<WorkSheetResponse> createWorksheet(String name) {
+    @BeforeAll
+    public static  void init() {
+        requestEntityUtil = RequestEntityUtilBuilder
+            .useRandomUser("admin")
+            .useApUserContextInRequests();
+
+        testingUser = requestEntityUtil.getEmbeddedUser();
+    }
+
+    public ResponseWrapper<WorkSheetResponse> createWorksheet(String name) {
 
         WorksheetRequest body = WorksheetRequest
             .builder()
@@ -36,14 +45,13 @@ public class BcmUtil extends TestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)
                 .body(body)
-                .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
         return HTTPRequest.build(requestEntity).post();
     }
 
-    public  ResponseWrapper<ErrorResponse> createWorksheetAlreadyExists(String name) {
+    public ResponseWrapper<ErrorResponse> createWorksheetAlreadyExists(String name) {
 
         WorksheetRequest body = WorksheetRequest
             .builder()
@@ -54,17 +62,15 @@ public class BcmUtil extends TestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(BcmAppAPIEnum.WORKSHEETS, ErrorResponse.class)
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, ErrorResponse.class)
                 .body(body)
-                .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
         return HTTPRequest.build(requestEntity).post();
     }
 
     public ResponseWrapper<WorkSheets> getWorksheets() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheets.class)
-                .apUserContext(testingApUserContext)
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheets.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).get();
     }
