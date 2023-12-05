@@ -33,7 +33,7 @@ import java.util.List;
 public class ActiveAxesByScenarioIterationKeyTests extends TestUtil {
 
     @Test
-    @Disabled("Jira bug ticket (COST-173) has been close with the reason of won't do")
+    @Disabled("Jira bug ticket (COST-173) has been closed with the reason of won't do")
     @Issue("COST-173")
     @TestRail(id = 10980)
     @Description("Validate Get Active Axes by Scenario Iteration Key")
