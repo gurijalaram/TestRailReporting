@@ -69,16 +69,6 @@ public class ComponentsUtil {
      * POST cad files
      *
      * @param componentInfo - the component object
-     * @return cad file response object
-     */
-    public ResponseWrapper<CadFilesResponse> postCadFile(ComponentInfoBuilder componentInfo) {
-        return postCadFile(componentInfo, Collections.singletonList(componentInfo.getResourceFile()));
-    }
-
-    /**
-     * POST cad files
-     *
-     * @param componentInfo - the component object
      * @param files         - the list of files
      * @return cad file response object
      */
@@ -151,7 +141,7 @@ public class ComponentsUtil {
      * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
      */
     public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentInfo) {
-        String resourceName = postCadFile(componentInfo).getResponseEntity().getCadFiles().stream()
+        String resourceName = postSubcomponentsCadFiles(List.of(componentInfo)).getCadFiles().stream()
             .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
 
         RequestEntity requestEntity =
