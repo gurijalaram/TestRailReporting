@@ -60,7 +60,7 @@ public class BcmUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-    public ResponseWrapper<WorkSheets> getWorksheetsList() {
+    public ResponseWrapper<WorkSheets> getWorksheets() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheets.class)
                 .apUserContext(testingApUserContext)

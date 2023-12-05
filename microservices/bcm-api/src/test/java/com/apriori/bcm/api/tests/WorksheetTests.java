@@ -54,9 +54,9 @@ public class WorksheetTests extends  BcmUtil {
 
         bcmUtil.createWorksheet(name);
 
-        ResponseWrapper<WorkSheets> worksheetsList = bcmUtil.getWorksheetsList();
-        softAssertions.assertThat(worksheetsList.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
-        softAssertions.assertThat(worksheetsList.getResponseEntity().getItems().stream().filter(worksheet -> worksheet.getName().equals(name)).collect(Collectors.toList()).get(0)).isNotNull();
+        WorkSheets worksheetsList = bcmUtil.getWorksheets().getResponseEntity();
+        softAssertions.assertThat(worksheetsList.getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        softAssertions.assertThat(worksheetsList.getItems().stream().filter(worksheet -> worksheet.getName().equals(name)).collect(Collectors.toList()).get(0)).isNotNull();
         softAssertions.assertAll();
     }
 }
