@@ -10,7 +10,7 @@ import com.apriori.shared.util.enums.TokenEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.request.TokenRequest;
 import com.apriori.shared.util.models.response.Claims;
@@ -48,7 +48,7 @@ public class AchUsersTests {
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil.useTokenForRequests(getWidgetsUserToken(USER_ADMIN));
+        RequestEntityUtil_Old.useTokenForRequests(getWidgetsUserToken(USER_ADMIN));
         customerIdentity = achTestUtil.getCustomer("Widgets").getIdentity();
         Customer widgets = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity();
         String pattern = widgets.getEmailRegexPatterns().stream().findFirst().orElseThrow();
@@ -163,7 +163,7 @@ public class AchUsersTests {
     @TestRail(id = {29180})
     @Description("Error when non admin user trying to create user")
     public void notAdminCreateUser() {
-        RequestEntityUtil.useTokenForRequests(getWidgetsUserToken(NOT_ADMIN_USER));
+        RequestEntityUtil_Old.useTokenForRequests(getWidgetsUserToken(NOT_ADMIN_USER));
 
         String userName = new GenerateStringUtil().generateUserName();
 
@@ -184,7 +184,7 @@ public class AchUsersTests {
         User userResponse = newUser.getResponseEntity();
         userIdentity = userResponse.getIdentity();
 
-        RequestEntityUtil.useTokenForRequests(getWidgetsUserToken(NOT_ADMIN_USER));
+        RequestEntityUtil_Old.useTokenForRequests(getWidgetsUserToken(NOT_ADMIN_USER));
 
         ResponseWrapper<AchErrorResponse> updateUser = achTestUtil.patchUser(AchErrorResponse.class, userResponse, updatedJobTitle, HttpStatus.SC_FORBIDDEN);
 
@@ -203,7 +203,7 @@ public class AchUsersTests {
     }
 
     private String getWidgetsUserToken(String name) {
-        RequestEntity requestEntity = RequestEntityUtil.init(TokenEnum.POST_TOKEN, Token.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(TokenEnum.POST_TOKEN, Token.class)
             .body(TokenRequest.builder()
                 .token(TokenInformation.builder()
                     .issuer(PropertiesContext.get("ats.token_issuer"))

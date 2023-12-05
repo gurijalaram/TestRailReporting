@@ -23,7 +23,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.properties.PropertiesContext;
 
@@ -73,7 +73,7 @@ public class DmsApiTestUtils {
      * @return ResponseWrapper of String
      */
     public static ResponseWrapper<String> deleteDiscussion(String discussionIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION, null)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -92,7 +92,7 @@ public class DmsApiTestUtils {
      * @return response class
      */
     public static <T> T getDiscussions(Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSIONS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSIONS, responseClass)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -113,7 +113,7 @@ public class DmsApiTestUtils {
      */
     public static <T> T getScenarioDiscussions(Class<T> responseClass, Integer httpStatus, UserCredentials currentUser, ScenarioDiscussionResponse qmsScenarioDiscussionResponse) {
         QueryParams queryParams = new QueryParams();
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSIONS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSIONS, responseClass)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .queryParams(queryParams.use("scenarioDiscussionIdentity[EQ]", qmsScenarioDiscussionResponse.getIdentity()))
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
@@ -132,7 +132,7 @@ public class DmsApiTestUtils {
      * @return DmsCommentsResponse discussion comments
      */
     public static DmsCommentsResponse getDiscussionComments(UserCredentials currentUser, String discussionIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, DmsCommentsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, DmsCommentsResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -150,7 +150,7 @@ public class DmsApiTestUtils {
      * @return DmsCommentResponse discussion comment
      */
     public static DmsCommentResponse getDiscussionComment(UserCredentials currentUser, String discussionIdentity, String commentIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT, DmsCommentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT, DmsCommentResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"),
                 discussionIdentity, commentIdentity)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
@@ -179,7 +179,7 @@ public class DmsApiTestUtils {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT, DmsCommentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT, DmsCommentResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, commentIdentity)
             .body(dmsCommentsRequest)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
@@ -209,7 +209,7 @@ public class DmsApiTestUtils {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION, klass)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -232,7 +232,7 @@ public class DmsApiTestUtils {
      * @return response class object
      */
     public static <T> T updateDiscussion(DiscussionsRequest discussionsRequestBuilder, String discussionIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION, klass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION, klass)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -256,7 +256,7 @@ public class DmsApiTestUtils {
      * @return response class object
      */
     public static <T> T deleteComment(String discussionIdentity, String commentIdentity, UserCredentials currentUser, Class<T> responseClass, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT, responseClass)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, commentIdentity)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -286,7 +286,7 @@ public class DmsApiTestUtils {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT_VIEWS, DmsCommentViewResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT_VIEWS, DmsCommentViewResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, discussionCommentIdentity)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .body(dmsCommentViewRequest)
@@ -304,7 +304,7 @@ public class DmsApiTestUtils {
      * @return DmsCommentViewsResponse discussion comment views
      */
     public static DmsCommentViewsResponse getDiscussionCommentViews(String discussionIdentity, String commentIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT_VIEWS, DmsCommentViewsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT_VIEWS, DmsCommentViewsResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, commentIdentity)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -323,7 +323,7 @@ public class DmsApiTestUtils {
      * @return DmsCommentViewResponse discussion comment view
      */
     public static DmsCommentViewResponse getDiscussionCommentView(String discussionIdentity, String commentIdentity, String commentViewIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT_VIEW, DmsCommentViewResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT_VIEW, DmsCommentViewResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, commentIdentity, commentViewIdentity)
             .headers(DmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -342,7 +342,7 @@ public class DmsApiTestUtils {
      * @return ResponseWrapper[String] response wrapper
      */
     public static ResponseWrapper<String> deleteCommentView(String discussionIdentity, String commentIdentity, String commentViewIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT_VIEW, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENT_VIEW, null)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, commentIdentity, commentViewIdentity)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -359,7 +359,7 @@ public class DmsApiTestUtils {
      * @return ResponseWrapper[DmsDiscussionResponse] dms discussion response
      */
     public static DmsDiscussionResponse createDiscussion(DiscussionsRequest discussionsRequestBuilder, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSIONS, DmsDiscussionResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSIONS, DmsDiscussionResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -384,7 +384,7 @@ public class DmsApiTestUtils {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSIONS, DmsDiscussionResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSIONS, DmsDiscussionResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -415,7 +415,7 @@ public class DmsApiTestUtils {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, responseClass)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .body(dmsCommentsRequest)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
@@ -435,7 +435,7 @@ public class DmsApiTestUtils {
      * @return DmsCommentResponse dms comment response
      */
     public static DmsCommentResponse addCommentToDiscussion(DmsCommentsRequest dmsCommentsRequestBuilder, String discussionIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, DmsCommentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, DmsCommentResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .body(dmsCommentsRequestBuilder)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
@@ -453,7 +453,7 @@ public class DmsApiTestUtils {
      * @return DmsDiscussionParticipantsResponse discussion participants
      */
     public static DmsDiscussionParticipantsResponse getDiscussionParticipants(String discussionIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_PARTICIPANTS, DmsDiscussionParticipantsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_PARTICIPANTS, DmsDiscussionParticipantsResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -471,7 +471,7 @@ public class DmsApiTestUtils {
      * @return DmsDiscussionParticipantResponse discussion participant
      */
     public static DmsDiscussionParticipantResponse getDiscussionParticipant(String discussionIdentity, String participantIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_PARTICIPANT, DmsDiscussionParticipantResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_PARTICIPANT, DmsDiscussionParticipantResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, participantIdentity)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -490,7 +490,7 @@ public class DmsApiTestUtils {
      * @return DmsDiscussionParticipantResponse dms discussion participant response
      */
     public static DmsDiscussionParticipantResponse addDiscussionParticipant(DiscussionParticipantRequest discussionParticipantRequestBuilder, String discussionIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_PARTICIPANTS, DmsDiscussionParticipantResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_PARTICIPANTS, DmsDiscussionParticipantResponse.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .body(discussionParticipantRequestBuilder)
@@ -520,7 +520,7 @@ public class DmsApiTestUtils {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_PARTICIPANTS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_PARTICIPANTS, responseClass)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .body(discussionParticipantRequest)
@@ -543,7 +543,7 @@ public class DmsApiTestUtils {
      * @return response class object
      */
     public static <T> T deleteDiscussionParticipant(String discussionIdentity, String participantIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_PARTICIPANT, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_PARTICIPANT, responseClass)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), discussionIdentity, participantIdentity)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -564,7 +564,7 @@ public class DmsApiTestUtils {
      * @return the t
      */
     public static <T> T deleteDiscussionProjectItem(String projectItemIdentity, Class<T> responseClass, UserCredentials currentUser, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil.init(DMSApiEnum.CUSTOMER_DISCUSSION_PROJECT_ITEM, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DMSApiEnum.CUSTOMER_DISCUSSION_PROJECT_ITEM, responseClass)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), projectItemIdentity)
             .headers(setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))

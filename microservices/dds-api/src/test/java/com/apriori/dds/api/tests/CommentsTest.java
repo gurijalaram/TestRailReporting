@@ -15,7 +15,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.ErrorMessage;
@@ -95,7 +95,7 @@ public class CommentsTest extends TestUtil {
     @TestRail(id = {12376, 14326})
     @Description("get a valid comments and verify pagination")
     public void getComments() {
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, CommentsResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, CommentsResponse.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), discussionResponse.getResponseEntity().getIdentity())
             .headers(DdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -111,7 +111,7 @@ public class CommentsTest extends TestUtil {
     @TestRail(id = {12373})
     @Description("get a valid comment")
     public void getComment() {
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, CommentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, CommentResponse.class)
             .inlineVariables(PropertiesContext.get("customer_identity"),
                 discussionResponse.getResponseEntity().getIdentity(),
                 commentResponse.getResponseEntity().getIdentity())
@@ -137,7 +137,7 @@ public class CommentsTest extends TestUtil {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, CommentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, CommentResponse.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), discussionResponse.getResponseEntity().getIdentity(), commentResponse.getResponseEntity().getIdentity())
             .body(commentsRequest)
             .headers(DdsApiTestUtils.setUpHeader())
@@ -213,7 +213,7 @@ public class CommentsTest extends TestUtil {
     @TestRail(id = {12374})
     @Description("get a invalid comment")
     public void getInvalidComment() {
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ErrorMessage.class)
             .inlineVariables(PropertiesContext.get("customer_identity"),
                 discussionResponse.getResponseEntity().getIdentity(),
                 "INVALID")
@@ -229,7 +229,7 @@ public class CommentsTest extends TestUtil {
     @TestRail(id = {12377})
     @Description("get a comment With Invalid discussion")
     public void getCommentWithInvalidDiscussion() {
-        RequestEntity requestEntity = RequestEntityUtil.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ErrorMessage.class)
             .inlineVariables(PropertiesContext.get("customer_identity"),
                 "INVALID",
                 commentResponse.getResponseEntity().getIdentity())

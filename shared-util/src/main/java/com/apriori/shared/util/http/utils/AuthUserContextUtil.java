@@ -22,14 +22,14 @@ public class AuthUserContextUtil {
      * @return string
      */
     public String getAuthUserContext(String email) {
-        RequestEntity userEntity = RequestEntityUtil.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT, Users.class)
+        RequestEntity userEntity = RequestEntityUtil_Old.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT, Users.class)
             .queryParams(new QueryParams().use("email[EQ]", email));
 
         ResponseWrapper<Users> userResponse = HTTPRequest.build(userEntity).get();
 
         String identity = userResponse.getResponseEntity().getItems().get(0).getIdentity();
 
-        RequestEntity idEntity = RequestEntityUtil.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT_BY_USERID, User.class)
+        RequestEntity idEntity = RequestEntityUtil_Old.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT_BY_USERID, User.class)
             .inlineVariables(identity);
 
         ResponseWrapper<User> userIdResponse = HTTPRequest.build(idEntity).get();
@@ -51,7 +51,7 @@ public class AuthUserContextUtil {
      * @return user Identity
      */
     public String getAuthUserIdentity(String email) {
-        RequestEntity userEntity = RequestEntityUtil.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT, Users.class)
+        RequestEntity userEntity = RequestEntityUtil_Old.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT, Users.class)
             .queryParams(new QueryParams().use("email[EQ]", email));
 
         ResponseWrapper<Users> userResponse = HTTPRequest.build(userEntity).get();

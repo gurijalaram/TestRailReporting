@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.greaterThan;
 
 import com.apriori.edc.api.models.response.bill.of.materials.BillOfMaterialsResponse;
 import com.apriori.edc.api.utils.BillOfMaterialsUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -34,7 +34,7 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
     @BeforeEach
     public void setUp() {
-        RequestEntityUtil.useTokenForRequests(currentUser.getToken());
+        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
         billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
 

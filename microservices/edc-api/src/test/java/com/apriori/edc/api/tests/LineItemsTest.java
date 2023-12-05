@@ -9,7 +9,7 @@ import com.apriori.edc.api.utils.LineItemsUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -51,7 +51,7 @@ public class LineItemsTest extends LineItemsUtil {
     @BeforeEach
     public void setUp() {
         userToken = UserUtil.getUser("admin").getToken();
-        RequestEntityUtil.useTokenForRequests(userToken);
+        RequestEntityUtil_Old.useTokenForRequests(userToken);
         billOfMaterialsIdentity = postBillOfMaterialsWithToken(filename, userToken).getResponseEntity().getIdentity();
     }
 

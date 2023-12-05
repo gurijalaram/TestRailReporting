@@ -26,7 +26,7 @@ public class CnhService {
      * @param executeRequest - pass the body
      */
     public ResponseWrapper<ExecuteResponse> execute(ExecuteRequest executeRequest,String... inlineVariables) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CNHAPIEnum.EXECUTE, ExecuteResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CNHAPIEnum.EXECUTE, ExecuteResponse.class)
             .headers(headers)
             .body(executeRequest)
             .inlineVariables(inlineVariables);
@@ -40,7 +40,7 @@ public class CnhService {
      * @param executeRequest - pass the body
      */
     public ResponseWrapper<ExecuteResponse> execute(Map<String, String> headers, ExecuteRequest executeRequest,String... inlineVariables) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CNHAPIEnum.EXECUTE, ExecuteResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CNHAPIEnum.EXECUTE, ExecuteResponse.class)
             .headers(headers)
             .body(executeRequest)
             .inlineVariables(inlineVariables);
@@ -55,7 +55,7 @@ public class CnhService {
      *
      */
     public ResponseWrapper<ExecuteResponse> status(String... inlineVariables) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CNHAPIEnum.STATUS, ExecuteResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CNHAPIEnum.STATUS, ExecuteResponse.class)
             .headers(headers)
             .inlineVariables(inlineVariables);
 

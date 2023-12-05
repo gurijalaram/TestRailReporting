@@ -2,7 +2,6 @@ package com.apriori.vds.api.tests;
 
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.vds.api.enums.VDSAPIEnum;
@@ -21,7 +20,7 @@ public class CustomizationsTest extends VDSTestUtil {
     @TestRail(id = {7953})
     @Description("Get a list of Customizations for a specific customer.")
     public void getCustomizations() {
-        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_CUSTOMIZATIONS, CustomizationsItems.class)
+        RequestEntity requestEntity = requestEntityUtil.init(VDSAPIEnum.GET_CUSTOMIZATIONS, CustomizationsItems.class)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         HTTPRequest.build(requestEntity).get();

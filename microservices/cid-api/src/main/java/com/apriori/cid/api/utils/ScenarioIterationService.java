@@ -10,7 +10,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.ErrorRequestResponse;
 import com.apriori.shared.util.models.response.component.ComponentResponse;
@@ -44,7 +44,7 @@ public class ScenarioIterationService {
     public ResponseWrapper<ComponentResponse> getScenarioIterationWithParams(QueryParams queryParams) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, ComponentResponse.class)
+            RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS, ComponentResponse.class)
                 .token(currentUser.getToken())
                 .queryParams(queryParams);
         return HTTPRequest.build(requestEntity).get();
@@ -58,7 +58,7 @@ public class ScenarioIterationService {
     public ResponseWrapper<ErrorRequestResponse> getScenarioIterationWithParamsPostForErrors(ScenarioIterationRequest scenarioIterationRequest) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ErrorRequestResponse.class)
+            RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ErrorRequestResponse.class)
                 .body(scenarioIterationRequest)
                 .token(currentUser.getToken());
         return HTTPRequest.build(requestEntity).post();
@@ -72,7 +72,7 @@ public class ScenarioIterationService {
     public ResponseWrapper<ComponentResponse> getScenarioIterationWithParamsPost(ScenarioIterationRequest scenarioIterationRequest) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ComponentResponse.class)
+            RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ComponentResponse.class)
                 .body(scenarioIterationRequest)
                 .token(currentUser.getToken());
         return HTTPRequest.build(requestEntity).post();

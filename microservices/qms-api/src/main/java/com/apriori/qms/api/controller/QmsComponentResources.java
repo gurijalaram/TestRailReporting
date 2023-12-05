@@ -21,7 +21,7 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.models.response.component.componentiteration.ComponentIteration;
@@ -63,7 +63,7 @@ public class QmsComponentResources {
      * @return ResponseWrapper of class object ComponentResponse
      */
     public static ResponseWrapper<ComponentResponse> getComponent(String userContext, String componentIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT, ComponentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT, ComponentResponse.class)
             .inlineVariables(componentIdentity).apUserContext(userContext);
         return HTTPRequest.build(requestEntity).get();
     }
@@ -77,7 +77,7 @@ public class QmsComponentResources {
      * @return ResponseWrapper[ScenarioResponse] component scenario
      */
     public static ResponseWrapper<ScenarioResponse> getComponentScenario(String userContext, String componentIdentity, String scenarioIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO, ScenarioResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO, ScenarioResponse.class)
             .inlineVariables(componentIdentity, scenarioIdentity).apUserContext(userContext);
         return HTTPRequest.build(requestEntity).get();
     }
@@ -90,7 +90,7 @@ public class QmsComponentResources {
      * @return ResponseWrapper of class object ScenariosResponse
      */
     public static ResponseWrapper<ScenariosResponse> getComponentScenarios(String userContext, String componentIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIOS, ScenariosResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIOS, ScenariosResponse.class)
             .inlineVariables(componentIdentity).apUserContext(userContext);
         return HTTPRequest.build(requestEntity).get();
     }
@@ -105,7 +105,7 @@ public class QmsComponentResources {
      */
     public static ResponseWrapper<ScenarioProjectUserResponse> getComponentScenarioUsers(String userContext,
                                                                                          String componentIdentity, String scenarioIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
             .inlineVariables(componentIdentity, scenarioIdentity)
             .headers(QmsApiTestUtils.setUpHeader(UserUtil.getUser().generateCloudContext().getCloudContext()))
             .apUserContext(userContext);
@@ -122,7 +122,7 @@ public class QmsComponentResources {
      * @return ResponseWrapper[ComponentIteration] latest iteration
      */
     public static ResponseWrapper<ComponentIteration> getLatestIteration(String userContext, String componentIdentity, String scenarioIdentity, String iterationIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_ID, ComponentIteration.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_ID, ComponentIteration.class)
             .inlineVariables(componentIdentity, scenarioIdentity, iterationIdentity).apUserContext(userContext);
         return HTTPRequest.build(requestEntity).get();
     }
@@ -140,7 +140,7 @@ public class QmsComponentResources {
         ProjectUserRequest projectUserRequest = ProjectUserRequest.builder()
             .users(Collections.singletonList(projectUsers)).build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
             .inlineVariables(componentIdentity, scenarioIdentity)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .body(projectUserRequest)
@@ -166,7 +166,7 @@ public class QmsComponentResources {
         ProjectUserRequest projectUserRequest = ProjectUserRequest.builder()
             .users(Collections.singletonList(projectUsers)).build();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, responseClass)
             .inlineVariables(componentIdentity, scenarioIdentity)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .body(projectUserRequest)
@@ -187,7 +187,7 @@ public class QmsComponentResources {
      * @return the scenario project user response
      */
     public static ScenarioProjectUserResponse addComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest createProjectUserRequest, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, ScenarioProjectUserResponse.class)
             .inlineVariables(componentIdentity, scenarioIdentity)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -207,7 +207,7 @@ public class QmsComponentResources {
      * @param currentUser              the current user
      */
     public static void deleteComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest deleteProjectUserRequest, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, null)
             .inlineVariables(componentIdentity, scenarioIdentity)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -230,7 +230,7 @@ public class QmsComponentResources {
      * @return the response wrapper entity
      */
     public static <T> T deleteComponentScenarioUser(String componentIdentity, String scenarioIdentity, ProjectUserRequest deleteProjectUserRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENT_SCENARIO_USERS, responseClass)
             .inlineVariables(componentIdentity, scenarioIdentity)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -251,7 +251,7 @@ public class QmsComponentResources {
      * @return the components assigned
      */
     public static <T> T getComponentsAssigned(AssignedComponentRequest assignedComponentRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.COMPONENTS_ASSIGNED, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.COMPONENTS_ASSIGNED, responseClass)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .body(assignedComponentRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
