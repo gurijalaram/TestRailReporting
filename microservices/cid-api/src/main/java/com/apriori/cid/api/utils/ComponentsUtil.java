@@ -97,14 +97,14 @@ public class ComponentsUtil {
      * @param componentInfo - the component object
      * @return cad files response object
      */
-    public CadFilesResponse postSubcomponentsCadFiles(ComponentInfoBuilder componentInfo) {
+    public CadFilesResponse postSubcomponentsCadFiles(List<ComponentInfoBuilder> componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
-                .multiPartFiles(new MultiPartFiles().use("cadFiles", componentInfo.getSubComponents()
+                .multiPartFiles(new MultiPartFiles().use("cadFiles", componentInfo
                     .stream()
                     .map(ComponentInfoBuilder::getResourceFile)
                     .collect(Collectors.toList())))
-                .token(componentInfo.getUser().getToken());
+                .token(componentInfo.get(0).getUser().getToken());
 
         ResponseWrapper<CadFilesResponse> cadFilesResponse = HTTPRequest.build(requestEntity).post();
         return cadFilesResponse.getResponseEntity();

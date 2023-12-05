@@ -99,7 +99,7 @@ public class AssemblyUtils {
                 }
             });
 
-        CadFilesResponse cadFilesResponse = componentsUtil.postSubcomponentsCadFiles(componentAssembly);
+        CadFilesResponse cadFilesResponse = componentsUtil.postSubcomponentsCadFiles(componentAssembly.getSubComponents());
         PostComponentResponse postComponentResponse = componentsUtil.postComponents(componentAssembly.getSubComponents(), cadFilesResponse);
 
         componentAssembly.getSubComponents()
