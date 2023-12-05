@@ -17,6 +17,7 @@ import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.ErrorMessage;
@@ -74,7 +75,7 @@ public class BatchPartResources {
      * @return Response of type part object
      */
     public static ResponseWrapper<Part> createNewBatchPartByID(PartData partData, String batchIdentity) {
-        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class).inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity);
+        requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class).inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity);
         Map<String, String> header = new HashMap<>();
         QueryParams queryParams = new QueryParams();
         partData.setScenarioName("Scenario" + System.currentTimeMillis());
@@ -128,7 +129,7 @@ public class BatchPartResources {
      */
     public static <T> ResponseWrapper<T> addPartToBatch(QueryParams queryParams, File partFile, String batchIdentity, Class<T> klass, Integer httpStatus) {
         Map<String, String> header = new HashMap<>();
-        requestEntity = RequestEntityUtil.init(
+        requestEntity = RequestEntityUtil_Old.init(
                 BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, klass)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity)
             .expectedResponseCode(httpStatus);
@@ -166,7 +167,7 @@ public class BatchPartResources {
      * @return RequestEntity object
      */
     public static <T> RequestEntity getBatchPartRequestEntity(BCSAPIEnum endPoint, String batchIdentity, String partIdentity, Class<T> klass) {
-        return RequestEntityUtil.init(endPoint, klass).inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity, partIdentity);
+        return RequestEntityUtil_Old.init(endPoint, klass).inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity, partIdentity);
     }
 
     /**
@@ -199,7 +200,7 @@ public class BatchPartResources {
      * @return - Response
      */
     public static ResponseWrapper<Parts> getBatchPartById(String batchIdentity) {
-        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
+        requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity)
             .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("bcs.number_of_parts")))
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -214,7 +215,7 @@ public class BatchPartResources {
      * @return - Response
      */
     public static ResponseWrapper<Parts> getPartsByBatchId(String batchIdentity) {
-        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
+        requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity)
             .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("bcs.number_of_parts")));
         return HTTPRequest.build(requestEntity).get();
@@ -228,7 +229,7 @@ public class BatchPartResources {
      * @return The response returned from the server
      */
     public static ResponseWrapper<Part> getBatchPartRepresentation(String batchIdentity, String partIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity, partIdentity);
         return HTTPRequest.build(requestEntity).get();
     }
@@ -243,7 +244,7 @@ public class BatchPartResources {
     public static ResponseWrapper<PartReport> getPartReport(String batchIdentity, String partIdentity) {
         if (BatchPartResources.waitUntilPartStateIsCompleted(batchIdentity, partIdentity)) {
             log.info("Batch Part State is => " + BCSState.COMPLETED);
-            RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS, PartReport.class)
+            RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS, PartReport.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity, partIdentity)
                 .expectedResponseCode(HttpStatus.SC_OK);
             return HTTPRequest.build(requestEntity).get();
@@ -283,7 +284,7 @@ public class BatchPartResources {
      * @return The response returned from the server
      */
     public static ResponseWrapper<Results> getBatchPartResults(String batchIdentity, String partIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS, Results.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS, Results.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity, partIdentity);
         return HTTPRequest.build(requestEntity).get();
     }
@@ -321,7 +322,7 @@ public class BatchPartResources {
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity) {
-        requestEntity = RequestEntityUtil.init(
+        requestEntity = RequestEntityUtil_Old.init(
                 BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -337,7 +338,7 @@ public class BatchPartResources {
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static <T> RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity, Class<T> klass) {
-        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, klass).inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity);
+        requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_PARTS_BY_ID, klass).inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity);
         return setPartRequestFormParams(newPartRequest);
     }
 
@@ -350,7 +351,7 @@ public class BatchPartResources {
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity, String customerIdentity) {
-        return RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class)
+        return RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class)
             .inlineVariables(customerIdentity, batchIdentity);
     }
 
@@ -365,7 +366,7 @@ public class BatchPartResources {
         long initialTime = System.currentTimeMillis() / 1000;
         Part part;
         do {
-            requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
+            requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity, partIdentity);
             part = (Part) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {
@@ -388,7 +389,7 @@ public class BatchPartResources {
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static RequestEntity batchPartRequestEntity(QueryParams queryParameter, File partFile, String batchIdentity) {
-        requestEntity = RequestEntityUtil.init(
+        requestEntity = RequestEntityUtil_Old.init(
                 BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -414,7 +415,7 @@ public class BatchPartResources {
         long initialTime = System.currentTimeMillis() / 1000;
         Part part;
         do {
-            requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
+            requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), batchIdentity, partIdentity);
             part = (Part) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {

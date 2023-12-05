@@ -9,7 +9,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 /**
@@ -29,7 +29,7 @@ public class QmsLayoutResources {
      * @return the response entity
      */
     public static <T> T createLayoutConfiguration(LayoutConfigurationRequest layoutConfigRequestBuilder, String viewElementName, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATIONS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATIONS, responseClass)
             .inlineVariables(viewElementName)
             .body(layoutConfigRequestBuilder)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
@@ -53,7 +53,7 @@ public class QmsLayoutResources {
      * @return the response entity
      */
     public static <T> T updateLayoutConfiguration(LayoutConfigurationRequest layoutConfigRequestBuilder, String viewElementName, String layoutConfigurationIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
             .body(layoutConfigRequestBuilder)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
@@ -77,7 +77,7 @@ public class QmsLayoutResources {
      * @return the response entity
      */
     public static <T> T shareLayoutConfiguration(LayoutConfigurationRequest layoutConfigRequestBuilder, String viewElementName, String layoutConfigurationIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION_SHARE, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION_SHARE, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
             .body(layoutConfigRequestBuilder)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
@@ -100,7 +100,7 @@ public class QmsLayoutResources {
      * @return the response entity
      */
     public static <T> T deleteLayoutConfiguration(String viewElementName, String layoutConfigurationIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -121,7 +121,7 @@ public class QmsLayoutResources {
      * @return the layout configurations
      */
     public static <T> T getLayoutConfigurations(String viewElementName, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATIONS, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATIONS, responseClass)
             .inlineVariables(viewElementName)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -143,7 +143,7 @@ public class QmsLayoutResources {
      * @return the layout configuration
      */
     public static <T> T getLayoutConfiguration(String viewElementName, String layoutConfigurationIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.VIEW_ELEMENT_LAYOUT_CONFIGURATION, responseClass)
             .inlineVariables(viewElementName, layoutConfigurationIdentity)
             .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))

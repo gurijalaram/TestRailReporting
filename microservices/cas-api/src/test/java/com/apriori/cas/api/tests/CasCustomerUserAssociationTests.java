@@ -10,7 +10,7 @@ import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.Users;
@@ -42,7 +42,7 @@ public class CasCustomerUserAssociationTests {
 
     @BeforeAll
     public static void globalSetup() {
-        RequestEntityUtil.useTokenForRequests(UserUtil.getUser("admin").getToken());
+        RequestEntityUtil_Old.useTokenForRequests(UserUtil.getUser("admin").getToken());
     }
 
     @BeforeEach

@@ -11,7 +11,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 import org.apache.http.HttpStatus;
@@ -36,7 +36,7 @@ public class ComparisonUtils {
      */
     public <T> T createComparison(CreateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CMPAPIEnum.COMPARISONS, klass)
+            RequestEntityUtil_Old.init(CMPAPIEnum.COMPARISONS, klass)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .body("comparison", comparison)
                 .expectedResponseCode(expectedResponse);
@@ -56,7 +56,7 @@ public class ComparisonUtils {
      */
     public <T> T updateComparison(UpdateComparison comparison, UserCredentials currentUser, Class<T> klass, Integer expectedResponse, String... inlineVariables) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, klass)
+            RequestEntityUtil_Old.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, klass)
                 .inlineVariables(inlineVariables)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .body("comparison", comparison)
@@ -76,7 +76,7 @@ public class ComparisonUtils {
      */
     public GetComparisonResponse getComparison(UserCredentials currentUser, String... inlineVariables) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, GetComparisonResponse.class)
+            RequestEntityUtil_Old.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, GetComparisonResponse.class)
                 .inlineVariables(inlineVariables)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .expectedResponseCode(HttpStatus.SC_OK);
@@ -95,7 +95,7 @@ public class ComparisonUtils {
      */
     public List<GetComparisonResponse> getComparisons(UserCredentials currentUser) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CMPAPIEnum.COMPARISONS, GetComparisonsResponse.class)
+            RequestEntityUtil_Old.init(CMPAPIEnum.COMPARISONS, GetComparisonsResponse.class)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -117,7 +117,7 @@ public class ComparisonUtils {
         uriParams.forEach(uriParam -> searchCriteria.put(uriParam[0].trim(), uriParam[1].trim()));
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CMPAPIEnum.COMPARISONS, GetComparisonsResponse.class)
+            RequestEntityUtil_Old.init(CMPAPIEnum.COMPARISONS, GetComparisonsResponse.class)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .urlParams(Collections.singletonList(searchCriteria))
                 .expectedResponseCode(HttpStatus.SC_OK);
@@ -146,7 +146,7 @@ public class ComparisonUtils {
      */
     public <T> ResponseWrapper<T> deleteComparison(String comparisonID, UserCredentials currentUser) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, null)
+            RequestEntityUtil_Old.init(CMPAPIEnum.COMPARISON_BY_IDENTITY, null)
                 .inlineVariables(comparisonID)
                 .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .expectedResponseCode(HttpStatus.SC_NO_CONTENT);

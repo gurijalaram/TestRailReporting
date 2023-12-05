@@ -13,7 +13,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 import org.apache.http.HttpStatus;
@@ -30,7 +30,7 @@ public class LayoutResources {
                 .published(false)
                 .build())
             .build();
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUTS, LayoutResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.LAYOUTS, LayoutResponse.class)
             .headers(QdsApiTestUtils.setUpHeader())
             .body(layoutRequest)
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -40,7 +40,7 @@ public class LayoutResources {
     }
 
     public static ResponseWrapper<String> deleteLayout(String layoutIdentity, String userContext) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.LAYOUT, null)
             .inlineVariables(layoutIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -50,7 +50,7 @@ public class LayoutResources {
     }
 
     public static ResponseWrapper<String> deleteLayoutViewElement(String layoutIdentity, String viewElementIdentity, String userContext) {
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENT, null)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENT, null)
             .inlineVariables(layoutIdentity, viewElementIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -68,7 +68,7 @@ public class LayoutResources {
                     .build())
                 .build())
             .build();
-        RequestEntity requestEntity = RequestEntityUtil.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENTS, ViewElementResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.LAYOUT_VIEW_ELEMENTS, ViewElementResponse.class)
             .inlineVariables(layoutIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .body(viewElementRequest)

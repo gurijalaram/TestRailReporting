@@ -3,7 +3,7 @@ package com.apriori.dfs.api.models.utils;
 import com.apriori.dfs.api.enums.DFSApiEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 public class DigitalFactoryUtil {
@@ -23,7 +23,7 @@ public class DigitalFactoryUtil {
         DFSApiEnum path = inlineVariables.length == 0
             ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(path, expectedType)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(path, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
 
@@ -57,7 +57,7 @@ public class DigitalFactoryUtil {
                                                                        Class<T> expectedType,
                                                                        String identity) {
 
-        final RequestEntity requestEntity =  RequestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH, expectedType)
+        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH, expectedType)
             .inlineVariables(new String[]{ identity, ""}) // hack - add one more empty variable to skip auto adding shared secret
             .expectedResponseCode(expectedResponseCode);
 
@@ -98,7 +98,7 @@ public class DigitalFactoryUtil {
         DFSApiEnum path = inlineVariables.length == 0
             ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(path, expectedType)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(path, expectedType)
                 .body(requestBody)
                 .inlineVariables(inlineVariables)
                 .expectedResponseCode(expectedResponseCode);
@@ -132,7 +132,7 @@ public class DigitalFactoryUtil {
         DFSApiEnum path = inlineVariables.length == 1
             ? DFSApiEnum.DIGITAL_FACTORIES_BY_PATH : DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM;
 
-        return RequestEntityUtil.init(path, expectedType)
+        return RequestEntityUtil_Old.init(path, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
     }

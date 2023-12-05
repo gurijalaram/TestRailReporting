@@ -7,7 +7,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.request.TokenRequest;
 import com.apriori.shared.util.models.response.Application;
@@ -42,7 +42,7 @@ public class AuthorizationUtil {
     public synchronized ResponseWrapper<Token> getToken(UserCredentials userCredentials) {
         log.info("Getting ATS Token...");
 
-        RequestEntity requestEntity = RequestEntityUtil.init(TokenEnum.POST_TOKEN, Token.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(TokenEnum.POST_TOKEN, Token.class)
             .body(TokenRequest.builder()
                 .token(TokenInformation.builder()
                     .issuer(PropertiesContext.get("ats.token_issuer"))
@@ -66,7 +66,7 @@ public class AuthorizationUtil {
      * @return List of Deployment Items
      */
     private List<Deployment> getDeploymentItems(UserCredentials userCredentials, QueryParams queryParams) {
-        final RequestEntity requestEntity = RequestEntityUtil
+        final RequestEntity requestEntity = RequestEntityUtil_Old
             .init(DeploymentsAPIEnum.DEPLOYMENTS, Deployments.class)
             .token(userCredentials.getToken())
             .inlineVariables(
@@ -158,7 +158,7 @@ public class AuthorizationUtil {
             return currentCustomer;
         }
 
-        RequestEntity customerRequest = RequestEntityUtil.init(CustomersApiEnum.CUSTOMERS, Customers.class)
+        RequestEntity customerRequest = RequestEntityUtil_Old.init(CustomersApiEnum.CUSTOMERS, Customers.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .queryParams(new QueryParams().use("cloudReference[EQ]",PropertiesContext.get("${customer}.cloud_reference_name")));
 
@@ -168,7 +168,7 @@ public class AuthorizationUtil {
     }
 
     private static String getCustomerSiteIdByCustomer(Customer customerToProcess) {
-        RequestEntity sitesRequest = RequestEntityUtil.init(CustomersApiEnum.SITES_BY_CUSTOMER_ID, Sites.class)
+        RequestEntity sitesRequest = RequestEntityUtil_Old.init(CustomersApiEnum.SITES_BY_CUSTOMER_ID, Sites.class)
             .inlineVariables(customerToProcess.getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
         ResponseWrapper<Sites> sitesResponseWrapper =  HTTPRequest.build(sitesRequest).get();

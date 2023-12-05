@@ -6,7 +6,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 
 import lombok.Singular;
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +49,7 @@ public class OldAuthorizationUtil {
         requestData2.put("scope", "tenantGroup=default tenant=default");
         requestData.add(requestData2);
 
-        RequestEntity requestEntity = RequestEntityUtil.init(OldTokenEnum.POST_TOKEN, OldTokenRequest.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(OldTokenEnum.POST_TOKEN, OldTokenRequest.class)
             .headers(headers)
             .xwwwwFormUrlEncodeds(null)
             .urlParams(requestData);

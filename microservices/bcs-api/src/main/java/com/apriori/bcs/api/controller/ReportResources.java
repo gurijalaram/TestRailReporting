@@ -13,7 +13,7 @@ import com.apriori.bcs.api.models.response.Reports;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.properties.PropertiesContext;
@@ -41,7 +41,7 @@ public class ReportResources {
         reportRequestTestData.setScopedIdentity(getPartInCompletedState().getIdentity());
         reportRequestTestData.setReportTemplateIdentity(getPartReportTemplateId());
 
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORTS, Report.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORTS, Report.class)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .body(reportRequestTestData);
         return HTTPRequest.build(requestEntity).post();
@@ -54,7 +54,7 @@ public class ReportResources {
      * @return - response - object of ResponseWrapper object.
      */
     public static ResponseWrapper<Report> createReport(ReportRequest reportRequestData) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORTS, Report.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORTS, Report.class)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .body(reportRequestData);
         return HTTPRequest.build(requestEntity).post();
@@ -67,7 +67,7 @@ public class ReportResources {
      * @return response - response object of ReportError POJO Object
      */
     public static ResponseWrapper<ReportError> createReportWithInvalidData(ReportRequest reportRequestData) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORTS, ReportError.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORTS, ReportError.class)
             .inlineVariables(PropertiesContext.get("customer_identity"))
             .body(reportRequestData);
         return HTTPRequest.build(requestEntity).post();
@@ -79,7 +79,7 @@ public class ReportResources {
      * @return - response - ResponseWrapper object of Reports POJO
      */
     public static ResponseWrapper<Reports> getReports() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORTS, Reports.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORTS, Reports.class)
             .inlineVariables(PropertiesContext.get("customer_identity"));
         return HTTPRequest.build(requestEntity).get();
     }
@@ -91,7 +91,7 @@ public class ReportResources {
      * @return response object of ResponseWrapper with Report POJO
      */
     public static ResponseWrapper<Report> getReportRepresentation(String reportIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_BY_ID, Report.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORT_BY_ID, Report.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), reportIdentity)
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -105,7 +105,7 @@ public class ReportResources {
      * @return response - object ResponseWrapper with ReportExport POJO
      */
     public static ResponseWrapper<ReportExport> exportReport(String reportIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_EXPORT_BY_ID, ReportExport.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORT_EXPORT_BY_ID, ReportExport.class)
             .inlineVariables(PropertiesContext.get("customer_identity"), reportIdentity)
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -118,7 +118,7 @@ public class ReportResources {
      * @return - response  object of ResponseWrapper.
      */
     public static ResponseWrapper<ReportTemplates> getReportTemplates() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_TEMPLATES, ReportTemplates.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORT_TEMPLATES, ReportTemplates.class)
             .inlineVariables(PropertiesContext.get("customer_identity"));
 
         return HTTPRequest.build(requestEntity).get();
@@ -172,7 +172,7 @@ public class ReportResources {
         Report report;
         RequestEntity requestEntity;
         do {
-            requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_BY_ID, Report.class)
+            requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORT_BY_ID, Report.class)
                 .inlineVariables(PropertiesContext.get("customer_identity"), reportIdentity);
             report = (Report) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {

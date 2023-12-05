@@ -11,6 +11,7 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
@@ -35,7 +36,7 @@ public class BcmUtil extends TestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)
+            RequestEntityUtil_Old.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)
                 .body(body)
                 .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -53,7 +54,7 @@ public class BcmUtil extends TestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, ErrorResponse.class)
+            RequestEntityUtil_Old.init(BcmAppAPIEnum.WORKSHEETS, ErrorResponse.class)
                 .body(body)
                 .apUserContext(testingApUserContext)
                 .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);

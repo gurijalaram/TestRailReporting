@@ -9,7 +9,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.Deployment;
@@ -62,7 +62,7 @@ public class AchEnvironmentAPIUtil extends TestUtil {
      * @return filtered customer user and all related information
      */
     protected static User getCustomerUserDataByEmail(final String email, final String customerIdentity) {
-        RequestEntity customerUsersRequest = RequestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, Users.class)
+        RequestEntity customerUsersRequest = RequestEntityUtil_Old.init(CDSAPIEnum.CUSTOMER_USERS, Users.class)
                 .inlineVariables(customerIdentity)
                 .queryParams(new QueryParams().use("email[EQ]", email))
                 .expectedResponseCode(HttpStatus.SC_OK);
@@ -82,7 +82,7 @@ public class AchEnvironmentAPIUtil extends TestUtil {
      * @return user access information
      */
     protected List<AccessControlResponse> getUserAccessControls(final String userIdentity, final String customerIdentity) {
-        RequestEntity userAccessControlRequest = RequestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
+        RequestEntity userAccessControlRequest = RequestEntityUtil_Old.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
                 .inlineVariables(customerIdentity, userIdentity)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -100,7 +100,7 @@ public class AchEnvironmentAPIUtil extends TestUtil {
      * @return customer deployments
      */
     public Deployment getCustomerDeploymentInformation(final String customerIdentity) {
-        RequestEntity customerApplicationsRequest = RequestEntityUtil.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployments.class)
+        RequestEntity customerApplicationsRequest = RequestEntityUtil_Old.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployments.class)
                 .inlineVariables(customerIdentity)
                 .queryParams(new QueryParams().use("name[EQ]", deploymentName))
                 .expectedResponseCode(HttpStatus.SC_OK);
