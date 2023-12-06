@@ -1,4 +1,4 @@
-package com.apriori.shared.util.dto;
+package com.apriori.shared.util.dataservice;
 
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 
