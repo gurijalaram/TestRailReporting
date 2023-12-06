@@ -3,7 +3,7 @@ package com.apriori.cid.ui.tests.devtest;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.ComponentRequestUtil;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.models.response.component.PostComponentResponse;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
