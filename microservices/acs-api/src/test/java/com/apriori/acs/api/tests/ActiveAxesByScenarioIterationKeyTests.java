@@ -22,6 +22,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -32,6 +33,7 @@ import java.util.List;
 public class ActiveAxesByScenarioIterationKeyTests extends TestUtil {
 
     @Test
+    @Disabled("Jira bug ticket (COST-173) has been closed with the reason of won't do")
     @Issue("COST-173")
     @TestRail(id = 10980)
     @Description("Validate Get Active Axes by Scenario Iteration Key")

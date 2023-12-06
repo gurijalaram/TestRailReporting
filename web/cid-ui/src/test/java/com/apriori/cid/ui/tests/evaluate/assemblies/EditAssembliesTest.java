@@ -25,7 +25,7 @@ import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.AssemblyRequestUtil;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;

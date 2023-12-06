@@ -10,7 +10,7 @@ import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.dto.ComponentRequestUtil;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
