@@ -311,7 +311,7 @@ public class ExploreToolbar extends MainNavBar {
      * @param componentInfo - the component info builder
      * @return response object
      */
-    public List<PostComponentResponse> uploadMultiComponentsCID(List<ComponentInfoBuilder> componentInfo) {
+    public PostComponentResponse uploadMultiComponentsCID(List<ComponentInfoBuilder> componentInfo) {
         ComponentsUtil componentsUtil = new ComponentsUtil();
         return componentsUtil.postComponents(componentInfo, componentsUtil.postCadFiles(componentInfo));
     }

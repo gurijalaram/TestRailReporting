@@ -27,12 +27,12 @@ public class DevTests extends TestBaseUI {
         List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(11);
 
         loginPage = new CidAppLoginPage(driver);
-        List<PostComponentResponse> componentItems = loginPage.login(components.get(0).getUser())
+        PostComponentResponse componentItems = loginPage.login(components.get(0).getUser())
             .uploadMultiComponentsCID(components);
 
-        softAssertions.assertThat(componentItems.stream().map(PostComponentResponse::getSuccesses)).hasSize(11);
+        softAssertions.assertThat(componentItems.getSuccesses()).hasSize(11);
 
-        componentItems.forEach(component -> softAssertions.assertThat(component.getSuccesses()).isNotEmpty());
+        componentItems.getSuccesses().forEach(component -> softAssertions.assertThat(component.getComponentIdentity()).isNotEmpty());
 
         explorePage = new ExplorePage(driver);
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(false);

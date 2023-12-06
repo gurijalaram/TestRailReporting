@@ -100,14 +100,14 @@ public class AssemblyUtils {
             });
 
         List<CadFile> cadFilesResponse = componentsUtil.postCadFiles(componentAssembly.getSubComponents());
-        List<PostComponentResponse> postComponentResponse = componentsUtil.postComponents(componentAssembly.getSubComponents(), cadFilesResponse);
+        PostComponentResponse postComponentResponse = componentsUtil.postComponents(componentAssembly.getSubComponents(), cadFilesResponse);
 
         componentAssembly.getSubComponents()
-            .forEach(subcomponent -> postComponentResponse.stream().map(PostComponentResponse::getSuccesses).collect(Collectors.toList())
+            .forEach(subcomponent -> postComponentResponse.getSuccesses()
                 .forEach(success -> {
-                    if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.get(0).getFilename())) {
-                        subcomponent.setComponentIdentity(success.get(0).getComponentIdentity());
-                        subcomponent.setScenarioIdentity(success.get(0).getScenarioIdentity());
+                    if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.getFilename())) {
+                        subcomponent.setComponentIdentity(success.getComponentIdentity());
+                        subcomponent.setScenarioIdentity(success.getScenarioIdentity());
 
                         ComponentIdentityResponse componentIdentityResponse = componentsUtil.getComponentIdentityPart(subcomponent);
                         subcomponent.setComponentIdentity(componentIdentityResponse.getIdentity());
