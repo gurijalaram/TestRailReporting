@@ -37,10 +37,9 @@ public class AwsUtil {
         System.out.println("====================== AWS: " + System.getenv("AWS_ACCESS_KEY_ID"));
         return S3Client.builder()
             .region(S3_REGION_NAME)
-            .credentialsProvider(
-            //                System.getenv("AWS_ACCESS_KEY_ID") != null
-            //                ? EnvironmentVariableCredentialsProvider.create()
-                 ProfileCredentialsProvider.create()
+            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
+                ? EnvironmentVariableCredentialsProvider.create()
+                : ProfileCredentialsProvider.create("AWS")
             )
             .build();
     }
