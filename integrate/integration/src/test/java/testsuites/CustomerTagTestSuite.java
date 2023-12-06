@@ -8,7 +8,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectPackages({
-    "com.apriori", // cic aP Generate
+    "com.apriori"
 })
 
 @IncludeTags(TestSuiteType.TestSuite.CUSTOMER)
