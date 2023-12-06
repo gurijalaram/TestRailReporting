@@ -134,8 +134,8 @@ public class FileResourceUtil {
             .acl("public-read")
             .build();
 
-        getS3ClientInstance().putObject(putObjectRequest, RequestBody.fromFile(fileToUpload));
-        S3Waiter s3Waiter = getS3ClientInstance().waiter();
+        AwsUtil.getS3ClientInstance().putObject(putObjectRequest, RequestBody.fromFile(fileToUpload));
+        S3Waiter s3Waiter = AwsUtil.getS3ClientInstance().waiter();
         HeadObjectRequest waitRequest = HeadObjectRequest.builder()
             .bucket(S3_BUCKET_NAME)
             .key(cloudFilePath)
@@ -156,28 +156,28 @@ public class FileResourceUtil {
         final String cloudFilePath = String.format("%s/%s", workspaceName, fileName);
         final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, fileName);
 
-        getS3ClientInstance().deleteObject(DeleteObjectRequest.builder()
+        AwsUtil.getS3ClientInstance().deleteObject(DeleteObjectRequest.builder()
             .bucket(S3_BUCKET_NAME)
             .key(cloudFilePath).build());
         log.info(String.format("File deleted from AWS S3 Bucket  %s/%s", S3_BUCKET_NAME, cloudFilePath));
 
     }
 
-    /**
-     * Connect to AWS S3 client
-     *
-     * @return S3Client instance
-     */
-    private static S3Client getS3ClientInstance() {
-        S3Client s3Client = S3Client.builder()
-            .region(S3_REGION_NAME)
-            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
-                ? EnvironmentVariableCredentialsProvider.create()
-                : ProfileCredentialsProvider.create()
-            )
-            .build();
-        return s3Client;
-    }
+//    /**
+//     * Connect to AWS S3 client
+//     *
+//     * @return S3Client instance
+//     */
+//    private static S3Client getS3ClientInstance() {
+//        S3Client s3Client = S3Client.builder()
+//            .region(S3_REGION_NAME)
+//            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
+//                ? EnvironmentVariableCredentialsProvider.create()
+//                : ProfileCredentialsProvider.create()
+//            )
+//            .build();
+//        return s3Client;
+//    }
 
     /**
      * connect to AWS S3 bucket and copy the file from S3 bucket to local temp directory
@@ -196,7 +196,7 @@ public class FileResourceUtil {
             .key(cloudFilePath)
             .build();
 
-        ResponseInputStream<GetObjectResponse> object = getS3ClientInstance().getObject(getObjectRequest);
+        ResponseInputStream<GetObjectResponse> object = AwsUtil.getS3ClientInstance().getObject(getObjectRequest);
 
         return copyIntoTempFile(object, localTempFolderPath, fileName);
     }
@@ -218,7 +218,7 @@ public class FileResourceUtil {
             .key(cloudFilePath)
             .build();
 
-        ResponseInputStream<GetObjectResponse> object = getS3ClientInstance().getObject(getObjectRequest);
+        ResponseInputStream<GetObjectResponse> object = AwsUtil.getS3ClientInstance().getObject(getObjectRequest);
 
         return copyIntoTempFile(object, localTempFolderPath, fileName);
     }
@@ -399,36 +399,6 @@ public class FileResourceUtil {
         } while (((System.currentTimeMillis() / 1000) - initialTime) < waitTimeInSec);
 
         return false;
-    }
-
-    /**
-     * Get the parameter value from AWS systems manager -> parameter store
-     *
-     * @param parameterName Parameter name
-     * @return Parameter value
-     */
-    public static String getAwsSystemParameter(String parameterName) {
-        String parameterValue = "";
-        SsmClient ssmClient = SsmClient.builder()
-            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
-                ? EnvironmentVariableCredentialsProvider.create()
-                : ProfileCredentialsProvider.create())
-            .region(S3_REGION_NAME)
-            .build();
-
-        try {
-            GetParameterRequest parameterRequest = GetParameterRequest.builder()
-                .name(parameterName)
-                .withDecryption(true)
-                .build();
-
-            GetParameterResponse parameterResponse = ssmClient.getParameter(parameterRequest);
-            parameterValue = parameterResponse.parameter().value();
-
-        } catch (SsmException e) {
-            log.error(e.getMessage());
-        }
-        return parameterValue;
     }
 
     /**

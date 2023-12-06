@@ -33,11 +33,14 @@ public class AwsUtil {
      * @return S3Client configured instance with appropriate credentials
      */
     protected static S3Client getS3ClientInstance() {
+
+        System.out.println("====================== AWS: " + System.getenv("AWS_ACCESS_KEY_ID"));
         return S3Client.builder()
             .region(S3_REGION_NAME)
-            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
-                ? EnvironmentVariableCredentialsProvider.create()
-                : ProfileCredentialsProvider.create()
+            .credentialsProvider(
+            //                System.getenv("AWS_ACCESS_KEY_ID") != null
+            //                ? EnvironmentVariableCredentialsProvider.create()
+                 ProfileCredentialsProvider.create()
             )
             .build();
     }
