@@ -1,6 +1,6 @@
 package com.apriori.cid.api.utils;
 
-import com.apriori.cid.api.models.response.CadFilesResponse;
+import com.apriori.cid.api.models.response.CadFile;
 import com.apriori.cid.api.models.response.ComponentIdentityResponse;
 import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
@@ -99,15 +99,15 @@ public class AssemblyUtils {
                 }
             });
 
-        CadFilesResponse cadFilesResponse = componentsUtil.postSubcomponentsCadFiles(componentAssembly.getSubComponents());
-        PostComponentResponse postComponentResponse = componentsUtil.postComponents(componentAssembly.getSubComponents(), cadFilesResponse);
+        List<CadFile> cadFilesResponse = componentsUtil.postCadFiles(componentAssembly.getSubComponents());
+        List<PostComponentResponse> postComponentResponse = componentsUtil.postComponents(componentAssembly.getSubComponents(), cadFilesResponse);
 
         componentAssembly.getSubComponents()
-            .forEach(subcomponent -> postComponentResponse.getSuccesses()
+            .forEach(subcomponent -> postComponentResponse.stream().map(PostComponentResponse::getSuccesses).collect(Collectors.toList())
                 .forEach(success -> {
-                    if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.getFilename())) {
-                        subcomponent.setComponentIdentity(success.getComponentIdentity());
-                        subcomponent.setScenarioIdentity(success.getScenarioIdentity());
+                    if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.get(0).getFilename())) {
+                        subcomponent.setComponentIdentity(success.get(0).getComponentIdentity());
+                        subcomponent.setScenarioIdentity(success.get(0).getScenarioIdentity());
 
                         ComponentIdentityResponse componentIdentityResponse = componentsUtil.getComponentIdentityPart(subcomponent);
                         subcomponent.setComponentIdentity(componentIdentityResponse.getIdentity());

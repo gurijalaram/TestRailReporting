@@ -45,6 +45,10 @@ public class ComponentsUtil {
     private static final int CHUNK_SIZE = 10;
     private static final int POLL_TIME = 1;
     private static final int WAIT_TIME = 570;
+    ResponseWrapper<CadFilesResponse> cadFilesResponse;
+    List<CadFile> listOfCadFiles = new ArrayList<>();
+    ResponseWrapper<PostComponentResponse> postComponentResponse;
+    List<PostComponentResponse> listOfComponents = new ArrayList<>();
 
     /**
      * POST cad files
@@ -52,18 +56,27 @@ public class ComponentsUtil {
      * @param componentInfo - the component object
      * @return cad file response object
      */
-    public List<CadFile> postCadFiles(ComponentInfoBuilder componentInfo) {
-        if (componentInfo.getResourceFiles().size() > MAX_FILES) {
-            throw new RuntimeException("Attempted to upload '" + componentInfo.getResourceFiles().size() + "' files. Only a maximum of '" + MAX_FILES + "' CAD files can be uploaded at the same time");
-        }
-
-        List<CadFile> cadFiles = new ArrayList<>();
-
-        Iterators.partition(componentInfo.getResourceFiles().iterator(), CHUNK_SIZE).forEachRemaining(cadFile ->
-            cadFiles.addAll(postCadFile(componentInfo, cadFile).getResponseEntity().getCadFiles()));
-
-        return cadFiles;
-    }
+//    public List<CadFile> postCadFiles(List<ComponentInfoBuilder> componentInfo) {
+//        if (componentInfo.size() > MAX_FILES) {
+//            throw new RuntimeException("Attempted to upload '" + componentInfo.size() + "' files. Only a maximum of '" + MAX_FILES + "' CAD files can be uploaded at the same time");
+//        }
+//
+//        List<CadFile> cadFiles = new ArrayList<>();
+//
+//        Iterators.partition(componentInfo.iterator(), CHUNK_SIZE).forEachRemaining(cadFile ->
+//            cadFiles.addAll(postSubcomponentsCadFiles(cadFile).getCadFiles()));
+//
+//        return cadFiles;
+//    }
+//    public List<PostComponentResponse> postComponentsAfterCadFiles(List<ComponentInfoBuilder> componentInfo) {
+//
+//        List<PostComponentResponse> cadFiles = new ArrayList<>();
+//
+//        Iterators.partition(componentInfo.iterator(), CHUNK_SIZE).forEachRemaining(cadFile ->
+//           cadFiles.addAll(postComponents(cadFile, postSubcomponentsCadFiles(componentInfo))));
+//
+//        return cadFiles;
+//    }
 
     /**
      * POST subcomponents cad files
@@ -71,17 +84,23 @@ public class ComponentsUtil {
      * @param componentInfo - the component object
      * @return cad files response object
      */
-    public CadFilesResponse postSubcomponentsCadFiles(List<ComponentInfoBuilder> componentInfo) {
-        RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
-                .multiPartFiles(new MultiPartFiles().use("cadFiles", componentInfo
-                    .stream()
-                    .map(ComponentInfoBuilder::getResourceFile)
-                    .collect(Collectors.toList())))
-                .token(componentInfo.get(0).getUser().getToken());
+    public List<CadFile> postCadFiles(List<ComponentInfoBuilder> componentInfo) {
 
-        ResponseWrapper<CadFilesResponse> cadFilesResponse = HTTPRequest.build(requestEntity).post();
-        return cadFilesResponse.getResponseEntity();
+        Iterators.partition(componentInfo.iterator(), CHUNK_SIZE).forEachRemaining(partitioned -> {
+
+            RequestEntity requestEntity =
+                RequestEntityUtil_Old.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
+                    .multiPartFiles(new MultiPartFiles().use("cadFiles", partitioned
+                        .stream()
+                        .map(ComponentInfoBuilder::getResourceFile)
+                        .collect(Collectors.toList())))
+                    .token(partitioned.get(0).getUser().getToken());
+
+            cadFilesResponse = HTTPRequest.build(requestEntity).post();
+            listOfCadFiles.addAll(cadFilesResponse.getResponseEntity().getCadFiles());
+        });
+
+        return listOfCadFiles;
     }
 
     /**
@@ -91,31 +110,38 @@ public class ComponentsUtil {
      * @param cadFilesResponse - the cad files
      * @return component response object
      */
-    public PostComponentResponse postComponents(List<ComponentInfoBuilder> componentInfo, CadFilesResponse cadFilesResponse) {
+    public List<PostComponentResponse> postComponents(List<ComponentInfoBuilder> componentInfo, List<CadFile> cadFilesResponse) {
 
-        RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
-                .body("groupItems", cadFilesResponse.getCadFiles()
-                    .stream()
-                    .map(cadFileResponse -> ComponentRequest.builder()
-                        .filename(cadFileResponse.getFilename())
-                        .override(componentInfo.stream()
-                            .filter(x -> x.getComponentName().concat(x.getExtension()).equals(cadFileResponse.getFilename()))
-                            .map(ComponentInfoBuilder::getOverrideScenario)
-                            .collect(Collectors.toList())
-                            .get(0))
-                        .resourceName(cadFileResponse.getResourceName())
-                        .scenarioName(componentInfo.stream()
-                            .filter(x -> x.getComponentName().concat(x.getExtension()).equals(cadFileResponse.getFilename()))
-                            .map(ComponentInfoBuilder::getScenarioName)
-                            .collect(Collectors.toList())
-                            .get(0))
-                        .build())
-                    .collect(Collectors.toList()))
-                .token(componentInfo.get(0).getUser().getToken());
+        List<ComponentRequest> componentRequests = cadFilesResponse.stream()
+            .map(componentRequest ->
+                ComponentRequest.builder()
+                    .filename(componentRequest.getFilename())
+                    .override(componentInfo.stream()
+                        .filter(x -> x.getComponentName().concat(x.getExtension()).equals(componentRequest.getFilename()))
+                        .map(ComponentInfoBuilder::getOverrideScenario)
+                        .collect(Collectors.toList())
+                        .get(0))
+                    .resourceName(componentRequest.getResourceName())
+                    .scenarioName(componentInfo.stream()
+                        .filter(x -> x.getComponentName().concat(x.getExtension()).equals(componentRequest.getFilename()))
+                        .map(ComponentInfoBuilder::getScenarioName)
+                        .collect(Collectors.toList())
+                        .get(0))
+                    .build()
+            ).collect(Collectors.toList());
 
-        ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
-        return postComponentResponse.getResponseEntity();
+        Iterators.partition(componentRequests.iterator(), CHUNK_SIZE).forEachRemaining(partitioned -> {
+
+            RequestEntity requestEntity =
+                RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+                    .body("groupItems", partitioned)
+                    .token(componentInfo.get(0).getUser().getToken());
+
+            postComponentResponse = HTTPRequest.build(requestEntity).post();
+            listOfComponents.add(postComponentResponse.getResponseEntity());
+        });
+// TODO: 06/12/2023 need to make 1 list here 
+        return listOfComponents;
     }
 
     /**
@@ -125,7 +151,7 @@ public class ComponentsUtil {
      * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
      */
     public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentInfo) {
-        String resourceName = postSubcomponentsCadFiles(List.of(componentInfo)).getCadFiles().stream()
+        String resourceName = postCadFiles(List.of(componentInfo)).stream()
             .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
 
         RequestEntity requestEntity =
@@ -233,7 +259,7 @@ public class ComponentsUtil {
      * @return response object
      */
     public List<ScenarioItem> postMultiComponentsQueryCSS(ComponentInfoBuilder componentInfo) {
-        CadFilesResponse resources = postSubcomponentsCadFiles(List.of(componentInfo));
+        List<CadFile> resources = postCadFiles(List.of(componentInfo));
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
             .body("groupItems", componentInfo.getResourceFiles()
@@ -242,7 +268,7 @@ public class ComponentsUtil {
                     ComponentRequest.builder()
                         .filename(resourceFile.getName())
                         .override(false)
-                        .resourceName(resources.getCadFiles().stream()
+                        .resourceName(resources.stream()
                             .filter(x -> x.getFilename().equals(resourceFile.getName()))
                             .map(CadFile::getResourceName)
                             .collect(Collectors.toList())
@@ -269,7 +295,7 @@ public class ComponentsUtil {
      * @return response object
      */
     public List<ComponentIdentityResponse> postMultiComponentsQueryCID(ComponentInfoBuilder componentInfo) {
-        CadFilesResponse resources = postSubcomponentsCadFiles(List.of(componentInfo));
+        List<CadFile> resources = postCadFiles(List.of(componentInfo));
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
             .body("groupItems", componentInfo.getResourceFiles()
@@ -278,7 +304,7 @@ public class ComponentsUtil {
                     ComponentRequest.builder()
                         .filename(resourceFile.getName())
                         .override(false)
-                        .resourceName(resources.getCadFiles().stream()
+                        .resourceName(resources.stream()
                             .filter(x -> x.getFilename().equals(resourceFile.getName()))
                             .map(CadFile::getResourceName)
                             .collect(Collectors.toList())
