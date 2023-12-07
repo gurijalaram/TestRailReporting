@@ -214,11 +214,16 @@ pipeline {
                             --build-arg MODULE=${MODULE} \
                             --build-arg JAVAOPTS='${javaOpts}' \
                             --build-arg TESTS=${testSuite} \
-                            //-v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
-                            //-v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
-                            amazon/aws-cli ecr get-login-password \
-                            --profile '${environment.profile}',  --region '${environment.region}'
                             .
+
+                        docker run
+                            --tag ${buildInfo.name}-test-${timeStamp}:latest \
+                            -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
+                            -v "build":"build-workspace/${folder}/${MODULE}/build"
+                            -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
+                            -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
+                            amazon/aws-cli ecr get-login-password \
+                            --profile ${environment.profile} --region ${environment.region}
                     """
                 }
             }
@@ -227,9 +232,9 @@ pipeline {
         stage("Extract Test Results") {
             steps {
                 // Copy out build/test artifacts.
-                echo "Extract Test Results.."
-                sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
-                sh "docker cp ${buildInfo.name}-test-${timeStamp}:build-workspace/${folder}/${MODULE}/build ."
+                //echo "Extract Test Results.."
+                //sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
+                //sh "docker cp ${buildInfo.name}-test-${timeStamp}:build-workspace/${folder}/${MODULE}/build ."
                 echo "Publishing Results"
                 allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
                 junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
