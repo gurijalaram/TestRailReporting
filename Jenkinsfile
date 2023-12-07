@@ -260,8 +260,3 @@ pipeline {
         }
     }
 }
-
-
- docker build --progress=plain --target test --tag myTest:latest
-
- docker run -t ff-test-dd:latest -v "dd":/root/.aws/credentials -v "build":"build-workspace/dd/dd/build" -v "dd":/root/.aws/config -v "dd":/root/.aws/config amazon/aws-cli ecr get-login-password --profile dd --region dd
