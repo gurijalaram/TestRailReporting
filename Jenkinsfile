@@ -217,7 +217,7 @@ pipeline {
                             -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
                             -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
                             amazon/aws-cli ecr get-login-password \
-                            --profile ${profile} --region ${region}
+                            --profile '${environment.profile}',  --region '${environment.region}'
                             .
                     """
                 }
