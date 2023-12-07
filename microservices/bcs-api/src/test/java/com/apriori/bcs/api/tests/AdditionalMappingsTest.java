@@ -142,7 +142,6 @@ public class AdditionalMappingsTest {
         Results assemblyResults = bcsTestUtil.getAssemblyResult();
         softAssertions.assertThat(assemblyResults.getTargetCost()).isNull();
         softAssertions.assertThat(assemblyResults.getTargetMass()).isNull();
-        softAssertions.assertAll();
     }
 
     @Test

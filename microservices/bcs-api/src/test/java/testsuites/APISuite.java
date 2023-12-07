@@ -8,6 +8,7 @@ import com.apriori.bcs.api.tests.CostingScenarioTest;
 import com.apriori.bcs.api.tests.CustomerNegativeTests;
 import com.apriori.bcs.api.tests.CustomerResourcesTest;
 import com.apriori.bcs.api.tests.ReportResourcesTest;
+import com.apriori.bcs.api.tests.SustainabilityMetricsTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
@@ -21,7 +22,8 @@ import org.junit.platform.suite.api.Suite;
     CostingScenarioTest.class,
     BatchPartNegativeTest.class,
     CustomerNegativeTests.class,
-    AdditionalMappingsTest.class
+    AdditionalMappingsTest.class,
+    SustainabilityMetricsTest.class
 })
 public class APISuite {
 }

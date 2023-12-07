@@ -134,6 +134,9 @@
         "marginPercent": {
           "type": "number"
         },
+        "materialCarbon": {
+          "type": "number"
+        },
         "materialCost": {
           "type": "number"
         },
@@ -185,6 +188,9 @@
         "pieceCost": {
           "type": "number"
         },
+        "processCarbon": {
+          "type": "number"
+        },
         "processRoutingName": {
           "type": "string"
         },
@@ -207,6 +213,18 @@
           "type": "number"
         },
         "sgaCost": {
+          "type": "number"
+        },
+        "stockPropertyHeight": {
+          "type": "number"
+        },
+        "stockPropertyInsideDia": {
+          "type": "number"
+        },
+        "stockPropertyOutsideDia": {
+          "type": "number"
+        },
+        "stockPropertyWallThickness": {
           "type": "number"
         },
         "stockPropertyLength": {
@@ -245,6 +263,9 @@
         "utilizationWithoutAddendum": {
           "type": "number"
         },
+        "virtualMaterialStockName": {
+          "type": "string"
+        },
         "width": {
           "type": "number"
         },
@@ -282,6 +303,7 @@
         "additionalDirectCosts",
         "amortizedInvestment",
         "annualCost",
+        "annualManufacturingCarbon",
         "annualVolume",
         "batchCost",
         "batchSetupTime",
@@ -317,6 +339,7 @@
         "logisticsCarbon",
         "margin",
         "marginPercent",
+        "materialCarbon",
         "materialCost",
         "materialMode",
         "materialName",
@@ -331,6 +354,7 @@
         "periodOverhead",
         "pieceAndPeriod",
         "pieceCost",
+        "processCarbon",
         "processRoutingName",
         "productionLife",
         "programmingCost",
@@ -339,6 +363,10 @@
         "scrapMass",
         "setupCostPerPart",
         "sgaCost",
+        "stockPropertyHeight",
+        "stockPropertyInsideDia",
+        "stockPropertyOutsideDia",
+        "stockPropertyWallThickness",
         "stripNestingPitch",
         "toolingCostPerPart",
         "totalCarbon",
@@ -347,6 +375,7 @@
         "utilization",
         "utilizationWithAddendum",
         "utilizationWithoutAddendum",
+        "virtualMaterialStockName",
         "width",
         "costingStatus",
         "currencyCode",
