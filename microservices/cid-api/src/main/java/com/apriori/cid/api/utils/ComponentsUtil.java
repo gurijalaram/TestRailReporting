@@ -45,8 +45,8 @@ public class ComponentsUtil {
     private static final int CHUNK_SIZE = 10;
     private static final int POLL_TIME = 1;
     private static final int WAIT_TIME = 570;
-    ResponseWrapper<CadFilesResponse> cadFilesResponse;
-    List<CadFile> listOfCadFiles = new ArrayList<>();
+    ResponseWrapper<CadFilesResponse> cadFilesResponse = null;
+
 
     /**
      * POST cad files
@@ -84,6 +84,8 @@ public class ComponentsUtil {
      */
     public List<CadFile> postCadFiles(List<ComponentInfoBuilder> componentInfo) {
 
+        List<CadFile> listOfCadFiles = new ArrayList<>();
+
         Iterators.partition(componentInfo.iterator(), CHUNK_SIZE).forEachRemaining(partitioned -> {
 
             RequestEntity requestEntity =
@@ -108,27 +110,27 @@ public class ComponentsUtil {
      * @param cadFilesResponse - the cad files
      * @return component response object
      */
+
     public PostComponentResponse postComponents(List<ComponentInfoBuilder> componentInfo, List<CadFile> cadFilesResponse) {
+
+        List<ComponentRequest> componentRequests = new ArrayList<>();
+
+        componentInfo.forEach(component -> cadFilesResponse.forEach(cadFile -> {
+            if (component.getComponentName().concat(component.getExtension()).equalsIgnoreCase(cadFile.getFilename())) {
+                componentRequests.add(
+                    ComponentRequest.builder()
+                        .filename(cadFile.getFilename())
+                        .override(component.getOverrideScenario())
+                        .resourceName(cadFile.getResourceName())
+                        .scenarioName(component.getScenarioName())
+                        .build()
+                );
+            }
+        }));
 
         RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
-                .body("groupItems", cadFilesResponse.stream()
-                    .map(componentRequest ->
-                        ComponentRequest.builder()
-                            .filename(componentRequest.getFilename())
-                            .override(componentInfo.stream()
-                                .filter(x -> x.getComponentName().concat(x.getExtension()).equals(componentRequest.getFilename()))
-                                .map(ComponentInfoBuilder::getOverrideScenario)
-                                .collect(Collectors.toList())
-                                .get(0))
-                            .resourceName(componentRequest.getResourceName())
-                            .scenarioName(componentInfo.stream()
-                                .filter(x -> x.getComponentName().concat(x.getExtension()).equals(componentRequest.getFilename()))
-                                .map(ComponentInfoBuilder::getScenarioName)
-                                .collect(Collectors.toList())
-                                .get(0))
-                            .build()
-                    ).collect(Collectors.toList()))
+                .body("groupItems", componentRequests)
                 .token(componentInfo.get(0).getUser().getToken());
 
         ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
