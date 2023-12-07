@@ -16,9 +16,14 @@ RUN gradle --build-cache clean :$FOLDER:$MODULE:build -x test
 # Build & Test.
 FROM build as test
 
+ARG AWS_CONFIG_SECRET_TXT
+ARG AWS_CREDENTIALS_SECRET_TXT
 ARG JAVAOPTS
 ARG FOLDER
 ARG MODULE
 ARG TESTS
+
+COPY AWS_CONFIG_SECRET_TXT "/root/.aws/config"
+COPY AWS_CREDENTIALS_SECRET_TXT "/root/.aws/credentials"
 
 RUN gradle --build-cache --info $JAVAOPTS :$FOLDER:$MODULE:test --tests $TESTS

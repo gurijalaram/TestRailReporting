@@ -207,23 +207,15 @@ pipeline {
                     sh """
                         docker build \
                             --progress=plain \
-                            --target test \
                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
                             --label \"build-date=${timeStamp}\" \
+                            --build-arg AWS_CONFIG_SECRET_TXT=${AWS_CONFIG_SECRET_TXT} \
+                            --build-arg AWS_CREDENTIALS_SECRET_TXT=${AWS_CREDENTIALS_SECRET_TXT} \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
                             --build-arg JAVAOPTS='${javaOpts}' \
                             --build-arg TESTS=${testSuite} \
                             .
-
-                        docker run
-                            --tag ${buildInfo.name}-test-${timeStamp}:latest \
-                            -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
-                            -v "build":"build-workspace/${folder}/${MODULE}/build"
-                            -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
-                            -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
-                            amazon/aws-cli ecr get-login-password \
-                            --profile ${environment.profile} --region ${environment.region}
                     """
                 }
             }
@@ -232,9 +224,9 @@ pipeline {
         stage("Extract Test Results") {
             steps {
                 // Copy out build/test artifacts.
-                //echo "Extract Test Results.."
-                //sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
-                //sh "docker cp ${buildInfo.name}-test-${timeStamp}:build-workspace/${folder}/${MODULE}/build ."
+                echo "Extract Test Results.."
+                sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
+                sh "docker cp ${buildInfo.name}-test-${timeStamp}:build-workspace/${folder}/${MODULE}/build ."
                 echo "Publishing Results"
                 allure includeProperties: false, jdk: "", results: [[path: "build/allure-results"]]
                 junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
@@ -268,3 +260,8 @@ pipeline {
         }
     }
 }
+
+
+ docker build --progress=plain --target test --tag myTest:latest
+
+ docker run -t ff-test-dd:latest -v "dd":/root/.aws/credentials -v "build":"build-workspace/dd/dd/build" -v "dd":/root/.aws/config -v "dd":/root/.aws/config amazon/aws-cli ecr get-login-password --profile dd --region dd
