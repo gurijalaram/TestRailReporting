@@ -35,13 +35,13 @@ public class AtsUsersTests {
 
     @AfterEach
     public void cleanUp() {
-        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         if (userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,
                 customerIdentity,
                 userIdentity
             );
         }
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         if (customerIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity
             );

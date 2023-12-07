@@ -13,7 +13,7 @@
   },
   "enablements": {
     "customerAssignedRole": "",
-    "userAdminEnabled": true,
+    "userAdminEnabled": false,
     "highMemEnabled": false,
     "sandboxEnabled": false,
     "previewEnabled": false,
