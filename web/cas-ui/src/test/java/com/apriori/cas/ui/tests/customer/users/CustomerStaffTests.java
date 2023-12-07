@@ -77,8 +77,8 @@ public class CustomerStaffTests extends TestBaseUI {
                 deleteIdentityHolder.userIdentity()
             );
         }
-        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
     }
 

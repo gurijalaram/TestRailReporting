@@ -71,6 +71,7 @@ public class CasBulkGrantDenyAccessTests {
 
     @AfterEach
     public void teardown() {
+        sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
         if (installationIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_ID, installationIdentity);
         }
@@ -86,7 +87,6 @@ public class CasBulkGrantDenyAccessTests {
         if (licensedAcsIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS, customerIdentity, siteIdentity, licensedAcsIdentity);
         }
-        sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
     }
 
