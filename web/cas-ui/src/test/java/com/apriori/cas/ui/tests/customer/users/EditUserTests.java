@@ -56,8 +56,8 @@ public class EditUserTests extends TestBaseUI {
 
     @AfterEach
     public void teardown() {
-        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
