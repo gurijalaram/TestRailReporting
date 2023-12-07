@@ -33,7 +33,6 @@ import java.io.File;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -143,23 +142,33 @@ public class ComponentsUtil {
      * @param componentInfo - the component object
      * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
      */
-    public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentInfo) {
-        String resourceName = postCadFiles(List.of(componentInfo)).stream()
-            .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
-
-        RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
-                .body("groupItems",
-                    Collections.singletonList(ComponentRequest.builder()
-                        .filename(componentInfo.getResourceFile().getName())
-                        .override(componentInfo.getOverrideScenario())
-                        .resourceName(resourceName)
-                        .scenarioName(componentInfo.getScenarioName())
-                        .build()))
-                .token(componentInfo.getUser().getToken());
-
-        return HTTPRequest.build(requestEntity).post();
+    public PostComponentResponse postComponents(ComponentInfoBuilder componentInfo) {
+        return postComponents(List.of(componentInfo), postCadFiles(List.of(componentInfo)));
     }
+
+//    /**
+//     * POST new component
+//     *
+//     * @param componentInfo - the component object
+//     * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
+//     */
+//    public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentInfo) {
+//        String resourceName = postCadFiles(List.of(componentInfo)).stream()
+//            .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
+//
+//        RequestEntity requestEntity =
+//            RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+//                .body("groupItems",
+//                    Collections.singletonList(ComponentRequest.builder()
+//                        .filename(componentInfo.getResourceFile().getName())
+//                        .override(componentInfo.getOverrideScenario())
+//                        .resourceName(resourceName)
+//                        .scenarioName(componentInfo.getScenarioName())
+//                        .build()))
+//                .token(componentInfo.getUser().getToken());
+//
+//        return HTTPRequest.build(requestEntity).post();
+//    }
 
     /**
      * POST new component and query CSS
@@ -169,7 +178,7 @@ public class ComponentsUtil {
      */
     public ComponentInfoBuilder postComponentQueryCSSUncosted(ComponentInfoBuilder componentInfo) {
 
-        Successes componentSuccess = postComponent(componentInfo).getResponseEntity().getSuccesses().stream().findFirst().get();
+        Successes componentSuccess = postComponents(componentInfo).getSuccesses().stream().findFirst().get();
 
         ScenarioItem scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
             componentInfo.getUser()).stream().findFirst().get();
@@ -188,7 +197,7 @@ public class ComponentsUtil {
      */
     public ComponentInfoBuilder postComponentQueryCID(ComponentInfoBuilder componentInfo) {
 
-        Successes componentSuccess = postComponent(componentInfo).getResponseEntity().getSuccesses().stream().findFirst().get();
+        Successes componentSuccess = postComponents(componentInfo).getSuccesses().stream().findFirst().get();
 
         componentInfo.setComponentIdentity(componentSuccess.getComponentIdentity());
         componentInfo.setScenarioIdentity(componentSuccess.getScenarioIdentity());

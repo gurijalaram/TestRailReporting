@@ -114,7 +114,7 @@ public class QmsApiTestUtils {
             .resourceFile(resourceFile)
             .user(currentUser)
             .build();
-        new ComponentsUtil().postComponent(componentInfoBuilder);
+        new ComponentsUtil().postComponents(componentInfoBuilder);
         ScenarioItem scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
                 SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)
             .get(0);

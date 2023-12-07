@@ -154,7 +154,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
             .resourceFile(resourceFile)
             .user(currentUser)
             .build();
-        new ComponentsUtil().postComponent(componentInfoBuilder);
+        new ComponentsUtil().postComponents(componentInfoBuilder);
         scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
                 SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName())
             .get(0);

@@ -8,13 +8,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.request.component.PublishRequest;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.models.response.component.PostComponentResponse;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -25,39 +19,26 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.io.File;
-
 @ExtendWith(TestRulesAPI.class)
 public class ComponentRedirectTests {
 
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private ComponentInfoBuilder component;
 
     @Test
     @Tag(REGRESSION)
     @TestRail(id = 14197)
     @Description("Verify receipt of 301 response when getting component details of a file which already exists")
     public void receive301AfterUploadOfExistingComponent() {
+        component = new ComponentRequestUtil().getComponent();
 
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "Machined Box AMERICAS";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        PostComponentResponse existingPartResponse = componentsUtil.postComponents(component);
 
-        ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build();
+        component.setComponentIdentity(existingPartResponse.getSuccesses().get(0).getComponentIdentity());
+        component.setScenarioIdentity(existingPartResponse.getSuccesses().get(0).getScenarioIdentity());
 
-        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart);
-
-        existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
-        existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
-
-        assertThat(componentsUtil.getComponentIdentityExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
+        assertThat(componentsUtil.getComponentIdentityExpectingStatusCode(component, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
     }
 
     @Test
@@ -66,25 +47,14 @@ public class ComponentRedirectTests {
     @Description("Verify receipt of 301 response when getting component and scenario details of a file which already exists using new scenario")
     public void receive301AfterUploadOfExistingComponentWithNewScenario() {
 
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "Machined Box AMERICAS";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent();
 
-        ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build();
+        PostComponentResponse existingPartResponse = componentsUtil.postComponents(component);
 
-        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart);
+        component.setComponentIdentity(existingPartResponse.getSuccesses().get(0).getComponentIdentity());
+        component.setScenarioIdentity(existingPartResponse.getSuccesses().get(0).getScenarioIdentity());
 
-        existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
-        existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
-
-        assertThat(scenariosUtil.getScenarioExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
+        assertThat(scenariosUtil.getScenarioExpectingStatusCode(component, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
     }
 
     @Test
@@ -93,26 +63,14 @@ public class ComponentRedirectTests {
     @Description("Verify receipt of 301 response when getting component and scenario details of a file which already exists using new scenario")
     public void receive301AfterUploadOfExistingComponentWithOverriddenScenario() {
 
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "Machined Box AMERICAS";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent();
 
-        ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .publishRequest(PublishRequest.builder().override(true).build())
-            .build();
+        PostComponentResponse existingPartScenarioResponse = componentsUtil.postComponents(component);
 
-        ResponseWrapper<PostComponentResponse> existingPartScenarioResponse = componentsUtil.postComponent(existingPart);
+        component.setComponentIdentity(existingPartScenarioResponse.getSuccesses().get(0).getComponentIdentity());
+        component.setScenarioIdentity(existingPartScenarioResponse.getSuccesses().get(0).getScenarioIdentity());
 
-        existingPart.setComponentIdentity(existingPartScenarioResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
-        existingPart.setScenarioIdentity(existingPartScenarioResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
-
-        assertThat(scenariosUtil.getScenarioExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
+        assertThat(scenariosUtil.getScenarioExpectingStatusCode(component, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
     }
 
     @Test
@@ -121,24 +79,13 @@ public class ComponentRedirectTests {
     @Description("Verify receipt of 301 response when getting iteration details of a file which already exists using new scenario")
     public void receive301IterationsEndpoint() {
 
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "Machined Box AMERICAS";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent();
 
-        ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build();
+        PostComponentResponse existingPartResponse = componentsUtil.postComponents(component);
 
-        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart);
+        component.setComponentIdentity(existingPartResponse.getSuccesses().get(0).getComponentIdentity());
+        component.setScenarioIdentity(existingPartResponse.getSuccesses().get(0).getScenarioIdentity());
 
-        existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
-        existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
-
-        assertThat(componentsUtil.getComponentIterationLatestExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
+        assertThat(componentsUtil.getComponentIterationLatestExpectingStatusCode(component, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
     }
 }
