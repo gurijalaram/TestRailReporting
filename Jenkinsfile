@@ -214,8 +214,8 @@ pipeline {
                             --build-arg MODULE=${MODULE} \
                             --build-arg JAVAOPTS='${javaOpts}' \
                             --build-arg TESTS=${testSuite} \
-                            -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
-                            -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
+                            //-v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
+                            //-v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
                             amazon/aws-cli ecr get-login-password \
                             --profile '${environment.profile}',  --region '${environment.region}'
                             .
