@@ -4,7 +4,6 @@ import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 
 import com.apriori.cid.api.enums.CidAppAPIEnum;
-import com.apriori.cid.api.models.request.ComponentRequest;
 import com.apriori.cid.api.models.response.CadFile;
 import com.apriori.cid.api.models.response.CadFilesResponse;
 import com.apriori.cid.api.models.response.ComponentIdentityResponse;
@@ -20,6 +19,7 @@ import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.request.component.ComponentRequest;
 import com.apriori.shared.util.models.request.component.Successes;
 import com.apriori.shared.util.models.response.component.PostComponentResponse;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
@@ -136,6 +136,19 @@ public class ComponentsUtil {
         return postComponentResponse.getResponseEntity();
     }
 
+    public PostComponentResponse postComponents2(List<ComponentInfoBuilder> componentInfo) {
+
+        RequestEntity requestEntity =
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+                .body("groupItems", componentInfo.stream()
+                    .map(ComponentInfoBuilder::getComponentRequest)
+                    .collect(Collectors.toList()))
+                .token(componentInfo.get(0).getUser().getToken());
+
+        ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
+        return postComponentResponse.getResponseEntity();
+    }
+
     /**
      * POST new component
      *
@@ -143,7 +156,7 @@ public class ComponentsUtil {
      * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
      */
     public PostComponentResponse postComponents(ComponentInfoBuilder componentInfo) {
-        return postComponents(List.of(componentInfo), postCadFiles(List.of(componentInfo)));
+        return postComponents2(List.of(componentInfo));
     }
 
 //    /**

@@ -2,6 +2,7 @@ package com.apriori.shared.util.builder;
 
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.models.request.component.ComponentRequest;
 import com.apriori.shared.util.models.request.component.PublishRequest;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.PostComponentResponse;
@@ -36,6 +37,7 @@ public class ComponentInfoBuilder implements Serializable {
     private Boolean overrideScenario = false;
     private CostingTemplate costingTemplate;
     private Metadata metadata;
+    private ComponentRequest componentRequest;
 
 
     public CostingTemplate getCostingTemplate() {

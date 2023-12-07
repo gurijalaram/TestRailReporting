@@ -7,9 +7,11 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.request.component.ComponentRequest;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.models.response.component.PostComponentResponse;
 
+import com.google.common.collect.Iterators;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -100,22 +102,37 @@ public class AssemblyUtils {
             });
 
         List<CadFile> cadFilesResponse = componentsUtil.postCadFiles(componentAssembly.getSubComponents());
-        PostComponentResponse postComponentResponse = componentsUtil.postComponents(componentAssembly.getSubComponents(), cadFilesResponse);
 
-        componentAssembly.getSubComponents()
-            .forEach(subcomponent -> postComponentResponse.getSuccesses()
-                .forEach(success -> {
-                    if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.getFilename())) {
-                        subcomponent.setComponentIdentity(success.getComponentIdentity());
-                        subcomponent.setScenarioIdentity(success.getScenarioIdentity());
+        componentAssembly.getSubComponents().forEach(component -> cadFilesResponse.forEach(cadFile -> {
+            if (component.getComponentName().concat(component.getExtension()).equalsIgnoreCase(cadFile.getFilename())) {
+                component.setComponentRequest(
+                    ComponentRequest.builder()
+                        .filename(cadFile.getFilename())
+                        .override(component.getOverrideScenario())
+                        .resourceName(cadFile.getResourceName())
+                        .scenarioName(component.getScenarioName())
+                        .build());
+            }
+        }));
 
-                        ComponentIdentityResponse componentIdentityResponse = componentsUtil.getComponentIdentityPart(subcomponent);
-                        subcomponent.setComponentIdentity(componentIdentityResponse.getIdentity());
+        Iterators.partition(componentAssembly.getSubComponents().iterator(), 5).forEachRemaining(partitioned -> {
+            PostComponentResponse postComponentResponse = componentsUtil.postComponents2(partitioned);
 
-                        scenariosUtil.getScenarioCompleted(subcomponent);
-                    }
-                })
-            );
+            partitioned
+                .forEach(subcomponent -> postComponentResponse.getSuccesses()
+                    .forEach(success -> {
+                        if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.getFilename())) {
+                            subcomponent.setComponentIdentity(success.getComponentIdentity());
+                            subcomponent.setScenarioIdentity(success.getScenarioIdentity());
+
+                            ComponentIdentityResponse componentIdentityResponse = componentsUtil.getComponentIdentityPart(subcomponent);
+                            subcomponent.setComponentIdentity(componentIdentityResponse.getIdentity());
+
+                            scenariosUtil.getScenarioCompleted(subcomponent);
+                        }
+                    })
+                );});
+
 
         return this;
     }
