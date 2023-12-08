@@ -209,8 +209,10 @@ pipeline {
                             --progress=plain \
                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
                             --label \"build-date=${timeStamp}\" \
-                            --build-arg AWS_CONFIG_SECRET_TXT=${AWS_CONFIG_SECRET_TXT} \
-                            --build-arg AWS_CREDENTIALS_SECRET_TXT=${AWS_CREDENTIALS_SECRET_TXT} \
+                            --secret id=aws_config,src=${AWS_CONFIG_SECRET_TXT}
+                            --secret id=aws_creds,src=${AWS_CREDENTIALS_SECRET_TXT}
+                            //--build-arg AWS_CONFIG_SECRET_TXT=${AWS_CONFIG_SECRET_TXT} \
+                            //--build-arg AWS_CREDENTIALS_SECRET_TXT=${AWS_CREDENTIALS_SECRET_TXT} \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
                             --build-arg JAVAOPTS='${javaOpts}' \
