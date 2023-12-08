@@ -200,7 +200,8 @@ pipeline {
                         //script {
                         //    def registryPwd = registry_password("${environment.profile}", "${environment.region}")
                         //    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-
+                        //--build-arg AWS_PROFILE_ARG=${environment.profile} \
+                        //--build-arg AWS_REGION_ARG=${environment.region} \
                     file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
                     file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
 
@@ -211,8 +212,6 @@ pipeline {
                             --label \"build-date=${timeStamp}\" \
                             --secret id=aws_config,src=${AWS_CONFIG_SECRET_TXT} \
                             --secret id=aws_creds,src=${AWS_CREDENTIALS_SECRET_TXT} \
-                            --build-arg AWS_PROFILE_ARG=${environment.profile} \
-                            --build-arg AWS_REGION_ARG=${environment.region} \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
                             --build-arg JAVAOPTS='${javaOpts}' \

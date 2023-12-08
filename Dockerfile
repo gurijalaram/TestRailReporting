@@ -20,12 +20,12 @@ ARG JAVAOPTS
 ARG FOLDER
 ARG MODULE
 ARG TESTS
-ARG AWS_PROFILE_ARG
-ARG AWS_REGION_ARG
+#ARG AWS_PROFILE_ARG
+#ARG AWS_REGION_ARG
 
 
-ENV AWS_PROFILE=$AWS_PROFILE_ARG
-ENV AWS_REGION=$AWS_REGION_ARG
+#ENV AWS_PROFILE=$AWS_PROFILE_ARG
+#ENV AWS_REGION=$AWS_REGION_ARG
 
 RUN --mount=type=secret,id=aws_config,target=/root/.aws/config \
     --mount=type=secret,id=aws_creds,target=/root/.aws/credentials \
