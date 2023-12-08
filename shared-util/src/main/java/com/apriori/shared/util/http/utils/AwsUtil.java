@@ -59,7 +59,8 @@ public class AwsUtil {
             .roleSessionName(roleSessionName)
             .build();
 
-        StsClient stsClient = StsClient.builder().region(Region.US_EAST_1).build();
+        StsClient stsClient = StsClient.builder()
+            .credentialsProvider(ProfileCredentialsProvider.create()).region(Region.US_EAST_1).build();
 
         return StsAssumeRoleCredentialsProvider
             .builder()
