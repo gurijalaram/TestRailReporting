@@ -1,15 +1,20 @@
 package com.apriori.shared.util.http.utils;
 
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.ssm.SsmClient;
+import software.amazon.awssdk.services.sts.StsClient;
+import software.amazon.awssdk.services.sts.auth.StsAssumeRoleCredentialsProvider;
+import software.amazon.awssdk.services.sts.model.AssumeRoleRequest;
 
 public class AwsUtil {
 
     protected static final String S3_BUCKET_NAME = "qa-test-parts";
-    protected static final Region S3_REGION_NAME = Region.US_EAST_1;
+    protected static final Region S3_REGION_NAME =System.getenv("AWS_REGION") != null ?
+        Region.of(System.getenv("AWS_REGION")) : Region.US_EAST_1;
 
     /**
      * Configure instance for AWS Systems Manager
@@ -34,7 +39,10 @@ public class AwsUtil {
      */
     protected static S3Client getS3ClientInstance() {
 
-        System.out.println("====================== AWS: " + System.getenv("AWS_PROFILE"));
+
+        String roleSessionName = "WBCSession-" + Thread.currentThread().getId();
+        AwsCredentialsProvider awsCredentialsProvider = roleCredentialsProvider("apriori-central", roleSessionName);
+
         return S3Client.builder()
             .region(S3_REGION_NAME)
             .credentialsProvider(
@@ -43,5 +51,21 @@ public class AwsUtil {
                 ProfileCredentialsProvider.create()
             )
             .build();
+    }
+
+    private static AwsCredentialsProvider roleCredentialsProvider(String roleArn, String roleSessionName) {
+        AssumeRoleRequest assumeRoleRequest = AssumeRoleRequest.builder()
+            .roleArn(roleArn)
+            .roleSessionName(roleSessionName)
+            .build();
+
+        StsClient stsClient = StsClient.builder().region(Region.US_EAST_1).build();
+
+        return StsAssumeRoleCredentialsProvider
+            .builder()
+            .stsClient(stsClient).refreshRequest(assumeRoleRequest)
+            .asyncCredentialUpdateEnabled(true)
+            .build();
+
     }
 }

@@ -42,11 +42,9 @@ import java.util.Base64;
 import java.util.List;
 
 @Slf4j
-public class FileResourceUtil {
+public class FileResourceUtil extends AwsUtil {
 
     private static final int TEMP_DIR_ATTEMPTS = 50;
-    private static final String S3_BUCKET_NAME = "qa-test-parts";
-    private static final Region S3_REGION_NAME = Region.US_EAST_1;
 
     /**
      * Get resource file stream from a jar file. {getResource}
@@ -134,8 +132,8 @@ public class FileResourceUtil {
             .acl("public-read")
             .build();
 
-        AwsUtil.getS3ClientInstance().putObject(putObjectRequest, RequestBody.fromFile(fileToUpload));
-        S3Waiter s3Waiter = AwsUtil.getS3ClientInstance().waiter();
+        getS3ClientInstance().putObject(putObjectRequest, RequestBody.fromFile(fileToUpload));
+        S3Waiter s3Waiter = getS3ClientInstance().waiter();
         HeadObjectRequest waitRequest = HeadObjectRequest.builder()
             .bucket(S3_BUCKET_NAME)
             .key(cloudFilePath)
@@ -156,7 +154,7 @@ public class FileResourceUtil {
         final String cloudFilePath = String.format("%s/%s", workspaceName, fileName);
         final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, fileName);
 
-        AwsUtil.getS3ClientInstance().deleteObject(DeleteObjectRequest.builder()
+        getS3ClientInstance().deleteObject(DeleteObjectRequest.builder()
             .bucket(S3_BUCKET_NAME)
             .key(cloudFilePath).build());
         log.info(String.format("File deleted from AWS S3 Bucket  %s/%s", S3_BUCKET_NAME, cloudFilePath));
@@ -196,7 +194,7 @@ public class FileResourceUtil {
             .key(cloudFilePath)
             .build();
 
-        ResponseInputStream<GetObjectResponse> object = AwsUtil.getS3ClientInstance().getObject(getObjectRequest);
+        ResponseInputStream<GetObjectResponse> object = getS3ClientInstance().getObject(getObjectRequest);
 
         return copyIntoTempFile(object, localTempFolderPath, fileName);
     }
@@ -218,7 +216,7 @@ public class FileResourceUtil {
             .key(cloudFilePath)
             .build();
 
-        ResponseInputStream<GetObjectResponse> object = AwsUtil.getS3ClientInstance().getObject(getObjectRequest);
+        ResponseInputStream<GetObjectResponse> object = getS3ClientInstance().getObject(getObjectRequest);
 
         return copyIntoTempFile(object, localTempFolderPath, fileName);
     }
