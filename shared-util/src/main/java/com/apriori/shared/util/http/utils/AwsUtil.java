@@ -40,7 +40,7 @@ public class AwsUtil {
             .credentialsProvider(
                 // System.getenv("AWS_ACCESS_KEY_ID") != null
                 //? EnvironmentVariableCredentialsProvider.create()
-                ProfileCredentialsProvider.create("development")
+                ProfileCredentialsProvider.create("apriori-central")
             )
             .build();
     }
