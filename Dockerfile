@@ -23,8 +23,8 @@ ARG FOLDER
 ARG MODULE
 ARG TESTS
 
-ADD $AWS_CONFIG_SECRET_TXT "/root/.aws/config"
-ADD $AWS_CREDENTIALS_SECRET_TXT "/root/.aws/credentials"
+#COPY $AWS_CONFIG_SECRET_TXT "/root/.aws/config"
+#COPY $AWS_CREDENTIALS_SECRET_TXT "/root/.aws/credentials"
 
 RUN echo $AWS_CONFIG_SECRET_TXT
 RUN gradle --build-cache --info $JAVAOPTS :$FOLDER:$MODULE:test --tests $TESTS
