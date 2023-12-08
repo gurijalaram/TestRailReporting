@@ -1,5 +1,6 @@
 package com.apriori.shared.util.http.utils;
 
+import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -33,15 +34,20 @@ public class AwsUtil {
      * @return S3Client configured instance with appropriate credentials
      */
     protected static S3Client getS3ClientInstance() {
-
-        System.out.println("====================== AWS: " + System.getenv("AWS_ACCESS_KEY_ID"));
         return S3Client.builder()
             .region(S3_REGION_NAME)
             .credentialsProvider(
                 // System.getenv("AWS_ACCESS_KEY_ID") != null
                 //? EnvironmentVariableCredentialsProvider.create()
-                ProfileCredentialsProvider.create()
+                DefaultCredentialsProvider
+                    .builder()
+                    .profileName("development")
+                    .build()
+                    .create()
             )
             .build();
+
+
+
     }
 }
