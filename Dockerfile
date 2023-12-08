@@ -20,6 +20,7 @@ ARG JAVAOPTS
 ARG FOLDER
 ARG MODULE
 ARG TESTS
+ENV AWS_PROFILE=development
 
 RUN --mount=type=secret,id=aws_config,target=/root/.aws/config \
     --mount=type=secret,id=aws_creds,target=/root/.aws/credentials \
