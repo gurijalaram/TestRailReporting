@@ -61,7 +61,7 @@ public class AwsUtil {
             .build();
 
         StsClient stsClient = StsClient.builder()
-            .credentialsProvider(ProfileCredentialsProvider.create()).region(Region.US_EAST_1).build();
+            .region(S3_REGION_NAME).build();
 
         return StsAssumeRoleCredentialsProvider
             .builder()
