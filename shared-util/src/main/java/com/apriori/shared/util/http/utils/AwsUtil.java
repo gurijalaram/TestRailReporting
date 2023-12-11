@@ -13,7 +13,7 @@ import software.amazon.awssdk.services.sts.model.AssumeRoleRequest;
 public class AwsUtil {
 
     protected static final String S3_BUCKET_NAME = "qa-test-parts";
-    protected static final Region S3_REGION_NAME =System.getenv("AWS_REGION") != null ?
+    protected static final Region S3_REGION_NAME = System.getenv("AWS_REGION") != null ?
         Region.of(System.getenv("AWS_REGION")) : Region.US_EAST_1;
 
     /**
@@ -41,14 +41,15 @@ public class AwsUtil {
 
 
         String roleSessionName = "WBCSession-" + Thread.currentThread().getId();
-        AwsCredentialsProvider awsCredentialsProvider = roleCredentialsProvider("apriori-central", roleSessionName);
+        //AwsCredentialsProvider awsCredentialsProvider = roleCredentialsProvider("apriori-central", roleSessionName);
 
         return S3Client.builder()
             .region(S3_REGION_NAME)
             .credentialsProvider(
                 // System.getenv("AWS_ACCESS_KEY_ID") != null
                 //? EnvironmentVariableCredentialsProvider.create()
-                awsCredentialsProvider
+                //                awsCredentialsProvider
+                ProfileCredentialsProvider.create()
             )
             .build();
     }

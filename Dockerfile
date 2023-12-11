@@ -26,7 +26,6 @@ ARG TESTS
 
 #ENV AWS_PROFILE=$AWS_PROFILE_ARG
 #ENV AWS_REGION=$AWS_REGION_ARG
-
-RUN --mount=type=secret,id=aws_config,target=/root/.aws/config \
-    --mount=type=secret,id=aws_creds,target=/root/.aws/credentials \
+#--mount=type=secret,id=aws_config,target=/root/.aws/config \
+RUN --mount=type=secret,id=aws_creds,target=/root/.aws/credentials \
     gradle --build-cache --info $JAVAOPTS :$FOLDER:$MODULE:test --tests $TESTS
