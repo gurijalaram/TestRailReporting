@@ -200,7 +200,7 @@ pipeline {
 
                     sh """
                         docker build \
-                            --traget test \
+                            --target test \
                             --progress=plain \
                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
                             --label \"build-date=${timeStamp}\" \
