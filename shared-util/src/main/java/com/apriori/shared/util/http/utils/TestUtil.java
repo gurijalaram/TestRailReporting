@@ -119,7 +119,7 @@ public class TestUtil {
      * @param <T>             The paginated data type to return
      * @return The pagination for the given klass.
      */
-    public final <E extends EndpointEnum, T, P extends Paged<T>> ResponseWrapper<P> find(
+    public <E extends EndpointEnum, T, P extends Paged<T>> ResponseWrapper<P> find(
         E apiEnum,
         Class<P> klass,
         Map<String, ?> filter,
@@ -150,7 +150,7 @@ public class TestUtil {
      * @param <T>             The data type expected to be returned.
      * @return The response wrapper that contains the response data.
      */
-    public final <E extends EndpointEnum, T> ResponseWrapper<T> getCommonRequest(E apiEnum, Class<T> klass, Integer expectedResponseCode, String... inlineVariables) {
+    public <E extends EndpointEnum, T> ResponseWrapper<T> getCommonRequest(E apiEnum, Class<T> klass, Integer expectedResponseCode, String... inlineVariables) {
         RequestEntity request = RequestEntityUtil_Old.init(apiEnum, klass).inlineVariables(inlineVariables).expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(request).get();
     }

@@ -4,17 +4,19 @@ import com.apriori.ach.api.enums.ACHAPIEnum;
 import com.apriori.ach.api.models.response.AchErrorResponse;
 import com.apriori.ach.api.utils.AchTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
-import com.apriori.cds.api.models.response.CdsErrorResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.enums.TokenEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.request.TokenRequest;
 import com.apriori.shared.util.models.response.Claims;
 import com.apriori.shared.util.models.response.Customer;
+import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.Token;
 import com.apriori.shared.util.models.response.TokenInformation;
 import com.apriori.shared.util.models.response.User;
@@ -36,10 +38,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ExtendWith(TestRulesAPI.class)
-public class AchUsersTests {
+public class AchUsersTests extends AchTestUtil {
     private static final String USER_ADMIN = "testUser1";
     private static final String NOT_ADMIN_USER = "testUser11";
-    private AchTestUtil achTestUtil = new AchTestUtil();
+    private RequestEntityUtil requestEntityUtilNoAdmin;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
@@ -48,8 +50,15 @@ public class AchUsersTests {
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil_Old.useTokenForRequests(getWidgetsUserToken(USER_ADMIN));
-        customerIdentity = achTestUtil.getCustomer("Widgets").getIdentity();
+        requestEntityUtil = RequestEntityUtilBuilder
+            .useCustomUser(new UserCredentials(USER_ADMIN, null))
+            .useCustomTokenInRequests(getWidgetsUserToken(USER_ADMIN));
+
+        requestEntityUtilNoAdmin = RequestEntityUtilBuilder
+            .useCustomUser(new UserCredentials(NOT_ADMIN_USER, null))
+            .useCustomTokenInRequests(getWidgetsUserToken(NOT_ADMIN_USER));
+
+        customerIdentity = PropertiesContext.get("widgets.ci-connect.customer_identity");
         Customer widgets = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity();
         String pattern = widgets.getEmailRegexPatterns().stream().findFirst().orElseThrow();
         domain = pattern.replace("\\S+@", "").replace(".com", "");
@@ -68,14 +77,15 @@ public class AchUsersTests {
     public void createUserByAdmin() {
         String userName = new GenerateStringUtil().generateUserName();
 
-        ResponseWrapper<User> newUser = achTestUtil.createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
+        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
         userIdentity = newUser.getResponseEntity().getIdentity();
 
         soft.assertThat(newUser.getResponseEntity().getUsername()).isEqualTo(userName);
 
-        ResponseWrapper<AchErrorResponse> newUserSameEmail = achTestUtil.createNewUser(AchErrorResponse.class, customerIdentity, userName, domain, HttpStatus.SC_CONFLICT);
+        ResponseWrapper<AchErrorResponse> newUserSameEmail = createNewUser(AchErrorResponse.class, customerIdentity, userName, domain, HttpStatus.SC_CONFLICT);
 
-        soft.assertThat(newUserSameEmail.getResponseEntity().getMessage()).isEqualTo(String.format("Can't create a user with email '%s' as the email already exists.", userName + "@" + domain + ".com"));
+        soft.assertThat(newUserSameEmail.getResponseEntity().getMessage())
+            .isEqualTo(String.format("Can't create a user with email '%s' as the email already exists.", userName + "@" + domain + ".com"));
         soft.assertAll();
     }
 
@@ -83,9 +93,10 @@ public class AchUsersTests {
     @TestRail(id = {29179})
     @Description("Bad request is returned when create user without required fields")
     public void createUserNoRequiredFields() {
-        ResponseWrapper<AchErrorResponse> newUserSameEmail = achTestUtil.createNewUser(AchErrorResponse.class, customerIdentity, null, null, HttpStatus.SC_BAD_REQUEST);
+        ResponseWrapper<AchErrorResponse> newUserSameEmail = createNewUser(AchErrorResponse.class, customerIdentity, null, null, HttpStatus.SC_BAD_REQUEST);
 
-        soft.assertThat(newUserSameEmail.getResponseEntity().getMessage()).contains("username' should not be null.");
+        soft.assertThat(newUserSameEmail.getResponseEntity().getMessage())
+            .contains("username' should not be null.");
         soft.assertAll();
     }
 
@@ -96,13 +107,14 @@ public class AchUsersTests {
         String userName = new GenerateStringUtil().generateUserName();
         String updatedJobTitle = "QA";
 
-        ResponseWrapper<User> newUser = achTestUtil.createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
+        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
         User userResponse = newUser.getResponseEntity();
         userIdentity = userResponse.getIdentity();
 
-        ResponseWrapper<User> updateUser = achTestUtil.patchUser(User.class, userResponse, updatedJobTitle, HttpStatus.SC_OK);
+        ResponseWrapper<User> updateUser = patchUser(User.class, userResponse, updatedJobTitle, HttpStatus.SC_OK);
 
-        soft.assertThat(updateUser.getResponseEntity().getUserProfile().getJobTitle()).isEqualTo(updatedJobTitle);
+        soft.assertThat(updateUser.getResponseEntity().getUserProfile().getJobTitle())
+            .isEqualTo(updatedJobTitle);
         soft.assertAll();
     }
 
@@ -112,14 +124,19 @@ public class AchUsersTests {
     public void deleteUserByAdmin() {
         String userName = new GenerateStringUtil().generateUserName();
 
-        ResponseWrapper<User> newUser = achTestUtil.createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
+        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
         String userIdentity = newUser.getResponseEntity().getIdentity();
 
-        achTestUtil.delete(ACHAPIEnum.USER_BY_ID, customerIdentity, userIdentity);
+        RequestEntity deleteRequest = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
+            .token(getWidgetsUserToken(USER_ADMIN))
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT)
+            .inlineVariables(customerIdentity, userIdentity);
+        HTTPRequest.build(deleteRequest).delete();
 
-        ResponseWrapper<CdsErrorResponse> getDeletedUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, CdsErrorResponse.class, HttpStatus.SC_NOT_FOUND, customerIdentity, userIdentity);
+        ResponseWrapper<User> getDeletedUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_ID, User.class, HttpStatus.SC_OK, userIdentity);
 
-        soft.assertThat(getDeletedUser.getResponseEntity().getMessage()).isEqualTo(String.format("Unable to get user with identity '%s' for customer with identity '%s'.", userIdentity, customerIdentity));
+        soft.assertThat(getDeletedUser.getResponseEntity().getActive())
+            .isFalse();
         soft.assertAll();
     }
 
@@ -137,12 +154,13 @@ public class AchUsersTests {
 
         ResponseWrapper<AchErrorResponse> errorResponse = HTTPRequest.build(deleteRequest).delete();
 
-        soft.assertThat(errorResponse.getResponseEntity().getMessage()).isEqualTo("This user can not be deleted through self service");
+        soft.assertThat(errorResponse.getResponseEntity().getMessage())
+            .isEqualTo("This user can not be deleted through self service");
         soft.assertAll();
     }
 
     @Test
-    @TestRail(id = {29186})
+    @TestRail(id = {29185})
     @Description("Service account cannot be deleted by API")
     public void tryDeleteServiceAccount() {
         String serviceAccountIdentity = getUser("widgets.service-account.1", customerIdentity).getIdentity();
@@ -155,7 +173,8 @@ public class AchUsersTests {
 
         ResponseWrapper<AchErrorResponse> errorResponse = HTTPRequest.build(deleteRequest).delete();
 
-        soft.assertThat(errorResponse.getResponseEntity().getMessage()).isEqualTo("This user can not be deleted through self service");
+        soft.assertThat(errorResponse.getResponseEntity().getMessage())
+            .isEqualTo("This user can not be deleted through self service");
         soft.assertAll();
     }
 
@@ -163,13 +182,12 @@ public class AchUsersTests {
     @TestRail(id = {29180})
     @Description("Error when non admin user trying to create user")
     public void notAdminCreateUser() {
-        RequestEntityUtil_Old.useTokenForRequests(getWidgetsUserToken(NOT_ADMIN_USER));
-
         String userName = new GenerateStringUtil().generateUserName();
 
-        ResponseWrapper<AchErrorResponse> newUser = achTestUtil.createNewUser(AchErrorResponse.class, customerIdentity, userName, domain, HttpStatus.SC_FORBIDDEN);
+        ResponseWrapper<AchErrorResponse> newUser = createNewUser(AchErrorResponse.class, customerIdentity, userName, domain, HttpStatus.SC_FORBIDDEN, requestEntityUtilNoAdmin);
 
-        soft.assertThat(newUser.getResponseEntity().getMessage()).isEqualTo("Operation not allowed.");
+        soft.assertThat(newUser.getResponseEntity().getMessage())
+            .isEqualTo("Operation not allowed.");
         soft.assertAll();
     }
 
@@ -180,13 +198,11 @@ public class AchUsersTests {
         String userName = new GenerateStringUtil().generateUserName();
         String updatedJobTitle = "QA";
 
-        ResponseWrapper<User> newUser = achTestUtil.createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
+        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
         User userResponse = newUser.getResponseEntity();
         userIdentity = userResponse.getIdentity();
 
-        RequestEntityUtil_Old.useTokenForRequests(getWidgetsUserToken(NOT_ADMIN_USER));
-
-        ResponseWrapper<AchErrorResponse> updateUser = achTestUtil.patchUser(AchErrorResponse.class, userResponse, updatedJobTitle, HttpStatus.SC_FORBIDDEN);
+        ResponseWrapper<AchErrorResponse> updateUser = patchUser(AchErrorResponse.class, userResponse, updatedJobTitle, HttpStatus.SC_FORBIDDEN, requestEntityUtilNoAdmin);
 
         soft.assertThat(updateUser.getResponseEntity().getMessage()).isEqualTo("Operation not allowed.");
 
@@ -198,12 +214,53 @@ public class AchUsersTests {
 
         ResponseWrapper<AchErrorResponse> errorResponse = HTTPRequest.build(deleteRequest).delete();
 
-        soft.assertThat(errorResponse.getResponseEntity().getMessage()).isEqualTo("Operation not allowed.");
+        soft.assertThat(errorResponse.getResponseEntity().getMessage())
+            .isEqualTo("Operation not allowed.");
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29343})
+    @Description("User admin cannot update own enablements")
+    public void updateOwnEnablements() {
+        User current = getUser(USER_ADMIN, customerIdentity);
+        RequestEntity updateEnablements = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
+            .returnType(AchErrorResponse.class)
+            .token(getWidgetsUserToken(USER_ADMIN))
+            .expectedResponseCode(HttpStatus.SC_FORBIDDEN)
+            .inlineVariables(customerIdentity, current.getIdentity())
+            .body("user",
+                User.builder()
+                    .enablements(Enablements.builder()
+                        .customerAssignedRole("APRIORI_EXPERT")
+                        .userAdminEnabled(false).build())
+                    .build());
+
+        ResponseWrapper<AchErrorResponse> error = HTTPRequest.build(updateEnablements).patch();
+        soft.assertThat(error.getResponseEntity().getMessage())
+            .isEqualTo("You are not allowed to update your own enablements");
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29344})
+    @Description("User admin cannot delete themself")
+    public void tryDeleteThemself() {
+        User current = getUser(USER_ADMIN, customerIdentity);
+        RequestEntity deleteRequest = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
+            .returnType(AchErrorResponse.class)
+            .token(getWidgetsUserToken(USER_ADMIN))
+            .expectedResponseCode(HttpStatus.SC_FORBIDDEN)
+            .inlineVariables(customerIdentity, current.getIdentity());
+
+        ResponseWrapper<AchErrorResponse> errorResponse = HTTPRequest.build(deleteRequest).delete();
+        soft.assertThat(errorResponse.getResponseEntity().getMessage())
+            .isEqualTo("You are not allowed to delete yourself. Please ask another user administrator to do this for you.");
         soft.assertAll();
     }
 
     private String getWidgetsUserToken(String name) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(TokenEnum.POST_TOKEN, Token.class)
+        RequestEntity requestEntity = requestEntityUtil.init(TokenEnum.POST_TOKEN, Token.class)
             .body(TokenRequest.builder()
                 .token(TokenInformation.builder()
                     .issuer(PropertiesContext.get("ats.token_issuer"))
@@ -224,7 +281,7 @@ public class AchUsersTests {
         Map<String, Object> filters = new HashMap<>();
         filters.put("username[EQ]", name);
 
-        User user = achTestUtil.findFirst(ACHAPIEnum.CUSTOMER_USERS, Users.class, filters, Collections.emptyMap(), customerIdentity);
+        User user = findFirst(ACHAPIEnum.CUSTOMER_USERS, Users.class, filters, Collections.emptyMap(), customerIdentity);
 
         if (user == null) {
             throw new IllegalStateException(String.format("User, %s, is missing.", name));
