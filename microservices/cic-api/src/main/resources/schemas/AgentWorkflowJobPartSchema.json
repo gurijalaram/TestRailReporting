@@ -58,6 +58,15 @@
         },
         "productionLife": {
           "type": "number"
+        },
+        "machiningMode": {
+          "type": "string"
+        },
+        "targetCost": {
+          "type": "number"
+        },
+        "targetMass": {
+          "type": "number"
         }
       },
       "optional": [
@@ -66,7 +75,10 @@
         "vpeName",
         "annualVolume",
         "batchSize",
-        "productionLife"
+        "productionLife",
+        "machiningMode",
+        "targetCost",
+        "targetMass"
       ]
     },
     "result": {

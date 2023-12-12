@@ -28,7 +28,10 @@ public enum ACHAPIEnum implements ExternalEndpointEnum {
     APP_METADATA("application-metadata"),
 
     //ENABLEMENTS_SUPPORT
-    ENABLEMENTS_SUPPORT("enablements-support");
+    ENABLEMENTS_SUPPORT("enablements-support"),
+
+    //DEPLOYMENTS
+    CUSTOMER_DEPLOYMENTS("customers/%s/deployments");
 
 
     private final String endpoint;
