@@ -199,7 +199,7 @@ pipeline {
                     file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
 
                     sh """
-                        docker buildx build \
+                        docker build \
                             --progress=plain \
                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
                             --label \"build-date=${timeStamp}\" \
