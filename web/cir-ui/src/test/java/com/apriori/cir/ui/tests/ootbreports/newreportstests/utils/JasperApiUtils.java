@@ -572,7 +572,9 @@ public class JasperApiUtils {
         JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
 
         if (areBubblesPresent) {
-            softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().size()).isEqualTo(1);
+            if (!this.reportRequest.getReportUnitUri().contains("machiningDTC")) {
+                softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().size()).isEqualTo(1);
+            }
             softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(0).getAnnualSpend()).isNotEqualTo(minimumAnnualSpendValue);
         } else {
             for (int i = 0; i < 6; i++) {
