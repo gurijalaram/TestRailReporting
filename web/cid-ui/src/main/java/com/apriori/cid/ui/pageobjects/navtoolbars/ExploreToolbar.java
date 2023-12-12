@@ -311,7 +311,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return response object
      */
     public List<ComponentInfoBuilder> uploadMultiComponentsCID(List<ComponentInfoBuilder> componentInfo) {
-//        ComponentsUtil componentsUtil = new ComponentsUtil();
         return new ComponentsUtil().postCadUploadComponentSuccess(componentInfo);
     }
 
