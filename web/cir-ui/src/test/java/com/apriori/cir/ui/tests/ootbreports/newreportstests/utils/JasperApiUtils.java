@@ -521,13 +521,11 @@ public class JasperApiUtils {
      */
     public void genericProcessGroupDtcTest(List<String> partNames, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
-        String pgToSet = miscDataList.get(1).equals(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            || miscDataList.get(1).equals(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            ? miscDataList.get(1) : "";
-        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), pgToSet);
+        String processGroup = miscDataList.size() > 1 ? miscDataList.get(1) : "";
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), processGroup);
 
         for (String partName : partNames) {
-            partName = miscDataList.get(1).equals(ProcessGroupEnum.CASTING_SAND.getProcessGroup()) ? partName.replace(" (Initial)", "") : partName;
+            partName = miscDataList.get(1).contains("(Initial") ? partName.replace(" (Initial)", "") : partName;
             softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
         }
 
