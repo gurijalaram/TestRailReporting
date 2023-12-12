@@ -111,9 +111,9 @@ default:
     ui_url: https://ci-connect.${deployment_url_template}
     agent_api_url: http://conqscic02.fbc.com
     authorization_key: DogCatMonkey
-    nexus_repository: apriori-zip-dev
+    nexus_repository: apriori-zip-prod-local
     nexus_group: apriori-cic-agt
-    nexus_version: 3.1.0-snapshot
+    nexus_version: 3.4.0-rc.1
     nexus_extension: zip
     custom_install: false
     maximum_parts: 5

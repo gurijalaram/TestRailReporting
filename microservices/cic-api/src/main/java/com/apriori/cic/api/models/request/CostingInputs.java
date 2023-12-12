@@ -20,6 +20,9 @@ public class CostingInputs {
     private Integer annualVolume;
     private Integer batchSize;
     private String description;
+    private Double targetCost;
+    private Double targetMass;
+    private String machiningMode;
     private Integer productionLife;
     @JsonProperty("UDA1")
     private String customString;

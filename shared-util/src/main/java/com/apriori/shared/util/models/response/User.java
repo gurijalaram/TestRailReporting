@@ -59,4 +59,7 @@ public class User {
     protected String updatedByName;
     protected List<Object> licenseAssignments = null;
     protected String awsRole;
+    protected Boolean canDelete;
+    protected Boolean canEditEnablements;
+    protected Boolean canEditProfile;
 }
