@@ -34,19 +34,17 @@ public class FileManagementControllerTest extends TestUtil {
         userCredentials = UserUtil.getUserWithCloudContext();
     }
 
-    // TODO z: uncomment after AWS update
+    @Test
+    @Tag(API_SANITY)
+    @TestRail(id = 3933)
+    @Description("Get files for a targetCloudContext with an authorized user")
+    public void getFiles() {
+        List<FileResponse> files = FileManagementController.getFiles(userCredentials).getResponseEntity().getResponse().getItems();
 
-    //    @Test
-    //    @Tag(API_SANITY)
-    //    @TestRail(id = 3933)
-    //    @Description("Get files for a targetCloudContext with an authorized user")
-    //    public void getFiles() {
-    //        List<FileResponse> files = FileManagementController.getFiles(userCredentials).getResponseEntity().getResponse().getItems();
-    //
-    //        String fileIdentity = files.get(new Random().nextInt(files.size())).getIdentity();
-    //
-    //        assertThat(FileManagementController.getFileByIdentity(userCredentials, fileIdentity).getResponseEntity().getIdentity(), is(notNullValue()));
-    //    }
+        String fileIdentity = files.get(new Random().nextInt(files.size())).getIdentity();
+
+        assertThat(FileManagementController.getFileByIdentity(userCredentials, fileIdentity).getResponseEntity().getIdentity(), is(notNullValue()));
+    }
 
     @Test
     @TestRail(id = {3939, 3934})

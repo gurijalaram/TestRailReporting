@@ -1,14 +1,10 @@
 package com.apriori.shared.util.http.utils;
 
-import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.ssm.SsmClient;
-import software.amazon.awssdk.services.sts.StsClient;
-import software.amazon.awssdk.services.sts.auth.StsAssumeRoleCredentialsProvider;
-import software.amazon.awssdk.services.sts.model.AssumeRoleRequest;
 
 public class AwsUtil {
 
@@ -38,36 +34,12 @@ public class AwsUtil {
      * @return S3Client configured instance with appropriate credentials
      */
     protected static S3Client getS3ClientInstance() {
-
-
-        String roleSessionName = "WBCSession-" + Thread.currentThread().getId();
-        //AwsCredentialsProvider awsCredentialsProvider = roleCredentialsProvider("apriori-central", roleSessionName);
-
         return S3Client.builder()
             .region(S3_REGION_NAME)
-            .credentialsProvider(
-                // System.getenv("AWS_ACCESS_KEY_ID") != null
-                //? EnvironmentVariableCredentialsProvider.create()
-                //                awsCredentialsProvider
-                ProfileCredentialsProvider.create()
+            .credentialsProvider( System.getenv("AWS_ACCESS_KEY_ID") != null
+                ? EnvironmentVariableCredentialsProvider.create()
+                : ProfileCredentialsProvider.create()
             )
             .build();
-    }
-
-    private static AwsCredentialsProvider roleCredentialsProvider(String roleArn, String roleSessionName) {
-        AssumeRoleRequest assumeRoleRequest = AssumeRoleRequest.builder()
-            .roleArn(roleArn)
-            .roleSessionName(roleSessionName)
-            .build();
-
-        StsClient stsClient = StsClient.builder()
-            .region(S3_REGION_NAME).build();
-
-        return StsAssumeRoleCredentialsProvider
-            .builder()
-            .stsClient(stsClient).refreshRequest(assumeRoleRequest)
-            .asyncCredentialUpdateEnabled(true)
-            .build();
-
     }
 }

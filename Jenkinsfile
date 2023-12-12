@@ -195,13 +195,6 @@ pipeline {
             steps {
                 echo "Testing..."
                 withCredentials([
-                        //string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
-                        //string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        //script {
-                        //    def registryPwd = registry_password("${environment.profile}", "${environment.region}")
-                        //    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
-                        //--build-arg AWS_PROFILE_ARG=${environment.profile} \
-                        //--build-arg AWS_REGION_ARG=${environment.region} \
                     file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
                     file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
 
