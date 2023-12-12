@@ -88,7 +88,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @TmsLink("3026")
-    @TestRail(id = 7393)
+    @TestRail(id = 3026)
     @Description("Verify currency code input control functions correctly")
     public void testCurrencyChange() {
         jasperApiUtils.genericDtcCurrencyTest(
@@ -97,14 +97,6 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
             false
         );
     }
-
-    /*
-    Process group tests (3 needed)
-    Process groups: Stock Machining and 2-Model Machining
-    One test for Stock Machining Only
-    One test for 2-Model Machining Only
-    One test for both process groups
-     */
 
     @Test
     @Tag(REPORTS)
