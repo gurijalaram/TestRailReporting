@@ -36,7 +36,7 @@ public class AwsUtil {
     protected static S3Client getS3ClientInstance() {
         return S3Client.builder()
             .region(S3_REGION_NAME)
-            .credentialsProvider( System.getenv("AWS_ACCESS_KEY_ID") != null
+            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
                 ? EnvironmentVariableCredentialsProvider.create()
                 : ProfileCredentialsProvider.create()
             )

@@ -161,22 +161,6 @@ public class FileResourceUtil extends AwsUtil {
 
     }
 
-//    /**
-//     * Connect to AWS S3 client
-//     *
-//     * @return S3Client instance
-//     */
-//    private static S3Client getS3ClientInstance() {
-//        S3Client s3Client = S3Client.builder()
-//            .region(S3_REGION_NAME)
-//            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
-//                ? EnvironmentVariableCredentialsProvider.create()
-//                : ProfileCredentialsProvider.create()
-//            )
-//            .build();
-//        return s3Client;
-//    }
-
     /**
      * connect to AWS S3 bucket and copy the file from S3 bucket to local temp directory
      *
