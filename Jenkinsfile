@@ -195,16 +195,17 @@ pipeline {
             steps {
                 echo "Testing..."
                 withCredentials([
-                        string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
-                        string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
+                    file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
+
                     sh """
                         docker build \
-                            --progress=plain \
                             --target test \
+                            --progress=plain \
                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
                             --label \"build-date=${timeStamp}\" \
-                            --build-arg AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
-                            --build-arg AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+                            --secret id=aws_config,src=${AWS_CONFIG_SECRET_TXT} \
+                            --secret id=aws_creds,src=${AWS_CREDENTIALS_SECRET_TXT} \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
                             --build-arg JAVAOPTS='${javaOpts}' \
