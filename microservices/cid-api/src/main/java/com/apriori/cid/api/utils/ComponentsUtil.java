@@ -20,7 +20,6 @@ import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.request.component.ComponentRequest;
-import com.apriori.shared.util.models.request.component.Successes;
 import com.apriori.shared.util.models.response.component.PostComponentResponse;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.models.response.component.componentiteration.ComponentIteration;
@@ -76,7 +75,7 @@ public class ComponentsUtil {
 //    }
 
     /**
-     * POST subcomponents cad files
+     * Calls and api with POST verb
      *
      * @param componentInfo - the component object
      * @return cad files response object
@@ -103,14 +102,13 @@ public class ComponentsUtil {
     }
 
     /**
-     * POST subcomponents
+     * Calls an api with POST verb
      *
      * @param componentInfo    - the component object
-     * @param cadFilesResponse - the cad files
+     * @param cadFilesResponse - cad files response
      * @return component response object
      */
-
-    public PostComponentResponse postComponents(List<ComponentInfoBuilder> componentInfo, List<CadFile> cadFilesResponse) {
+    public PostComponentResponse postComponentsResponse(List<ComponentInfoBuilder> componentInfo, List<CadFile> cadFilesResponse) {
 
         List<ComponentRequest> componentRequests = new ArrayList<>();
 
@@ -136,7 +134,23 @@ public class ComponentsUtil {
         return postComponentResponse.getResponseEntity();
     }
 
-    public PostComponentResponse postComponents2(List<ComponentInfoBuilder> componentInfo) {
+    /**
+     * Calls an api with POST verb
+     *
+     * @param componentInfo - the component object
+     * @return component response object
+     */
+    public PostComponentResponse postComponentResponse(ComponentInfoBuilder componentInfo) {
+        return postComponentsResponse(List.of(componentInfo), postCadFiles(List.of(componentInfo)));
+    }
+
+    /**
+     * Calls an api with POST verb
+     *
+     * @param componentInfo - the component object
+     * @return component response object
+     */
+    public PostComponentResponse postComponents(List<ComponentInfoBuilder> componentInfo) {
 
         RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
@@ -150,13 +164,56 @@ public class ComponentsUtil {
     }
 
     /**
-     * POST new component
+     * Calls an api with POST verb
      *
      * @param componentInfo - the component object
      * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
      */
-    public PostComponentResponse postComponents(ComponentInfoBuilder componentInfo) {
-        return postComponents2(List.of(componentInfo));
+    public List<ComponentInfoBuilder> postComponents(ComponentInfoBuilder componentInfo) {
+        return postCadUploadComponentSuccess(List.of(componentInfo));
+    }
+
+    /**
+     * Calls an api with POST verb
+     *
+     * @param componentInfo - the component object
+     * @return component response object
+     */
+    public List<ComponentInfoBuilder> postCadUploadComponentSuccess(List<ComponentInfoBuilder> componentInfo) {
+        List<CadFile> cadFilesResponse = postCadFiles(componentInfo);
+
+        componentInfo.forEach(component -> cadFilesResponse.forEach(cadFile -> {
+            if (component.getComponentName().concat(component.getExtension()).equalsIgnoreCase(cadFile.getFilename())) {
+                component.setComponentRequest(
+                    ComponentRequest.builder()
+                        .filename(cadFile.getFilename())
+                        .override(component.getOverrideScenario())
+                        .resourceName(cadFile.getResourceName())
+                        .scenarioName(component.getScenarioName())
+                        .build());
+            }
+        }));
+
+        Iterators.partition(componentInfo.iterator(), MAX_FILES).forEachRemaining(partitioned -> {
+            PostComponentResponse postComponentResponse = postComponents(partitioned);
+
+            partitioned
+                .forEach(subcomponent -> postComponentResponse.getSuccesses()
+                    .forEach(success -> {
+                            if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.getFilename())) {
+                                subcomponent.setComponentIdentity(success.getComponentIdentity());
+                                subcomponent.setScenarioIdentity(success.getScenarioIdentity());
+
+                                ComponentIdentityResponse componentIdentityResponse = getComponentIdentityPart(subcomponent);
+                                subcomponent.setComponentIdentity(componentIdentityResponse.getIdentity());
+
+                                new ScenariosUtil().getScenarioCompleted(subcomponent);
+                            }
+                        }
+                    ));
+        });
+
+        return componentInfo;
     }
 
 //    /**
@@ -191,10 +248,10 @@ public class ComponentsUtil {
      */
     public ComponentInfoBuilder postComponentQueryCSSUncosted(ComponentInfoBuilder componentInfo) {
 
-        Successes componentSuccess = postComponents(componentInfo).getSuccesses().stream().findFirst().get();
+        ComponentInfoBuilder component = postComponents(componentInfo).stream().findFirst().get();
 
-        ScenarioItem scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
-            componentInfo.getUser()).stream().findFirst().get();
+        ScenarioItem scenarioItemResponse = getUnCostedComponent(component.getComponentName(), component.getScenarioName(),
+            component.getUser()).stream().findFirst().get();
 
         componentInfo.setComponentIdentity(scenarioItemResponse.getComponentIdentity());
         componentInfo.setScenarioIdentity(scenarioItemResponse.getScenarioIdentity());
@@ -210,10 +267,10 @@ public class ComponentsUtil {
      */
     public ComponentInfoBuilder postComponentQueryCID(ComponentInfoBuilder componentInfo) {
 
-        Successes componentSuccess = postComponents(componentInfo).getSuccesses().stream().findFirst().get();
+        ComponentInfoBuilder component = postComponents(componentInfo).stream().findFirst().get();
 
-        componentInfo.setComponentIdentity(componentSuccess.getComponentIdentity());
-        componentInfo.setScenarioIdentity(componentSuccess.getScenarioIdentity());
+        componentInfo.setComponentIdentity(component.getComponentIdentity());
+        componentInfo.setScenarioIdentity(component.getScenarioIdentity());
 
         ComponentIdentityResponse componentIdentityResponse = getComponentIdentityPart(componentInfo);
 

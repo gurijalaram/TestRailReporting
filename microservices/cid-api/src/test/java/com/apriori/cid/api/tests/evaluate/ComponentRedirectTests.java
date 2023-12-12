@@ -33,7 +33,7 @@ public class ComponentRedirectTests {
     public void receive301AfterUploadOfExistingComponent() {
         component = new ComponentRequestUtil().getComponent();
 
-        PostComponentResponse existingPartResponse = componentsUtil.postComponents(component);
+        PostComponentResponse existingPartResponse = componentsUtil.postComponentResponse(component);
 
         component.setComponentIdentity(existingPartResponse.getSuccesses().get(0).getComponentIdentity());
         component.setScenarioIdentity(existingPartResponse.getSuccesses().get(0).getScenarioIdentity());
@@ -49,7 +49,7 @@ public class ComponentRedirectTests {
 
         component = new ComponentRequestUtil().getComponent();
 
-        PostComponentResponse existingPartResponse = componentsUtil.postComponents(component);
+        PostComponentResponse existingPartResponse = componentsUtil.postComponentResponse(component);
 
         component.setComponentIdentity(existingPartResponse.getSuccesses().get(0).getComponentIdentity());
         component.setScenarioIdentity(existingPartResponse.getSuccesses().get(0).getScenarioIdentity());
@@ -65,7 +65,7 @@ public class ComponentRedirectTests {
 
         component = new ComponentRequestUtil().getComponent();
 
-        PostComponentResponse existingPartScenarioResponse = componentsUtil.postComponents(component);
+        PostComponentResponse existingPartScenarioResponse = componentsUtil.postComponentResponse(component);
 
         component.setComponentIdentity(existingPartScenarioResponse.getSuccesses().get(0).getComponentIdentity());
         component.setScenarioIdentity(existingPartScenarioResponse.getSuccesses().get(0).getScenarioIdentity());
@@ -81,7 +81,7 @@ public class ComponentRedirectTests {
 
         component = new ComponentRequestUtil().getComponent();
 
-        PostComponentResponse existingPartResponse = componentsUtil.postComponents(component);
+        PostComponentResponse existingPartResponse = componentsUtil.postComponentResponse(component);
 
         component.setComponentIdentity(existingPartResponse.getSuccesses().get(0).getComponentIdentity());
         component.setScenarioIdentity(existingPartResponse.getSuccesses().get(0).getScenarioIdentity());

@@ -1,17 +1,12 @@
 package com.apriori.cid.api.utils;
 
-import com.apriori.cid.api.models.response.CadFile;
-import com.apriori.cid.api.models.response.ComponentIdentityResponse;
 import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.request.component.ComponentRequest;
 import com.apriori.shared.util.models.response.ErrorMessage;
-import com.apriori.shared.util.models.response.component.PostComponentResponse;
 
-import com.google.common.collect.Iterators;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -101,38 +96,39 @@ public class AssemblyUtils {
                 }
             });
 
-        List<CadFile> cadFilesResponse = componentsUtil.postCadFiles(componentAssembly.getSubComponents());
-
-        componentAssembly.getSubComponents().forEach(component -> cadFilesResponse.forEach(cadFile -> {
-            if (component.getComponentName().concat(component.getExtension()).equalsIgnoreCase(cadFile.getFilename())) {
-                component.setComponentRequest(
-                    ComponentRequest.builder()
-                        .filename(cadFile.getFilename())
-                        .override(component.getOverrideScenario())
-                        .resourceName(cadFile.getResourceName())
-                        .scenarioName(component.getScenarioName())
-                        .build());
-            }
-        }));
-
-        Iterators.partition(componentAssembly.getSubComponents().iterator(), 5).forEachRemaining(partitioned -> {
-            PostComponentResponse postComponentResponse = componentsUtil.postComponents2(partitioned);
-
-            partitioned
-                .forEach(subcomponent -> postComponentResponse.getSuccesses()
-                    .forEach(success -> {
-                        if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.getFilename())) {
-                            subcomponent.setComponentIdentity(success.getComponentIdentity());
-                            subcomponent.setScenarioIdentity(success.getScenarioIdentity());
-
-                            ComponentIdentityResponse componentIdentityResponse = componentsUtil.getComponentIdentityPart(subcomponent);
-                            subcomponent.setComponentIdentity(componentIdentityResponse.getIdentity());
-
-                            scenariosUtil.getScenarioCompleted(subcomponent);
-                        }
-                    })
-                );});
-
+        componentsUtil.postCadUploadComponentSuccess(componentAssembly.getSubComponents());
+//        List<CadFile> cadFilesResponse = componentsUtil.postCadFiles(componentAssembly.getSubComponents());
+//
+//        componentAssembly.getSubComponents().forEach(component -> cadFilesResponse.forEach(cadFile -> {
+//            if (component.getComponentName().concat(component.getExtension()).equalsIgnoreCase(cadFile.getFilename())) {
+//                component.setComponentRequest(
+//                    ComponentRequest.builder()
+//                        .filename(cadFile.getFilename())
+//                        .override(component.getOverrideScenario())
+//                        .resourceName(cadFile.getResourceName())
+//                        .scenarioName(component.getScenarioName())
+//                        .build());
+//            }
+//        }));
+//
+//        Iterators.partition(componentAssembly.getSubComponents().iterator(), 5).forEachRemaining(partitioned -> {
+//            PostComponentResponse postComponentResponse = componentsUtil.postComponents2(partitioned);
+//
+//            partitioned
+//                .forEach(subcomponent -> postComponentResponse.getSuccesses()
+//                    .forEach(success -> {
+//                            if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.getFilename())) {
+//                                subcomponent.setComponentIdentity(success.getComponentIdentity());
+//                                subcomponent.setScenarioIdentity(success.getScenarioIdentity());
+//
+//                                ComponentIdentityResponse componentIdentityResponse = componentsUtil.getComponentIdentityPart(subcomponent);
+//                                subcomponent.setComponentIdentity(componentIdentityResponse.getIdentity());
+//
+//                                scenariosUtil.getScenarioCompleted(subcomponent);
+//                            }
+//                        }
+//                    ));
+//        });
 
         return this;
     }

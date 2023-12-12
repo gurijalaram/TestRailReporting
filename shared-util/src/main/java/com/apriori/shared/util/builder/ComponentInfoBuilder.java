@@ -39,7 +39,6 @@ public class ComponentInfoBuilder implements Serializable {
     private Metadata metadata;
     private ComponentRequest componentRequest;
 
-
     public CostingTemplate getCostingTemplate() {
         if (costingTemplate == null) {
             costingTemplate = CostingTemplate.builder()
