@@ -9,8 +9,8 @@ import software.amazon.awssdk.services.ssm.SsmClient;
 public class AwsUtil {
 
     protected static final String S3_BUCKET_NAME = "qa-test-parts";
-    protected static final Region S3_REGION_NAME = System.getenv("AWS_REGION") != null ?
-        Region.of(System.getenv("AWS_REGION")) : Region.US_EAST_1;
+    protected static final Region S3_REGION_NAME = System.getenv("AWS_REGION") != null
+        ? Region.of(System.getenv("AWS_REGION")) : Region.US_EAST_1;
 
     /**
      * Configure instance for AWS Systems Manager
