@@ -58,8 +58,8 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TmsLink("7489")
-    @TestRail(id = 7489)
+    @TmsLink("7389")
+    @TestRail(id = 7389)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Casting DTC Comparison Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
