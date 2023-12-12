@@ -43,36 +43,7 @@ public class ComponentsUtil {
     private static final int CHUNK_SIZE = 10;
     private static final int POLL_TIME = 1;
     private static final int WAIT_TIME = 570;
-    ResponseWrapper<CadFilesResponse> cadFilesResponse = null;
-
-
-    /**
-     * POST cad files
-     *
-     * @param componentInfo - the component object
-     * @return cad file response object
-     */
-//    public List<CadFile> postCadFiles(List<ComponentInfoBuilder> componentInfo) {
-//        if (componentInfo.size() > MAX_FILES) {
-//            throw new RuntimeException("Attempted to upload '" + componentInfo.size() + "' files. Only a maximum of '" + MAX_FILES + "' CAD files can be uploaded at the same time");
-//        }
-//
-//        List<CadFile> cadFiles = new ArrayList<>();
-//
-//        Iterators.partition(componentInfo.iterator(), CHUNK_SIZE).forEachRemaining(cadFile ->
-//            cadFiles.addAll(postSubcomponentsCadFiles(cadFile).getCadFiles()));
-//
-//        return cadFiles;
-//    }
-//    public List<PostComponentResponse> postComponentsAfterCadFiles(List<ComponentInfoBuilder> componentInfo) {
-//
-//        List<PostComponentResponse> cadFiles = new ArrayList<>();
-//
-//        Iterators.partition(componentInfo.iterator(), CHUNK_SIZE).forEachRemaining(cadFile ->
-//           cadFiles.addAll(postComponents(cadFile, postSubcomponentsCadFiles(componentInfo))));
-//
-//        return cadFiles;
-//    }
+    private ResponseWrapper<CadFilesResponse> cadFilesResponse = null;
 
     /**
      * Calls and api with POST verb
@@ -215,30 +186,6 @@ public class ComponentsUtil {
 
         return componentInfo;
     }
-
-//    /**
-//     * POST new component
-//     *
-//     * @param componentInfo - the component object
-//     * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
-//     */
-//    public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentInfo) {
-//        String resourceName = postCadFiles(List.of(componentInfo)).stream()
-//            .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
-//
-//        RequestEntity requestEntity =
-//            RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
-//                .body("groupItems",
-//                    Collections.singletonList(ComponentRequest.builder()
-//                        .filename(componentInfo.getResourceFile().getName())
-//                        .override(componentInfo.getOverrideScenario())
-//                        .resourceName(resourceName)
-//                        .scenarioName(componentInfo.getScenarioName())
-//                        .build()))
-//                .token(componentInfo.getUser().getToken());
-//
-//        return HTTPRequest.build(requestEntity).post();
-//    }
 
     /**
      * POST new component and query CSS

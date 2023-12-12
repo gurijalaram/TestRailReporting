@@ -97,38 +97,6 @@ public class AssemblyUtils {
             });
 
         componentsUtil.postCadUploadComponentSuccess(componentAssembly.getSubComponents());
-//        List<CadFile> cadFilesResponse = componentsUtil.postCadFiles(componentAssembly.getSubComponents());
-//
-//        componentAssembly.getSubComponents().forEach(component -> cadFilesResponse.forEach(cadFile -> {
-//            if (component.getComponentName().concat(component.getExtension()).equalsIgnoreCase(cadFile.getFilename())) {
-//                component.setComponentRequest(
-//                    ComponentRequest.builder()
-//                        .filename(cadFile.getFilename())
-//                        .override(component.getOverrideScenario())
-//                        .resourceName(cadFile.getResourceName())
-//                        .scenarioName(component.getScenarioName())
-//                        .build());
-//            }
-//        }));
-//
-//        Iterators.partition(componentAssembly.getSubComponents().iterator(), 5).forEachRemaining(partitioned -> {
-//            PostComponentResponse postComponentResponse = componentsUtil.postComponents2(partitioned);
-//
-//            partitioned
-//                .forEach(subcomponent -> postComponentResponse.getSuccesses()
-//                    .forEach(success -> {
-//                            if (subcomponent.getComponentName().concat(subcomponent.getExtension()).equalsIgnoreCase(success.getFilename())) {
-//                                subcomponent.setComponentIdentity(success.getComponentIdentity());
-//                                subcomponent.setScenarioIdentity(success.getScenarioIdentity());
-//
-//                                ComponentIdentityResponse componentIdentityResponse = componentsUtil.getComponentIdentityPart(subcomponent);
-//                                subcomponent.setComponentIdentity(componentIdentityResponse.getIdentity());
-//
-//                                scenariosUtil.getScenarioCompleted(subcomponent);
-//                            }
-//                        }
-//                    ));
-//        });
 
         return this;
     }
