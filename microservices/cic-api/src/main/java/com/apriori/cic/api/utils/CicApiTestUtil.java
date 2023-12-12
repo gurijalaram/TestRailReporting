@@ -57,7 +57,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CicApiTestUtil {
 
-    private static final int WAIT_TIME = 20;
+    private static final int WAIT_TIME = 30;
 
     /**
      * Deserialize workflow data from json file to string.

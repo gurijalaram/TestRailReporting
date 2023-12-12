@@ -76,8 +76,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("3060")
     @TestRail(id = {3060})
@@ -89,8 +88,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("1916")
     @TestRail(id = {1916})
@@ -103,8 +101,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({
         @Tag(REPORTS),
-        @Tag(ON_PREM),
-        @Tag(CUSTOMER)
+        @Tag(ON_PREM)
     })
     @TmsLink("1922")
     @TestRail(id = {1922})
@@ -140,8 +137,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("3205")
     @TestRail(id = {3205})
@@ -192,8 +188,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Issue("AP-58059")
     @Issue("AP-53537")
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("3067")
     @TmsLink("1929")
@@ -240,8 +235,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Issue("AP-58059")
     @Issue("AP-53537")
     @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM),
-        @Tag(CUSTOMER)
+        @Tag(ON_PREM)
     })
     @TmsLink("3068")
     @TmsLink("1929")
@@ -352,8 +346,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("3231")
     @TmsLink("1929")
@@ -406,8 +399,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("3232")
     @TmsLink("1929")
@@ -463,8 +455,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({
         @Tag(REPORTS),
-        @Tag(ON_PREM),
-        @Tag(CUSTOMER)
+        @Tag(ON_PREM)
     })
     @TmsLink("3233")
     @TmsLink("1929")
@@ -520,8 +511,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({
         @Tag(REPORTS),
-        @Tag(ON_PREM),
-        @Tag(CUSTOMER)
+        @Tag(ON_PREM)
     })
     @TmsLink("1919")
     @TestRail(id = {1919})
@@ -536,8 +526,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({
         @Tag(REPORTS),
-        @Tag(ON_PREM),
-        @Tag(CUSTOMER)
+        @Tag(ON_PREM)
     })
     @TmsLink("3244")
     @TestRail(id = {3244})
@@ -549,8 +538,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("1930")
     @TestRail(id = {1930})
@@ -641,8 +629,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({
         @Tag(REPORTS),
-        @Tag(ON_PREM),
-        @Tag(CUSTOMER)
+        @Tag(ON_PREM)
     })
     @TmsLink("1918")
     @TestRail(id = {1918})
@@ -678,8 +665,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({
         @Tag(REPORTS),
-        @Tag(ON_PREM),
-        @Tag(CUSTOMER)
+        @Tag(ON_PREM)
     })
     @TmsLink("1920")
     @TestRail(id = {1920})
@@ -692,8 +678,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({
         @Tag(REPORTS),
-        @Tag(ON_PREM),
-        @Tag(CUSTOMER)
+        @Tag(ON_PREM)
     })
     @TmsLink("1931")
     @TestRail(id = {1931})
@@ -730,8 +715,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("1921")
     @TestRail(id = {1921})
@@ -752,8 +736,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("7683")
     @TestRail(id = {7683})
@@ -768,8 +751,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("7684")
     @TestRail(id = {7684})
@@ -820,8 +802,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("7685")
     @TestRail(id = {7685})
@@ -837,8 +818,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("7686")
     @TestRail(id = {7686})
@@ -853,8 +833,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("7687")
     @TestRail(id = {7687})
@@ -893,8 +872,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("7688")
     @TestRail(id = {7688})
@@ -911,8 +889,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({
         @Tag(REPORTS),
-        @Tag(ON_PREM),
-        @Tag(CUSTOMER)
+        @Tag(ON_PREM)
     })
     @TmsLink("7689")
     @TmsLink("1921")
@@ -974,8 +951,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("1928")
     @TestRail(id = {1928})
@@ -1010,8 +986,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
-        @Tag(CUSTOMER)
+        @Tag(REPORTS)
     })
     @TmsLink("1933")
     @TestRail(id = {1933})

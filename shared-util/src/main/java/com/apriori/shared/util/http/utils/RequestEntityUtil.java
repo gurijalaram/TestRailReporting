@@ -28,6 +28,16 @@ public class RequestEntityUtil {
     }
 
     /**
+     * Automatically insert token of initialized user
+     * into all requests initialized by the current RequestEntityUtil object
+     * @return current RequestEntityUtil object
+     */
+    public RequestEntityUtil useCustomTokenInRequests(final String token) {
+        this.token = token;
+        return this;
+    }
+
+    /**
      * Automatically insert apUserContext of initialized user
      * into all requests initialized by the current RequestEntityUtil object
      * @return current RequestEntityUtil object

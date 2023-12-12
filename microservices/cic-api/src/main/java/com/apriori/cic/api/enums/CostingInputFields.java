@@ -10,6 +10,9 @@ public enum CostingInputFields {
     SCENARIO_NAME("Scenario Name"),
     DESCRIPTION("Description"),
     PART_NUMBER("partNumber"),
+    TARGET_COST("targetCost"),
+    TARGET_MASS("targetMass"),
+    MACHINING_MODE("machiningMode"),
     CUSTOM_STRING("Custom String"),  //twxAttributeName : UDA1
     CUSTOM_NUMBER("Custom Number"), //twxAttributeName : UDA2
     CUSTOM_DATE("Custom Date"), //twxAttributeName : UDA3

@@ -36,10 +36,10 @@ public class CdsIdentityProvidersTests {
         if (idpIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS, customerIdentity, idpIdentity);
         }
-        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         if (customerIdentity != null && userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         if (customerIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }

@@ -1,4 +1,4 @@
-package com.apriori.shared.util.dto;
+package com.apriori.shared.util.dataservice;
 
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -10,10 +10,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FileRequestManager {
+public class PartRequestManager {
     private final String jsonFile;
 
-    public FileRequestManager(String jsonFile) {
+    public PartRequestManager(String jsonFile) {
         this.jsonFile = jsonFile;
     }
 

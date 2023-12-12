@@ -17,4 +17,6 @@ public class AgentWorkflowJobPartCostingInput {
     private Integer batchSize;
     private Double productionLife;
     private String machiningMode;
+    private Double targetCost;
+    private Double targetMass;
 }
