@@ -54,10 +54,10 @@ public class CasCustomerUserAccessControlsTests {
                 accessControlIdentityHolder.accessControlIdentity()
             );
         }
-        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         if (customerIdentity != null && userIdentity != null) {
             casTestUtil.delete(CASAPIEnum.USER, customerIdentity, userIdentity);
         }
+        customerInfrastructure.cleanUpCustomerInfrastructure(customerIdentity);
         if (customerIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }

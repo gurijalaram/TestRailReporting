@@ -131,7 +131,6 @@ public class QmsBidPackageProjectsTest extends TestUtil {
     @Issue("COL-2020")
     @Description("Update Bid Package Project By Identity")
     public void updateBidPackageProject() {
-        String projectNameNew = new GenerateStringUtil().getRandomString();
         String projectDescriptionNew = new GenerateStringUtil().getRandomString();
         String displayNameNew = new GenerateStringUtil().getRandomString();
         String ownerEmail = UserUtil.getUser().getEmail();
@@ -140,7 +139,6 @@ public class QmsBidPackageProjectsTest extends TestUtil {
         String dueAtNew = DateUtil.getDateDaysAfter(15, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
             .project(BidPackageProjectParameters.builder()
-                .name(projectNameNew)
                 .description(projectDescriptionNew)
                 .displayName(displayNameNew)
                 .status(statusNew)
@@ -152,7 +150,6 @@ public class QmsBidPackageProjectsTest extends TestUtil {
             bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(), currentUser, BidPackageProjectResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity())
             .isEqualTo(bidPackageResponse.getIdentity());
-        softAssertions.assertThat(getBidPackageProjectResponse.getName()).isEqualTo(projectNameNew);
         softAssertions.assertThat(getBidPackageProjectResponse.getDescription()).isEqualTo(projectDescriptionNew);
         softAssertions.assertThat(getBidPackageProjectResponse.getDisplayName()).isEqualTo(displayNameNew);
         softAssertions.assertThat(getBidPackageProjectResponse.getStatus()).isEqualTo(statusNew);

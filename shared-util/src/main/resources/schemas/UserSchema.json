@@ -121,7 +121,10 @@
         "customProperties",
         "licenseAssignments",
         "createdByName",
-        "updatedByName"
+        "updatedByName",
+        "canDelete",
+        "canEditEnablements",
+        "canEditProfile"
       ]
     }
   }

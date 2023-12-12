@@ -106,6 +106,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
 
     @AfterEach
     public void teardown() {
+        cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         cdsTestUtil.delete(CDSAPIEnum.APPLICATION_INSTALLATION_BY_ID, customerIdentity, deploymentIdentity, installationIdentity, appIdentity);
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
             licensedAppIdentityHolder.customerIdentity(),
@@ -115,7 +116,6 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
             installationIdentityHolder.customerIdentity(),
             installationIdentityHolder.deploymentIdentity(),
             installationIdentityHolder.installationIdentity());
-        cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
     }
 

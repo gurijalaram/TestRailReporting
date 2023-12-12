@@ -42,11 +42,9 @@ import java.util.Base64;
 import java.util.List;
 
 @Slf4j
-public class FileResourceUtil {
+public class FileResourceUtil extends AwsUtil {
 
     private static final int TEMP_DIR_ATTEMPTS = 50;
-    private static final String S3_BUCKET_NAME = "qa-test-parts";
-    private static final Region S3_REGION_NAME = Region.US_EAST_1;
 
     /**
      * Get resource file stream from a jar file. {getResource}
@@ -161,22 +159,6 @@ public class FileResourceUtil {
             .key(cloudFilePath).build());
         log.info(String.format("File deleted from AWS S3 Bucket  %s/%s", S3_BUCKET_NAME, cloudFilePath));
 
-    }
-
-    /**
-     * Connect to AWS S3 client
-     *
-     * @return S3Client instance
-     */
-    private static S3Client getS3ClientInstance() {
-        S3Client s3Client = S3Client.builder()
-            .region(S3_REGION_NAME)
-            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
-                ? EnvironmentVariableCredentialsProvider.create()
-                : ProfileCredentialsProvider.create()
-            )
-            .build();
-        return s3Client;
     }
 
     /**
@@ -399,36 +381,6 @@ public class FileResourceUtil {
         } while (((System.currentTimeMillis() / 1000) - initialTime) < waitTimeInSec);
 
         return false;
-    }
-
-    /**
-     * Get the parameter value from AWS systems manager -> parameter store
-     *
-     * @param parameterName Parameter name
-     * @return Parameter value
-     */
-    public static String getAwsSystemParameter(String parameterName) {
-        String parameterValue = "";
-        SsmClient ssmClient = SsmClient.builder()
-            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
-                ? EnvironmentVariableCredentialsProvider.create()
-                : ProfileCredentialsProvider.create())
-            .region(S3_REGION_NAME)
-            .build();
-
-        try {
-            GetParameterRequest parameterRequest = GetParameterRequest.builder()
-                .name(parameterName)
-                .withDecryption(true)
-                .build();
-
-            GetParameterResponse parameterResponse = ssmClient.getParameter(parameterRequest);
-            parameterValue = parameterResponse.parameter().value();
-
-        } catch (SsmException e) {
-            log.error(e.getMessage());
-        }
-        return parameterValue;
     }
 
     /**

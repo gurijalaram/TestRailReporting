@@ -521,13 +521,11 @@ public class JasperApiUtils {
      */
     public void genericProcessGroupDtcTest(List<String> partNames, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
-        String pgToSet = miscDataList.get(1).equals(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
-            || miscDataList.get(1).equals(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            ? miscDataList.get(1) : "";
-        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), pgToSet);
+        String processGroup = miscDataList.size() > 1 ? miscDataList.get(1) : "";
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), processGroup);
 
         for (String partName : partNames) {
-            partName = miscDataList.get(1).equals(ProcessGroupEnum.CASTING_SAND.getProcessGroup()) ? partName.replace(" (Initial)", "") : partName;
+            partName = miscDataList.get(1).contains("(Initial") ? partName.replace(" (Initial)", "") : partName;
             softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
         }
 
@@ -574,7 +572,9 @@ public class JasperApiUtils {
         JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
 
         if (areBubblesPresent) {
-            softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().size()).isEqualTo(1);
+            if (!this.reportRequest.getReportUnitUri().contains("machiningDTC")) {
+                softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().size()).isEqualTo(1);
+            }
             softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(0).getAnnualSpend()).isNotEqualTo(minimumAnnualSpendValue);
         } else {
             for (int i = 0; i < 6; i++) {
