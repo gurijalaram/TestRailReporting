@@ -43,6 +43,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -381,7 +382,7 @@ public class WorkorderAPITests extends TestUtil {
 
         GenericErrorResponse genericErrorResponse = acsResources.getScenarioInfoByScenarioIterationKeyNegative(scenarioIterationKey);
 
-        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(404)));
+        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
         assertThat(genericErrorResponse.getErrorMessage(), is(containsString("No scenario found for key: ")));
     }
 

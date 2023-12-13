@@ -142,21 +142,28 @@ Get user functionality has reference to `{environment}.properties` file.
 
 
 ## API Request functionality
+**`RequestEntityUtilBuilder`** - it is a build object with global configurations for requests created by `RequestEntity`
+**`RequestEntityUtil`** - it is the main http object, which allow you to generate `RequestEntity`
+**`RequestEntity`** - it is a transfer object, which contain all needed information about the request. You need to use a variable of `RequestEntityUtil` to do a request
 
-**`RequestEntity`** - it is a transfer object, which contain all needed information about the request
-
-- To init default RequestEntity use `com.apriori.shared.util.utils.http.utils.RequestEntityUtil` :
+- To init RequestEntity use `com.apriori.shared.util.http.utils.RequestEntityUtilBuilder` 
+```
+final RequestEntityUtil requestEntityUtil = RequestEntityUtilBuilder.useRandomUser()
+            .useApUserContextInRequests()
+            .useTokenInRequests();
+```
+- Created variable `requestEntityUtil` use to init HTTP requests
 - You may add special parameters e.g.: 
-    - `RequestEntityUtil_Old.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsWrapper.class)
+    - `requestEntityUtil.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsWrapper.class)
           .body("")
           .apUserContext("")
           .inlineVariables("");`
 - If you don't want to validate and map response body, _returnType_ should be null e.g.:
-    - `RequestEntityUtil_Old.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, null);`
+    - `requestEntityUtil.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, null);`
 
 - To validate a response code automatically `RequestEntity` contain `expectedResponseCode` property.
  - To insert expected code use `.expectedResponseCode(<expected response code>)` e.g.
-    - `RequestEntityUtil_Old.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsWrapper.class)
+    - `requestEntityUtil.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsWrapper.class)
         .expectedResponseCode(HttpStatus.SC_OK)`
 
     
@@ -175,8 +182,11 @@ _ResponseWrapper_ fields: <br>
 
 ### Final example of HTTP request: 
 ```
+final RequestEntityUtil requestEntityUtil = RequestEntityUtilBuilder.useRandomUser()
+            .useTokenInRequests();
+            
 final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
+            requestEntityUtil.init(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
