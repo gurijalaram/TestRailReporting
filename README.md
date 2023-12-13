@@ -70,18 +70,18 @@
 
 ## Run Gradle tests with JVM args
 1. Open Terminal to project root directory
-2. Run `gradle clean :web:cidapp-ui:test --tests "{parentFolder.suiteName}"` eg `gradle clean :web:cidapp-ui:test --tests "testsuites.SmokeTestSuite"`
-3. To pass in JVM args `gradle clean :web:cidapp-ui:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :web:cidapp-ui:test --tests "testsuites.SmokeTestSuite"
+2. Run `gradle clean :web:cid-ui:test --tests "{parentFolder.suiteName}"` eg `gradle clean :web:cid-ui:test --tests "testsuites.SmokeTestSuite"`
+3. To pass in JVM args `gradle clean :web:cid-ui:test --tests {modulename}:test --test "{parentFolder.nameOfTest}" -Darg=someArg` eg. `gradle clean :web:cid-ui:test --tests "testsuites.CIDSmokeTestSuite"
    -D"junit.jupiter.execution.parallel.config.fixed.max-pool-size"=3 -D"junit.jupiter.execution.parallel.config.fixed.parallelism"=4 -Denv=qa-test -Dcsv="common-users.csv"`
 **Note:** I'd advise setting `max-pool-size` and `parallelism` to the same value to avoid junit errors
 
 ## How to run single suite
 1. Open Terminal to project root directory
-2. Run `gradle clean :web:cidapp-ui:test --tests "{fully qualified packagename.nameOfClass.nameOfTest}"` eg `gradle clean :web:cidapp-ui:test --tests "evaluate.designguidance.failures.failedCostingCount"`
+2. Run `gradle clean :web:cid-ui:test --tests "{fully qualified packagename.nameOfClass.nameOfTest}"` eg `gradle clean :web:cid-ui:test --tests "evaluate.designguidance.failures.failedCostingCount"`
 
 ## How to run multiple suites
 1. Open Terminal to project root directory
-Run `gradle clean :web:cidapp-ui:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :web:cidapp-ui:test --tests "testsuites.SanityTestSuite" --tests "testsuites.SmokeTestSuite"`
+Run `gradle clean :web:cid-ui:test --tests "{parentFolder.suiteName}" --tests "{parentFolder.suiteName}"` eg `gradle clean :web:cid-ui:test --tests "testsuites.SanityTestSuite" --tests "testsuites.CIDSmokeTestSuite"`
 
 ## Build Gradle jar files
 1. Download and install Gradle 6.1.1 (this is the version that was first used on the project)
