@@ -18,6 +18,7 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -90,7 +91,7 @@ public class TolerancePolicyDefaultsTests extends TestUtil {
     }
 
     private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
-        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(400)));
+        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
         assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
     }
 }

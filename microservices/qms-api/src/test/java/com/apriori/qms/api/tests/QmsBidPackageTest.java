@@ -354,7 +354,7 @@ public class QmsBidPackageTest extends TestUtil {
         ResponseWrapper<ApwErrorMessage> getBidPackagesResponse = HTTPRequest.build(requestEntity).get();
         softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getMessage())
             .contains(String.format("Can't find bidPackage with identity '%s' for customerIdentity", bidPackageResponse.getIdentity()));
-        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getStatus()).isEqualTo(404);
+        softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getStatus()).isEqualTo(HttpStatus.SC_NOT_FOUND);
         softAssertions.assertThat(getBidPackagesResponse.getResponseEntity().getError()).isEqualTo("Not Found");
     }
 

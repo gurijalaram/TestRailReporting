@@ -12,6 +12,7 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -38,7 +39,7 @@ public class ArtifactTableInfoTests extends TestUtil {
         AcsResources acsResources = new AcsResources();
         GenericErrorResponse genericErrorResponse = acsResources.getArtifactTableInfoInvalidProcessGroup();
 
-        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(404)));
+        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
         assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("Unknown process group: Sheet Metals")));
     }
 }
