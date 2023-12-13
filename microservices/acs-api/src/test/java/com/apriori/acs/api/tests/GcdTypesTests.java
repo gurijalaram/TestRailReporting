@@ -24,6 +24,7 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -345,7 +346,7 @@ public class GcdTypesTests {
         GenericErrorResponse errorResponse = acsResources.getGcdTypes(
             ProcessGroupEnum.INVALID_PG.getProcessGroup(), GenericErrorResponse.class).getResponseEntity();
 
-        softAssertions.assertThat(errorResponse.getErrorCode()).isEqualTo(404);
+        softAssertions.assertThat(errorResponse.getErrorCode()).isEqualTo(HttpStatus.SC_NOT_FOUND);
         softAssertions.assertThat(errorResponse.getErrorMessage()).isEqualTo("Unknown process group: " + ProcessGroupEnum.INVALID_PG.getProcessGroup());
         softAssertions.assertAll();
     }
