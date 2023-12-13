@@ -14,6 +14,7 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.component.PostComponentResponse;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.web.app.util.PageUtils;
@@ -310,8 +311,9 @@ public class ExploreToolbar extends MainNavBar {
      * @param componentInfo - the component info builder
      * @return response object
      */
-    public List<ComponentInfoBuilder> uploadMultiComponentsCID(List<ComponentInfoBuilder> componentInfo) {
-        return new ComponentsUtil().postCadUploadComponentSuccess(componentInfo);
+    public PostComponentResponse uploadMultiComponentsCID(List<ComponentInfoBuilder> componentInfo) {
+        ComponentsUtil componentsUtil = new ComponentsUtil();
+        return componentsUtil.postComponentsResponse(componentInfo, componentsUtil.postCadFiles(componentInfo));
     }
 
     /**
