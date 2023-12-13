@@ -51,6 +51,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
+// TODO: 13/12/2023 cn - almost all these tests are selecting a material. do we really need to? need to revise this.
+
 public class ActionsTests extends TestBaseUI {
 
     private UserCredentials currentUser;
