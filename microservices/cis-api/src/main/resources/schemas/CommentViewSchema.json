@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "participantIdentity": {
+      "type": "string"
+    },
+    "userCustomerIdentity": {
+      "type": "string"
+    },
+    "userIdentity": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "participantIdentity",
+    "userCustomerIdentity",
+    "userIdentity"
+  ]
+}
