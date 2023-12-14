@@ -37,7 +37,7 @@ public class DFMRiskTests extends TestBaseUI {
     private File resourceFile;
     private File cadResourceFile;
     private SoftAssertions softAssertions = new SoftAssertions();
-    private ComponentInfoBuilder componentInfoBuilder;
+    private ComponentInfoBuilder component;
 
     public DFMRiskTests() {
         super();
@@ -48,12 +48,12 @@ public class DFMRiskTests extends TestBaseUI {
     @Description("Validate DFM Risk - High for Stock Machining")
     public void stockMachiningHighDFM() {
 
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("gs515625_gt077_high");
+        component = new ComponentRequestUtil().getComponent("gs515625_gt077_high");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
@@ -70,12 +70,12 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6454})
     @Description("Validate DFM Risk - Medium for Stock Machining")
     public void stockMachiningMediumDFM() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("9856874Medium");
+        component = new ComponentRequestUtil().getComponent("9856874Medium");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
@@ -92,12 +92,12 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6456})
     @Description("Validate DFM Risk - Critical for Sheet Metal")
     public void sheetMetalCriticalDFM() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("1271576_CRITICAL");
+        component = new ComponentRequestUtil().getComponent("1271576_CRITICAL");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
@@ -115,12 +115,12 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6457})
     @Description("Validate DFM Risk - High for Sheet Metal")
     public void sheetMetalHighDFM() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("3571050_cad");
+        component = new ComponentRequestUtil().getComponent("3571050_cad");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
@@ -134,12 +134,12 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6462, 6415, 6416})
     @Description("Validate DFM Risk - Medium Plastic Moulding")
     public void plasticMouldedMediumDFM() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("PlasticMoulded-Special Tooling Sliders Lifters");
+        component = new ComponentRequestUtil().getComponent("PlasticMoulded-Special Tooling Sliders Lifters");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
@@ -163,12 +163,12 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6484, 6485})
     @Description("Validate when switch PG from a group with dfm risk to a group without that the risk is removed")
     public void noRiskTransferDie() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("bracket_basic");
+        component = new ComponentRequestUtil().getComponent("bracket_basic");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
@@ -190,12 +190,12 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6470})
     @Description("Validate DFM Risk - Medium Sand Casting")
     public void sandCastingMediumDFM() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("SandCast");
+        component = new ComponentRequestUtil().getComponent("SandCast");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
@@ -208,13 +208,13 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6472, 6824, 6473})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("1379344");
-        cadResourceFile = FileResourceUtil.getCloudCadFile(componentInfoBuilder.getProcessGroup(), componentInfoBuilder.getComponentName() + componentInfoBuilder.getExtension());
+        component = new ComponentRequestUtil().getComponent("1379344");
+        cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
@@ -249,13 +249,13 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6480, 6481})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("DTCPlasticIssues");
-        cadResourceFile = FileResourceUtil.getCloudCadFile(componentInfoBuilder.getProcessGroup(), componentInfoBuilder.getComponentName() + componentInfoBuilder.getExtension());
+        component = new ComponentRequestUtil().getComponent("DTCPlasticIssues");
+        cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
@@ -288,13 +288,13 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6474, 6475})
     @Description("Validate DFM Risk can be REDUCED for SHEET METAL")
     public void dfmReducedSheetMetal() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("bracketdfm");
-        cadResourceFile = FileResourceUtil.getCloudCadFile(componentInfoBuilder.getProcessGroup(), componentInfoBuilder.getComponentName() + componentInfoBuilder.getExtension());
+        component = new ComponentRequestUtil().getComponent("bracketdfm");
+        cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
@@ -327,13 +327,13 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6476, 5439, 6477})
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("manifold2");
-        cadResourceFile = FileResourceUtil.getCloudCadFile(componentInfoBuilder.getProcessGroup(), componentInfoBuilder.getComponentName() + componentInfoBuilder.getExtension());
+        component = new ComponentRequestUtil().getComponent("manifold2");
+        cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
@@ -365,13 +365,13 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6478, 6479, 6471})
     @Description("Validate DFM Risk can be REDUCED for SAND CAST")
     public void dfmReducedSandCast() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("SandCastBox");
-        cadResourceFile = FileResourceUtil.getCloudCadFile(componentInfoBuilder.getProcessGroup(), componentInfoBuilder.getComponentName() + componentInfoBuilder.getExtension());
+        component = new ComponentRequestUtil().getComponent("SandCastBox");
+        cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
@@ -404,13 +404,13 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6830})
     @Description("CAD file association can be updated & subsequently reverted")
     public void revertCADUpdate() {
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("1379344");
-        cadResourceFile = FileResourceUtil.getCloudCadFile(componentInfoBuilder.getProcessGroup(), componentInfoBuilder.getComponentName() + componentInfoBuilder.getExtension());
+        component = new ComponentRequestUtil().getComponent("1379344");
+        cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario(5);
 
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).as("Initial Fully Burdened Cost").isCloseTo(Double.valueOf(756.32), Offset.offset(30.0));
@@ -438,13 +438,13 @@ public class DFMRiskTests extends TestBaseUI {
     public void updateCADCreoVersion() {
         final String creoVersionFile = "bar_test1.prt.2";
 
-        componentInfoBuilder = new ComponentRequestUtil().getComponent("bar_test1");
-        cadResourceFile = FileResourceUtil.getCloudCadFile(componentInfoBuilder.getProcessGroup(), creoVersionFile);
+        component = new ComponentRequestUtil().getComponent("bar_test1");
+        cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), creoVersionFile);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentInfoBuilder.getUser())
-            .uploadComponentAndOpen(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getResourceFile(), componentInfoBuilder.getUser())
-            .selectProcessGroup(componentInfoBuilder.getProcessGroup())
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario(5);
 
         evaluatePage.clickActions()
