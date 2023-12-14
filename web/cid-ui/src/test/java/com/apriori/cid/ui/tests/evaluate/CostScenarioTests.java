@@ -28,24 +28,23 @@ import java.io.File;
 
 public class CostScenarioTests extends TestBaseUI {
 
-    private File resourceFile;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private SoftAssertions softAssertions = new SoftAssertions();
-    private UserCredentials currentUser;
+    private ComponentInfoBuilder component;
 
     public CostScenarioTests() {
         super();
     }
 
     @Test
-    @Tags({
+    @Tags( {
         @Tag(SANITY)
     })
     @TestRail(id = {8891})
     @Description("Cost Scenario")
     public void testCostScenario() {
-        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -67,25 +66,20 @@ public class CostScenarioTests extends TestBaseUI {
     @TestRail(id = {})
     @Description("Validate component fields and cost scenario")
     public void testCostScenarioWithFieldsValidation() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "Casting";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser);
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED)).isEqualTo(true);
 
-        evaluatePage.selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("ANSI AL380")
-                .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
-                .submit(EvaluatePage.class)
-                .costScenario();
+        evaluatePage.selectProcessGroup(component.getProcessGroup())
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.VERIFIED)).isEqualTo((true));
