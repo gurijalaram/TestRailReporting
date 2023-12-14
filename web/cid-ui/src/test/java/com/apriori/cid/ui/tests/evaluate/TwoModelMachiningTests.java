@@ -14,6 +14,7 @@ import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.EvaluateDfmIconEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
@@ -44,6 +45,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
     private UserCredentials currentUser;
     private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder cidComponentItemB;
+    private ComponentInfoBuilder component;
     private GuidanceIssuesPage guidanceIssuesPage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -56,38 +58,32 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @Description("Validate Source and util tile appears when 2 MM is selected")
     @TestRail(id = {7861, 7862, 7863, 7864, 7870})
     public void testTwoModelMachining() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String sourcePartName = "casting_BEFORE_machining";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
-        String twoModelPartName = "casting_AFTER_machining";
-        twoModelFile = FileResourceUtil.getCloudFile(processGroupEnum, twoModelPartName + ".stp");
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getComponent("casting_AFTER_machining");
+        twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(sourcePartName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(sourcePart.getUser())
+            .uploadComponentAndOpen(sourcePart)
+            .selectProcessGroup(sourcePart.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING)
+            .uploadComponentAndOpen(twoModelPart)
+            .selectProcessGroup(twoModelPart.getProcessGroup())
             .selectSourcePart()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(sourcePartName)
-            .highlightScenario(sourcePartName, testScenarioName)
+            .clickSearch(sourcePart.getComponentName())
+            .highlightScenario(sourcePart.getComponentName(), sourcePart.getScenarioName())
             .submit(EvaluatePage.class)
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getSourceModelMaterial()).isEqualTo(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName());
-        softAssertions.assertThat(evaluatePage.isSourcePartDetailsDisplayed(testScenarioName)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePart.getScenarioName())).isEqualTo(true);
 
         softAssertions.assertAll();
 
@@ -109,21 +105,14 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @Description("Validate the User can open the source part in the evaluate tab")
     @TestRail(id = {6466, 7866, 12511})
     public void testOpenSourceModel() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-        final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
-
-        String sourcePartName = "VulcainCasting";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".CATPart");
-        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
-        String twoModelPartName = "VulcainMachined";
-        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
-        twoModelFile = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModelPartName + ".CATPart");
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("VulcainCasting");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getComponent("VulcainMachined");
+        twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(sourcePart)
+            .selectProcessGroup(sourcePart.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
@@ -134,18 +123,18 @@ public class TwoModelMachiningTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
         evaluatePage.clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(processGroupEnumTwoModel)
+            .uploadComponentAndOpen(twoModelPart)
+            .selectProcessGroup(twoModelPart.getProcessGroup())
             .selectSourcePart()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(sourcePartName)
-            .highlightScenario(sourcePartName, sourceScenarioName)
+            .clickSearch(sourcePart.getComponentName())
+            .highlightScenario(sourcePart.getComponentName(), sourcePart.getScenarioName())
             .submit(EvaluatePage.class)
             .costScenario(5)
-            .openSourceScenario(sourceScenarioName);
+            .openSourceScenario(sourcePart.getScenarioName());
 
-        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourcePart.getScenarioName())).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -155,25 +144,16 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @Description("Validate the user can have multi level 2 model parts (source has been 2 model machined)")
     @TestRail(id = {7865, 7869, 7872})
     public void multiLevel2Model() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
-        final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
-
-        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
-        String twoModel1ScenarioName = new GenerateStringUtil().generateScenarioName();
-        String twoModel2ScenarioName = new GenerateStringUtil().generateScenarioName();
-        String sourcePartName = "2modeltest-cast";
-        String twoModel1PartName = "2modeltest-machine1";
-        String twoModel2PartName = "2modeltest-machine2";
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".SLDPRT");
-        twoModelFile = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModel1PartName + ".SLDPRT");
-        twoModelFile2 = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModel2PartName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("2modeltest-cast");
+        ComponentInfoBuilder twoModel = new ComponentRequestUtil().getComponent("2modeltest-machine1");
+        twoModel.setUser(sourcePart.getUser());
+        ComponentInfoBuilder twoModel2 = new ComponentRequestUtil().getComponent("2modeltest-machine2");
+        twoModel2.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(sourcePart.getUser())
+            .uploadComponentAndOpen(sourcePart)
+            .selectProcessGroup(sourcePart.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
@@ -185,13 +165,13 @@ public class TwoModelMachiningTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getProcessesResult("Finish Mass")).isCloseTo(Double.valueOf(2.33), Offset.offset(5.0));
 
         evaluatePage.clickExplore()
-            .uploadComponentAndOpen(twoModel1PartName, twoModel1ScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(processGroupEnumTwoModel)
+            .uploadComponentAndOpen(twoModel)
+            .selectProcessGroup(twoModel.getProcessGroup())
             .selectSourcePart()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(sourcePartName)
-            .highlightScenario(sourcePartName, sourceScenarioName)
+            .clickSearch(sourcePart.getComponentName())
+            .highlightScenario(sourcePart.getComponentName(), sourcePart.getScenarioName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -200,13 +180,13 @@ public class TwoModelMachiningTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getProcessesResult("Finish Mass")).isCloseTo(Double.valueOf(1.93), Offset.offset(10.0));
 
         evaluatePage.clickExplore()
-            .uploadComponentAndOpen(twoModel2PartName, twoModel2ScenarioName, twoModelFile2, currentUser)
-            .selectProcessGroup(processGroupEnumTwoModel)
+            .uploadComponentAndOpen(twoModel2)
+            .selectProcessGroup(twoModel2.getProcessGroup())
             .selectSourcePart()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(twoModel1PartName)
-            .highlightScenario(twoModel1PartName, twoModel1ScenarioName)
+            .clickSearch(twoModel.getComponentName())
+            .highlightScenario(twoModel.getComponentName(), twoModel.getScenarioName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -265,25 +245,16 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @Description("Validate the user can switch the source part")
     @TestRail(id = {6467, 7873, 7874})
     public void switchSourcePart() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-        final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
-
-        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
-        String source2ScenarioName = new GenerateStringUtil().generateScenarioName();
-        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
-        String sourcePartName = "Die Casting Lower Control Arm (As Cast)";
-        String source2PartName = "Die Casting Lower Control Arm (Source1)";
-        String twoModelPartName = "Die Casting Lower Control Arm (As Machined2)";
-        currentUser = UserUtil.getUser();
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".SLDPRT");
-        twoModelFile = FileResourceUtil.getCloudFile(processGroupEnum, source2PartName + ".SLDPRT");
-        twoModelFile2 = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModelPartName + ".SLDPRT");
+        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("Die Casting Lower Control Arm (As Cast)");
+        ComponentInfoBuilder sourcePart2 = new ComponentRequestUtil().getComponent("Die Casting Lower Control Arm (Source1)");
+        sourcePart2.setUser(sourcePart.getUser());
+        ComponentInfoBuilder twoModel = new ComponentRequestUtil().getComponent("Die Casting Lower Control Arm (As Machined2)");
+        twoModel.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(sourcePart.getUser())
+            .uploadComponentAndOpen(sourcePart)
+            .selectProcessGroup(sourcePart.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
@@ -294,36 +265,36 @@ public class TwoModelMachiningTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
 
         evaluatePage.clickExplore()
-            .uploadComponentAndOpen(source2PartName, source2ScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(sourcePart2)
+            .selectProcessGroup(sourcePart2.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile2, currentUser)
-            .selectProcessGroup(processGroupEnumTwoModel)
+            .uploadComponentAndOpen(twoModel)
+            .selectProcessGroup(twoModel.getProcessGroup())
             .selectSourcePart()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(sourcePartName)
-            .highlightScenario(sourcePartName, sourceScenarioName)
+            .clickSearch(sourcePart.getComponentName())
+            .highlightScenario(sourcePart.getComponentName(), sourcePart.getScenarioName())
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourceScenarioName)).isTrue();
+        softAssertions.assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePart.getScenarioName())).isTrue();
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(12.31), Offset.offset(5.0));
 
         evaluatePage.selectSourcePart()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(source2PartName)
-            .highlightScenario(source2PartName, source2ScenarioName)
+            .clickSearch(sourcePart2.getComponentName())
+            .highlightScenario(sourcePart2.getComponentName(), sourcePart2.getScenarioName())
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isSourcePartDetailsDisplayed(source2ScenarioName)).isTrue();
+        softAssertions.assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePart2.getScenarioName())).isTrue();
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(8.17), Offset.offset(3.0));
 
         softAssertions.assertAll();
@@ -333,34 +304,28 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @Description("Validate the user cannot use two completely different CAD models")
     @TestRail(id = {7871, 6630})
     public void testTwoModelCorrectCADModels() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-        final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
-
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String sourcePartName = "casting_before_machining";
-        String wrongSourcePartName = "PowderMetalShaft";
-        String twoModelPartName = "casting_AFTER_machining";
-        currentUser = UserUtil.getUser();
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, wrongSourcePartName + ".stp");
-        twoModelFile = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModelPartName + ".stp");
+        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
+        ComponentInfoBuilder wrongSourcePart = new ComponentRequestUtil().getComponent("PowderMetalShaft");
+        wrongSourcePart.setUser(sourcePart.getUser());
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getComponent("casting_AFTER_machining");
+        twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(wrongSourcePartName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
+            .uploadComponentAndOpen(wrongSourcePart)
+            .selectProcessGroup(wrongSourcePart.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, testScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(processGroupEnumTwoModel)
+            .uploadComponentAndOpen(twoModelPart)
+            .selectProcessGroup(twoModelPart.getProcessGroup())
             .selectSourcePart()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(wrongSourcePartName)
-            .highlightScenario(wrongSourcePartName, testScenarioName)
+            .clickSearch(wrongSourcePart.getComponentName())
+            .highlightScenario(wrongSourcePart.getComponentName(), wrongSourcePart.getScenarioName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -378,54 +343,46 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @TestRail(id = {7878})
     @Description("Validate the select source button is not clickable in the public workspace")
     public void selectSourceButtonDisabledInPublicWorkspace() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-        final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
-
-        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
-        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
-        String sourcePartName = "Raw Casting";
-        String twoModelPartName = "Machined Casting";
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".prt");
-        twoModelFile = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModelPartName + ".prt");
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("Raw Casting");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getComponent("Machined Casting");
+        twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        explorePage = loginPage.login(sourcePart.getUser())
+            .uploadComponentAndOpen(sourcePart)
+            .selectProcessGroup(sourcePart.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(processGroupEnumTwoModel)
+            .uploadComponentAndOpen(twoModelPart)
+            .selectProcessGroup(twoModelPart.getProcessGroup())
             .selectSourcePart()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(sourcePartName)
-            .highlightScenario(sourcePartName, sourceScenarioName)
+            .clickSearch(sourcePart.getComponentName())
+            .highlightScenario(sourcePart.getComponentName(), sourcePart.getScenarioName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
-            .openScenario(sourcePartName, sourceScenarioName)
+            .openScenario(sourcePart.getComponentName(), sourcePart.getScenarioName())
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
             .clickExplore()
-            .openScenario(twoModelPartName, twoModelScenarioName)
+            .openScenario(twoModelPart.getComponentName(), twoModelPart.getScenarioName())
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
             .clickExplore()
             .selectFilter("Public");
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(sourcePartName, sourceScenarioName)).isEqualTo(1);
-        softAssertions.assertThat(explorePage.getListOfScenarios(twoModelPartName, twoModelScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(sourcePart.getComponentName(), sourcePart.getScenarioName())).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(twoModelPart.getComponentName(), twoModelPart.getScenarioName())).isEqualTo(1);
 
-        evaluatePage = explorePage.openScenario(twoModelPartName, twoModelScenarioName);
+        evaluatePage = explorePage.openScenario(twoModelPart.getComponentName(), twoModelPart.getScenarioName());
 
         softAssertions.assertThat(evaluatePage.isSelectSourceButtonEnabled()).isFalse();
 
@@ -436,42 +393,34 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @TestRail(id = {7877})
     @Description("Validate the status icon updates if the source component is updated")
     public void updateSourceModel() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-        final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
-
-        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
-        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
-        String sourcePartName = "Raw Casting";
-        String twoModelPartName = "Machined Casting";
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".prt");
-        twoModelFile = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModelPartName + ".prt");
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("Raw Casting");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getComponent("Machined Casting");
+        twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(sourcePart.getUser())
+            .uploadComponentAndOpen(sourcePart)
+            .selectProcessGroup(sourcePart.getProcessGroup())
             .costScenario()
             .clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(processGroupEnumTwoModel)
+            .uploadComponentAndOpen(twoModelPart)
+            .selectProcessGroup(twoModelPart.getProcessGroup())
             .selectSourcePart()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(sourcePartName)
-            .highlightScenario(sourcePartName, sourceScenarioName)
+            .clickSearch(sourcePart.getComponentName())
+            .highlightScenario(sourcePart.getComponentName(), sourcePart.getScenarioName())
             .submit(EvaluatePage.class)
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
         evaluatePage.clickExplore()
-            .openScenario(sourcePartName, sourceScenarioName)
+            .openScenario(sourcePart.getComponentName(), sourcePart.getScenarioName())
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
             .clickCostButton()
             .clickExplore()
-            .openScenario(twoModelPartName, twoModelScenarioName)
+            .openScenario(twoModelPart.getComponentName(), twoModelPart.getScenarioName())
             .closeMessagePanel();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_CHANGES)).isEqualTo(true);

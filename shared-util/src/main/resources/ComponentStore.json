@@ -251,6 +251,56 @@
       "processGroup": "TWO_MODEL_MACHINING"
     },
     {
+      "componentName": "VulcainCasting",
+      "extension": ".stp",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "VulcainMachined",
+      "extension": ".stp",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "Raw Casting",
+      "extension": ".prt",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "Machined Casting",
+      "extension": ".prt",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "2modeltest-cast",
+      "extension": ".SLDPRT",
+      "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "2modeltest-machine1",
+      "extension": ".SLDPRT",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "2modeltest-machine2",
+      "extension": ".SLDPRT",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "Die Casting Lower Control Arm (As Cast)",
+      "extension": ".SLDPRT",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "Die Casting Lower Control Arm (Source1)",
+      "extension": ".SLDPRT",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "Die Casting Lower Control Arm (As Machined2)",
+      "extension": ".SLDPRT",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
       "componentName": "testpart-4",
       "extension": ".prt",
       "processGroup": "ADDITIVE_MANUFACTURING"
