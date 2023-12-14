@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate.dtc;
 
-import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
@@ -12,12 +11,9 @@ import com.apriori.cid.ui.pageobjects.evaluate.designguidance.TolerancesPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.ToleranceEnum;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -27,18 +23,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class DTCMachiningTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private GuidanceIssuesPage guidanceIssuesPage;
-    private UserCredentials currentUser;
     private TolerancesPage tolerancesPage;
     private SoftAssertions softAssertions = new SoftAssertions();
-
-    private File resourceFile;
+    private ComponentInfoBuilder component;
 
     public DTCMachiningTests() {
         super();
@@ -46,8 +38,8 @@ public class DTCMachiningTests extends TestBaseUI {
 
     @AfterEach
     public void resetAllSettings() {
-        if (currentUser != null) {
-            new UserPreferencesUtil().resetSettings(currentUser);
+        if (component.getUser() != null) {
+            new UserPreferencesUtil().resetSettings(component.getUser());
         }
     }
 
@@ -55,17 +47,12 @@ public class DTCMachiningTests extends TestBaseUI {
     @TestRail(id = {7751})
     @Description("Testing DTC Machining Keyseat Mill")
     public void testDTCKeyseat() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
-
-        String componentName = "Machining-DTC_Issue_KeyseatMillAccessibility";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("Machining-DTC_Issue_KeyseatMillAccessibility");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        guidanceIssuesPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
@@ -81,17 +68,12 @@ public class DTCMachiningTests extends TestBaseUI {
     @TestRail(id = {6441})
     @Description("Testing DTC Machining Sharp Corner on a Curved Surface")
     public void testDTCCurvedSurface() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
-
-        String componentName = "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        guidanceIssuesPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
@@ -108,17 +90,12 @@ public class DTCMachiningTests extends TestBaseUI {
     @TestRail(id = {6439})
     @Description("Testing DTC Machining Sharp Corner - Planar Face - Contouring")
     public void testDTCSharpCorner() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
-
-        String componentName = "Machining-DTC_Issue_SharpCorner-PlanarFace";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("Machining-DTC_Issue_SharpCorner-PlanarFace");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        guidanceIssuesPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
@@ -135,17 +112,12 @@ public class DTCMachiningTests extends TestBaseUI {
     @TestRail(id = {6445})
     @Description("Testing DTC Machining Side Milling L/D Ratio")
     public void testDTCSideMilling() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
-
-        String componentName = "Deep hole";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent("Deep hole");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(STOCK_MACHINING)
+        guidanceIssuesPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
@@ -161,17 +133,12 @@ public class DTCMachiningTests extends TestBaseUI {
     @TestRail(id = {6444})
     @Description("Testing DTC Machining Missing Setups")
     public void testDTCMissingSetup() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
-
-        String componentName = "Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent("Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        guidanceIssuesPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
@@ -187,17 +154,12 @@ public class DTCMachiningTests extends TestBaseUI {
     @TestRail(id = {6442})
     @Description("Verify obstructed surfaces on planar faces")
     public void obstructedSurfacePlanarFace() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
-
-        String componentName = "Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent("Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        guidanceIssuesPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
@@ -249,17 +211,12 @@ public class DTCMachiningTests extends TestBaseUI {
     @TestRail(id = {6438})
     @Description("Verify Sharp corners on curved walls are highlighted")
     public void sharpCornerCurvedWall() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
-
-        String componentName = "1379344_BEFORE_DTC";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent("1379344_BEFORE_DTC");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        guidanceIssuesPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
@@ -311,21 +268,16 @@ public class DTCMachiningTests extends TestBaseUI {
     @TestRail(id = {6452})
     @Description("Verify tolerances which induce an additional operation are correctly respected in CI Design geometry tab")
     public void toleranceInducingTest() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("DTCCastingIssues");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");

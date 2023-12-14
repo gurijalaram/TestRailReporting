@@ -261,9 +261,39 @@
       "processGroup": "STOCK_MACHINING"
     },
     {
+      "componentName": "Machining-DTC_Issue_KeyseatMillAccessibility",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Machining-DTC_Issue_SharpCorner-PlanarFace",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "1379344_BEFORE_DTC",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "PMI_AllTolTypesCatia",
       "extension": ".CATPart",
       "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Deep Hole",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
     },
     {
       "componentName": "case_012_009-0020647_hinge_2",
