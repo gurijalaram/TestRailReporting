@@ -33,6 +33,8 @@ import com.apriori.cid.ui.utils.MassEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.TimeEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
@@ -40,8 +42,6 @@ import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.UnitsEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -62,12 +62,11 @@ public class SettingsTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private DisplayPreferencesPage displayPreferencesPage;
     private EvaluatePage evaluatePage;
-    private ExplorePage explorePage;
     private ProductionDefaultsPage productionDefaultPage;
     private AssemblyDefaultsPage assemblyDefaultsPage;
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
-    private ComponentInfoBuilder cidComponentItem;
+    private ComponentInfoBuilder component;
     private AdvancedPage advancedPage;
     private ImportCadFilePage importCadFilePage;
     private UpdateCadFilePage updateCadFilePage;
@@ -80,6 +79,9 @@ public class SettingsTests extends TestBaseUI {
     public void resetAllSettings() {
         if (currentUser != null) {
             new UserPreferencesUtil().resetSettings(currentUser);
+        }
+        if (component != null) {
+            new UserPreferencesUtil().resetSettings(component.getUser());
         }
     }
 
@@ -121,22 +123,16 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {6281, 5442})
     @Description("User can change the default Process group")
     public void defaultPG() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING);
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .goToProductionTab()
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING)
+            .selectProcessGroup(component.getProcessGroup())
             .submit(ExplorePage.class)
-            .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
-
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+            .uploadComponentAndOpen(component)
+            .navigateToScenario(component)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
@@ -146,21 +142,16 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {6282})
     @Description("User can change the default VPE")
     public void defaultVPE() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "partbody_2";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .goToProductionTab()
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_MEXICO)
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory()));
@@ -171,22 +162,17 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {6285, 6286, 5429})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "partbody_2";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .goToProductionTab()
             .inputAnnualVolume("9524")
             .inputYears("7")
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getAnnualVolume()).isEqualTo("9524");
@@ -200,22 +186,18 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {6287, 6288})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentName = "Push Pin";
         final String batchSize = "46";
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        advancedPage = loginPage.login(currentUser)
+        advancedPage = loginPage.login(component.getUser())
             .openSettings()
             .goToProductionTab()
             .inputBatchSize(batchSize)
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .goToAdvancedTab();
 
@@ -449,23 +431,17 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {6277, 6291})
     @Description("Successfully change the Currency")
     public void changeCurrency() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .selectUnits(UnitsEnum.CUSTOM)
             .selectCurrency(CurrencyEnum.EUR)
             .selectMass(MassEnum.GRAM)
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1020")
@@ -525,28 +501,21 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {6368})
     @Description("Validate when a user changes their unit settings comparison values update")
     public void customUnitsDisplayedInComparison() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "M3CapScrew";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String componentName2 = "Push Pin";
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
-        comparePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
+        comparePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
-            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
+            .uploadComponentAndOpen(component2)
+            .selectProcessGroup(component2.getProcessGroup())
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), component2.getComponentName() + ", " + component2.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .openSettings()
@@ -556,9 +525,9 @@ public class SettingsTests extends TestBaseUI {
             .selectDecimalPlaces(DecimalPlaceEnum.FIVE)
             .submit(ComparePage.class);
 
-        softAssertions.assertThat(comparePage.getOutput(componentName, scenarioName, ComparisonCardEnum.MATERIAL_FINISH_MASS)).isEqualTo("0.20809g");
-        softAssertions.assertThat(comparePage.getOutput(componentName, scenarioName, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("0.60952min");
-        softAssertions.assertThat(comparePage.getOutput(componentName, scenarioName, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$10,918.70913");
+        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.MATERIAL_FINISH_MASS)).isEqualTo("0.20809g");
+        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("0.60952min");
+        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$10,918.70913");
 
         softAssertions.assertAll();
     }
@@ -567,21 +536,16 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {6360, 6361, 6367})
     @Description("Validate when a user uploads and costs a component their customer choice is shown")
     public void customUnitsAreDisplayedCorrectly() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1020")
-            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -657,20 +621,16 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {17154, 17155, 17156, 17157, 21547, 21548})
     @Description("Assembly Strategy stuff")
     public void testAssemblyStrategyDropdown() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-
         String preferPublic = "Prefer Public Scenarios";
         String preferPrivate = "Prefer Private Scenarios";
         String preferMaturityAndStatus = "Prefer High Maturity and Complete Status";
         String componentName = "Hinge assembly";
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDASM");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder assembly = new AssemblyRequestUtil().getAssembly();
 
         loginPage = new CidAppLoginPage(driver);
-        assemblyDefaultsPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        assemblyDefaultsPage = loginPage.login(assembly.getUser())
+            .uploadComponentAndOpen(assembly)
             .openSettings()
             .goToAssemblyDefaultsTab();
 
