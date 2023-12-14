@@ -42,10 +42,7 @@ public class SecondaryProcessTests extends TestBaseUI {
     private AdvancedPage advancedPage;
     private MaterialProcessPage materialProcessPage;
 
-    private File resourceFile;
-    private UserCredentials currentUser;
     private SecondaryProcessesPage secondaryProcessPage;
-    private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
     private ComponentInfoBuilder component;
 
@@ -455,7 +452,7 @@ public class SecondaryProcessTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Passivation / Carton Forming / Pack & Load");
 
         evaluatePage.publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()

@@ -16,6 +16,11 @@
       "processGroup": "POWDER_METAL"
     },
     {
+      "componentName": "case_31_test_part_6_small",
+      "extension": ".prt.2",
+      "processGroup": "POWDER_METAL"
+    },
+    {
       "componentName": "Push Pin",
       "extension": ".stp",
       "processGroup": "PLASTIC_MOLDING"
@@ -26,8 +31,63 @@
       "processGroup": "STOCK_MACHINING"
     },
     {
+      "componentName": "case_007_SpaceX_00088481-001_C",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "case_066_SpaceX_00128711-001_A",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "14100640",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "225_gasket-1-solid1",
       "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "42x1021_ref",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "prt0001",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "7021021-2_rib",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "ms16555-627_1",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "16-340053-00-04",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "case_002_00400016-003M10_A",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "case_005_flat end mill contouring",
+      "extension": ".SLDPRT",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Case_001_-_Rockwell_2075-0243G",
+      "extension": ".stp",
       "processGroup": "STOCK_MACHINING"
     },
     {
@@ -43,6 +103,11 @@
     {
       "componentName": "BasicScenario_Forging",
       "extension": ".stp",
+      "processGroup": "FORGING"
+    },
+    {
+      "componentName": "case_001_006-8613190_2",
+      "extension": ".prt.2",
       "processGroup": "FORGING"
     },
     {
@@ -156,6 +221,11 @@
       "processGroup": "SHEET_METAL"
     },
     {
+      "componentName": "case_011_CENA-009-A1-LH-Rear-Body-Mount",
+      "extension": ".prt",
+      "processGroup": "SHEET_METAL"
+    },
+    {
       "componentName": "gs515625_gt077_high",
       "extension": ".prt.2",
       "processGroup": "STOCK_MACHINING"
@@ -238,6 +308,16 @@
     {
       "componentName": "B&T-LOW-001",
       "extension": ".SLDPRT",
+      "processGroup": "BAR_TUBE_FAB"
+    },
+    {
+      "componentName": "GagePart_Case_011_gundrillgagepart-01",
+      "extension": ".prt.1",
+      "processGroup": "BAR_TUBE_FAB"
+    },
+    {
+      "componentName": "350611",
+      "extension": ".prt.1",
       "processGroup": "BAR_TUBE_FAB"
     },
     {
@@ -349,6 +429,11 @@
       "componentName": "case_012_009-0020647_hinge_2",
       "extension": ".prt.1",
       "processGroup": "CASTING_INVESTMENT"
+    },
+    {
+      "componentName": "case_012_009-0020647_hinge_2",
+      "extension": ".prt.1",
+      "processGroup": "CASTING_DIE"
     },
     {
       "componentName": "700-33770-01_A0",
