@@ -41,11 +41,9 @@ public class TwoModelMachiningTests extends TestBaseUI {
 
     private File resourceFile;
     private File twoModelFile;
-    private File twoModelFile2;
     private UserCredentials currentUser;
     private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder cidComponentItemB;
-    private ComponentInfoBuilder component;
     private GuidanceIssuesPage guidanceIssuesPage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
