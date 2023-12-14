@@ -6,18 +6,16 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.GuidanceIssuesPage;
-import com.apriori.cid.ui.pageobjects.evaluate.designguidance.InvestigationPage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.TolerancesPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.EvaluateDfmIconEnum;
 import com.apriori.cid.ui.utils.ToleranceEnum;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -32,7 +30,7 @@ import java.io.File;
 
 public class DTCCastingTests extends TestBaseUI {
 
-    SoftAssertions softAssertions = new SoftAssertions();
+    private SoftAssertions softAssertions = new SoftAssertions();
     private CidAppLoginPage loginPage;
     private GuidanceIssuesPage guidanceIssuesPage;
     private EvaluatePage evaluatePage;
@@ -40,7 +38,7 @@ public class DTCCastingTests extends TestBaseUI {
     private UserCredentials currentUser;
     private TolerancesPage tolerancesPage;
     private File resourceFile;
-    private InvestigationPage investigationsPage;
+    private ComponentInfoBuilder component;
 
     public DTCCastingTests() {
         super();
@@ -59,17 +57,12 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6468, 6379, 6383, 6389, 6382, 6292})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
@@ -102,17 +95,12 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6375, 6379, 6384, 6386, 6388, 6390})
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        guidanceIssuesPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:6");
@@ -152,20 +140,15 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6379, 6384, 6388})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void gravityDieCasting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
+        guidanceIssuesPage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .uploadComponentAndOpen(component)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .costScenario()
             .goToAdvancedTab()
@@ -190,21 +173,16 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6377})
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
-        tolerancesPage = loginPage.login(currentUser)
+        tolerancesPage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab();
@@ -222,22 +200,17 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6385, 6393, 6394, 8333, 6469})
     @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
     public void sandCastingDTCIssues() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
-
-        String componentName = "SandCastIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
@@ -266,23 +239,18 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6488})
     @Description("Failures/warnings tab - Verify costing failures are highlighted within the Design Guidance details tile Warnings tab with useful error message")
     public void errorMessagesInDesignGuidanceTab() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
+        explorePage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class);
 
         guidanceIssuesPage = explorePage
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.CASTING_DIE)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .costScenario(4)
             .openDesignGuidance()
             .selectIssueType("Not Supported GCDs", "Detached Solid");
@@ -300,17 +268,12 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6387})
     @Description("MAX. thickness checks for Die casting-Al. 38.1mm MAX. for high pressure, 50.5mm MAX. for gravity die casting")
     public void maxThicknessForDieCasting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.CASTING_DIE)
+        guidanceIssuesPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
