@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdByName": {
+      "type": "string"
+    },
+    "updatedByName": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "discussionIdentity": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "publishedAt": {
+      "type": "string"
+    },
+    "commentView": {
+      "type": "array",
+      "items": [
+        {
+          "$ref": "CommentViewSchema.json"
+        }
+      ]
+    },
+    "mentionedUsers": {
+      "type": "array",
+      "items": {}
+    },
+    "creatorAvatarColor": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "createdAt",
+    "createdBy",
+    "createdByName",
+    "content",
+    "discussionIdentity",
+    "status",
+    "publishedAt",
+    "commentView",
+    "mentionedUsers",
+    "creatorAvatarColor",
+    "customerIdentity"
+  ],
+  "optional": [
+    "updatedByName"
+  ]
+}

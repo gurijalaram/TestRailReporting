@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "userIdentity": {
+      "type": "string"
+    },
+    "userCustomerIdentity": {
+      "type": "string"
+    },
+    "creatorAvatarColor": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "createdAt",
+    "createdBy",
+    "userIdentity",
+    "userCustomerIdentity",
+    "creatorAvatarColor"
+  ]
+}

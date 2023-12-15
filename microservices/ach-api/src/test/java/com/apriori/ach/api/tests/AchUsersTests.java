@@ -58,7 +58,7 @@ public class AchUsersTests extends AchTestUtil {
             .useCustomUser(new UserCredentials(NOT_ADMIN_USER, null))
             .useCustomTokenInRequests(getWidgetsUserToken(NOT_ADMIN_USER));
 
-        customerIdentity = PropertiesContext.get("widgets.ci-connect.customer_identity");
+        customerIdentity = PropertiesContext.get("${env}.widgets_customer_identity");
         Customer widgets = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity();
         String pattern = widgets.getEmailRegexPatterns().stream().findFirst().orElseThrow();
         domain = pattern.replace("\\S+@", "").replace(".com", "");
