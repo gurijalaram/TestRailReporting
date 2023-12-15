@@ -134,25 +134,6 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * Uploads a component through the API and opens it via url
      *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param resourceFile  - the file
-     * @return new page object
-     */
-    public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCID(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(userCredentials)
-                .build());
-        return navigateToScenario(component);
-    }
-
-    /**
-     * Uploads a component through the API and opens it via url
-     *
      * @param componentInfo - the component info builder
      * @return new page object
      */
