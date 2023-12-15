@@ -25,11 +25,9 @@ import java.io.File;
 
 public class MaterialStockTests extends TestBaseUI {
 
-    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private StockPage stockPage;
     private MaterialUtilizationPage materialUtilizationPage;
-    private File resourceFile;
     private SoftAssertions softAssertions = new SoftAssertions();
     private ComponentInfoBuilder component;
 
@@ -45,7 +43,7 @@ public class MaterialStockTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(POWDER_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        materialUtilizationPage = loginPage.login(currentUser)
+        materialUtilizationPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(APRIORI_USA)
@@ -125,7 +123,7 @@ public class MaterialStockTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(POWDER_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        stockPage = loginPage.login(currentUser)
+        stockPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(APRIORI_USA)
