@@ -61,7 +61,6 @@ public class ActionsTests extends TestBaseUI {
     private InfoPage infoPage;
     private PreviewPage previewPage;
     private AssignPage assignPage;
-    private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private ComponentInfoBuilder component;
@@ -772,7 +771,7 @@ public class ActionsTests extends TestBaseUI {
         ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent("Machined Box AMERICAS");
 
         loginPage = new CidAppLoginPage(driver);
-        updateCadFilePage = loginPage.login(currentUser)
+        updateCadFilePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .clickActions()
             .updateCadFile(componentB.getResourceFile());

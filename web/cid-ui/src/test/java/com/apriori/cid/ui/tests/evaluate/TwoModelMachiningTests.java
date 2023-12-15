@@ -108,7 +108,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
         twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(sourcePart.getUser())
             .uploadComponentAndOpen(sourcePart)
             .selectProcessGroup(sourcePart.getProcessGroup())
             .openMaterialSelectorTable()
@@ -309,7 +309,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
         twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(sourcePart.getUser())
             .uploadComponentAndOpen(wrongSourcePart)
             .selectProcessGroup(wrongSourcePart.getProcessGroup())
             .openMaterialSelectorTable()

@@ -35,10 +35,6 @@ public class PreviewPanelTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private PreviewPage previewPage;
-    private File resourceFile;
-    private File resourceFile2;
-    private File resourceFile3;
-    private File resourceFile4;
     private SoftAssertions softAssertions = new SoftAssertions();
     private ComponentInfoBuilder component;
 

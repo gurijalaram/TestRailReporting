@@ -63,12 +63,6 @@ public class ProcessRoutingTests extends TestBaseUI {
     private GuidanceIssuesPage guidanceIssuesPage;
     private AdvancedPage advancedPage;
     private ComponentInfoBuilder component;
-
-    private File resourceFile;
-    private File twoModelFile;
-    private File subComponentA;
-    private File subComponentB;
-    private File assembly;
     private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -1065,7 +1059,7 @@ public class ProcessRoutingTests extends TestBaseUI {
         ComponentInfoBuilder subComponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("piston_pin")).collect(Collectors.toList()).get(0);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(componentAssembly.getUser())
             .uploadComponentAndOpen(subComponentA)
             .selectProcessGroup(subComponentA.getProcessGroup())
             .costScenario();

@@ -57,8 +57,6 @@ import java.io.File;
 import java.util.List;
 
 public class SettingsTests extends TestBaseUI {
-    private File resourceFile;
-    private File resourceFile2;
     private CidAppLoginPage loginPage;
     private DisplayPreferencesPage displayPreferencesPage;
     private EvaluatePage evaluatePage;
@@ -539,7 +537,7 @@ public class SettingsTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(APRIORI_USA)

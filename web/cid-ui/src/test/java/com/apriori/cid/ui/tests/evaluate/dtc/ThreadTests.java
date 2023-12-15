@@ -387,7 +387,7 @@ public class ThreadTests extends TestBaseUI {
     @TestRail(id = {8904, 6358, 6359})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
-        component = new ComponentRequestUtil().getComponent("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(component.getUser())
@@ -419,7 +419,7 @@ public class ThreadTests extends TestBaseUI {
     @TestRail(id = {8905, 6299, 6362})
     @Description("Testing thread units persist when changed to centimetres")
     public void validateThreadUnitsCM() {
-        component = new ComponentRequestUtil().getComponent("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(component.getUser())
@@ -452,7 +452,7 @@ public class ThreadTests extends TestBaseUI {
     @TestRail(id = {8906})
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
-        component = new ComponentRequestUtil().getComponent("DTCCastingIssues", ProcessGroupEnum.STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(component.getUser())

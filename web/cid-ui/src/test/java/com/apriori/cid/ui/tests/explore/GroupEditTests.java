@@ -49,11 +49,13 @@ public class GroupEditTests extends TestBaseUI {
 
         ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
         ComponentInfoBuilder componentC = new ComponentRequestUtil().getComponent();
+        componentC.setUser(componentA.getUser());
 
         loginPage = new CidAppLoginPage(driver);
 
-        editComponentsPage = loginPage.login(currentUser)
+        editComponentsPage = loginPage.login(componentA.getUser())
             .uploadComponentAndOpen(componentA)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
@@ -104,9 +106,10 @@ public class GroupEditTests extends TestBaseUI {
     public void testGroupEditPublicAndPrivateScenario() {
         ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
+        explorePage = loginPage.login(componentA.getUser())
             .uploadComponentAndOpen(componentA)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
@@ -143,9 +146,10 @@ public class GroupEditTests extends TestBaseUI {
 
         ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
+        explorePage = loginPage.login(componentA.getUser())
             .uploadComponentAndOpen(componentA)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)

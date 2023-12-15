@@ -33,8 +33,6 @@ public class DFMRiskTests extends TestBaseUI {
     private EvaluatePage evaluatePage;
     private InvestigationPage investigationPage;
 
-    private UserCredentials currentUser;
-    private File resourceFile;
     private File cadResourceFile;
     private SoftAssertions softAssertions = new SoftAssertions();
     private ComponentInfoBuilder component;

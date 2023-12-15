@@ -35,9 +35,7 @@ public class DTCCastingTests extends TestBaseUI {
     private GuidanceIssuesPage guidanceIssuesPage;
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
-    private UserCredentials currentUser;
     private TolerancesPage tolerancesPage;
-    private File resourceFile;
     private ComponentInfoBuilder component;
 
     public DTCCastingTests() {
@@ -46,8 +44,8 @@ public class DTCCastingTests extends TestBaseUI {
 
     @AfterEach
     public void resetAllSettings() {
-        if (currentUser != null) {
-            new UserPreferencesUtil().resetSettings(currentUser);
+        if (component != null) {
+            new UserPreferencesUtil().resetSettings(component.getUser());
         }
     }
 

@@ -59,9 +59,10 @@ public class SustainabilityFieldsTests extends TestBaseUI {
     public void sustainabilityFieldsComparisonView() {
         ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        comparePage = loginPage.login(currentUser)
+        comparePage = loginPage.login(componentA.getUser())
             .uploadComponentAndOpen(componentA)
             .uploadComponentAndOpen(componentB)
             .clickExplore()

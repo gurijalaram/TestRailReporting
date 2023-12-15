@@ -384,11 +384,12 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = {11910})
     @Description("Upload different Creo versions of files")
     public void uploadDifferentCreoVersions() {
-        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent( "piston", "prt.5");
-        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent( "piston", "prt.6");
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponentWithExtenstion( "piston", "prt.5");
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentWithExtenstion( "piston", "prt.6");
+        componentB.setUser(componentA.getUser());
 
         evaluatePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(componentA.getUser())
             .uploadComponentAndOpen(componentA)
             .clickExplore()
             .importCadFile()

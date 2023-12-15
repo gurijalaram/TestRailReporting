@@ -187,7 +187,7 @@ public class DTCPlasticMouldingTests extends TestBaseUI {
     @TestRail(id = {6420, 6421, 6424, 6460})
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticMaxWallThickness() {
-        component = new ComponentRequestUtil().getComponent("DTCCastingIssues", ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(component.getUser())
@@ -275,7 +275,7 @@ public class DTCPlasticMouldingTests extends TestBaseUI {
     @TestRail(id = {6415, 6416, 6427})
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticSlideLift() {
-        component = new ComponentRequestUtil().getComponent("DTCCastingIssues", ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         investigationPage = loginPage.login(component.getUser())
@@ -301,7 +301,7 @@ public class DTCPlasticMouldingTests extends TestBaseUI {
     @TestRail(id = {6422})
     @Description("Max. wall thickness for Structural Foam Moulding")
     public void maxThicknessStructuralFoamMolding() {
-        component = new ComponentRequestUtil().getComponent("DTCCastingIssues", ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(component.getUser())

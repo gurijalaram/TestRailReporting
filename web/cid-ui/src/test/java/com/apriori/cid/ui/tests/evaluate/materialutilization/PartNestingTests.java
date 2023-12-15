@@ -29,11 +29,8 @@ public class PartNestingTests extends TestBaseUI {
     private EvaluatePage evaluatePage;
     private MaterialProcessPage materialProcessPage;
     private PartNestingPage partNestingPage;
-    private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
     private ComponentInfoBuilder component;
-
-    private File resourceFile;
 
     public PartNestingTests() {
         super();
@@ -47,7 +44,7 @@ public class PartNestingTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         partNestingPage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .costScenario()
@@ -69,7 +66,7 @@ public class PartNestingTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         evaluatePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .costScenario()
@@ -94,7 +91,7 @@ public class PartNestingTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         evaluatePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .costScenario()
@@ -115,7 +112,7 @@ public class PartNestingTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         evaluatePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .costScenario()
@@ -139,7 +136,7 @@ public class PartNestingTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         materialProcessPage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING)
             .costScenario()
