@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ComponentRequestUtil {
-    private ComponentInfoBuilder component;
     private static final String COMPONENT_STORE = "ComponentStore.json";
     private static final PartRequestManager COMPONENT_REQUEST = new PartRequestManager(COMPONENT_STORE);
+    private ComponentInfoBuilder component;
 
     /**
      * Gets a random component
@@ -62,7 +62,7 @@ public class ComponentRequestUtil {
      * Gets a component specified by name and extension
      *
      * @param componentName - the part name
-     * @param extension  - the extension
+     * @param extension     - the extension
      * @return component builder object
      */
     public ComponentInfoBuilder getComponentWithExtension(String componentName, String extension) {
