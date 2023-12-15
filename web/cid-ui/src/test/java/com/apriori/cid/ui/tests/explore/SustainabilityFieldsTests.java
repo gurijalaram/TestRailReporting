@@ -10,6 +10,8 @@ import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.DirectionEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -30,8 +32,6 @@ public class SustainabilityFieldsTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private final SoftAssertions softAssertions = new SoftAssertions();
-    private File resourceFile;
-    private File resourceFile2;
     private ComparePage comparePage;
 
     @Test
@@ -57,24 +57,17 @@ public class SustainabilityFieldsTests extends TestBaseUI {
     @TestRail(id = 24101)
     @Description("Verify sustainability fields In comparison view")
     public void sustainabilityFieldsComparisonView() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "M3CapScrew";
-        String componentName2 = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+            .uploadComponentAndOpen(componentA)
+            .uploadComponentAndOpen(componentB)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
             .createComparison()
             .selectManualComparison();
 
