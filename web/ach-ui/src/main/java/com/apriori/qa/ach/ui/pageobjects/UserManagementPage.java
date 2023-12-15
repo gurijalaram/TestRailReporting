@@ -48,14 +48,18 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
     private WebElement threeDotsOnSearchedRow;
     @FindBy(xpath = "//div[contains(.,'Edit')][@class = 'line-item-body']")
     private WebElement editButtonOnTheRow;
-
     @FindBy(xpath = "//h2[contains(.,'Edit User Details')]")
     private WebElement editUserPageHeader;
     @FindBy(xpath = "//div[contains(.,'User Management')][@class = 'apriori-source-list-title mr-2']")
     private WebElement userManagementHeader;
-
     @FindBy(xpath = "//div[contains(@data-header-id,'username')][contains(@role,'cell')]")
     private WebElement searchedUsernameResult;
+    @FindBy(xpath = "//div[contains(.,'Delete')][@class = 'line-item-body']")
+    private WebElement deleteButton;
+    @FindBy(xpath = "//button[contains(.,'Yes')]")
+    private WebElement yesButtonOnConfirmationScreen;
+    @FindBy(xpath = "//div[contains(.,'Inactive')][@aria-label = 'Inactive']")
+    private WebElement userIsInactive;
 
 
     private PageUtils pageUtils;
@@ -183,6 +187,28 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
         pageUtils.waitForElementAndClick(threeDotsOnSearchedRow);
         pageUtils.waitForElementAndClick(editButtonOnTheRow);
         return this;
+    }
+
+    /**
+     * click on three dots on user row
+     *
+     * @return this object
+     */
+    public UserManagementPage clickOnThreeDotsUserRowAndHitDelete() {
+        pageUtils.waitForElementAndClick(threeDotsOnSearchedRow);
+        pageUtils.waitForElementAndClick(deleteButton);
+        pageUtils.waitForElementAndClick(yesButtonOnConfirmationScreen);
+        return this;
+    }
+
+    /**
+     * check if the user is inactive
+     *
+     * @return boolean
+     */
+    public boolean isUserIsInactive() {
+        pageUtils.waitForElementAppear(userIsInactive);
+        return pageUtils.isElementDisplayed(userIsInactive);
     }
 
     /**

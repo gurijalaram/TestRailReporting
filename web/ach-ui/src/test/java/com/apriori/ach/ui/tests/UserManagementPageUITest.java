@@ -90,6 +90,37 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
     }
 
     @Test
+    @TestRail(id = {29299})
+    public void validateInactivateUser() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        String username = new GenerateStringUtil().generateUserName();
+        String email = new GenerateStringUtil().generateEmail();
+
+        aprioriLoginService = new LoginService(driver, "");
+        cloudHomePage = aprioriLoginService.login(userCredentials, CloudHomePage.class);
+
+        userManagementPage =
+            cloudHomePage.clickUserPanel()
+                .clickUserManagementButton()
+                .clickAdduser()
+                .clickDropDownAndChooseRole(Roles.APRIORI_ANALYST.getRole())
+                .clickNext()
+                .fillInAllRequiredInfo(username, email)
+                .clickFinishButton();
+
+        softAssertions.assertThat(userManagementPage.ifOnUserManagementPage()).isTrue();
+
+        userManagementPage.findUser(username);
+
+        softAssertions.assertThat(userManagementPage.getUsernameFromSearching()).isEqualTo(username);;
+
+        userManagementPage.clickOnThreeDotsUserRowAndHitDelete();
+
+        softAssertions.assertThat(userManagementPage.isUserIsInactive()).isTrue();
+        softAssertions.assertAll();
+    }
+
+    @Test
     @TestRail(id = {28930})
     public void validateEditUserWindow() {
         SoftAssertions softAssertions = new SoftAssertions();
