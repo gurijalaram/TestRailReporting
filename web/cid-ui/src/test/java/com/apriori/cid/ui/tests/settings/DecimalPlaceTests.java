@@ -14,12 +14,10 @@ import com.apriori.cid.ui.pageobjects.explore.PreviewPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.DecimalPlaceEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -30,21 +28,16 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-
 public class DecimalPlaceTests extends TestBaseUI {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
-    File resourceFile;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private UserCredentials currentUser;
     private MaterialProcessPage materialProcessPage;
     private CostDetailsPage costDetailsPage;
     private PreviewPage previewPage;
-    private ExplorePage explorePage;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private ComponentInfoBuilder component;
+    private ComponentInfoBuilder componentAssembly;
 
     public DecimalPlaceTests() {
         super();
@@ -52,8 +45,11 @@ public class DecimalPlaceTests extends TestBaseUI {
 
     @AfterEach
     public void resetAllSettings() {
-        if (currentUser != null) {
-            new UserPreferencesUtil().resetSettings(currentUser);
+        if (component != null) {
+            new UserPreferencesUtil().resetSettings(component.getUser());
+        }
+        if (componentAssembly != null) {
+            new UserPreferencesUtil().resetSettings(componentAssembly.getUser());
         }
     }
 
@@ -62,20 +58,15 @@ public class DecimalPlaceTests extends TestBaseUI {
     @TestRail(id = {5287, 5288, 5291, 5297, 5290, 5295, 6633})
     @Description("User can change the default Displayed Decimal Places")
     public void changeDecimalPlaceDefaults() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .selectDecimalPlaces(DecimalPlaceEnum.SIX)
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1020")
@@ -235,20 +226,15 @@ public class DecimalPlaceTests extends TestBaseUI {
     @TestRail(id = {5293})
     @Description("Ensure number of decimal places is respected in Preview Panel")
     public void decimalPlacesInPreviewPanel() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        previewPage = loginPage.login(currentUser)
+        previewPage = loginPage.login(component.getUser())
             .openSettings()
             .selectDecimalPlaces(DecimalPlaceEnum.SIX)
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1020")
@@ -256,7 +242,7 @@ public class DecimalPlaceTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
-            .highlightScenario(componentName, scenarioName)
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .openPreviewPanel();
 
         softAssertions.assertThat(previewPage.getMaterialResultText("Piece Part Cost").split("\\.")[1].length())
@@ -273,39 +259,21 @@ public class DecimalPlaceTests extends TestBaseUI {
     @TestRail(id = {5294})
     @Description("Ensure number of decimal places is respected in Assemblies")
     public void decimalPlacesForAssembly() {
-        final String assemblyName = "flange c";
-        final String assemblyExtension = ".CATProduct";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("flange", "nut", "bolt");
-        final String subComponentExtension = ".CATPart";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            assemblyProcessGroup,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
+        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
             CostingTemplate.builder()
-                .processGroupName(subComponentProcessGroup.getProcessGroup())
+                .processGroupName(ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup())
                 .build()));
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(componentAssembly.getUser())
             .openSettings()
             .selectDecimalPlaces(DecimalPlaceEnum.SIX)
             .submit(ExplorePage.class)
-            .openScenario(assemblyName, scenarioName);
+            .openScenario(component.getComponentName(), component.getScenarioName());
 
         softAssertions.assertThat(evaluatePage.getCostResultsText("Assembly Process Cost").split("\\.")[1].length())
             .as("Verify Assembly Process Cost displayed to 6 decimal places").isEqualTo(6);
@@ -313,13 +281,10 @@ public class DecimalPlaceTests extends TestBaseUI {
             .as("Verify Total Cost displayed to 6 decimal places").isEqualTo(6);
         softAssertions.assertThat(evaluatePage.getCostResultsText("Total Investments").split("\\.")[1].length())
             .as("Verify Total Investments displayed to 6 decimal places").isEqualTo(6);
-        ;
         softAssertions.assertThat(evaluatePage.getMaterialResultText("Finish Mass").split("\\.")[1].length())
             .as("Verify Finish Mass displayed to 6 decimal places").isEqualTo(6);
-        ;
         softAssertions.assertThat(evaluatePage.getMaterialResultText("Assembly Time").split("\\.")[1].length())
             .as("Verify Assembly Time displayed to 6 decimal places").isEqualTo(6);
-        ;
 
         softAssertions.assertAll();
     }
