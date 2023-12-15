@@ -206,7 +206,7 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
      *
      * @return boolean
      */
-    public boolean isUserIsInactive() {
+    public boolean isUserInactive() {
         pageUtils.waitForElementAppear(userIsInactive);
         return pageUtils.isElementDisplayed(userIsInactive);
     }
