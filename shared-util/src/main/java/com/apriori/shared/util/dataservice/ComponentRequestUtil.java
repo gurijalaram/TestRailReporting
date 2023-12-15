@@ -59,6 +59,28 @@ public class ComponentRequestUtil {
     }
 
     /**
+     * Gets a component specified by name
+     *
+     * @param componentName - the part name
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getComponentAndProcessGroup(String componentName, ProcessGroupEnum processGroup) {
+
+        component = COMPONENT_REQUEST.getComponents()
+            .stream()
+            .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
+            .filter(o -> o.getProcessGroup().equals(processGroup))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
+
+        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setUser(UserUtil.getUser());
+
+        return component;
+    }
+
+    /**
      * Gets a number of components
      *
      * @param noOfComponents - the number of components
