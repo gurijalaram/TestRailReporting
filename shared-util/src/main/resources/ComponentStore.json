@@ -31,6 +31,11 @@
       "processGroup": "SHEET_METAL"
     },
     {
+      "componentName": "Bishop",
+      "extension": ".SLDPRT",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
       "componentName": "PowderMetalShaft",
       "extension": ".stp",
       "processGroup": "POWDER_METAL"
