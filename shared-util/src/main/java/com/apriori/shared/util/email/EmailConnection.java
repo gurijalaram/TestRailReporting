@@ -2,8 +2,7 @@ package com.apriori.shared.util.email;
 
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.EncryptionUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
+import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
@@ -12,7 +11,6 @@ import com.apriori.shared.util.models.response.EmailTokenResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
-import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -20,6 +18,7 @@ import java.util.HashMap;
 public class EmailConnection {
 
     private static String emailAccessToken;
+    private static final String EMAIL_SECRET_AWS_PARAMETER = "/qaautomation/emailAuthSecretKey";
 
     /**
      * Connects to test email server box using Microsoft Graph Client API and returns access token
@@ -51,12 +50,13 @@ public class EmailConnection {
      * Retrieve credentials and host url for the email account.
      */
     private static Credentials getCredentials() {
-        String key = "lygtvxdsesdfhind";
-        InputStream credentialFile = FileResourceUtil.getResourceFileStream("emailAuthInfo");
-
+        String secretKeyInfo;
         try {
-            String content = EncryptionUtil.decryptFile(key, credentialFile);
-            return JsonManager.deserializeJsonFromString(content, Credentials.class);
+            secretKeyInfo = AwsParameterStoreUtil.getSystemParameter(EMAIL_SECRET_AWS_PARAMETER);
+            if (secretKeyInfo.isEmpty()) {
+                throw new RuntimeException(EMAIL_SECRET_AWS_PARAMETER + " Not found in AWS Parameter store");
+            }
+            return JsonManager.deserializeJsonFromString(secretKeyInfo, Credentials.class);
         } catch (Exception ex) {
             log.error(ex.getMessage());
         }
