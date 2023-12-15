@@ -9,13 +9,11 @@ import com.apriori.cid.ui.pageobjects.evaluate.designguidance.GuidanceIssuesPage
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.InvestigationPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
-import com.apriori.cid.ui.pageobjects.settings.ToleranceDefaultsPage;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -31,15 +29,13 @@ import java.io.File;
 
 public class SheetMetalDTCTests extends TestBaseUI {
 
-    SoftAssertions softAssertions = new SoftAssertions();
+    private SoftAssertions softAssertions = new SoftAssertions();
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private GuidanceIssuesPage guidanceIssuesPage;
-    private ToleranceDefaultsPage toleranceDefaultsPage;
     private ExplorePage explorePage;
     private InvestigationPage investigationPage;
-    private UserCredentials currentUser;
-    private File resourceFile;
+    private ComponentInfoBuilder component;
 
     public SheetMetalDTCTests() {
         super();
@@ -47,8 +43,8 @@ public class SheetMetalDTCTests extends TestBaseUI {
 
     @AfterEach
     public void resetAllSettings() {
-        if (currentUser != null) {
-            new UserPreferencesUtil().resetSettings(currentUser);
+        if (component != null) {
+            new UserPreferencesUtil().resetSettings(component.getUser());
         }
     }
 
@@ -56,24 +52,18 @@ public class SheetMetalDTCTests extends TestBaseUI {
     @TestRail(id = {6496, 6499, 6500})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "SheMetDTC";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-
-        guidanceIssuesPage = loginPage.login(currentUser)
+        guidanceIssuesPage = loginPage.login(component.getUser())
             /*.openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         guidanceIssuesPage = settingsPage.save(ExplorePage.class)*/
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
@@ -111,17 +101,12 @@ public class SheetMetalDTCTests extends TestBaseUI {
     @TestRail(id = {6497, 6498})
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "SheetMetalTray";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("SheetMetalTray");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        guidanceIssuesPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
@@ -144,17 +129,12 @@ public class SheetMetalDTCTests extends TestBaseUI {
     @TestRail(id = {6495, 6501})
     @Description("Verify Bend Issues Are Highlighted")
     public void sheetMetalBends() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "extremebends";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("extremebends");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        guidanceIssuesPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
@@ -183,21 +163,16 @@ public class SheetMetalDTCTests extends TestBaseUI {
     @TestRail(id = {6486})
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "extremebends";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("extremebends");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
@@ -216,24 +191,18 @@ public class SheetMetalDTCTests extends TestBaseUI {
     @TestRail(id = {6491, 6492, 6493, 6494})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCInvestigation() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "SheMetDTC";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("SheMetDTC");
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
+        explorePage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class);
 
         investigationPage = explorePage
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.SHEET_METAL)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
@@ -261,23 +230,18 @@ public class SheetMetalDTCTests extends TestBaseUI {
     @TestRail(id = {6502})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic_matPMI";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("bracket_basic_matPMI");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
+        guidanceIssuesPage = loginPage.login(component.getUser())
             /*.openSettings()
             .openTolerancesTab()
             .selectUseCADModel();
 
         settingsPage = new SettingsPage(driver);
         guidanceIssuesPage = settingsPage.save(ExplorePage.class)*/
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1020")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())

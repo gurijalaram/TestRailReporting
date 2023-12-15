@@ -11,6 +11,26 @@
       "processGroup": "SHEET_METAL"
     },
     {
+      "componentName": "extremebends",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "bracket_basic_matPMI",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "SheetMetalTray",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "SheMetDTC",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
       "componentName": "PowderMetalShaft",
       "extension": ".stp",
       "processGroup": "POWDER_METAL"
