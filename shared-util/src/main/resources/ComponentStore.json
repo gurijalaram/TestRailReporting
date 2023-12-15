@@ -221,6 +221,11 @@
       "processGroup": "CASTING_DIE"
     },
     {
+      "componentName": "DTCCastingIssues",
+      "extension": ".catpart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
       "componentName": "SandCastIssues",
       "extension": ".SLDPRT",
       "processGroup": "CASTING_SAND"
