@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate;
 
-import static com.apriori.shared.util.enums.ProcessGroupEnum.ASSEMBLY;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.SHEET_METAL;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
@@ -24,8 +23,8 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.DecimalPlaceEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
-import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
@@ -49,8 +48,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProcessRoutingTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
@@ -64,7 +62,6 @@ public class ProcessRoutingTests extends TestBaseUI {
     private MaterialSelectorPage materialSelectorPage;
     private GuidanceIssuesPage guidanceIssuesPage;
     private AdvancedPage advancedPage;
-    private CssComponent cssComponent = new CssComponent();
     private ComponentInfoBuilder component;
 
     private File resourceFile;
@@ -524,33 +521,27 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14984, 15798})
     @Description("Validate routings 2-Model Machining")
     public void routings2mm() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String sourcePartName = "casting_BEFORE_machining";
-        String twoModelPartName = "casting_AFTER_machining";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".stp");
-        twoModelFile = FileResourceUtil.getCloudFile(processGroupEnum, twoModelPartName + ".stp");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getComponent("casting_AFTER_machining");
+        twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(sourcePartName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(sourcePart.getUser())
+            .uploadComponentAndOpen(sourcePart)
+            .selectProcessGroup(sourcePart.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING)
+            .uploadComponentAndOpen(twoModelPart)
+            .selectProcessGroup(twoModelPart.getProcessGroup())
             .selectSourcePart()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(sourcePartName)
-            .highlightScenario(sourcePartName, testScenarioName)
+            .clickSearch(sourcePart.getComponentName())
+            .highlightScenario(sourcePart.getComponentName(), sourcePart.getScenarioName())
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -1069,24 +1060,14 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {16098})
     @Description("Validate sub-component can be costed with an alternate routing in an assembly")
     public void testRoutingsInAssembly() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        String subComponentAName = "piston";
-        String subComponentBName = "piston_pin";
-        String assemblyName = "piston_assembly";
-
-        List<String> componentNames = Arrays.asList("piston", "piston_pin");
-
-        subComponentA = FileResourceUtil.getCloudFile(processGroupEnum, subComponentAName + ".prt.5");
-        subComponentB = FileResourceUtil.getCloudFile(processGroupEnum, subComponentBName + ".prt.1");
-        assembly = FileResourceUtil.getCloudFile(ASSEMBLY, assemblyName + ".asm.1");
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("piston_assembly");
+        ComponentInfoBuilder subComponentA = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("piston")).collect(Collectors.toList()).get(0);
+        ComponentInfoBuilder subComponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("piston_pin")).collect(Collectors.toList()).get(0);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(subComponentAName, scenarioName, subComponentA, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(subComponentA)
+            .selectProcessGroup(subComponentA.getProcessGroup())
             .costScenario();
 
         advancedPage = evaluatePage.goToAdvancedTab();
@@ -1099,20 +1080,20 @@ public class ProcessRoutingTests extends TestBaseUI {
 
         softAssertions.assertThat(advancedPage.getRoutingSelectionSelected()).contains("Structural Foam Mold");
 
-        evaluatePage.uploadComponentAndOpen(subComponentBName, scenarioName, subComponentB, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage.uploadComponentAndOpen(subComponentB)
+            .selectProcessGroup(subComponentB.getProcessGroup())
             .costScenario();
 
-        evaluatePage.uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
-            .selectProcessGroup(ASSEMBLY)
+        evaluatePage.uploadComponentAndOpen(componentAssembly)
+            .selectProcessGroup(componentAssembly.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
         componentsTablePage = evaluatePage.openComponents().selectTableView();
 
-        componentNames.forEach(component ->
-            assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+        componentAssembly.getSubComponents().forEach(component ->
+            assertThat(componentsTablePage.isComponentNameDisplayedInTreeView(component.getComponentName().toUpperCase()), is(true)));
         softAssertions.assertAll();
     }
 
