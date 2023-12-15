@@ -21,6 +21,16 @@
       "processGroup": "SHEET_METAL"
     },
     {
+      "componentName": "piston",
+      "extension": ".prt.5",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "piston",
+      "extension": ".prt.6",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
       "componentName": "SheetMetalTray",
       "extension": ".SLDPRT",
       "processGroup": "SHEET_METAL"
