@@ -47,7 +47,30 @@ public class ComponentRequestUtil {
 
         component = COMPONENT_REQUEST.getComponents()
             .stream()
-            .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
+            .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
+
+        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setUser(UserUtil.getUser());
+
+        return component;
+    }
+
+    /**
+     * Gets a component specified by name and extension
+     *
+     * @param componentName - the part name
+     * @param extension  - the extension
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getComponentWithExtension(String componentName, String extension) {
+
+        component = COMPONENT_REQUEST.getComponents()
+            .stream()
+            .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
+            .filter(component -> component.getExtension().equalsIgnoreCase("." + extension))
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
 
