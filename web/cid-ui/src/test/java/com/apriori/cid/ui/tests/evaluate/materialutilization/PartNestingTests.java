@@ -9,12 +9,11 @@ import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.PartNestingPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -32,6 +31,7 @@ public class PartNestingTests extends TestBaseUI {
     private PartNestingPage partNestingPage;
     private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private ComponentInfoBuilder component;
 
     private File resourceFile;
 
@@ -44,16 +44,12 @@ public class PartNestingTests extends TestBaseUI {
     @TestRail(id = {5922})
     @Description("Validate Part Nesting Tab can be accessed")
     public void partNestingTabAccessible() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         partNestingPage = new CidAppLoginPage(driver)
             .login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .openPartNestingTab();
@@ -70,16 +66,12 @@ public class PartNestingTests extends TestBaseUI {
     @TestRail(id = {7699})
     @Description("Select Rectangular method of Part Nesting and cost")
     public void partNestingTabRectangularNesting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         evaluatePage = new CidAppLoginPage(driver)
             .login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .openPartNestingTab()
@@ -99,16 +91,12 @@ public class PartNestingTests extends TestBaseUI {
     @TestRail(id = {7698})
     @Description("Select True Part method of Part Nesting and cost")
     public void partNestingTabTruePartNesting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         evaluatePage = new CidAppLoginPage(driver)
             .login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .openPartNestingTab()
@@ -124,16 +112,12 @@ public class PartNestingTests extends TestBaseUI {
     @TestRail(id = {7699})
     @Description("Select Machine Default method of Part Nesting and cost")
     public void partNestingTabMachineDefaultNesting() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         evaluatePage = new CidAppLoginPage(driver)
             .login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .openPartNestingTab()
@@ -152,16 +136,12 @@ public class PartNestingTests extends TestBaseUI {
     @TestRail(id = {5923})
     @Description("Validate Part Nesting Tab can not be accessed for inappropriate Process Groups")
     public void partNestingTabDisabled() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         materialProcessPage = new CidAppLoginPage(driver)
             .login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.STOCK_MACHINING)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING)
             .costScenario()
             .openMaterialProcess();
 
