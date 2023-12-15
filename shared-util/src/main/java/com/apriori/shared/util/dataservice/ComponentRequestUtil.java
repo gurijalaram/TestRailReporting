@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ComponentRequestUtil {
-    private ComponentInfoBuilder component;
     private static final String COMPONENT_STORE = "ComponentStore.json";
     private static final PartRequestManager COMPONENT_REQUEST = new PartRequestManager(COMPONENT_STORE);
+    private ComponentInfoBuilder component;
 
     /**
      * Gets a random component
@@ -62,14 +62,15 @@ public class ComponentRequestUtil {
      * Gets a component specified by name
      *
      * @param componentName - the part name
+     * @param processGroup  - the process group
      * @return component builder object
      */
-    public ComponentInfoBuilder getComponentAndProcessGroup(String componentName, ProcessGroupEnum processGroup) {
+    public ComponentInfoBuilder getComponentWithProcessGroup(String componentName, ProcessGroupEnum processGroup) {
 
         component = COMPONENT_REQUEST.getComponents()
             .stream()
-            .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
-            .filter(o -> o.getProcessGroup().equals(processGroup))
+            .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
+            .filter(component -> component.getProcessGroup().equals(processGroup))
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
 
