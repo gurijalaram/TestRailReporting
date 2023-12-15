@@ -186,6 +186,21 @@
       "processGroup": "STOCK_MACHINING"
     },
     {
+      "componentName": "100plusThreads",
+      "extension": ".prt",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "CREO-PMI-Threads",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "CatiaPMIThreads",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "PlasticMoulding",
       "extension": ".CATPart",
       "processGroup": "PLASTIC_MOLDING"
@@ -194,6 +209,16 @@
       "componentName": "DTCCastingIssues",
       "extension": ".catpart",
       "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "DTCCastingIssues",
+      "extension": ".catpart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "DTCCastingIssues",
+      "extension": ".catpart",
+      "processGroup": "CASTING_DIE"
     },
     {
       "componentName": "SandCastIssues",
