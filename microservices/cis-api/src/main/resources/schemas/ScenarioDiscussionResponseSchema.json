@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdByName": {
+          "type": "string"
+        },
+        "updatedByName": {
+          "type": "string"
+        },
+        "assigneeUserIdentity": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "attributeDisplayValue": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "attribute": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "attributeDisplayValue",
+            "subject",
+            "attribute"
+          ]
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "CommentSchema.json"
+            }
+          ]
+        },
+        "participants": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "ParticipantSchema.json"
+            }
+          ]
+        },
+        "status": {
+          "type": "string"
+        },
+        "componentIdentity": {
+          "type": "string"
+        },
+        "scenarioIdentity": {
+          "type": "string"
+        },
+        "projectIdentity": {
+          "type": "string"
+        },
+        "projectItemIdentity": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "createdByName",
+        "assigneeUserIdentity",
+        "attributes",
+        "customerIdentity",
+        "description",
+        "type",
+        "comments",
+        "participants",
+        "status",
+        "componentIdentity",
+        "scenarioIdentity",
+        "projectIdentity",
+        "projectItemIdentity"
+      ],
+      "optional": [
+        "updatedByName"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

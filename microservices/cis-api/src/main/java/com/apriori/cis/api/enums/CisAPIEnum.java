@@ -43,7 +43,12 @@ public enum CisAPIEnum implements ExternalEndpointEnum {
 
     USERS_EXTENDED_PREFERENCES("users/extended-preferences"),
 
-    USER_ASSIGNED_COMPONENTS("components/already-assign-components");
+    USER_ASSIGNED_COMPONENTS("components/already-assign-components"),
+
+    //Discussions
+    SCENARIO_DISCUSSIONS("components/%s/scenarios/%s/scenario-discussions"),
+    SCENARIO_DISCUSSION("components/%s/scenarios/%s/scenario-discussions/%s"),
+    USER_DISCUSSIONS("user-discussions");
 
     private final String endpoint;
 

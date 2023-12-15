@@ -5,6 +5,7 @@ import com.apriori.cis.api.tests.CisBidPackageProjectUsersTest;
 import com.apriori.cis.api.tests.CisBidPackageProjectsTest;
 import com.apriori.cis.api.tests.CisBidPackageTest;
 import com.apriori.cis.api.tests.CisComponentTest;
+import com.apriori.cis.api.tests.CisDiscussionTest;
 import com.apriori.cis.api.tests.CisProjectsTest;
 import com.apriori.cis.api.tests.CisUserPreferencesTest;
 
@@ -19,7 +20,8 @@ import org.junit.platform.suite.api.Suite;
     CisBidPackageProjectsTest.class,
     CisComponentTest.class,
     CisBidPackageProjectUsersTest.class,
-    CisProjectsTest.class
+    CisProjectsTest.class,
+    CisDiscussionTest.class
 })
 public class RegressionSuite {
 }

@@ -7,6 +7,7 @@ import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.LAST_ACTION_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.shared.util.enums.MaterialNameEnum.ABS;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -49,6 +50,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 
+// TODO: 13/12/2023 cn - almost all these tests are selecting a material. do we really need to? need to revise this.
+
 public class ActionsTests extends TestBaseUI {
 
     private UserCredentials currentUser;
@@ -73,14 +76,14 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7185, 7257, 7264, 7263, 7268, 6342})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
-            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
+            .selectMaterial(ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -115,14 +118,14 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7197, 7198, 7200})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
-            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
+            .selectMaterial(ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -159,7 +162,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7902, 5436})
     @Description("User can lock and unlock a scenario")
     public void lockUnlockScenario() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
 
         previewPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -205,7 +208,7 @@ public class ActionsTests extends TestBaseUI {
             "• Automation notes 3" +
             "• Automation notes 4";
 
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -213,7 +216,7 @@ public class ActionsTests extends TestBaseUI {
             .selectProcessGroup(component.getProcessGroup())
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
-            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
+            .selectMaterial(ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .clickActions()
             .info()
@@ -278,7 +281,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7172, 7175, 5437})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
     public void actionsAssign() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
 
         assignPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -312,7 +315,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7174, 7173})
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
 
         assignPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -347,14 +350,14 @@ public class ActionsTests extends TestBaseUI {
     public void filterAssignee() {
         String filterName = generateStringUtil.generateFilterName();
 
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
-            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
+            .selectMaterial(ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -378,7 +381,7 @@ public class ActionsTests extends TestBaseUI {
     public void editNotes() {
         final String editedNotes = "Testing QA notes validating the ability to edit notes";
 
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -445,7 +448,7 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = 7188)
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -488,14 +491,14 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7186, 7191})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -530,14 +533,14 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7911})
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -614,14 +617,14 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7266, 7913})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -656,14 +659,14 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {7177})
     @Description("Validate assignee is displayed in the explore view")
     public void actionsAssignValidateAssignee() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
-            .selectMaterial("ABS")
+            .selectMaterial(ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
@@ -694,7 +697,7 @@ public class ActionsTests extends TestBaseUI {
         final String testDescription = "QA Notes to be read by different user";
         final String testNotes = "Testing QA notes notes to be read by different user";
 
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
 
         infoPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -702,7 +705,7 @@ public class ActionsTests extends TestBaseUI {
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
-            .selectMaterial("Steel, Cold Worked, AISI 1010")
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
