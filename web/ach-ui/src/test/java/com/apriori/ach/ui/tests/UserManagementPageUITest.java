@@ -116,7 +116,7 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
 
         userManagementPage.clickOnThreeDotsUserRowAndHitDelete();
 
-        softAssertions.assertThat(userManagementPage.isUserIsInactive()).isTrue();
+        softAssertions.assertThat(userManagementPage.isUserInactive()).isTrue();
         softAssertions.assertAll();
     }
 
