@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "supportedByCloudApplications": {
+      "type": "boolean"
+    },
+    "supportsAssemblies": {
+      "type": "boolean"
+    },
+    "supportsParts": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "description",
+    "name",
+    "supportedByCloudApplications",
+    "supportsAssemblies",
+    "supportsParts",
+    "type",
+    "createdAt",
+    "createdBy"
+  ]
+}
