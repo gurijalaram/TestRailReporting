@@ -59,7 +59,7 @@ public class ComponentRequestUtil {
     }
 
     /**
-     * Gets a component specified by name
+     * Gets a component specified by name and process group
      *
      * @param componentName - the part name
      * @param processGroup  - the process group
