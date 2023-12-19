@@ -1,28 +1,12 @@
 package com.apriori.dfs.api.models.utils;
 
 import com.apriori.dfs.api.enums.DFSApiEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-
 public class ProcessGroupsUtil {
-
-    protected static RequestEntityUtil requestEntityUtil;
-    protected static UserCredentials testingUser;
-
-    @BeforeAll
-    public static void init() {
-        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser("admin")
-            .useApUserContextInRequests()
-            .useTokenInRequests();
-    }
 
     /**
      * GET process group
@@ -51,7 +35,7 @@ public class ProcessGroupsUtil {
                                                                        Class<T> expectedType,
                                                                        String identity) {
 
-        final RequestEntity requestEntity =  requestEntityUtil.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH, expectedType)
+        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH, expectedType)
             .inlineVariables(new String[]{ identity, ""}) // hack - add one more empty variable to skip auto adding shared secret
             .expectedResponseCode(expectedResponseCode);
 
@@ -65,7 +49,7 @@ public class ProcessGroupsUtil {
         DFSApiEnum path = inlineVariables.length == 1
             ? DFSApiEnum.PROCESS_GROUPS_BY_PATH : DFSApiEnum.PROCESS_GROUPS_BY_PATH_WITH_KEY_PARAM;
 
-        return requestEntityUtil.init(path, expectedType)
+        return RequestEntityUtil_Old.init(path, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
     }
