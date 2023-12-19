@@ -1,6 +1,7 @@
 package com.apriori.dfs.api.models.utils;
 
 import com.apriori.dfs.api.enums.DFSApiEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -8,9 +9,20 @@ import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+
 public class ProcessGroupsUtil {
 
     protected static RequestEntityUtil requestEntityUtil;
+    protected static UserCredentials testingUser;
+
+    @BeforeAll
+    public static void init() {
+        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser("admin")
+            .useApUserContextInRequests()
+            .useTokenInRequests();
+    }
 
     /**
      * GET process group
@@ -56,9 +68,5 @@ public class ProcessGroupsUtil {
         return requestEntityUtil.init(path, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
-    }
-
-    public static void init() {
-        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser();
     }
 }
