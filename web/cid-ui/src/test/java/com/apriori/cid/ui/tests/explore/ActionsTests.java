@@ -577,7 +577,7 @@ public class ActionsTests extends TestBaseUI {
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
 
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.RAPID_PROTOTYPING);
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
