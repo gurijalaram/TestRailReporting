@@ -622,7 +622,6 @@ public class SettingsTests extends TestBaseUI {
         String preferPublic = "Prefer Public Scenarios";
         String preferPrivate = "Prefer Private Scenarios";
         String preferMaturityAndStatus = "Prefer High Maturity and Complete Status";
-        String componentName = "Hinge assembly";
 
         ComponentInfoBuilder assembly = new AssemblyRequestUtil().getAssembly();
 
@@ -643,7 +642,7 @@ public class SettingsTests extends TestBaseUI {
         softAssertions.assertThat(importCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Public Scenarios. " +
             "This setting can be changed in User Preferences.");
 
-        updateCadFilePage = importCadFilePage.closeDialog(EvaluatePage.class).clickActions().updateCadFile(resourceFile);
+        updateCadFilePage = importCadFilePage.closeDialog(EvaluatePage.class).clickActions().updateCadFile(assembly.getResourceFile());
 
         softAssertions.assertThat(updateCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Public Scenarios. " +
             "This setting can be changed in User Preferences.");
@@ -663,7 +662,7 @@ public class SettingsTests extends TestBaseUI {
 
         importCadFilePage.closeDialog(EvaluatePage.class)
             .clickActions()
-            .updateCadFile(resourceFile);
+            .updateCadFile(assembly.getResourceFile());
 
         softAssertions.assertThat(updateCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer High Maturity and Complete Status. " +
             "This setting can be changed in User Preferences.");
@@ -683,7 +682,7 @@ public class SettingsTests extends TestBaseUI {
 
         importCadFilePage.closeDialog(EvaluatePage.class)
             .clickActions()
-            .updateCadFile(resourceFile);
+            .updateCadFile(assembly.getResourceFile());
 
         softAssertions.assertThat(updateCadFilePage.getAssociationAlert()).contains("Your current Assembly Association Strategy is: Prefer Private Scenarios. " +
             "This setting can be changed in User Preferences.");
