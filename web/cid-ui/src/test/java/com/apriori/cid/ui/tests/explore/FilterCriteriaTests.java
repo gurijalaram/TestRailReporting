@@ -289,7 +289,7 @@ public class FilterCriteriaTests extends TestBaseUI {
 
         softAssertion.assertThat(filterPage.isElementDisplayed(filterName, "text-overflow")).isTrue();
 
-        filterPage.cancel(ExplorePage.class)
+        explorePage = filterPage.cancel(ExplorePage.class)
             .filter()
             .newFilter()
             .inputName(filterName2)
