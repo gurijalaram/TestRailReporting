@@ -1,6 +1,7 @@
 package com.apriori.dfs.api.tests;
 
 import com.apriori.dfs.api.models.response.DigitalFactory;
+import com.apriori.dfs.api.models.response.ProcessGroup;
 import com.apriori.dfs.api.models.utils.DigitalFactoryUtil;
 import com.apriori.dfs.api.models.utils.ProcessGroupsUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -17,7 +18,7 @@ import software.amazon.awssdk.http.HttpStatusCode;
 public class ProcessGroupsTests {
 
     private static final String BAD_REQUEST_ERROR = "Bad Request";
-    private static final String DF_NAME = "aPriori USA";
+    private static final String PG_NAME = "Stock Machining";
     private static final String IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'identity' is not a valid identity.";
     private static final String INVALID_CONTENT_TYPE = "application/text";
     private static final String INVALID_CREDENTIAL_MSG = "Invalid credential";
@@ -25,7 +26,7 @@ public class ProcessGroupsTests {
     private static final String INVALID_OR_MISSING_CREDENTIAL_MSG = "Invalid or missing credential";
     private static final String INVALID_SHARED_SECRET = "InvalidSharedSecret";
     private static final String NO_SHARED_SECRET = "";
-    private static final String VALID_DIGITAL_FACTORY_ID = "123456789012";
+    private static final String VALID_PROCESS_GROUP_ID = "7EU8N44NCK0F";
     private static final String UNAUTHORIZED_ERROR = "Unauthorized";
 
     private final SoftAssertions softAssertions = new SoftAssertions();
@@ -37,11 +38,11 @@ public class ProcessGroupsTests {
     @Description("Gets a process group by identity when shared secret/identity are valid")
     public void getProcessGroupByIdentityTest() {
 
-        ResponseWrapper<DigitalFactory> responseWrapper = processGroupsUtil.getProcessGroup(
-            HttpStatusCode.OK, DigitalFactory.class, VALID_DIGITAL_FACTORY_ID);
+        ResponseWrapper<ProcessGroup> responseWrapper = processGroupsUtil.getProcessGroup(
+            HttpStatusCode.OK, ProcessGroup.class, VALID_PROCESS_GROUP_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isNotNull();
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isEqualTo(DF_NAME);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isEqualTo(PG_NAME);
         softAssertions.assertAll();
     }
 }

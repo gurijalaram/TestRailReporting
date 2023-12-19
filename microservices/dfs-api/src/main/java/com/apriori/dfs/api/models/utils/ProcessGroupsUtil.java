@@ -20,12 +20,6 @@ public class ProcessGroupsUtil {
                                                     Class<T> expectedType,
                                                     String... inlineVariables) {
 
-        DFSApiEnum path = inlineVariables.length == 0
-            ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
-
-        final RequestEntity requestEntity = RequestEntityUtil_Old.init(path, expectedType)
-            .inlineVariables(inlineVariables)
-            .expectedResponseCode(expectedResponseCode);
-
-        return HTTPRequest.build(requestEntity).get();    }
+        return HTTPRequest.build(getRequestEntity(expectedResponseCode, expectedType, inlineVariables)).get();
+}
 }
