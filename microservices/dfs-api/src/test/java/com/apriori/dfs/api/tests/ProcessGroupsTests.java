@@ -1,8 +1,6 @@
 package com.apriori.dfs.api.tests;
 
-import com.apriori.dfs.api.models.response.DigitalFactory;
 import com.apriori.dfs.api.models.response.ProcessGroup;
-import com.apriori.dfs.api.models.utils.DigitalFactoryUtil;
 import com.apriori.dfs.api.models.utils.ProcessGroupsUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.ErrorMessage;
