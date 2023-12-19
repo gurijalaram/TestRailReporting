@@ -22,4 +22,35 @@ public class ProcessGroupsUtil {
 
         return HTTPRequest.build(getRequestEntity(expectedResponseCode, expectedType, inlineVariables)).get();
 }
+
+    /**
+     * GET process group
+     *
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @param identity - identity
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> getProcessGroupWithoutKeyParameter(Integer expectedResponseCode,
+                                                                       Class<T> expectedType,
+                                                                       String identity) {
+
+        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH, expectedType)
+            .inlineVariables(new String[]{ identity, ""}) // hack - add one more empty variable to skip auto adding shared secret
+            .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    private <T> RequestEntity getRequestEntity(Integer expectedResponseCode,
+                                               Class<T> expectedType,
+                                               String... inlineVariables) {
+
+        DFSApiEnum path = inlineVariables.length == 1
+            ? DFSApiEnum.PROCESS_GROUPS_BY_PATH : DFSApiEnum.PROCESS_GROUPS_BY_PATH_WITH_KEY_PARAM;
+
+        return RequestEntityUtil_Old.init(path, expectedType)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(expectedResponseCode);
+    }
 }
