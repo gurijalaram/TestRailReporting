@@ -32,7 +32,7 @@ public class ProcessGroupsTests {
     private final ProcessGroupsUtil processGroupsUtil = new ProcessGroupsUtil();
 
     @Test
-    @TestRail(id = {28959})
+    @TestRail(id = {29414})
     @Description("Gets a process group by identity when shared secret/identity are valid")
     public void getProcessGroupByIdentityTest() {
 
@@ -45,7 +45,7 @@ public class ProcessGroupsTests {
     }
 
     @Test
-    @TestRail(id = {28962})
+    @TestRail(id = {29415})
     @Description("Get Unauthorized Error when shared secret value is invalid")
     public void getProcessGroupWithInvalidSharedSecretTest() {
 
@@ -58,7 +58,7 @@ public class ProcessGroupsTests {
     }
 
     @Test
-    @TestRail(id = {28977})
+    @TestRail(id = {29417})
     @Description("Get Unauthorized Error when shared secret parameter is not provided")
     public void getProcessGroupWithoutSharedSecretTest() {
         ResponseWrapper<ErrorMessage> responseWrapper = processGroupsUtil.getProcessGroupWithoutKeyParameter(
@@ -70,7 +70,7 @@ public class ProcessGroupsTests {
     }
 
     @Test
-    @TestRail(id = {28976})
+    @TestRail(id = {29416})
     @Description("Get Unauthorized Error when shared secret value is not provided")
     public void getProcessGroupWithEmptySharedSecretTest() {
 
@@ -83,7 +83,7 @@ public class ProcessGroupsTests {
     }
 
     @Test
-    @TestRail(id = {28978})
+    @TestRail(id = {29418})
     @Description("Get Unauthorized Error when identity is invalid")
     public void getProcessGroupWithBadIdentityTest() {
 
