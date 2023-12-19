@@ -19,7 +19,6 @@ public class ProcessGroupsTests {
     private static final String BAD_REQUEST_ERROR = "Bad Request";
     private static final String PG_NAME = "Stock Machining";
     private static final String IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'identity' is not a valid identity.";
-    private static final String INVALID_CONTENT_TYPE = "application/text";
     private static final String INVALID_CREDENTIAL_MSG = "Invalid credential";
     private static final String INVALID_PROCESS_GROUP_ID = "1234567890";
     private static final String INVALID_OR_MISSING_CREDENTIAL_MSG = "Invalid or missing credential";
