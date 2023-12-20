@@ -21,7 +21,7 @@ public class ProcessGroupsUtil {
                                                     String... inlineVariables) {
 
         return HTTPRequest.build(getRequestEntity(expectedResponseCode, expectedType, inlineVariables)).get();
-}
+    }
 
     /**
      * GET process group
