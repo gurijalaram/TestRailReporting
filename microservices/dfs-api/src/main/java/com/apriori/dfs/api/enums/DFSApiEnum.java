@@ -11,7 +11,11 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
     DIGITAL_FACTORIES("digital-factories"),
     DIGITAL_FACTORIES_WITH_KEY_PARAM("digital-factories?key=%s"),
     DIGITAL_FACTORIES_BY_PATH("digital-factories/%s"),
-    DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM("digital-factories/%s?key=%s");
+    DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM("digital-factories/%s?key=%s"),
+
+    // PROCESS GROUP
+    PROCESS_GROUPS_BY_PATH("process-groups/%s"),
+    PROCESS_GROUPS_BY_PATH_WITH_KEY_PARAM("process-groups/%s?key=%s");
 
     private final String endpoint;
 
