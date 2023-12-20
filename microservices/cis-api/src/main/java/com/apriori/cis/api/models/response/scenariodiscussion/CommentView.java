@@ -15,11 +15,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentView {
-    public String identity;
+    private String identity;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    public LocalDateTime createdAt;
-    public String createdBy;
-    public String participantIdentity;
-    public String userCustomerIdentity;
-    public String userIdentity;
+    private LocalDateTime createdAt;
+    private String createdBy;
+    private String createdByName;
+    private String updatedByName;
+    private String participantIdentity;
+    private String userCustomerIdentity;
+    private String userIdentity;
 }
