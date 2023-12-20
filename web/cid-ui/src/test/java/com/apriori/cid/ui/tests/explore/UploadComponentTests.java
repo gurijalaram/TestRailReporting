@@ -55,7 +55,6 @@ public class UploadComponentTests extends TestBaseUI {
     private ComponentInfoBuilder componentAssembly;
     private ComponentInfoBuilder component;
     private File resourceFile;
-    private File resourceFile1;
     private ExplorePage explorePage;
     private UserCredentials currentUser;
     private CadFileStatusPage cadFileStatusPage;
@@ -385,37 +384,30 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = {11910})
     @Description("Upload different Creo versions of files")
     public void uploadDifferentCreoVersions() {
-
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String componentName1 = "piston";
-        final String extension1 = ".prt.5";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName1 + extension1);
-        final String componentName2 = "piston";
-        final String extension2 = ".prt.6";
-        resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + extension2);
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponentWithExtension("piston", "prt.5");
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentWithExtension("piston", "prt.6");
+        componentB.setUser(componentA.getUser());
 
         evaluatePage = new CidAppLoginPage(driver)
-            .login(currentUser)
-            .uploadComponentAndOpen(componentName1, scenarioName, resourceFile, currentUser)
+            .login(componentA.getUser())
+            .uploadComponentAndOpen(componentA)
             .clickExplore()
             .importCadFile()
-            .inputComponentDetails(scenarioName, resourceFile1)
+            .inputComponentDetails(componentB.getScenarioName(), componentB.getResourceFile())
             .tick("Override existing scenario")
-            .waitForUploadStatus(componentName2.concat(extension2), UploadStatusEnum.UPLOADED)
+            .waitForUploadStatus(componentB.getComponentName().concat(componentB.getExtension()), UploadStatusEnum.UPLOADED)
             .submit()
             .clickClose()
-            .openScenario(componentName2, scenarioName)
+            .openScenario(componentB.getComponentName(), componentB.getScenarioName())
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_CREATE_ACTION, 2);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD)).isTrue();
 
         explorePage = evaluatePage.clickExplore()
-            .clickSearch(componentName2)
+            .clickSearch(componentB.getComponentName())
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName2, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentB.getComponentName(), componentB.getScenarioName())).isEqualTo(1);
 
         softAssertions.assertAll();
     }

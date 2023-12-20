@@ -2,12 +2,10 @@ package com.apriori.cid.ui.tests.evaluate;
 
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -15,34 +13,26 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class MachiningStrategyTests extends TestBaseUI {
 
-    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private File resourceFile;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private ComponentInfoBuilder component;
 
     @Test
     @TestRail(id = {14210, 14211, 14212, 14213, 14214, 14937, 14938, 14936})
     @Description("Verify Machining Strategy option made available when suitable Process Group selected")
     public void testMachiningStrategyOptionAvailable() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-
-        String componentName = "big ring";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .selectProcessGroup(ProcessGroupEnum.BAR_TUBE_FAB);
 
         softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxDisplayed()).isEqualTo(false);
-        evaluatePage.selectProcessGroup(processGroupEnum);
+        evaluatePage.selectProcessGroup(component.getProcessGroup());
 
         softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxDisplayed()).isEqualTo(true);
 
@@ -76,7 +66,7 @@ public class MachiningStrategyTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxDisplayed()).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxSelected()).isEqualTo(false);
 
-        evaluatePage.selectProcessGroup(processGroupEnum);
+        evaluatePage.selectProcessGroup(component.getProcessGroup());
         softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxSelected()).isEqualTo(true);
 
         evaluatePage.selectProcessGroup(ProcessGroupEnum.SHEET_METAL);
@@ -90,16 +80,11 @@ public class MachiningStrategyTests extends TestBaseUI {
     @TestRail(id = {14794})
     @Description("Verify non-machinable PG can be used after costing with machinable PG")
     public void testCostWithNonMachinableAfterMachinablePG() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "Part0004";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".ipt");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .selectProcessGroup(ProcessGroupEnum.FORGING)
             .costScenario();
 
@@ -107,7 +92,7 @@ public class MachiningStrategyTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
         evaluatePage.selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
-                .costScenario();
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxDisplayed()).isEqualTo(false);
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
@@ -119,16 +104,11 @@ public class MachiningStrategyTests extends TestBaseUI {
     @TestRail(id = {15421})
     @Description("Evaluate page - Machinable PG can be selected and part can be costed with Do not machine this part checked")
     public void testCostWithMachiningOptionSelected() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .selectMachineOptionsCheckbox()
             .costScenario();

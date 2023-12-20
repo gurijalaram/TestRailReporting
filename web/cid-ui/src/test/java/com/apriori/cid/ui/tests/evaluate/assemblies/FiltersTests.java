@@ -381,7 +381,7 @@ public class FiltersTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         componentsTablePage = loginPage.login(componentAssembly.getUser())
-            .uploadComponentAndOpen(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getResourceFile(), componentAssembly.getUser())
+            .uploadComponentAndOpen(componentAssembly)
             .openComponents()
             .selectTableView()
             .selectFilter("Assigned To Me");
@@ -423,7 +423,7 @@ public class FiltersTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         componentsTablePage = loginPage.login(componentAssembly.getUser())
-            .uploadComponentAndOpen(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getResourceFile(), componentAssembly.getUser())
+            .uploadComponentAndOpen(componentAssembly)
             .openComponents()
             .selectTableView()
             .selectFilter("All");

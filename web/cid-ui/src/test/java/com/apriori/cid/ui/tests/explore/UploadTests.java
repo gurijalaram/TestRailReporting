@@ -15,6 +15,7 @@ import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.PreferencesEnum;
@@ -165,10 +166,6 @@ public class UploadTests extends TestBaseUI {
     @Description("User can upload a file, after a failed file upload")
     public void uploadAfterFailedUpload() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentName2 = "2062987";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".prt");
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
         String componentName = "ANKARA_SEHPA_SKETCHUP";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".skp");
@@ -176,6 +173,8 @@ public class UploadTests extends TestBaseUI {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         String fileError;
+
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
         fileError = loginPage.login(currentUser)
@@ -186,10 +185,10 @@ public class UploadTests extends TestBaseUI {
         softAssertions.assertThat(fileError).contains("The file type of the selected file is not supported");
 
         evaluatePage = new ExplorePage(driver)
-            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser);
+            .uploadComponentAndOpen(component);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED)).isEqualTo(true);
-        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(scenarioName2);
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(component.getScenarioName());
 
         softAssertions.assertAll();
     }

@@ -4,10 +4,8 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.properties.PropertiesContext;
@@ -24,7 +22,7 @@ import org.junit.jupiter.api.BeforeAll;
 import java.util.List;
 
 public abstract class VDSTestUtil extends TestUtil {
-    protected static final String customerId =  PropertiesContext.get("customer_identity");
+    protected static final String customerId = PropertiesContext.get("customer_identity");
     protected static final String userId = PropertiesContext.get("user_identity");
     protected static UserCredentials testingUser = UserUtil.getUser();
 
@@ -35,7 +33,7 @@ public abstract class VDSTestUtil extends TestUtil {
     private static String digitalFactoryIdentity;
 
     @BeforeAll
-    public static  void init() {
+    public static void init() {
         requestEntityUtil = RequestEntityUtilBuilder
             .useRandomUser()
             .useTokenInRequests()

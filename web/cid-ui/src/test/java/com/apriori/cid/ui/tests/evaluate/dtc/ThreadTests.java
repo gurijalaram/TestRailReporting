@@ -10,13 +10,11 @@ import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.ThreadsPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.LengthEnum;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.UnitsEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -30,11 +28,10 @@ import java.io.File;
 
 public class ThreadTests extends TestBaseUI {
 
-    SoftAssertions softAssertions = new SoftAssertions();
+    private SoftAssertions softAssertions = new SoftAssertions();
     private CidAppLoginPage loginPage;
     private ThreadsPage threadingPage;
-    private UserCredentials currentUser;
-    private File resourceFile;
+    private ComponentInfoBuilder component;
 
     public ThreadTests() {
         super();
@@ -42,8 +39,8 @@ public class ThreadTests extends TestBaseUI {
 
     @AfterEach
     public void resetAllSettings() {
-        if (currentUser != null) {
-            new UserPreferencesUtil().resetSettings(currentUser);
+        if (component != null) {
+            new UserPreferencesUtil().resetSettings(component.getUser());
         }
     }
 
@@ -100,16 +97,12 @@ public class ThreadTests extends TestBaseUI {
     @TestRail(id = {8902})
     @Description("Testing to verify costed thread with attribute change")
     public void selectScenario() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("DTCCastingIssues");
 
         loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        threadingPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario(7)
             .openDesignGuidance()
             .openThreadsTab()
@@ -118,7 +111,7 @@ public class ThreadTests extends TestBaseUI {
         softAssertions.assertThat(threadingPage.getThreaded("SimpleHole:1")).contains("check");
 
         threadingPage.closePanel()
-            .selectProcessGroup(processGroupEnum)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("11000")
             .selectMaterial(MaterialNameEnum.COPPER_UNS_C11000.getMaterialName())
@@ -360,16 +353,12 @@ public class ThreadTests extends TestBaseUI {
     @TestRail(id = {8903})
     @Description("Testing thread length persist when attributes are changed from process group")
     public void maintainingThreadChangeAttributes() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("DTCCastingIssues");
 
         loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        threadingPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario(7)
             .openDesignGuidance()
             .openThreadsTab()
@@ -378,7 +367,7 @@ public class ThreadTests extends TestBaseUI {
         softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
 
         threadingPage.closePanel()
-            .selectProcessGroup(processGroupEnum.SHEET_METAL)
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
             .openMaterialSelectorTable()
             .search("1095")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1095.getMaterialName())
@@ -398,16 +387,12 @@ public class ThreadTests extends TestBaseUI {
     @TestRail(id = {8904, 6358, 6359})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        threadingPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openThreadsTab()
@@ -434,16 +419,12 @@ public class ThreadTests extends TestBaseUI {
     @TestRail(id = {8905, 6299, 6362})
     @Description("Testing thread units persist when changed to centimetres")
     public void validateThreadUnitsCM() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        threadingPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openThreadsTab()
@@ -471,16 +452,12 @@ public class ThreadTests extends TestBaseUI {
     @TestRail(id = {8906})
     @Description("Testing threading persist when secondary process is added")
     public void maintainingThreadSecondaryProcessGroup() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.STOCK_MACHINING)
+        threadingPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openThreadsTab()
@@ -489,7 +466,7 @@ public class ThreadTests extends TestBaseUI {
         softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
 
         threadingPage.closePanel()
-            .selectProcessGroup(processGroupEnum.CASTING_DIE)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToOtherSecProcessesTab()
@@ -509,16 +486,12 @@ public class ThreadTests extends TestBaseUI {
     @TestRail(id = {8268})
     @Description("Testing compatible thread length for DTC files")
     public void threadsCompatibleCadDTC() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "CatiaPMIThreads";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("CatiaPMIThreads");
 
         loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        threadingPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openThreadsTab()
@@ -531,16 +504,12 @@ public class ThreadTests extends TestBaseUI {
     @TestRail(id = {8268})
     @Description("Testing compatible thread length for NX files")
     public void threadsCompatibleCadNX() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "100plusThreads";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("100plusThreads");
 
         loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.SHEET_METAL)
+        threadingPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
             .costScenario(5)
             .openDesignGuidance()
             .openThreadsTab()
@@ -554,16 +523,12 @@ public class ThreadTests extends TestBaseUI {
     @TestRail(id = {8268})
     @Description("Testing compatible thread length for Creo files")
     public void threadsCompatibleCadCreo() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "CREO-PMI-Threads";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("CREO-PMI-Threads");
 
         loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum.SHEET_METAL)
+        threadingPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
             .costScenario()
             .openDesignGuidance()
             .openThreadsTab()

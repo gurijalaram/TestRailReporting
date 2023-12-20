@@ -13,12 +13,14 @@ import java.util.List;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "DiscussionCommentResponseSchema.json")
+@Schema(location = "CommentResponseSchema.json")
 public class DiscussionCommentResponse {
     private String identity;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
+    private String createdByName;
+    private String updatedByName;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
     private String updatedBy;

@@ -14,6 +14,7 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.ScenarioPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.OperationEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -55,17 +56,12 @@ public class NewScenarioNameTests extends TestBaseUI {
     @TestRail(id = {5424})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     public void testEnterNewScenarioName() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
-
-        String componentName = "partbody_2";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
-        String testScenarioName = generateStringUtil.generateScenarioName();
         String testScenarioName2 = generateStringUtil.generateScenarioName();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .copyScenario()
             .enterScenarioName(testScenarioName2)
             .submit(EvaluatePage.class);
@@ -141,17 +137,13 @@ public class NewScenarioNameTests extends TestBaseUI {
     @TestRail(id = {5425})
     @Description("Failure to create a new scenario that is named identical to existing scenario")
     public void usingAnExistingScenarioName() {
-
-        String componentName = "M3CapScrew";
-        resourceFile = FileResourceUtil.getCloudFile(PLASTIC_MOLDING, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        scenarioPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        scenarioPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .copyScenario()
-            .enterScenarioName(scenarioName)
+            .enterScenarioName(component.getScenarioName())
             .submit(ScenarioPage.class);
 
         assertThat(scenarioPage.getErrorMessage(), is("Must be unique."));

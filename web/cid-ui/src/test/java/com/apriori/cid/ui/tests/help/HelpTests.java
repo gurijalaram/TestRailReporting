@@ -11,11 +11,12 @@ import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.help.HelpDocPage;
 import com.apriori.cid.ui.pageobjects.help.HelpPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -24,15 +25,11 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class HelpTests extends TestBaseUI {
 
-    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private HelpPage helpPage;
     private HelpDocPage helpDocPage;
-    private File resourceFile;
 
     @Test
     @Tag(SMOKE)
@@ -53,16 +50,12 @@ public class HelpTests extends TestBaseUI {
     @TestRail(id = {6371})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void linksToHelpPage() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        helpDocPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openMaterialProcess()
             .openHelp();
@@ -86,15 +79,11 @@ public class HelpTests extends TestBaseUI {
     @TestRail(id = {6547})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void assemblyHelp() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-
-        String componentName = "Hinge assembly";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDASM");
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder assembly = new AssemblyRequestUtil().getAssembly();
 
         loginPage = new CidAppLoginPage(driver);
-        helpDocPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+        helpDocPage = loginPage.login(assembly.getUser())
+            .uploadComponentAndOpen(assembly)
             .openComponents()
             .selectTableView()
             .openHelp();

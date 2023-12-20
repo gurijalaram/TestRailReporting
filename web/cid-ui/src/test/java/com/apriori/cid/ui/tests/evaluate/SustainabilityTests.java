@@ -4,6 +4,8 @@ import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -20,9 +22,7 @@ import java.io.File;
 import java.util.Arrays;
 
 public class SustainabilityTests extends TestBaseUI {
-    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
-    private File resourceFile;
     private EvaluatePage evaluatePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private MaterialUtilizationPage materialUtilizationPage;
@@ -32,16 +32,12 @@ public class SustainabilityTests extends TestBaseUI {
     @TestRail(id = {24103, 24100, 24360})
     @Description("Verify if Sustainability tab is presented on Evaluate page, and Material Carbon, Energy Carbon properties are visible")
     public void sustainabilityPropertiesTest() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isSustainabilityDetailsPresentForCosted()).isTrue();
