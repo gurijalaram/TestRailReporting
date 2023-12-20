@@ -215,27 +215,6 @@ public class ComponentsUtil {
         return componentInfo;
     }
 
-    /**
-     * Feeder method for postComponentQueryCID to allow users to upload parts
-     * without creating one-shot ComponentInfoBuilders
-     *
-     * @param componentName    - String of components name
-     * @param scenarioName     - String with chosen name for scenario
-     * @param processGroupEnum - Enum of components Process Group
-     * @param resourceFile     - File to be uploaded
-     * @param currentUser      - Current user performing upload
-     * @return - ComponentInfoBuilder of created scenario
-     */
-//    public ComponentInfoBuilder postComponentCID(String componentName, String scenarioName, ProcessGroupEnum processGroupEnum, File resourceFile, UserCredentials currentUser) {
-//        return postComponentQueryCID(ComponentInfoBuilder.builder()
-//            .componentName(componentName)
-//            .scenarioName(scenarioName)
-//            .processGroup(processGroupEnum)
-//            .resourceFile(resourceFile)
-//            .user(currentUser)
-//            .build());
-//    }
-
 
     /**
      * Gets the uncosted component from CSS

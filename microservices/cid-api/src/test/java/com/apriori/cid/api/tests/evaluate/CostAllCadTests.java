@@ -11,6 +11,7 @@ import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -40,8 +41,10 @@ public class CostAllCadTests {
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private final IterationsUtil iterationsUtil = new IterationsUtil();
-    private SoftAssertions softAssertions;
+    private final SoftAssertions softAssertions = new SoftAssertions();
+    private ComponentInfoBuilder component;
 
+    // TODO: 20/12/2023 cn - all these tests have the same testrail id. this is not correct
     @Test
     @Tags({
         @Tag(SMOKE),
@@ -50,43 +53,15 @@ public class CostAllCadTests {
     @TestRail(id = {5421, 565, 567})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void cadFormatSLDPRT() {
+        component = new ComponentRequestUtil().getComponentByExtension("SLDPRT");
 
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "Machined Box AMERICAS";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        componentsUtil.postComponent(component);
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build());
+        scenariosUtil.postCostScenario(component);
 
-        scenariosUtil.postCostScenario(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .componentIdentity(componentResponse.getComponentIdentity())
-                .scenarioIdentity(componentResponse.getScenarioIdentity())
-                .costingTemplate(CostingTemplate.builder()
-                    .processGroupName(processGroupEnum.getProcessGroup())
-                    .build())
-                .user(currentUser)
-                .build());
-
-        ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(
-            ComponentInfoBuilder.builder()
-                .componentIdentity(componentResponse.getComponentIdentity())
-                .scenarioIdentity(componentResponse.getScenarioIdentity())
-                .user(currentUser)
-                .build());
+        ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(component);
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
-
-        softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(analysisOfScenario.getMaterialCost()).isCloseTo(Double.valueOf(27.44), Offset.offset(15.0));
         softAssertions.assertThat(analysisOfScenario.getLaborCost()).isCloseTo(Double.valueOf(6.30), Offset.offset(5.0));
@@ -99,12 +74,9 @@ public class CostAllCadTests {
     @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - par")
     public void cadFormatPar() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "26136";
-        final String componentExtension = ".par";
-        final String materialName = "Steel, Hot Worked, AISI 1010";
+        component = new ComponentRequestUtil().getComponent("26136");
 
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
+        uploadCostCadPartAndAssert(component);
     }
 
     @Test
@@ -112,37 +84,18 @@ public class CostAllCadTests {
     @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - CATPart")
     public void testCADFormatCATPart() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentName = "Plastic moulded cap DFM";
-        final String componentExtension = ".CATPart";
-        final String materialName = "ABS";
+        component = new ComponentRequestUtil().getComponent("Plastic moulded cap DFM");
 
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
+        uploadCostCadPartAndAssert(component);
     }
 
     @Test
     @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - prt.4")
     public void testCADFormatPRT4() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "turning";
-        final String componentExtension = ".prt.4";
-        final String materialName = "Steel, Hot Worked, AISI 1010";
+        component = new ComponentRequestUtil().getComponent("turning");
 
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
-    }
-
-    @Test
-    @Tag(SMOKE)
-    @TestRail(id = {5421})
-    @Description("CAD file from all supported CAD formats - Creo")
-    public void testCADFormatCreo() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "turning";
-        final String componentExtension = ".prt.4";
-        final String materialName = "Steel, Hot Worked, AISI 1010";
-
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
+        uploadCostCadPartAndAssert(component);
     }
 
     @Test
@@ -150,89 +103,56 @@ public class CostAllCadTests {
     @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - NX")
     public void testCADFormatNX() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "Locker_bottom_panel";
-        final String componentExtension = ".prt";
-        final String materialName = "Steel, Hot Worked, AISI 1010";
+        component = new ComponentRequestUtil().getComponent("Locker_bottom_panel");
 
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
+        uploadCostCadPartAndAssert(component);
     }
 
     @Test
     @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "VERTICAL PLATE";
-        final String componentExtension = ".ipt";
-        final String materialName = "Steel, Hot Worked, AISI 1010";
+        component = new ComponentRequestUtil().getComponent("VERTICAL PLATE");
 
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
+        uploadCostCadPartAndAssert(component);
     }
 
     @Test
     @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "partbody_2";
-        final String componentExtension = ".stp";
-        final String materialName = "Steel, Hot Worked, AISI 1010";
+        component = new ComponentRequestUtil().getComponent("partbody_2");
 
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
+        uploadCostCadPartAndAssert(component);
     }
 
     @Test
     @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParaSolid() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "bracket_basic_steel_PMI";
-        final String componentExtension = ".x_t";
-        final String materialName = "Steel, Hot Worked, AISI 1010";
+        component = new ComponentRequestUtil().getComponent("bracket_basic_steel_PMI");
 
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
+        uploadCostCadPartAndAssert(component);
     }
 
     @Test
     @TestRail(id = {5421})
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentName = "Plastic moulded cap thinPart";
-        final String componentExtension = ".SAT";
-        final String materialName = "ABS";
+        component = new ComponentRequestUtil().getComponent("Plastic moulded cap thinPart");
 
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
+        uploadCostCadPartAndAssert(component);
     }
 
-    private void uploadCostCadPartAndAssert(final ProcessGroupEnum processGroupEnum, final String componentName, final String extension, final String material) {
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
+    private void uploadCostCadPartAndAssert(ComponentInfoBuilder component) {
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(component);
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
-
-        scenariosUtil.postCostScenario(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .componentIdentity(componentResponse.getComponentIdentity())
-                .scenarioIdentity(componentResponse.getScenarioIdentity())
-                .costingTemplate(CostingTemplate.builder()
-                    .processGroupName(processGroupEnum.getProcessGroup())
-                    .materialName(material)
-                    .build())
-                .user(currentUser)
-                .build());
+        scenariosUtil.postCostScenario(component);
 
         ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(componentResponse);
 
-        assertThat(scenarioRepresentation.getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
+        softAssertions.assertThat(scenarioRepresentation.getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
+
+        softAssertions.assertAll();
     }
 }
