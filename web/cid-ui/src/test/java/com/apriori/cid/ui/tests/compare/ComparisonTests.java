@@ -1256,7 +1256,7 @@ public class ComparisonTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(currentUser)
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(componentName + ", " + scenarioName, componentName2 + ", " + scenarioName2)
             .createComparison()
             .selectManualComparison()
             .saveNew()
@@ -1282,31 +1282,21 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {25983, 25984, 26956, 26957, 26958, 27005, 27995})
     @Description("Verify Comparison Explorer can be launched and saved comparisons can be opened from it")
     public void testComparisonExplorer() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "Part0004";
-        String componentName2 = "700-33770-01_A0";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".ipt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponentCID(componentName, scenarioName, processGroupEnum, resourceFile, currentUser);
-        ComponentInfoBuilder part2 = componentsUtil.postComponentCID(componentName2, scenarioName2, processGroupEnum, resourceFile2, currentUser);
+        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
+        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
+        part2.setUser(part1.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        compareExplorePage = loginPage.login(currentUser)
+        compareExplorePage = loginPage.login(part1.getUser())
             .clickCompare(CompareExplorePage.class);
 
         softAssertions.assertThat(compareExplorePage.isComparisonNameFilterDisplayed()).as("Verify Comparison Explorer was Loaded")
             .isTrue();
 
         comparePage = compareExplorePage.clickExplore()
-            .multiSelectScenarios(
-                part1.getComponentName() + "," + part1.getScenarioName(),
-                part2.getComponentName() + "," + part2.getScenarioName())
+            .multiSelectScenarios(part1.getComponentName() + "," + part1.getScenarioName(), part2.getComponentName() + "," + part2.getScenarioName())
             .createComparison()
             .selectManualComparison();
 
@@ -1329,9 +1319,7 @@ public class ComparisonTests extends TestBaseUI {
             .isTrue();
 
         comparePage = compareExplorePage.clickExplore()
-            .multiSelectScenarios(
-                part1.getComponentName() + "," + part1.getScenarioName(),
-                part2.getComponentName() + "," + part2.getScenarioName())
+            .multiSelectScenarios(part1.getComponentName() + "," + part1.getScenarioName(), part2.getComponentName() + "," + part2.getScenarioName())
             .createComparison()
             .selectManualComparison();
 
@@ -1363,16 +1351,6 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {27967, 27968, 27969})
     @Description("Rename Comparison from Explorer and Comparison Views")
     public void testRenameComparison() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
-
-        String componentName = "Casting";
-        String componentName2 = "SandCastBox";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".SLDPRT");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName1 = new GenerateStringUtil().generateComparisonName();
         String comparisonName2 = new GenerateStringUtil().generateComparisonName();
         String comparisonViewRename = new GenerateStringUtil().generateComparisonName();
@@ -1380,15 +1358,14 @@ public class ComparisonTests extends TestBaseUI {
         String invalidComparisonName = "Special+Characters~100%";
         String invalidCharacterErrorText = "Must only contain characters, numbers, spaces and the following special characters: . - _ ( )";
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponentCID(componentName, scenarioName, processGroupEnum, resourceFile, currentUser);
-        ComponentInfoBuilder part2 = componentsUtil.postComponentCID(componentName2, scenarioName2, processGroupEnum, resourceFile2, currentUser);
+        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
+        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
+        part2.setUser(part1.getUser());
 
         explorePage = new CidAppLoginPage(driver)
-            .login(currentUser);
+            .login(part1.getUser());
 
-        compareExplorePage = explorePage.multiSelectScenarios(
-                part1.getComponentName() + "," + part1.getScenarioName(),
-                part2.getComponentName() + "," + part2.getScenarioName())
+        compareExplorePage = explorePage.multiSelectScenarios(part1.getComponentName() + "," + part1.getScenarioName(), part2.getComponentName() + "," + part2.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .saveNew()
@@ -1396,9 +1373,7 @@ public class ComparisonTests extends TestBaseUI {
             .save(ComparePage.class)
             .clickAllComparisons()
             .clickExplore()
-            .multiSelectScenarios(
-                part2.getComponentName() + "," + part2.getScenarioName(),
-                part1.getComponentName() + "," + part1.getScenarioName())
+            .multiSelectScenarios(part2.getComponentName() + "," + part2.getScenarioName(), part1.getComponentName() + "," + part1.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .saveNew()
@@ -1450,27 +1425,17 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {26150, 26151, 27965})
     @Description("Verify Deleting Comparisons from Explore and Viewer pages")
     public void testDeleteComparisons() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
-
-        String componentName = "Casting";
-        String componentName2 = "SandCastBox";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".SLDPRT");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName1 = new GenerateStringUtil().generateComparisonName();
         String comparisonName2 = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponentCID(componentName, scenarioName, processGroupEnum, resourceFile, currentUser);
-        ComponentInfoBuilder part2 = componentsUtil.postComponentCID(componentName2, scenarioName2, processGroupEnum, resourceFile2, currentUser);
+        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
+        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
+        part2.setUser(part1.getUser());
 
         explorePage = new CidAppLoginPage(driver)
             .login(currentUser);
 
-        comparePage = explorePage.multiSelectScenarios(
-                part1.getComponentName() + "," + part1.getScenarioName(),
-                part2.getComponentName() + "," + part2.getScenarioName())
+        comparePage = explorePage.multiSelectScenarios(part1.getComponentName() + "," + part1.getScenarioName(), part2.getComponentName() + "," + part2.getScenarioName())
             .createComparison()
             .selectManualComparison();
 
