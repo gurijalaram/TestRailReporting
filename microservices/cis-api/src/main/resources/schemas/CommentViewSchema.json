@@ -5,6 +5,18 @@
     "identity": {
       "type": "string"
     },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdByName": {
+      "type": "string"
+    },
+    "updatedByName": {
+      "type": "string"
+    },
     "participantIdentity": {
       "type": "string"
     },
@@ -20,5 +32,11 @@
     "participantIdentity",
     "userCustomerIdentity",
     "userIdentity"
+  ],
+  "optional": [
+    "createdAt",
+    "createdBy",
+    "createdByName",
+    "updatedByName"
   ]
 }

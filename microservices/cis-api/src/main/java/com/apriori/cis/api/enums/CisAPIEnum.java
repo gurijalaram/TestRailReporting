@@ -48,7 +48,11 @@ public enum CisAPIEnum implements ExternalEndpointEnum {
     //Discussions
     SCENARIO_DISCUSSIONS("components/%s/scenarios/%s/scenario-discussions"),
     SCENARIO_DISCUSSION("components/%s/scenarios/%s/scenario-discussions/%s"),
-    USER_DISCUSSIONS("user-discussions");
+    USER_DISCUSSIONS("user-discussions"),
+
+    //Comments
+    SCENARIO_DISCUSSION_COMMENTS("components/%s/scenarios/%s/scenario-discussions/%s/comments"),
+    SCENARIO_DISCUSSION_COMMENT("components/%s/scenarios/%s/scenario-discussions/%s/comments/%s");
 
     private final String endpoint;
 
