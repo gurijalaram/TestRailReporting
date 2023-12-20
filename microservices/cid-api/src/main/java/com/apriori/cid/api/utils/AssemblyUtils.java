@@ -107,11 +107,8 @@ public class AssemblyUtils {
      * @return component info builder object
      */
     public ComponentInfoBuilder uploadAssembly(ComponentInfoBuilder componentAssembly) {
-        ComponentInfoBuilder assemblyScenarioItem = componentsUtil.setFilePostComponentQueryCID(componentAssembly);
-        componentAssembly.setComponentIdentity(assemblyScenarioItem.getComponentIdentity());
-        componentAssembly.setScenarioIdentity(assemblyScenarioItem.getScenarioIdentity());
-
-        return componentAssembly;
+        List<ComponentInfoBuilder> assemblies = componentsUtil.postCadUploadComponentSuccess(List.of(componentAssembly));
+        return assemblies.stream().findFirst().get();
     }
 
     /**

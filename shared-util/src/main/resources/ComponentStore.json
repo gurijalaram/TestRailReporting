@@ -96,6 +96,11 @@
       "processGroup": "STOCK_MACHINING"
     },
     {
+      "componentName": "case_010_lam_15-435508-00",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "7021021-2_rib",
       "extension": ".prt.1",
       "processGroup": "STOCK_MACHINING"
@@ -379,6 +384,11 @@
       "componentName": "GagePart_Case_011_gundrillgagepart-01",
       "extension": ".prt.1",
       "processGroup": "BAR_TUBE_FAB"
+    },
+    {
+      "componentName": "Case_011_-_Team_350385",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
     },
     {
       "componentName": "350611",
