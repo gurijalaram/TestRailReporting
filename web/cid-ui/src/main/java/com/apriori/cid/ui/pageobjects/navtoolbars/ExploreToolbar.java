@@ -138,7 +138,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(ComponentInfoBuilder componentInfo) {
-        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCID(componentInfo);
+        ComponentInfoBuilder component = new ComponentsUtil().postComponent(componentInfo);
         return navigateToScenario(component);
     }
 
@@ -262,7 +262,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return response object
      */
     public ComponentInfoBuilder uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        return new ComponentsUtil().postComponentQueryCID(ComponentInfoBuilder.builder()
+        return new ComponentsUtil().postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .resourceFile(resourceFile)

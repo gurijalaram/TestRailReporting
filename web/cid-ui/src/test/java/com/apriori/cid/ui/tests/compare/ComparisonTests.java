@@ -956,7 +956,7 @@ public class ComparisonTests extends TestBaseUI {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder bracketBasic = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder bracketBasic = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .processGroup(processGroupEnum)
@@ -964,7 +964,7 @@ public class ComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder panel = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder panel = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName2)
             .scenarioName(scenarioName2)
             .processGroup(processGroupEnum)
@@ -1015,7 +1015,7 @@ public class ComparisonTests extends TestBaseUI {
         String comparisonName = new GenerateStringUtil().generateComparisonName();
         String comparisonName2 = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder bracketBasic = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder bracketBasic = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .processGroup(processGroupEnum)
@@ -1023,7 +1023,7 @@ public class ComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder panel = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder panel = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName2)
             .scenarioName(scenarioName2)
             .processGroup(processGroupEnum)
@@ -1071,7 +1071,7 @@ public class ComparisonTests extends TestBaseUI {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .processGroup(processGroupEnum)
@@ -1079,7 +1079,7 @@ public class ComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName2)
             .scenarioName(scenarioName)
             .processGroup(processGroupEnum)
@@ -1128,7 +1128,7 @@ public class ComparisonTests extends TestBaseUI {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .processGroup(processGroupEnum)
@@ -1136,7 +1136,7 @@ public class ComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder panel = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder panel = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName2)
             .scenarioName(scenarioName2)
             .processGroup(processGroupEnum)
@@ -1238,7 +1238,7 @@ public class ComparisonTests extends TestBaseUI {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder part = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder part = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .processGroup(processGroupEnum)
@@ -1246,7 +1246,7 @@ public class ComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName2)
             .scenarioName(scenarioName2)
             .processGroup(processGroupEnum)
@@ -1284,8 +1284,8 @@ public class ComparisonTests extends TestBaseUI {
     public void testComparisonExplorer() {
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
-        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
+        ComponentInfoBuilder part1 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        ComponentInfoBuilder part2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
         part2.setUser(part1.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -1358,8 +1358,8 @@ public class ComparisonTests extends TestBaseUI {
         String invalidComparisonName = "Special+Characters~100%";
         String invalidCharacterErrorText = "Must only contain characters, numbers, spaces and the following special characters: . - _ ( )";
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
-        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
+        ComponentInfoBuilder part1 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        ComponentInfoBuilder part2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
         part2.setUser(part1.getUser());
 
         explorePage = new CidAppLoginPage(driver)
@@ -1428,8 +1428,8 @@ public class ComparisonTests extends TestBaseUI {
         String comparisonName1 = new GenerateStringUtil().generateComparisonName();
         String comparisonName2 = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
-        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(new ComponentRequestUtil().getComponent());
+        ComponentInfoBuilder part1 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        ComponentInfoBuilder part2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
         part2.setUser(part1.getUser());
 
         explorePage = new CidAppLoginPage(driver)

@@ -46,7 +46,7 @@ public class CostingTemplateTests {
 
         CostingTemplate costingTemplateId = new ScenariosUtil().postCostingTemplate(costingInfo);
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)

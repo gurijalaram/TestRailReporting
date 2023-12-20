@@ -10,7 +10,6 @@ import com.apriori.cid.api.models.response.ComponentIdentityResponse;
 import com.apriori.cid.api.models.response.GetComponentResponse;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -145,6 +144,16 @@ public class ComponentsUtil {
     }
 
     /**
+     * Calls an api with POST verb and query CID
+     *
+     * @param componentInfo - the component object
+     * @return response object
+     */
+    public ComponentInfoBuilder postComponent(ComponentInfoBuilder componentInfo) {
+        return postCadUploadComponentSuccess(List.of(componentInfo)).stream().findFirst().get();
+    }
+
+    /**
      * Calls an api with POST verb
      *
      * @param componentInfo - the component object
@@ -207,28 +216,6 @@ public class ComponentsUtil {
     }
 
     /**
-     * Calls an api with POST verb and query CID
-     *
-     * @param componentInfo - the component object
-     * @return response object
-     */
-    public ComponentInfoBuilder postComponentQueryCID(ComponentInfoBuilder componentInfo) {
-
-        ComponentInfoBuilder component = postComponents(componentInfo).stream().findFirst().get();
-
-        componentInfo.setComponentIdentity(component.getComponentIdentity());
-        componentInfo.setScenarioIdentity(component.getScenarioIdentity());
-
-        ComponentIdentityResponse componentIdentityResponse = getComponentIdentityPart(componentInfo);
-
-        componentInfo.setComponentIdentity(componentIdentityResponse.getIdentity());
-
-        new ScenariosUtil().getScenarioCompleted(componentInfo);
-
-        return componentInfo;
-    }
-
-    /**
      * Feeder method for postComponentQueryCID to allow users to upload parts
      * without creating one-shot ComponentInfoBuilders
      *
@@ -239,15 +226,15 @@ public class ComponentsUtil {
      * @param currentUser      - Current user performing upload
      * @return - ComponentInfoBuilder of created scenario
      */
-    public ComponentInfoBuilder postComponentCID(String componentName, String scenarioName, ProcessGroupEnum processGroupEnum, File resourceFile, UserCredentials currentUser) {
-        return postComponentQueryCID(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
-    }
+//    public ComponentInfoBuilder postComponentCID(String componentName, String scenarioName, ProcessGroupEnum processGroupEnum, File resourceFile, UserCredentials currentUser) {
+//        return postComponentQueryCID(ComponentInfoBuilder.builder()
+//            .componentName(componentName)
+//            .scenarioName(scenarioName)
+//            .processGroup(processGroupEnum)
+//            .resourceFile(resourceFile)
+//            .user(currentUser)
+//            .build());
+//    }
 
 
     /**
@@ -308,58 +295,6 @@ public class ComponentsUtil {
     }
 
     /**
-     * Calls an api with POST verb to post multiple components
-     *
-     * @param componentInfo - the component object
-     * @return response object
-     */
-    public List<ComponentIdentityResponse> postMultiComponentsQueryCID(ComponentInfoBuilder componentInfo) {
-        List<CadFile> resources = postCadFiles(List.of(componentInfo));
-
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
-            .body("groupItems", componentInfo.getResourceFiles()
-                .stream()
-                .map(resourceFile ->
-                    ComponentRequest.builder()
-                        .filename(resourceFile.getName())
-                        .override(false)
-                        .resourceName(resources.stream()
-                            .filter(x -> x.getFilename().equals(resourceFile.getName()))
-                            .map(CadFile::getResourceName)
-                            .collect(Collectors.toList())
-                            .get(0))
-                        .scenarioName(componentInfo.getScenarioName())
-                        .build())
-                .collect(Collectors.toList()))
-            .token(componentInfo.getUser().getToken())
-            .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
-
-        componentInfo.setComponent(postComponentResponse.getResponseEntity());
-
-        return postComponentResponse.getResponseEntity().getSuccesses().stream().map(component ->
-            getComponentIdentityPart(ComponentInfoBuilder.builder()
-                .componentIdentity(component.getComponentIdentity())
-                .user(componentInfo.getUser())
-                .build())).collect(Collectors.toList());
-    }
-
-    /**
-     * Upload a component via CSS
-     *
-     * @param componentInfo - the component
-     * @return response object
-     */
-    public ComponentInfoBuilder setFilePostComponentQueryCSS(ComponentInfoBuilder componentInfo) {
-        File resourceFile = FileResourceUtil.getCloudFile(componentInfo.getProcessGroup(), componentInfo.getComponentName() + componentInfo.getExtension());
-
-        componentInfo.setResourceFile(resourceFile);
-
-        return postComponentQueryCSSUncosted(componentInfo);
-    }
-
-    /**
      * Upload a component via CID
      *
      * @param componentInfo - the component
@@ -370,7 +305,7 @@ public class ComponentsUtil {
 
         componentInfo.setResourceFile(resourceFile);
 
-        return postComponentQueryCID(componentInfo);
+        return postComponent(componentInfo);
     }
 
     /**

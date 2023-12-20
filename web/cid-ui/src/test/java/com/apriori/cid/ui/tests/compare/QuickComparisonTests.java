@@ -74,7 +74,7 @@ public class QuickComparisonTests extends TestBaseUI {
         String scenarioName1 = new GenerateStringUtil().generateScenarioName();
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder part1 = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName1)
             .processGroup(processGroupEnum)
@@ -82,7 +82,7 @@ public class QuickComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder part2 = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName2)
             .processGroup(processGroupEnum)
@@ -112,7 +112,7 @@ public class QuickComparisonTests extends TestBaseUI {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder basePart = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder basePart = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .processGroup(processGroupEnum)
@@ -166,7 +166,7 @@ public class QuickComparisonTests extends TestBaseUI {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder basePart = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder basePart = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .processGroup(processGroupEnum)
@@ -223,7 +223,7 @@ public class QuickComparisonTests extends TestBaseUI {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String scenarioName3 = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder basePart = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder basePart = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(baseScenarioName)
             .processGroup(processGroupEnum)
@@ -231,7 +231,7 @@ public class QuickComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder scenario1 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder scenario1 = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName1)
             .processGroup(processGroupEnum)
@@ -239,7 +239,7 @@ public class QuickComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder scenario2 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder scenario2 = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName2)
             .processGroup(processGroupEnum)
@@ -247,7 +247,7 @@ public class QuickComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder scenario3 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder scenario3 = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName3)
             .processGroup(processGroupEnum)
