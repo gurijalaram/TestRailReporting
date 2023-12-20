@@ -384,8 +384,8 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = {11910})
     @Description("Upload different Creo versions of files")
     public void uploadDifferentCreoVersions() {
-        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponentWithExtenstion( "piston", "prt.5");
-        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentWithExtenstion( "piston", "prt.6");
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponentWithExtension( "piston", "prt.5");
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentWithExtension( "piston", "prt.6");
         componentB.setUser(componentA.getUser());
 
         evaluatePage = new CidAppLoginPage(driver)
