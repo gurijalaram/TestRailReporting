@@ -12,13 +12,12 @@ import com.apriori.cid.ui.pageobjects.explore.PreviewPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.OperationEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -34,14 +33,10 @@ import java.io.File;
 
 public class PreviewPanelTests extends TestBaseUI {
 
-    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private PreviewPage previewPage;
-    private File resourceFile;
-    private File resourceFile2;
-    private File resourceFile3;
-    private File resourceFile4;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private ComponentInfoBuilder component;
 
     public PreviewPanelTests() {
         super();
@@ -51,17 +46,12 @@ public class PreviewPanelTests extends TestBaseUI {
     @Description("Test preview panel data is displayed")
     @TestRail(id = {6350, 6349})
     public void testPreviewPanelDisplay() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String partName = "Casting";
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, partName + ".prt");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
-        previewPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(partName, testScenarioName, resourceFile, currentUser)
-            .selectProcessGroup(PLASTIC_MOLDING)
+        previewPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial(MaterialNameEnum.ABS_10_GLASS.getMaterialName())
@@ -70,7 +60,7 @@ public class PreviewPanelTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .highlightScenario(partName, testScenarioName)
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .openPreviewPanel();
 
         assertThat(previewPage.isPreviewPanelDisplayed(), is(true));
@@ -81,17 +71,11 @@ public class PreviewPanelTests extends TestBaseUI {
     @Description("Validate user can see information and metrics for the selected scenario in the preview panel")
     @TestRail(id = {6351, 6201, 6352})
     public void previewPanelMetrics() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "225_gasket-1-solid1.prt.1");
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "225_gasket-1-solid1";
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
-        previewPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+        previewPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .selectProcessGroup(PLASTIC_MOLDING)
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
@@ -102,8 +86,8 @@ public class PreviewPanelTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(componentName)
-            .highlightScenario(componentName, testScenarioName)
+            .clickSearch(component.getComponentName())
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .openPreviewPanel();
 
         softAssertions.assertThat(previewPage.isImageDisplayed()).isEqualTo(true);
@@ -120,45 +104,32 @@ public class PreviewPanelTests extends TestBaseUI {
     @Description("Validate user can select multiple items with the checkboxes or all items on a page by checkbox on a top")
     @TestRail(id = {6202, 6203, 6204})
     public void previewPanelMultiSelect() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "Casting";
-        String componentName2 = "Y_shape";
-        String componentName3 = "Casting-Die";
-        String componentName4 = "partbody_2";
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".prt");
-        resourceFile3 = FileResourceUtil.getCloudFile(processGroupEnum, componentName3 + ".stp");
-        resourceFile4 = FileResourceUtil.getCloudFile(processGroupEnum, componentName4 + ".stp");
-        currentUser = UserUtil.getUser();
-
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-        String scenarioName3 = new GenerateStringUtil().generateScenarioName();
-        String scenarioName4 = new GenerateStringUtil().generateScenarioName();
         String filterName = new GenerateStringUtil().generateFilterName();
         String notes = new GenerateStringUtil().generateNotes();
 
+        component = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder component3 = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder component4 = new ComponentRequestUtil().getComponent();
+
         loginPage = new CidAppLoginPage(driver);
-        previewPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        previewPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .clickActions()
             .info()
             .inputNotes(notes)
             .submit(EvaluatePage.class)
-            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+            .uploadComponentAndOpen(component2)
             .clickActions()
             .info()
             .inputNotes(notes)
             .submit(EvaluatePage.class)
-            .uploadComponentAndOpen(componentName3, scenarioName3, resourceFile3, currentUser)
+            .uploadComponentAndOpen(component3)
             .clickActions()
             .info()
             .inputNotes(notes)
             .submit(EvaluatePage.class)
-            .uploadComponentAndOpen(componentName4, scenarioName4, resourceFile4, currentUser)
+            .uploadComponentAndOpen(component4)
             .clickActions()
             .info()
             .inputNotes(notes)
@@ -166,7 +137,7 @@ public class PreviewPanelTests extends TestBaseUI {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), component2.getComponentName() + ", " + component2.getScenarioName())
             .openPreviewPanel();
 
         softAssertions.assertThat(previewPage.getSelectionTitle()).isEqualTo("2 Scenarios Selected");

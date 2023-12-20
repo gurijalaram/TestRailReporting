@@ -91,25 +91,25 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(componentAssembly.getUser())
-            .uploadComponentAndOpen(subcomponentA.getComponentName(), componentAssembly.getScenarioName(), subcomponentA.getResourceFile(), componentAssembly.getUser())
+            .uploadComponentAndOpen(subcomponentA)
             .selectProcessGroup(subcomponentA.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
-        evaluatePage.uploadComponentAndOpen(subcomponentB.getComponentName(), componentAssembly.getScenarioName(), subcomponentB.getResourceFile(), componentAssembly.getUser())
+        evaluatePage.uploadComponentAndOpen(subcomponentB)
             .selectProcessGroup(subcomponentB.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
-        evaluatePage.uploadComponentAndOpen(subcomponentC.getComponentName(), componentAssembly.getScenarioName(), subcomponentC.getResourceFile(), componentAssembly.getUser())
+        evaluatePage.uploadComponentAndOpen(subcomponentC)
             .selectProcessGroup(subcomponentC.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
-        evaluatePage.uploadComponentAndOpen(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getResourceFile(), componentAssembly.getUser())
+        evaluatePage.uploadComponentAndOpen(componentAssembly)
             .selectProcessGroup(componentAssembly.getProcessGroup())
             .costScenario();
 
@@ -626,19 +626,16 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(componentAssembly.getUser())
-            .uploadComponentAndOpen(subcomponentA.getComponentName(), subcomponentA.getScenarioName(), subcomponentA.getResourceFile(), componentAssembly.getUser())
+            .uploadComponentAndOpen(subcomponentA)
             .selectProcessGroup(subcomponentA.getProcessGroup())
             .costScenario()
-
-            .uploadComponentAndOpen(subcomponentB.getComponentName(), subcomponentB.getScenarioName(), subcomponentB.getResourceFile(), componentAssembly.getUser())
+            .uploadComponentAndOpen(subcomponentB)
             .selectProcessGroup(subcomponentB.getProcessGroup())
             .costScenario()
-
-            .uploadComponentAndOpen(subcomponentC.getComponentName(), subcomponentC.getScenarioName(), subcomponentC.getResourceFile(), componentAssembly.getUser())
+            .uploadComponentAndOpen(subcomponentC)
             .selectProcessGroup(subcomponentC.getProcessGroup())
             .costScenario()
-
-            .uploadComponentAndOpen(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getResourceFile(), componentAssembly.getUser())
+            .uploadComponentAndOpen(componentAssembly)
             .selectProcessGroup(componentAssembly.getProcessGroup())
             .costScenario();
 

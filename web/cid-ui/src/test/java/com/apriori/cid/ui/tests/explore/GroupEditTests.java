@@ -11,6 +11,8 @@ import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.css.api.utils.CssComponent;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
@@ -43,39 +45,31 @@ public class GroupEditTests extends TestBaseUI {
     @TestRail(id = {14723})
     @Description("Verify user can edit multiple scenarios")
     public void testGroupEdit() {
-        final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-        String componentName1 = "titan charger lead";
-        final File resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum1, componentName1 + ".SLDPRT");
-        final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        String componentName2 = "Part0004";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".ipt");
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-
-        final ProcessGroupEnum processGroupEnum3 = ProcessGroupEnum.CASTING_SAND;
-        String componentName3 = "SandCast";
-        final File resourceFile3 = FileResourceUtil.getCloudFile(processGroupEnum3, componentName3 + ".x_t");
-        final String scenarioName3 = new GenerateStringUtil().generateScenarioName();
-        final String scenarioName4 = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
+        ComponentInfoBuilder componentC = new ComponentRequestUtil().getComponent();
+        componentC.setUser(componentA.getUser());
 
         loginPage = new CidAppLoginPage(driver);
 
-        editComponentsPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName1, scenarioName1, resourceFile1, currentUser)
+        editComponentsPage = loginPage.login(componentA.getUser())
+            .uploadComponentAndOpen(componentA)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
-            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+            .uploadComponentAndOpen(componentB)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
-            .uploadComponentAndOpen(componentName3, scenarioName3, resourceFile3, currentUser)
+            .uploadComponentAndOpen(componentC)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
             .clickExplore()
             .selectFilter("Public")
-            .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "", "" + componentName3 + ", " + scenarioName3 + "")
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName(),
+                componentC.getComponentName() + ", " + componentB.getScenarioName())
             .editScenario(EditComponentsPage.class);
 
         softAssertions.assertThat(editComponentsPage.getConflictForm()).contains("If you wish to retain existing private scenarios, change the scenario name, otherwise they will be overridden.");
@@ -85,21 +79,22 @@ public class GroupEditTests extends TestBaseUI {
             .close(ExplorePage.class)
             .selectFilter("Private");
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName1, scenarioName1)).isEqualTo(1);
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName2, scenarioName2)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentA.getComponentName(), componentA.getScenarioName())).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentB.getComponentName(), componentB.getScenarioName())).isEqualTo(1);
 
         explorePage.selectFilter("Public")
-            .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "", "" + componentName3 + ", " + scenarioName3 + "")
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName(),
+                componentC.getComponentName() + ", " + componentB.getScenarioName())
             .editScenario(EditComponentsPage.class)
             .renameScenarios()
-            .enterScenarioName(scenarioName4)
+            .enterScenarioName(scenarioName)
             .clickContinue(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
             .selectFilter("Private");
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName1, scenarioName4)).isEqualTo(1);
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName2, scenarioName4)).isEqualTo(1);
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName3, scenarioName4)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentA.getComponentName(), scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentB.getComponentName(), scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentC.getComponentName(), scenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
 
@@ -109,32 +104,24 @@ public class GroupEditTests extends TestBaseUI {
     @TestRail(id = {14724})
     @Description("Attempt to edit multiple scenarios, including a private scenario")
     public void testGroupEditPublicAndPrivateScenario() {
-        final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
-        String componentName1 = "titan charger lead";
-        final File resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum1, componentName1 + ".SLDPRT");
-        final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-        String componentName2 = "Part0004";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".ipt");
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName1, scenarioName1, resourceFile1, currentUser)
+        explorePage = loginPage.login(componentA.getUser())
+            .uploadComponentAndOpen(componentA)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
-            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+            .uploadComponentAndOpen(componentB)
             .clickExplore()
             .selectFilter("Public")
-            .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "");
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName());
 
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(true);
 
         explorePage.selectFilter("Private")
-            .multiSelectScenarios("" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(componentB.getComponentName() + ", " + componentB.getScenarioName())
             .selectFilter("Public");
 
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(false);
@@ -146,38 +133,30 @@ public class GroupEditTests extends TestBaseUI {
     @TestRail(id = {14725})
     @Description("Attempt to edit multiple scenarios, including one which is processing")
     public void testGroupEditScenarioInProcessingState() {
-        final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
-        String componentName1 = "titan charger lead";
-        final File resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum1, componentName1 + ".SLDPRT");
-        final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-        String componentName2 = "Part0004";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".ipt");
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName1, scenarioName1, resourceFile1, currentUser)
+        explorePage = loginPage.login(componentA.getUser())
+            .uploadComponentAndOpen(componentA)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
-            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+            .uploadComponentAndOpen(componentB)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
             .clickExplore()
             .selectFilter("Public")
-            .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "");
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName());
 
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(true);
 
-        explorePage.multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "")
+        explorePage.multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName())
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .selectFilter("Public")
-            .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "");
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName());
 
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(false);
 

@@ -19,12 +19,10 @@ import com.apriori.cid.ui.utils.OverridesEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.ToleranceEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -35,18 +33,15 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class ToleranceTests extends TestBaseUI {
 
-    SoftAssertions softAssertions = new SoftAssertions();
+    private SoftAssertions softAssertions = new SoftAssertions();
+    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private UserCredentials currentUser;
     private TolerancesPage tolerancesPage;
     private ToleranceDefaultsPage toleranceDefaultsPage;
-    private File resourceFile;
-    private ComponentInfoBuilder cidComponentItem;
+    private ComponentInfoBuilder component;
 
     public ToleranceTests() {
         super();
@@ -57,6 +52,9 @@ public class ToleranceTests extends TestBaseUI {
         if (currentUser != null) {
             new UserPreferencesUtil().resetSettings(currentUser);
         }
+        if (component != null) {
+            new UserPreferencesUtil().resetSettings(component.getUser());
+        }
     }
 
     @Test
@@ -65,21 +63,16 @@ public class ToleranceTests extends TestBaseUI {
     @TestRail(id = {6464, 7811, 6964})
     @Description("Validate the user can edit multiple tolerances for a GCD in a private workspace scenario")
     public void testEditTolerances() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "DTCCastingIssues";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("DTCCastingIssues");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         /*assertThat(evaluatePage.getDfmRiskIcon(), is("Critical"));
@@ -258,21 +251,16 @@ public class ToleranceTests extends TestBaseUI {
     @TestRail(id = {6455})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
     public void toleranceCounts() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "PMI_AllTolTypesCatia";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("PMI_AllTolTypesCatia");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         tolerancesPage = evaluatePage.openDesignGuidance()
@@ -457,17 +445,12 @@ public class ToleranceTests extends TestBaseUI {
     @TestRail(id = {6970})
     @Description("Verify PMI data is not extracted ")
     public void assumeTolerances() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "PMI_AllTolTypesCatia";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("PMI_AllTolTypesCatia");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("0"));
@@ -477,15 +460,10 @@ public class ToleranceTests extends TestBaseUI {
     @TestRail(id = {6965})
     @Description(" All tolerances types can be selected & edited")
     public void specificTolerances() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "PMI_AllTolTypesCatia";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("PMI_AllTolTypesCatia");
 
         loginPage = new CidAppLoginPage(driver);
-        tolerancesPage = loginPage.login(currentUser)
+        tolerancesPage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .editSpecificValues()
@@ -506,8 +484,8 @@ public class ToleranceTests extends TestBaseUI {
             .inputOverride(OverridesEnum.SYMMETRY, "1.6")
             .submit()
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
             .costScenario()
             .openDesignGuidance()
@@ -553,23 +531,18 @@ public class ToleranceTests extends TestBaseUI {
     @TestRail(id = {6973})
     @Description("Validate PMI is off when use specific is selected")
     public void specificTolerancesNoPMI() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "PMI_AllTolTypesCatia";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("PMI_AllTolTypesCatia");
 
         loginPage = new CidAppLoginPage(driver);
-        tolerancesPage = loginPage.login(currentUser)
+        tolerancesPage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .editSpecificValues()
             .inputOverride(OverridesEnum.ROUGHNESS_RA, "1.2")
             .submit()
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
             .costScenario()
             .openDesignGuidance()
@@ -616,22 +589,17 @@ public class ToleranceTests extends TestBaseUI {
     @TestRail(id = {6975, 6967})
     @Description("Validate 'Replace values less than' button")
     public void replaceValuesButton() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "PMI_AllTolTypesCatia";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("PMI_AllTolTypesCatia");
 
         loginPage = new CidAppLoginPage(driver);
-        tolerancesPage = loginPage.login(currentUser)
+        tolerancesPage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .replaceValues("0.2", "0.35")
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab()
@@ -645,25 +613,16 @@ public class ToleranceTests extends TestBaseUI {
     @TestRail(id = {6465, 6978, 7814})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void tolerancesDiffUsers() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "PMI_AllTolTypesCatia";
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        UserCredentials testUser1 = UserUtil.getUser();
-        UserCredentials testUser2 = UserUtil.getUser();
-        currentUser = testUser1;
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        component = new ComponentRequestUtil().getComponent("PMI_AllTolTypesCatia");
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(testUser1)
+        evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class)
-            .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
-
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario(3);
 
         softAssertions.assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances")).isEqualTo("13");
@@ -671,13 +630,13 @@ public class ToleranceTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
         evaluatePage.publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .logout()
-            .login(testUser2)
+            .login(UserUtil.getUser())
             .selectFilter("Public")
-            .clickSearch(componentName)
+            .clickSearch(component.getComponentName())
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario(componentName, testScenarioName);
+            .openScenario(component.getComponentName(), component.getScenarioName());
 
         softAssertions.assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances")).isEqualTo("13");
 

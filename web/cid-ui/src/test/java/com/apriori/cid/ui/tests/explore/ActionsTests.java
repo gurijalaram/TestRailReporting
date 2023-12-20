@@ -38,7 +38,6 @@ import com.apriori.shared.util.enums.PropertyEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -62,7 +61,6 @@ public class ActionsTests extends TestBaseUI {
     private InfoPage infoPage;
     private PreviewPage previewPage;
     private AssignPage assignPage;
-    private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private ComponentInfoBuilder component;
@@ -421,7 +419,7 @@ public class ActionsTests extends TestBaseUI {
             .inputCostMaturity("Medium")
             .submit(ExplorePage.class)
             .getCssComponents(component.getUser(), COMPONENT_NAME_EQ.getKey() + component.getComponentName(), SCENARIO_NAME_EQ.getKey() + component.getScenarioName(),
-                LAST_ACTION_EQ.getKey() + " UPDATE",                SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE)
+                LAST_ACTION_EQ.getKey() + " UPDATE", SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE)
             .refresh()
             .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
@@ -769,25 +767,16 @@ public class ActionsTests extends TestBaseUI {
     @TestRail(id = {5440})
     @Description("User cannot update the 3D CAD with a differently named 3D CAD file")
     public void updateWithDifferentCADFile() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentName = "Bishop";
-        final String extension = ".SLDPRT";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        final String componentName2 = "Machined Box AMERICAS";
-        File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + extension);
-
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("Bishop");
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent("Machined Box AMERICAS");
 
         loginPage = new CidAppLoginPage(driver);
-        updateCadFilePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        updateCadFilePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .clickActions()
-            .updateCadFile(resourceFile2);
+            .updateCadFile(componentB.getResourceFile());
 
-        final String expectedError = "The supplied CAD file (" + componentName2 + extension + ") cannot be used for this scenario. The name of the file must be " + componentName + extension;
+        final String expectedError = "The supplied CAD file (" + componentB.getComponentName() + componentB.getExtension() + ") cannot be used for this scenario. The name of the file must be " + component.getComponentName() + component.getExtension();
         assertThat(updateCadFilePage.getFileInputError(), containsString(expectedError));
     }
 

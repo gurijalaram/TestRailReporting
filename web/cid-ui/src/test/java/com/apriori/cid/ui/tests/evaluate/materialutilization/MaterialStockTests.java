@@ -2,18 +2,17 @@ package com.apriori.cid.ui.tests.evaluate.materialutilization;
 
 import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.FORGING;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.POWDER_METAL;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.StockPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -26,12 +25,11 @@ import java.io.File;
 
 public class MaterialStockTests extends TestBaseUI {
 
-    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private StockPage stockPage;
     private MaterialUtilizationPage materialUtilizationPage;
-    private File resourceFile;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private ComponentInfoBuilder component;
 
     public MaterialStockTests() {
         super();
@@ -42,17 +40,12 @@ public class MaterialStockTests extends TestBaseUI {
     @TestRail(id = {5115})
     @Description("Validate material name is updated in material and util panel")
     public void materialSelectionTest() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        String componentName = "Powder Metal";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(POWDER_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        materialUtilizationPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        materialUtilizationPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
@@ -127,18 +120,12 @@ public class MaterialStockTests extends TestBaseUI {
     @TestRail(id = {5154, 5155, 5156})
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "Square circle";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(POWDER_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        stockPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+        stockPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1010")

@@ -15,6 +15,7 @@ import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
@@ -40,15 +41,12 @@ public class IgnoredTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-    private AdvancedPage advancedPage;
     private CssComponent cssComponent = new CssComponent();
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder cidComponentItem;
-    private ComponentInfoBuilder cidComponentItemB;
-    private ComponentInfoBuilder cidComponentItemC;
-    private ComponentInfoBuilder cidComponentItemD;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private ComponentInfoBuilder component;
 
     public IgnoredTests() {
         super();
@@ -140,36 +138,33 @@ public class IgnoredTests extends TestBaseUI {
     @TestRail(id = {6212})
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-        String componentName = "PowderMetalShaft";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .navigateToScenario(cidComponentItem)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickActions()
             .lock(EvaluatePage.class);
-        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, SCENARIO_LOCKED_EQ.getKey() + " true");
+        cssComponent.getComponentParts(component.getUser(), COMPONENT_NAME_EQ.getKey() + component.getComponentName(), SCENARIO_NAME_EQ.getKey() + component.getScenarioName(),
+            SCENARIO_LOCKED_EQ.getKey() + " true");
 
-        evaluatePage = new EvaluatePage(driver).uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
+        component.setScenarioName(scenarioName2);
+        evaluatePage = new EvaluatePage(driver).uploadComponentAndOpen(component)
             .selectProcessGroup(ProcessGroupEnum.FORGING)
             .costScenario()
             .publishScenario(PublishPage.class)
             .changeName(scenarioName2)
-            .publish(cidComponentItem, EvaluatePage.class);
+            .publish(component, EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2)).isEqualTo(true);
     }

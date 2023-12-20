@@ -89,11 +89,15 @@ public class AssemblyUtils {
      */
     public AssemblyUtils uploadSubComponents(ComponentInfoBuilder componentAssembly) {
 
-        componentAssembly.getSubComponents().forEach(subComponent -> {
-            ComponentInfoBuilder subComponentScenarioItem = componentsUtil.setFilePostComponentQueryCID(subComponent);
-            subComponent.setComponentIdentity(subComponentScenarioItem.getComponentIdentity());
-            subComponent.setScenarioIdentity(subComponentScenarioItem.getScenarioIdentity());
-        });
+        componentAssembly.getSubComponents()
+            .forEach(subcomponent -> {
+                if (subcomponent.getSubComponents() != null) {
+                    uploadSubComponents(subcomponent);
+                }
+            });
+
+        componentsUtil.postCadUploadComponentSuccess(componentAssembly.getSubComponents());
+
         return this;
     }
 
@@ -289,7 +293,7 @@ public class AssemblyUtils {
      * Get the ComponentInfoBuilder object of a specified subcomponent
      *
      * @param componentAssembly - The Component Assembly
-     * @param subComponentName - The name of the desired subcomponent
+     * @param subComponentName  - The name of the desired subcomponent
      * @return ComponentInfoBuilder object of desired subcomponent
      */
     public ComponentInfoBuilder getSubComponent(ComponentInfoBuilder componentAssembly, String subComponentName) {

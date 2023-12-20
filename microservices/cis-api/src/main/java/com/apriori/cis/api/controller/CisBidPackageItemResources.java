@@ -181,7 +181,7 @@ public class CisBidPackageItemResources {
             .user(currentUser)
             .build();
 
-        new ComponentsUtil().postComponent(componentInfoBuilder);
+        new ComponentsUtil().postComponents(componentInfoBuilder);
         return new CssComponent().getBaseCssComponents(currentUser,
             CssSearch.COMPONENT_NAME_EQ.getKey() + componentName,
             CssSearch.SCENARIO_NAME_EQ.getKey() + scenarioName).get(0);

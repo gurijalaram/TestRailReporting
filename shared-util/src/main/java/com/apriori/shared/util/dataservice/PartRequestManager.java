@@ -6,7 +6,9 @@ import com.apriori.shared.util.json.JsonManager;
 
 import org.openqa.selenium.NoSuchElementException;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,6 +84,6 @@ public class PartRequestManager {
      * @return list of component builder object
      */
     public List<ComponentInfoBuilder> getComponents() {
-        return readFile().getComponents();
+        return new ArrayList<>(new HashSet<>(readFile().getComponents()));
     }
 }

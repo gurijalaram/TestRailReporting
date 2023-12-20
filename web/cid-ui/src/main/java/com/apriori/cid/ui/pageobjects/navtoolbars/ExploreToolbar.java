@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
-import com.apriori.cid.api.models.response.ComponentIdentityResponse;
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -15,6 +14,7 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.component.PostComponentResponse;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.web.app.util.PageUtils;
@@ -129,25 +129,6 @@ public class ExploreToolbar extends MainNavBar {
      */
     public boolean isDeleteButtonPresent() {
         return deleteButton.isDisplayed();
-    }
-
-    /**
-     * Uploads a component through the API and opens it via url
-     *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param resourceFile  - the file
-     * @return new page object
-     */
-    public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCID(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(userCredentials)
-                .build());
-        return navigateToScenario(component);
     }
 
     /**
@@ -308,17 +289,12 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * Upload multi-components via api
      *
-     * @param resourceFiles - the resource files
-     * @param scenarioName  - the scenario name
-     * @param currentUser   - the user credentials
+     * @param componentInfo - the component info builder
      * @return response object
      */
-    public List<ComponentIdentityResponse> uploadMultiComponentsCID(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
-        return new ComponentsUtil().postMultiComponentsQueryCID(ComponentInfoBuilder.builder()
-            .resourceFiles(resourceFiles)
-            .scenarioName(scenarioName)
-            .user(currentUser)
-            .build());
+    public PostComponentResponse uploadMultiComponentsCID(List<ComponentInfoBuilder> componentInfo) {
+        ComponentsUtil componentsUtil = new ComponentsUtil();
+        return componentsUtil.postComponentsResponse(componentInfo, componentsUtil.postCadFiles(componentInfo));
     }
 
     /**
@@ -669,6 +645,7 @@ public class ExploreToolbar extends MainNavBar {
 
     /**
      * Gets the downloaded report data
+     *
      * @param componentInfo - the component object
      */
     public File getDownloadedReport(ComponentInfoBuilder componentInfo) {

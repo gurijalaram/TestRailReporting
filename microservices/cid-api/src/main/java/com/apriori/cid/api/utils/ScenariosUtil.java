@@ -4,7 +4,6 @@ import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 
 import com.apriori.cid.api.enums.CidAppAPIEnum;
-import com.apriori.cid.api.models.request.ComponentRequest;
 import com.apriori.cid.api.models.request.ForkRequest;
 import com.apriori.cid.api.models.request.GroupPublishRequest;
 import com.apriori.cid.api.models.request.ScenarioAssociationGroupItems;
@@ -27,6 +26,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.request.component.ComponentRequest;
 import com.apriori.shared.util.models.request.component.GroupItems;
 import com.apriori.shared.util.models.request.component.Options;
 import com.apriori.shared.util.models.request.component.PublishRequest;

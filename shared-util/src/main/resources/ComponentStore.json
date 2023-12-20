@@ -11,8 +11,48 @@
       "processGroup": "SHEET_METAL"
     },
     {
+      "componentName": "extremebends",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "bracket_basic_matPMI",
+      "extension": ".prt.1",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "piston",
+      "extension": ".prt.5",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "piston",
+      "extension": ".prt.6",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "SheetMetalTray",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "SheMetDTC",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "Bishop",
+      "extension": ".SLDPRT",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
       "componentName": "PowderMetalShaft",
       "extension": ".stp",
+      "processGroup": "POWDER_METAL"
+    },
+    {
+      "componentName": "case_31_test_part_6_small",
+      "extension": ".prt.2",
       "processGroup": "POWDER_METAL"
     },
     {
@@ -26,8 +66,63 @@
       "processGroup": "STOCK_MACHINING"
     },
     {
+      "componentName": "case_007_SpaceX_00088481-001_C",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "case_066_SpaceX_00128711-001_A",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "14100640",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "225_gasket-1-solid1",
       "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "42x1021_ref",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "prt0001",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "7021021-2_rib",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "ms16555-627_1",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "16-340053-00-04",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "case_002_00400016-003M10_A",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "case_005_flat end mill contouring",
+      "extension": ".SLDPRT",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Case_001_-_Rockwell_2075-0243G",
+      "extension": ".stp",
       "processGroup": "STOCK_MACHINING"
     },
     {
@@ -43,6 +138,11 @@
     {
       "componentName": "BasicScenario_Forging",
       "extension": ".stp",
+      "processGroup": "FORGING"
+    },
+    {
+      "componentName": "case_001_006-8613190_2",
+      "extension": ".prt.2",
       "processGroup": "FORGING"
     },
     {
@@ -101,6 +201,21 @@
       "processGroup": "STOCK_MACHINING"
     },
     {
+      "componentName": "100plusThreads",
+      "extension": ".prt",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "CREO-PMI-Threads",
+      "extension": ".prt.1",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "CatiaPMIThreads",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "PlasticMoulding",
       "extension": ".CATPart",
       "processGroup": "PLASTIC_MOLDING"
@@ -109,6 +224,21 @@
       "componentName": "DTCCastingIssues",
       "extension": ".catpart",
       "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "DTCCastingIssues",
+      "extension": ".catpart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "DTCCastingIssues",
+      "extension": ".catpart",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "DTCCastingIssues",
+      "extension": ".catpart",
+      "processGroup": "PLASTIC_MOLDING"
     },
     {
       "componentName": "SandCastIssues",
@@ -143,6 +273,21 @@
     {
       "componentName": "bracketdfm",
       "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "Part0004",
+      "extension": ".ipt",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "Part0005b",
+      "extension": ".ipt",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "case_011_CENA-009-A1-LH-Rear-Body-Mount",
+      "extension": ".prt",
       "processGroup": "SHEET_METAL"
     },
     {
@@ -221,8 +366,23 @@
       "processGroup": "CASTING_INVESTMENT"
     },
     {
+      "componentName": "piston rod_model1",
+      "extension": ".prt",
+      "processGroup": "CASTING_INVESTMENT"
+    },
+    {
       "componentName": "B&T-LOW-001",
       "extension": ".SLDPRT",
+      "processGroup": "BAR_TUBE_FAB"
+    },
+    {
+      "componentName": "GagePart_Case_011_gundrillgagepart-01",
+      "extension": ".prt.1",
+      "processGroup": "BAR_TUBE_FAB"
+    },
+    {
+      "componentName": "350611",
+      "extension": ".prt.1",
       "processGroup": "BAR_TUBE_FAB"
     },
     {
@@ -236,6 +396,56 @@
       "processGroup": "TWO_MODEL_MACHINING"
     },
     {
+      "componentName": "VulcainCasting",
+      "extension": ".stp",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "VulcainMachined",
+      "extension": ".stp",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "Raw Casting",
+      "extension": ".prt",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "Machined Casting",
+      "extension": ".prt",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "2modeltest-cast",
+      "extension": ".SLDPRT",
+      "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "2modeltest-machine1",
+      "extension": ".SLDPRT",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "2modeltest-machine2",
+      "extension": ".SLDPRT",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "Die Casting Lower Control Arm (As Cast)",
+      "extension": ".SLDPRT",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "Die Casting Lower Control Arm (Source1)",
+      "extension": ".SLDPRT",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
+      "componentName": "Die Casting Lower Control Arm (As Machined2)",
+      "extension": ".SLDPRT",
+      "processGroup": "TWO_MODEL_MACHINING"
+    },
+    {
       "componentName": "testpart-4",
       "extension": ".prt",
       "processGroup": "ADDITIVE_MANUFACTURING"
@@ -246,14 +456,49 @@
       "processGroup": "STOCK_MACHINING"
     },
     {
+      "componentName": "Machining-DTC_Issue_KeyseatMillAccessibility",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Machining-DTC_Issue_SharpCorner-PlanarFace",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Machining-DTC_Issues_MissingSetups_CurvedWall-PlanarFace",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "Machining-DTC_Issues_ObstructedSurfaces_CurvedWall-PlanarFace",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "1379344_BEFORE_DTC",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "PMI_AllTolTypesCatia",
       "extension": ".CATPart",
       "processGroup": "PLASTIC_MOLDING"
     },
     {
+      "componentName": "Deep Hole",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "case_012_009-0020647_hinge_2",
       "extension": ".prt.1",
       "processGroup": "CASTING_INVESTMENT"
+    },
+    {
+      "componentName": "case_012_009-0020647_hinge_2",
+      "extension": ".prt.1",
+      "processGroup": "CASTING_DIE"
     },
     {
       "componentName": "700-33770-01_A0",
