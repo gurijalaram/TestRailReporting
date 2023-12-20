@@ -133,17 +133,6 @@ public class GroupEditTests extends TestBaseUI {
     @TestRail(id = {14725})
     @Description("Attempt to edit multiple scenarios, including one which is processing")
     public void testGroupEditScenarioInProcessingState() {
-//        final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
-//        String componentName1 = "titan charger lead";
-//        final File resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum1, componentName1 + ".SLDPRT");
-//        final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
-//        currentUser = UserUtil.getUser();
-//
-//        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-//        String componentName2 = "Part0004";
-//        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".ipt");
-//        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-
         ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
         componentB.setUser(componentA.getUser());
