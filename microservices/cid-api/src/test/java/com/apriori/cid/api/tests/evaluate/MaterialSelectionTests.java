@@ -34,9 +34,7 @@ public class MaterialSelectionTests {
 
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private IterationsUtil iterationUtil = new IterationsUtil();
-
-    UserCredentials currentUser;
+    private UserCredentials currentUser;
     private File resourceFile;
 
     static Stream<Arguments> materialData() {
