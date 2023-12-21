@@ -227,14 +227,6 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {8680})
     @Description("While in an open public comparison, user is able to expand and collapse each section of the comparison (Info & Inputs, Process, etc.)")
     public void expandCollapseSectionsInPublicComparison() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "testpart-4";
-        String componentName2 = "prt0001";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".prt.1");
-        currentUser = UserUtil.getUser();
-
         component = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
         component2.setUser(component.getUser());
@@ -1310,7 +1302,7 @@ public class ComparisonTests extends TestBaseUI {
         part2.setUser(part1.getUser());
 
         explorePage = new CidAppLoginPage(driver)
-            .login(currentUser);
+            .login(part1.getUser());
 
         comparePage = explorePage.multiSelectScenarios(part1.getComponentName() + "," + part1.getScenarioName(), part2.getComponentName() + "," + part2.getScenarioName())
             .createComparison()
