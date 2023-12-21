@@ -45,6 +45,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
@@ -73,6 +74,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
@@ -101,6 +103,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
@@ -188,6 +191,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
