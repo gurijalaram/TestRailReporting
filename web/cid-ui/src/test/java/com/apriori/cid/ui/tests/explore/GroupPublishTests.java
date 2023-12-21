@@ -16,6 +16,7 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.utils.MultiUpload;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -31,7 +32,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,52 +48,37 @@ public class GroupPublishTests extends TestBaseUI {
     private PublishPage publishPage;
     private AssignPage assignPage;
     private InfoPage infoPage;
-    private ComponentInfoBuilder cidComponentItem;
-    private ComponentInfoBuilder cidComponentItemA;
 
     @Test
     @TestRail(id = {14458})
     @Description("Publish multiple components")
     public void testGroupPublishPartScenarios() {
-        final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentName1 = "titan charger lead";
-        final File resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum1, componentName1 + ".SLDPRT");
-        final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-        final String componentName2 = "Part0004";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".ipt");
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        componentB.setUser(componentA.getUser());
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName1, scenarioName1, resourceFile1, currentUser);
-
-        cidComponentItemA = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(resourceFile1, scenarioName1));
-        multiComponents.add(new MultiUpload(resourceFile2, scenarioName2));
-
-        explorePage = new ExplorePage(driver)
+        explorePage = loginPage.login(componentA.getUser())
+            .uploadComponent(componentA)
+            .uploadComponent(componentB)
             .refresh()
-            .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
             .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
             .close(ExplorePage.class);
 
-        multiComponents.forEach(component ->
+        Arrays.asList(componentA, componentB).forEach(component ->
             softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh()
             .selectFilter("Public");
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName1, scenarioName1)).isEqualTo(1);
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName2, scenarioName2)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentA.getComponentName(), componentA.getScenarioName())).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentB.getComponentName(), componentB.getScenarioName())).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -228,32 +213,17 @@ public class GroupPublishTests extends TestBaseUI {
     @TestRail(id = {14464, 21551})
     @Description("Publish multiple components and set inputs in modal")
     public void testGroupPublishWithInputs() {
-        final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentName1 = "titan charger lead";
-        final File resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum1, componentName1 + ".SLDPRT");
-        final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-        final String componentName2 = "Part0004";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".ipt");
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        componentB.setUser(componentA.getUser());
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName1, scenarioName1, resourceFile1, currentUser);
-
-        cidComponentItemA = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-
-        String scenarioAssignedTo = scenariosUtil.getScenarioCompleted(cidComponentItem).getCreatedByName();
-
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(resourceFile1, scenarioName1));
-        multiComponents.add(new MultiUpload(resourceFile2, scenarioName2));
-
-        publishPage = new ExplorePage(driver).refresh()
-            .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "")
+        publishPage = loginPage.login(currentUser)
+            .uploadComponent(componentA)
+            .uploadComponent(componentB)
+            .refresh()
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
             .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class);
@@ -267,15 +237,17 @@ public class GroupPublishTests extends TestBaseUI {
 
         explorePage = publishPage.close(ExplorePage.class);
 
-        multiComponents.forEach(component ->
+        Arrays.asList(componentA, componentB).forEach(component ->
             softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         assignPage = explorePage.refresh()
             .selectFilter("Public")
-            .openScenario(componentName1, scenarioName1)
+            .openScenario(componentA.getComponentName(), componentA.getScenarioName())
             .clickActions()
             .assign();
+
+        String scenarioAssignedTo = scenariosUtil.getScenarioCompleted(componentA).getCreatedByName();
 
         softAssertions.assertThat(assignPage.isAssigneeDisplayed(scenarioAssignedTo)).isEqualTo(true);
 
@@ -288,7 +260,7 @@ public class GroupPublishTests extends TestBaseUI {
 
         infoPage.cancel(EvaluatePage.class)
             .clickExplore()
-            .openScenario(componentName2, scenarioName2)
+            .openScenario(componentB.getComponentName(), componentB.getScenarioName())
             .clickActions()
             .assign();
 

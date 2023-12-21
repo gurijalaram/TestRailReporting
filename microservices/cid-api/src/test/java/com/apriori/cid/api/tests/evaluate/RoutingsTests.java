@@ -348,13 +348,9 @@ public class RoutingsTests {
 
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build();
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(component.getComponentName())
-            .scenarioName(component.getScenarioName())
-            .resourceFile(component.getResourceFile())
-            .user(component.getUser())
-            .costingTemplate(costingTemplate)
-            .build());
+        component.setCostingTemplate(costingTemplate);
+
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(component);
 
         scenariosUtil.postCostScenario(componentResponse);
 

@@ -63,15 +63,7 @@ public class ComparisonTests extends TestBaseUI {
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private ModifyComparisonPage modifyComparisonPage;
-    private File resourceFile;
-    private File resourceFile2;
-    private File resourceFile3;
-    private File resourceFile4;
-    private File resourceFile5;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private ComponentInfoBuilder cidComponentItemC;
-    private ComponentInfoBuilder cidComponentItemB;
-    private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ComponentsUtil componentsUtil = new ComponentsUtil();
@@ -143,54 +135,45 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {5778})
     @Description("In comparison view, user can access any scenario included in the comparison (private and public)")
     public void accessAnyScenario() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "700-33770-01_A0";
-        String componentName2 = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItemC = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .uploadComponentAndOpen(component2)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), component2.getComponentName() + ", " + component2.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .openBasisScenario();
 
-        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(component.getScenarioName())).isEqualTo(true);
 
-        evaluatePage.selectProcessGroup(processGroupEnum)
+        evaluatePage.selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemC, EvaluatePage.class)
+            .publish(component2, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario(componentName2, scenarioName2)
-            .selectProcessGroup(processGroupEnum)
+            .openScenario(component2.getComponentName(), component2.getScenarioName())
+            .selectProcessGroup(component2.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, EvaluatePage.class)
+            .publish(component2, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), component2.getComponentName() + ", " + component2.getScenarioName())
             .createComparison()
             .selectManualComparison()
-            .openScenario(componentName2, scenarioName2);
+            .openScenario(component2.getComponentName(), component2.getScenarioName());
 
-        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(component2.getScenarioName())).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -200,7 +183,7 @@ public class ComparisonTests extends TestBaseUI {
     @Description("While in an open private comparison, user is able to expand and collapse each section of the comparison (Info & Inputs, Process, etc.)")
     public void expandCollapseSectionsInPrivateComparison() {
         component = new ComponentRequestUtil().getComponent();
-        ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -251,31 +234,28 @@ public class ComparisonTests extends TestBaseUI {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".prt.1");
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        component = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        comparePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
-            .clickExplore();
-
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-
-        comparePage = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
-            .selectProcessGroup(processGroupEnum)
+            .publish(component, EvaluatePage.class)
+            .clickExplore()
+            .uploadComponentAndOpen(component2)
+            .selectProcessGroup(component2.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, EvaluatePage.class)
+            .publish(component2, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), component2.getComponentName() + ", " + component2.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .collapse("Info & Inputs")
@@ -559,51 +539,41 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {5798})
     @Description("Delete public scenarios that are included in the comparison")
     public void deletePublicScenarioOfComparison() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "case_005_flat end mill contouring";
-        String componentName2 = "Case_001_-_Rockwell_2075-0243G";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        cidComponentItemB = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
-            .uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-
-        evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemB)
-            .selectProcessGroup(processGroupEnum)
+            .publish(component, EvaluatePage.class)
+            .uploadComponentAndOpen(component2)
+            .selectProcessGroup(component2.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, EvaluatePage.class)
+            .publish(component2, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .multiSelectScenarios("" + componentName2 + ", " + scenarioName2 + "", "" + componentName + ", " + scenarioName + "")
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), component2.getComponentName() + ", " + component2.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .clickExplore()
             .selectFilter("Public")
-            .highlightScenario(componentName, scenarioName)
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .clickCompare(ComparePage.class)
-            .openScenario(componentName, scenarioName);
+            .openScenario(component.getComponentName(), component.getScenarioName());
 
         softAssertions.assertThat(evaluatePage.getNotFoundMessage()).isEqualTo(notFoundMessage);
 
         comparePage = evaluatePage.backFromError(ComparePage.class);
 
-        softAssertions.assertThat(comparePage.getScenariosInComparison()).doesNotContain(componentName.toUpperCase() + "  / " + scenarioName);
+        softAssertions.assertThat(comparePage.getScenariosInComparison()).doesNotContain(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
 
         softAssertions.assertAll();
     }
@@ -612,65 +582,57 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {5800, 6458, 6459})
     @Description("Publish private scenarios that are included in the comparison")
     public void publishScenarioOfComparison() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        String componentName2 = "700-33770-01_A0";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItemC = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemC)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .uploadComponentAndOpen(component2)
+            .navigateToScenario(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
-            .navigateToScenario(cidComponentItemB)
-            .selectProcessGroup(processGroupEnum)
+            .navigateToScenario(component2)
+            .selectProcessGroup(component2.getProcessGroup())
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), component2.getComponentName() + ", " + component2.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .highlightScenario(componentName2, scenarioName2)
+            .highlightScenario(component2.getComponentName(), component2.getScenarioName())
             .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, ExplorePage.class)
             .clickCompare(ComparePage.class)
-            .openScenario(componentName2, scenarioName2);
+            .openScenario(component2.getComponentName(), component2.getScenarioName());
 
-        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(component2.getScenarioName())).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
 
         comparePage = evaluatePage.clickCompare(ComparePage.class);
 
-        softAssertions.assertThat(comparePage.isIconDisplayed(componentName2, scenarioName2, StatusIconEnum.PUBLIC)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isIconDisplayed(component2.getComponentName(), component2.getScenarioName(), StatusIconEnum.PUBLIC)).isEqualTo(true);
 
         evaluatePage = comparePage.clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .highlightScenario(componentName, scenarioName)
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .publishScenario(PublishPage.class)
             .publish(cidComponentItemC, ExplorePage.class)
             .clickCompare(ComparePage.class)
             .openBasisScenario();
 
-        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(component.getScenarioName())).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
         comparePage = evaluatePage.clickCompare(ComparePage.class);
 
-        softAssertions.assertThat(comparePage.isIconDisplayed(componentName, scenarioName, StatusIconEnum.PUBLIC)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isIconDisplayed(component.getComponentName(), component.getScenarioName(), StatusIconEnum.PUBLIC)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -945,35 +907,18 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {25983, 25984, 25986})
     @Description("Verify that Save button is present and enabled for initial save and can only be clicked when changes made")
     public void testSaveComparison() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        String componentName2 = "700-33770-01_A0";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder bracketBasic = componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
 
-        ComponentInfoBuilder panel = componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName2)
-            .scenarioName(scenarioName2)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile2)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder bracketBasic = componentsUtil.postComponent(componentA);
+
+        ComponentInfoBuilder panel = componentsUtil.postComponent(componentB);
 
         loginPage = new CidAppLoginPage(driver);
-        comparePage = loginPage.login(currentUser)
+        comparePage = loginPage.login(component.getUser())
             .multiSelectScenarios(bracketBasic.getComponentName() + "," + bracketBasic.getScenarioName(), panel.getComponentName() + "," + panel.getScenarioName())
             .createComparison()
             .selectManualComparison();
@@ -1003,36 +948,19 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = 25985)
     @Description("Verify that a Comparison cannot be saved using a name that already exists")
     public void testSaveComparisonWithExistingName() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        String componentName2 = "700-33770-01_A0";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName = new GenerateStringUtil().generateComparisonName();
         String comparisonName2 = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder bracketBasic = componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
 
-        ComponentInfoBuilder panel = componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName2)
-            .scenarioName(scenarioName2)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile2)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder bracketBasic = componentsUtil.postComponent(componentA);
+
+        ComponentInfoBuilder panel = componentsUtil.postComponent(componentB);
 
         loginPage = new CidAppLoginPage(driver);
-        SaveComparisonPage saveComparePage = loginPage.login(currentUser)
+        SaveComparisonPage saveComparePage = loginPage.login(componentA.getUser())
             .multiSelectScenarios(bracketBasic.getComponentName() + "," + bracketBasic.getScenarioName(), panel.getComponentName() + "," + panel.getScenarioName())
             .createComparison()
             .selectManualComparison()
@@ -1062,41 +990,24 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {26149, 26176})
     @Description("Validate scenarios can be deleted from a new manual comparison via modify comparison")
     public void testDeleteNewManualComparison() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
 
-        String componentName = "bracket_basic";
-        String componentName2 = "700-33770-01_A0";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        componentsUtil.postComponent(componentA);
 
-        componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
-
-        componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName2)
-            .scenarioName(scenarioName)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile2)
-            .user(currentUser)
-            .build());
+        componentsUtil.postComponent(componentB);
 
         loginPage = new CidAppLoginPage(driver);
-        comparePage = loginPage.login(currentUser)
+        comparePage = loginPage.login(componentA.getUser())
             .createComparison()
             .selectManualComparison();
 
         comparePage.modify()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickScenarioCheckbox(componentName, scenarioName)
-            .clickScenarioCheckbox(componentName2, scenarioName)
+            .clickScenarioCheckbox(componentA.getComponentName(), componentA.getScenarioName())
+            .clickScenarioCheckbox(componentB.getComponentName(), componentB.getScenarioName())
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(1);
@@ -1104,8 +1015,8 @@ public class ComparisonTests extends TestBaseUI {
         comparePage.modify()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickScenarioCheckbox(componentName, scenarioName)
-            .clickScenarioCheckbox(componentName2, scenarioName)
+            .clickScenarioCheckbox(componentA.getComponentName(), componentA.getScenarioName())
+            .clickScenarioCheckbox(componentB.getComponentName(), componentB.getScenarioName())
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);
@@ -1117,48 +1028,31 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {26173, 26174})
     @Description("Verify that deleted Private scenarios are removed from saved comparison")
     public void testDeletePrivateScenarioInComparison() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "Part0004";
-        String componentName2 = "700-33770-01_A0";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".ipt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
 
-        ComponentInfoBuilder panel = componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName2)
-            .scenarioName(scenarioName2)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile2)
-            .user(currentUser)
-            .build());
+        componentsUtil.postComponent(componentA);
+
+        ComponentInfoBuilder panel = componentsUtil.postComponent(componentB);
 
         loginPage = new CidAppLoginPage(driver);
-        comparePage = loginPage.login(currentUser)
+        comparePage = loginPage.login(componentA.getUser())
             .selectFilter("Recent")
-            .multiSelectScenarios("" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(componentB.getComponentName() + ", " + componentB.getScenarioName())
             .publishScenario(PublishPage.class)
             .publish(ExplorePage.class)
             .selectFilter("Private")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .saveNew()
             .inputName(comparisonName)
             .save(ComparePage.class)
-            .openScenario(componentName2, scenarioName2)
+            .openScenario(componentB.getComponentName(), componentB.getScenarioName())
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .checkComponentDelete(panel)
@@ -1227,36 +1121,19 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {26175})
     @Description("Verify that scenario in position 2 will replace basis, if it is deleted")
     public void testDeleteReplacesBasis() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "Part0004";
-        String componentName2 = "700-33770-01_A0";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".ipt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder part = componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
 
-        componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName2)
-            .scenarioName(scenarioName2)
-            .processGroup(processGroupEnum)
-            .resourceFile(resourceFile2)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder part = componentsUtil.postComponent(componentA);
+
+        componentsUtil.postComponent(componentB);
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(currentUser)
-            .multiSelectScenarios(componentName + ", " + scenarioName, componentName2 + ", " + scenarioName2)
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .saveNew()
@@ -1264,16 +1141,16 @@ public class ComparisonTests extends TestBaseUI {
             .save(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
-            .isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
+            .isEqualTo(componentA.getComponentName().toUpperCase() + "  / " + componentA.getScenarioName());
 
-        comparePage.openScenario(componentName, scenarioName)
+        comparePage.openScenario(componentA.getComponentName(), componentA.getScenarioName())
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .checkComponentDelete(part)
             .clickCompare(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
-            .isEqualTo(componentName2.toUpperCase() + "  / " + scenarioName2);
+            .isEqualTo(componentB.getComponentName().toUpperCase() + "  / " + componentB.getScenarioName());
 
         softAssertions.assertAll();
     }

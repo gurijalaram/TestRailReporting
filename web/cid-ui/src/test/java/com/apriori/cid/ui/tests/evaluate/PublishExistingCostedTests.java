@@ -10,14 +10,12 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.OperationEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -27,17 +25,12 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class PublishExistingCostedTests extends TestBaseUI {
-    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-    private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private ComponentInfoBuilder cidComponentItem;
-    private ComponentInfoBuilder cidComponentItemB;
+    private ComponentInfoBuilder component;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public PublishExistingCostedTests() {
@@ -49,33 +42,26 @@ public class PublishExistingCostedTests extends TestBaseUI {
     @TestRail(id = {6209, 5427, 6732})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "testpart-4";
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
         String filterName = generateStringUtil.generateFilterName();
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        explorePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(componentName)
-            .openScenario(componentName, scenarioName)
+            .clickSearch(component.getComponentName())
+            .openScenario(component.getComponentName(), component.getScenarioName())
             .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA)
@@ -83,15 +69,15 @@ public class PublishExistingCostedTests extends TestBaseUI {
             .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, componentName)
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, component.getComponentName())
             .submit(ExplorePage.class);
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isGreaterThan(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName())).isGreaterThan(0);
         softAssertions.assertAll();
     }
 
@@ -99,35 +85,25 @@ public class PublishExistingCostedTests extends TestBaseUI {
     @TestRail(id = {6211, 6734, 6040})
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
-
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "PowderMetalShaft";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        componentB.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component).
+            selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
-            .clickExplore();
-
-        cidComponentItemB = new ExplorePage(driver)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        evaluatePage = new ExplorePage(driver).selectFilter("Private")
-            .enterKeySearch(componentName)
+            .publish(component, EvaluatePage.class)
+            .uploadComponentAndOpen(componentB).clickExplore()
+            .selectFilter("Private")
+            .enterKeySearch(component.getComponentName())
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario(componentName, scenarioName)
+            .openScenario(component.getComponentName(), component.getScenarioName())
             .selectProcessGroup(ProcessGroupEnum.FORGING)
             .costScenario()
             .publishScenario(PublishPage.class)

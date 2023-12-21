@@ -4,14 +4,13 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
-import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -23,19 +22,15 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 public class WatchpointReportTests extends TestBaseUI {
 
-    private File resourceFile;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private UserCredentials currentUser;
-    private ComponentInfoBuilder cidComponentItem;
 
     public WatchpointReportTests() {
         super();
@@ -48,20 +43,12 @@ public class WatchpointReportTests extends TestBaseUI {
     @TestRail(id = {21933, 21934, 21940})
     @Description("Generate and download a Part Cost Report")
     public void partCostReport() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        String componentName = "PowderMetalShaft";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        evaluatePage = new ExplorePage(driver)
-            .navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isReportButtonEnabled()).isTrue();
@@ -74,7 +61,7 @@ public class WatchpointReportTests extends TestBaseUI {
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3)
             .downloadReport(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.getDownloadedReport(cidComponentItem).length()).isGreaterThan(0);
+        softAssertions.assertThat(evaluatePage.getDownloadedReport(component).length()).isGreaterThan(0);
 
         softAssertions.assertAll();
     }

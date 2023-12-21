@@ -44,7 +44,6 @@ public class FilterCriteriaTests extends TestBaseUI {
     private ExplorePage explorePage;
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder component;
     private ComponentInfoBuilder assembly;
     private FilterPage filterPage;
@@ -212,18 +211,16 @@ public class FilterCriteriaTests extends TestBaseUI {
 
         ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
 
+        ScenarioItem scenarioCreated = cssComponent.findFirst(component.getComponentName(), component.getScenarioName(), component.getUser());
+
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(component.getUser())
-            .uploadComponent(component.getComponentName(), component.getScenarioName(), component.getResourceFile(), component.getUser());
-
-        ScenarioItem scenarioCreated = cssComponent.findFirst(cidComponentItem.getComponentName(), cidComponentItem.getScenarioName(), cidComponentItem.getUser());
-
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+        explorePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .publishScenario(PublishPage.class)
             .selectStatus("Analysis")
             .selectCostMaturity("Initial")
-            .selectAssignee(cidComponentItem.getUser())
-            .publish(cidComponentItem, EvaluatePage.class)
+            .selectAssignee(component.getUser())
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()

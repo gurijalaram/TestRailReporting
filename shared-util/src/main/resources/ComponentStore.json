@@ -36,6 +36,16 @@
       "processGroup": "SHEET_METAL"
     },
     {
+      "componentName": "sheet metal custom 2",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
+      "componentName": "sheet metal custom 3",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
       "componentName": "SheMetDTC",
       "extension": ".SLDPRT",
       "processGroup": "SHEET_METAL"
@@ -519,6 +529,11 @@
       "componentName": "116-5809",
       "extension": ".prt.1",
       "processGroup": "ADDITIVE_MANUFACTURING"
+    },
+    {
+      "componentName": "2062987",
+      "extension": ".prt",
+      "processGroup": "PLASTIC_MOLDING"
     }
   ]
 }
