@@ -588,8 +588,8 @@ public class ComparisonTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .uploadComponentAndOpen(component2)
+            .uploadComponent(component)
+            .uploadComponent(component2)
             .navigateToScenario(component)
             .selectProcessGroup(component.getProcessGroup())
             .costScenario()
@@ -607,7 +607,7 @@ public class ComparisonTests extends TestBaseUI {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(component2.getComponentName(), component2.getScenarioName())
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, ExplorePage.class)
+            .publish(component2, ExplorePage.class)
             .clickCompare(ComparePage.class)
             .openScenario(component2.getComponentName(), component2.getScenarioName());
 
@@ -623,7 +623,7 @@ public class ComparisonTests extends TestBaseUI {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(component.getComponentName(), component.getScenarioName())
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemC, ExplorePage.class)
+            .publish(component, ExplorePage.class)
             .clickCompare(ComparePage.class)
             .openBasisScenario();
 
