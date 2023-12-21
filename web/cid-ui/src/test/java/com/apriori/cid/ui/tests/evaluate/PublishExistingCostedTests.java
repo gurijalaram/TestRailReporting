@@ -91,8 +91,8 @@ public class PublishExistingCostedTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component).
-            selectProcessGroup(component.getProcessGroup())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
