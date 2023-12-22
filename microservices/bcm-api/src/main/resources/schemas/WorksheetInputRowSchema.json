@@ -20,13 +20,16 @@
         "createdBy": {
           "type": "string"
         },
-        "name": {
+        "worksheetId": {
           "type": "string"
         },
-        "inputRowIds": {
-          "type": "array"
+        "componentIdentity": {
+          "type": "string"
         },
-        "costingEventIds": {
+        "scenarioIdentity": {
+          "type": "string"
+        },
+        "iterationIds": {
           "type": "array"
         }
       },
@@ -36,8 +39,10 @@
         "customerIdentity",
         "createdAt",
         "createdBy",
-        "name",
-        "costingEventIds"
+        "worksheetId",
+        "componentIdentity",
+        "scenarioIdentity",
+        "iterationIds"
       ]
     }
   },
