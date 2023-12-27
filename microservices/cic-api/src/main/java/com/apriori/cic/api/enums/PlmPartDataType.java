@@ -22,7 +22,8 @@ public enum PlmPartDataType {
     PLM_PART_PUBLISH_GENERATED("PublishGenerated"),
     PLM_PART_PUBLISH_CONSTANT("PublishConstant"),
     PLM_PART_VALID_UDA("ValidUda"),
-    PLM_PART_GENERAL("GeneralPart");
+    PLM_PART_GENERAL("GeneralPart"),
+    PLM_PART_ASSEMBLY("PartAssembly");
 
     private final String plmPartType;
 
