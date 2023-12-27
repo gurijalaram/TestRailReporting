@@ -25,7 +25,6 @@ public class WorkSheetResponse {
     private String createdAt;
     private String createdBy;
     private String name;
-    //private List inputRowIds;
     private List costingEventIds;
 
 

@@ -27,6 +27,8 @@ public class WorksheetTests extends BcmUtil {
     private CssComponent cssComponent = new CssComponent();
     private final String componentType = "PART";
 
+    // TODO - add clean up method once API will be available
+
     @Test
     @TestRail(id = 28963)
     @Description("Verify worksheet creation")
