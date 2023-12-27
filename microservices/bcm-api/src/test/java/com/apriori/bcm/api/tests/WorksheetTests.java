@@ -5,9 +5,8 @@ import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
 import com.apriori.bcm.api.utils.BcmUtil;
-import com.apriori.cid.api.utils.ScenarioIterationService;
+import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.ComponentResponse;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
@@ -25,7 +24,8 @@ import java.util.stream.Collectors;
 public class WorksheetTests extends BcmUtil {
     private final BcmUtil bcmUtil = new BcmUtil();
     private static SoftAssertions softAssertions = new SoftAssertions();
-    private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
+    private CssComponent cssComponent = new CssComponent();
+    private final String componentType = "PART";
 
     @Test
     @TestRail(id = 28963)
@@ -88,13 +88,8 @@ public class WorksheetTests extends BcmUtil {
     }
 
     private ScenarioItem getPart() {
-        QueryParams queryParams = new QueryParams();
-        queryParams.use("componentName[EQ]", "bracket_basic");
-
-        ResponseWrapper<ComponentResponse> scenarioIterationRespond =
-            scenarioIterationService.getScenarioIterationWithParams(queryParams);
-
-        return scenarioIterationRespond.getResponseEntity().getItems().stream()
+        ResponseWrapper<ComponentResponse> components = cssComponent.postSearchRequest(testingUser, componentType);
+        return components.getResponseEntity().getItems().stream()
             .findFirst().orElse(null);
     }
 

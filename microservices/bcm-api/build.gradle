@@ -12,6 +12,5 @@ sourceSets {
 dependencies {
     implementation project(':shared-util')
     implementation project(':microservices:css-api')
-    implementation project(':microservices:cid-api')
     implementation project(':serialization-util')
 }
