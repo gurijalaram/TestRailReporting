@@ -50,10 +50,6 @@ public class CIDIntegrationTests extends TestBaseUI {
         testDataService.getInputData().replace("exportSetName", GenerateStringUtil.saltString((String) testDataService.getInputData().get("exportSetName")));
     }
 
-    @AfterAll
-    public static void testCleanup() {
-    }
-
     @Test
     @TestRail(id = 12106)
     @Description("Upload, Cost and Publish part")
