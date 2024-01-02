@@ -42,7 +42,6 @@ public class GroupDeleteTests extends TestBaseUI {
         explorePage = loginPage.login(component.getUser())
             .uploadComponent(component)
             .uploadComponent(componentB)
-            .clickExplore()
             .selectFilter("Recent")
             .refresh()
             .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName());

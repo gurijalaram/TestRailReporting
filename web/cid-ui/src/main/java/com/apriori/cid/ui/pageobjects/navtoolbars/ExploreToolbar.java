@@ -277,9 +277,9 @@ public class ExploreToolbar extends MainNavBar {
      * @param componentInfo - the component info builder
      * @return current page object
      */
-    public ExploreToolbar uploadComponent(ComponentInfoBuilder componentInfo) {
+    public ExplorePage uploadComponent(ComponentInfoBuilder componentInfo) {
         new ComponentsUtil().postComponent(componentInfo);
-        return this;
+        return new ExplorePage(driver);
     }
 
     /**
