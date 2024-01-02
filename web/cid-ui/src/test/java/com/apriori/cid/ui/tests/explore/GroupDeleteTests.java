@@ -111,7 +111,6 @@ public class GroupDeleteTests extends TestBaseUI {
             .uploadComponent(assembly)
             .uploadComponent(assemblyB)
             .uploadComponent(component)
-            .clickExplore()
             .selectFilter("Recent")
             .refresh()
             .multiSelectScenarios(assembly.getComponentName() + ", " + assembly.getScenarioName());
