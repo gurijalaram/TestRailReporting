@@ -76,6 +76,16 @@
       "processGroup": "STOCK_MACHINING"
     },
     {
+      "componentName": "26136",
+      "extension": ".par",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "turning",
+      "extension": ".prt.4",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "case_007_SpaceX_00088481-001_C",
       "extension": ".stp",
       "processGroup": "STOCK_MACHINING"
@@ -296,6 +306,16 @@
       "processGroup": "SHEET_METAL"
     },
     {
+      "componentName": "VERTICAL PLATE",
+      "extension": ".ipt",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
+      "componentName": "partbody_2",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "Part0005b",
       "extension": ".ipt",
       "processGroup": "SHEET_METAL"
@@ -344,6 +364,11 @@
       "componentName": "SandCast",
       "extension": ".x_t",
       "processGroup": "CASTING_SAND"
+    },
+    {
+      "componentName": "bracket_basic_steel_PMI",
+      "extension": ".x_t",
+      "processGroup": "STOCK_MACHINING"
     },
     {
       "componentName": "SandCastBox",
