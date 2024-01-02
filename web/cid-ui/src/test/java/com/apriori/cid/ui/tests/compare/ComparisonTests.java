@@ -40,7 +40,6 @@ import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -50,8 +49,6 @@ import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 public class ComparisonTests extends TestBaseUI {
 
@@ -869,14 +866,19 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getOutput(component4.getComponentName(), component4.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Medium");
         softAssertions.assertThat(comparePage.getOutput(component5.getComponentName(), component5.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Low");
 
-        softAssertions.assertThat(comparePage.isArrowColour(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
-        softAssertions.assertThat(comparePage.isDeltaIcon(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.ARROW_DOWN)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isArrowColour(component2.getComponentName(), component2.getScenarioName(),
+            ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(component2.getComponentName(), component2.getScenarioName(),
+            ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.ARROW_DOWN)).isEqualTo(true);
 
         comparePage.dragDropToBasis(component3.getComponentName(), component3.getScenarioName());
 
-        softAssertions.assertThat(comparePage.isArrowColour(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.RED)).isEqualTo(true);
-        softAssertions.assertThat(comparePage.isDeltaIcon(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.ARROW_UP)).isEqualTo(true);
-        softAssertions.assertThat(comparePage.isDeltaIcon(component5.getComponentName(), component5.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.MINUS)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isArrowColour(component2.getComponentName(), component2.getScenarioName(),
+            ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.RED)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(component2.getComponentName(), component2.getScenarioName(),
+            ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.ARROW_UP)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(component5.getComponentName(), component5.getScenarioName(),
+            ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.MINUS)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -901,16 +903,16 @@ public class ComparisonTests extends TestBaseUI {
     public void testSaveComparison() {
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
-        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
-        componentB.setUser(componentA.getUser());
+        component = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
 
-        ComponentInfoBuilder bracketBasic = componentsUtil.postComponent(componentA);
+        ComponentInfoBuilder bracketBasic = componentsUtil.postComponent(component);
 
-        ComponentInfoBuilder panel = componentsUtil.postComponent(componentB);
+        ComponentInfoBuilder panel = componentsUtil.postComponent(component2);
 
         loginPage = new CidAppLoginPage(driver);
-        comparePage = loginPage.login(component.getUser())
+        comparePage = loginPage.login(this.component.getUser())
             .multiSelectScenarios(bracketBasic.getComponentName() + "," + bracketBasic.getScenarioName(), panel.getComponentName() + "," + panel.getScenarioName())
             .createComparison()
             .selectManualComparison();
@@ -943,16 +945,16 @@ public class ComparisonTests extends TestBaseUI {
         String comparisonName = new GenerateStringUtil().generateComparisonName();
         String comparisonName2 = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
-        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
-        componentB.setUser(componentA.getUser());
+        component = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
 
-        ComponentInfoBuilder bracketBasic = componentsUtil.postComponent(componentA);
+        ComponentInfoBuilder bracketBasic = componentsUtil.postComponent(component);
 
-        ComponentInfoBuilder panel = componentsUtil.postComponent(componentB);
+        ComponentInfoBuilder panel = componentsUtil.postComponent(component2);
 
         loginPage = new CidAppLoginPage(driver);
-        SaveComparisonPage saveComparePage = loginPage.login(componentA.getUser())
+        SaveComparisonPage saveComparePage = loginPage.login(component.getUser())
             .multiSelectScenarios(bracketBasic.getComponentName() + "," + bracketBasic.getScenarioName(), panel.getComponentName() + "," + panel.getScenarioName())
             .createComparison()
             .selectManualComparison()
@@ -968,7 +970,7 @@ public class ComparisonTests extends TestBaseUI {
             .save(SaveComparisonPage.class);
 
         softAssertions.assertThat(saveComparePage.getToastifyError()).as("Verify error message displayed")
-            .isEqualTo("HTTP 409: A comparison with the name '" + comparisonName + "' already exists for user '" + currentUser.getUsername() + "'");
+            .isEqualTo("HTTP 409: A comparison with the name '" + comparisonName + "' already exists for user '" + component.getUser().getUsername() + "'");
 
         comparePage = saveComparePage.inputName(comparisonName2)
             .save(ComparePage.class);
@@ -982,24 +984,24 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {26149, 26176})
     @Description("Validate scenarios can be deleted from a new manual comparison via modify comparison")
     public void testDeleteNewManualComparison() {
-        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
-        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
-        componentB.setUser(componentA.getUser());
+        component = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
 
-        componentsUtil.postComponent(componentA);
+        componentsUtil.postComponent(component);
 
-        componentsUtil.postComponent(componentB);
+        componentsUtil.postComponent(component2);
 
         loginPage = new CidAppLoginPage(driver);
-        comparePage = loginPage.login(componentA.getUser())
+        comparePage = loginPage.login(component.getUser())
             .createComparison()
             .selectManualComparison();
 
         comparePage.modify()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickScenarioCheckbox(componentA.getComponentName(), componentA.getScenarioName())
-            .clickScenarioCheckbox(componentB.getComponentName(), componentB.getScenarioName())
+            .clickScenarioCheckbox(component.getComponentName(), component.getScenarioName())
+            .clickScenarioCheckbox(component2.getComponentName(), component2.getScenarioName())
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(1);
@@ -1007,8 +1009,8 @@ public class ComparisonTests extends TestBaseUI {
         comparePage.modify()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickScenarioCheckbox(componentA.getComponentName(), componentA.getScenarioName())
-            .clickScenarioCheckbox(componentB.getComponentName(), componentB.getScenarioName())
+            .clickScenarioCheckbox(component.getComponentName(), component.getScenarioName())
+            .clickScenarioCheckbox(component2.getComponentName(), component2.getScenarioName())
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);
@@ -1022,29 +1024,29 @@ public class ComparisonTests extends TestBaseUI {
     public void testDeletePrivateScenarioInComparison() {
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
-        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
-        componentB.setUser(componentA.getUser());
+        component = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
 
-        componentsUtil.postComponent(componentA);
+        componentsUtil.postComponent(component);
 
-        ComponentInfoBuilder panel = componentsUtil.postComponent(componentB);
+        ComponentInfoBuilder panel = componentsUtil.postComponent(component2);
 
         loginPage = new CidAppLoginPage(driver);
-        comparePage = loginPage.login(componentA.getUser())
+        comparePage = loginPage.login(component.getUser())
             .selectFilter("Recent")
-            .multiSelectScenarios(componentB.getComponentName() + ", " + componentB.getScenarioName())
+            .multiSelectScenarios(component2.getComponentName() + ", " + component2.getScenarioName())
             .publishScenario(PublishPage.class)
             .publish(ExplorePage.class)
             .selectFilter("Private")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), component2.getComponentName() + ", " + component2.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .saveNew()
             .inputName(comparisonName)
             .save(ComparePage.class)
-            .openScenario(componentB.getComponentName(), componentB.getScenarioName())
+            .openScenario(component2.getComponentName(), component2.getScenarioName())
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .checkComponentDelete(panel)
@@ -1115,17 +1117,17 @@ public class ComparisonTests extends TestBaseUI {
     public void testDeleteReplacesBasis() {
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
-        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
-        componentB.setUser(componentA.getUser());
+        component = new ComponentRequestUtil().getComponent();
+        component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
 
-        ComponentInfoBuilder part = componentsUtil.postComponent(componentA);
+        ComponentInfoBuilder part = componentsUtil.postComponent(component);
 
-        componentsUtil.postComponent(componentB);
+        componentsUtil.postComponent(component2);
 
         loginPage = new CidAppLoginPage(driver);
-        comparePage = loginPage.login(currentUser)
-            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
+        comparePage = loginPage.login(component.getUser())
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), component2.getComponentName() + ", " + component2.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .saveNew()
@@ -1133,16 +1135,16 @@ public class ComparisonTests extends TestBaseUI {
             .save(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
-            .isEqualTo(componentA.getComponentName().toUpperCase() + "  / " + componentA.getScenarioName());
+            .isEqualTo(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
 
-        comparePage.openScenario(componentA.getComponentName(), componentA.getScenarioName())
+        comparePage.openScenario(component.getComponentName(), component.getScenarioName())
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .checkComponentDelete(part)
             .clickCompare(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
-            .isEqualTo(componentB.getComponentName().toUpperCase() + "  / " + componentB.getScenarioName());
+            .isEqualTo(component2.getComponentName().toUpperCase() + "  / " + component2.getScenarioName());
 
         softAssertions.assertAll();
     }
@@ -1153,24 +1155,24 @@ public class ComparisonTests extends TestBaseUI {
     public void testComparisonExplorer() {
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        ComponentInfoBuilder part2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        part2.setUser(part1.getUser());
+        component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        compareExplorePage = loginPage.login(part1.getUser())
+        compareExplorePage = loginPage.login(component.getUser())
             .clickCompare(CompareExplorePage.class);
 
         softAssertions.assertThat(compareExplorePage.isComparisonNameFilterDisplayed()).as("Verify Comparison Explorer was Loaded")
             .isTrue();
 
         comparePage = compareExplorePage.clickExplore()
-            .multiSelectScenarios(part1.getComponentName() + "," + part1.getScenarioName(), part2.getComponentName() + "," + part2.getScenarioName())
+            .multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(), component2.getComponentName() + "," + component2.getScenarioName())
             .createComparison()
             .selectManualComparison();
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify comparison loaded as expected")
-            .isEqualTo(part1.getComponentName().toUpperCase() + "  / " + part1.getScenarioName());
+            .isEqualTo(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
         softAssertions.assertThat(comparePage.getComparisonName()).as("Verify comparison is unsaved").isEqualTo("Untitled Comparison");
         softAssertions.assertThat(comparePage.isRefreshEnabled()).as("Verify that Refresh button is disabled while comparison unsaved").isFalse();
 
@@ -1178,7 +1180,7 @@ public class ComparisonTests extends TestBaseUI {
             .clickCompare(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getBasis()).as("Verify comparison retained as expected")
-            .isEqualTo(part1.getComponentName().toUpperCase() + "  / " + part1.getScenarioName());
+            .isEqualTo(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
         softAssertions.assertThat(comparePage.getComparisonName()).as("Verify comparison remains unsaved").isEqualTo("Untitled Comparison");
 
         compareExplorePage = comparePage
@@ -1188,7 +1190,7 @@ public class ComparisonTests extends TestBaseUI {
             .isTrue();
 
         comparePage = compareExplorePage.clickExplore()
-            .multiSelectScenarios(part1.getComponentName() + "," + part1.getScenarioName(), part2.getComponentName() + "," + part2.getScenarioName())
+            .multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(), component2.getComponentName() + "," + component2.getScenarioName())
             .createComparison()
             .selectManualComparison();
 
@@ -1209,8 +1211,8 @@ public class ComparisonTests extends TestBaseUI {
 
         softAssertions.assertThat(comparePage.getComparisonName()).as("Verify that correct Comparison Name displayed").isEqualTo(comparisonName);
         softAssertions.assertThat(comparePage.getBasis()).as("Verify correct Basis in Comparison")
-            .isEqualTo(part1.getComponentName().toUpperCase() + "  / " + part1.getScenarioName());
-        softAssertions.assertThat(part2.getComponentName() + "  / " + part2.getScenarioName()).as("Verify correct Compared Scenario in Comparison")
+            .isEqualTo(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
+        softAssertions.assertThat(component2.getComponentName() + "  / " + component2.getScenarioName()).as("Verify correct Compared Scenario in Comparison")
             .isIn(comparePage.getScenariosInComparison());
 
         softAssertions.assertAll();
@@ -1227,14 +1229,15 @@ public class ComparisonTests extends TestBaseUI {
         String invalidComparisonName = "Special+Characters~100%";
         String invalidCharacterErrorText = "Must only contain characters, numbers, spaces and the following special characters: . - _ ( )";
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        ComponentInfoBuilder part2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        part2.setUser(part1.getUser());
+        component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2.setUser(component.getUser());
 
         explorePage = new CidAppLoginPage(driver)
-            .login(part1.getUser());
+            .login(component.getUser());
 
-        compareExplorePage = explorePage.multiSelectScenarios(part1.getComponentName() + "," + part1.getScenarioName(), part2.getComponentName() + "," + part2.getScenarioName())
+        compareExplorePage = explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(),
+                component2.getComponentName() + "," + component2.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .saveNew()
@@ -1242,7 +1245,7 @@ public class ComparisonTests extends TestBaseUI {
             .save(ComparePage.class)
             .clickAllComparisons()
             .clickExplore()
-            .multiSelectScenarios(part2.getComponentName() + "," + part2.getScenarioName(), part1.getComponentName() + "," + part1.getScenarioName())
+            .multiSelectScenarios(component2.getComponentName() + "," + component2.getScenarioName(), component.getComponentName() + "," + component.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .saveNew()
@@ -1297,14 +1300,15 @@ public class ComparisonTests extends TestBaseUI {
         String comparisonName1 = new GenerateStringUtil().generateComparisonName();
         String comparisonName2 = new GenerateStringUtil().generateComparisonName();
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        ComponentInfoBuilder part2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        part2.setUser(part1.getUser());
+        component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2.setUser(component.getUser());
 
         explorePage = new CidAppLoginPage(driver)
-            .login(part1.getUser());
+            .login(component.getUser());
 
-        comparePage = explorePage.multiSelectScenarios(part1.getComponentName() + "," + part1.getScenarioName(), part2.getComponentName() + "," + part2.getScenarioName())
+        comparePage = explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(),
+                component2.getComponentName() + "," + component2.getScenarioName())
             .createComparison()
             .selectManualComparison();
 
@@ -1319,8 +1323,8 @@ public class ComparisonTests extends TestBaseUI {
         compareExplorePage = comparePage.clickAllComparisons()
             .clickExplore()
             .multiSelectScenarios(
-                part2.getComponentName() + "," + part2.getScenarioName(),
-                part1.getComponentName() + "," + part1.getScenarioName())
+                component2.getComponentName() + "," + component2.getScenarioName(),
+                component.getComponentName() + "," + component.getScenarioName())
             .createComparison()
             .selectManualComparison()
             .saveNew()
