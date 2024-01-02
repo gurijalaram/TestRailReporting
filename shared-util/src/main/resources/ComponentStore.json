@@ -442,12 +442,12 @@
     },
     {
       "componentName": "VulcainCasting",
-      "extension": ".stp",
+      "extension": ".CATPart",
       "processGroup": "CASTING_DIE"
     },
     {
       "componentName": "VulcainMachined",
-      "extension": ".stp",
+      "extension": ".CATPart",
       "processGroup": "TWO_MODEL_MACHINING"
     },
     {
@@ -483,7 +483,7 @@
     {
       "componentName": "Die Casting Lower Control Arm (Source1)",
       "extension": ".SLDPRT",
-      "processGroup": "TWO_MODEL_MACHINING"
+      "processGroup": "CASTING_DIE"
     },
     {
       "componentName": "Die Casting Lower Control Arm (As Machined2)",
@@ -531,7 +531,7 @@
       "processGroup": "PLASTIC_MOLDING"
     },
     {
-      "componentName": "Deep Hole",
+      "componentName": "Deep hole",
       "extension": ".CATPart",
       "processGroup": "STOCK_MACHINING"
     },
