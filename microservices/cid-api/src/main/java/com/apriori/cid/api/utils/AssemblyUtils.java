@@ -59,6 +59,7 @@ public class AssemblyUtils {
      * @param currentUser              - the current user
      * @return component info builder object
      */
+    // TODO: 02/01/2024 cn - this method needs updated or removed. any tests currently using this method will more than likely fail due to 'resourceFile' being null in postCadFiles() line#63
     public ComponentInfoBuilder associateAssemblyAndSubComponents(String assemblyName,
                                                                   String assemblyExtension,
                                                                   ProcessGroupEnum assemblyProcessGroup,
