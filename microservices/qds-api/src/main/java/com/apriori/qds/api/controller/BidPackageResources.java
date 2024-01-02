@@ -35,7 +35,7 @@ import java.util.HashMap;
 /**
  * The type Bid package resources.
  */
-public class BidPackageResources {
+public class BidPackageResources extends QdsApiTestUtils {
 
     /**
      * Create bid package response.
@@ -454,48 +454,24 @@ public class BidPackageResources {
     }
 
     /**
-     * Create bid package project user bid package project user response.
-     *
-     * @param role               the role
-     * @param bidPackageIdentity the bid package identity
-     * @param projectIdentity    the project identity
-     * @param currentUser        the current user
-     * @return the bid package project user response
-     */
-    public static BidPackageProjectUserResponse createBidPackageProjectUser(String role, String bidPackageIdentity, String projectIdentity, UserCredentials currentUser) {
-        BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
-            .projectUser(BidPackageProjectUserParameters.builder()
-                .userEmail(currentUser.getEmail())
-                .role(role)
-                .build())
-            .build();
-
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE_PROJECT_USERS, BidPackageProjectUserResponse.class)
-            .inlineVariables(bidPackageIdentity, projectIdentity)
-            .body(bidPackageProjectUserRequestBuilder)
-            .headers(QdsApiTestUtils.setUpHeader())
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
-            .expectedResponseCode(HttpStatus.SC_CREATED);
-
-        return (BidPackageProjectUserResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
-    }
-
-    /**
      * Delete bid package project user response wrapper.
      *
      * @param bidPackageIdentity  the bid package identity
      * @param projectIdentity     the project identity
      * @param projectUserIdentity the project user identity
      * @param currentUser         the current user
+     * @param responseClass
+     * @param httpStatus
      */
-    public static void deleteBidPackageProjectUser(String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE_PROJECT_USER, null)
+    public static <T> T deleteBidPackageProjectUser(String bidPackageIdentity, String projectIdentity, String projectUserIdentity, UserCredentials currentUser, Class<T> responseClass, Integer httpStatus) {
+        RequestEntity requestEntity = requestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_USER, responseClass)
             .inlineVariables(bidPackageIdentity, projectIdentity, projectUserIdentity)
             .headers(QdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
 
-        HTTPRequest.build(requestEntity).delete();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).delete();
+        return responseWrapper.getResponseEntity();
     }
 
     /**
@@ -575,5 +551,33 @@ public class BidPackageResources {
 
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).patch();
         return responseWrapper.getResponseEntity();
+    }
+
+    /**
+     * Create project user
+     *
+     * @param role               - ADMIN or DEFAULT
+     * @param bidPackageIdentity - bid package identity
+     * @param projectIdentity    - project identity
+     * @param adminUser          - project admin user
+     * @param projectUser        - project additional user
+     * @return BidPackageProjectUserResponse
+     */
+    public static BidPackageProjectUserResponse createBidPackageProjectUser(String role, String bidPackageIdentity, String projectIdentity, UserCredentials adminUser, UserCredentials projectUser) {
+        BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder = BidPackageProjectUserRequest.builder()
+            .projectUser(BidPackageProjectUserParameters.builder()
+                .userEmail(projectUser.getEmail())
+                .role(role)
+                .build())
+            .build();
+
+        RequestEntity requestEntity = requestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_USERS, BidPackageProjectUserResponse.class)
+            .inlineVariables(bidPackageIdentity, projectIdentity)
+            .body(bidPackageProjectUserRequestBuilder)
+            .headers(QdsApiTestUtils.setUpHeader())
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(adminUser.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        return (BidPackageProjectUserResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 }
