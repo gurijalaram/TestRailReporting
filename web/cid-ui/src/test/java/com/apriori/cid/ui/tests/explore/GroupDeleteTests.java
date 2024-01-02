@@ -120,7 +120,7 @@ public class GroupDeleteTests extends TestBaseUI {
         explorePage.multiSelectScenarios(assemblyB.getComponentName() + ", " + assemblyB.getScenarioName());
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(true);
 
-        explorePage.multiSelectScenarios(component.getComponent() + ", " + component.getScenarioName());
+        explorePage.multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName());
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(false);
 
         explorePage.multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName());
