@@ -1,9 +1,12 @@
 package com.apriori.bcm.api.utils;
 
 import com.apriori.bcm.api.enums.BcmAppAPIEnum;
+import com.apriori.bcm.api.models.request.Inputrow;
 import com.apriori.bcm.api.models.request.Worksheet;
+import com.apriori.bcm.api.models.request.WorksheetInputRowsRequest;
 import com.apriori.bcm.api.models.request.WorksheetRequest;
 import com.apriori.bcm.api.models.response.ErrorResponse;
+import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -34,6 +37,14 @@ public class BcmUtil extends TestUtil {
         testingUser = requestEntityUtil.getEmbeddedUser();
     }
 
+    /**
+     *
+     * request to create worksheet
+     * @param name - name of worksheet
+     *
+     * @return response object
+     */
+
     public ResponseWrapper<WorkSheetResponse> createWorksheet(String name) {
 
         WorksheetRequest body = WorksheetRequest
@@ -47,6 +58,31 @@ public class BcmUtil extends TestUtil {
         final RequestEntity requestEntity =
             requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)
                 .body(body)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * adding part (component) int existing worksheet
+     * @param componentIdentity - componentIdentity of added part
+     * @param scenarioIdentity - scenarioIdentity of added part
+     * @param worksheetIdentity - param to  the request call
+     * @return response object
+     */
+
+    public ResponseWrapper<WorkSheetInputRowResponse> createWorkSheetInputRow(String componentIdentity, String scenarioIdentity, String worksheetIdentity) {
+        WorksheetInputRowsRequest body = WorksheetInputRowsRequest
+            .builder()
+            .inputRow(Inputrow
+                .builder()
+                .componentIdentity(componentIdentity)
+                .scenarioIdentity(scenarioIdentity)
+                .build())
+            .build();
+        final RequestEntity requestEntity =
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_INPUT_NAME, WorkSheetInputRowResponse.class)
+                .body(body)
+                .inlineVariables(worksheetIdentity)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
         return HTTPRequest.build(requestEntity).post();
     }

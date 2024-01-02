@@ -2,6 +2,7 @@ package com.apriori.cic.api.utils;
 
 import com.apriori.cic.api.enums.CICPartSelectionType;
 import com.apriori.cic.api.enums.CostingInputFields;
+import com.apriori.cic.api.enums.EmailRecipientType;
 import com.apriori.cic.api.enums.MappingRule;
 import com.apriori.cic.api.enums.PlmTypeAttributes;
 import com.apriori.cic.api.enums.PublishResultsWriteRule;
@@ -230,4 +231,48 @@ public class WorkflowDataUtil {
         return this;
     }
 
+    /**
+     * set workflow email template information
+     * @param isEmailTemplate - Boolean (true or false)
+     * @param reportName - reportName(Identity)
+     * @param emailRecipientType - EmailRecipientType enum
+     * @param emailAddress - email address
+     * @return - current class object
+     */
+    public WorkflowDataUtil setEmailTemplate(Boolean isEmailTemplate, String reportName, EmailRecipientType emailRecipientType, String emailAddress) {
+        workflowRequestData.setIsEmailTemplateSelected(isEmailTemplate);
+        workflowRequestData.setSelectedEmailTemplate(reportName);
+        if (isEmailTemplate) {
+            workflowRequestData.setEmailRecipientType(emailRecipientType.getEmailRecipientType().toLowerCase());
+            workflowRequestData.setEmailRecipientValue(emailAddress);
+        }
+        return this;
+    }
+
+    /**
+     * set email report information during workflow creation
+     * @param isEmailReportName - Boolean (true or false)
+     * @param emailReportIdentity - Email Report template identity
+     * @return current class object
+     */
+    public WorkflowDataUtil setEmailReport(Boolean isEmailReportName, String emailReportIdentity) {
+        workflowRequestData.setIsEmailReportNameSelected(isEmailReportName);
+        workflowRequestData.setSelectedEmailReportName(emailReportIdentity);
+        if (!isEmailReportName) {
+            workflowRequestData.setEmailReportConfiguration(null);
+        }
+        return this;
+    }
+
+    /**
+     * Set PLM Write report information during workflow creation
+     * @param isPlmWriteReport - Boolean (true or false)
+     * @param plmWriteReportName - Report template identity
+     * @return current class object
+     */
+    public WorkflowDataUtil setPlmWriteReport(Boolean isPlmWriteReport, String plmWriteReportName) {
+        workflowRequestData.setIsPlmWriteReportNameSelected(isPlmWriteReport);
+        workflowRequestData.setSelectedPlmWriteReportName(plmWriteReportName);
+        return this;
+    }
 }

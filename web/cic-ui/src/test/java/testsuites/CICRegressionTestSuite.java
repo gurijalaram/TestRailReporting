@@ -1,5 +1,6 @@
 package testsuites;
 
+import com.apriori.cic.ui.tests.AssemblyReportTests;
 import com.apriori.cic.ui.tests.ConnectorTabTests;
 import com.apriori.cic.ui.tests.CostingInputTabTests;
 import com.apriori.cic.ui.tests.CostingPreferencesTests;
@@ -41,7 +42,8 @@ import org.junit.platform.suite.api.Suite;
     PlmQueryDefDateRuleTests.class,
     PlmQueryDefIntRuleTests.class,
     PlmQueryDefRealRuleTests.class,
-    PlmQueryDefStrEmailRuleTests.class
+    PlmQueryDefStrEmailRuleTests.class,
+    AssemblyReportTests.class
 })
 public class CICRegressionTestSuite {
 }

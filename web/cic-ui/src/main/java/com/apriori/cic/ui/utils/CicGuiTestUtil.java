@@ -6,6 +6,9 @@ import com.apriori.cic.api.utils.CicApiTestUtil;
 import com.apriori.cic.api.utils.WorkflowTestUtil;
 import com.apriori.cic.ui.pageobjects.home.CIConnectHome;
 import com.apriori.cic.ui.pageobjects.login.CicLoginPage;
+import com.apriori.shared.util.PDFDocument;
+import com.apriori.shared.util.file.part.PartData;
+import com.apriori.shared.util.models.response.EmailMessageAttachments;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -78,8 +81,8 @@ public class CicGuiTestUtil extends WorkflowTestUtil {
 
     @SneakyThrows
     public CicGuiTestUtil trackWorkflow() {
-        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
-        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
+        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         Boolean isJobFinished = true;
         finalJobStatus = CicApiTestUtil.getCicAgentWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId()).getStatus();
@@ -124,5 +127,94 @@ public class CicGuiTestUtil extends WorkflowTestUtil {
             .invokeWorkflow()
             .trackWorkflow()
             .getJobResult();
+    }
+
+    /**
+     * Verify PLM part name in job results
+     *
+     * @param agentWorkflowJobResults - AgentWorkflowJobResults
+     * @param plmPartData             - Expected PartData
+     * @return boolean
+     */
+    public Boolean verifyPartNameInJobResult(AgentWorkflowJobResults agentWorkflowJobResults, List<PartData> plmPartData) {
+        return agentWorkflowJobResults.stream()
+            .anyMatch(agentWorkflowJobPartsResult ->
+                plmPartData.stream()
+                    .peek(partData -> {
+                        if (agentWorkflowJobPartsResult.getCidPartNumber().contains(partData.getPartName())) {
+                            log.debug(String.format("ACTUAL PART NAME  : (%s) <=> EXPECTED PART NAME : (%s)", agentWorkflowJobPartsResult.getCidPartNumber(), partData.getPartName()));
+                        }
+                    })
+                    .anyMatch(partData ->
+                        agentWorkflowJobPartsResult.getCidPartNumber().contains(partData.getPartName())
+                    )
+            );
+    }
+
+    /**
+     * Verify PLM part number in job results
+     *
+     * @param agentWorkflowJobResults - AgentWorkflowJobResults
+     * @param plmPartData             - Expected PartData
+     * @return boolean
+     */
+    public Boolean verifyPartNumberInJobResult(AgentWorkflowJobResults agentWorkflowJobResults, List<PartData> plmPartData) {
+        return agentWorkflowJobResults.stream()
+            .anyMatch(agentWorkflowJobPartsResult ->
+                plmPartData.stream()
+                    .peek(partData -> {
+                        if (agentWorkflowJobPartsResult.getPartNumber().contains(partData.getPlmPartNumber())) {
+                            log.debug(String.format("ACTUAL PART NUMBER  : (%s) <=> EXPECTED PART NUMBER : (%s)", agentWorkflowJobPartsResult.getPartNumber(), partData.getPlmPartNumber()));
+                        }
+                    })
+                    .anyMatch(partData ->
+                        agentWorkflowJobPartsResult.getPartNumber().contains(partData.getPlmPartNumber())
+                    )
+            );
+    }
+
+    /**
+     * Verify Report in received email report
+     *
+     * @param emailMessageAttachments - AgentWorkflowJobResults
+     * @param plmPartData             - Expected PartData
+     * @return boolean
+     */
+    public Boolean verifyEmailAttachedReportName(EmailMessageAttachments emailMessageAttachments, List<PartData> plmPartData) {
+        return emailMessageAttachments.value.stream()
+            .anyMatch(emailMessageAttachment ->
+                plmPartData.stream()
+                    .peek(partData -> {
+                        if (emailMessageAttachment.getName().contains(partData.getPartName())) {
+                            log.debug(String.format("ACTUAL REPORT NAME  : (%s) <=> EXPECTED REPORT NAME : (%s)", emailMessageAttachment.getName(), partData.getPartName()));
+                        }
+                    })
+                    .anyMatch(partData ->
+                        emailMessageAttachment.getName().contains(partData.getPartName())
+                    )
+            );
+    }
+
+    /**
+     * Verify Report content in email (PDF document)
+     *
+     * @param emailMessageAttachments
+     * @param plmPartData
+     * @return boolean
+     */
+    public Boolean verifyPdfDocumentContent(EmailMessageAttachments emailMessageAttachments, List<PartData> plmPartData) {
+        return emailMessageAttachments.value.stream()
+            .map(emailMessageAttachment -> (PDFDocument) emailMessageAttachment.getFileAttachment())
+            .anyMatch(pdfDocument ->
+                plmPartData.stream()
+                    .peek(partData -> {
+                        if (!pdfDocument.getDocumentContents().contains(partData.getPartName().toUpperCase())) {
+                            log.debug(String.format("ACTUAL Document content : (%s) <=> EXPECTED PART NAME : (%s)", pdfDocument.getDocumentContents(), partData.getPartName()));
+                        }
+                    })
+                    .anyMatch(partData ->
+                        pdfDocument.getDocumentContents().contains(partData.getPartName().toUpperCase())
+                    )
+            );
     }
 }

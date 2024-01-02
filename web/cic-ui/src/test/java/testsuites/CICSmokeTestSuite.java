@@ -2,6 +2,7 @@ package testsuites;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
+import com.apriori.cic.ui.tests.AssemblyReportTests;
 import com.apriori.cic.ui.tests.ConnectorTabTests;
 import com.apriori.cic.ui.tests.CostingInputTabTests;
 import com.apriori.cic.ui.tests.CostingPreferencesTests;
@@ -42,7 +43,8 @@ import org.junit.platform.suite.api.Suite;
     QueryDefinitionTests.class,
     UsersTests.class,
     WorkflowScheduleTests.class,
-    WorkflowHistoryTests.class
+    WorkflowHistoryTests.class,
+    AssemblyReportTests.class
 })
 
 @IncludeTags(SMOKE)

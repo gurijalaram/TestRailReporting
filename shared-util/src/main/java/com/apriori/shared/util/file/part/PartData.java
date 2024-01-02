@@ -14,7 +14,6 @@ import java.time.temporal.ChronoUnit;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PartData {
-
     private String filename;
     private String externalId;
     private Integer annualVolume;

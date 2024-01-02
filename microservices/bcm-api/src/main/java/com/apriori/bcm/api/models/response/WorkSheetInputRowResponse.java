@@ -12,20 +12,20 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "WorksheetSchema.json")
+@Schema(location = "WorksheetInputRowSchema.json")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonRootName("response")
-public class WorkSheetResponse {
-    private String id;
-    private String identity;
-    private String customerIdentity;
-    private String createdAt;
-    private String createdBy;
-    private String name;
-    private List costingEventIds;
-
-
+public class WorkSheetInputRowResponse {
+    String id;
+    String identity;
+    String customerIdentity;
+    String createdAt;
+    String createdBy;
+    String worksheetId;
+    String componentIdentity;
+    String scenarioIdentity;
+    List<String> iterationIds;
 }
