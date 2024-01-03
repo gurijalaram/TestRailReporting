@@ -166,6 +166,7 @@ local:
   application_name: cid
   deployment: aPriori Internal Production
   installation_name: Local
+  installation_name: US 1
 
   admin:
     ui_url: ${local.base_url}/apriori/login

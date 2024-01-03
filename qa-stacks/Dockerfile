@@ -35,6 +35,7 @@ ENV BROWER=$BROWSER
 ENV THREAD_COUNTS=$THREAD_COUNTS
 ENV ENVS=$ENVS
 ENV BASE_URL=$BASE_URL
+ENV DEPLOYMENT=$DEPLOYMENT
 
 CMD java \
   -javaagent:aspectjweaver-1.9.20.1.jar \
@@ -46,5 +47,6 @@ CMD java \
   -Dbrowser=$BROWSER \
   -Denv=$ENVS \
   -Dlocal_base_url=$BASE_URL \
+  -Ddeployment=$DEPLOYMENT \
   -jar app.jar \
   -test $TESTS
