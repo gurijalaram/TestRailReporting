@@ -61,7 +61,6 @@ public class UploadComponentTests extends TestBaseUI {
     private ImportCadFilePage importCadFilePage;
     private EvaluatePage evaluatePage;
     private ComponentsTreePage componentsTreePage;
-    private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();
 
@@ -339,11 +338,9 @@ public class UploadComponentTests extends TestBaseUI {
 
         component = new ComponentRequestUtil().getComponent();
 
-        cidComponentItem = new CidAppLoginPage(driver)
+        evaluatePage = new CidAppLoginPage(driver)
             .login(component.getUser())
-            .uploadComponent(component.getComponentName(), component.getScenarioName(), component.getResourceFile(), component.getUser());
-
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
+            .uploadComponentAndOpen(component);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
 

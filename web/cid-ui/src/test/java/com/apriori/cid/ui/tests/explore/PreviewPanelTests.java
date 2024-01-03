@@ -109,8 +109,11 @@ public class PreviewPanelTests extends TestBaseUI {
 
         component = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
         ComponentInfoBuilder component3 = new ComponentRequestUtil().getComponent();
+        component3.setUser(component.getUser());
         ComponentInfoBuilder component4 = new ComponentRequestUtil().getComponent();
+        component4.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(component.getUser())

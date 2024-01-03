@@ -13,13 +13,11 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.OperationEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -29,16 +27,12 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class PublishTests extends TestBaseUI {
 
-    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private PublishPage publishPage;
-    private File resourceFile;
-    private ComponentInfoBuilder cidComponentItem;
+    private ComponentInfoBuilder component;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public PublishTests() {
@@ -51,52 +45,38 @@ public class PublishTests extends TestBaseUI {
     @Description("Publish a new scenario from the Private Workspace to the Public Workspace")
     @TestRail(id = {6729, 6731})
     public void testPublishNewCostedScenario() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "testpart-4";
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        explorePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
+        assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()), is(greaterThan(0)));
     }
 
     @Test
     @TestRail(id = {6743, 6744, 6745, 6747, 6041, 21550})
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
-        final String file = "testpart-4.prt";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "testpart-4";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, file);
         String filterName = new GenerateStringUtil().generateFilterName();
-        currentUser = UserUtil.getUser();
+
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        publishPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        publishPage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
@@ -108,18 +88,18 @@ public class PublishTests extends TestBaseUI {
 
         publishPage.selectStatus("Analysis")
             .selectCostMaturity("Low")
-            .selectAssignee(currentUser);
+            .selectAssignee(component.getUser());
 
-        explorePage = publishPage.publish(cidComponentItem, EvaluatePage.class).clickExplore()
+        explorePage = publishPage.publish(component, EvaluatePage.class).clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, scenarioName)
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, component.getScenarioName())
             .submit(ExplorePage.class);
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isGreaterThan(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName())).isGreaterThan(0);
 
-        explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "");
+        explorePage.multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName());
 
         softAssertions.assertThat(explorePage.isPublishButtonEnabled()).isEqualTo(false);
 

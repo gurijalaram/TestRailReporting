@@ -18,11 +18,7 @@ import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -199,43 +195,31 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @Description("Validate the User can open a public source part in the evaluate tab")
     @TestRail(id = {7867, 7876})
     public void testOpenPublicSourceModel() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-        final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
-
-        String sourceScenarioName = new GenerateStringUtil().generateScenarioName();
-        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
-        String sourcePartName = "Raw Casting";
-        String twoModelPartName = "Machined Casting";
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".prt");
-        twoModelFile = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModelPartName + ".prt");
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder sourcePartName = new ComponentRequestUtil().getComponent("Raw Casting");
+        ComponentInfoBuilder twoModelPartName = new ComponentRequestUtil().getComponent("Machined Casting");
+        twoModelPartName.setUser(sourcePartName.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(sourcePartName, sourceScenarioName, resourceFile, currentUser);
-
-        cidComponentItemB = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(sourcePartName)
+            .selectProcessGroup(sourcePartName.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
-            .uploadComponent(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser);
-
-        evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemB)
-            .selectProcessGroup(processGroupEnumTwoModel)
+            .publish(sourcePartName, EvaluatePage.class)
+            .uploadComponentAndOpen(twoModelPartName)
+            .selectProcessGroup(twoModelPartName.getProcessGroup())
             .selectSourcePart()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(sourcePartName)
-            .highlightScenario(sourcePartName, sourceScenarioName)
+            .clickSearch(sourcePartName.getComponentName())
+            .highlightScenario(sourcePartName.getComponentName(), sourcePartName.getScenarioName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, EvaluatePage.class)
-            .openSourceScenario(sourceScenarioName);
+            .openSourceScenario(sourcePartName.getComponentName());
 
-        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourcePartName.getComponentName()), is(true));
     }
 
     @Test

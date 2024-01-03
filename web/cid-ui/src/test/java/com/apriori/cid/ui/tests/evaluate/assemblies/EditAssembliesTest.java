@@ -66,7 +66,6 @@ public class EditAssembliesTest extends TestBaseUI {
     private EditScenarioStatusPage editStatusPage;
     private PreviewPage previewPage;
     private SoftAssertions softAssertions = new SoftAssertions();
-    private ComponentInfoBuilder cidComponentItem;
 
     @Test
     @Issue("APD-2431")
@@ -984,6 +983,7 @@ public class EditAssembliesTest extends TestBaseUI {
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
         componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
+        ComponentInfoBuilder bigRing = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(big_ring)).findFirst().get();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costAssembly(componentAssembly);
@@ -991,18 +991,13 @@ public class EditAssembliesTest extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItem = loginPage.login(componentAssembly.getUser())
-            .uploadComponent(big_ring, newScenarioName, componentAssembly.getSubComponents().stream().findAny()
-                .filter(x -> x.getComponentName().equalsIgnoreCase(big_ring))
-                .get()
-                .getResourceFile(), componentAssembly.getUser());
+        loginPage.login(componentAssembly.getUser())
+            .uploadComponent(big_ring, newScenarioName, bigRing.getResourceFile(), bigRing.getExtension(), componentAssembly.getUser());
 
-        evaluatePage = new EvaluatePage(driver).refresh()
-            .navigateToScenario(componentAssembly);
-
-        componentsTreePage = evaluatePage.openComponents();
-
-        componentsTablePage = componentsTreePage.selectTableView()
+        componentsTablePage = new EvaluatePage(driver)
+            .refresh()
+            .navigateToScenario(componentAssembly).openComponents()
+            .selectTableView()
             .multiSelectSubcomponents(big_ring + "," + componentAssembly.getScenarioName())
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsTablePage.class)

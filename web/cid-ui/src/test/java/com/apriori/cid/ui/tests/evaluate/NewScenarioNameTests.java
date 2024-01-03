@@ -1,7 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate;
 
 import static com.apriori.shared.util.enums.ProcessGroupEnum.PLASTIC_MOLDING;
-import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,9 +18,6 @@ import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.OperationEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -31,20 +27,13 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class NewScenarioNameTests extends TestBaseUI {
 
-    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ScenarioPage scenarioPage;
     private EvaluatePage evaluatePage;
-    private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private ComponentInfoBuilder cidComponentItemB;
-    private ComponentInfoBuilder cidComponentItemC;
-    private ComponentInfoBuilder cidComponentItemD;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public NewScenarioNameTests() {
@@ -73,50 +62,42 @@ public class NewScenarioNameTests extends TestBaseUI {
     @TestRail(id = {5953})
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
     public void multipleUpload() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "MultiUpload";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioA = generateStringUtil.generateScenarioName();
-        String scenarioB = generateStringUtil.generateScenarioName();
-        String scenarioC = generateStringUtil.generateScenarioName();
         String filterName = generateStringUtil.generateFilterName();
-        currentUser = UserUtil.getUser();
+
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        componentB.setUser(component.getUser());
+        ComponentInfoBuilder componentC = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        componentC.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItemB = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioA, resourceFile, currentUser);
-
-        cidComponentItemC = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
-            .selectProcessGroup(processGroupEnum)
+        explorePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, EvaluatePage.class)
-            .uploadComponent(componentName, scenarioB, resourceFile, currentUser);
-
-        cidComponentItemD = new EvaluatePage(driver).navigateToScenario(cidComponentItemC)
-            .selectProcessGroup(STOCK_MACHINING)
+            .publish(component, EvaluatePage.class)
+            .uploadComponentAndOpen(componentB)
+            .selectProcessGroup(componentB.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemC, EvaluatePage.class)
-            .uploadComponent(componentName, scenarioC, resourceFile, currentUser);
-
-        explorePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemD)
+            .publish(componentB, EvaluatePage.class)
+            .uploadComponentAndOpen(componentC)
             .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemD, EvaluatePage.class)
+            .publish(componentC, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -126,9 +107,9 @@ public class NewScenarioNameTests extends TestBaseUI {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        softAssertions.assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioA)).isEqualTo(1);
-        softAssertions.assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioB)).isEqualTo(1);
-        softAssertions.assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioC)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName())).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentB.getComponentName(), componentB.getScenarioName())).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentC.getComponentName(), componentC.getScenarioName())).isEqualTo(1);
 
         softAssertions.assertAll();
     }

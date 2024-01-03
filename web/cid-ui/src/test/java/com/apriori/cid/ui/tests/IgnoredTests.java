@@ -37,14 +37,11 @@ import java.io.File;
 
 public class IgnoredTests extends TestBaseUI {
 
-    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private CssComponent cssComponent = new CssComponent();
-    private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
     private ComponentInfoBuilder component;
 
@@ -58,33 +55,28 @@ public class IgnoredTests extends TestBaseUI {
     @TestRail(id = {5950, 5951, 5952})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-        String componentName = "partbody_2";
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, componentName + ".stp");
-        String testScenarioName = generateStringUtil.generateScenarioName();
         String testNewScenarioName = generateStringUtil.generateScenarioName();
-        currentUser = UserUtil.getUser();
+
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
-
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED)).isEqualTo(true);
 
-        evaluatePage.selectProcessGroup(processGroupEnum)
+        evaluatePage.selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(componentName)
-            .highlightScenario(componentName, testScenarioName)
+            .clickSearch(component.getComponentName())
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .copyScenario()
             .enterScenarioName(testNewScenarioName)
             .submit(EvaluatePage.class);
@@ -99,39 +91,33 @@ public class IgnoredTests extends TestBaseUI {
     @TestRail(id = {6210, 5435, 6735})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioNameB = new GenerateStringUtil().generateScenarioName();
-        String componentName = "PowderMetalShaft";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+        explorePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
-            .selectProcessGroup(processGroupEnum)
+            .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
             .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickActions()
             .lock(EvaluatePage.class)
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, ExplorePage.class);
+            .publish(component, ExplorePage.class);
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioNameB)).isEqualTo(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), scenarioNameB)).isEqualTo(0);
     }
 
     @Test
@@ -145,7 +131,6 @@ public class IgnoredTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
-            .navigateToScenario(cidComponentItem)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005.getMaterialName())

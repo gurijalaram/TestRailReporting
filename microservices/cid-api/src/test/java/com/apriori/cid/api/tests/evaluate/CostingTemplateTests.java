@@ -4,11 +4,10 @@ import com.apriori.cid.api.models.response.CostingTemplates;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -28,11 +27,7 @@ public class CostingTemplateTests {
 
     @Test
     public void testCostingTemplateId() {
-        final ProcessGroupEnum processGroup = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "Machined Box AMERICAS";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".SLDPRT");
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent("Machined Box AMERICAS");
 
         ComponentInfoBuilder costingInfo = ComponentInfoBuilder.builder()
             .costingTemplate(CostingTemplate.builder()
@@ -41,23 +36,18 @@ public class CostingTemplateTests {
                 .productionLife(2.5)
                 .processGroupName(ProcessGroupEnum.CASTING.getProcessGroup())
                 .build())
-            .user(currentUser)
+            .user(component.getUser())
             .build();
 
         CostingTemplate costingTemplateId = new ScenariosUtil().postCostingTemplate(costingInfo);
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .costingTemplate(costingTemplateId)
-                .build());
+        component.setCostingTemplate(costingTemplateId);
 
-        scenariosUtil.postCostScenario(componentResponse);
+        componentsUtil.postComponent(component);
 
-        CostingTemplate costingTemplate = scenariosUtil.getCostingTemplateIdentity(currentUser, costingTemplateId.getIdentity());
+        scenariosUtil.postCostScenario(component);
+
+        CostingTemplate costingTemplate = scenariosUtil.getCostingTemplateIdentity(component.getUser(), costingTemplateId.getIdentity());
 
         softAssertions.assertThat(costingTemplate.getAnnualVolume()).isEqualTo(4400);
         softAssertions.assertThat(costingTemplate.getBatchSize()).isEqualTo(7);

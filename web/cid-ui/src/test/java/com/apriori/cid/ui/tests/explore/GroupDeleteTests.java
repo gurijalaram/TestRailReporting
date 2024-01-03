@@ -8,12 +8,10 @@ import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.DeletePage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -22,16 +20,12 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class GroupDeleteTests extends TestBaseUI {
 
-    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private ComponentInfoBuilder cidComponentItem;
-    private ComponentInfoBuilder cidComponentItemB;
-    private ComponentInfoBuilder cidComponentItemC;
+    private ComponentInfoBuilder component;
+    private ComponentInfoBuilder componentB;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
@@ -39,43 +33,34 @@ public class GroupDeleteTests extends TestBaseUI {
     @Description("Verify user can delete 2 or more parts")
     @Tag(SMOKE)
     public void testGroupDelete() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        final String componentName = "bracket_basic";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-        final String componentName2 = "bracket_basic";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".prt");
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent();
+        componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-
-        explorePage = new ExplorePage(driver).selectFilter("Recent")
+        explorePage = loginPage.login(component.getUser())
+            .uploadComponent(component)
+            .uploadComponent(componentB)
+            .selectFilter("Recent")
             .refresh()
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "");
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName());
 
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(true);
 
-        explorePage = explorePage.multiSelectScenarios("" + componentName2 + ", " + scenarioName2 + "");
+        explorePage = explorePage.multiSelectScenarios(componentB.getComponentName() + ", " + componentB.getScenarioName());
 
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(true);
 
         explorePage.clickDeleteIcon()
             .clickDelete(DeletePage.class)
             .clickClose(ExplorePage.class)
-            .checkComponentDelete(cidComponentItem)
-            .checkComponentDelete(cidComponentItemB)
+            .checkComponentDelete(component)
+            .checkComponentDelete(componentB)
             .refresh();
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isEqualTo(0);
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName2, scenarioName2)).isEqualTo(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName())).isEqualTo(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentB.getComponentName(), componentB.getScenarioName())).isEqualTo(0);
 
         softAssertions.assertAll();
     }
@@ -84,20 +69,16 @@ public class GroupDeleteTests extends TestBaseUI {
     @TestRail(id = {15021, 15022})
     @Description("Verify Delete icon disabled if a selected part is in Processing/Costing state")
     public void testGroupDeleteProcessing() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        final String componentName = "bracket_basic";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        explorePage = new ExplorePage(driver).selectFilter("Recent")
+        explorePage = loginPage.login(component.getUser())
+            .uploadComponent(component)
+            .clickExplore()
+            .selectFilter("Recent")
             .refresh()
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "")
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName())
             .clickCostButton(ComponentBasicPage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA)
@@ -114,55 +95,46 @@ public class GroupDeleteTests extends TestBaseUI {
     @Description("Verify user can delete 2 or more assemblies. Verify correct behavior of Delete button when multi-selecting.")
     @Tag(SMOKE)
     public void testGroupDeleteAssemblies() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
         final String assemblyName = "titan cordless drill";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, assemblyName + ".SLDASM");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.ASSEMBLY;
         final String assemblyName2 = "titan charger ass";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, assemblyName2 + ".SLDASM");
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-
-        final ProcessGroupEnum processGroupEnum3 = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentName = "2062987";
-        final File resourceFile3 = FileResourceUtil.getCloudFile(processGroupEnum3, componentName + ".prt");
-        final String scenarioName3 = new GenerateStringUtil().generateScenarioName();
 
-        currentUser = UserUtil.getUser();
+        ComponentInfoBuilder assembly = new AssemblyRequestUtil().getAssembly(assemblyName);
+        ComponentInfoBuilder assemblyB = new AssemblyRequestUtil().getAssembly(assemblyName2);
+        assemblyB.setUser(assembly.getUser());
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent(componentName);
+        component.setUser(assembly.getUser());
+
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(assemblyName, scenarioName, resourceFile, currentUser);
-
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(assemblyName2, scenarioName2, resourceFile2, currentUser);
-
-        cidComponentItemC = new ExplorePage(driver).uploadComponent(componentName, scenarioName3, resourceFile3, currentUser);
-
-        explorePage = new ExplorePage(driver).selectFilter("Recent")
+        explorePage = loginPage.login(assembly.getUser())
+            .uploadComponent(assembly)
+            .uploadComponent(assemblyB)
+            .uploadComponent(component)
+            .selectFilter("Recent")
             .refresh()
-            .multiSelectScenarios("" + assemblyName + ", " + scenarioName + "");
+            .multiSelectScenarios(assembly.getComponentName() + ", " + assembly.getScenarioName());
 
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(true);
 
-        explorePage.multiSelectScenarios("" + assemblyName2 + ", " + scenarioName2 + "");
+        explorePage.multiSelectScenarios(assemblyB.getComponentName() + ", " + assemblyB.getScenarioName());
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(true);
 
-        explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName3 + "");
+        explorePage.multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName());
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(false);
 
-        explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName3 + "");
+        explorePage.multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName());
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(true);
 
         explorePage.clickDeleteIcon()
             .clickDelete(DeletePage.class)
             .clickClose(ExplorePage.class)
-            .checkComponentDelete(cidComponentItem)
-            .checkComponentDelete(cidComponentItemB)
+            .checkComponentDelete(assembly)
+            .checkComponentDelete(assemblyB)
             .refresh();
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(0);
-        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName2, scenarioName2)).isEqualTo(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(assembly.getComponentName(), assembly.getScenarioName())).isEqualTo(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyB.getComponentName(), assemblyB.getScenarioName())).isEqualTo(0);
 
         softAssertions.assertAll();
     }

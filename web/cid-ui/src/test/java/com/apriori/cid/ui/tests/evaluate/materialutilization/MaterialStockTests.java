@@ -3,6 +3,7 @@ package com.apriori.cid.ui.tests.evaluate.materialutilization;
 import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.POWDER_METAL;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
@@ -120,7 +121,7 @@ public class MaterialStockTests extends TestBaseUI {
     @TestRail(id = {5154, 5155, 5156})
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(POWDER_METAL);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
         stockPage = loginPage.login(component.getUser())
