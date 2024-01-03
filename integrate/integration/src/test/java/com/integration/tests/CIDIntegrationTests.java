@@ -1,6 +1,5 @@
 package com.integration.tests;
 
-import com.apriori.cia.ui.pageobjects.manage.ScenarioExport;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
@@ -8,7 +7,6 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.pageobjects.settings.ProductionDefaultsPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
-import com.apriori.cir.ui.pageobjects.view.reports.ComponentCostReportPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.TestDataService;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
@@ -31,16 +29,14 @@ import java.io.File;
 
 public class CIDIntegrationTests extends TestBaseUI {
 
+    private static final String FILE_NAME = "CID_To_AppStream.csv";
+    private static TestDataService testDataService;
     private UserCredentials currentUser = UserUtil.getUser();
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private File resourceFile;
     private ComponentInfoBuilder cidComponentItem;
     private ProductionDefaultsPage productionDefaultPage;
-    private ScenarioExport scenarioExport;
-    private ComponentCostReportPage componentCostReportPage;
-    private static TestDataService testDataService;
-    private static final String FILE_NAME = "CID_To_AppStream.csv";
 
     public CIDIntegrationTests() {
         super();
@@ -63,7 +59,7 @@ public class CIDIntegrationTests extends TestBaseUI {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, testDataService.getInputData().get("componentName") + ".prt");
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(testDataService.getInputData().get("componentName").toString(), testDataService.getInputData().get("scenarioName").toString(), resourceFile, currentUser);
+            .uploadComponent(testDataService.getInputData().get("componentName").toString(), testDataService.getInputData().get("scenarioName").toString(), resourceFile, ".prt", currentUser);
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(ProcessGroupEnum.fromString((String) testDataService.getInputData().get("processGroup")))
@@ -88,7 +84,6 @@ public class CIDIntegrationTests extends TestBaseUI {
     @Description("User can change the default Production Defaults")
     public void changeUserSettings() {
         SoftAssertions softAssertions = new SoftAssertions();
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -116,9 +111,5 @@ public class CIDIntegrationTests extends TestBaseUI {
         softAssertions.assertThat(productionDefaultPage.getMaterial()).contains("ABS, Plating");
 
         softAssertions.assertAll();
-    }
-
-    @AfterAll
-    public static void testCleanup() {
     }
 }

@@ -60,6 +60,10 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
     private WebElement yesButtonOnConfirmationScreen;
     @FindBy(xpath = "//div[contains(.,'Inactive')][@aria-label = 'Inactive']")
     private WebElement userIsInactive;
+    @FindBy(xpath = "//div[contains(.,'This user is not able to have their enablements edited')][@data-testid ='alert-messaging']")
+    private WebElement cannotEditEnablaments;
+    @FindBy(xpath = "//div[contains(@class,'apriori-select disabled')]")
+    private WebElement disabledEnablments;
 
 
     private PageUtils pageUtils;
@@ -263,5 +267,21 @@ public class UserManagementPage extends LoadableComponent<UserManagementPage> {
         return pageUtils.isElementDisplayed(userManagementHeader);
     }
 
+    /**
+     * check user see warning info
+     * return boolean
+     */
+    public boolean isInfoCannotEditIsVisible() {
+        pageUtils.waitForElementAppear(cannotEditEnablaments);
+        return cannotEditEnablaments.isDisplayed();
+    }
 
+    /**
+     * check user is disabling for editing enablements
+     * return boolean
+     */
+    public boolean isDisabledToEditEnablements() {
+        pageUtils.waitForElementAppear(disabledEnablments);
+        return disabledEnablments.isDisplayed();
+    }
 }

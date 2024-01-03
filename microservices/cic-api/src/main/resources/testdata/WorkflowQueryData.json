@@ -235,6 +235,126 @@
     "description": ""
   },
   "selectedEmailReportName": "none",
+  "emailReportConfiguration": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "identifier": {
+          "name": "identifier",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 3,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isValid": {
+          "name": "isValid",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 4,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 2,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "key": {
+          "name": "key",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 1,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [
+      {
+        "identifier": "84c49f4a-b0d4-4dd9-9e83-e394eb638599",
+        "isValid": true,
+        "value": "USD",
+        "key": "currencyCode",
+        "_isSelected": false
+      },
+      {
+        "identifier": "6df5ff37-6a19-4f09-aab4-857890541c4b",
+        "isValid": true,
+        "value": "true",
+        "key": "roundToDollar",
+        "_isSelected": false
+      }
+    ],
+    "name": "",
+    "description": ""
+  },
+  "plmWriteReportConfiguration": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "identifier": {
+          "name": "identifier",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 3,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isValid": {
+          "name": "isValid",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 4,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 2,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "key": {
+          "name": "key",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 1,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [
+      {
+        "identifier": "1f7b8768-761c-4470-bddf-7f5b42a222bf",
+        "isValid": true,
+        "value": "USD",
+        "key": "currencyCode",
+        "_isSelected": false
+      },
+      {
+        "identifier": "41d54b06-78a2-4c94-b109-96cc20fdadbd",
+        "isValid": true,
+        "value": "true",
+        "key": "roundToDollar",
+        "_isSelected": false
+      }
+    ],
+    "name": "",
+    "description": ""
+  },
   "isPlmWriteReportNameSelected": false,
   "selectedPlmWriteReportName": "none",
   "emailPartFilter": {},

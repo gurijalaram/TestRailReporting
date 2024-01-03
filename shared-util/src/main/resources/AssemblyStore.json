@@ -26,6 +26,51 @@
       ]
     },
     {
+      "componentName": "auto hinge assembly",
+      "extension": ".SLDASM",
+      "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
+      "subComponents": [
+        {
+          "componentName": "auto big ring",
+          "extension": ".SLDPRT",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "auto pin",
+          "extension": ".SLDPRT",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "auto small ring",
+          "extension": ".SLDPRT",
+          "processGroup": "FORGING"
+        }
+      ]
+    },
+    {
+      "componentName": "Miss_Fuse_Block_Asm",
+      "extension": ".CATProduct",
+      "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
+      "subComponents": [
+        {
+          "componentName": "Miss_Conductor",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        },
+        {
+          "componentName": "Miss_Fuse_Connector_Housing",
+          "extension": ".CATPart",
+          "processGroup": "FORGING"
+        }
+      ]
+    },
+    {
       "componentName": "titan battery ass",
       "extension": ".SLDASM",
       "processGroup": "ASSEMBLY",
@@ -68,6 +113,26 @@
           "extension": ".CATPart",
           "processGroup": "PLASTIC_MOLDING"
         }
+      ]
+    },
+    {
+      "componentName": "titan cordless drill",
+      "extension": ".SLDASM",
+      "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
+      "subComponents": [
+      ]
+    },
+    {
+      "componentName": "titan charger ass",
+      "extension": ".SLDASM",
+      "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "small"
+      },
+      "subComponents": [
       ]
     },
     {

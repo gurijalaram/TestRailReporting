@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cid.api.utils.ComponentsUtil;
-import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.MaterialNameEnum;
@@ -69,7 +68,7 @@ public class MaterialSelectionTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCID(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)

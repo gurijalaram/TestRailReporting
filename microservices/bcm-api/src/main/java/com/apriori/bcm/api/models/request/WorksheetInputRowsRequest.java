@@ -1,5 +1,6 @@
-package com.apriori.bcm.api.models.response;
+package com.apriori.bcm.api.models.request;
 
+import com.apriori.shared.util.annotations.CreatableModel;
 import com.apriori.shared.util.annotations.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,23 +10,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "WorksheetSchema.json")
+@Schema(location = "WorksheetInputRowRequestSchema.json")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@CreatableModel("worksheet")
 @JsonRootName("response")
-public class WorkSheetResponse {
-    private String id;
-    private String identity;
-    private String customerIdentity;
-    private String createdAt;
-    private String createdBy;
-    private String name;
-    private List costingEventIds;
-
-
+public class WorksheetInputRowsRequest {
+    Inputrow inputRow;
 }

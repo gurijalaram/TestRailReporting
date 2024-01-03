@@ -143,7 +143,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItemA = loginPage.login(currentUser).uploadComponent(hingeAssembly, newScenarioName, resourceFile, currentUser);
+        cidComponentItemA = loginPage.login(currentUser).uploadComponent(hingeAssembly, newScenarioName, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(componentAssembly)
             .openComponents()
             .addColumn(ColumnsEnum.PUBLISHED);
@@ -152,12 +152,12 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        cidComponentItemB = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName2, resourceFile2, currentUser);
+        cidComponentItemB = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName2, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemB)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        cidComponentItemC = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName2, resourceFile, currentUser);
+        cidComponentItemC = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName2, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemC)
             .openComponents();
 
@@ -165,9 +165,9 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        cidComponentItemD = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName3, resourceFile2, currentUser);
+        cidComponentItemD = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName3, resourceFile2, subComponentExtension, currentUser);
 
-        cidComponentItemE = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName4, resourceFile, currentUser);
+        cidComponentItemE = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName4, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemE)
             .openComponents();
 
@@ -175,9 +175,9 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        cidComponentItemF = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName4, resourceFile2, currentUser);
+        cidComponentItemF = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName4, resourceFile2, subComponentExtension, currentUser);
 
-        cidComponentItemG = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName3, resourceFile, currentUser);
+        cidComponentItemG = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName3, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemG)
             .openComponents();
 
@@ -205,7 +205,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItemA = loginPage.login(currentUser).uploadComponent(hingeAssembly, newScenarioName, resourceFile, currentUser);
+        cidComponentItemA = loginPage.login(currentUser).uploadComponent(hingeAssembly, newScenarioName, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(componentAssembly)
             .openComponents()
             .addColumn(ColumnsEnum.PUBLISHED);
@@ -214,12 +214,12 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        cidComponentItemB = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName2, resourceFile2, currentUser);
+        cidComponentItemB = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName2, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemB)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        cidComponentItemC = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName2, resourceFile, currentUser);
+        cidComponentItemC = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName2, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemC)
             .openComponents();
 
@@ -227,9 +227,9 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        cidComponentItemD = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName3, resourceFile2, currentUser);
+        cidComponentItemD = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName3, resourceFile2, subComponentExtension, currentUser);
 
-        cidComponentItemE = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName4, resourceFile, currentUser);
+        cidComponentItemE = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName4, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemE)
             .openComponents();
 
@@ -237,9 +237,9 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        cidComponentItemF = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName4, resourceFile2, currentUser);
+        cidComponentItemF = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName4, resourceFile2, subComponentExtension, currentUser);
 
-        cidComponentItemG = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName3, resourceFile, currentUser);
+        cidComponentItemG = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName3, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemG)
             .openComponents();
 
@@ -265,7 +265,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItemA = loginPage.login(currentUser).uploadComponent(hingeAssembly, newScenarioName, resourceFile, currentUser);
+        cidComponentItemA = loginPage.login(currentUser).uploadComponent(hingeAssembly, newScenarioName, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(componentAssembly)
             .openComponents()
             .addColumn(ColumnsEnum.PUBLISHED);
@@ -274,9 +274,9 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
-        cidComponentItemB = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName2, resourceFile2, currentUser);
+        cidComponentItemB = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName2, resourceFile2, subComponentExtension, currentUser);
 
-        cidComponentItemC = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName2, resourceFile, currentUser);
+        cidComponentItemC = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName2, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemC)
             .openComponents();
 
@@ -284,12 +284,12 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
-        cidComponentItemD = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName3, resourceFile2, currentUser);
+        cidComponentItemD = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName3, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemD)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        cidComponentItemE = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName4, resourceFile, currentUser);
+        cidComponentItemE = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName4, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemE)
             .openComponents();
 
@@ -297,12 +297,12 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
-        cidComponentItemF = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName4, resourceFile2, currentUser);
+        cidComponentItemF = new EvaluatePage(driver).uploadComponent(bigRing, newScenarioName4, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemF)
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        cidComponentItemG = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName3, resourceFile, currentUser);
+        cidComponentItemG = new EvaluatePage(driver).uploadComponent(hingeAssembly, newScenarioName3, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemG)
             .openComponents();
 

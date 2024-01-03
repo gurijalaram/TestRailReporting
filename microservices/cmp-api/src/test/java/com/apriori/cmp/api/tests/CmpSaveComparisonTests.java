@@ -53,7 +53,7 @@ public class CmpSaveComparisonTests {
         scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        component1 = componentsUtil.postComponentQueryCID(
+        component1 = componentsUtil.postComponent(
             ComponentInfoBuilder.builder()
                 .componentName(componentName1)
                 .scenarioName(scenarioName)
@@ -61,7 +61,7 @@ public class CmpSaveComparisonTests {
                 .user(currentUser)
                 .build()
         );
-        component2 = componentsUtil.postComponentQueryCID(
+        component2 = componentsUtil.postComponent(
             ComponentInfoBuilder.builder()
                 .componentName(componentName2)
                 .scenarioName(scenarioName)
@@ -69,7 +69,7 @@ public class CmpSaveComparisonTests {
                 .user(currentUser)
                 .build()
         );
-        component3 = componentsUtil.postComponentQueryCID(
+        component3 = componentsUtil.postComponent(
             ComponentInfoBuilder.builder()
                 .componentName(componentName3)
                 .scenarioName(scenarioName)

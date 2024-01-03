@@ -14,6 +14,7 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.utils.MultiUpload;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
@@ -30,7 +31,6 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,35 +42,22 @@ public class GroupCostTests extends TestBaseUI {
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private ComponentInfoBuilder cidComponentItem;
-    private ComponentInfoBuilder cidComponentItemB;
-    private ComponentInfoBuilder cidComponentItemA;
     private CssComponent cssComponent = new CssComponent();
 
     @Test
     @TestRail(id = {14796})
     @Description("Select multiple private components and cost")
     public void testGroupCost() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        final String componentName = "bracket_basic";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-        final String componentName2 = "bracket_basic";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".prt");
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        componentB.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-
-        explorePage = new ExplorePage(driver).refresh()
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+        explorePage = loginPage.login(component.getUser())
+            .uploadComponent(component)
+            .uploadComponent(componentB).refresh()
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
             .clickCostButton(ComponentBasicPage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA)
@@ -82,11 +69,11 @@ public class GroupCostTests extends TestBaseUI {
             .submit(ComponentBasicPage.class)
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
-            .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
-            .checkComponentStateRefresh(cidComponentItemB, ScenarioStateEnum.COST_COMPLETE);
+            .checkComponentStateRefresh(component, ScenarioStateEnum.COST_COMPLETE)
+            .checkComponentStateRefresh(componentB, ScenarioStateEnum.COST_COMPLETE);
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory(), "6,000");
-        softAssertions.assertThat(explorePage.getRowDetails(componentName2, scenarioName2)).contains(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory(), "6,000");
+        softAssertions.assertThat(explorePage.getRowDetails(component.getComponentName(), component.getScenarioName())).contains(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory(), "6,000");
+        softAssertions.assertThat(explorePage.getRowDetails(componentB.getComponentName(), componentB.getScenarioName())).contains(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory(), "6,000");
 
         softAssertions.assertAll();
     }
@@ -150,44 +137,32 @@ public class GroupCostTests extends TestBaseUI {
     @TestRail(id = {14798})
     @Description("Verify that Cost button is disabled when a combination of private and public parts are selected")
     public void testGroupCostPrivateAndPublicScenarios() {
-        final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.PLASTIC_MOLDING;
-        String componentName1 = "titan charger lead";
-        final File resourceFile1 = FileResourceUtil.getCloudFile(processGroupEnum1, componentName1 + ".SLDPRT");
-        final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-        String componentName2 = "Part0004";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".ipt");
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-
-        final ProcessGroupEnum processGroupEnum3 = ProcessGroupEnum.CASTING_SAND;
-        String componentName3 = "SandCast";
-        final File resourceFile3 = FileResourceUtil.getCloudFile(processGroupEnum3, componentName3 + ".x_t");
-        final String scenarioName3 = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        componentB.setUser(component.getUser());
+        ComponentInfoBuilder componentC = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
+        componentC.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName1, scenarioName1, resourceFile1, currentUser);
-
-        cidComponentItemA = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName3, scenarioName3, resourceFile3, currentUser);
-
-        explorePage = new ExplorePage(driver).refresh()
-            .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "");
+        explorePage = loginPage.login(currentUser)
+            .uploadComponent(component)
+            .uploadComponent(componentB)
+            .uploadComponent(componentC)
+            .refresh()
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName());
 
         softAssertions.assertThat(explorePage.isCostButtonEnabled()).isEqualTo(true);
 
-        explorePage.openScenario(componentName3, scenarioName3)
+        explorePage.openScenario(componentC.getComponentName(), componentC.getScenarioName())
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
             .clickExplore()
             .selectFilter("Public")
-            .multiSelectScenarios("" + componentName3 + ", " + scenarioName3 + "")
+            .multiSelectScenarios(componentC.getComponentName() + ", " + componentC.getScenarioName())
             .selectFilter("Private")
-            .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "");
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName());
 
         softAssertions.assertThat(explorePage.isCostButtonEnabled()).isEqualTo(false);
 

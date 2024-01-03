@@ -18,6 +18,7 @@ import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.web.app.util.login.LoginService;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
@@ -146,6 +147,26 @@ public class UserManagementPageUITest extends AchEnvironmentUIUtil {
             .clickFinishButton();
 
         softAssertions.assertThat(userManagementPage.ifOnUserManagementPage()).isTrue();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29342})
+    public void userAdminCannotUpdateTheirEnablements() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        aprioriLoginService = new LoginService(driver, "");
+        cloudHomePage = aprioriLoginService.login(userCredentials, CloudHomePage.class);
+
+        String userName = StringUtils.substringBefore(userCredentials.getEmail(), "@");
+
+        userManagementPage =
+            cloudHomePage.clickUserPanel()
+                .clickUserManagementButton()
+                .findUserAndClickEdit(userName);
+
+        softAssertions.assertThat(userManagementPage.isInfoCannotEditIsVisible()).isTrue();
+        softAssertions.assertThat(userManagementPage.isDisabledToEditEnablements()).isTrue();
+        softAssertions.assertAll();
     }
 
     private void deleteCreatedUser(String email) {

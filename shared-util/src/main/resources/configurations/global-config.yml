@@ -37,6 +37,7 @@ global:
   page_size: 1000
   scenario_name_prefix: AutoScenario
 
+  report_email_address: nts-testing-mailbox@aprioritest.com
   nexus:
     api_url: https://nexus.apriori.com/
     username: 1W_7fYw7

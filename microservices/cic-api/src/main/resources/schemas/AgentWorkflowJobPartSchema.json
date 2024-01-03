@@ -144,7 +144,6 @@
         "laborTime",
         "finishMass",
         "roughMass",
-        "utilization",
         "routingName"
       ],
       "optional": [
@@ -156,7 +155,8 @@
         "totalCarbon",
         "totalCost",
         "dfmRisk",
-        "dfmScore"
+        "dfmScore",
+        "utilization"
       ]
     }
   },

@@ -41,7 +41,6 @@ public class UploadTests extends TestBaseUI {
 
     private File resourceFile;
     private UserCredentials currentUser;
-    private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder assembly;
 
     @Test
@@ -109,32 +108,25 @@ public class UploadTests extends TestBaseUI {
     @TestRail(id = {6652})
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
     public void cadConnectionRemains() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
-        String componentName = "225_gasket-1-solid1";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .logout()
             .login(UserUtil.getUser())
             .selectFilter("Public")
-            .clickSearch(componentName)
+            .clickSearch(component.getComponentName())
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario(componentName, scenarioName);
+            .openScenario(component.getComponentName(), component.getScenarioName());
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
     }
