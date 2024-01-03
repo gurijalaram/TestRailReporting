@@ -189,6 +189,9 @@ local:
     appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity: H337GKD0LA0N
     identity_role: H337GKD0L80E
+    cia_application_identity: 1J8M416FBJCD
+    cir_application_identity: 1J8M416FBJDE
+    acs_application_identity: DD4356A476DC
 
   cidapp:
     ui_url: ${local.base_url}:3003/
