@@ -183,6 +183,7 @@ pipeline {
                              --target build \
                              --tag ${buildInfo.name}-test-${timeStamp}:latest \
                              --label \"build-date=${timeStamp}\" \
+                             --label qa-automation
                              --build-arg FOLDER=${folder} \
                              --build-arg MODULE=${MODULE} \
                              .
@@ -204,6 +205,7 @@ pipeline {
                             --progress=plain \
                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
                             --label \"build-date=${timeStamp}\" \
+                            --label qa-automation
                             --secret id=aws_config,src=${AWS_CONFIG_SECRET_TXT} \
                             --secret id=aws_creds,src=${AWS_CREDENTIALS_SECRET_TXT} \
                             --build-arg FOLDER=${folder} \
@@ -241,11 +243,12 @@ pipeline {
     post {
         always {
             echo "Cleaning up.."
-            sh "docker rm -f ${buildInfo.name}-test-${timeStamp}"
-            sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
-            sh "docker volume rm \$(docker volume ls -qf dangling=true)"
-            sh "docker system prune --all --force"
-            cleanWs()
+            //sh "docker rm -f ${buildInfo.name}-test-${timeStamp}"
+            //sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
+            //sh "docker volume rm \$(docker volume ls -qf dangling=true)"
+            //sh "docker system prune --all --force"
+            sh "docker system prune --filter \"label=qa-automation\" --force"
+            //cleanWs()
 
             script {
                 if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
