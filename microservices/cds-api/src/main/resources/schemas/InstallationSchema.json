@@ -93,7 +93,9 @@
                   "name",
                   "cloudReference",
                   "serviceName",
-                  "description",
+                  "description"
+                ],
+                "optional" : [
                   "iconUrl"
                 ],
                 "properties": {
