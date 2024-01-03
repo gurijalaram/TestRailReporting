@@ -9,7 +9,6 @@ import com.apriori.cid.ui.pageobjects.evaluate.UpdateCadFilePage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.explore.ImportCadFilePage;
-import com.apriori.cid.ui.utils.MultiUpload;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -138,7 +137,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(ComponentInfoBuilder componentInfo) {
-        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCID(componentInfo);
+        ComponentInfoBuilder component = new ComponentsUtil().postComponent(componentInfo);
         return navigateToScenario(component);
     }
 
@@ -259,15 +258,28 @@ public class ExploreToolbar extends MainNavBar {
      * @param scenarioName    - the scenario name
      * @param resourceFile    - the file
      * @param userCredentials - the user credentials
+     * @param extension       - the extension
      * @return response object
      */
-    public ComponentInfoBuilder uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        return new ComponentsUtil().postComponentQueryCID(ComponentInfoBuilder.builder()
+    public ComponentInfoBuilder uploadComponent(String componentName, String scenarioName, File resourceFile, String extension, UserCredentials userCredentials) {
+        return new ComponentsUtil().postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .resourceFile(resourceFile)
+            .extension(extension)
             .user(userCredentials)
             .build());
+    }
+
+    /**
+     * Uploads a component through the API
+     *
+     * @param componentInfo - the component info builder
+     * @return current page object
+     */
+    public ExplorePage uploadComponent(ComponentInfoBuilder componentInfo) {
+        new ComponentsUtil().postComponent(componentInfo);
+        return new ExplorePage(driver);
     }
 
     /**
@@ -476,26 +488,6 @@ public class ExploreToolbar extends MainNavBar {
     public ExplorePage refresh() {
         pageUtils.waitForElementAndClick(refreshButton);
         return new ExplorePage(driver);
-    }
-
-    /**
-     * This method uploads via drop zone, wait to be in a not costed state and opens the component
-     *
-     * @param multiComponents - the multi components
-     * @param scenarioName    - scenario name
-     * @param assemblyName    - assembly name
-     * @param currentUser     - current user
-     * @return - new page object
-     */
-    public ComponentsTreePage uploadAndOpenComponent(List<MultiUpload> multiComponents, String scenarioName, String assemblyName, UserCredentials currentUser) {
-        importCadFile()
-            .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
-            .submit()
-            .clickClose()
-            .openComponent(assemblyName, scenarioName, currentUser)
-            .openComponents();
-        return new ComponentsTreePage(driver);
     }
 
     /**

@@ -156,7 +156,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(explorePage.getRowDetails(conductor, scenarioName)).contains("Low");
         softAssertions.assertThat(explorePage.getRowDetails(housing, scenarioName)).contains("Low");
 
-        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, newScenarioName, resourceFile, currentUser);
+        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, newScenarioName, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new ExplorePage(driver).navigateToScenario(cidComponentItemA)
             .openComponents()
             .addColumn(ColumnsEnum.COST_MATURITY)
@@ -173,14 +173,14 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
         componentsTreePage.closePanel()
             .clickExplore();
 
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(conductor, newScenarioName, resourceFile2, currentUser);
+        cidComponentItemB = new ExplorePage(driver).uploadComponent(conductor, newScenarioName, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
             .clickActions()
             .info()
             .inputCostMaturity("Medium")
             .submit(EvaluatePage.class);
 
-        cidComponentItemD = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        cidComponentItemD = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemD)
             .openComponents();
 
@@ -194,14 +194,14 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
         componentsTreePage.closePanel()
             .clickExplore();
 
-        cidComponentItemC = new ExplorePage(driver).uploadComponent(conductor, newScenarioName2, resourceFile2, currentUser);
+        cidComponentItemC = new ExplorePage(driver).uploadComponent(conductor, newScenarioName2, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemC)
             .clickActions()
             .info()
             .inputCostMaturity("Medium")
             .submit(EvaluatePage.class);
 
-        cidComponentItemD = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName3, resourceFile, currentUser);
+        cidComponentItemD = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName3, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemD)
             .openComponents();
 
@@ -239,7 +239,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(explorePage.getRowDetails(conductor, scenarioName)).contains("High");
         softAssertions.assertThat(explorePage.getRowDetails(housing, scenarioName)).contains("High");
 
-        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, newScenarioName, resourceFile, currentUser);
+        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, newScenarioName, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new ExplorePage(driver).navigateToScenario(cidComponentItemA)
             .openComponents()
             .addColumn(ColumnsEnum.COST_MATURITY)
@@ -256,7 +256,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
         componentsTreePage.closePanel()
             .clickExplore();
 
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(conductor, newScenarioName, resourceFile2, currentUser);
+        cidComponentItemB = new ExplorePage(driver).uploadComponent(conductor, newScenarioName, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
             .clickActions()
             .info()
@@ -264,7 +264,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
             .selectStatus("Complete")
             .submit(EvaluatePage.class);
 
-        cidComponentItemD = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        cidComponentItemD = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemD)
             .openComponents()
             .addColumn(ColumnsEnum.STATUS);
@@ -280,7 +280,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
         componentsTreePage.closePanel()
             .clickExplore();
 
-        cidComponentItemC = new ExplorePage(driver).uploadComponent(conductor, newScenarioName2, resourceFile2, currentUser);
+        cidComponentItemC = new ExplorePage(driver).uploadComponent(conductor, newScenarioName2, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemC)
             .clickActions()
             .info()
@@ -288,7 +288,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
             .selectStatus("Complete")
             .submit(EvaluatePage.class);
 
-        cidComponentItemD = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName3, resourceFile, currentUser);
+        cidComponentItemD = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName3, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemD)
             .openComponents();
 
@@ -314,8 +314,8 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser);
 
-        cidComponentItemH = new ExplorePage(driver).uploadComponent(conductor, scenarioName, resourceFile2, currentUser);
-        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, newScenarioName, resourceFile, currentUser);
+        cidComponentItemH = new ExplorePage(driver).uploadComponent(conductor, scenarioName, resourceFile2, subComponentExtension, currentUser);
+        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, newScenarioName, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new ExplorePage(driver).navigateToScenario(cidComponentItemA)
             .openComponents()
             .addColumn(ColumnsEnum.PUBLISHED);
@@ -323,7 +323,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(conductor, newScenarioName, resourceFile2, currentUser);
+        cidComponentItemB = new ExplorePage(driver).uploadComponent(conductor, newScenarioName, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
             .clickActions()
             .info()
@@ -332,7 +332,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        cidComponentItemC = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        cidComponentItemC = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemC)
             .openComponents()
             .addColumn(ColumnsEnum.COST_MATURITY);
@@ -345,7 +345,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class);
 
-        cidComponentItemD = new ExplorePage(driver).uploadComponent(conductor, newScenarioName3, resourceFile2, currentUser);
+        cidComponentItemD = new ExplorePage(driver).uploadComponent(conductor, newScenarioName3, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemD)
             .clickActions()
             .info()
@@ -354,7 +354,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        cidComponentItemE = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        cidComponentItemE = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemE)
             .openComponents();
 
@@ -366,7 +366,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class);
 
-        cidComponentItemF = new ExplorePage(driver).uploadComponent(conductor, newScenarioName4, resourceFile2, currentUser);
+        cidComponentItemF = new ExplorePage(driver).uploadComponent(conductor, newScenarioName4, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemF)
             .clickActions()
             .info()
@@ -375,7 +375,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        cidComponentItemG = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        cidComponentItemG = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemG)
             .openComponents();
 
@@ -413,7 +413,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class);
 
-        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, scenarioName, resourceFile, currentUser);
+        cidComponentItemA = new ExplorePage(driver).uploadComponent(fuse_block_asm, scenarioName, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new ExplorePage(driver).navigateToScenario(cidComponentItemA)
             .openComponents()
             .addColumn(ColumnsEnum.PUBLISHED);
@@ -421,7 +421,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(conductor, newScenarioName, resourceFile2, currentUser);
+        cidComponentItemB = new ExplorePage(driver).uploadComponent(conductor, newScenarioName, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
             .clickActions()
             .info()
@@ -431,7 +431,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        cidComponentItemC = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        cidComponentItemC = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemC)
             .openComponents()
             .addColumn(ColumnsEnum.COST_MATURITY)
@@ -446,7 +446,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class);
 
-        cidComponentItemD = new ExplorePage(driver).uploadComponent(conductor, newScenarioName3, resourceFile2, currentUser);
+        cidComponentItemD = new ExplorePage(driver).uploadComponent(conductor, newScenarioName3, resourceFile2, subComponentExtension, currentUser);
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemD)
             .clickActions()
             .info()
@@ -456,7 +456,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        cidComponentItemE = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, currentUser);
+        cidComponentItemE = new EvaluatePage(driver).uploadComponent(fuse_block_asm, newScenarioName2, resourceFile, assemblyExtension, currentUser);
         componentsTreePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemE)
             .openComponents();
 

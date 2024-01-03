@@ -1,15 +1,14 @@
 package com.apriori.cid.ui.tests.compare;
 
-import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.compare.ComparePage;
 import com.apriori.cid.ui.pageobjects.compare.CreateComparePage;
-import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -39,25 +38,24 @@ public class QuickComparisonTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private CreateComparePage createComparePage;
     private ComparePage comparePage;
-    private ComponentInfoBuilder cidComponentItemA;
-    private ComponentInfoBuilder cidComponentItemB;
+    private ComponentInfoBuilder component;
+    private ComponentInfoBuilder componentB;
 
     private ScenariosUtil scenarioUtil = new ScenariosUtil();
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private File resourceFile;
     private SoftAssertions softAssertions = new SoftAssertions();
-    private AssemblyUtils assemblyUtils = new AssemblyUtils();
 
     @AfterEach
     public void deleteScenarios() {
 
-        if (cidComponentItemA != null) {
-            scenarioUtil.deleteScenario(cidComponentItemA.getComponentIdentity(), cidComponentItemA.getScenarioIdentity(), currentUser);
-            cidComponentItemA = null;
+        if (component != null) {
+            scenarioUtil.deleteScenario(component.getComponentIdentity(), component.getScenarioIdentity(), currentUser);
+            component = null;
 
-            if (cidComponentItemB != null) {
-                scenarioUtil.deleteScenario(cidComponentItemB.getComponentIdentity(), cidComponentItemB.getScenarioIdentity(), currentUser);
-                cidComponentItemB = null;
+            if (componentB != null) {
+                scenarioUtil.deleteScenario(componentB.getComponentIdentity(), componentB.getScenarioIdentity(), currentUser);
+                componentB = null;
             }
         }
     }
@@ -74,7 +72,7 @@ public class QuickComparisonTests extends TestBaseUI {
         String scenarioName1 = new GenerateStringUtil().generateScenarioName();
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder part1 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder part1 = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName1)
             .processGroup(processGroupEnum)
@@ -82,7 +80,7 @@ public class QuickComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder part2 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder part2 = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName2)
             .processGroup(processGroupEnum)
@@ -112,7 +110,7 @@ public class QuickComparisonTests extends TestBaseUI {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder basePart = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder basePart = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .processGroup(processGroupEnum)
@@ -166,7 +164,7 @@ public class QuickComparisonTests extends TestBaseUI {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder basePart = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder basePart = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .processGroup(processGroupEnum)
@@ -223,7 +221,7 @@ public class QuickComparisonTests extends TestBaseUI {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String scenarioName3 = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder basePart = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder basePart = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(baseScenarioName)
             .processGroup(processGroupEnum)
@@ -231,7 +229,7 @@ public class QuickComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder scenario1 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder scenario1 = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName1)
             .processGroup(processGroupEnum)
@@ -239,7 +237,7 @@ public class QuickComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder scenario2 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder scenario2 = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName2)
             .processGroup(processGroupEnum)
@@ -247,7 +245,7 @@ public class QuickComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder scenario3 = componentsUtil.postComponentQueryCID(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder scenario3 = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName3)
             .processGroup(processGroupEnum)
@@ -312,34 +310,30 @@ public class QuickComparisonTests extends TestBaseUI {
     @TestRail(id = {26147})
     @Description("Validate scenarios can be deleted from quick comparison via modify comparison")
     public void testDeleteQuickComparison() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-
-        String componentName = "auto pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        component = new ComponentRequestUtil().getComponent();
+        componentB = component;
+        componentB.setScenarioName(scenarioName);
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItemA = loginPage.login(currentUser).uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        new ExplorePage(driver).logout();
-
-        cidComponentItemB = loginPage.login(currentUser).uploadComponent(componentName, scenarioName2, resourceFile, currentUser);
-
-        comparePage = new ExplorePage(driver)
+        comparePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component).logout()
+            .login(component.getUser())
+            .uploadComponentAndOpen(componentB)
+            .clickExplore()
             .selectFilter("Recent")
-            .multiSelectScenarios("" + componentName + ", " + scenarioName)
+            .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName())
             .createComparison()
             .selectQuickComparison();
 
-        softAssertions.assertThat(comparePage.getAllScenariosInComparison()).contains(componentName.toUpperCase() + "  / " + scenarioName);
+        softAssertions.assertThat(comparePage.getAllScenariosInComparison()).contains(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
 
         comparePage.modify()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickScenarioCheckbox(componentName, scenarioName)
-            .clickScenarioCheckbox(componentName, scenarioName2)
+            .clickScenarioCheckbox(component.getComponentName(), component.getScenarioName())
+            .clickScenarioCheckbox(component.getComponentName(), scenarioName)
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);

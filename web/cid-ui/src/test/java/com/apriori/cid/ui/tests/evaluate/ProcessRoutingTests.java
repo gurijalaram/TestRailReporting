@@ -31,10 +31,6 @@ import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -47,23 +43,18 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.stream.Collectors;
 
 public class ProcessRoutingTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private ExplorePage explorePage;
     private ComponentsTablePage componentsTablePage;
-    private ComponentInfoBuilder cidComponentItem;
-    private ComponentInfoBuilder cidComponentItemA;
     private MaterialProcessPage materialProcessPage;
     private RoutingSelectionPage routingSelectionPage;
     private MaterialSelectorPage materialSelectorPage;
     private GuidanceIssuesPage guidanceIssuesPage;
     private AdvancedPage advancedPage;
     private ComponentInfoBuilder component;
-    private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public ProcessRoutingTests() {
@@ -72,8 +63,8 @@ public class ProcessRoutingTests extends TestBaseUI {
 
     @AfterEach
     public void resetAllSettings() {
-        if (currentUser != null) {
-            new UserPreferencesUtil().resetSettings(currentUser);
+        if (component != null) {
+            new UserPreferencesUtil().resetSettings(component.getUser());
         }
     }
 
@@ -955,35 +946,26 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {16095, 16099})
     @Description("Validate group cost behaviour against routings")
     public void routingsAndGroupCost() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        final String componentName = "sheet metal custom 2";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
-        final String componentName2 = "sheet metal custom 3";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".SLDPRT");
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        component = new ComponentRequestUtil().getComponent("sheet metal custom 2");
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent("sheet metal custom 2");
+        componentB.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        cidComponentItemA = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-
-        explorePage = new ExplorePage(driver).refresh()
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+        evaluatePage = loginPage.login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .uploadComponentAndOpen(componentB)
+            .clickExplore()
+            .refresh()
+            .multiSelectScenarios("" + component.getComponentName() + ", " + component.getScenarioName() + "", "" + componentB.getComponentName() + ", " + componentB.getScenarioName() + "")
             .clickCostButton(ComponentBasicPage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
-            .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
-            .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
-
-        evaluatePage = explorePage.openScenario(componentName, scenarioName);
+            .checkComponentStateRefresh(component, ScenarioStateEnum.COST_COMPLETE)
+            .checkComponentStateRefresh(componentB, ScenarioStateEnum.COST_COMPLETE)
+            .openScenario(component.getComponentName(), component.getScenarioName());
 
         routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
 
@@ -991,13 +973,13 @@ public class ProcessRoutingTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        evaluatePage.clickExplore()
+        ExplorePage explorePage = evaluatePage.clickExplore()
             .selectFilter("Private")
             .addColumn(ColumnsEnum.PROCESS_ROUTING);
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("Material Stock / Waterjet Cut / Bend Brake");
+        softAssertions.assertThat(explorePage.getRowDetails(component.getComponentName(), component.getScenarioName())).contains("Material Stock / Waterjet Cut / Bend Brake");
 
-        explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+        explorePage.multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
             .clickCostButton(ComponentBasicPage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
@@ -1009,22 +991,22 @@ public class ProcessRoutingTests extends TestBaseUI {
             .submit(ComponentBasicPage.class)
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
-            .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
-            .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
+            .checkComponentStateRefresh(component, ScenarioStateEnum.COST_COMPLETE)
+            .checkComponentStateRefresh(componentB, ScenarioStateEnum.COST_COMPLETE);
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("Material Stock / Waterjet Cut / Bend Brake");
+        softAssertions.assertThat(explorePage.getRowDetails(component.getComponentName(), component.getScenarioName())).contains("Material Stock / Waterjet Cut / Bend Brake");
 
-        explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+        explorePage.multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
             .clickCostButton(ComponentBasicPage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC)
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
-            .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
-            .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
+            .checkComponentStateRefresh(component, ScenarioStateEnum.COST_COMPLETE)
+            .checkComponentStateRefresh(componentB, ScenarioStateEnum.COST_COMPLETE);
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("3 Station Rotary Thermoforming / Router");
+        softAssertions.assertThat(explorePage.getRowDetails(component.getComponentName(), component.getScenarioName())).contains("3 Station Rotary Thermoforming / Router");
 
-        explorePage.openScenario(componentName, scenarioName)
+        explorePage.openScenario(component.getComponentName(), component.getScenarioName())
             .goToAdvancedTab()
             .openRoutingSelection();
 
@@ -1035,17 +1017,17 @@ public class ProcessRoutingTests extends TestBaseUI {
         evaluatePage.clickExplore()
             .selectFilter("Private");
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("Shuttle Station Thermoforming / Router");
+        softAssertions.assertThat(explorePage.getRowDetails(component.getComponentName(), component.getScenarioName())).contains("Shuttle Station Thermoforming / Router");
 
-        explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+        explorePage.multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
             .clickCostButton(ComponentBasicPage.class)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
-            .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
-            .checkComponentStateRefresh(cidComponentItemA, ScenarioStateEnum.COST_COMPLETE);
+            .checkComponentStateRefresh(component, ScenarioStateEnum.COST_COMPLETE)
+            .checkComponentStateRefresh(componentB, ScenarioStateEnum.COST_COMPLETE);
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains("3 Station Rotary Thermoforming / Router");
+        softAssertions.assertThat(explorePage.getRowDetails(component.getComponentName(), component.getScenarioName())).contains("3 Station Rotary Thermoforming / Router");
 
         softAssertions.assertAll();
     }
