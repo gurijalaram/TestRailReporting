@@ -1,19 +1,14 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
-import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.api.utils.UserPreferencesUtil;
-import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.PreferencesEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -23,37 +18,24 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MissingAssemblyAssociationsTests extends TestBaseUI {
 
-    private CidAppLoginPage loginPage;
-    private ComponentsTreePage componentsTreePage;
-    private UserCredentials currentUser;
-
-    private SoftAssertions softAssertions = new SoftAssertions();
-    private ComponentInfoBuilder componentAssembly;
-    private ComponentInfoBuilder cidComponentItemA;
-
-    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static UserPreferencesUtil userPreferencesUtil = new UserPreferencesUtil();
+    private CidAppLoginPage loginPage;
+    private ComponentsTreePage componentsTreePage;
+    private SoftAssertions softAssertions = new SoftAssertions();
+    private ComponentInfoBuilder componentAssembly;
 
     @AfterEach
     public void deleteScenarios() {
-        if (currentUser != null) {
-            userPreferencesUtil.resetSettings(currentUser);
+        if (componentAssembly != null) {
+            userPreferencesUtil.resetSettings(componentAssembly.getUser());
 
             assemblyUtils.deleteAssemblyAndComponents(componentAssembly);
-        }
-
-        if (cidComponentItemA != null) {
-            scenariosUtil.deleteScenario(cidComponentItemA.getComponentIdentity(), cidComponentItemA.getScenarioIdentity(), currentUser);
-            cidComponentItemA = null;
         }
     }
 
@@ -61,18 +43,6 @@ public class MissingAssemblyAssociationsTests extends TestBaseUI {
     @TestRail(id = {21669, 21670})
     @Description("Validate, with Prefer Maturity strategy, private sub-components with same scenario name are associated to assembly")
     public void testMaturityPresetPrivateWithSameNameAndMissing() {
-        final String fuse_block_asm = "Miss_Fuse_Block_Asm";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final String assemblyExtension = ".CATProduct";
-        final String conductor = "Miss_Conductor";
-        final String housing = "Miss_Fuse_Connector_Housing";
-        final String subComponentExtension = ".CATPart";
-        final List<String> subComponentNames = Arrays.asList(housing);
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-        final File resourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroup, fuse_block_asm + assemblyExtension);
-
-        currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
         String asmStrategy = "PREFER_HIGH_MATURITY";
@@ -80,44 +50,39 @@ public class MissingAssemblyAssociationsTests extends TestBaseUI {
         Map<PreferencesEnum, String> updateStrategy = new HashMap<>();
         updateStrategy.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
 
-        userPreferencesUtil.updatePreferences(currentUser, updateStrategy);
+        userPreferencesUtil.updatePreferences(componentAssembly.getUser(), updateStrategy);
 
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            fuse_block_asm,
-            assemblyExtension,
-            assemblyProcessGroup,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Miss_Fuse_Block_Asm");
+        ComponentInfoBuilder componentAssemblyB = componentAssembly;
+        componentAssemblyB.setScenarioName(newScenarioName);
+        ComponentInfoBuilder conductor = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("Miss_conductor")).findFirst().get();
+        ComponentInfoBuilder housing = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("Miss_Fuse_Connector_Housing")).findFirst().get();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
 
-        cidComponentItemA = loginPage.login(currentUser)
-            .uploadComponent(fuse_block_asm, newScenarioName, resourceFile, currentUser);
-
-        componentsTreePage = new EvaluatePage(driver).refresh()
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
+            .uploadComponent(componentAssemblyB)
+            .refresh()
             .navigateToScenario(componentAssembly)
             .openComponents()
             .addColumn(ColumnsEnum.SCENARIO_TYPE)
             .addColumn(ColumnsEnum.PUBLISHED);
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, scenarioName)).contains(StatusIconEnum.MISSING.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, scenarioName)).contains(StatusIconEnum.VERIFIED.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor.getComponentName(), componentAssembly.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor.getComponentName(), componentAssembly.getScenarioName())).contains(StatusIconEnum.MISSING.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName(), componentAssembly.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName(), componentAssembly.getScenarioName())).contains(StatusIconEnum.VERIFIED.getStatusIcon());
 
         componentsTreePage.closePanel()
-            .navigateToScenario(cidComponentItemA)
+            .navigateToScenario(componentAssemblyB)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor, newScenarioName)).contains(StatusIconEnum.MISSING.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, newScenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing, newScenarioName)).contains(StatusIconEnum.MISSING.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor.getComponentName(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor.getComponentName(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.MISSING.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.MISSING.getStatusIcon());
 
         softAssertions.assertAll();
     }

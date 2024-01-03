@@ -53,7 +53,7 @@ public class CostHistoryTests extends TestBaseUI {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder castingPart = componentsUtil.postComponentQueryCID(
+        ComponentInfoBuilder castingPart = componentsUtil.postComponent(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .resourceFile(resourceFile)

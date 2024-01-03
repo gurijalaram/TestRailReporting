@@ -8,15 +8,11 @@ import com.apriori.cid.ui.pageobjects.evaluate.components.inputs.ComponentBasicP
 import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
-import com.apriori.cid.ui.utils.MultiUpload;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -24,19 +20,12 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class GroupMachineStrategyApplyTests extends TestBaseUI {
 
-    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private File resourceFile;
-    private File resourceFile2;
-    private ComponentInfoBuilder cidComponentItem;
-    private ComponentInfoBuilder cidComponentItemB;
     private SoftAssertions softAssertions = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();
     private ComponentBasicPage componentBasicPage;
@@ -45,26 +34,16 @@ public class GroupMachineStrategyApplyTests extends TestBaseUI {
     @TestRail(id = {15433, 14939})
     @Description("Explore page - Machinable PG can be selected and part can be costed with \"Do not machine this part\" checked")
     public void testMachiningStrategyOptionFromExplorePage() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-
-        String componentName = "big ring";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName2 = "small ring";
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".SLDPRT");
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
+        componentB.setUser(componentA.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName2));
-
-        componentBasicPage = new ExplorePage(driver).refresh()
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+        componentBasicPage = loginPage.login(componentA.getUser())
+            .uploadComponent(componentA)
+            .uploadComponent(componentB)
+            .refresh()
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
             .clickCostButton(ComponentBasicPage.class);
 
         softAssertions.assertThat(componentBasicPage.isMachineOptionsCheckBoxDisplayed()).isEqualTo(false);
@@ -78,12 +57,12 @@ public class GroupMachineStrategyApplyTests extends TestBaseUI {
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class);
 
-        multiComponents.forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+        Arrays.asList(componentA, componentB).forEach(component ->
+            softAssertions.assertThat(cssComponent.getComponentParts(componentA.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_INCOMPLETE)).hasSizeGreaterThan(0));
 
         componentBasicPage = explorePage.refresh()
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
             .clickCostButton(ComponentBasicPage.class);
 
         softAssertions.assertThat(componentBasicPage.isMachineOptionsCheckBoxSelected()).isEqualTo(true);
@@ -92,8 +71,8 @@ public class GroupMachineStrategyApplyTests extends TestBaseUI {
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class);
 
-        multiComponents.forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+        Arrays.asList(componentA, componentB).forEach(component ->
+            softAssertions.assertThat(cssComponent.getComponentParts(componentA.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.COST_COMPLETE)).hasSizeGreaterThan(0));
 
         softAssertions.assertAll();

@@ -51,7 +51,7 @@ public class DataCreationUtil {
      * @return response object
      */
     public ComponentInfoBuilder createComponent() {
-        return scenariosUtil.getComponentsUtil().postComponentQueryCID(this.componentBuilder);
+        return scenariosUtil.getComponentsUtil().postComponent(this.componentBuilder);
     }
 
     /**

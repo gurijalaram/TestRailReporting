@@ -10,10 +10,9 @@ import com.apriori.cmp.api.models.response.GetComparisonResponse;
 import com.apriori.cmp.api.models.response.PostComparisonResponse;
 import com.apriori.cmp.api.utils.ComparisonUtils;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -28,7 +27,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -41,10 +39,8 @@ public class CmpComparisonTests {
     private static ComponentInfoBuilder component1;
     private static ComponentInfoBuilder component2;
     private static ComponentInfoBuilder component3;
-    private static String scenarioName;
     private static UserCredentials currentUser;
     private ComparisonUtils comparisonUtils = new ComparisonUtils();
-    private String comparisonName;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
@@ -63,42 +59,17 @@ public class CmpComparisonTests {
     @TestRail(id = {26152, 26183, 26184, 26185, 26186, 26187})
     @Description("Verify comparison for a given user")
     public void verifyComparisonForGivenUser() {
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-        comparisonName = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        String componentName1 = "big ring";
-        String componentName2 = "small ring";
-        String componentName3 = "Pin";
-        String componentExt = ".SLDPRT";
-        File resourceFile1 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName1 + componentExt);
-        File resourceFile2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName2 + componentExt);
-        File resourceFile3 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, componentName3 + componentExt);
+        ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();
+        componentB.setUser(componentA.getUser());
+        ComponentInfoBuilder componentC = new ComponentRequestUtil().getComponent();
+        componentC.setUser(componentA.getUser());
 
-        component1 = componentsUtil.postComponentQueryCID(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName1)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile1)
-                .user(currentUser)
-                .build()
-        );
-        component2 = componentsUtil.postComponentQueryCID(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName2)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile2)
-                .user(currentUser)
-                .build()
-        );
-        component3 = componentsUtil.postComponentQueryCID(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName3)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile3)
-                .user(currentUser)
-                .build()
-        );
+        component1 = componentsUtil.postComponent(componentA);
+        component2 = componentsUtil.postComponent(componentB);
+        component3 = componentsUtil.postComponent(componentC);
 
         ComparisonObjectBuilder baseScenario = ComparisonObjectBuilder.builder()
             .externalIdentity(component1.getScenarioIdentity())
@@ -126,28 +97,28 @@ public class CmpComparisonTests {
             .objectsToCompare(comparisonObjectsList)
             .build();
 
-        PostComparisonResponse savedComparisonResponse = comparisonUtils.createComparison(comparison, currentUser, PostComparisonResponse.class, HttpStatus.SC_CREATED);
+        PostComparisonResponse savedComparisonResponse = comparisonUtils.createComparison(comparison, componentA.getUser(), PostComparisonResponse.class, HttpStatus.SC_CREATED);
 
         softAssertions.assertThat(savedComparisonResponse.getComparisonName()).isEqualTo(comparisonName);
 
-        List<GetComparisonResponse> comparisonsResponse = comparisonUtils.queryComparison(currentUser, "pageNumber, 1", "pageSize, 10", "createdBy[EQ],"
+        List<GetComparisonResponse> comparisonsResponse = comparisonUtils.queryComparison(componentA.getUser(), "pageNumber, 1", "pageSize, 10", "createdBy[EQ],"
             + savedComparisonResponse.getCreatedBy());
 
         comparisonsResponse.forEach(comparisonResponse -> softAssertions.assertThat(comparisonResponse.getCreatedBy()).isEqualTo(savedComparisonResponse.getCreatedBy()));
 
-        List<GetComparisonResponse> sortResponse = comparisonUtils.queryComparison(currentUser, "pageNumber, 1", "pageSize, 2000", "sortBy[DESC],"
+        List<GetComparisonResponse> sortResponse = comparisonUtils.queryComparison(componentA.getUser(), "pageNumber, 1", "pageSize, 2000", "sortBy[DESC],"
             + "createdAt");
 
         softAssertions.assertThat(Comparators.isInOrder(sortResponse.stream().map(GetComparisonResponse::getCreatedAt).collect(Collectors.toList()), Comparator.reverseOrder())).isTrue();
 
         final String secondUser = comparisonUtils.getCurrentPerson(UserUtil.getUser()).getIdentity();
 
-        List<GetComparisonResponse> secondUserQuery = comparisonUtils.queryComparison(currentUser, "pageNumber, 1", "pageSize, 10", "createdBy[EQ],"
+        List<GetComparisonResponse> secondUserQuery = comparisonUtils.queryComparison(componentA.getUser(), "pageNumber, 1", "pageSize, 10", "createdBy[EQ],"
             + secondUser);
 
         secondUserQuery.forEach(userQuery -> softAssertions.assertThat(userQuery.getCreatedBy()).isNotEqualTo(savedComparisonResponse.getCreatedBy()));
 
-        ResponseWrapper<String> deleteResponse = comparisonUtils.deleteComparison(savedComparisonResponse.getIdentity(), currentUser);
+        ResponseWrapper<String> deleteResponse = comparisonUtils.deleteComparison(savedComparisonResponse.getIdentity(), componentA.getUser());
 
         softAssertions.assertThat(deleteResponse.getBody()).isEmpty();
 
