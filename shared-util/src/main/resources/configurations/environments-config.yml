@@ -166,6 +166,7 @@ local:
   application_name: cid
   deployment: aPriori Internal Production
   installation_name: US 1
+  user_identity: 4N630F61FGNG
 
   admin:
     ui_url: ${local.base_url}/apriori/login
@@ -218,6 +219,9 @@ local:
 
   sds:
     api_url: ${local.base_url}:8811/
+
+  vds:
+    api_url: ${local.base_url}:8812/
 
 ########################################################################################################################
 
