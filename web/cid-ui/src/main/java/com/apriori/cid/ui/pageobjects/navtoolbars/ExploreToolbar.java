@@ -97,6 +97,9 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(id = "qa-action-bar-download-report")
     private WebElement downloadReportButton;
 
+    @FindBy(css = "[data-testid='apriori-alert']")
+    private WebElement lastUpdatedAlert;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -648,5 +651,14 @@ public class ExploreToolbar extends MainNavBar {
         file.deleteOnExit();
 
         return file;
+    }
+
+    /**
+     * Gets the Last updated timestamp
+     *
+     * @return string
+     */
+    public String returnLastUpdatedTimestamp() {
+        return lastUpdatedAlert.getText();
     }
 }

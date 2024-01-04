@@ -111,4 +111,18 @@ public class TableHeadersTests extends TestBaseUI {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(id = {})
+    @Description("Test")
+    public void testLastUpdatedAlert() {
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser());
+
+        String timestamp = explorePage.returnLastUpdatedTimestamp();
+
+        softAssertions.assertThat(timestamp).as("Returns timestamp string").contains("Last updated at ");
+
+        softAssertions.assertAll();
+    }
 }
