@@ -6,7 +6,7 @@
 ############################################# Global properties ########################################################
 # Define main configurations
 env: qa-test
-deployment: Sandbox
+deployment: production
 customer: ap-int
 
 # Deployment
@@ -15,7 +15,6 @@ production:
   url_part: ${env}
 
 sandbox:
-  name: Sandbox
   url_part: sandbox.${env}
 #==========================================================
 
@@ -75,7 +74,7 @@ default:
     api_url: https://cas-api.${core_service_url_template}
 
   cus:
-    api_url: https://cus.${core_service_url_template}
+    api_url: https://cus.${deployment_independent_services_url_template}
 
   cds:
     api_url: https://cds.${deployment_independent_services_url_template}
