@@ -16,6 +16,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -120,8 +121,16 @@ public class TableHeadersTests extends TestBaseUI {
         explorePage = loginPage.login(UserUtil.getUser());
 
         String timestamp = explorePage.returnLastUpdatedTimestamp();
+        String formattedTime = DateTime.now().toString("h:mma");
 
-        softAssertions.assertThat(timestamp).as("Returns timestamp string").contains("Last updated at ");
+        softAssertions.assertThat(timestamp).as("Verify Last Updated Timestamp on initial load").contains("Last updated at " + formattedTime);
+
+        // I've thrown in an arbitrary refresh here to verify, but I think it should either be padded out with doing other tasks that'll take 1+ minutes to perform
+        explorePage.refresh();
+        timestamp = explorePage.returnLastUpdatedTimestamp();
+        formattedTime = DateTime.now().toString("h:mma");
+
+        softAssertions.assertThat(timestamp).as("Verify Last Updated Timestamp after Refresh").contains("Last updated at " + formattedTime);
 
         softAssertions.assertAll();
     }
