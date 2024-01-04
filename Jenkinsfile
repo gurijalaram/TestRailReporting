@@ -243,12 +243,9 @@ pipeline {
     post {
         always {
             echo "Cleaning up.."
-            //sh "docker rm -f ${buildInfo.name}-test-${timeStamp}"
-            //sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
-            //sh "docker volume rm \$(docker volume ls -qf dangling=true)"
-            //sh "docker system prune --all --force"
+
             sh "docker system prune --filter \"label=qa-automation\" --force"
-            //cleanWs()
+            cleanWs()
 
             script {
                 if (currentBuild.rawBuild.log.contains('Response contains MappingException.')) {
