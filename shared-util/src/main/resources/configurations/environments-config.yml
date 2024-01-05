@@ -224,6 +224,9 @@ local:
   vds:
     api_url: ${local.base_url}:8812/
 
+  cloud:
+    ui_url: ${local.base_url}:3001/
+
   ach:
     api_url: ${local.base_url}:8800/
 
