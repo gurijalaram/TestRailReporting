@@ -203,6 +203,7 @@ local:
 
   cis:
     ui_url: ${local.base_url}:3004/
+    api_url: ${local.base_url}:8815/
 
   css:
     ui_url: ${local.base_url}:8802
@@ -231,6 +232,15 @@ local:
 
   igs:
     api_url: ${local.base_url}:8899/
+
+  dds:
+    api_url: ${local.base_url}:8817/
+
+  qms:
+    api_url: ${local.base_url}:8821/
+
+  qds:
+    api_url: ${local.base_url}:8814/
 
 ########################################################################################################################
 
