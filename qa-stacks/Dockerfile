@@ -47,6 +47,6 @@ CMD java \
   -Dbrowser=$BROWSER \
   -Denv=$ENVS \
   -Dlocal_base_url=$BASE_URL \
-  -Ddeployment=$DEPLOYMENT \
+  -Ddeployment="$DEPLOYMENT" \
   -jar app.jar \
   -test $TESTS
