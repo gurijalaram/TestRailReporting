@@ -159,7 +159,7 @@ public class DigitalFactoriesTests {
     public void getDigitalFactoryIncorrectAcceptHeader() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.getDigitalFactory(
-            HttpStatusCode.NOT_FOUND, ErrorMessage.class, NON_EXISTENT_DIGITAL_FACTORY_ID);
+            HttpStatusCode.NOT_ACCEPTABLE, ErrorMessage.class, NON_EXISTENT_DIGITAL_FACTORY_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(IDENTITY_DOES_NOT_EXIST_MSG);
