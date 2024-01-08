@@ -39,9 +39,9 @@ def registry_password(profile = '', region = '') {
 }
 
 pipeline {
-    agent {
-        label "automation"
-    }
+     agent {
+            label ('docker && linux')
+        }
 
     stages {
         stage("Initialize") {
@@ -243,7 +243,6 @@ pipeline {
     post {
         always {
             echo "Cleaning up.."
-
             sh "docker system prune --filter \"label=qa-automation\" --force"
             cleanWs()
 
