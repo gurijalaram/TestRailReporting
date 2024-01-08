@@ -38,11 +38,4 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
 
         return dontAddSharedSecret ? endpoint : endpoint + this.addQuery(getEndpointString());
     }
-
-    @Override
-    public String addQuery(String endpointString) {
-        // TODO: use when DFS fixed to pull secret from the param store
-        // return endpointString.contains("?") ? "&" : "?key=" + getSecretKey();
-        return endpointString.contains("?") ? "&" : "?key=" + PropertiesContext.get("dfs.authorization_key");
-    }
 }
