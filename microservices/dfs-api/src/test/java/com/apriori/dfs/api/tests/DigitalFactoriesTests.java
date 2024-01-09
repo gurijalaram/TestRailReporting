@@ -1,8 +1,12 @@
 package com.apriori.dfs.api.tests;
 
+import com.apriori.dfs.api.enums.DFSApiEnum;
 import com.apriori.dfs.api.models.response.DigitalFactories;
 import com.apriori.dfs.api.models.response.DigitalFactory;
 import com.apriori.dfs.api.models.utils.DigitalFactoryUtil;
+import com.apriori.shared.util.http.models.entity.RequestEntity;
+import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -35,6 +39,8 @@ public class DigitalFactoriesTests {
     private static final String VALID_DIGITAL_FACTORY_ID = "ABCDEFGHIJK2";
     private static final String NON_EXISTENT_DIGITAL_FACTORY_ID = "ABCDEFGHIJK5";
     private static final String UNAUTHORIZED_ERROR = "Unauthorized";
+    private static final String NOT_ACCEPTABLE = "Not Acceptable";
+    private static final String NOT_ACCEPTABLE_MSG = "Could not find acceptable representation";
 
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final DigitalFactoryUtil digitalFactoryUtil = new DigitalFactoryUtil();
@@ -163,6 +169,25 @@ public class DigitalFactoriesTests {
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(IDENTITY_DOES_NOT_EXIST_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29566})
+    @Description("Get Not Acceptable error when incorrect Accept Header is provided")
+    public void getDigitalFactoryWithIncorrectAcceptHeader() {
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DFSApiEnum.DIGITAL_FACTORIES, ErrorMessage.class)
+            .headers(new HashMap<>() {
+                {
+                    put("Accept", "application/javascript");
+                }
+            });
+
+        ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).get();
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getStatus()).isEqualTo(406);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_ACCEPTABLE);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(NOT_ACCEPTABLE_MSG);
         softAssertions.assertAll();
     }
 
