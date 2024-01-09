@@ -9,6 +9,27 @@ import com.apriori.shared.util.http.utils.ResponseWrapper;
 public class ProcessGroupsUtil {
 
     /**
+     * FIND process groups
+     *
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @param inlineVariables - identity or identity/secret
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> findProcessGroups(Integer expectedResponseCode,
+                                                  Class<T> expectedType,
+                                                  String... inlineVariables) {
+
+        DFSApiEnum path = inlineVariables.length == 0
+            ? DFSApiEnum.PROCESS_GROUPS : DFSApiEnum.PROCESS_GROUPS_WITH_KEY_PARAM;
+
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(path, expectedType)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+    /**
      * GET process group
      *
      * @param expectedResponseCode - Expected HTTP status code
@@ -52,5 +73,24 @@ public class ProcessGroupsUtil {
         return RequestEntityUtil_Old.init(path, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
+    }
+
+    /**
+     * GET process group
+     *
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @param identity - identity
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> findProcessGroupsWithoutKeyParameter(Integer expectedResponseCode,
+                                                                     Class<T> expectedType,
+                                                                     String identity) {
+
+        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(DFSApiEnum.PROCESS_GROUPS_BY_PATH, expectedType)
+            .inlineVariables(new String[]{ identity, ""}) // hack - add one more empty variable to skip auto adding shared secret
+            .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).get();
     }
 }

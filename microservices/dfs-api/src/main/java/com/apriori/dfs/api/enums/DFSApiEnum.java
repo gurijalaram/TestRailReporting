@@ -14,6 +14,8 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
     DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM("digital-factories/%s?key=%s"),
 
     // PROCESS GROUP
+    PROCESS_GROUPS("process-groups"),
+    PROCESS_GROUPS_WITH_KEY_PARAM("digital-factories?key=%s"),
     PROCESS_GROUPS_BY_PATH("process-groups/%s"),
     PROCESS_GROUPS_BY_PATH_WITH_KEY_PARAM("process-groups/%s?key=%s");
 
@@ -37,12 +39,5 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
             .anyMatch(String::isEmpty);
 
         return dontAddSharedSecret ? endpoint : endpoint + this.addQuery(getEndpointString());
-    }
-
-    @Override
-    public String addQuery(String endpointString) {
-        // TODO: use when DFS fixed to pull secret from the param store
-        // return endpointString.contains("?") ? "&" : "?key=" + getSecretKey();
-        return endpointString.contains("?") ? "&" : "?key=" + PropertiesContext.get("dfs.authorization_key");
     }
 }
