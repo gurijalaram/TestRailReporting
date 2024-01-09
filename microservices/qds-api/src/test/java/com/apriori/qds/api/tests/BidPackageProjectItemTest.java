@@ -3,10 +3,12 @@ package com.apriori.qds.api.tests;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.qds.api.controller.BidPackageResources;
 import com.apriori.qds.api.enums.QDSAPIEnum;
+import com.apriori.qds.api.enums.UserRole;
 import com.apriori.qds.api.models.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qds.api.models.response.bidpackage.BidPackageProjectItemResponse;
 import com.apriori.qds.api.models.response.bidpackage.BidPackageProjectItemsResponse;
 import com.apriori.qds.api.models.response.bidpackage.BidPackageProjectResponse;
+import com.apriori.qds.api.models.response.bidpackage.BidPackageProjectUserResponse;
 import com.apriori.qds.api.models.response.bidpackage.BidPackageResponse;
 import com.apriori.qds.api.utils.QdsApiTestUtils;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -15,9 +17,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -34,7 +34,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.HashMap;
 
 @ExtendWith(TestRulesAPI.class)
-public class BidPackageProjectItemTest extends TestUtil {
+public class BidPackageProjectItemTest extends QdsApiTestUtils {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
@@ -185,7 +185,7 @@ public class BidPackageProjectItemTest extends TestUtil {
             bidPackageProjectItemResponse.getIdentity(),
             currentUser);
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ErrorMessage.class)
+        RequestEntity requestEntity = requestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ErrorMessage.class)
             .inlineVariables(bidPackageResponse.getIdentity(),
                 bidPackageProjectResponse.getIdentity(),
                 bidPackageProjectItemResponse.getIdentity())
@@ -234,7 +234,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     @TestRail(id = {13428})
     @Description("Delete project Item by incorrect project Identity")
     public void deleteProjectItemWithInvalidIdentity() {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ErrorMessage.class)
+        RequestEntity requestEntity = requestEntityUtil.init(QDSAPIEnum.BID_PACKAGE_PROJECT_ITEM, ErrorMessage.class)
             .inlineVariables(bidPackageResponse.getIdentity(),
                 "INVALIDPROJECTIDENTITY",
                 bidPackageProjectItemResponse.getIdentity())
@@ -246,6 +246,44 @@ public class BidPackageProjectItemTest extends TestUtil {
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage())
             .contains("'projectIdentity' is not a valid identity");
+    }
+
+    @Test
+    @TestRail(id = {13736, 13739})
+    @Description("Create and Delete Project Item by Admin")
+    public void createProjectItemByAdmin() {
+        String packageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        BidPackageResponse packageResponse = BidPackageResources.createBidPackage(packageName, userContext);
+        BidPackageProjectResponse packageProjectResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), packageResponse.getIdentity(), currentUser);
+        BidPackageItemResponse packageItemResponse = BidPackageResources.createBidPackageItem(
+            BidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
+                scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
+            packageResponse.getIdentity(),
+            currentUser,
+            BidPackageItemResponse.class, HttpStatus.SC_CREATED);
+
+        UserCredentials adminUser = UserUtil.getUser();
+        BidPackageProjectUserResponse bidPackageDefaultProjectUserResponse = BidPackageResources.createBidPackageProjectUser(UserRole.ADMIN.getUserRole(),
+            packageResponse.getIdentity(), packageProjectResponse.getIdentity(), currentUser, adminUser);
+
+        softAssertions.assertThat(bidPackageDefaultProjectUserResponse.getProjectIdentity()).isEqualTo(packageProjectResponse.getIdentity());
+
+        BidPackageProjectItemResponse projectItemResponse = BidPackageResources.createBidPackageProjectItem(
+            packageResponse.getIdentity(),
+            packageProjectResponse.getIdentity(),
+            packageItemResponse.getIdentity(),
+            adminUser, BidPackageProjectItemResponse.class, HttpStatus.SC_CREATED);
+
+        softAssertions.assertThat(projectItemResponse.getBidPackageItemIdentity()).isEqualTo(packageItemResponse.identity);
+
+        BidPackageResources.deleteBidPackageProjectItem(packageResponse.getIdentity(),
+            packageProjectResponse.getIdentity(),
+            projectItemResponse.getIdentity(),
+            adminUser);
+
+        BidPackageResources.deleteBidPackageItem(packageResponse.getIdentity(), packageItemResponse.getIdentity(), adminUser);
+        BidPackageResources.deleteBidPackageProject(packageResponse.getIdentity(), packageProjectResponse.getIdentity(), adminUser);
+        BidPackageResources.deleteBidPackage(packageResponse.getIdentity(), currentUser);
     }
 
     @AfterEach

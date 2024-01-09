@@ -15,7 +15,9 @@
         "username",
         "active",
         "userProfile",
-        "userType",
+        "userType"
+      ],
+      "optional": [
         "enablements"
       ],
       "properties": {

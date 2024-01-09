@@ -165,7 +165,8 @@ local:
   customer_identity: 212B5ABD2F6C
   application_name: cid
   deployment: aPriori Internal Production
-  installation_name: Local
+  installation_name: US 1
+  user_identity: 4N630F61FGNG
 
   admin:
     ui_url: ${local.base_url}/apriori/login
@@ -189,6 +190,9 @@ local:
     appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity: H337GKD0LA0N
     identity_role: H337GKD0L80E
+    cia_application_identity: 1J8M416FBJCD
+    cir_application_identity: 1J8M416FBJDE
+    acs_application_identity: DD4356A476DC
 
   cidapp:
     ui_url: ${local.base_url}:3003/
@@ -199,6 +203,7 @@ local:
 
   cis:
     ui_url: ${local.base_url}:3004/
+    api_url: ${local.base_url}:8815/
 
   css:
     ui_url: ${local.base_url}:8802
@@ -215,6 +220,34 @@ local:
 
   sds:
     api_url: ${local.base_url}:8811/
+
+  vds:
+    api_url: ${local.base_url}:8812/
+
+  cloud:
+    ui_url: ${local.base_url}:3001/
+
+  ach:
+    api_url: ${local.base_url}:8800/
+
+  cmp:
+    api_url: ${local.base_url}:8830/
+
+  igs:
+    api_url: ${local.base_url}:8899/
+
+  dds:
+    api_url: ${local.base_url}:8817/
+
+  qms:
+    api_url: ${local.base_url}:8821/
+
+  qds:
+    api_url: ${local.base_url}:8814/
+
+  edc:
+    ui_url: ${local.base_url}:3000/
+    api_url: ${local.base_url}:8803/
 
 ########################################################################################################################
 
