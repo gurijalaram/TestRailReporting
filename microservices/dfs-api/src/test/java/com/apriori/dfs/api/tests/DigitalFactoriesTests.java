@@ -160,19 +160,6 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {28978})
-    @Description("Get Unauthorized Error when identity is invalid")
-    public void getDigitalFactoryIncorrectAcceptHeader() {
-
-        ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.getDigitalFactory(
-            HttpStatusCode.NOT_ACCEPTABLE, ErrorMessage.class, NON_EXISTENT_DIGITAL_FACTORY_ID);
-
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND_ERROR);
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(IDENTITY_DOES_NOT_EXIST_MSG);
-        softAssertions.assertAll();
-    }
-
-    @Test
     @TestRail(id = {29566})
     @Description("Get Not Acceptable error when incorrect Accept Header is provided")
     public void getDigitalFactoryWithIncorrectAcceptHeader() {
