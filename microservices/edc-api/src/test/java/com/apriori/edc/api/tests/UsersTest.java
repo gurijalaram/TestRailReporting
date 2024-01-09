@@ -29,6 +29,7 @@ public class UsersTest extends UsersUtil {
     public void testGetCurrentRepresentationOfUser() {
         Users users = getCurrentUser();
 
+        // TODO: 05/01/2024 cn - this test provides no value as these assertion values should not be hardcoded.
         softAssertions.assertThat(users.getUserType()).isEqualTo("AP_STAFF_USER");
         softAssertions.assertThat(users.getUserProfile().getFamilyName()).isEqualTo("Automation Account 01");
         softAssertions.assertThat(users.getCustomAttributes().getWorkspaceId()).isEqualTo(355);

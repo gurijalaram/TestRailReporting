@@ -80,11 +80,11 @@ public class PageUtils {
 
     public static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
     static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
+    public String downloadPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
     private WebDriver driver;
     private List<Class<? extends WebDriverException>> ignoredWebDriverExceptions = Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class,
         StaleElementReferenceException.class, ElementNotInteractableException.class);
     private String currentlyOn = "CURRENTLY ON PAGE:";
-    public String downloadPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
 
     public PageUtils(WebDriver driver) {
         this.driver = driver;
@@ -1448,5 +1448,24 @@ public class PageUtils {
         return webStorage.getLocalStorage().getItem(propertyName);
     }
 
+    /**
+     * Wait for an element to contain some value and not be empty
+     *
+     * @param locator   - the locator of the element
+     * @param attribute - the attribute to query
+     * @return string
+     */
+    public String waitForElementNotEmpty(By locator, String attribute) {
+        int retries = 0;
+        int maxRetries = 12;
 
+        String element = waitForElementToAppear(locator).getAttribute(attribute);
+
+        while (element.isEmpty() && retries < maxRetries) {
+            waitForSteadinessOfElement(locator);
+            element = driver.findElement(locator).getAttribute(attribute);
+            retries++;
+        }
+        return element;
+    }
 }

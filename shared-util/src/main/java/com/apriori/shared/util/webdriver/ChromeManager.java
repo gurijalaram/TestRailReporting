@@ -51,6 +51,7 @@ public class ChromeManager implements DriverManager<ChromeOptions> {
 
         if (mode != null && mode.toUpperCase().equals(TestMode.DOCKER_GRID.value())) {
             chromeOptions.addArguments("--unsafely-treat-insecure-origin-as-secure=http://host.docker.internal:3003");
+            chromeOptions.addArguments("--unsafely-treat-insecure-origin-as-secure=http://host.docker.internal:3002");
         }
 
         chromeOptions.setExperimentalOption("prefs", chromePrefs);
