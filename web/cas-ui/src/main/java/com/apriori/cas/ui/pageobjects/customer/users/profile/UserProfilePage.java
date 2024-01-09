@@ -162,7 +162,7 @@ public final class UserProfilePage extends NavToolbar {
      * @return string
      */
     public String getUserIdentity() {
-        return getDriver().findElement(By.xpath("//div[@class='text-overflow read-field read-field-identity']")).getAttribute("textContent");
+        return getPageUtils().waitForElementNotEmpty(By.cssSelector(".read-field.read-field-identity"), "textContent");
     }
 
     /**
