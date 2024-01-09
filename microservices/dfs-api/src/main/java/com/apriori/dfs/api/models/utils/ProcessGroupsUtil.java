@@ -37,6 +37,7 @@ public class ProcessGroupsUtil {
      * @param inlineVariables - identity or identity/secret
      * @return Response object
      */
+
     public <T> ResponseWrapper<T> getProcessGroup(Integer expectedResponseCode,
                                                     Class<T> expectedType,
                                                     String... inlineVariables) {
