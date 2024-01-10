@@ -40,8 +40,8 @@ public class TestMain {
                     testsToRun.add(Class.forName(testName));
                 } catch (ClassNotFoundException e) {
                     throw new IllegalArgumentException(String.format(
-                            "Could not find class with name '%s'",
-                            testName
+                        "Could not find class with name '%s'",
+                        testName
                     ));
                 }
             });
@@ -59,10 +59,10 @@ public class TestMain {
         Options options = new Options();
 
         Option testsOption = new Option(
-                "t",
-                "tests",
-                true,
-                "The tests to run. This is a comma-delimited string that cannot include spaces."
+            "t",
+            "tests",
+            true,
+            "The tests to run. This is a comma-delimited string that cannot include spaces."
         );
         testsOption.setRequired(false);
         options.addOption(testsOption);
@@ -92,6 +92,10 @@ public class TestMain {
 
         TestExecutionSummary summary = listener.getSummary();
 
+        log.info("-------------------------------------------------------\n");
+        log.info("T E S T S\n");
+        log.info("-------------------------------------------------------");
+
         log.info("Number of tests to execute :- {}", summary.getTestsFoundCount());
 
         log.info("Number of tests succeeded :- {}", summary.getTestsSucceededCount());
@@ -101,6 +105,7 @@ public class TestMain {
         log.info("Number of tests aborted :- {}", summary.getTestsAbortedCount());
 
         log.info("Number of tests failed :- {}", summary.getTestsFailedCount());
-        summary.getFailures().forEach(failure -> log.info("Failure :- " + failure.getException()));
+
+        summary.getFailures().forEach(failure -> log.info(String.format("Failure :- %s *** Exception :- %s", failure.getTestIdentifier().getDisplayName(), failure.getException())));
     }
 }

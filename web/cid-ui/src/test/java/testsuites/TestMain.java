@@ -92,7 +92,12 @@ public class TestMain {
 
         TestExecutionSummary summary = listener.getSummary();
 
+        log.info("-------------------------------------------------------\n");
+        log.info("T E S T S\n");
+        log.info("-------------------------------------------------------");
+
         log.info("Number of tests to execute :- {}", summary.getTestsFoundCount());
+
         log.info("Number of tests succeeded :- {}", summary.getTestsSucceededCount());
 
         log.info("Number of tests skipped :- {}", summary.getTestsSkippedCount());
@@ -100,6 +105,7 @@ public class TestMain {
         log.info("Number of tests aborted :- {}", summary.getTestsAbortedCount());
 
         log.info("Number of tests failed :- {}", summary.getTestsFailedCount());
-        summary.getFailures().forEach(failure -> log.info("Failure :- " + failure.getException()));
+
+        summary.getFailures().forEach(failure -> log.info(String.format("Failure :- %s *** Exception :- %s", failure.getTestIdentifier().getDisplayName(), failure.getException())));
     }
 }
