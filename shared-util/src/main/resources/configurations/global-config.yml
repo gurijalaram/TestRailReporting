@@ -50,8 +50,7 @@ default:
   customer_aws_account_type: dev
 ###########################
 #  Core services
-  core_service_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
-  deployment_independent_services_url_template: ${default.aws_region}.${env}.apriori.net/
+  core_service_url_template: ${default.aws_region}.${env}.apriori.net/
 
   cloud:
     ui_url: https://cloud.${core_service_url_template}
@@ -60,7 +59,7 @@ default:
     api_url: https://ach-api.${core_service_url_template}
 
   ats:
-    api_url: https://ats.${deployment_independent_services_url_template}
+    api_url: https://ats.${core_service_url_template}
     token_username: qa-automation-01
     token_email: qa-automation-01@apriori.com
     token_issuer: 2021 R1
@@ -74,10 +73,10 @@ default:
     api_url: https://cas-api.${core_service_url_template}
 
   cus:
-    api_url: https://cus.${deployment_independent_services_url_template}
+    api_url: https://cus.${core_service_url_template}
 
   cds:
-    api_url: https://cds.${deployment_independent_services_url_template}
+    api_url: https://cds.${core_service_url_template}
 
   edc:
     ui_url: https://edc.${core_service_url_template}
