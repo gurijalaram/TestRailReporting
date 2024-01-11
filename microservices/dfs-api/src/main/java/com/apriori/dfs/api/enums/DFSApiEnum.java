@@ -20,8 +20,6 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
     PROCESS_GROUPS_BY_PATH_WITH_KEY_PARAM("process-groups/%s?key=%s"),
 
     // MATERIALS
-    MATERIAL("digital-factories/%s/process-groups/%s/materials"),
-    MATERIAL_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials?key=%s"),
     MATERIAL_BY_PATH("digital-factories/%s/process-groups/%s/materials/%s"),
     MATERIAL_BY_PATH_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials/%s?key=%s");
     private final String endpoint;

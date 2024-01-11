@@ -1,7 +1,5 @@
 package com.apriori.dfs.api.models.utils;
 
-import com.apriori.dfs.api.enums.DFSApiEnum;
-import com.apriori.dfs.api.models.response.Material;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
@@ -30,7 +28,7 @@ public class MaterialUtil {
      *
      * @param expectedResponseCode - Expected HTTP status code
      * @param expectedType         Expected type from body of HTTP response
-     * @param identity             - identity
+     * @param inlineVariables             - inlineVariables
      * @return Response object
      */
     public <T> ResponseWrapper<T> getMaterialWithoutKeyParameter(EndpointEnum endpointEnum,
