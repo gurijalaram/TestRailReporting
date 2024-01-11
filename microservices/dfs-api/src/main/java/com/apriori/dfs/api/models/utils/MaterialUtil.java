@@ -16,7 +16,6 @@ public class MaterialUtil {
      * @param inlineVariables      - identity or identity/secret
      * @return Response object
      */
-
     public <T> ResponseWrapper<T> getMaterial(EndpointEnum endpointEnum, Integer expectedResponseCode,
                                               Class<T> expectedType, String... inlineVariables) {
 
