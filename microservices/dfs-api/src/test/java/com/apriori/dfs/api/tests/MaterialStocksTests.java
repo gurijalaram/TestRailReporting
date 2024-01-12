@@ -23,7 +23,6 @@ import java.util.HashMap;
 public class MaterialStocksTests {
 
     private static final String BAD_REQUEST_ERROR = "Bad Request";
-//    private static final String MATERIAL_NAME = "Aluminum, ANSI 2030";
     private static final String MATERIAL_STOCK_NAME = "Square/Rectangular Bar:  1  3/4 w x 3/8 h in.  20 ft lengths";
     private static final String IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'identity' is not a valid identity.";
     private static final String INVALID_CREDENTIAL_MSG = "Invalid credential";
