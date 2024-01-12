@@ -93,7 +93,7 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6375, 6379, 6384, 6386, 6388, 6390})
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(component.getUser())
