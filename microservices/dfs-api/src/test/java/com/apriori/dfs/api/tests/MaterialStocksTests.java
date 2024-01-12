@@ -25,9 +25,18 @@ public class MaterialStocksTests {
     private static final String BAD_REQUEST_ERROR = "Bad Request";
     private static final String MATERIAL_STOCK_NAME = "Square/Rectangular Bar:  1  3/4 w x 3/8 h in.  20 ft lengths";
     private static final String IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'identity' is not a valid identity.";
+    private static final String MATERIAL_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'materialIdentity' is not a valid identity.";
+    private static final String PROCESS_GROUP_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'processGroupIdentity' is not a valid identity.";
+    private static final String DIGITAL_FACTORY_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'digitalFactoryIdentity' is not a valid identity.";
     private static final String INVALID_CREDENTIAL_MSG = "Invalid credential";
     private static final String INVALID_MATERIAL_STOCK_ID = "1234567890";
     private static final String MISSING_MATERIAL_STOCK_ID = "CX757P9KVW4Y";
+    private static final String INVALID_MATERIAL_ID = "1234567890";
+    private static final String MISSING_MATERIAL_ID = "CX757P9KVW4Y";
+    private static final String INVALID_PROCESS_GROUP_ID = "1234567890";
+    private static final String MISSING_PROCESS_GROUP_ID = "CX757P9KVW4Y";
+    private static final String INVALID_DIGITAL_FACTORY_ID = "1234567890";
+    private static final String MISSING_DIGITAL_FACTORY_ID = "CX757P9KVW4Y";
     private static final String INVALID_OR_MISSING_CREDENTIAL_MSG = "Invalid or missing credential";
     private static final String INVALID_SHARED_SECRET = "InvalidSharedSecret";
     private static final String NO_SHARED_SECRET = "";
@@ -38,6 +47,9 @@ public class MaterialStocksTests {
     private static final String UNAUTHORIZED_ERROR = "Unauthorized";
     private static final String NOT_FOUND = "Not Found";
     private static final String NOT_FOUND_MSG = "Resource 'MaterialStock' with identity 'CX757P9KVW4Y' was not found";
+    private static final String MATERIAL_NOT_FOUND_MSG = "Resource 'Material' with identity 'CX757P9KVW4Y' was not found";
+    private static final String PROCESS_GROUP_NOT_FOUND_MSG = "Resource 'ProcessGroup' with identity 'CX757P9KVW4Y' was not found";
+    private static final String DIGITAL_FACTORY_NOT_FOUND_MSG = "Resource 'DigitalFactory' with identity 'CX757P9KVW4Y' was not found";
     private static final String NOT_ACCEPTABLE = "Not Acceptable";
     private static final String NOT_ACCEPTABLE_MSG = "Could not find acceptable representation";
     private final SoftAssertions softAssertions = new SoftAssertions();
@@ -99,7 +111,7 @@ public class MaterialStocksTests {
     @Test
     @TestRail(id = {29628})
     @Description("Get Unauthorized Error when identity is invalid")
-    public void getMaterialStockWithBadIdentityTest() {
+    public void getMaterialStockWithBadMaterialStockIdentityTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
             HttpStatusCode.BAD_REQUEST, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, INVALID_MATERIAL_STOCK_ID);
@@ -112,13 +124,91 @@ public class MaterialStocksTests {
     @Test
     @TestRail(id = {29625})
     @Description("Get Unauthorized Error when identity is invalid")
-    public void getMaterialStockWithMissingMaterialTest() {
+    public void getMaterialStockWithMissingMaterialStockTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
             HttpStatusCode.NOT_FOUND, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, MISSING_MATERIAL_STOCK_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(NOT_FOUND_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29628})
+    @Description("Get Unauthorized Error when identity is invalid")
+    public void getMaterialStockWithBadMaterialIdentityTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, INVALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(MATERIAL_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29625})
+    @Description("Get Unauthorized Error when identity is invalid")
+    public void getMaterialStockWithMissingMaterialTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
+            HttpStatusCode.NOT_FOUND, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, MISSING_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(MATERIAL_NOT_FOUND_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29628})
+    @Description("Get Unauthorized Error when identity is invalid")
+    public void getMaterialStockWithBadProcessGroupIdentityTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, INVALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(PROCESS_GROUP_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29625})
+    @Description("Get Unauthorized Error when identity is invalid")
+    public void getMaterialStockWithMissingProcessGroupTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
+            HttpStatusCode.NOT_FOUND, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, MISSING_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(PROCESS_GROUP_NOT_FOUND_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29628})
+    @Description("Get Unauthorized Error when identity is invalid")
+    public void getMaterialStockWithBadDigitalFactoryIdentityTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, INVALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(DIGITAL_FACTORY_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29625})
+    @Description("Get Unauthorized Error when identity is invalid")
+    public void getMaterialStockWithMissingDigitalFactoryTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
+            HttpStatusCode.NOT_FOUND, ErrorMessage.class, MISSING_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(DIGITAL_FACTORY_NOT_FOUND_MSG);
         softAssertions.assertAll();
     }
 
