@@ -6,7 +6,7 @@
 ############################################# Global properties ########################################################
 # Define main configurations
 env: qa-test
-deployment: sandbox
+deployment: production
 customer: ap-int
 
 # Deployment
