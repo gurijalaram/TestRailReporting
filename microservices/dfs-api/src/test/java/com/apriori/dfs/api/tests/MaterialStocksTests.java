@@ -1,16 +1,13 @@
 package com.apriori.dfs.api.tests;
 
 import com.apriori.dfs.api.enums.DFSApiEnum;
-import com.apriori.dfs.api.models.response.Material;
 import com.apriori.dfs.api.models.response.MaterialStocks;
 import com.apriori.dfs.api.models.utils.MaterialStockUtil;
-import com.apriori.dfs.api.models.utils.MaterialUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.ErrorMessage;
-import com.apriori.shared.util.models.response.component.componentiteration.MaterialStock;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
