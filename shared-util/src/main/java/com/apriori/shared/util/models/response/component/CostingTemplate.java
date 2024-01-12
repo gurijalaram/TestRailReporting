@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @Schema(location = "CostingTemplate.json")
 @JsonRootName("response")
-public class CostingTemplate {
+public class CostingTemplate implements Serializable {
     private String identity = null;
     private String costingTemplateIdentity;
     @JsonSerialize(using = ToStringSerializer.class)
