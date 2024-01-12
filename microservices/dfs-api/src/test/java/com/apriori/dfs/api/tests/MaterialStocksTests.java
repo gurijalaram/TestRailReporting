@@ -62,7 +62,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29592})
+    @TestRail(id = {29619})
     @Description("Get Unauthorized Error when shared secret value is invalid")
     public void getMaterialStockWithInvalidSharedSecretTest() {
 
@@ -76,7 +76,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29593})
+    @TestRail(id = {29620})
     @Description("Get Unauthorized Error when shared secret parameter is not provided")
     public void getMaterialStockWithEmptySharedSecretTest() {
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStockWithoutKeyParameter(DFSApiEnum.MATERIAL_STOCKS_BY_PATH_WITH_KEY_PARAM,
@@ -88,7 +88,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29594})
+    @TestRail(id = {29621})
     @Description("Get Unauthorized Error when shared secret value is not provided")
     public void getMaterialStockWithoutSharedSecretTest() {
 
@@ -101,7 +101,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29597})
+    @TestRail(id = {29628})
     @Description("Get Unauthorized Error when identity is invalid")
     public void getMaterialStockWithBadIdentityTest() {
 
@@ -114,7 +114,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29596})
+    @TestRail(id = {29625})
     @Description("Get Unauthorized Error when identity is invalid")
     public void getMaterialStockWithMissingMaterialTest() {
 
@@ -127,7 +127,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29555})
+    @TestRail(id = {29622})
     @Description("Get Not Acceptable error when incorrect Accept Header is provided")
     public void getMaterialStockWithIncorrectAcceptHeader() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DFSApiEnum.MATERIAL_STOCKS_BY_PATH, ErrorMessage.class)
