@@ -125,6 +125,7 @@ public class QuickComparisonTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(component.getUser())
             .uploadComponent(component)
+            .selectFilter("Recent")
             .multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName())
             .createComparison()
             .selectQuickComparison();
@@ -165,13 +166,18 @@ public class QuickComparisonTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponent();
         componentB = SerializationUtils.clone(component);
         componentB.setScenarioName(new GenerateStringUtil().generateScenarioName());
-        componentC = new ComponentRequestUtil().getComponent();
+        componentC = SerializationUtils.clone(component);
         componentC.setScenarioName(new GenerateStringUtil().generateScenarioName());
-        componentD = new ComponentRequestUtil().getComponent();
+        componentD = SerializationUtils.clone(component);
         componentD.setScenarioName(new GenerateStringUtil().generateScenarioName());
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(component.getUser())
+            .uploadComponent(component)
+            .uploadComponent(componentB)
+            .uploadComponent(componentC)
+            .uploadComponent(componentD)
+            .selectFilter("Recent")
             .multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName())
             .createComparison()
             .selectQuickComparison();
@@ -179,11 +185,11 @@ public class QuickComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getBasis()).as("Verify Comparison Basis Scenario Name")
             .isEqualTo(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
         softAssertions.assertThat(comparePage.getScenariosInComparison().get(0)).as("Verify Most Recent Comparison")
-            .isEqualTo(component.getComponentName().toUpperCase() + "  / " + componentB.getScenarioName());
+            .isEqualTo(component.getComponentName().toUpperCase() + "  / " + componentD.getScenarioName());
         softAssertions.assertThat(comparePage.getScenariosInComparison().get(1)).as("Verify Most Recent Comparison")
             .isEqualTo(component.getComponentName().toUpperCase() + "  / " + componentC.getScenarioName());
         softAssertions.assertThat(comparePage.getScenariosInComparison().get(2)).as("Verify Most Recent Comparison")
-            .isEqualTo(component.getComponentName().toUpperCase() + "  / " + componentD.getScenarioName());
+            .isEqualTo(component.getComponentName().toUpperCase() + "  / " + componentB.getScenarioName());
 
         comparePage = comparePage.clickExplore()
             .navigateToScenario(componentC)
@@ -207,6 +213,7 @@ public class QuickComparisonTests extends TestBaseUI {
         scenarioUtil.postCostScenario(componentB);
 
         comparePage = comparePage.clickExplore()
+            .selectFilter("Recent")
             .multiHighlightScenarios(component.getComponentName() + "," + component.getScenarioName())
             .createComparison()
             .selectQuickComparison();
@@ -235,7 +242,8 @@ public class QuickComparisonTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component).logout()
+            .uploadComponentAndOpen(component)
+            .logout()
             .login(component.getUser())
             .uploadComponentAndOpen(componentB)
             .clickExplore()

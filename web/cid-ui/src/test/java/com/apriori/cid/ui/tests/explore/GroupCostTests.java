@@ -145,7 +145,7 @@ public class GroupCostTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
 
-        explorePage = loginPage.login(currentUser)
+        explorePage = loginPage.login(component.getUser())
             .uploadComponent(component)
             .uploadComponent(componentB)
             .uploadComponent(componentC)
