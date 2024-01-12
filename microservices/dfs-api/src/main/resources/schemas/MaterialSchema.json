@@ -1,0 +1,164 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "baseCostPerUnit": {
+      "type": "number"
+    },
+    "carbonEmissionsFactor": {
+      "type": "number"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "cutCode": {
+      "type": "string"
+    },
+    "digitalFactoryIdentity": {
+      "type": "string"
+    },
+    "density": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "hardness": {
+      "type": "number"
+    },
+    "hardnessSystem": {
+      "type": "string"
+    },
+    "industryStandardNames": {
+      "type": "object",
+      "properties": {
+        "dinName": {
+          "type": "string"
+        },
+        "enName": {
+          "type": "string"
+        },
+        "gbName": {
+          "type": "string"
+        },
+        "jisName": {
+          "type": "string"
+        },
+        "usaName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "dinName",
+        "enName",
+        "gbName",
+        "jisName",
+        "usaName"
+      ]
+    },
+    "name": {
+      "type": "string"
+    },
+    "processGroupIdentity": {
+      "type": "string"
+    },
+    "properties": {
+      "type": "object",
+      "properties": {
+        "costPerKG": {
+          "type": "number"
+        },
+        "ultimateTensileStrength": {
+          "type": "integer"
+        },
+        "k": {
+          "type": "number"
+        },
+        "shearStrength": {
+          "type": "number"
+        },
+        "youngModulus": {
+          "type": "integer"
+        },
+        "tensileYieldStrength": {
+          "type": "integer"
+        },
+        "n": {
+          "type": "number"
+        },
+        "possionRatio": {
+          "type": "number"
+        },
+        "r": {
+          "type": "number"
+        },
+        "scrapCostPercent": {
+          "type": "number"
+        },
+        "costUnits": {
+          "type": "string"
+        },
+        "sourceName": {
+          "type": "string"
+        },
+        "millingSpeed": {
+          "type": "integer"
+        },
+        "dataSource": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "costPerKG",
+        "ultimateTensileStrength",
+        "k",
+        "shearStrength",
+        "youngModulus",
+        "tensileYieldStrength",
+        "n",
+        "possionRatio",
+        "r",
+        "scrapCostPercent",
+        "costUnits",
+        "sourceName",
+        "millingSpeed",
+        "dataSource"
+      ]
+    },
+    "type": {
+      "type": "string"
+    },
+    "unitCost": {
+      "type": "number"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "baseCostPerUnit",
+    "carbonEmissionsFactor",
+    "customerIdentity",
+    "cutCode",
+    "digitalFactoryIdentity",
+    "density",
+    "description",
+    "hardness",
+    "hardnessSystem",
+    "industryStandardNames",
+    "name",
+    "processGroupIdentity",
+    "properties",
+    "type",
+    "unitCost",
+    "createdAt",
+    "createdBy"
+  ]
+}

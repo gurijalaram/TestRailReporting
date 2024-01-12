@@ -451,6 +451,7 @@ public class AgentService {
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
                 agentConnectionOptions.setPort(agentPort.getPort());
                 agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
+                agentConnectionOptions.setRootFolderPath("C:" + AgentConstants.REMOTE_ROOT_FILE_PATH_FOLDER);
                 agentConnectionOptions.setPlmUser(agentCredentials.getPlmUser());
                 agentConnectionOptions.setPlmPassword(agentCredentials.getPlmPassword());
                 agentConnectionOptions.setHostName(PropertiesContext.get("ci-connect.windchill.host_name"));

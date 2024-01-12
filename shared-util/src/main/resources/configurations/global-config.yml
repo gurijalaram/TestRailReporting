@@ -161,7 +161,6 @@ default:
 
   dfs:
     api_url: https://dfs.${deployment_url_template}
-    authorization_key: DogCatMonkey
 
   gcd:
     api_url: https://gcd.${deployment_url_template}
