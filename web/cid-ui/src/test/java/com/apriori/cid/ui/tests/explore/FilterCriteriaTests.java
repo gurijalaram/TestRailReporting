@@ -209,12 +209,10 @@ public class FilterCriteriaTests extends TestBaseUI {
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
 
-        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
-
-        ScenarioItem scenarioCreated = cssComponent.findFirst(component.getComponentName(), component.getScenarioName(), component.getUser());
+        component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(component.getUser())
+        filterPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .publishScenario(PublishPage.class)
             .selectStatus("Analysis")
@@ -224,8 +222,11 @@ public class FilterCriteriaTests extends TestBaseUI {
             .clickExplore()
             .filter()
             .saveAs()
-            .inputName(filterName)
-            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreated.getScenarioCreatedByName())
+            .inputName(filterName);
+
+        ScenarioItem scenarioCreated = cssComponent.findFirst(component.getComponentName(), component.getScenarioName(), component.getUser());
+
+        explorePage = filterPage.addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreated.getScenarioCreatedByName())
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(component.getComponentName(), component.getScenarioName())

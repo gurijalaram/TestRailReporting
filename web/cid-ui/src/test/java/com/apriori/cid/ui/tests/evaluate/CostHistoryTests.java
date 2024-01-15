@@ -7,6 +7,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.CostHistoryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -28,15 +29,12 @@ import java.io.File;
 import java.util.Arrays;
 
 public class CostHistoryTests extends TestBaseUI {
-    private File resourceFile;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private CostHistoryPage costHistoryPage;
 
-    private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private SoftAssertions softAssertions = new SoftAssertions();
-    private UserCredentials currentUser;
 
     public CostHistoryTests() {
         super();
@@ -46,21 +44,8 @@ public class CostHistoryTests extends TestBaseUI {
     @TestRail(id = {28442, 28443, 28444, 28447})
     @Description("Verify Cost History available")
     public void testCostHistory() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        String componentName = "Casting";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        ComponentInfoBuilder castingPart = componentsUtil.postComponent(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .resourceFile(resourceFile)
-                .scenarioName(scenarioName)
-                .processGroup(processGroupEnum)
-                .user(currentUser)
-                .build());
+        ComponentInfoBuilder castingPart = new ComponentRequestUtil().getComponentWithProcessGroup("Casting", ProcessGroupEnum.CASTING_DIE);
 
         scenariosUtil.postCostScenario(castingPart);
 
@@ -128,7 +113,7 @@ public class CostHistoryTests extends TestBaseUI {
         scenariosUtil.postCostScenario(castingPart);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(castingPart.getUser())
             .openScenario(castingPart.getComponentName(), castingPart.getScenarioName());
 
         softAssertions.assertThat(evaluatePage.isProgressButtonEnabled()).as("Verify Progress button disabled before initial cost").isTrue();

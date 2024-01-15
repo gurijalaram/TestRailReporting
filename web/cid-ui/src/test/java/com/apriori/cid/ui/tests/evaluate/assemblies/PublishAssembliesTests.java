@@ -64,9 +64,8 @@ public class PublishAssembliesTests extends TestBaseUI {
         String preferPublic = "Prefer Public Scenarios";
 
         componentAssembly = new AssemblyRequestUtil().getAssembly("titan battery ass");
-        ComponentInfoBuilder subComponentA = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("titan battery release")).findFirst().get();
-        ComponentInfoBuilder subComponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("titan battery")).findFirst().get();
-
+        ComponentInfoBuilder titanBatteryRelease = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("titan battery release")).findFirst().get();
+        ComponentInfoBuilder titanBattery = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("titan battery")).findFirst().get();
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(componentAssembly.getUser())
@@ -74,19 +73,23 @@ public class PublishAssembliesTests extends TestBaseUI {
             .goToAssemblyDefaultsTab()
             .selectAssemblyStrategy(preferPublic)
             .submit(EvaluatePage.class)
-            .uploadComponentAndOpen(subComponentA)
+            .uploadComponentAndOpen(titanBatteryRelease)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(subComponentA, EvaluatePage.class)
+            .publish(titanBatteryRelease, EvaluatePage.class)
             .clickExplore()
-            .uploadComponentAndOpen(subComponentB)
+            .uploadComponentAndOpen(titanBattery)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
             .costScenario(4)
             .publishScenario(PublishPage.class)
-            .publish(subComponentB, EvaluatePage.class)
+            .publish(titanBattery, EvaluatePage.class)
             .clickExplore()
-            .uploadComponentAndOpen(componentAssembly);
+            .uploadComponentAndOpen(componentAssembly)
+            .selectProcessGroup(ProcessGroupEnum.ASSEMBLY)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(componentAssembly, EvaluatePage.class);;
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
     }

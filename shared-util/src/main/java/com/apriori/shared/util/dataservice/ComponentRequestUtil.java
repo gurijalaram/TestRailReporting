@@ -60,6 +60,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets a component specified by name and extension
+     * The first dot (.) should be ignored e.g. getComponentByExtension("stp")
      *
      * @param componentName - the part name
      * @param extension     - the extension
