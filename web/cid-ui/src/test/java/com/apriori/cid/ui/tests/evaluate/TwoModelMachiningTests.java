@@ -200,7 +200,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
         twoModelPartName.setUser(sourcePartName.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(sourcePartName.getUser())
             .uploadComponentAndOpen(sourcePartName)
             .selectProcessGroup(sourcePartName.getProcessGroup())
             .costScenario()
@@ -216,10 +216,10 @@ public class TwoModelMachiningTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, EvaluatePage.class)
-            .openSourceScenario(sourcePartName.getComponentName());
+            .publish(twoModelPartName, EvaluatePage.class)
+            .openSourceScenario(sourcePartName.getScenarioName());
 
-        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourcePartName.getComponentName()), is(true));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourcePartName.getScenarioName()), is(true));
     }
 
     @Test

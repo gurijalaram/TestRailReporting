@@ -239,7 +239,7 @@ public class DTCPlasticMouldingTests extends TestBaseUI {
     @TestRail(id = {6419, 6423})
     @Description("Testing DTC Moulding Thickness Min")
     public void plasticMinWallThickness() {
-        component = new ComponentRequestUtil().getComponent("Plastic moulded cap thinPart");
+        component = new ComponentRequestUtil().getComponentWithExtension("Plastic moulded cap thinPart", "CATPart");
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(component.getUser())

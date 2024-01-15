@@ -71,7 +71,7 @@ public class GroupPublishTests extends TestBaseUI {
             .close(ExplorePage.class);
 
         Arrays.asList(componentA, componentB).forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+            softAssertions.assertThat(cssComponent.getComponentParts(componentA.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh()
@@ -219,7 +219,7 @@ public class GroupPublishTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
 
-        publishPage = loginPage.login(currentUser)
+        publishPage = loginPage.login(componentA.getUser())
             .uploadComponent(componentA)
             .uploadComponent(componentB)
             .refresh()
@@ -232,13 +232,13 @@ public class GroupPublishTests extends TestBaseUI {
 
         publishPage.selectStatus("Analysis")
             .selectCostMaturity("Low")
-            .selectAssignee(currentUser)
+            .selectAssignee(componentA.getUser())
             .publish(PublishPage.class);
 
         explorePage = publishPage.close(ExplorePage.class);
 
         Arrays.asList(componentA, componentB).forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+            softAssertions.assertThat(cssComponent.getComponentParts(componentA.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         assignPage = explorePage.refresh()
