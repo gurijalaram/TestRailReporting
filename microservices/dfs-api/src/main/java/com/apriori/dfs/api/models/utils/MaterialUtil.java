@@ -36,7 +36,7 @@ public class MaterialUtil {
                                                                  String... inlineVariables) {
 
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(endpointEnum, expectedType)
-            .inlineVariables(inlineVariables) // hack - add one more empty variable to skip auto adding shared secret
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
 
         return HTTPRequest.build(requestEntity).get();
