@@ -281,6 +281,11 @@
       "processGroup": "PLASTIC_MOLDING"
     },
     {
+      "componentName": "Plastic moulded cap thinPart",
+      "extension": ".CATPart",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
       "componentName": "Plastic moulded cap edge radius",
       "extension": ".CATPart",
       "processGroup": "PLASTIC_MOLDING"
@@ -549,6 +554,10 @@
       "componentName": "700-33770-01_A0",
       "extension": ".stp",
       "processGroup": "SHEET_METAL"
+    },{
+      "componentName": "700-33770-01_A0",
+      "extension": ".stp",
+      "processGroup": "PLASTIC_MOLDING"
     },
     {
       "componentName": "116-5809",

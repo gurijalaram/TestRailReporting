@@ -429,7 +429,7 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {6277, 6291})
     @Description("Successfully change the Currency")
     public void changeCurrency() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
