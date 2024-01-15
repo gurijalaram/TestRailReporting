@@ -568,6 +568,26 @@
       "componentName": "2062987",
       "extension": ".prt",
       "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Casting",
+      "extension": ".prt",
+      "processGroup": "WITHOUT_PG"
+    },
+    {
+      "componentName": "LargePart",
+      "extension": ".prt.1",
+      "processGroup": "WITHOUT_PG"
+    },
+    {
+      "componentName": "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface",
+      "extension": ".CATPart",
+      "processGroup": "WITHOUT_PG"
+    },
+    {
+      "componentName": "partbody_2",
+      "extension": ".stp",
+      "processGroup": "WITHOUT_PG"
     }
   ]
 }
