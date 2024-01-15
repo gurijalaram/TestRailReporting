@@ -25,6 +25,8 @@ public class MaterialsTests {
     private static final String BAD_REQUEST_ERROR = "Bad Request";
     private static final String MATERIAL_NAME = "Aluminum, ANSI 2030";
     private static final String IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'materialIdentity' is not a valid identity.";
+    private static final String PROCESS_GROUP_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'processGroupIdentity' is not a valid identity.";
+    private static final String DIGITAL_FACTORY_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'digitalFactoryIdentity' is not a valid identity.";
     private static final String INVALID_CREDENTIAL_MSG = "Invalid credential";
     private static final String INVALID_MATERIAL_ID = "1234567890";
     private static final String MISSING_MATERIAL_ID = "CX757P9KVW4Y";
@@ -32,11 +34,17 @@ public class MaterialsTests {
     private static final String INVALID_SHARED_SECRET = "InvalidSharedSecret";
     private static final String NO_SHARED_SECRET = "";
     private static final String VALID_DIGITAL_FACTORY_ID = "ABCDEFGHIJK2";
+    private static final String INVALID_DIGITAL_FACTORY_ID = "1234567890";
+    private static final String MISSING_DIGITAL_FACTORY_ID = "CX757P9KVW4Y";
     private static final String VALID_PROCESS_GROUP_ID = "7EU8N44NEO5A";
+    private static final String INVALID_PROCESS_GROUP_ID = "1234567890";
+    private static final String MISSING_PROCESS_GROUP_ID = "CX757P9KVW4Y";
     private static final String VALID_MATERIAL_ID = "CX757P9KVW4X";
     private static final String UNAUTHORIZED_ERROR = "Unauthorized";
     private static final String NOT_FOUND = "Not Found";
     private static final String NOT_FOUND_MSG = "Resource 'Material' with identity 'CX757P9KVW4Y' was not found";
+    private static final String PROCESS_GROUP_NOT_FOUND_MSG = "Resource 'ProcessGroup' with identity 'CX757P9KVW4Y' was not found";
+    private static final String DIGITAL_FACTORY_NOT_FOUND_MSG = "Resource 'DigitalFactory' with identity 'CX757P9KVW4Y' was not found";
     private static final String NOT_ACCEPTABLE = "Not Acceptable";
     private static final String NOT_ACCEPTABLE_MSG = "Could not find acceptable representation";
     private final SoftAssertions softAssertions = new SoftAssertions();
@@ -118,6 +126,58 @@ public class MaterialsTests {
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(NOT_FOUND_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29597})
+    @Description("Get Unauthorized Error when identity is invalid")
+    public void getMaterialWithBadProcessGroupIdentityTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = materialUtil.getMaterial(DFSApiEnum.MATERIAL_BY_PATH,
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, INVALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(PROCESS_GROUP_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29596})
+    @Description("Get Unauthorized Error when identity is invalid")
+    public void getMaterialWithMissingProcessGroupTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = materialUtil.getMaterial(DFSApiEnum.MATERIAL_BY_PATH,
+            HttpStatusCode.NOT_FOUND, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, MISSING_PROCESS_GROUP_ID, VALID_MATERIAL_ID);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(PROCESS_GROUP_NOT_FOUND_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29597})
+    @Description("Get Unauthorized Error when identity is invalid")
+    public void getMaterialWithBadDigitalFactoryIdentityTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = materialUtil.getMaterial(DFSApiEnum.MATERIAL_BY_PATH,
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, INVALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(DIGITAL_FACTORY_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29596})
+    @Description("Get Unauthorized Error when identity is invalid")
+    public void getMaterialWithMissingDigitalFactoryTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = materialUtil.getMaterial(DFSApiEnum.MATERIAL_BY_PATH,
+            HttpStatusCode.NOT_FOUND, ErrorMessage.class, MISSING_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(DIGITAL_FACTORY_NOT_FOUND_MSG);
         softAssertions.assertAll();
     }
 
