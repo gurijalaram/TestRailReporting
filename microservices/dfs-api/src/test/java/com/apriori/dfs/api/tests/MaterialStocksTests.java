@@ -135,7 +135,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29628})
+    @TestRail(id = {29624})
     @Description("Get Unauthorized Error when identity is invalid")
     public void getMaterialStockWithBadMaterialIdentityTest() {
 
@@ -148,7 +148,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29625})
+    @TestRail(id = {29623})
     @Description("Get Unauthorized Error when identity is invalid")
     public void getMaterialStockWithMissingMaterialTest() {
 
@@ -161,7 +161,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29628})
+    @TestRail(id = {29630})
     @Description("Get Unauthorized Error when identity is invalid")
     public void getMaterialStockWithBadProcessGroupIdentityTest() {
 
@@ -174,7 +174,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29625})
+    @TestRail(id = {29629})
     @Description("Get Unauthorized Error when identity is invalid")
     public void getMaterialStockWithMissingProcessGroupTest() {
 
@@ -187,7 +187,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29628})
+    @TestRail(id = {29627})
     @Description("Get Unauthorized Error when identity is invalid")
     public void getMaterialStockWithBadDigitalFactoryIdentityTest() {
 
@@ -200,7 +200,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {29625})
+    @TestRail(id = {29626})
     @Description("Get Unauthorized Error when identity is invalid")
     public void getMaterialStockWithMissingDigitalFactoryTest() {
 
