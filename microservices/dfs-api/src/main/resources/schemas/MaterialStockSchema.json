@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "baseCostPerUnit": {
+      "type": "number"
+    },
+    "form": {
+      "type": "string"
+    },
+    "hardness": {
+      "type": "number"
+    },
+    "hardnessSystem": {
+      "type": "string"
+    },
+    "materialIdentity": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "properties": {
+      "type": "object",
+      "properties": {
+        "costPerKG": {
+          "type": "number"
+        },
+        "outsideDia": {
+          "type": "integer"
+        },
+        "length": {
+          "type": "integer"
+        },
+        "width": {
+          "type": "number"
+        },
+        "wallThickness": {
+          "type": "integer"
+        },
+        "materialStockCarbonEmissionsFactor": {
+          "type": "number"
+        },
+        "costUnits": {
+          "type": "string"
+        },
+        "insideDia": {
+          "type": "integer"
+        },
+        "massPerMeter": {
+          "type": "integer"
+        },
+        "height": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "costPerKG",
+        "outsideDia",
+        "length",
+        "width",
+        "wallThickness",
+        "materialStockCarbonEmissionsFactor",
+        "costUnits",
+        "insideDia",
+        "massPerMeter",
+        "height"
+      ]
+    },
+    "unitCost": {
+      "type": "number"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "identity",
+    "baseCostPerUnit",
+    "form",
+    "hardness",
+    "hardnessSystem",
+    "materialIdentity",
+    "name",
+    "properties",
+    "unitCost",
+    "createdAt",
+    "createdBy"
+  ]
+}
