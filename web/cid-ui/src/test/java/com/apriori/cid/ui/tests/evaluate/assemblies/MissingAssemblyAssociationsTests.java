@@ -50,9 +50,10 @@ public class MissingAssemblyAssociationsTests extends TestBaseUI {
         Map<PreferencesEnum, String> updateStrategy = new HashMap<>();
         updateStrategy.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);
 
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Miss_Fuse_Block_Asm");
+
         userPreferencesUtil.updatePreferences(componentAssembly.getUser(), updateStrategy);
 
-        componentAssembly = new AssemblyRequestUtil().getAssembly("Miss_Fuse_Block_Asm");
         ComponentInfoBuilder componentAssemblyB = componentAssembly;
         componentAssemblyB.setScenarioName(newScenarioName);
         ComponentInfoBuilder conductor = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("Miss_conductor")).findFirst().get();
