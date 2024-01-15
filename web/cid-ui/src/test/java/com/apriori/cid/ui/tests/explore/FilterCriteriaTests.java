@@ -226,7 +226,7 @@ public class FilterCriteriaTests extends TestBaseUI {
 
         ScenarioItem scenarioCreated = cssComponent.findFirst(component.getComponentName(), component.getScenarioName(), component.getUser());
 
-         explorePage = filterPage.addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreated.getScenarioCreatedByName())
+        explorePage = filterPage.addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreated.getScenarioCreatedByName())
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(component.getComponentName(), component.getScenarioName())
