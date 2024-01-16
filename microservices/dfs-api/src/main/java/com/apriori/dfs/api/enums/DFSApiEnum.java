@@ -17,8 +17,15 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
     PROCESS_GROUPS("process-groups"),
     PROCESS_GROUPS_WITH_KEY_PARAM("digital-factories?key=%s"),
     PROCESS_GROUPS_BY_PATH("process-groups/%s"),
-    PROCESS_GROUPS_BY_PATH_WITH_KEY_PARAM("process-groups/%s?key=%s");
+    PROCESS_GROUPS_BY_PATH_WITH_KEY_PARAM("process-groups/%s?key=%s"),
 
+    // MATERIALS
+    MATERIAL_BY_PATH("digital-factories/%s/process-groups/%s/materials/%s"),
+    MATERIAL_BY_PATH_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials/%s?key=%s"),
+
+    // MATERIAL STOCKS
+    MATERIAL_STOCKS_BY_PATH("digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s"),
+    MATERIAL_STOCKS_BY_PATH_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s?key=%s");
     private final String endpoint;
 
     DFSApiEnum(String endpoint) {

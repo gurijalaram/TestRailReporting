@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class WorksheetTests extends BcmUtil {
-    private final BcmUtil bcmUtil = new BcmUtil();
     private static SoftAssertions softAssertions = new SoftAssertions();
-    private CssComponent cssComponent = new CssComponent();
+    private final BcmUtil bcmUtil = new BcmUtil();
     private final String componentType = "PART";
+    private CssComponent cssComponent = new CssComponent();
 
     // TODO - add clean up method once API will be available
 
@@ -89,12 +89,14 @@ public class WorksheetTests extends BcmUtil {
         softAssertions.assertAll();
     }
 
+    // TODO: 15/01/2024 cn - krzy, move this to test if its only going to be used once
     private ScenarioItem getPart() {
         ResponseWrapper<ComponentResponse> components = cssComponent.postSearchRequest(testingUser, componentType);
         return components.getResponseEntity().getItems().stream()
             .findFirst().orElse(null);
     }
 
+    // TODO: 15/01/2024 cn - krzy, what's the purpose of this private method when you can just call bcmUtil.createWorksheet in the test?
     private String createWorksheet() {
         String name = new GenerateStringUtil().saltString("name");
         ResponseWrapper<WorkSheetResponse> worksheet =

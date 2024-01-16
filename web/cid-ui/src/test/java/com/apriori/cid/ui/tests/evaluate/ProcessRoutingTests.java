@@ -1077,7 +1077,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14409})
     @Description("Validate routings and user preferences")
     public void routingsAndUserPreferences() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_PLASTIC);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("5d51749fig01", ProcessGroupEnum.SHEET_PLASTIC);
 
         loginPage = new CidAppLoginPage(driver);
         routingSelectionPage = loginPage.login(component.getUser())

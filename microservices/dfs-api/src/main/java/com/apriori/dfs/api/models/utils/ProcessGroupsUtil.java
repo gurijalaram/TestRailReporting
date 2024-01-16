@@ -57,7 +57,7 @@ public class ProcessGroupsUtil {
                                                                        Class<T> expectedType,
                                                                        String identity) {
 
-        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(DFSApiEnum.DIGITAL_FACTORIES_BY_PATH, expectedType)
+        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(DFSApiEnum.PROCESS_GROUPS_BY_PATH, expectedType)
             .inlineVariables(new String[]{ identity, ""}) // hack - add one more empty variable to skip auto adding shared secret
             .expectedResponseCode(expectedResponseCode);
 

@@ -1,6 +1,7 @@
 package com.apriori.cid.ui.tests.evaluate;
 
 import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_USA;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.ROTO_BLOW_MOLDING;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -128,7 +129,7 @@ public class ProcessGroupsTests extends TestBaseUI {
     @Description("Testing process group Extrusion")
     @TestRail(id = {6126, 6461})
     public void testProcessGroupExtrusion() {
-        component = new ComponentRequestUtil().getComponent("700-33770-01_A0");
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("700-33770-01_A0", PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
