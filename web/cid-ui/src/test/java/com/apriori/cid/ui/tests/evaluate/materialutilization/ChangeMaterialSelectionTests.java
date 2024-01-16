@@ -156,11 +156,13 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestStockMachining() {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        //component = new ComponentRequestUtil().getComponent("bracket_basic");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectDigitalFactory(APRIORI_USA)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())).isEqualTo(true);
