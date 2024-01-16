@@ -99,7 +99,10 @@ pipeline {
                 axes {
                     axis {
                         name 'MODULE'
-                        values 'cid-ui', 'cid-api'
+                        values 'cid-ui', 'cas-ui', 'ach-ui', 'cis-ui',
+                                'cid-api', 'cas-api', 'cds-api', 'ats-api', 'cus-api', 'css-api', 'vds-api', 'nts-api',
+                                'fms-api', 'sds-api', 'ach-api', 'cmp-api', 'bcs-api', 'cis-api', 'dds-api',
+                                'dms-api', 'qds-api', 'qms-api', 'edc-api', 'bcm-api'
                     }
                 }
 
