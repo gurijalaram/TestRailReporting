@@ -656,6 +656,22 @@ public class PageUtils {
      *
      * @param by         The search query to search the context for.
      * @param forHowLong The maximum amount of time to wait.
+     * @return The WebElement that was found.
+     * @throws TimeoutException If there is never an element that becomes visible.
+     */
+    public WebElement waitForElementToAppear(By by, Duration forHowLong) {
+        waitForCondition(() -> {
+            WebElement element = driver.findElements(by).stream().findFirst().orElse(null);
+            return element != null;
+        }, forHowLong);
+        return driver.findElement(by);
+    }
+
+    /**
+     * Waits for an element to become visible.
+     *
+     * @param by         The search query to search the context for.
+     * @param forHowLong The maximum amount of time to wait.
      * @param search     The parent context to search under.
      * @return The WebElement that was found.
      * @throws TimeoutException If there is never an element that becomes visible.

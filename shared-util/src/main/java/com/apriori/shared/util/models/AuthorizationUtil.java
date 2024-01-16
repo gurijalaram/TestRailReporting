@@ -148,6 +148,16 @@ public class AuthorizationUtil {
         return customerSiteId.substring(customerSiteId.length() - 4);
     }
 
+
+    /**
+     * Get Apriori customer data
+     * By a cloud reference name filter all customers to find a user used for the environment
+     * @return filtered customer
+     */
+    public static Customer getApIntCustomerData() {
+        return getCustomerData("ap-int");
+    }
+
     /**
      * Get current customer data
      * By a cloud reference name filter all customers to find a user used for the environment
@@ -157,14 +167,36 @@ public class AuthorizationUtil {
         if (currentCustomer != null) {
             return currentCustomer;
         }
+        return currentCustomer = getCustomerData(null);
+    }
+
+    /**
+     * Get customer data
+     * By a cloud reference name filter all customers to find a user used for the environment
+     * @param customerName - if null will return current customer data
+     * @return
+     */
+    public static Customer getCustomerData(final String customerName) {
+        String customerCloudReferenceName = getCustomerCloudReferenceName(customerName);
 
         RequestEntity customerRequest = RequestEntityUtil_Old.init(CustomersApiEnum.CUSTOMERS, Customers.class)
             .expectedResponseCode(HttpStatus.SC_OK)
-            .queryParams(new QueryParams().use("cloudReference[EQ]",PropertiesContext.get("${customer}.cloud_reference_name")));
+            .queryParams(new QueryParams().use("cloudReference[EQ]", customerCloudReferenceName));
 
         ResponseWrapper<Customers> customersResponseWrapper =  HTTPRequest.build(customerRequest).get();
 
-        return currentCustomer = customersResponseWrapper.getResponseEntity().getItems().get(0);
+        return customersResponseWrapper.getResponseEntity().getItems().get(0);
+    }
+
+    private static String getCustomerCloudReferenceName(final String customerName) {
+        try {
+            return customerName == null
+                ? PropertiesContext.get("${customer}.cloud_reference_name")
+                : PropertiesContext.get(String.format("%s.cloud_reference_name", customerName));
+        } catch (IllegalArgumentException e) {
+            log.info("${customer}.cloud_reference_name is not specified. Setting it to be the same as customer name");
+            return PropertiesContext.get("customer");
+        }
     }
 
     private static String getCustomerSiteIdByCustomer(Customer customerToProcess) {
