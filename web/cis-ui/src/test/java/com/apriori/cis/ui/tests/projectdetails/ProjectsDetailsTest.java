@@ -31,10 +31,7 @@ import java.util.List;
 public class ProjectsDetailsTest extends TestBaseUI {
 
     private CisLoginPage loginPage;
-    private LeftHandNavigationBar leftHandNavigationBar;
     private ProjectsPage projectsPage;
-    private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
-    private CreateNewProjectsPage createNewProjectsPage;
     private ProjectsDetailsPage projectsDetailsPage;
     private File resourceFile;
     private UserCredentials currentUser;
