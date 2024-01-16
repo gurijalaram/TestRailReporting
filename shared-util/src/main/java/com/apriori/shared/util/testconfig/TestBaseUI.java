@@ -18,6 +18,7 @@ import org.openqa.selenium.support.events.WebDriverListener;
 import java.io.File;
 import java.lang.reflect.Method;
 
+
 @Slf4j
 @ExtendWith(TestRulesUI.class)
 public class TestBaseUI {
