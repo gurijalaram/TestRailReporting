@@ -85,8 +85,8 @@ public class PublishExistingCostedTests extends TestBaseUI {
     @TestRail(id = {6211, 6734, 6040})
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
-        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
+        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
         componentB.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
