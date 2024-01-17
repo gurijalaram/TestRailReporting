@@ -161,6 +161,11 @@
       "processGroup": "PLASTIC_MOLDING"
     },
     {
+      "componentName": "case_002_006-8611543_prt",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "BasicScenario_Forging",
       "extension": ".stp",
       "processGroup": "FORGING"
@@ -188,6 +193,11 @@
     {
       "componentName": "Casting",
       "extension": ".prt",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "MultiUpload",
+      "extension": ".stp",
       "processGroup": "CASTING_DIE"
     },
     {
