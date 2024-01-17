@@ -148,7 +148,7 @@ public class GroupEditTests extends TestBaseUI {
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
             .clickExplore()
             .selectFilter("Public")
-            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName());
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName());
 
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(true);
 
@@ -156,7 +156,7 @@ public class GroupEditTests extends TestBaseUI {
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
             .selectFilter("Public")
-            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName());
+            .multiSelectScenarios(componentA.getComponentName() + ", " + componentA.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName());
 
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(false);
 
