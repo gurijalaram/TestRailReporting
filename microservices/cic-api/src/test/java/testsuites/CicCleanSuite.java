@@ -1,13 +1,13 @@
 package testsuites;
 
+import com.apriori.cic.api.tests.CicWorkflowsCleanTest;
+
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({
-    ApiSanityTestSuite.class,
-    CustomerSmokeEnvironmentTestSuite.class,
-    CustomerTagTestSuite.class
+    CicWorkflowsCleanTest.class
 })
-public class CustomerGlobalTestSuite {
+public class CicCleanSuite {
 }

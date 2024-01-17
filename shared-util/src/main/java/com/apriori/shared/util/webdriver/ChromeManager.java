@@ -73,7 +73,6 @@ public class ChromeManager implements DriverManager<ChromeOptions> {
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--headless");
         }
-
         chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 
         return chromeOptions;
