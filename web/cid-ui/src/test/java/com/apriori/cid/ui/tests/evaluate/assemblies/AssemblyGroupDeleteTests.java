@@ -7,39 +7,38 @@ import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.DeletePage;
 import com.apriori.cid.ui.utils.ButtonTypeEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AssemblyGroupDeleteTests extends TestBaseUI {
 
-    private UserCredentials currentUser;
     private EvaluatePage evaluatePage;
     private ComponentsTreePage componentsTreePage;
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
+    private ComponentInfoBuilder componentAssembly;
+
+    @AfterEach
+    public void cleanUp() {
+        if (componentAssembly != null) {
+            new AssemblyUtils().deleteAssemblyAndComponents(componentAssembly);
+        }
+    }
 
     @Test
     @TestRail(id = {15023, 15024, 15025, 15026})
     @Description("Delete 10 subcomponents of an assembly")
     public void assemblyMenuGroupDelete() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
 
-        String assemblyName = "RandomShapeAsm";
-        String assemblyExtension = ".SLDASM";
-        String subComponentExtension = ".SLDPRT";
         String arc = "50mmArc";
         String cube50 = "50mmCube";
         String ellipse = "50mmEllipse";
@@ -52,42 +51,36 @@ public class AssemblyGroupDeleteTests extends TestBaseUI {
         String cylinder = "200mmCylinder";
         String blob = "500mmBlob";
 
-        final List<String> subComponentNames = Arrays.asList(
-            arc, cube50, ellipse, octagon, cube75, hexagon, cube100, slot, cuboid, cylinder, blob);
-
-        final List<String> subComponentNamesToDelete = Arrays.asList(
-            arc, cube50, ellipse, octagon, cube75, hexagon, cube100, slot, cuboid, cylinder);
-
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
-            assemblyExtension,
-            processGroupEnum,
-            subComponentNames,
-            subComponentExtension,
-            processGroupEnum,
-            scenarioName,
-            currentUser);
+        componentAssembly = new AssemblyRequestUtil().getAssembly("RandomShapeAsm");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
         evaluatePage = new CidAppLoginPage(driver)
-            .login(currentUser)
-            .openScenario(assemblyName, scenarioName);
+            .login(componentAssembly.getUser())
+            .openScenario(componentAssembly.getComponentName(), componentAssembly.getScenarioName());
         componentsTreePage = evaluatePage.openComponents();
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.DELETE)).as("Delete Button Enabled").isFalse();
 
-        componentsTreePage.multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," + scenarioName, ellipse + "," + scenarioName, octagon + "," + scenarioName,
-            cube75 + "," + scenarioName, hexagon + "," + scenarioName, cube100 + "," + scenarioName, slot + "," + scenarioName, cuboid + "," + scenarioName,
-            cylinder + "," + scenarioName);
+        List<ComponentInfoBuilder> includedSubcomponents = componentAssembly.getSubComponents().stream().filter(o -> !o.getComponentName().equalsIgnoreCase(blob)).collect(Collectors.toList());
+
+        includedSubcomponents.forEach(includedSubcomponent -> {
+            componentsTreePage.multiSelectSubcomponents(includedSubcomponent + "," + componentAssembly.getScenarioName(),
+                includedSubcomponent + "," + componentAssembly.getScenarioName(), includedSubcomponent + "," + componentAssembly.getScenarioName(),
+                includedSubcomponent + "," + componentAssembly.getScenarioName(), includedSubcomponent + "," + componentAssembly.getScenarioName(),
+                includedSubcomponent + "," + componentAssembly.getScenarioName(), includedSubcomponent + "," + componentAssembly.getScenarioName(),
+                includedSubcomponent + "," + componentAssembly.getScenarioName(), includedSubcomponent + "," + componentAssembly.getScenarioName(),
+                includedSubcomponent + "," + componentAssembly.getScenarioName());
+        });
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.DELETE)).as("Delete Button Enabled").isTrue();
 
-        componentsTreePage.multiSelectSubcomponents(blob + "," + scenarioName);
+        componentsTreePage.multiSelectSubcomponents(blob + "," + componentAssembly.getScenarioName());
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.DELETE)).as("Delete Button Enabled").isFalse();
 
-        componentsTreePage.multiSelectSubcomponents(blob + "," + scenarioName);
+        componentsTreePage.multiSelectSubcomponents(blob + "," + componentAssembly.getScenarioName());
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.DELETE)).as("Delete Button Enabled").isTrue();
 
@@ -99,8 +92,8 @@ public class AssemblyGroupDeleteTests extends TestBaseUI {
             .clickRefresh(EvaluatePage.class)
             .openComponents();
 
-        subComponentNamesToDelete.forEach(comp ->
-            softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(comp)).isEqualTo(true));
+        includedSubcomponents.forEach(includedSubcomponent ->
+            softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(includedSubcomponent.getComponentName())).isEqualTo(true));
 
         softAssertions.assertAll();
     }
