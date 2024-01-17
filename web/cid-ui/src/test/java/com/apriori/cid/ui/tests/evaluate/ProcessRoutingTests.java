@@ -473,7 +473,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {16132, 7841})
     @Description("Be able to see basic breakdown of cycle time by process for problem identification.")
     public void routingCycleTime() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("Push Pin", ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
         materialProcessPage = loginPage.login(component.getUser())

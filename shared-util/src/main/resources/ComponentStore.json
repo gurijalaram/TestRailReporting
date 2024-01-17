@@ -71,6 +71,11 @@
       "processGroup": "PLASTIC_MOLDING"
     },
     {
+      "componentName": "Push Pin",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "Locker_bottom_panel",
       "extension": ".prt",
       "processGroup": "STOCK_MACHINING"

@@ -99,7 +99,7 @@ public class PublishExistingCostedTests extends TestBaseUI {
             .costScenario()
             .publishScenario(PublishPage.class)
             .publish(component, EvaluatePage.class)
-            .uploadComponentAndOpen(componentB).clickExplore()
+            .uploadComponent(componentB)
             .selectFilter("Private")
             .enterKeySearch(component.getComponentName())
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
