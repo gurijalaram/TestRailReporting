@@ -1,5 +1,6 @@
 package com.apriori.cic.api.utils;
 
+import com.apriori.cic.api.enums.CICAPIEnum;
 import com.apriori.cic.api.models.request.WorkflowParts;
 import com.apriori.cic.api.models.request.WorkflowRequest;
 import com.apriori.cic.api.models.response.AgentWorkflow;
@@ -9,10 +10,15 @@ import com.apriori.cic.api.models.response.AgentWorkflowJobRun;
 import com.apriori.shared.util.file.part.PartData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class WorkflowTestUtil extends TestBaseUI {
@@ -273,7 +279,38 @@ public class WorkflowTestUtil extends TestBaseUI {
         this.workflowPartsRequestDataBuilder = null;
     }
 
+    /**
+     * getter for AgentWorkflowJobRun class object
+     *
+     * @return AgentWorkflowJobRun
+     */
     public AgentWorkflowJobRun getAgentWorkflowJobRunResponse() {
         return agentWorkflowJobRunResponse;
+    }
+
+
+    /**
+     * delete workflows
+     *
+     * @return current class object
+     */
+    public Boolean isWorkflowsDeleted() {
+        ResponseWrapper<String> response = CicApiTestUtil.submitRequest(CICAPIEnum.CIC_AGENT_WORKFLOWS, null);
+        AgentWorkflow[] agentWorkflows = JsonManager.deserializeJsonFromString(response.getBody(), AgentWorkflow[].class);
+        try {
+            Arrays.stream(agentWorkflows)
+                .filter(wf -> wf.getName().startsWith("CIC") || wf.getName().startsWith("-"))
+                .forEach(wf -> CicApiTestUtil.deleteWorkFlow(this.cicLoginUtil.getSessionId(), wf));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
+        ResponseWrapper<String> workflowResponse = CicApiTestUtil.submitRequest(CICAPIEnum.CIC_AGENT_WORKFLOWS, null);
+        AgentWorkflow[] workflowList = JsonManager.deserializeJsonFromString(workflowResponse.getBody(), AgentWorkflow[].class);
+        List<AgentWorkflow> agentWorkflow = Arrays.stream(workflowList)
+            .filter(wf -> wf.getName().startsWith("CIC") || wf.getName().startsWith("-"))
+            .collect(Collectors.toList());
+
+        return (agentWorkflow.size() > 0) ? false : true;
     }
 }
