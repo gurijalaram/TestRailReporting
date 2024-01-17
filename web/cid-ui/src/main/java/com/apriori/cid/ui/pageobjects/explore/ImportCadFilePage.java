@@ -124,6 +124,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return current page object
      */
     public ImportCadFilePage inputMultiComponentBuilderDetails(List<ComponentInfoBuilder> multiUploadList) {
+        unTick("Apply to all");
         multiUploadList.forEach(multiUpload -> {
             String file = multiUpload.getResourceFile().getName();
 
