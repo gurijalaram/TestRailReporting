@@ -1301,8 +1301,9 @@ public class ComparisonTests extends TestBaseUI {
         String comparisonName2 = new GenerateStringUtil().generateComparisonName();
 
         component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        component2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2 = new ComponentRequestUtil().getComponent();
         component2.setUser(component.getUser());
+        component2 = componentsUtil.postComponent(component2);
 
         comparePage = new CidAppLoginPage(driver)
             .login(component.getUser())
