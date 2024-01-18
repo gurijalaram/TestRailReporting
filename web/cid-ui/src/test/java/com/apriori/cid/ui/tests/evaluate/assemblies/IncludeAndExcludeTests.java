@@ -14,6 +14,7 @@ import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.ButtonTypeEnum;
 import com.apriori.cid.ui.utils.ColourEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -36,7 +37,6 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class IncludeAndExcludeTests extends TestBaseUI {
 
@@ -82,27 +82,14 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     @TestRail(id = 11154)
     @Description("Include and Exclude buttons disabled by default")
     public void testIncludeAndExcludeDisabledButtons() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+        ComponentInfoBuilder assembly = new AssemblyRequestUtil().getAssembly();
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
-
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .uploadsAndOpenAssembly(
-                assemblyName,
-                assemblyExtension,
-                ProcessGroupEnum.ASSEMBLY,
-                subComponentNames,
-                componentExtension,
-                processGroupEnum,
-                scenarioName,
-                currentUser)
+        componentsTreePage = loginPage.login(assembly.getUser())
+            .navigateToScenario(assembly)
             .openComponents();
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
@@ -115,34 +102,20 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     @TestRail(id = 11150)
     @Description("Exclude all sub-components from top-level assembly")
     public void testExcludeButtons() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+        ComponentInfoBuilder assembly = new AssemblyRequestUtil().getAssembly();
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
-
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .uploadsAndOpenAssembly(
-                assemblyName,
-                assemblyExtension,
-                ProcessGroupEnum.ASSEMBLY,
-                subComponentNames,
-                componentExtension,
-                processGroupEnum,
-                scenarioName,
-                currentUser)
+        componentsTreePage = loginPage.login(assembly.getUser())
+            .navigateToScenario(assembly)
             .openComponents()
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
-        Stream.of(subComponentNames.toArray())
-            .forEach(componentName ->
-                assertThat(componentsTreePage.isTextDecorationStruckOut(componentName.toString()), is(true)));
+        assembly.getSubComponents().forEach(componentName ->
+            assertThat(componentsTreePage.isTextDecorationStruckOut(componentName.toString()), is(true)));
     }
 
     @Test
@@ -150,46 +123,35 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     @TestRail(id = {11874, 11843, 11842, 11155, 11148})
     @Description("Verify Include and Exclude buttons disabled if mixture selected")
     public void testIncludeAndExcludeDisabledButtonsWithMixedSelections() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+        ComponentInfoBuilder assembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
+        ComponentInfoBuilder pin = assembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("pin")).findFirst().get();
+        ComponentInfoBuilder smallRing = assembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("small ring")).findFirst().get();
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
-
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .uploadsAndOpenAssembly(
-                assemblyName,
-                assemblyExtension,
-                ProcessGroupEnum.ASSEMBLY,
-                subComponentNames,
-                componentExtension,
-                processGroupEnum,
-                scenarioName,
-                currentUser)
+        componentsTreePage = loginPage.login(assembly.getUser())
+            .navigateToScenario(assembly)
             .openComponents()
-            .multiSelectSubcomponents("PIN, " + scenarioName + "")
+            .multiSelectSubcomponents(pin.getComponentName() + "," + assembly.getScenarioName())
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
-            .multiSelectSubcomponents("SMALL RING, " + scenarioName + "");
+            .multiSelectSubcomponents(smallRing.getComponentName() + "," + assembly.getScenarioName());
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(true);
 
-        componentsTreePage.multiSelectSubcomponents("pin, " + scenarioName + "");
+        componentsTreePage.multiSelectSubcomponents(pin.getComponentName() + "," + assembly.getScenarioName());
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
 
-        componentsTreePage.multiSelectSubcomponents("small ring, " + scenarioName + "");
+        componentsTreePage.multiSelectSubcomponents(smallRing.getComponentName() + "," + assembly.getScenarioName());
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
 
-        componentsTreePage.multiSelectSubcomponents("small ring, " + scenarioName + "");
+        componentsTreePage.multiSelectSubcomponents(smallRing.getComponentName() + "," + assembly.getScenarioName());
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
@@ -201,32 +163,15 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     @TestRail(id = {11153, 11152, 11151})
     @Description("Include all sub-components from top-level assembly")
     public void testIncludeButtonEnabledWithCostedComponents() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
-
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            scenarioName,
-            currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectCheckAllBox()
@@ -237,9 +182,8 @@ public class IncludeAndExcludeTests extends TestBaseUI {
 
         componentsTreePage.selectButtonType(ButtonTypeEnum.INCLUDE);
 
-        Stream.of(subComponentNames.toArray())
-            .forEach(componentName ->
-                assertThat(componentsTreePage.isTextDecorationStruckOut(componentName.toString()), is(false)));
+        componentAssembly.getSubComponents().forEach(component ->
+            assertThat(componentsTreePage.isTextDecorationStruckOut(component.getComponentName()), is(false)));
     }
 
     @Test
@@ -247,32 +191,15 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     @TestRail(id = {11150, 11149, 11156})
     @Description("Include all sub-components from top-level assembly")
     public void testExcludeButtonEnabledWithCostedComponents() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
-
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            scenarioName,
-            currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectCheckAllBox();
@@ -281,9 +208,8 @@ public class IncludeAndExcludeTests extends TestBaseUI {
 
         componentsTreePage.selectButtonType(ButtonTypeEnum.EXCLUDE);
 
-        Stream.of(subComponentNames.toArray())
-            .forEach(componentName ->
-                assertThat(componentsTreePage.isTextDecorationStruckOut(componentName.toString()), is(true)));
+        componentAssembly.getSubComponents().forEach(component ->
+            assertThat(componentsTreePage.isTextDecorationStruckOut(component.getComponentName()), is(true)));
     }
 
     @Test
@@ -291,35 +217,21 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     @TestRail(id = {12089, 6554})
     @Description("Verify Excluded scenarios are not highlighted in flattened view")
     public void testExcludedScenarioInFlattenedView() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
-
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder assembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
+        ComponentInfoBuilder pin = assembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("pin")).findFirst().get();
+        ComponentInfoBuilder smallRing = assembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("small ring")).findFirst().get();
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .uploadsAndOpenAssembly(
-                assemblyName,
-                assemblyExtension,
-                ProcessGroupEnum.ASSEMBLY,
-                subComponentNames,
-                componentExtension,
-                processGroupEnum,
-                scenarioName,
-                currentUser)
+        componentsTreePage = loginPage.login(assembly.getUser())
+            .navigateToScenario(assembly)
             .openComponents()
-            .multiSelectSubcomponents("PIN, " + scenarioName + ",SMALL RING, " + scenarioName + "")
+            .multiSelectSubcomponents(pin.getComponentName() + ", " + pin.getScenarioName(), smallRing.getComponentName() + "," + smallRing.getScenarioName())
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
         componentsTablePage = componentsTreePage.selectTableView();
 
-        softAssertions.assertThat(componentsTablePage.getCellColour("pin", scenarioName)).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
-        softAssertions.assertThat(componentsTablePage.getCellColour("small ring", scenarioName)).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
+        softAssertions.assertThat(componentsTablePage.getCellColour(pin.getComponentName(), pin.getScenarioName())).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
+        softAssertions.assertThat(componentsTablePage.getCellColour(smallRing.getComponentName(), smallRing.getScenarioName())).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
 
         softAssertions.assertAll();
     }
@@ -329,36 +241,24 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     @TestRail(id = {11921, 11920, 11919})
     @Description("Include all sub-components from top-level assembly")
     public void testIncludeSubcomponentsAndCost() {
-        String assemblyName = "flange c";
-        final String assemblyExtension = ".CATProduct";
 
-        List<String> subComponentNames = Arrays.asList("flange", "nut", "bolt");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".CATPart";
+        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
 
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            scenarioName,
-            currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
-        componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
-            CostingTemplate.builder()
-                .processGroupName(processGroupEnum.getProcessGroup())
-                .build()));
+
+        componentAssembly.getSubComponents()
+            .forEach(subComponent -> subComponent.setCostingTemplate(
+                CostingTemplate.builder()
+                    .processGroupName(componentAssembly.getSubComponents().get(0).getProcessGroup().getProcessGroup())
+                    .build())
+            );
+
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectCheckAllBox()
@@ -373,8 +273,8 @@ public class IncludeAndExcludeTests extends TestBaseUI {
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.INCLUDE);
 
-        subComponentNames.forEach(componentName ->
-            assertThat(componentsTreePage.isTextDecorationStruckOut(componentName), is(false)));
+        componentAssembly.getSubComponents().forEach(component ->
+            assertThat(componentsTreePage.isTextDecorationStruckOut(component.getComponentName()), is(false)));
 
         evaluatePage = componentsTreePage.closePanel()
             .costScenario();
@@ -393,30 +293,13 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     @TestRail(id = {11918, 11917, 11916})
     @Description("Exclude all sub-components from top-level assembly")
     public void testExcludeSubcomponentsAndCost() {
-        String assemblyName = "flange c";
-        final String assemblyExtension = ".CATProduct";
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
-        List<String> subComponentNames = Arrays.asList("flange", "nut", "bolt");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".CATPart";
-
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            scenarioName,
-            currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
         componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
             CostingTemplate.builder()
-                .processGroupName(processGroupEnum.getProcessGroup())
+                .processGroupName(componentAssembly.getSubComponents().get(0).getProcessGroup().getProcessGroup())
                 .build()));
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
@@ -432,8 +315,8 @@ public class IncludeAndExcludeTests extends TestBaseUI {
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
-        subComponentNames.forEach(componentName ->
-            assertThat(componentsTreePage.isTextDecorationStruckOut(componentName), is(true)));
+        componentAssembly.getSubComponents().forEach(component ->
+            assertThat(componentsTreePage.isTextDecorationStruckOut(component.getComponentName()), is(true)));
 
         evaluatePage = componentsTreePage.closePanel()
             .costScenario();
