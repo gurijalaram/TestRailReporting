@@ -31,7 +31,6 @@ import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -39,13 +38,11 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.apache.commons.lang3.SerializationUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class EditAssembliesTest extends TestBaseUI {
 
@@ -543,11 +540,10 @@ public class EditAssembliesTest extends TestBaseUI {
 
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        final String FLANGE = "flange";
-        final String NUT = "nut";
-        final String BOLT = "bolt";
-
         componentAssembly = assemblyRequestUtil.getAssembly("flange c");
+        ComponentInfoBuilder bolt = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("bolt")).findFirst().get();
+        ComponentInfoBuilder nut = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("nut")).findFirst().get();
+        ComponentInfoBuilder flange = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("flange")).findFirst().get();
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -559,10 +555,10 @@ public class EditAssembliesTest extends TestBaseUI {
         editScenarioStatusPage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .multiSelectSubcomponents(FLANGE + "," + componentAssembly.getScenarioName())
+            .multiSelectSubcomponents(flange.getComponentName() + "," + componentAssembly.getScenarioName())
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsTreePage.class)
-            .multiSelectSubcomponents(BOLT + "," + componentAssembly.getScenarioName(), NUT + "," + componentAssembly.getScenarioName())
+            .multiSelectSubcomponents(bolt.getComponentName() + "," + componentAssembly.getScenarioName(), nut.getComponentName() + "," + componentAssembly.getScenarioName())
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
             .enterScenarioName(newScenarioName)
@@ -572,8 +568,8 @@ public class EditAssembliesTest extends TestBaseUI {
 
         componentsTreePage = editScenarioStatusPage.close(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTreePage.getListOfScenarios(BOLT, newScenarioName)).isEqualTo(1);
-        softAssertions.assertThat(componentsTreePage.getListOfScenarios(NUT, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(bolt.getComponentName(), newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsTreePage.getListOfScenarios(nut.getComponentName(), newScenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -582,44 +578,19 @@ public class EditAssembliesTest extends TestBaseUI {
     @TestRail(id = 11142)
     @Description("Validate an error message appears if any issues occur")
     public void testEditWithExistingPrivateScenarioName() {
-        String preExistingScenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
 
-        final String FLANGE = "flange";
-        final String NUT = "nut";
-        final String BOLT = "bolt";
-        String assemblyName = "flange c";
-        final String assemblyExtension = ".CATProduct";
+        ComponentInfoBuilder preExistingComponentAssembly = new AssemblyRequestUtil().getAssembly();
+        componentAssembly = SerializationUtils.clone(preExistingComponentAssembly);
+        componentAssembly.setScenarioName(new GenerateStringUtil().generateScenarioName());
 
-        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".CATPart";
-
-        ComponentInfoBuilder preExistingComponentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            preExistingScenarioName,
-            currentUser);
+        ComponentInfoBuilder bolt = preExistingComponentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("bolt")).findFirst().get();
+        ComponentInfoBuilder nut = preExistingComponentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("nut")).findFirst().get();
 
         assemblyUtils.uploadSubComponents(preExistingComponentAssembly)
             .uploadAssembly(preExistingComponentAssembly);
         assemblyUtils.costSubComponents(preExistingComponentAssembly)
             .costAssembly(preExistingComponentAssembly);
 
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            scenarioName,
-            currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly)
@@ -627,14 +598,14 @@ public class EditAssembliesTest extends TestBaseUI {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        editScenarioStatusPage = loginPage.login(currentUser)
+        editScenarioStatusPage = loginPage.login(preExistingComponentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
-            .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "")
+            .multiSelectSubcomponents(bolt.getComponentName() + "," + bolt.getScenarioName(), nut.getComponentName() + "," + nut.getScenarioName())
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
-            .enterScenarioName(preExistingScenarioName)
+            .enterScenarioName(preExistingComponentAssembly.getScenarioName())
             .clickContinue(EditScenarioStatusPage.class);
 
         assertThat(editScenarioStatusPage.getEditScenarioErrorMessage(), containsString("failed while attempting to create private scenario(s)."));
