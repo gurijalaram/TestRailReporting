@@ -57,7 +57,6 @@ public class UploadAssembliesTests extends TestBaseUI {
     private ExplorePage explorePage;
     private ConfigurePage configurePage;
     private ComponentsTreePage componentsTreePage;
-    private ComponentInfoBuilder assemblyInfo;
     private ComponentInfoBuilder componentAssembly;
     private ComponentInfoBuilder autoSword;
 
@@ -67,12 +66,7 @@ public class UploadAssembliesTests extends TestBaseUI {
 
     @AfterEach
     public void cleanUp() {
-        if (currentUser != null && assemblyInfo != null) {
-            assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);
-            assemblyInfo = null;
-        }
-
-        Arrays.asList(assemblyInfo, autoSword, componentAssembly).forEach(assembly -> {
+        Arrays.asList(autoSword, componentAssembly).forEach(assembly -> {
             if (assembly != null) {
                 assemblyUtils.deleteAssemblyAndComponents(assembly);
             }
