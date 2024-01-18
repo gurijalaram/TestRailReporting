@@ -94,4 +94,61 @@ public class ProcessGroupsUtil {
 
         return HTTPRequest.build(requestEntity).get();
     }
+
+    /**
+     * FIND process groups page
+     *
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> findProcessGroupsPage(Integer expectedResponseCode,
+                                                        Class<T> expectedType,
+                                                        String... inlineVariables) {
+
+        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(
+            DFSApiEnum.PROCESS_GROUPS_WITH_PAGE_SIZE_AND_PAGE_NUMBER, expectedType)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * FIND all process groups sored by name
+     *
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> findAllProcessGroupsSortedByName(Integer expectedResponseCode,
+                                                        Class<T> expectedType,
+                                                        String... inlineVariables) {
+
+        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(
+            DFSApiEnum.PROCESS_GROUPS_SORTED_BY_NAME, expectedType)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * FIND all process groups by name
+     *
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> findAllProcessGroupsByName(Integer expectedResponseCode,
+                                                             Class<T> expectedType,
+                                                             String... inlineVariables) {
+
+        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(
+            DFSApiEnum.PROCESS_GROUPS_BY_NAME, expectedType)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
 }

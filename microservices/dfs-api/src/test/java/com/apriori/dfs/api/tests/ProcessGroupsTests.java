@@ -17,9 +17,14 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import software.amazon.awssdk.http.HttpStatusCode;
 
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class ProcessGroupsTests {
@@ -36,6 +41,9 @@ public class ProcessGroupsTests {
     private static final String UNAUTHORIZED_ERROR = "Unauthorized";
     private static final String NOT_ACCEPTABLE = "Not Acceptable";
     private static final String NOT_ACCEPTABLE_MSG = "Could not find acceptable representation";
+    private static final String BOTH_PAGE_NUMBER_AND_PAGE_SIZE_MUST_BE_GREATER_THAN_0 =
+        "Both pageNumber and pageSize must be greater than 0";
+
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final ProcessGroupsUtil processGroupsUtil = new ProcessGroupsUtil();
     protected static RequestEntityUtil requestEntityUtil;
@@ -156,6 +164,104 @@ public class ProcessGroupsTests {
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_ACCEPTABLE);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(NOT_ACCEPTABLE_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    //@TestRail(id = {0})
+    @Description("Find a page of Process Groups")
+    public void findProcessGroupsPage() {
+
+        String pageSize = "15";
+        String pageNumber = "3";
+
+        ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findProcessGroupsPage(
+            HttpStatusCode.OK, ProcessGroups.class, pageSize, pageNumber);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageNumber()).isEqualTo(3);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo(15);
+        softAssertions.assertAll();
+    }
+
+    //@TestRail(id = {0})
+    @Description("Find invalid page number/page size of Process Groups")
+    @ParameterizedTest
+    @CsvSource({
+        "15, 0",
+        "0, 3"
+    })
+    public void findProcessGroupsPageWithInvalidPageNumber(String pageSize, String pageNumber) {
+
+
+        ResponseWrapper<ErrorMessage> responseWrapper = processGroupsUtil.findProcessGroupsPage(
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, pageSize, pageNumber);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(BOTH_PAGE_NUMBER_AND_PAGE_SIZE_MUST_BE_GREATER_THAN_0);
+        softAssertions.assertAll();
+    }
+
+    //@TestRail(id = {0})
+    @Description("Find all Process Groups sorted by name")
+    @ParameterizedTest
+    @ValueSource(strings = { "ASC", "DESC" })
+    public void findProcessGroupsPageSortedByName(String sort) {
+
+        int pageSize = 100;
+        int pageNumber = 1;
+
+        ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findAllProcessGroupsSortedByName(
+            HttpStatusCode.OK, ProcessGroups.class, sort);
+
+        List<ProcessGroup> items = responseWrapper.getResponseEntity().getItems();
+
+        softAssertions.assertThat(items).isNotNull();
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageNumber()).isEqualTo(pageNumber);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo(pageSize);
+        softAssertions.assertAll();
+
+        ProcessGroup previous = items.get(0);
+
+        Comparator<String> comparator = "ASC".equals(sort) ? Comparator.naturalOrder() : Comparator.reverseOrder();
+
+        for (int i = 1; i < items.size(); i++) {
+            ProcessGroup current = items.get(i);
+            int compareResult = comparator.compare(previous.getName(), current.getName());
+            softAssertions.assertThat(compareResult).isEqualTo(-1);
+            previous = current;
+        }
+    }
+
+    @Test
+    //@TestRail(id = {0})
+    @Description("Find a page of Process Groups matched by name")
+    public void findProcessGroupsMatchedByName() {
+
+        String searchString = "sheet";
+
+        ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findAllProcessGroupsByName(
+            HttpStatusCode.OK, ProcessGroups.class, "CN", searchString);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
+        responseWrapper.getResponseEntity().getItems().forEach(pg ->
+            softAssertions.assertThat(pg.getName().toLowerCase().contains(searchString)).isEqualTo(true)
+        );
+        softAssertions.assertAll();
+    }
+
+    @Test
+    //@TestRail(id = {0})
+    @Description("Find a page of Process Groups not matched by name")
+    public void findProcessGroupsNotMatchedByName() {
+
+        String searchString = "fake";
+
+        ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findAllProcessGroupsByName(
+            HttpStatusCode.OK, ProcessGroups.class, "EQ", searchString);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().isEmpty()).isEqualTo(true);
         softAssertions.assertAll();
     }
 }
