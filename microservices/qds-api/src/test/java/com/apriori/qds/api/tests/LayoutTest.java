@@ -30,9 +30,8 @@ public class LayoutTest extends TestUtil {
 
     private static SoftAssertions softAssertions;
     private static LayoutResponse layoutResponse;
-    UserCredentials currentUser = UserUtil.getUser();
+    private UserCredentials currentUser = UserUtil.getUser();
     private static String userContext;
-    private static String viewElementName;
     private static String layoutName;
 
     @BeforeEach
@@ -99,6 +98,5 @@ public class LayoutTest extends TestUtil {
     public void testCleanup() {
         LayoutResources.deleteLayout(layoutResponse.getIdentity(), userContext);
         softAssertions.assertAll();
-
     }
 }
