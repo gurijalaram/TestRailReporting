@@ -14,13 +14,9 @@ import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -28,9 +24,8 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GroupEditTests extends TestBaseUI {
 
@@ -167,88 +162,43 @@ public class GroupEditTests extends TestBaseUI {
     @TestRail(id = {14726, 15015})
     @Description("Attempt to edit more than 10 scenarios")
     public void testEditMoreThanTenScenarios() {
-        currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        final File resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT");
-        final File resourceFile2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger lead.SLDPRT");
-        final File resourceFile3 = FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT");
-        final File resourceFile4 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt");
-        final File resourceFile5 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt");
-        final File resourceFile6 = FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp");
-        final File resourceFile7 = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp");
-        final File resourceFile8 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt");
-        final File resourceFile9 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0005b.ipt");
-        final File resourceFile10 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt");
-        final File resourceFile11 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt");
+        List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(11);
+        List<ComponentInfoBuilder> ten_components = components.subList(0, 10);
+        ComponentInfoBuilder excluded_component = components.stream().filter(element -> !ten_components.contains(element)).collect(Collectors.toList()).get(0);
 
         loginPage = new CidAppLoginPage(driver);
-        List<ScenarioItem> componentItems = loginPage.login(currentUser)
-            .uploadMultiComponentsCSS(Arrays.asList(resourceFile, resourceFile2, resourceFile3, resourceFile4, resourceFile5, resourceFile6, resourceFile7, resourceFile8, resourceFile9, resourceFile10, resourceFile11),
-                scenarioName, currentUser);
+        explorePage = loginPage.login(components.get(0).getUser());
+        explorePage.uploadMultiComponentsCID(components);
 
-        componentItems.forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(),
-                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
+        components.forEach(component -> softAssertions.assertThat(cssComponent.getComponentParts(component.getUser(), COMPONENT_NAME_EQ.getKey() + component.getComponentName(),
+            SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
-        explorePage = new ExplorePage(driver);
         explorePage.refresh()
-            .setPagination()
-            .multiSelectScenarios("" + "piston rod_model1" + ", " + scenarioName + "",
-                "" + "Part0005b" + ", " + scenarioName + "",
-                "" + "piston cover_model1" + ", " + scenarioName + "",
-                "" + "Push Pin" + ", " + scenarioName + "",
-                "" + "PowderMetalShaft" + ", " + scenarioName + "",
-                "" + "bracket_basic" + ", " + scenarioName + "",
-                "" + "Part0004" + ", " + scenarioName + "",
-                "" + "small ring" + ", " + scenarioName + "",
-                "" + "titan charger lead" + ", " + scenarioName + "",
-                "" + "big ring" + ", " + scenarioName + "")
-            .publishScenario(PublishPage.class)
+            .setPagination();
+        ten_components.forEach(component -> explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName()));
+        explorePage.publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
             .close(ExplorePage.class);
 
-        componentItems.forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(),
-                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
-
         explorePage.refresh()
             .setPagination()
-            .selectFilter("Public")
-            .multiSelectScenarios("" + "piston rod_model1" + ", " + scenarioName + "",
-                "" + "Part0005b" + ", " + scenarioName + "",
-                "" + "piston cover_model1" + ", " + scenarioName + "",
-                "" + "Push Pin" + ", " + scenarioName + "",
-                "" + "PowderMetalShaft" + ", " + scenarioName + "",
-                "" + "bracket_basic" + ", " + scenarioName + "",
-                "" + "Part0004" + ", " + scenarioName + "",
-                "" + "small ring" + ", " + scenarioName + "",
-                "" + "titan charger lead" + ", " + scenarioName + "",
-                "" + "big ring" + ", " + scenarioName + "");
+            .selectFilter("Public");
+        ten_components.forEach(component -> explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName()));
 
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(true);
 
         explorePage.selectFilter("Private")
-            .openScenario("piston_model1", scenarioName)
+            .openScenario(excluded_component.getComponentName(), excluded_component.getScenarioName())
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
             .clickExplore()
-            .selectFilter("Public")
-            .multiSelectScenarios("" + "piston rod_model1" + ", " + scenarioName + "",
-                "" + "Part0005b" + ", " + scenarioName + "",
-                "" + "piston cover_model1" + ", " + scenarioName + "",
-                "" + "Push Pin" + ", " + scenarioName + "",
-                "" + "PowderMetalShaft" + ", " + scenarioName + "",
-                "" + "bracket_basic" + ", " + scenarioName + "",
-                "" + "Part0004" + ", " + scenarioName + "",
-                "" + "small ring" + ", " + scenarioName + "",
-                "" + "titan charger lead" + ", " + scenarioName + "",
-                "" + "big ring" + ", " + scenarioName + "",
-                "" + "piston_model1" + ", " + scenarioName + "");
+            .selectFilter("Public");
 
+        ten_components.forEach(component -> explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName()));
+        explorePage.multiSelectScenarios(excluded_component.getComponentName() + "," + excluded_component.getScenarioName());
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(false);
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(false);
 
