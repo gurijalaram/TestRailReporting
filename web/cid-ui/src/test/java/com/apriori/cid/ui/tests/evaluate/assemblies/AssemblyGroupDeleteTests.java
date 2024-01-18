@@ -52,6 +52,7 @@ public class AssemblyGroupDeleteTests extends TestBaseUI {
         String blob = "500mmBlob";
 
         componentAssembly = new AssemblyRequestUtil().getAssembly("RandomShapeAsm");
+        // TODO: 18/01/2024 cn - favour filtering over hardcoding eg. ComponentBuilder blob = componentAssembly.filter("blob").get();
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
