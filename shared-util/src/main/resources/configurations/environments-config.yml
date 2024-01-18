@@ -165,7 +165,7 @@ local:
   secret_key: O85XMATZEMBO
   customer_identity: 212B5ABD2F6C
   application_name: cid
-  deployment: aPriori Internal Production
+  deployment_name: aPriori Internal Production
   installation_name: US 1
   user_identity: 4N630F61FGNG
 
@@ -249,6 +249,12 @@ local:
   edc:
     ui_url: ${local.base_url}:3000/
     api_url: ${local.base_url}:8803/
+
+  bcm:
+    api_url: ${local.base_url}:8832/
+
+  gcd:
+    api_url: ${local.base_url}:8829/
 
 ########################################################################################################################
 

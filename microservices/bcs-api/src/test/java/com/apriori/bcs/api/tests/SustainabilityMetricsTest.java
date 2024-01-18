@@ -24,7 +24,6 @@ import java.io.File;
 public class SustainabilityMetricsTest {
     private SoftAssertions softAssertions;
     private BcsTestUtil bcsTestUtil;
-    private QueryParams queryParams;
 
     @BeforeEach
     public void testSetup() {
