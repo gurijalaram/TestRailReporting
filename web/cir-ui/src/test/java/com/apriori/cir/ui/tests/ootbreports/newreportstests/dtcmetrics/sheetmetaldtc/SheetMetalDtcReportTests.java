@@ -183,4 +183,14 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
             "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
         );
     }
+
+    @Test
+    @TmsLink("2323")
+    @TestRail(id = 2323)
+    @Description("Verify minimum annual spend input control correctly filters list of available parts")
+    public void testMinimumAnnualSpends() {
+        jasperApiUtils.genericMinAnnualSpendDtcTest(
+            3
+        );
+    }
 }
