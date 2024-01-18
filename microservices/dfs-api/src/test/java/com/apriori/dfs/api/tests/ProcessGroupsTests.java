@@ -176,6 +176,7 @@ public class ProcessGroupsTests {
         String pageNumber = "3";
 
         ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findProcessGroupsPage(
+            DFSApiEnum.PROCESS_GROUPS_WITH_PAGE_SIZE_AND_PAGE_NUMBER,
             HttpStatusCode.OK, ProcessGroups.class, pageSize, pageNumber);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
@@ -195,6 +196,7 @@ public class ProcessGroupsTests {
 
 
         ResponseWrapper<ErrorMessage> responseWrapper = processGroupsUtil.findProcessGroupsPage(
+            DFSApiEnum.PROCESS_GROUPS_WITH_PAGE_SIZE_AND_PAGE_NUMBER,
             HttpStatusCode.BAD_REQUEST, ErrorMessage.class, pageSize, pageNumber);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
@@ -211,15 +213,14 @@ public class ProcessGroupsTests {
         int pageSize = 100;
         int pageNumber = 1;
 
-        ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findAllProcessGroupsSortedByName(
-            HttpStatusCode.OK, ProcessGroups.class, sort);
+        ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findProcessGroupsPage(
+            DFSApiEnum.PROCESS_GROUPS_SORTED_BY_NAME, HttpStatusCode.OK, ProcessGroups.class, sort);
 
         List<ProcessGroup> items = responseWrapper.getResponseEntity().getItems();
 
         softAssertions.assertThat(items).isNotNull();
         softAssertions.assertThat(responseWrapper.getResponseEntity().getPageNumber()).isEqualTo(pageNumber);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo(pageSize);
-        softAssertions.assertAll();
 
         ProcessGroup previous = items.get(0);
 
@@ -228,9 +229,10 @@ public class ProcessGroupsTests {
         for (int i = 1; i < items.size(); i++) {
             ProcessGroup current = items.get(i);
             int compareResult = comparator.compare(previous.getName(), current.getName());
-            softAssertions.assertThat(compareResult).isEqualTo(-1);
+            softAssertions.assertThat(compareResult).isLessThan(0);
             previous = current;
         }
+        softAssertions.assertAll();
     }
 
     @Test
@@ -240,8 +242,8 @@ public class ProcessGroupsTests {
 
         String searchString = "sheet";
 
-        ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findAllProcessGroupsByName(
-            HttpStatusCode.OK, ProcessGroups.class, "CN", searchString);
+        ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findProcessGroupsPage(
+            DFSApiEnum.PROCESS_GROUPS_BY_NAME, HttpStatusCode.OK, ProcessGroups.class, "CN", searchString);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
         responseWrapper.getResponseEntity().getItems().forEach(pg ->
@@ -257,8 +259,8 @@ public class ProcessGroupsTests {
 
         String searchString = "fake";
 
-        ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findAllProcessGroupsByName(
-            HttpStatusCode.OK, ProcessGroups.class, "EQ", searchString);
+        ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findProcessGroupsPage(
+            DFSApiEnum.PROCESS_GROUPS_BY_NAME, HttpStatusCode.OK, ProcessGroups.class, "EQ", searchString);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
         softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().isEmpty()).isEqualTo(true);
