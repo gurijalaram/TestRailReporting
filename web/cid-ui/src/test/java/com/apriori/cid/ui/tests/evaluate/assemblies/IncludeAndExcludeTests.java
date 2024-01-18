@@ -304,7 +304,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
-    @Issues( {@Issue("AP-74028")})
+    @Issues({@Issue("AP-74028")})
     @TestRail(id = {12135, 12052, 12138})
     @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
     public void testMissingSubcomponentIncludedOnUpdate() {
