@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -45,8 +46,7 @@ public class QuickComparisonTests extends TestBaseUI {
 
     @AfterEach
     public void deleteScenarios() {
-
-        List.of(component, componentB, componentC, componentD).forEach(comp -> {
+        Arrays.asList(component, componentB, componentC, componentD).forEach(comp -> {
             if (comp != null) {
                 scenarioUtil.deleteScenario(comp.getComponentIdentity(), comp.getScenarioIdentity(), comp.getUser());
             }

@@ -3,6 +3,7 @@ package com.apriori.cid.ui.tests.evaluate;
 import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.ROTO_BLOW_MOLDING;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
@@ -389,7 +390,7 @@ public class ProcessGroupsTests extends TestBaseUI {
     @Description("Testing process group Turning")
     @TestRail(id = {6139})
     public void testProcessGroupTurning() {
-        component = new ComponentRequestUtil().getComponent("case_002_006-8611543_prt");
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("case_002_006-8611543_prt", STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())

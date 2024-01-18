@@ -2,6 +2,7 @@ package com.apriori.cid.ui.tests.evaluate;
 
 import static com.apriori.shared.util.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.SHEET_METAL;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
@@ -73,7 +74,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14404, 15002, 15816, 14408})
     @Description("Validate the user can Change the process routing in CI Design")
     public void testAlternateRoutingSelection() {
-        component = new ComponentRequestUtil().getComponent("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface");
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface", STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -472,7 +473,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {16132, 7841})
     @Description("Be able to see basic breakdown of cycle time by process for problem identification.")
     public void routingCycleTime() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("Push Pin", ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
         materialProcessPage = loginPage.login(component.getUser())
