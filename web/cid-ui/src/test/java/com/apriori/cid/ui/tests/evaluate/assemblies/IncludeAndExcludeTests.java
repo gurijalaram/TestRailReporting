@@ -16,11 +16,6 @@ import com.apriori.cid.ui.utils.ColourEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -34,24 +29,17 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
 public class IncludeAndExcludeTests extends TestBaseUI {
 
-    private static ComponentInfoBuilder componentAssembly;
     private static ComponentsUtil componentsUtil = new ComponentsUtil();
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private ComponentInfoBuilder componentAssembly;
     private CidAppLoginPage loginPage;
-    private ComponentsTablePage componentsTablePage;
     private ComponentsTreePage componentsTreePage;
     private EvaluatePage evaluatePage;
-    private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
-    private File assemblyResourceFile;
-    private File componentResourceFile;
-    private ComponentInfoBuilder assemblyInfo;
 
     public IncludeAndExcludeTests() {
         super();
@@ -59,14 +47,8 @@ public class IncludeAndExcludeTests extends TestBaseUI {
 
     @AfterEach
     public void deleteScenarios() {
-        if (currentUser != null) {
-            if (assemblyInfo != null) {
-                assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);
-                assemblyInfo = null;
-            }
-            if (componentAssembly != null) {
-                assemblyUtils.deleteAssemblyAndComponents(componentAssembly);
-            }
+        if (componentAssembly != null) {
+            assemblyUtils.deleteAssemblyAndComponents(componentAssembly);
         }
     }
 
@@ -76,8 +58,8 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     public void testIncludeAndExcludeDisabledButtons() {
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
-        assemblyUtils.uploadSubComponents(IncludeAndExcludeTests.componentAssembly)
-            .uploadAssembly(IncludeAndExcludeTests.componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -96,8 +78,8 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     public void testExcludeButtons() {
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
-        assemblyUtils.uploadSubComponents(IncludeAndExcludeTests.componentAssembly)
-            .uploadAssembly(IncludeAndExcludeTests.componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -119,8 +101,8 @@ public class IncludeAndExcludeTests extends TestBaseUI {
         ComponentInfoBuilder pin = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("pin")).findFirst().get();
         ComponentInfoBuilder smallRing = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("small ring")).findFirst().get();
 
-        assemblyUtils.uploadSubComponents(IncludeAndExcludeTests.componentAssembly)
-            .uploadAssembly(IncludeAndExcludeTests.componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -220,7 +202,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
             .multiSelectSubcomponents(pin.getComponentName() + ", " + pin.getScenarioName(), smallRing.getComponentName() + "," + smallRing.getScenarioName())
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
-        componentsTablePage = componentsTreePage.selectTableView();
+        ComponentsTablePage componentsTablePage = componentsTreePage.selectTableView();
 
         softAssertions.assertThat(componentsTablePage.getCellColour(pin.getComponentName(), pin.getScenarioName())).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
         softAssertions.assertThat(componentsTablePage.getCellColour(smallRing.getComponentName(), smallRing.getScenarioName())).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
@@ -296,7 +278,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
             .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly);
 
         double initialTotalCost = evaluatePage.getCostResults("Total Cost");
@@ -326,73 +308,51 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     @TestRail(id = {12135, 12052, 12138})
     @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
     public void testMissingSubcomponentIncludedOnUpdate() {
-        String assemblyName = "autobotasm";
-        final String assemblyExtension = ".asm.2";
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly();
+        ComponentInfoBuilder excludedComponent = componentAssembly.getSubComponents().remove(componentAssembly.getSubComponents().size() - 1);
 
-        final ProcessGroupEnum assemblyProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        assemblyResourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroupEnum, assemblyName + assemblyExtension);
-
-        List<String> subComponentNames = Arrays.asList(
-            "autoparthead", "autoparttorso", "autopartarm", "autoparthand", "autopartleg", "autopartfoot");
-        String componentName = "autoparthelm";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        final String componentExtension = ".prt.1";
-        componentResourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + componentExtension);
-
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        assemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            assemblyProcessGroupEnum,
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            scenarioName,
-            currentUser);
-        assemblyUtils.uploadSubComponents(assemblyInfo)
-            .uploadAssembly(assemblyInfo);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .navigateToScenario(assemblyInfo)
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
+            .navigateToScenario(componentAssembly)
             .openComponents();
 
-        subComponentNames.forEach(component ->
-            softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component)).isTrue());
+        componentAssembly.getSubComponents().forEach(component ->
+            softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(component.getComponentName())).isTrue());
 
         componentsTreePage.closePanel()
             .clickActions()
-            .updateCadFile(assemblyResourceFile)
+            .updateCadFile(componentAssembly.getResourceFile())
             .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(componentName)).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(excludedComponent.getComponentName())).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(excludedComponent.getComponentName())).isEqualTo(true);
 
-        componentsTreePage.clickScenarioCheckbox(componentName)
-            .updateCadFile(componentResourceFile)
+        componentsTreePage.clickScenarioCheckbox(excludedComponent.getComponentName())
+            .updateCadFile(excludedComponent.getResourceFile())
             .closePanel()
             .openComponents();
 
-        List<ScenarioItem> autoHelmDetails = componentsUtil.getUnCostedComponent(componentName, scenarioName, currentUser);
+        List<ScenarioItem> excludeComponentDetails = componentsUtil.getUnCostedComponent(excludedComponent.getComponentName(), excludedComponent.getScenarioName(), excludedComponent.getUser());
 
-        ComponentInfoBuilder helmInfo = ComponentInfoBuilder.builder()
-            .scenarioName(scenarioName)
-            .scenarioIdentity(autoHelmDetails.get(0).getScenarioIdentity())
-            .componentIdentity(autoHelmDetails.get(0).getComponentIdentity())
-            .componentName(componentName)
-            .user(currentUser)
+        ComponentInfoBuilder excludedComponentInfo = ComponentInfoBuilder.builder()
+            .componentName(excludedComponent.getComponentName())
+            .scenarioName(excludedComponent.getScenarioName())
+            .scenarioIdentity(excludeComponentDetails.get(0).getScenarioIdentity())
+            .componentIdentity(excludeComponentDetails.get(0).getComponentIdentity())
+            .user(excludedComponent.getUser())
             .build();
 
-        assemblyInfo.getSubComponents().add(helmInfo);
+        componentAssembly.getSubComponents().add(excludedComponentInfo);
 
         componentsTreePage = componentsTreePage.closePanel()
             .clickRefresh(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(componentName)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(excludedComponent.getComponentName())).isEqualTo(false);
 
         softAssertions.assertAll();
     }
