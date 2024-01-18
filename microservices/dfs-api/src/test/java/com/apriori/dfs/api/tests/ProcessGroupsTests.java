@@ -168,7 +168,7 @@ public class ProcessGroupsTests {
     }
 
     @Test
-    //@TestRail(id = {0})
+    @TestRail(id = {29645})
     @Description("Find a page of Process Groups")
     public void findProcessGroupsPage() {
 
@@ -185,7 +185,7 @@ public class ProcessGroupsTests {
         softAssertions.assertAll();
     }
 
-    //@TestRail(id = {0})
+    @TestRail(id = {29646})
     @Description("Find invalid page number/page size of Process Groups")
     @ParameterizedTest
     @CsvSource({
@@ -204,7 +204,7 @@ public class ProcessGroupsTests {
         softAssertions.assertAll();
     }
 
-    //@TestRail(id = {0})
+    @TestRail(id = {29647})
     @Description("Find all Process Groups sorted by name")
     @ParameterizedTest
     @ValueSource(strings = { "ASC", "DESC" })
@@ -236,7 +236,7 @@ public class ProcessGroupsTests {
     }
 
     @Test
-    //@TestRail(id = {0})
+    @TestRail(id = {29648})
     @Description("Find a page of Process Groups matched by name")
     public void findProcessGroupsMatchedByName() {
 
@@ -253,7 +253,7 @@ public class ProcessGroupsTests {
     }
 
     @Test
-    //@TestRail(id = {0})
+    @TestRail(id = {29649})
     @Description("Find a page of Process Groups not matched by name")
     public void findProcessGroupsNotMatchedByName() {
 
