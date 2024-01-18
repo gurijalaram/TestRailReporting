@@ -7,6 +7,7 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 
+import org.apache.xmlbeans.impl.xb.xsdschema.Attribute;
 import org.openqa.selenium.NoSuchElementException;
 
 import java.util.Collections;
@@ -17,6 +18,21 @@ public class ComponentRequestUtil {
     private static final String COMPONENT_STORE = "ComponentStore.json";
     private static final PartRequestManager COMPONENT_REQUEST = new PartRequestManager(COMPONENT_STORE);
     private ComponentInfoBuilder component;
+    private UserCredentials user;
+
+    public ComponentRequestUtil() {
+        super();
+    }
+
+    /**
+     * Override constructor to allow setting of user on instantiation
+     *
+     * @param userCredentials - The users credentials you wish to use
+     */
+    public ComponentRequestUtil(UserCredentials userCredentials) {
+        super();
+        user = userCredentials;
+    }
 
     /**
      * Gets a random component
@@ -32,7 +48,7 @@ public class ComponentRequestUtil {
 
         component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
-        component.setUser(UserUtil.getUser());
+        component.setUser(checkUser());
 
         return component;
     }
@@ -53,7 +69,7 @@ public class ComponentRequestUtil {
 
         component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
-        component.setUser(UserUtil.getUser());
+        component.setUser(checkUser());
 
         return component;
     }
@@ -77,7 +93,7 @@ public class ComponentRequestUtil {
 
         component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
-        component.setUser(UserUtil.getUser());
+        component.setUser(checkUser());
 
         return component;
     }
@@ -100,7 +116,7 @@ public class ComponentRequestUtil {
 
         component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
-        component.setUser(UserUtil.getUser());
+        component.setUser(checkUser());
 
         return component;
     }
@@ -118,7 +134,7 @@ public class ComponentRequestUtil {
 
         List<ComponentInfoBuilder> components = listOfComponents.subList(0, noOfComponents);
 
-        final UserCredentials currentUser = UserUtil.getUser();
+        final UserCredentials currentUser = checkUser();
         components.forEach(component -> {
             component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
             component.setUser(currentUser);
@@ -147,7 +163,7 @@ public class ComponentRequestUtil {
         componentInfoExtension.setResourceFile(FileResourceUtil.getCloudFile(componentInfoExtension.getProcessGroup(),
             componentInfoExtension.getComponentName() + componentInfoExtension.getExtension()));
         componentInfoExtension.setScenarioName(new GenerateStringUtil().generateScenarioName());
-        componentInfoExtension.setUser(UserUtil.getUser());
+        componentInfoExtension.setUser(checkUser());
         return componentInfoExtension;
     }
 
@@ -169,7 +185,11 @@ public class ComponentRequestUtil {
         componentInfoPG.setResourceFile(FileResourceUtil.getCloudFile(componentInfoPG.getProcessGroup(),
             componentInfoPG.getComponentName() + componentInfoPG.getExtension()));
         componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
-        componentInfoPG.setUser(UserUtil.getUser());
+        componentInfoPG.setUser(checkUser());
         return componentInfoPG;
+    }
+
+    private UserCredentials checkUser() {
+        return this.user == null ? UserUtil.getUser() : this.user;
     }
 }
