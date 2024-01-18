@@ -152,7 +152,7 @@ public class ComparisonTests extends TestBaseUI {
         evaluatePage.selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(component2, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
