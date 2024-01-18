@@ -167,21 +167,22 @@ public class ProcessGroupsTests {
         softAssertions.assertAll();
     }
 
-    @Test
     @TestRail(id = {29645})
     @Description("Find a page of Process Groups")
-    public void findProcessGroupsPage() {
-
-        String pageSize = "15";
-        String pageNumber = "3";
+    @ParameterizedTest
+    @CsvSource({
+        "10, 1",
+        "15, 3"
+    })
+    public void findProcessGroupsPage(String pageSize, String pageNumber) {
 
         ResponseWrapper<ProcessGroups> responseWrapper = processGroupsUtil.findProcessGroupsPage(
             DFSApiEnum.PROCESS_GROUPS_WITH_PAGE_SIZE_AND_PAGE_NUMBER,
             HttpStatusCode.OK, ProcessGroups.class, pageSize, pageNumber);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageNumber()).isEqualTo(3);
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo(15);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageNumber()).isEqualTo(Integer.valueOf(pageNumber));
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo((Integer.valueOf(pageSize)));
         softAssertions.assertAll();
     }
 
