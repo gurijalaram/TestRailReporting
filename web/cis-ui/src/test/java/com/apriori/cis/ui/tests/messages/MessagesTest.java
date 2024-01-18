@@ -27,7 +27,6 @@ public class MessagesTest extends TestBaseUI {
     private LeftHandNavigationBar leftHandNavigationBar;
     private MessagesPage messagesPage;
     private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
-    private PartsAndAssembliesPage partsAndAssembliesPage;
     private File resourceFile;
     private UserCredentials currentUser;
 

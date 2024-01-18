@@ -59,7 +59,7 @@ public class ProjectsTest extends TestBaseUI {
 
         projectsPage = leftHandNavigationBar.clickProjects();
 
-        softAssertions.assertThat(projectsPage.getPageTitle().contains("Projects"));
+        softAssertions.assertThat(projectsPage.getPageTitle()).contains("Projects");
         softAssertions.assertThat(projectsPage.isCreateNewProjectsOptionDisplayed()).isEqualTo(true);
 
         softAssertions.assertAll();
