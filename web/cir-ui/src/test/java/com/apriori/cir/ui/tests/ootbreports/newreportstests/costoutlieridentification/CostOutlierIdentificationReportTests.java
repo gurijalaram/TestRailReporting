@@ -29,7 +29,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     @Test
     @TmsLink("13925")
     @TestRail(id = 13925)
-    @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
+    @Description("Input controls - Cost Metric - FBC")
     public void testCostMetricFbcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierTest(
             Arrays.asList("Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName())
@@ -37,9 +37,9 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     }
 
     @Test
-    @TmsLink("13925")
-    @TestRail(id = 13925)
-    @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
+    @TmsLink("29651")
+    @TestRail(id = 29651)
+    @Description("Input controls - Cost Metric - PPC")
     public void testCostMetricPpcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierTest(
             Arrays.asList("Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName())

@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC.getEndpoint();
     private String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
