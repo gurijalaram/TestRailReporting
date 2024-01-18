@@ -31,7 +31,6 @@ public class UserPreferenceTest extends TestBaseUI {
 
     private CisLoginPage loginPage;
     private UserPreferencePage userPreferencePage;
-    private PartsAndAssembliesPage partsAndAssembliesPage;
     private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
     private File resourceFile;
     private UserCredentials currentUser;
@@ -49,8 +48,8 @@ public class UserPreferenceTest extends TestBaseUI {
 
         softAssertions.assertThat(userPreferencePage.isPreferencesModalDisplayed()).isTrue();
         softAssertions.assertThat(userPreferencePage.getSubmitButtonState()).contains("Mui-disabled");
-        softAssertions.assertThat(userPreferencePage.getUserPreferenceItems().contains(CisUserPreferenceItemsEnum.DISPLAY_PREFERENCES.getItems()));
-        softAssertions.assertThat(userPreferencePage.getUserPreferenceItems().contains(CisUserPreferenceItemsEnum.PROFILE.getItems()));
+        softAssertions.assertThat(userPreferencePage.getUserPreferenceItems()).contains(CisUserPreferenceItemsEnum.DISPLAY_PREFERENCES.getItems());
+        softAssertions.assertThat(userPreferencePage.getUserPreferenceItems()).contains(CisUserPreferenceItemsEnum.PROFILE.getItems());
 
         userPreferencePage.clickCancelButton();
         softAssertions.assertThat(userPreferencePage.isPreferencesModalDisplayed()).isFalse();
@@ -88,14 +87,14 @@ public class UserPreferenceTest extends TestBaseUI {
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(userPreferencePage.getSubmitButtonState()).doesNotContain("Mui-disabled");
-        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields().contains(CisDisplayPreferenceEnum.UNITS.getFields()));
-        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields().contains(CisDisplayPreferenceEnum.LENGTH.getFields()));
-        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields().contains(CisDisplayPreferenceEnum.MASS.getFields()));
-        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields().contains(CisDisplayPreferenceEnum.TIME.getFields()));
-        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields().contains(CisDisplayPreferenceEnum.DECIMAL_PLACE.getFields()));
-        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields().contains(CisDisplayPreferenceEnum.LANGUAGE.getFields()));
-        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields().contains(CisDisplayPreferenceEnum.CURRENCY.getFields()));
-        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields().contains(CisDisplayPreferenceEnum.EXCHANGE_RATE_TABLE.getFields()));
+        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields()).contains(CisDisplayPreferenceEnum.UNITS.getFields());
+        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields()).contains(CisDisplayPreferenceEnum.LENGTH.getFields());
+        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields()).contains(CisDisplayPreferenceEnum.MASS.getFields());
+        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields()).contains(CisDisplayPreferenceEnum.TIME.getFields());
+        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields()).contains(CisDisplayPreferenceEnum.DECIMAL_PLACE.getFields());
+        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields()).contains(CisDisplayPreferenceEnum.LANGUAGE.getFields());
+        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields()).contains(CisDisplayPreferenceEnum.CURRENCY.getFields());
+        softAssertions.assertThat(userPreferencePage.getDisplayPreferenceFields()).contains(CisDisplayPreferenceEnum.EXCHANGE_RATE_TABLE.getFields());
 
         userPreferencePage.clickSubmitButton();
 
@@ -108,13 +107,13 @@ public class UserPreferenceTest extends TestBaseUI {
                 .clickOnComponentName(componentName)
                 .clickMaterialStockIcon();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getLengthType().contains("m"));
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCostType().contains("kg"));
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getLengthType()).contains("m");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCostType()).contains("kg");
 
         partsAndAssembliesDetailsPage.clickMaterialPropertiesIcon();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getTimeType().contains("h"));
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDecimalPlaces().contains("."));
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getTimeType()).contains("h");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDecimalPlaces()).contains(".");
 
         userPreferencePage = new MyUserPage(driver)
                 .selectUserPreference()

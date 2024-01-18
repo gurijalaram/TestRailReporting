@@ -30,7 +30,6 @@ public class PartsAndAssemblyTest extends TestBaseUI {
     private CisLoginPage loginPage;
     private LeftHandNavigationBar leftHandNavigationBar;
     private PartsAndAssembliesPage partsAndAssembliesPage;
-    private SoftAssertions softAssertions;
     private File resourceFile;
     private UserCredentials currentUser;
 
@@ -265,7 +264,6 @@ public class PartsAndAssemblyTest extends TestBaseUI {
         softAssertions.assertThat(partsAndAssembliesPage.getListOfComponents()).isNotEqualTo(1);
 
         softAssertions.assertAll();
-
     }
 
     @Test
