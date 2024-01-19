@@ -5,6 +5,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.interfaces.EndpointEnum;
 
 public class ProcessGroupsUtil {
 
@@ -90,6 +91,26 @@ public class ProcessGroupsUtil {
 
         final RequestEntity requestEntity =  RequestEntityUtil_Old.init(DFSApiEnum.PROCESS_GROUPS_BY_PATH, expectedType)
             .inlineVariables(new String[]{ identity, ""}) // hack - add one more empty variable to skip auto adding shared secret
+            .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * FIND process groups page
+     *
+     * @param endpoint - Target endpoint
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> findProcessGroupsPage(EndpointEnum endpoint,
+                                                        Integer expectedResponseCode,
+                                                        Class<T> expectedType,
+                                                        String... inlineVariables) {
+
+        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(endpoint, expectedType)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
 
         return HTTPRequest.build(requestEntity).get();

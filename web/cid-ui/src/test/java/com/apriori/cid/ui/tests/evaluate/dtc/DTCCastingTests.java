@@ -171,7 +171,7 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6377})
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         tolerancesPage = loginPage.login(component.getUser())
