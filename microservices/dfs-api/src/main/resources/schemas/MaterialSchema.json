@@ -59,6 +59,9 @@
         "usaName"
       ]
     },
+    "isDefault" : {
+      "type": "boolean"
+    },
     "name": {
       "type": "string"
     },
@@ -138,6 +141,18 @@
       "type": "string"
     },
     "createdBy": {
+      "type": "string"
+    },
+    "deletedAt": {
+      "type": "string"
+    },
+    "deletedBy": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
       "type": "string"
     }
   },
