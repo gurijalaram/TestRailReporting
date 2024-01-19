@@ -1,6 +1,7 @@
 package com.apriori.shared.util.dataservice;
 
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.json.JsonManager;
 
@@ -84,6 +85,17 @@ public class PartRequestManager {
      * @return list of component builder object
      */
     public List<ComponentInfoBuilder> getComponents() {
-        return new ArrayList<>(new HashSet<>(readFile().getComponents()));
+        return new ArrayList<>(new HashSet<>(readFile().getComponents().stream()
+            .filter(o -> !o.getProcessGroup().equals(ProcessGroupEnum.TWO_MODEL_MACHINING)).collect(Collectors.toList())));
+    }
+
+    /**
+     * Gets a list of two model machining components
+     *
+     * @return list of component builder object
+     */
+    public List<ComponentInfoBuilder> getTwoModelComponents() {
+        return new ArrayList<>(new HashSet<>(readFile().getComponents().stream()
+            .filter(o -> o.getProcessGroup().equals(ProcessGroupEnum.TWO_MODEL_MACHINING)).collect(Collectors.toList())));
     }
 }

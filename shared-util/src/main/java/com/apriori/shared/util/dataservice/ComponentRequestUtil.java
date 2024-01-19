@@ -38,6 +38,27 @@ public class ComponentRequestUtil {
     }
 
     /**
+     * Gets a two model component
+     *
+     * @param componentName - the part name
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getTwoModelComponent(String componentName) {
+
+        component = COMPONENT_REQUEST.getTwoModelComponents()
+            .stream()
+            .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
+
+        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setUser(UserUtil.getUser());
+
+        return component;
+    }
+
+    /**
      * Gets a component specified by name
      *
      * @param componentName - the part name
