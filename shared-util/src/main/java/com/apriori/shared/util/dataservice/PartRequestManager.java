@@ -1,6 +1,7 @@
 package com.apriori.shared.util.dataservice;
 
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.json.JsonManager;
 
@@ -84,6 +85,19 @@ public class PartRequestManager {
      * @return list of component builder object
      */
     public List<ComponentInfoBuilder> getComponents() {
-        return new ArrayList<>(new HashSet<>(readFile().getComponents()));
+        return new ArrayList<>(new HashSet<>(readFile().getComponents()
+            .stream()
+            .filter(o -> !o.getProcessGroup().equals(ProcessGroupEnum.WITHOUT_PG)).collect(Collectors.toList())));
+    }
+
+    /**
+     * Gets only WithoutPG components
+     *
+     * @return list of component builder object
+     */
+    public List<ComponentInfoBuilder> getWithoutPgComponents() {
+        return new ArrayList<>(new HashSet<>(readFile().getComponents()
+            .stream()
+            .filter(o -> o.getProcessGroup().equals(ProcessGroupEnum.WITHOUT_PG)).collect(Collectors.toList())));
     }
 }

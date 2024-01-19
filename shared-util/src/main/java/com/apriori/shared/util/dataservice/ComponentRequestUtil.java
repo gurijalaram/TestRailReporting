@@ -59,6 +59,25 @@ public class ComponentRequestUtil {
     }
 
     /**
+     * Gets a Without PG component
+     *
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getWithoutPgComponent() {
+
+        List<ComponentInfoBuilder> listOfComponents = COMPONENT_REQUEST.getWithoutPgComponents();
+
+        Collections.shuffle(listOfComponents);
+        component = listOfComponents.stream().findFirst().get();
+
+        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setUser(UserUtil.getUser());
+
+        return component;
+    }
+
+    /**
      * Gets a component specified by name and extension
      * The first dot (.) should be ignored e.g. getComponentByExtension("stp")
      *
