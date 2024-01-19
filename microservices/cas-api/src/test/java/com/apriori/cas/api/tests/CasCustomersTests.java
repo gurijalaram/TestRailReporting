@@ -177,14 +177,13 @@ public class CasCustomersTests {
     @TestRail(id = {16546})
     @Description("Return a paged list of applications licensed for a specific customer.")
     public void getCustomerLicensedApplications() {
-        ResponseWrapper<Customers> customersResponse = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
+        String customerIdentity = casTestUtil.getAprioriInternal().getIdentity();
 
-        Customer customer = customersResponse.getResponseEntity().getItems().get(0);
 
         ResponseWrapper<Applications> responseApplications = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_LICENSED_APP,
             Applications.class,
             HttpStatus.SC_OK,
-            customer.getIdentity());
+            customerIdentity);
 
         soft.assertThat(responseApplications.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
