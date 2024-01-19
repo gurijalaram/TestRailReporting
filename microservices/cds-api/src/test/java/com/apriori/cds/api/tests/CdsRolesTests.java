@@ -3,6 +3,7 @@ package com.apriori.cds.api.tests;
 import com.apriori.cds.api.models.response.Role;
 import com.apriori.cds.api.models.response.Roles;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -22,7 +23,9 @@ public class CdsRolesTests {
     @TestRail(id = {3243, 17159})
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getRoles() {
-        Roles response = cdsTestUtil.getRoles();
+        QueryParams queryParams = new QueryParams()
+            .use("pageSize", "20");
+        Roles response = cdsTestUtil.getRoles(queryParams);
 
         soft.assertThat(response.getTotalItemCount()).isEqualTo(13);
         soft.assertThat(response.getItems().stream().map(Role::getName).collect(Collectors.toList()))
@@ -34,11 +37,13 @@ public class CdsRolesTests {
     @TestRail(id = {3699})
     @Description("API returns a role's information based on the supplied identity")
     public void getRoleById() {
-        Roles responseWrapper = cdsTestUtil.getRoles();
+        QueryParams queryParams = new QueryParams()
+            .use("sortBy[ASC]", "name");
+        Roles responseWrapper = cdsTestUtil.getRoles(queryParams);
 
         String roleIdentity = responseWrapper.getItems().get(0).getIdentity();
 
-        Roles response = cdsTestUtil.getRoles(roleIdentity);
+        Roles response = cdsTestUtil.getRoles(queryParams, roleIdentity);
 
         soft.assertThat(response.getItems().get(0).getName()).isEqualTo("AP_ANALYST");
         soft.assertAll();
