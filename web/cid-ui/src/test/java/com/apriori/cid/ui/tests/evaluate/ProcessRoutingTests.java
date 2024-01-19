@@ -507,7 +507,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14984, 15798})
     @Description("Validate routings 2-Model Machining")
     public void routings2mm() {
-        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getTwoModelComponent("casting_BEFORE_machining");
+        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
         ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getTwoModelComponent("casting_AFTER_machining");
         twoModelPart.setUser(sourcePart.getUser());
 
