@@ -12,13 +12,15 @@ import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.models.response.Application;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Deployments;
+import com.apriori.shared.util.models.response.Installation;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.properties.PropertiesContext;
 
-import org.apache.commons.lang3.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import java.util.List;
  * Customer environment util class
  * Contains methods with base functionality for customer environments tests
  */
+@Slf4j
 public class AchEnvironmentAPIUtil extends TestUtil {
 
     protected final String deploymentName = PropertiesContext.get("${deployment}.name");
@@ -43,10 +46,10 @@ public class AchEnvironmentAPIUtil extends TestUtil {
      */
     public UserCredentials getAwsCustomerUserCredentials() {
 
-        String username = System.getProperty("username");
-        String password = System.getProperty("userpass");
+        String username = PropertiesContext.get("global.default_user_name");
+        String password = PropertiesContext.get("global.default_password");
 
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+        if (!Boolean.parseBoolean(PropertiesContext.get("global.use_default_user"))) {
             username = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUsername1");
             password = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUserPass1");
         }
@@ -130,25 +133,46 @@ public class AchEnvironmentAPIUtil extends TestUtil {
                 installation -> {
                     installation.getApplications().forEach(
                             application -> {
-                                ApplicationDTO applicationDTO = ApplicationDTO.builder()
-                                        .identitiesHierarchy(
-                                                new StringBuilder("customerId:" + customerDeployment.getCustomerIdentity())
-                                                        .append(identitiesDelimiter + "deploymentId:" + customerDeployment.getIdentity())
-                                                        .append(identitiesDelimiter + "installationId:" + installation.getIdentity())
-                                                        .append(identitiesDelimiter + "applicationId:" + application.getIdentity())
-                                                        .toString()
-                                        )
-                                        .installation(installation.getName())
-                                        .version(installation.getApVersion())
-                                        .applicationName(application.getName())
-                                        .build();
-
-                                mappedApplicationDTOs.add(applicationDTO);
+                                mappedApplicationDTOs.add(buildApplicationDTO(customerDeployment, installation, application));
                             }
                     );
                 }
         );
 
         return mappedApplicationDTOs;
+    }
+
+    public List<ApplicationDTO> mapMultiTenantDeploymentDataToDTO(Deployment customerDeployment, final String regionNameToFilter) {
+        final List<ApplicationDTO> mappedApplicationDTOs = new ArrayList<>();
+        final String installationNameToFilter = customerDeployment.getName() + " " + regionNameToFilter;
+
+        customerDeployment.getInstallations()
+            .stream()
+            .filter(installation -> installation.getName().equals(installationNameToFilter) && installation.getRegion().equals(regionNameToFilter))
+            .findAny()
+            .map(installation -> {
+                installation.getApplications().forEach(
+                    application -> {
+                        mappedApplicationDTOs.add(buildApplicationDTO(customerDeployment, installation, application));
+                    });
+                return this;
+            });
+
+        return mappedApplicationDTOs;
+    }
+
+    private ApplicationDTO buildApplicationDTO(final Deployment customerDeployment, final Installation installation, final Application application) {
+        return ApplicationDTO.builder()
+            .identitiesHierarchy(
+                new StringBuilder("customerId:" + customerDeployment.getCustomerIdentity())
+                    .append(identitiesDelimiter + "deploymentId:" + customerDeployment.getIdentity())
+                    .append(identitiesDelimiter + "installationId:" + installation.getIdentity())
+                    .append(identitiesDelimiter + "applicationId:" + application.getIdentity())
+                    .toString()
+            )
+            .installation(installation.getName())
+            .version(installation.getApVersion())
+            .applicationName(application.getName())
+            .build();
     }
 }

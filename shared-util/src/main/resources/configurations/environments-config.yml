@@ -98,7 +98,8 @@ staging:
   base_api_sp_url: https://na-1-install.apriori-internal.staging.apriori.net/
   customer_identity: 7G0JGBE2N4GM
   widgets_customer_identity: 2F265BC1MKAB
-  secret_key: K6JWVF8KV884
+  #  TODO: uncomment for staging local run
+  #  secret_key: K6JWVF8KV884
   user_identity: 6AHL1HHGB15E
 
   cds:
@@ -164,7 +165,7 @@ local:
   secret_key: O85XMATZEMBO
   customer_identity: 212B5ABD2F6C
   application_name: cid
-  deployment: aPriori Internal Production
+  deployment_name: aPriori Internal Production
   installation_name: US 1
   user_identity: 4N630F61FGNG
 
@@ -248,6 +249,12 @@ local:
   edc:
     ui_url: ${local.base_url}:3000/
     api_url: ${local.base_url}:8803/
+
+  bcm:
+    api_url: ${local.base_url}:8832/
+
+  gcd:
+    api_url: ${local.base_url}:8829/
 
 ########################################################################################################################
 

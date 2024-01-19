@@ -1,7 +1,9 @@
 package com.apriori.cid.ui.tests.evaluate;
 
 import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_USA;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.ROTO_BLOW_MOLDING;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
@@ -128,7 +130,7 @@ public class ProcessGroupsTests extends TestBaseUI {
     @Description("Testing process group Extrusion")
     @TestRail(id = {6126, 6461})
     public void testProcessGroupExtrusion() {
-        component = new ComponentRequestUtil().getComponent("700-33770-01_A0");
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("700-33770-01_A0", PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -388,7 +390,7 @@ public class ProcessGroupsTests extends TestBaseUI {
     @Description("Testing process group Turning")
     @TestRail(id = {6139})
     public void testProcessGroupTurning() {
-        component = new ComponentRequestUtil().getComponent("case_002_006-8611543_prt");
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("case_002_006-8611543_prt", STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())

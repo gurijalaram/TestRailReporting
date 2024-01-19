@@ -1167,6 +1167,7 @@ public class ComparisonTests extends TestBaseUI {
             .isTrue();
 
         comparePage = compareExplorePage.clickExplore()
+            .selectFilter("Recent")
             .multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(), component2.getComponentName() + "," + component2.getScenarioName())
             .createComparison()
             .selectManualComparison();
@@ -1190,6 +1191,7 @@ public class ComparisonTests extends TestBaseUI {
             .isTrue();
 
         comparePage = compareExplorePage.clickExplore()
+            .selectFilter("Recent")
             .multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(), component2.getComponentName() + "," + component2.getScenarioName())
             .createComparison()
             .selectManualComparison();
@@ -1233,10 +1235,10 @@ public class ComparisonTests extends TestBaseUI {
         component2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
         component2.setUser(component.getUser());
 
-        explorePage = new CidAppLoginPage(driver)
-            .login(component.getUser());
-
-        compareExplorePage = explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(),
+        compareExplorePage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .selectFilter("Recent")
+            .multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(),
                 component2.getComponentName() + "," + component2.getScenarioName())
             .createComparison()
             .selectManualComparison()
@@ -1304,10 +1306,10 @@ public class ComparisonTests extends TestBaseUI {
         component2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
         component2.setUser(component.getUser());
 
-        explorePage = new CidAppLoginPage(driver)
-            .login(component.getUser());
-
-        comparePage = explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(),
+        comparePage = new CidAppLoginPage(driver)
+            .login(component.getUser())
+            .selectFilter("Recent")
+            .multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(),
                 component2.getComponentName() + "," + component2.getScenarioName())
             .createComparison()
             .selectManualComparison();

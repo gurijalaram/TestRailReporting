@@ -52,16 +52,10 @@ public class SheetMetalDTCTests extends TestBaseUI {
     @TestRail(id = {6496, 6499, 6500})
     @Description("Testing DTC Sheet Metal")
     public void sheetMetalDTCHoles() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("SheMetDTC", ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(component.getUser())
-            /*.openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
-
-        settingsPage = new SettingsPage(driver);
-        guidanceIssuesPage = settingsPage.save(ExplorePage.class)*/
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()

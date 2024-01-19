@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC.getEndpoint();
     private String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
@@ -181,6 +180,16 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
             partNames,
             assertFigures,
             "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("2323")
+    @TestRail(id = 2323)
+    @Description("Verify minimum annual spend input control correctly filters list of available parts")
+    public void testMinimumAnnualSpends() {
+        jasperApiUtils.genericMinAnnualSpendDtcTest(
+            3
         );
     }
 }

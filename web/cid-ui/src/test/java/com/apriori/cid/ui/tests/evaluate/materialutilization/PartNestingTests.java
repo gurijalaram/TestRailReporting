@@ -63,7 +63,7 @@ public class PartNestingTests extends TestBaseUI {
     @TestRail(id = {7699})
     @Description("Select Rectangular method of Part Nesting and cost")
     public void partNestingTabRectangularNesting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("bracket_basic", ProcessGroupEnum.SHEET_METAL);
 
         evaluatePage = new CidAppLoginPage(driver)
             .login(component.getUser())

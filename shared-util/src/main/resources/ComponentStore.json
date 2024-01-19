@@ -71,6 +71,11 @@
       "processGroup": "PLASTIC_MOLDING"
     },
     {
+      "componentName": "Push Pin",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "Locker_bottom_panel",
       "extension": ".prt",
       "processGroup": "STOCK_MACHINING"
@@ -161,6 +166,11 @@
       "processGroup": "PLASTIC_MOLDING"
     },
     {
+      "componentName": "case_002_006-8611543_prt",
+      "extension": ".stp",
+      "processGroup": "STOCK_MACHINING"
+    },
+    {
       "componentName": "BasicScenario_Forging",
       "extension": ".stp",
       "processGroup": "FORGING"
@@ -188,6 +198,11 @@
     {
       "componentName": "Casting",
       "extension": ".prt",
+      "processGroup": "CASTING_DIE"
+    },
+    {
+      "componentName": "MultiUpload",
+      "extension": ".stp",
       "processGroup": "CASTING_DIE"
     },
     {
@@ -278,6 +293,11 @@
     {
       "componentName": "Plastic moulded cap thinPart",
       "extension": ".SLDPRT",
+      "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Plastic moulded cap thinPart",
+      "extension": ".CATPart",
       "processGroup": "PLASTIC_MOLDING"
     },
     {
@@ -549,6 +569,10 @@
       "componentName": "700-33770-01_A0",
       "extension": ".stp",
       "processGroup": "SHEET_METAL"
+    },{
+      "componentName": "700-33770-01_A0",
+      "extension": ".stp",
+      "processGroup": "PLASTIC_MOLDING"
     },
     {
       "componentName": "116-5809",
@@ -559,6 +583,26 @@
       "componentName": "2062987",
       "extension": ".prt",
       "processGroup": "PLASTIC_MOLDING"
+    },
+    {
+      "componentName": "Casting",
+      "extension": ".prt",
+      "processGroup": "WITHOUT_PG"
+    },
+    {
+      "componentName": "LargePart",
+      "extension": ".prt.1",
+      "processGroup": "WITHOUT_PG"
+    },
+    {
+      "componentName": "Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface",
+      "extension": ".CATPart",
+      "processGroup": "WITHOUT_PG"
+    },
+    {
+      "componentName": "partbody_2",
+      "extension": ".stp",
+      "processGroup": "WITHOUT_PG"
     }
   ]
 }

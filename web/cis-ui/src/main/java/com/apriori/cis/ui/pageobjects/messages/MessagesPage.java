@@ -12,6 +12,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 
+import java.time.Duration;
+
 @Slf4j
 public class MessagesPage extends EagerPageComponent<MessagesPage> {
 
@@ -252,8 +254,8 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * Method to wait message page loads
      */
     public void waitForMessagePageLoad() {
-        getPageUtils().waitForElementToAppear(spinner);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        By bySpinner = By.xpath("//img[@data-testid='main-logo']");
+        getPageUtils().waitForElementToAppear(bySpinner, Duration.ofMinutes(3));
     }
 
     /**

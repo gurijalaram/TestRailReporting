@@ -45,9 +45,6 @@ public class CisComponentTest extends TestUtil {
     private static SoftAssertions softAssertions;
     private static ScenarioItem scenarioItem;
     private static UserCredentials currentUser;
-    private static BidPackageResponse bidPackageResponse;
-    private static BidPackageProjectResponse bidPackageProjectResponse;
-    private static String projectName;
 
     @BeforeEach
     public void testSetup() {

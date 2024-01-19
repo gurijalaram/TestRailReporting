@@ -45,7 +45,7 @@ public class NavigationPanelTest extends TestBaseUI {
         cisHeaderBar = new CisHeaderBar(driver);
 
         softAssertions.assertThat(cisHeaderBar.getHeaderText()).isEqualTo("All Messages");
-
+        softAssertions.assertAll();
     }
 
     @Test

@@ -148,7 +148,7 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Comparison Report")
     public void testMinimumAnnualSpend() {
         jasperApiUtils.genericMinAnnualSpendDtcTest(
-            true
+            1
         );
     }
 }

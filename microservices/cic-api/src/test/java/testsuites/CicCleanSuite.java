@@ -1,13 +1,13 @@
 package testsuites;
 
-import com.apriori.css.api.tests.CssSearchTests;
+import com.apriori.cic.api.tests.CicWorkflowsCleanTest;
 
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
 @SelectClasses({
-    CssSearchTests.class
+    CicWorkflowsCleanTest.class
 })
-public class CssRegressionTestSuite {
+public class CicCleanSuite {
 }
