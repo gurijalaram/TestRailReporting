@@ -14,6 +14,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -468,8 +469,8 @@ public class MaterialsTests {
         softAssertions.assertAll();
     }
 
-    //Temporally disabled ot. Should be enabled once COST-1326 be fixed
-    /*
+    //Temporally disabled. Should be enabled once COST-1326 be fixed
+    @Disabled
     @TestRail(id = {})
     @Description("Find all Materials sorted by name")
     @ParameterizedTest
@@ -501,7 +502,6 @@ public class MaterialsTests {
         softAssertions.assertThat(isSorted(items, comparator)).isTrue();
         softAssertions.assertAll();
     }
-    */
 
     private boolean isSorted(List<Material> employees, Comparator<String> materialsComparator) {
         if (employees.isEmpty() || employees.size() == 1) {
