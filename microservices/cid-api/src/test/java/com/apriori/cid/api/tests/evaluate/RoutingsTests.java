@@ -319,7 +319,7 @@ public class RoutingsTests {
     @TestRail(id = {14962})
     @Description("Verify Get available routings API returns appropriate routings for 2-Model Machining")
     public void testAvailableRoutingForTwoModelMachining() {
-        component = new ComponentRequestUtil().getTwoModelComponent("casting_BEFORE_machining");
+        component = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
         ComponentInfoBuilder component2 = new ComponentRequestUtil().getTwoModelComponent("casting_AFTER_machining");
         component2.setUser(component.getUser());
 
