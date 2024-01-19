@@ -38,7 +38,7 @@ public class DeleteTests extends TestBaseUI {
     public void testDeletePrivateScenario() {
         String filterName = new GenerateStringUtil().generateFilterName();
 
-        component = new ComponentRequestUtil().getWithoutPgComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.WITHOUT_PG);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(component.getUser())
@@ -64,7 +64,7 @@ public class DeleteTests extends TestBaseUI {
     public void testDeletePublicScenario() {
         String filterName = new GenerateStringUtil().generateFilterName();
 
-        component = new ComponentRequestUtil().getWithoutPgComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.WITHOUT_PG);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(component.getUser())
@@ -98,7 +98,7 @@ public class DeleteTests extends TestBaseUI {
     public void testDeletePrivateScenarioEvaluate() {
         String filterName = new GenerateStringUtil().generateFilterName();
 
-        component = new ComponentRequestUtil().getWithoutPgComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.WITHOUT_PG);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(component.getUser())
@@ -121,7 +121,7 @@ public class DeleteTests extends TestBaseUI {
     public void testDeletePublicScenarioEvaluate() {
         String filterName = new GenerateStringUtil().generateFilterName();
 
-        component = new ComponentRequestUtil().getWithoutPgComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.WITHOUT_PG);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(component.getUser())
@@ -152,7 +152,7 @@ public class DeleteTests extends TestBaseUI {
     public void testDeletePublicAndPrivateScenarios() {
         String filterName = new GenerateStringUtil().generateFilterName();
 
-        component = new ComponentRequestUtil().getWithoutPgComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.WITHOUT_PG);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(component.getUser())

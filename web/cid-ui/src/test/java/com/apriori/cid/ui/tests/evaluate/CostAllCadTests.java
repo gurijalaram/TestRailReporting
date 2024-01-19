@@ -102,7 +102,7 @@ public class CostAllCadTests extends TestBaseUI {
     @TestRail(id = {28507})
     @Description("Upload large GCD part. Part should be displayed in the viewer within 60 seconds")
     public void translationTest() {
-        component = new ComponentRequestUtil().getWithoutPgComponent();
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.WITHOUT_PG);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
