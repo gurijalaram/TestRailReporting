@@ -211,7 +211,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29639})
     @Description("Get Bad Request Error when Digital factory identity is invalid")
     public void findMaterialsWithBadDigitalFactoryIdentityTest() {
 
@@ -228,7 +228,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29638})
     @Description("Get Not Found Error when Digital factory identity is invalid")
     public void findMaterialsWithMissingDigitalFactoryTest() {
 
@@ -245,7 +245,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29636})
     @Description("Get Bad Request Error when Process group identity is invalid")
     public void findMaterialsWithBadProcessGroupIdentityTest() {
 
@@ -262,7 +262,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29637})
     @Description("Get Not Found Error when Process group identity is invalid")
     public void findMaterialsWithMissingProcessGroupTest() {
 
@@ -279,7 +279,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29591})
     @Description("Gets a list of materials by digital factory and process group when shared secret is valid")
     public void findMaterialsWithValidSharedSecretTest() {
 
@@ -296,7 +296,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29592})
     @Description("Gets no materials by digital factory and process group when shared secret isn't valid")
     public void findMaterialsWithInvalidSharedSecretTest() {
 
@@ -315,7 +315,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29594})
     @Description("Gets no materials by digital factory and process group when shared secret is missed")
     public void findMaterialsWithoutSharedSecretTest() {
 
@@ -333,7 +333,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29593})
     @Description("Gets no materials by digital factory and process group when shared secret is missed")
     public void findMaterialsWithEmptySharedSecretTest() {
 
@@ -352,7 +352,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29595})
     @Description("Get Not Acceptable error when incorrect Accept Header is provided")
     public void findMaterialsWithIncorrectAcceptHeader() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DFSApiEnum.MATERIALS, ErrorMessage.class)
@@ -370,7 +370,7 @@ public class MaterialsTests {
         softAssertions.assertAll();
     }
 
-    @TestRail(id = {})
+    @TestRail(id = {29645})
     @Description("Find a page of Materials")
     @ParameterizedTest
     @CsvSource({
@@ -378,7 +378,7 @@ public class MaterialsTests {
         "20, 2",
         "10, 3"
     })
-    public void findProcessGroupsPage(String pageSize, String pageNumber) {
+    public void findMaterialsPage(String pageSize, String pageNumber) {
 
         ResponseWrapper<Materials> responseWrapper = materialUtil.findMaterials(
             DFSApiEnum.MATERIALS_WITH_PAGE_SIZE_AND_PAGE_NUMBER,
@@ -398,6 +398,7 @@ public class MaterialsTests {
         softAssertions.assertAll();
     }
 
+    //TODO - should be added Test Rail id
     @TestRail(id = {})
     @Description("Find invalid page number/page size of Materials")
     @ParameterizedTest
@@ -423,9 +424,9 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29648})
     @Description("Find a page of Materials matched by name")
-    public void findProcessGroupsMatchedByName() {
+    public void findMaterialsMatchedByName() {
 
         String searchString = "aluminum";
 
@@ -448,9 +449,9 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29649})
     @Description("Find a page of Process Groups not matched by name")
-    public void findProcessGroupsNotMatchedByName() {
+    public void findMaterialsNotMatchedByName() {
 
         String searchString = "Test Material";
 
@@ -469,6 +470,7 @@ public class MaterialsTests {
         softAssertions.assertAll();
     }
 
+    //TODO - should be added Test Rail id
     //Temporally disabled. Should be enabled once COST-1326 be fixed
     @Disabled
     @TestRail(id = {})
