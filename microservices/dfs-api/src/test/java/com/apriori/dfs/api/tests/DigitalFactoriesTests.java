@@ -16,10 +16,15 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import software.amazon.awssdk.http.HttpStatusCode;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @ExtendWith(TestRulesAPI.class)
@@ -41,6 +46,8 @@ public class DigitalFactoriesTests {
     private static final String UNAUTHORIZED_ERROR = "Unauthorized";
     private static final String NOT_ACCEPTABLE = "Not Acceptable";
     private static final String NOT_ACCEPTABLE_MSG = "Could not find acceptable representation";
+    private static final String BOTH_PAGE_NUMBER_AND_PAGE_SIZE_MUST_BE_GREATER_THAN_0 =
+        "Both pageNumber and pageSize must be greater than 0";
 
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final DigitalFactoryUtil digitalFactoryUtil = new DigitalFactoryUtil();
@@ -54,6 +61,7 @@ public class DigitalFactoriesTests {
             HttpStatusCode.OK, DigitalFactories.class);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().size()).isGreaterThan(0);
         softAssertions.assertAll();
     }
 
@@ -79,6 +87,125 @@ public class DigitalFactoriesTests {
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(UNAUTHORIZED_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(INVALID_CREDENTIAL_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    //@TestRail(id = {0})
+    @Description("Get Not Acceptable error when incorrect Accept Header is provided")
+    public void findDigitalFactoriesWithIncorrectAcceptHeader() {
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(DFSApiEnum.DIGITAL_FACTORIES, ErrorMessage.class)
+            .headers(new HashMap<>() {
+                {
+                    put("Accept", "application/javascript");
+                }
+            });
+
+        ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).get();
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_ACCEPTABLE);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(NOT_ACCEPTABLE_MSG);
+        softAssertions.assertAll();
+    }
+
+    //@TestRail(id = {0})
+    @Description("Find invalid page number/page size of Digital Factories")
+    @ParameterizedTest
+    @CsvSource({
+        "15, 0",
+        "0, 3"
+    })
+    public void findDigitalFactoriesPageWithInvalidPageNumber(String pageSize, String pageNumber) {
+
+
+        ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.findDigitalFactoriesPage(
+            DFSApiEnum.DIGITAL_FACTORIES_WITH_PAGE_SIZE_AND_PAGE_NUMBER,
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, pageSize, pageNumber);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(BOTH_PAGE_NUMBER_AND_PAGE_SIZE_MUST_BE_GREATER_THAN_0);
+        softAssertions.assertAll();
+    }
+
+    //@TestRail(id = {0})
+    @Description("Find a page of Digital Factories")
+    @ParameterizedTest
+    @CsvSource({
+        "10, 1",
+        "2, 2"
+    })
+    public void findDigitalFactoriesPage(String pageSize, String pageNumber) {
+
+        ResponseWrapper<DigitalFactories> responseWrapper = digitalFactoryUtil.findDigitalFactoriesPage(
+            DFSApiEnum.DIGITAL_FACTORIES_WITH_PAGE_SIZE_AND_PAGE_NUMBER,
+            HttpStatusCode.OK, DigitalFactories.class, pageSize, pageNumber);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageNumber()).isEqualTo(Integer.valueOf(pageNumber));
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo((Integer.valueOf(pageSize)));
+        softAssertions.assertAll();
+    }
+
+    //@TestRail(id = {0})
+    @Description("Find all Digital Factories sorted by name")
+    @ParameterizedTest
+    @ValueSource(strings = { "ASC", "DESC" })
+    public void findDigitalFactoriesPageSortedByName(String sort) {
+
+        int pageSize = 1000;
+        int pageNumber = 1;
+
+        ResponseWrapper<DigitalFactories> responseWrapper = digitalFactoryUtil.findDigitalFactoriesPage(
+            DFSApiEnum.DIGITAL_FACTORIES_SORTED_BY_NAME, HttpStatusCode.OK, DigitalFactories.class, sort);
+
+        List<DigitalFactory> items = responseWrapper.getResponseEntity().getItems();
+
+        softAssertions.assertThat(items).isNotNull();
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageNumber()).isEqualTo(pageNumber);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo(pageSize);
+
+        DigitalFactory previous = items.get(0);
+
+        Comparator<String> comparator = "ASC".equals(sort) ? Comparator.naturalOrder() : Comparator.reverseOrder();
+
+        for (int i = 1; i < items.size(); i++) {
+            DigitalFactory current = items.get(i);
+            int compareResult = comparator.compare(previous.getName(), current.getName());
+            softAssertions.assertThat(compareResult).isLessThan(0);
+            previous = current;
+        }
+        softAssertions.assertAll();
+    }
+
+    @Test
+    //@TestRail(id = {0})
+    @Description("Find a page of Digital Factories matched by name")
+    public void findDigitalFactoriesMatchedByName() {
+
+        String searchString = "apriori";
+
+        ResponseWrapper<DigitalFactories> responseWrapper = digitalFactoryUtil.findDigitalFactoriesPage(
+            DFSApiEnum.DIGITAL_FACTORIES_BY_NAME, HttpStatusCode.OK, DigitalFactories.class, "CN", searchString);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
+        responseWrapper.getResponseEntity().getItems().forEach(pg ->
+            softAssertions.assertThat(pg.getName().toLowerCase().contains(searchString)).isEqualTo(true)
+        );
+        softAssertions.assertAll();
+    }
+
+    @Test
+    //@TestRail(id = {0})
+    @Description("Find a page of Digital Factories not matched by name")
+    public void findDigitalFactoriesNotMatchedByName() {
+
+        String searchString = "fake";
+
+        ResponseWrapper<DigitalFactories> responseWrapper = digitalFactoryUtil.findDigitalFactoriesPage(
+            DFSApiEnum.DIGITAL_FACTORIES_BY_NAME, HttpStatusCode.OK, DigitalFactories.class, "EQ", searchString);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().isEmpty()).isEqualTo(true);
         softAssertions.assertAll();
     }
 
