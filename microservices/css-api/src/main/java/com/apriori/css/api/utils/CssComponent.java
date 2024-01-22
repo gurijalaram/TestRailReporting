@@ -172,7 +172,6 @@ public class CssComponent {
                     put("pageNumber", "1");
                     put("pageSize", "10");
                     put("latest[EQ]", "true");
-                    put("scenarioPublished[EQ]", "true");
                     put("componentType[IN]", componentType);
                     put("sortBy[DESC]", "scenarioCreatedAt");
                 }

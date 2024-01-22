@@ -238,42 +238,6 @@ public class ComponentsUtil {
     }
 
     /**
-     * Calls an api with POST verb to post multiple components
-     *
-     * @param componentInfo - the component object
-     * @return response object
-     */
-    public List<ScenarioItem> postMultiComponentsQueryCSS(ComponentInfoBuilder componentInfo) {
-        List<CadFile> resources = postCadFiles(List.of(componentInfo));
-
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
-            .body("groupItems", componentInfo.getResourceFiles()
-                .stream()
-                .map(resourceFile ->
-                    ComponentRequest.builder()
-                        .filename(resourceFile.getName())
-                        .override(false)
-                        .resourceName(resources.stream()
-                            .filter(x -> x.getFilename().equals(resourceFile.getName()))
-                            .map(CadFile::getResourceName)
-                            .collect(Collectors.toList())
-                            .get(0))
-                        .scenarioName(componentInfo.getScenarioName())
-                        .build())
-                .collect(Collectors.toList()))
-            .token(componentInfo.getUser().getToken())
-            .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
-
-        componentInfo.setComponent(postComponentResponse.getResponseEntity());
-
-        return postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(component ->
-            getUnCostedComponent(component.getFilename().split("\\.", 2)[0], component.getScenarioName(), componentInfo.getUser())
-                .stream()).collect(Collectors.toList());
-    }
-
-    /**
      * Upload a component via CID
      *
      * @param componentInfo - the component

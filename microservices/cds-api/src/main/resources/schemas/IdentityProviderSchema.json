@@ -10,6 +10,7 @@
         "identity",
         "createdBy",
         "createdAt",
+        "contact",
         "identityProviderPlatform",
         "active",
         "name",
@@ -39,6 +40,9 @@
           "type": "string"
         },
         "createdAt": {
+          "type": "string"
+        },
+        "contact": {
           "type": "string"
         },
         "identityProviderPlatform": {

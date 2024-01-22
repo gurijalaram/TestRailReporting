@@ -7,7 +7,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
-import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.common.ConfigurePage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
@@ -32,7 +31,6 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
-import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -42,10 +40,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UploadAssembliesTests extends TestBaseUI {
 
@@ -55,28 +53,24 @@ public class UploadAssembliesTests extends TestBaseUI {
     private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private ExplorePage explorePage;
     private ConfigurePage configurePage;
     private ComponentsTreePage componentsTreePage;
-    private ComponentInfoBuilder assemblyInfo;
-    private ComponentInfoBuilder subAssemblyInfo;
+    private ComponentInfoBuilder componentAssembly;
+    private ComponentInfoBuilder autoSword;
 
     public UploadAssembliesTests() {
         super();
     }
 
     @AfterEach
-    public void deleteScenarios() {
-        if (currentUser != null && assemblyInfo != null) {
-            assemblyUtils.deleteAssemblyAndComponents(assemblyInfo);
-            assemblyInfo = null;
-        }
-        if (subAssemblyInfo != null) {
-            assemblyUtils.deleteAssemblyAndComponents(subAssemblyInfo);
-            subAssemblyInfo = null;
-        }
+    public void cleanUp() {
+        Arrays.asList(autoSword, componentAssembly).forEach(assembly -> {
+            if (assembly != null) {
+                assemblyUtils.deleteAssemblyAndComponents(assembly);
+            }
+        });
     }
 
     @Test
@@ -84,7 +78,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {6511, 10510})
     @Description("Upload Assembly file with no missing sub-components")
     public void uploadAssemblyTest() {
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
         ComponentInfoBuilder subcomponentA = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("big ring")).findFirst().get();
         ComponentInfoBuilder subcomponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("Pin")).findFirst().get();
         ComponentInfoBuilder subcomponentC = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("small ring")).findFirst().get();
@@ -132,7 +126,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11902, 10762, 11861})
     @Description("Upload Assembly with sub-components from Catia")
     public void testCatiaMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -146,7 +140,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11903, 10767, 6562, 11909})
     @Description("Upload Assembly with sub-components from Creo")
     public void testCreoMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("piston_assembly");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("piston_assembly");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -160,7 +154,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = 11904)
     @Description("Upload Assembly with sub-components from Solidworks")
     public void testSolidworksMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -174,7 +168,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11905, 10764, 11867})
     @Description("Upload Assembly with sub-components from SolidEdge")
     public void testSolidEdgeMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("oldham");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("oldham");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -198,7 +192,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11906, 10765, 11868})
     @Description("Upload Assembly with sub-components from NX")
     public void testNxMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("v6 piston assembly_asm1");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("v6 piston assembly_asm1");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -223,7 +217,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {11907, 10766})
     @Description("Upload Assembly with sub-components from Inventor")
     public void testInventorMultiUpload() {
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("Assembly01");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Assembly01");
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
@@ -349,7 +343,6 @@ public class UploadAssembliesTests extends TestBaseUI {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         final String assemblyName1 = "titan battery ass";
-        final List<String> subComponentNames1 = Arrays.asList("titan battery release", "titan battery");
         List<MultiUpload> firstAssemblyBatch = new ArrayList<>();
         firstAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan battery release.SLDPRT"), scenarioName));
         firstAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, "titan battery.SLDPRT"), scenarioName));
@@ -417,30 +410,14 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {12156, 6557, 6524})
     @Description("Column Configuration button in Tree View is clickable and opens menu")
     public void testColumnConfigurationButton() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        componentAssembly = new AssemblyRequestUtil().getAssembly("titan charger ass");
 
-        final String assemblyName = "titan charger ass";
-        final String assemblyExtension = ".SLDASM";
-        final List<String> subComponentNames = Arrays.asList("titan charger base", "titan charger lead", "titan charger upper");
-        final String subComponentExtension = ".SLDPRT";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ASSEMBLY,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
-
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        configurePage = loginPage.login(currentUser)
-            .openComponent(assemblyName, scenarioName, currentUser)
+        configurePage = loginPage.login(componentAssembly.getUser())
+            .openComponent(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getUser())
             .openComponents()
             .configure();
 
@@ -499,30 +476,14 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {12139, 12101, 12136})
     @Description("Column configuration in Tree View with All filter does not affect column configuration in List View")
     public void testColumnConfigurationListView() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        componentAssembly = new AssemblyRequestUtil().getAssembly("titan charger ass");
 
-        final String assemblyName = "titan charger ass";
-        final String assemblyExtension = ".SLDASM";
-        final List<String> subComponentNames = Arrays.asList("titan charger base", "titan charger lead", "titan charger upper");
-        final String subComponentExtension = ".SLDPRT";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ASSEMBLY,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
-
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(currentUser)
-            .openComponent("titan charger base", scenarioName, currentUser)
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
+            .openComponent(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getUser())
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .costScenario(3)
             .clickActions()
@@ -533,14 +494,14 @@ public class UploadAssembliesTests extends TestBaseUI {
             .editNotes("Test Notes")
             .submit(EvaluatePage.class)
             .clickExplore()
-            .openComponent(assemblyName, scenarioName, currentUser)
+            .openComponent(componentAssembly.getComponentName(), componentAssembly.getScenarioName(), componentAssembly.getUser())
             .openComponents()
             .configure()
             .selectChoices()
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails("titan charger base", scenarioName)).contains("High", "Test Description", "Test Notes",
+        softAssertions.assertThat(componentsTreePage.getRowDetails(componentAssembly.getComponentName(), componentAssembly.getScenarioName())).contains("High", "Test Description", "Test Notes",
             "New", "Casting - Die", "Melting / High Pressure Die Casting / Trim / 3 Axis Mill");
 
         componentsTablePage = componentsTreePage.selectTableView()
@@ -570,36 +531,15 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {6546})
     @Description("Changing unit user preferences when viewing assembly")
     public void testUnitPreferenceInAssembly() {
-        currentUser = UserUtil.getUser();
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
 
-        final String hinge_assembly = "Hinge assembly";
-        final ProcessGroupEnum assemblyProcessGroup = ASSEMBLY;
-        final String assemblyExtension = ".SLDASM";
-        final String big_ring = "big ring";
-        final String pin = "Pin";
-        final String small_ring = "small ring";
-        final String subComponentExtension = ".SLDPRT";
-        final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            hinge_assembly,
-            assemblyExtension,
-            assemblyProcessGroup,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
-
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openSettings()
             .selectUnits(UnitsEnum.FPM)
@@ -619,7 +559,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {6564})
     @Description("Assembly costs with multiple quantity of parts")
     public void costAssemblyWithMultipleQuantityOfParts() {
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
         ComponentInfoBuilder subcomponentA = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("flange")).findFirst().get();
         ComponentInfoBuilder subcomponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("nut")).findFirst().get();
         ComponentInfoBuilder subcomponentC = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("bolt")).findFirst().get();
@@ -651,73 +591,35 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = 5625)
     @Description("Validate missing sub-assembly association when manually uploaded")
     public void verifySubAsmAssociationOnUpload() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        componentAssembly = new AssemblyRequestUtil().getAssembly("autobotasm");
+        autoSword = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("autosword")).findFirst().get();
+        componentAssembly.setSubComponents(componentAssembly.getSubComponents().stream().filter(o -> !o.getComponentName().equalsIgnoreCase("autosword")).collect(Collectors.toList()));
 
-        final String componentExtension = ".prt.1";
-        final String originalAsmExtension = ".asm.1";
-        final String topLevelAsmExtension = ".asm.3";
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
-        final String autoBotAsm = "autobotasm";
-        final String autoHelm = "autoparthelm";
-        final String autoHead = "autoparthead";
-        final String autoTorso = "autoparttorso";
-        final String autoArm = "autopartarm";
-        final String autoHand = "autoparthand";
-        final String autoLeg = "autopartleg";
-        final String autoFoot = "autopartfoot";
-        final String autoSword = "autosword";
+        componentsTreePage = new CidAppLoginPage(driver).login(componentAssembly.getUser())
+            .openScenario(componentAssembly.getComponentName(), componentAssembly.getScenarioName())
+            .openComponents();
 
-        final String autoPommel = "autopommel";
-        final String autoHandle = "autohandle";
-        final String autoGuard = "autoguard";
-        final String autoBlade = "autoblade";
-
-        final File autoSwordFile = FileResourceUtil.getCloudFile(ASSEMBLY, autoSword + originalAsmExtension);
-
-        List<String> components = Arrays.asList(autoHelm, autoHead, autoTorso, autoArm, autoHand, autoLeg, autoFoot);
-        List<String> subAsmComponents = Arrays.asList(autoPommel, autoHandle, autoGuard, autoBlade);
-
-        assemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoBotAsm, topLevelAsmExtension, ASSEMBLY,
-            components, componentExtension, ASSEMBLY, scenarioName, currentUser);
-
-        assemblyUtils.uploadSubComponents(assemblyInfo);
-        assemblyUtils.uploadAssembly(assemblyInfo);
-
-        evaluatePage = new CidAppLoginPage(driver).login(currentUser)
-            .openScenario(autoBotAsm, scenarioName);
-        componentsTreePage = evaluatePage.openComponents();
-
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword)).as("Verify Missing Sub-Assembly is struck out").isTrue();
-        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.DISCONNECTED.getStatusIcon()))
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword.getComponentName())).as("Verify Missing Sub-Assembly is struck out").isTrue();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword.getComponentName(), autoSword.getScenarioName()).contains(StatusIconEnum.DISCONNECTED.getStatusIcon()))
             .as("Verify sub-assembly is shown as CAD disconnected").isTrue();
 
         explorePage = componentsTreePage.closePanel()
             .importCadFile()
-            .inputScenarioName(scenarioName)
-            .enterFilePath(autoSwordFile)
+            .inputScenarioName(componentAssembly.getScenarioName())
+            .enterFilePath(autoSword.getResourceFile())
             .submit()
             .clickClose();
 
-        subAssemblyInfo = assemblyUtils.associateAssemblyAndSubComponents(autoSword, originalAsmExtension, ASSEMBLY,
-            subAsmComponents, componentExtension, ASSEMBLY, scenarioName, currentUser);
-        List<ScenarioItem> autoSwordDetails = componentsUtil.getUnCostedComponent(autoSword, scenarioName, currentUser);
-        subAssemblyInfo.setScenarioIdentity(autoSwordDetails.get(0).getScenarioIdentity());
-        subAssemblyInfo.setComponentIdentity(autoSwordDetails.get(0).getComponentIdentity());
-
-        subAssemblyInfo.getSubComponents().forEach(subComponent -> {
-            List<ScenarioItem> componenetDetails = componentsUtil.getUnCostedComponent(subComponent.getComponentName(), scenarioName, currentUser);
-            subComponent.setScenarioIdentity(componenetDetails.get(0).getScenarioIdentity());
-            subComponent.setComponentIdentity(componenetDetails.get(0).getComponentIdentity());
-        });
-
-        componentsTreePage = explorePage.openScenario(autoBotAsm, scenarioName)
+        componentsTreePage = explorePage.openScenario(componentAssembly.getComponentName(), componentAssembly.getScenarioName())
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword)).as("Verify Sub-Assembly is no longer struck out").isFalse();
-        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName).contains(StatusIconEnum.CAD.getStatusIcon()))
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(autoSword.getComponentName())).as("Verify Sub-Assembly is no longer struck out").isFalse();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword.getComponentName(), componentAssembly.getScenarioName()).contains(StatusIconEnum.CAD.getStatusIcon()))
             .as("Verify sub-assembly is shown as CAD connected").isTrue();
-        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword, scenarioName)).as("Verify 'missing' sub-asm overridden").isNotEmpty();
+        softAssertions.assertThat(componentsTreePage.getRowDetails(autoSword.getComponentName(), componentAssembly.getScenarioName())).as("Verify 'missing' sub-asm overridden").isNotEmpty();
 
         softAssertions.assertAll();
     }
@@ -726,50 +628,35 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {10748, 10761})
     @Description("Changing unit user preferences when viewing assembly")
     public void testCopyScenarioRetainsAsmAssociation() {
-        currentUser = UserUtil.getUser();
-
-        final String hinge_assembly = "Hinge assembly";
-        final ProcessGroupEnum assemblyProcessGroup = ASSEMBLY;
-        final String assemblyExtension = ".SLDASM";
-        final String big_ring = "big ring";
-        final String pin = "Pin";
-        final String small_ring = "small ring";
-        final String subComponentExtension = ".SLDPRT";
-        final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String newScenarioNamePrivateEvaluate = new GenerateStringUtil().generateScenarioName();
         final String newScenarioNamePrivateExplore = new GenerateStringUtil().generateScenarioName();
         final String newScenarioNamePublicEvaluate = new GenerateStringUtil().generateScenarioName();
         final String newScenarioNamePublicExplore = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            hinge_assembly,
-            assemblyExtension,
-            assemblyProcessGroup,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
+        ComponentInfoBuilder big_ring = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("big_ring")).findFirst().get();
+        ComponentInfoBuilder pin = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("pin")).findFirst().get();
+        ComponentInfoBuilder small_ring = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("small_ring")).findFirst().get();
 
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
         componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setCostingTemplate(
             CostingTemplate.builder()
-                .processGroupName(subComponentProcessGroup.getProcessGroup())
+                .processGroupName(componentAssembly.getSubComponents().get(0).getProcessGroup().getProcessGroup())
                 .build()));
-        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents();
 
-        List<String> bigRingDetails = componentsTreePage.getRowDetails(big_ring, scenarioName);
-        List<String> smallRingDetails = componentsTreePage.getRowDetails(small_ring, scenarioName);
-        List<String> pinDetails = componentsTreePage.getRowDetails(pin, scenarioName);
+        List<String> bigRingDetails = componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName());
+        List<String> smallRingDetails = componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName());
+        List<String> pinDetails = componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName());
 
         evaluatePage = componentsTreePage.closePanel()
             .copyScenario()
@@ -781,13 +668,13 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         componentsTreePage = evaluatePage.openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring, scenarioName)).as("Verify sub-component details").isEqualTo(bigRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring, scenarioName)).as("Verify sub-component details").isEqualTo(smallRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).as("Verify sub-component details").isEqualTo(pinDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName())).as("Verify sub-component details").isEqualTo(pinDetails);
 
         evaluatePage = componentsTreePage.closePanel()
             .clickExplore()
-            .multiSelectScenarios(hinge_assembly + "," + scenarioName)
+            .multiSelectScenarios(componentAssembly.getComponentName() + "," + componentAssembly.getScenarioName())
             .copyScenario()
             .enterScenarioName(newScenarioNamePrivateExplore)
             .submit(EvaluatePage.class)
@@ -797,13 +684,13 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         componentsTreePage = evaluatePage.openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring, scenarioName)).as("Verify sub-component details").isEqualTo(bigRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring, scenarioName)).as("Verify sub-component details").isEqualTo(smallRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).as("Verify sub-component details").isEqualTo(pinDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName())).as("Verify sub-component details").isEqualTo(pinDetails);
 
         evaluatePage = componentsTreePage.closePanel()
             .clickExplore()
-            .openScenario(hinge_assembly, scenarioName)
+            .openScenario(componentAssembly.getComponentName(), componentAssembly.getScenarioName())
             .openComponents()
             .selectCheckAllBox()
             .publishSubcomponent()
@@ -816,9 +703,9 @@ public class UploadAssembliesTests extends TestBaseUI {
         evaluatePage.clickRefresh(EvaluatePage.class);
 
         componentsTreePage = evaluatePage.openComponents();
-        bigRingDetails = componentsTreePage.getRowDetails(big_ring, scenarioName);
-        smallRingDetails = componentsTreePage.getRowDetails(small_ring, scenarioName);
-        pinDetails = componentsTreePage.getRowDetails(pin, scenarioName);
+        bigRingDetails = componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName());
+        smallRingDetails = componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName());
+        pinDetails = componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName());
 
         evaluatePage = componentsTreePage.closePanel()
             .copyScenario()
@@ -830,13 +717,13 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         componentsTreePage = evaluatePage.openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring, scenarioName)).as("Verify sub-component details").isEqualTo(bigRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring, scenarioName)).as("Verify sub-component details").isEqualTo(smallRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).as("Verify sub-component details").isEqualTo(pinDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName())).as("Verify sub-component details").isEqualTo(pinDetails);
 
         evaluatePage = componentsTreePage.closePanel()
             .clickExplore()
-            .multiSelectScenarios(hinge_assembly + "," + scenarioName)
+            .multiSelectScenarios(componentAssembly.getComponentName() + "," + componentAssembly.getScenarioName())
             .copyScenario()
             .enterScenarioName(newScenarioNamePublicExplore)
             .submit(EvaluatePage.class)
@@ -846,9 +733,9 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         componentsTreePage = evaluatePage.openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring, scenarioName)).as("Verify sub-component details").isEqualTo(bigRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring, scenarioName)).as("Verify sub-component details").isEqualTo(smallRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(pin, scenarioName)).as("Verify sub-component details").isEqualTo(pinDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName())).as("Verify sub-component details").isEqualTo(pinDetails);
 
         softAssertions.assertAll();
     }

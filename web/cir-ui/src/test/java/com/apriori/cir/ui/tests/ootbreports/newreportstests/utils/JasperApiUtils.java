@@ -565,23 +565,14 @@ public class JasperApiUtils {
     /**
      * Generic test for minimum annual spend input control on a dtc report
      *
-     * @param areBubblesPresent - boolean to specify the type of report
+     * @param expectedBubbleNumber - int to specify the number of chart data points to assert against
      */
-    public void genericMinAnnualSpendDtcTest(boolean areBubblesPresent) {
+    public void genericMinAnnualSpendDtcTest(int expectedBubbleNumber) {
         String minimumAnnualSpendValue = "7820000";
         JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
 
-        if (areBubblesPresent) {
-            if (!this.reportRequest.getReportUnitUri().contains("machiningDTC")) {
-                softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().size()).isEqualTo(1);
-            }
-            softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(0).getAnnualSpend()).isNotEqualTo(minimumAnnualSpendValue);
-        } else {
-            for (int i = 0; i < 6; i++) {
-                softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPoints().size()).isEqualTo(1);
-                softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPoints().get(0).getAnnualSpend()).isNotEqualTo(minimumAnnualSpendValue);
-            }
-        }
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().size()).isEqualTo(expectedBubbleNumber);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(0).getAnnualSpend()).isNotEqualTo(minimumAnnualSpendValue);
 
         softAssertions.assertAll();
     }
