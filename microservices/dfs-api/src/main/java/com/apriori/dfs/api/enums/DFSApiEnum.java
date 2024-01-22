@@ -3,6 +3,9 @@ package com.apriori.dfs.api.enums;
 import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
 import com.apriori.shared.util.properties.PropertiesContext;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Arrays;
 
 public enum DFSApiEnum implements ExternalEndpointEnum {
@@ -23,6 +26,11 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
     PROCESS_GROUPS_WITH_PAGE_SIZE_AND_PAGE_NUMBER("process-groups?pageSize=%s&pageNumber=%s"),
 
     // MATERIALS
+    MATERIALS("digital-factories/%s/process-groups/%s/materials"),
+    MATERIALS_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials?key=%s"),
+    MATERIALS_BY_NAME("digital-factories/%s/process-groups/%s/materials?name[%s]=%s"),
+    MATERIALS_SORTED_BY_NAME("digital-factories/%s/process-groups/%s/materials?pageSize=%s&pageNumber=%s&sortBy[%s]=name"),
+    MATERIALS_WITH_PAGE_SIZE_AND_PAGE_NUMBER("digital-factories/%s/process-groups/%s/materials?pageSize=%s&pageNumber=%s"),
     MATERIAL_BY_PATH("digital-factories/%s/process-groups/%s/materials/%s"),
     MATERIAL_BY_PATH_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials/%s?key=%s"),
 
@@ -30,6 +38,10 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
     MATERIAL_STOCKS_BY_PATH("digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s"),
     MATERIAL_STOCKS_BY_PATH_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s?key=%s");
     private final String endpoint;
+
+    @Getter
+    @Setter
+    private Boolean withSharedSecret;
 
     DFSApiEnum(String endpoint) {
         this.endpoint = endpoint;
@@ -44,10 +56,13 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
     public String getEndpoint(Object... variables) {
 
         String endpoint = PropertiesContext.get("dfs.api_url") + String.format(getEndpointString(), variables);
-        boolean dontAddSharedSecret = Arrays.stream(variables)
-            .map(Object::toString)
-            .anyMatch(String::isEmpty);
+        String sharedSecretKey = "key=";
+        if (Boolean.FALSE.equals(withSharedSecret)
+            || Arrays.stream(variables).anyMatch(o -> o.toString().contains(sharedSecretKey) || o.toString().isEmpty())) {
 
-        return dontAddSharedSecret ? endpoint : endpoint + this.addQuery(getEndpointString());
+            return endpoint;
+        }
+
+        return endpoint + this.addQuery(getEndpointString());
     }
 }
