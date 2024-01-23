@@ -27,7 +27,6 @@ import java.util.Collections;
 
 @ExtendWith(TestRulesAPI.class)
 public class DmsCommentsTest extends DmsApiTestDataUtils {
-    private static String userContext;
 
     @BeforeEach
     public void testSetup() {
