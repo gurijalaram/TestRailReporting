@@ -19,7 +19,6 @@ import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.explore.ImportCadFilePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
-import com.apriori.cid.ui.utils.MultiUpload;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.cid.ui.utils.UploadStatusEnum;
@@ -28,23 +27,21 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.apache.commons.lang3.SerializationUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,7 +53,6 @@ public class UploadComponentTests extends TestBaseUI {
     private ComponentInfoBuilder component;
     private File resourceFile;
     private ExplorePage explorePage;
-    private UserCredentials currentUser;
     private CadFileStatusPage cadFileStatusPage;
     private ImportCadFilePage importCadFilePage;
     private EvaluatePage evaluatePage;
@@ -149,7 +145,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate prompt if invalid files are submitted")
     public void testInvalidFileUpload() {
 
-        currentUser = UserUtil.getUser();
+        UserCredentials currentUser = UserUtil.getUser();
         resourceFile = FileResourceUtil.getResourceAsFile("auto_api_upload.csv");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String message = "The file type of the selected file is not supported." +
@@ -356,21 +352,16 @@ public class UploadComponentTests extends TestBaseUI {
     @TestRail(id = {11900, 11890})
     @Description("Validate multiple upload of same components is blocked")
     public void multipleUploadOfSameComponents() {
-
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
+        component = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder componentB = SerializationUtils.clone(component);
 
         importCadFilePage = new CidAppLoginPage(driver)
-            .login(currentUser)
+            .login(component.getUser())
             .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents);
+            .inputScenarioName(component.getScenarioName())
+            .inputMultiComponentsBuilder(Arrays.asList(component, componentB));
 
-        softAssertions.assertThat(importCadFilePage.getAlertWarning()).isEqualTo("piston_pin.prt.1 is already selected.");
+        softAssertions.assertThat(importCadFilePage.getAlertWarning()).isEqualTo(component.getComponentName() + component.getExtension() + " is already selected.");
 
         softAssertions.assertThat(importCadFilePage.getTooltipMessage()).isEqualTo("If unchecked, import will fail when the scenario already exists. Delete failed scenarios and repeat import.");
 
@@ -415,51 +406,13 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate race conditions - upload a full assembly with override")
     public void uploadMultiLevelAssemblyWithOverrideAndRename() {
 
-        currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
-        final File resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "21395.ipt");
-        final File resourceFile2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "33803.ipt");
-        final File resourceFile3 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "33804.ipt");
-        final File resourceFile4 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "78828.ipt");
-        final File resourceFile5 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "78829.ipt");
-        final File resourceFile6 = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "98241.ipt");
-        final File resourceFile7 = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "SubAssembly1.iam");
-        final File resourceFile8 = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "SubAssembly2.iam");
-        final File resourceFile9 = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "MainAssembly.iam");
+        List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(9);
 
-        List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(resourceFile, scenarioName2));
-        multiComponents.add(new MultiUpload(resourceFile2, scenarioName2));
-        multiComponents.add(new MultiUpload(resourceFile3, scenarioName2));
-        multiComponents.add(new MultiUpload(resourceFile4, scenarioName2));
-        multiComponents.add(new MultiUpload(resourceFile5, scenarioName2));
-        multiComponents.add(new MultiUpload(resourceFile6, scenarioName2));
-        multiComponents.add(new MultiUpload(resourceFile7, scenarioName2));
-        multiComponents.add(new MultiUpload(resourceFile8, scenarioName2));
-        multiComponents.add(new MultiUpload(resourceFile9, scenarioName2));
-
-        List<ScenarioItem> componentItems = new CidAppLoginPage(driver)
-            .login(currentUser)
-            .uploadMultiComponentsCSS(
-                Arrays.asList(
-                    resourceFile,
-                    resourceFile2,
-                    resourceFile3,
-                    resourceFile4,
-                    resourceFile5,
-                    resourceFile6,
-                    resourceFile7,
-                    resourceFile8,
-                    resourceFile9
-                ),
-                scenarioName,
-                currentUser
-            );
-
-        componentItems.forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getComponentName(),
+        components.forEach(component ->
+            softAssertions.assertThat(cssComponent.getComponentParts(component.getUser(), COMPONENT_NAME_EQ.getKey() + component.getComponentName(),
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage = new ExplorePage(driver);
@@ -481,13 +434,13 @@ public class UploadComponentTests extends TestBaseUI {
             .clickExplore()
             .importCadFile()
             .inputScenarioName(scenarioName2)
-            .inputMultiComponents(multiComponents)
+            .inputMultiComponentsBuilder(components)
             .submit()
             .clickClose()
             .selectFilter("Recent");
 
-        multiComponents.forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+        components.forEach(component ->
+            softAssertions.assertThat(cssComponent.getComponentParts(component.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh()
@@ -508,14 +461,14 @@ public class UploadComponentTests extends TestBaseUI {
             .clickExplore()
             .importCadFile()
             .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
+            .inputMultiComponentsBuilder(components)
             .tick("Override existing scenario")
             .submit()
             .clickClose()
             .selectFilter("Recent");
 
-        multiComponents.forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+        components.forEach(component ->
+            softAssertions.assertThat(cssComponent.getComponentParts(component.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh()

@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "DiscussionsResponseSchema.json")
+@Schema(location = "DdsDiscussionsResponseSchema.json")
 public class DiscussionsResponse extends Pagination {
     private List<DiscussionResponse> items;
 }

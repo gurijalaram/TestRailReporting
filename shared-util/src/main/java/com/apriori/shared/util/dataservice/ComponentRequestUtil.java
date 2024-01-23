@@ -38,6 +38,27 @@ public class ComponentRequestUtil {
     }
 
     /**
+     * Gets a two model component
+     *
+     * @param componentName - the part name
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getTwoModelComponent(String componentName) {
+
+        component = COMPONENT_REQUEST.getTwoModelComponents()
+            .stream()
+            .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
+
+        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setUser(UserUtil.getUser());
+
+        return component;
+    }
+
+    /**
      * Gets a component specified by name
      *
      * @param componentName - the part name
@@ -170,6 +191,29 @@ public class ComponentRequestUtil {
             componentInfoPG.getComponentName() + componentInfoPG.getExtension()));
         componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
         componentInfoPG.setUser(UserUtil.getUser());
+        return componentInfoPG;
+    }
+
+    /**
+     * Gets random component by process group and by user
+     *
+     * @param processGroup - the process group
+     * @param currentUser - UserCredentiala
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getComponentByProcessGroup(ProcessGroupEnum processGroup, UserCredentials currentUser) {
+
+        List<ComponentInfoBuilder> componentPG = COMPONENT_REQUEST.getComponents()
+            .stream()
+            .filter(component -> component.getProcessGroup().equals(processGroup)).collect(Collectors.toList());
+        Collections.shuffle(componentPG);
+
+        ComponentInfoBuilder componentInfoPG = componentPG.stream().findFirst().get();
+
+        componentInfoPG.setResourceFile(FileResourceUtil.getCloudFile(componentInfoPG.getProcessGroup(),
+            componentInfoPG.getComponentName() + componentInfoPG.getExtension()));
+        componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentInfoPG.setUser(currentUser);
         return componentInfoPG;
     }
 }

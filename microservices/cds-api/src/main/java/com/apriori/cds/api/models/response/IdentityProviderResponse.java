@@ -33,6 +33,7 @@ public class IdentityProviderResponse {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String contact;
     private IdentityProviderPlatform identityProviderPlatform;
     private Boolean active;
     private String name;

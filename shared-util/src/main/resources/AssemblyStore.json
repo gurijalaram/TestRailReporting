@@ -671,6 +671,48 @@
           ]
         }
       ]
+    },
+    {
+      "componentName": "sub-assembly",
+      "extension": ".asm.1",
+      "processGroup": "ASSEMBLY",
+      "metadata": {
+        "category": "large"
+      },
+      "subComponents": [
+        {
+          "componentName": "3570824",
+          "extension": ".prt.1",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "0200613",
+          "extension": ".prt.1",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "0362752",
+          "extension": ".prt.1",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "sub-sub-asm",
+          "extension": ".asm.1",
+          "processGroup": "ASSEMBLY",
+          "subComponents": [
+            {
+              "componentName": "3570823",
+              "extension": ".prt.1",
+              "processGroup": "SHEET_METAL"
+            },
+            {
+              "componentName": "3571050",
+              "extension": ".prt.1",
+              "processGroup": "SHEET_METAL"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

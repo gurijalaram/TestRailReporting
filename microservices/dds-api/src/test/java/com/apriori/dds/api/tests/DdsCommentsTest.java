@@ -39,15 +39,15 @@ import java.util.Collections;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
-public class CommentsTest extends TestUtil {
+public class DdsCommentsTest extends TestUtil {
 
-    private static String userContext;
-    private static SoftAssertions softAssertions;
-    private static ResponseWrapper<DiscussionResponse> discussionResponse;
-    private static ResponseWrapper<CommentResponse> commentResponse;
-    private static String contentDesc = StringUtils.EMPTY;
-    private static UserCredentials currentUser = UserUtil.getUser();
-    private static List<String> users = new ArrayList<>();
+    private String userContext;
+    private SoftAssertions softAssertions;
+    private ResponseWrapper<DiscussionResponse> discussionResponse;
+    private ResponseWrapper<CommentResponse> commentResponse;
+    private String contentDesc = StringUtils.EMPTY;
+    private UserCredentials currentUser = UserUtil.getUser();
+    private List<String> users = new ArrayList<>();
 
     @BeforeEach
     public void testSetup() {
@@ -128,17 +128,30 @@ public class CommentsTest extends TestUtil {
     @TestRail(id = {12375})
     @Description("update a valid comment")
     public void updateComment() {
+        CommentsRequest commentsRequestBuilder = CommentsRequest.builder()
+            .comment(CommentsRequestParameters.builder()
+                .status("ACTIVE")
+                .content(new GenerateStringUtil().getRandomString())
+                .mentionedUserEmails(Collections.singletonList(currentUser.getEmail()))
+                .build())
+            .build();
+        ResponseWrapper<CommentResponse>  commentCreateResponse = DdsApiTestUtils.createComment(commentsRequestBuilder,
+            discussionResponse.getResponseEntity().getIdentity(),
+            currentUser,
+            CommentResponse.class,
+            HttpStatus.SC_CREATED);
+
         String commentContent = RandomStringUtils.randomAlphabetic(15);
         CommentsRequest commentsRequest = CommentsRequest.builder()
             .comment(CommentsRequestParameters.builder()
-                .status(commentResponse.getResponseEntity().getStatus())
+                .status(commentCreateResponse.getResponseEntity().getStatus())
                 .content(commentContent)
                 .mentionedUserEmails(Collections.singletonList(currentUser.getEmail()))
                 .build())
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, CommentResponse.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"), discussionResponse.getResponseEntity().getIdentity(), commentResponse.getResponseEntity().getIdentity())
+            .inlineVariables(PropertiesContext.get("customer_identity"), discussionResponse.getResponseEntity().getIdentity(), commentCreateResponse.getResponseEntity().getIdentity())
             .body(commentsRequest)
             .headers(DdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)

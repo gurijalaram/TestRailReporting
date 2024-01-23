@@ -23,6 +23,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.apache.commons.lang3.SerializationUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -64,11 +65,11 @@ public class NewScenarioNameTests extends TestBaseUI {
     public void multipleUpload() {
         String filterName = generateStringUtil.generateFilterName();
 
-        ComponentInfoBuilder component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
-        ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
-        componentB.setUser(component.getUser());
-        ComponentInfoBuilder componentC = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
-        componentC.setUser(component.getUser());
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent("MultiUpload");
+        ComponentInfoBuilder componentB = SerializationUtils.clone(component);
+        componentB.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        ComponentInfoBuilder componentC = SerializationUtils.clone(component);
+        componentC.setScenarioName(new GenerateStringUtil().generateScenarioName());
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(component.getUser())

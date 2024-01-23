@@ -35,11 +35,6 @@ public class TwoModelMachiningTests extends TestBaseUI {
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
 
-    private File resourceFile;
-    private File twoModelFile;
-    private UserCredentials currentUser;
-    private ComponentInfoBuilder cidComponentItem;
-    private ComponentInfoBuilder cidComponentItemB;
     private GuidanceIssuesPage guidanceIssuesPage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -53,7 +48,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @TestRail(id = {7861, 7862, 7863, 7864, 7870})
     public void testTwoModelMachining() {
         ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
-        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getComponent("casting_AFTER_machining");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getTwoModelComponent("casting_AFTER_machining");
         twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -100,7 +95,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @TestRail(id = {6466, 7866, 12511})
     public void testOpenSourceModel() {
         ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("VulcainCasting");
-        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getComponent("VulcainMachined");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getTwoModelComponent("VulcainMachined");
         twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -139,9 +134,9 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @TestRail(id = {7865, 7869, 7872})
     public void multiLevel2Model() {
         ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("2modeltest-cast");
-        ComponentInfoBuilder twoModel = new ComponentRequestUtil().getComponent("2modeltest-machine1");
+        ComponentInfoBuilder twoModel = new ComponentRequestUtil().getTwoModelComponent("2modeltest-machine1");
         twoModel.setUser(sourcePart.getUser());
-        ComponentInfoBuilder twoModel2 = new ComponentRequestUtil().getComponent("2modeltest-machine2");
+        ComponentInfoBuilder twoModel2 = new ComponentRequestUtil().getTwoModelComponent("2modeltest-machine2");
         twoModel2.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -196,7 +191,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @TestRail(id = {7867, 7876})
     public void testOpenPublicSourceModel() {
         ComponentInfoBuilder sourcePartName = new ComponentRequestUtil().getComponent("Raw Casting");
-        ComponentInfoBuilder twoModelPartName = new ComponentRequestUtil().getComponent("Machined Casting");
+        ComponentInfoBuilder twoModelPartName = new ComponentRequestUtil().getTwoModelComponent("Machined Casting");
         twoModelPartName.setUser(sourcePartName.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -230,7 +225,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
         ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("Die Casting Lower Control Arm (As Cast)");
         ComponentInfoBuilder sourcePart2 = new ComponentRequestUtil().getComponent("Die Casting Lower Control Arm (Source1)");
         sourcePart2.setUser(sourcePart.getUser());
-        ComponentInfoBuilder twoModel = new ComponentRequestUtil().getComponent("Die Casting Lower Control Arm (As Machined2)");
+        ComponentInfoBuilder twoModel = new ComponentRequestUtil().getTwoModelComponent("Die Casting Lower Control Arm (As Machined2)");
         twoModel.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -289,7 +284,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
         ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
         ComponentInfoBuilder wrongSourcePart = new ComponentRequestUtil().getComponent("PowderMetalShaft");
         wrongSourcePart.setUser(sourcePart.getUser());
-        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getComponent("casting_AFTER_machining");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getTwoModelComponent("casting_AFTER_machining");
         twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -326,7 +321,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @Description("Validate the select source button is not clickable in the public workspace")
     public void selectSourceButtonDisabledInPublicWorkspace() {
         ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("Raw Casting");
-        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getComponent("Machined Casting");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getTwoModelComponent("Machined Casting");
         twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -376,7 +371,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
     @Description("Validate the status icon updates if the source component is updated")
     public void updateSourceModel() {
         ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("Raw Casting");
-        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getComponent("Machined Casting");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getTwoModelComponent("Machined Casting");
         twoModelPart.setUser(sourcePart.getUser());
 
         loginPage = new CidAppLoginPage(driver);

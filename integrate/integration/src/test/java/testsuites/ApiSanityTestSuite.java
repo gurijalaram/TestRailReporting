@@ -11,14 +11,14 @@ import com.apriori.cas.api.tests.CasCustomersTests;
 import com.apriori.cas.api.tests.CasUsersTests;
 import com.apriori.cds.api.tests.CdsCustomersTests;
 import com.apriori.cic.api.tests.CicAgentTest;
-import com.apriori.cid.api.tests.evaluate.CostAllCadTests;
 import com.apriori.cid.api.tests.evaluate.DataCreationTests;
+import com.apriori.cid.ui.tests.evaluate.CostAllCadTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.apriori.cis.api.tests.CisBidPackageProjectsTest;
 import com.apriori.cmp.api.tests.CmpComparisonTests;
 import com.apriori.css.api.tests.CssSearchTests;
-import com.apriori.dds.api.tests.CommentsTest;
-import com.apriori.dds.api.tests.DiscussionTest;
+import com.apriori.dds.api.tests.DdsCommentsTest;
+import com.apriori.dds.api.tests.DdsDiscussionTest;
 import com.apriori.dms.api.tests.DmsCommentsTest;
 import com.apriori.fms.api.tests.FileManagementControllerTest;
 import com.apriori.gcd.api.tests.GcdTreesTests;
@@ -51,9 +51,9 @@ import org.junit.platform.suite.api.Suite;
     CicAgentTest.class,
     CisBidPackageProjectsTest.class,
     CostAllCadTests.class,
-    CommentsTest.class,
     DataCreationTests.class,
-    DiscussionTest.class,
+    DdsCommentsTest.class,
+    DdsDiscussionTest.class,
     DmsCommentsTest.class,
     CmpComparisonTests.class,
     CssSearchTests.class,

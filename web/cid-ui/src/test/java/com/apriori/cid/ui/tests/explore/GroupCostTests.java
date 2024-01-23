@@ -14,6 +14,7 @@ import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.utils.MultiUpload;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
@@ -32,7 +33,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GroupCostTests extends TestBaseUI {
@@ -173,36 +173,20 @@ public class GroupCostTests extends TestBaseUI {
     @TestRail(id = {14800})
     @Description("Verify that Cost button is disabled when a combination of parts and assemblies are selected")
     public void testGroupCostPartAndAssemblyScenarios() {
-        currentUser = UserUtil.getUser();
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final String subComponentExtension = ".SLDPRT";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
+        ComponentInfoBuilder pin = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("pin")).findFirst().get();
+        ComponentInfoBuilder bigRing = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("big ring")).findFirst().get();
 
-        final String assemblyScenarioName = new GenerateStringUtil().generateScenarioName();
-
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            assemblyProcessGroup,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            assemblyScenarioName,
-            currentUser);
-
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .multiSelectScenarios("" + "big ring" + ", " + assemblyScenarioName + "",
-                "" + "Pin" + ", " + assemblyScenarioName + "");
+        explorePage = loginPage.login(componentAssembly.getUser())
+            .multiSelectScenarios(bigRing.getComponentName() + "," + bigRing.getScenarioName(), pin.getComponentName() + "," + pin.getScenarioName());
 
         softAssertions.assertThat(explorePage.isCostButtonEnabled()).isEqualTo(true);
 
-        explorePage.multiSelectScenarios("" + assemblyName + ", " + assemblyScenarioName + "");
+        explorePage.multiSelectScenarios(componentAssembly.getComponentName() + ", " + componentAssembly.getScenarioName());
 
         softAssertions.assertThat(explorePage.isCostButtonEnabled()).isEqualTo(false);
 
@@ -228,8 +212,7 @@ public class GroupCostTests extends TestBaseUI {
             .submit()
             .clickClose()
             .selectFilter("Recent")
-            .multiSelectScenarios("" + "big ring" + ", " + scenarioName + "",
-                "" + "titan charger lead" + ", " + scenarioName + "");
+            .multiSelectScenarios("big ring" + ", " + scenarioName, "titan charger lead" + ", " + scenarioName);
 
         softAssertions.assertThat(explorePage.isCostButtonEnabled()).isEqualTo(false);
 
@@ -238,17 +221,15 @@ public class GroupCostTests extends TestBaseUI {
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh()
-            .multiSelectScenarios("" + "big ring" + ", " + scenarioName + "",
-                "" + "titan charger lead" + ", " + scenarioName + "");
+            .multiSelectScenarios("big ring" + ", " + scenarioName, "titan charger lead" + ", " + scenarioName);
 
         softAssertions.assertThat(explorePage.isCostButtonEnabled()).isEqualTo(true);
 
-        explorePage.multiSelectScenarios("" + "big ring" + ", " + scenarioName + "")
+        explorePage.multiSelectScenarios("big ring" + ", " + scenarioName)
             .clickCostButton(ComponentBasicPage.class)
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
-            .multiSelectScenarios("" + "big ring" + ", " + scenarioName + "",
-                "" + "titan charger lead" + ", " + scenarioName + "");
+            .multiSelectScenarios("big ring" + ", " + scenarioName, "titan charger lead" + ", " + scenarioName);
 
         softAssertions.assertThat(explorePage.isCostButtonEnabled()).isEqualTo(false);
 
