@@ -500,6 +500,15 @@ public class PageUtils {
      * @param millis - time in milliseconds
      */
     public void waitFor(Integer millis) {
+        waitFor(millis.longValue());
+    }
+
+    /**
+     * Waits for a given time
+     *
+     * @param millis - time in milliseconds
+     */
+    public void waitFor(Long millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e1) {
