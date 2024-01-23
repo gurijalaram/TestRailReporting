@@ -141,7 +141,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
                 .append("\n");
         }
 
-        pageUtils.waitFor(10000);
+        pageUtils.waitFor(10000); // workaround for OAUTH issue
         driver.close();
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
     }
