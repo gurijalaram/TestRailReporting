@@ -324,33 +324,30 @@ public class JasperApiUtils {
      *
      * @param partName          - String of partName which is to be used
      * @param areBubblesPresent - boolean which states if bubbles are present or not
-     * @param isSheetMetalDtcDetails - boolean which states if current test is sheet metal dtc details report or not
+     * @param isDetailsOrComparisonReport - boolean which states if current test is sheet metal dtc details report or not
      */
-    public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent, boolean isSheetMetalDtcDetails) {
+    public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent, boolean isDetailsOrComparisonReport) {
         String currencyAssertValue = CurrencyEnum.USD.getCurrency();
         JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
 
-        String currentCurrencyAboveChart = isSheetMetalDtcDetails
-            ? getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryUsd)
+        String currentCurrencyAboveChart = isDetailsOrComparisonReport
+            ? getCurrentCurrencyFromAboveChartDtcDetailsOrComparisonReport(jasperReportSummaryUsd)
             : getCurrentCurrencyFromAboveChart(jasperReportSummaryUsd, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         currencyAssertValue = CurrencyEnum.GBP.getCurrency();
         JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
 
-        currentCurrencyAboveChart = isSheetMetalDtcDetails
-            ? getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryGbp)
+        currentCurrencyAboveChart = isDetailsOrComparisonReport
+            ? getCurrentCurrencyFromAboveChartDtcDetailsOrComparisonReport(jasperReportSummaryGbp)
             : getCurrentCurrencyFromAboveChart(jasperReportSummaryGbp, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
-        String usdCurrencyValue = areBubblesPresent
-            ? getCurrencyValueFromChart(jasperReportSummaryUsd, partName)
-            : getCurrencyValueFromChart(jasperReportSummaryUsd, "");
-        String gbpCurrencyValue = areBubblesPresent
-            ? getCurrencyValueFromChart(jasperReportSummaryGbp, partName)
-            : getCurrencyValueFromChart(jasperReportSummaryGbp, "");
-
-        softAssertions.assertThat(usdCurrencyValue).isNotEqualTo(gbpCurrencyValue);
+        if (areBubblesPresent) {
+            String usdCurrencyValue = getCurrencyValueFromChart(jasperReportSummaryUsd, partName);
+            String gbpCurrencyValue = getCurrencyValueFromChart(jasperReportSummaryGbp, partName);
+            softAssertions.assertThat(usdCurrencyValue).isNotEqualTo(gbpCurrencyValue);
+        }
 
         softAssertions.assertAll();
     }
@@ -862,8 +859,10 @@ public class JasperApiUtils {
         return assertValues;
     }
 
-    private String getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(JasperReportSummary jasperReportSummary) {
-        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(6).text();
+    private String getCurrentCurrencyFromAboveChartDtcDetailsOrComparisonReport(JasperReportSummary jasperReportSummary) {
+        String valsToUse = jasperReportSummary.getReportHtmlPart().toString().contains("DTC Details") ? "3,6" : "2,17";
+        String[] valuesToUse = valsToUse.split(",");
+        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", valuesToUse[0]).get(Integer.parseInt(valuesToUse[1])).text();
     }
 
     private String getCurrentCurrencyFromAboveChart(JasperReportSummary jasperReportSummary, boolean areBubblesPresent) {

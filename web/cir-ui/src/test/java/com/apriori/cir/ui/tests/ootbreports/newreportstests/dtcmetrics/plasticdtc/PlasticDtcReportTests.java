@@ -1,5 +1,7 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
+
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -8,13 +10,16 @@ import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
 import com.apriori.shared.util.enums.ExportSetEnum;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -71,6 +76,29 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericDtcTest(
             partNames,
             "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @TmsLink("1370")
+    @TestRail(id = {1370})
+    @Description("Verify currency code functionality works correctly - Plastic DTC Report")
+    public void testCurrencyCodeFunctionality() {
+        jasperApiUtils.genericDtcCurrencyTest(
+            JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName(),
+            true,
+            false
+        );
+    }
+
+    @Test
+    @TmsLink("29682")
+    @TestRail(id = {29682})
+    @Description("Test process group input control works correctly - Plastic DTC Report")
+    public void testProcessGroupFunctionality() {
+        jasperApiUtils.genericProcessGroupDtcTest(
+            partNames,
+            "Process Group", ProcessGroupEnum.CASTING_DIE.getProcessGroup()
         );
     }
 }
