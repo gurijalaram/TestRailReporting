@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -94,6 +95,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
      * @param userApplicationsFromUI
      */
     private void validateApplicationsAreLaunchedSuccessfully(List<ApplicationDTO> userApplicationsFromUI) {
+//        userApplicationsFromUI = Arrays.asList(new ApplicationDTO(null, "aP Pro", null, null));
         userApplicationsFromUI.forEach(application -> {
             log.debug("*********************** Testing application name: {}  **********************", application.getApplicationName());
 
