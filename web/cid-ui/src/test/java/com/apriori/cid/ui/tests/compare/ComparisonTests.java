@@ -285,7 +285,7 @@ public class ComparisonTests extends TestBaseUI {
         ComponentInfoBuilder component3 = new ComponentRequestUtil().getComponent();
         component3.setUser(component.getUser());
         ComponentInfoBuilder component4 = new ComponentRequestUtil().getComponent();
-        component2.setUser(component.getUser());
+        component4.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(component.getUser())
@@ -571,8 +571,8 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {5800, 6458, 6459})
     @Description("Publish private scenarios that are included in the comparison")
     public void publishScenarioOfComparison() {
-        component = new ComponentRequestUtil().getComponent();
-        component2 = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponent("bracket_basic");
+        component2 = new ComponentRequestUtil().getComponent("700-33770-01_A0");
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -1232,8 +1232,9 @@ public class ComparisonTests extends TestBaseUI {
         String invalidCharacterErrorText = "Must only contain characters, numbers, spaces and the following special characters: . - _ ( )";
 
         component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        component2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2 = new ComponentRequestUtil().getComponent();
         component2.setUser(component.getUser());
+        componentsUtil.postComponent(component2);
 
         compareExplorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
