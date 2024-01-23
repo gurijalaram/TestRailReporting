@@ -165,25 +165,6 @@ public class JasperApiUtils {
     }
 
     /**
-     * Generic method for testing currency only, excluding date
-     *
-     * @param currencyToSet - currency that is to be set
-     * @return JasperReportSummary instance
-     */
-    public JasperReportSummary genericTestCoreCurrencyOnly(String currencyToSet) {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
-        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
-
-        Stopwatch timer = Stopwatch.createUnstarted();
-        timer.start();
-        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
-        timer.stop();
-        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
-
-        return jasperReportSummary;
-    }
-
-    /**
      * Generic method for testing currency and latest cost date only
      *
      * @param currencyToSet - currency that is to be set

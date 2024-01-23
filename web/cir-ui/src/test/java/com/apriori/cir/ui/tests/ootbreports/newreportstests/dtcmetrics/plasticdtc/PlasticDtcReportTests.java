@@ -1,7 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
-
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -16,10 +14,8 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
