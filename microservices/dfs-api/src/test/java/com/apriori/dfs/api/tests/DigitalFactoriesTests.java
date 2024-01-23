@@ -91,7 +91,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    //@TestRail(id = {0})
+    @TestRail(id = {29566})
     @Description("Get Not Acceptable error when incorrect Accept Header is provided")
     public void findDigitalFactoriesWithIncorrectAcceptHeader() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DFSApiEnum.DIGITAL_FACTORIES, ErrorMessage.class)
@@ -108,7 +108,7 @@ public class DigitalFactoriesTests {
         softAssertions.assertAll();
     }
 
-    //@TestRail(id = {0})
+    @TestRail(id = {29677})
     @Description("Find invalid page number/page size of Digital Factories")
     @ParameterizedTest
     @CsvSource({
@@ -127,7 +127,7 @@ public class DigitalFactoriesTests {
         softAssertions.assertAll();
     }
 
-    //@TestRail(id = {0})
+    @TestRail(id = {29678})
     @Description("Find a page of Digital Factories")
     @ParameterizedTest
     @CsvSource({
@@ -146,7 +146,7 @@ public class DigitalFactoriesTests {
         softAssertions.assertAll();
     }
 
-    //@TestRail(id = {0})
+    @TestRail(id = {29679})
     @Description("Find all Digital Factories sorted by name")
     @ParameterizedTest
     @ValueSource(strings = { "ASC", "DESC" })
@@ -178,7 +178,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    //@TestRail(id = {0})
+    @TestRail(id = {29680})
     @Description("Find a page of Digital Factories matched by name")
     public void findDigitalFactoriesMatchedByName() {
 
@@ -195,7 +195,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    //@TestRail(id = {0})
+    @TestRail(id = {29681})
     @Description("Find a page of Digital Factories not matched by name")
     public void findDigitalFactoriesNotMatchedByName() {
 
