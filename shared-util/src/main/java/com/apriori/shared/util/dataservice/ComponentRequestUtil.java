@@ -193,4 +193,27 @@ public class ComponentRequestUtil {
         componentInfoPG.setUser(UserUtil.getUser());
         return componentInfoPG;
     }
+
+    /**
+     * Gets random component by process group and by user
+     *
+     * @param processGroup - the process group
+     * @param currentUser - UserCredentiala
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getComponentByProcessGroup(ProcessGroupEnum processGroup, UserCredentials currentUser) {
+
+        List<ComponentInfoBuilder> componentPG = COMPONENT_REQUEST.getComponents()
+            .stream()
+            .filter(component -> component.getProcessGroup().equals(processGroup)).collect(Collectors.toList());
+        Collections.shuffle(componentPG);
+
+        ComponentInfoBuilder componentInfoPG = componentPG.stream().findFirst().get();
+
+        componentInfoPG.setResourceFile(FileResourceUtil.getCloudFile(componentInfoPG.getProcessGroup(),
+            componentInfoPG.getComponentName() + componentInfoPG.getExtension()));
+        componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentInfoPG.setUser(currentUser);
+        return componentInfoPG;
+    }
 }
