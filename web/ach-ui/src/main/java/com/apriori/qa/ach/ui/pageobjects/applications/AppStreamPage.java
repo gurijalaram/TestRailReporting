@@ -3,9 +3,8 @@ package com.apriori.qa.ach.ui.pageobjects.applications;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
@@ -16,9 +15,6 @@ public class AppStreamPage extends LoadableComponent<AppStreamPage> {
 
     private PageUtils pageUtils;
     private WebDriver driver;
-
-    @FindBy(xpath = "//div[@id='toolbar']")
-    private WebElement toolbar;
 
     public AppStreamPage(WebDriver driver) {
         this.driver = driver;
@@ -34,7 +30,8 @@ public class AppStreamPage extends LoadableComponent<AppStreamPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForCondition(() -> toolbar.isDisplayed(), Duration.ofMinutes(5));
-        pageUtils.waitForElementAppear(toolbar);
+        pageUtils.waitForElementToAppear(
+            By.xpath("//div[@id='toolbar-content' and @ng-show='toolbarOptions.isVisible']"),
+            Duration.ofMinutes(3));
     }
 }

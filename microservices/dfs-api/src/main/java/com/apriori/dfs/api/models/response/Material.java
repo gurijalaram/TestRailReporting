@@ -24,14 +24,26 @@ public class Material {
     private Double hardness;
     private String hardnessSystem;
     private MaterialIndustryStandardNames industryStandardNames;
+    private Boolean isDefault;
     private String name;
     private String processGroupIdentity;
     private MaterialProperties properties;
     private String type;
     private Double unitCost;
+
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime deletedAt;
+    private String deletedBy;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
+    private String updatedBy;
 }
 

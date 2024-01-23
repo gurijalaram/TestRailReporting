@@ -106,43 +106,14 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @param multiUploadList - component details as a list
      * @return current page object
      */
-    public ImportCadFilePage inputMultiComponentDetails(List<MultiUpload> multiUploadList) {
-        multiUploadList.forEach(multiUpload -> {
-            String file = multiUpload.getResourceFile().getName();
-
-            enterMultiFilePath(multiUpload.getResourceFile())
-                .waitForUploadToBeDone(file)
-                .inputMultiScenarioName(multiUpload.getScenarioName(), file);
-        });
-        return this;
-    }
-
-    /**
-     * Input multiple component details
-     *
-     * @param multiUploadList - component details as a list
-     * @return current page object
-     */
     public ImportCadFilePage inputMultiComponentBuilderDetails(List<ComponentInfoBuilder> multiUploadList) {
         unTick("Apply to all");
         multiUploadList.forEach(multiUpload -> {
             String file = multiUpload.getResourceFile().getName();
 
             enterMultiFilePath(multiUpload.getResourceFile())
-                .waitForUploadToBeDone(file)
-                .inputMultiScenarioName(multiUpload.getScenarioName(), file);
+                .waitForUploadToBeDone(file);
         });
-        return this;
-    }
-
-    /**
-     * Upload multiple cad files
-     *
-     * @param multiComponents - component details as a file list
-     * @return current page object
-     */
-    public ImportCadFilePage uploadMultiComponents(List<File> multiComponents) {
-        multiComponents.forEach(this::enterMultiFilePath);
         return this;
     }
 
@@ -198,19 +169,6 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         pageUtils.waitForElementToAppear(scenarioNameInput);
         pageUtils.clearInput(scenarioNameInput);
         scenarioNameInput.sendKeys(scenarioName);
-        return this;
-    }
-
-    /**
-     * Input multiple scenario name
-     *
-     * @param scenarioName - the scenario name
-     * @return current page object
-     */
-    private ImportCadFilePage inputMultiScenarioName(String scenarioName, String file) {
-        By byMultiFileInput = By.xpath(String.format("//input[contains(@name,'%s')]", file));
-        pageUtils.waitForElementToAppear(byMultiFileInput);
-        pageUtils.setValueOfElement(driver.findElement(byMultiFileInput), scenarioName);
         return this;
     }
 

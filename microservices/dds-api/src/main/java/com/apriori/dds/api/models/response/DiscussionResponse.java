@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "DiscussionResponseSchema.json")
+@Schema(location = "DdsDiscussionResponseSchema.json")
 public class DiscussionResponse {
     private String identity;
     private String createdBy;

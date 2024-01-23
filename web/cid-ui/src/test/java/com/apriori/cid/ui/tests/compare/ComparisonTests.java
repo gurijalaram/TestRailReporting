@@ -1167,6 +1167,7 @@ public class ComparisonTests extends TestBaseUI {
             .isTrue();
 
         comparePage = compareExplorePage.clickExplore()
+            .selectFilter("Recent")
             .multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(), component2.getComponentName() + "," + component2.getScenarioName())
             .createComparison()
             .selectManualComparison();
@@ -1190,6 +1191,7 @@ public class ComparisonTests extends TestBaseUI {
             .isTrue();
 
         comparePage = compareExplorePage.clickExplore()
+            .selectFilter("Recent")
             .multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName(), component2.getComponentName() + "," + component2.getScenarioName())
             .createComparison()
             .selectManualComparison();

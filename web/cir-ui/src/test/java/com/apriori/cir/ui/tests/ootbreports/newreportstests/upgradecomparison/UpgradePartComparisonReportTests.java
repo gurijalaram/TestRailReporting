@@ -32,8 +32,8 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
     }
 
     @Test
-    @TmsLink("13944")
-    @TestRail(id = 13944)
+    @TmsLink("13952")
+    @TestRail(id = 13952)
     @Description("Input controls - Currency code")
     public void testCurrency() {
         ArrayList<String> gbpAssertValues = jasperApiUtils.generateReportAndGetAssertValues(CurrencyEnum.GBP.getCurrency(), 2);
