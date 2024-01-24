@@ -1,4 +1,4 @@
-package com.apriori.cic.agent.utils;
+package com.apriori.shared.util.nexus.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AgentData {
+public class NexusComponent {
     private String agentZipFolder;
     private String agentUnZipFolder;
     private String baseFolder;

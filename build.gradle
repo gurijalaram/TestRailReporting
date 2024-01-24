@@ -168,6 +168,7 @@ subprojects {
         implementation 'commons-cli:commons-cli:1.5.0'
         implementation 'org.jsoup:jsoup:1.15.4'
         implementation 'org.apache.commons:commons-math3:3.6.1'
+        implementation 'com.jcraft:jsch:0.1.55'
         testImplementation 'org.hamcrest:hamcrest:2.2'
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.14.0'
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.14.0'

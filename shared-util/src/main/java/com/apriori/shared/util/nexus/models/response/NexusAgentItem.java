@@ -1,4 +1,4 @@
-package com.apriori.cic.agent.entity.response;
+package com.apriori.shared.util.nexus.models.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

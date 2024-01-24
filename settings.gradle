@@ -17,14 +17,12 @@ final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api
                                        "gcd-api", "cmp-api", "dfs-api", "bcm-api"]
 final String[] webModules = ["ach-ui", "auth-ui", "cas-ui", "cia-ui", "cic-ui", "cid-ui", "cir-ui", "edc-ui", "cis-ui"]
 final String[] intModules = ["integration"]
-final String[] agentModules = ["cic-agent"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
     {
         put("microservices", microservicesModules)
         put("web", webModules)
         put("integrate", intModules)
-        put("agent", agentModules)
     }
 }
 final String configuration = System.getProperty("conf")
@@ -81,7 +79,6 @@ if (configuration != null) {
 
     //integration
     include ':integrate:integration'
-    include ':agent:cic-agent'
 }
 
 void includeProject(final String includePath, final String filePath) {

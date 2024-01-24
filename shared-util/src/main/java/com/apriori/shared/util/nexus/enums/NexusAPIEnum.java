@@ -1,4 +1,4 @@
-package com.apriori.cic.agent.enums;
+package com.apriori.shared.util.nexus.enums;
 
 import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
 import com.apriori.shared.util.properties.PropertiesContext;
@@ -7,6 +7,7 @@ public enum NexusAPIEnum implements ExternalEndpointEnum {
 
     NEXUS_CIC_AGENT_SEARCH("service/rest/v1/search?repository=%s"),
     NEXUS_CIC_AGENT_SEARCH_BY_GROUP("service/rest/v1/search?repository=%s&group=%s"),
+    NEXUS_CIC_AGENT_SEARCH_BY_GROUP_CONTINUATION("service/rest/v1/search?repository=%s&group=%s&continuationToken=%s"),
     NEXUS_CIC_AGENT_DOWNLOAD_URL("repository/%s/%s");
 
     private String endpoint;

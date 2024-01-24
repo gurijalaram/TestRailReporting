@@ -5,4 +5,5 @@ qa-test,ap-int,filesystem,8809,FS-conqcic01,http://conqscic02.fbc.com
 qa-test,ap-int,teamcenter,8810,TC-consvtc12,http://conqscic02.fbc.com
 qa-test,ap-int,windchill,8811,WC-consvwc02,http://conqscic02.fbc.com
 staging,ap-int,windchill,8812,WC-consvwc02,http://conqscic02.fbc.com
+staging,ap-int,filesystem,8813,FS-consvwc02,http://conqscic02.fbc.com
 development,ap-int,windchill,8811,WC-consvwc02,http://conqscic02.fbc.com

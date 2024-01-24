@@ -1,20 +1,18 @@
-package com.apriori.cic.agent.utils;
+package com.apriori.cic.api.utils;
 
-import com.apriori.cic.agent.entity.response.NexusAgentItem;
-import com.apriori.cic.agent.entity.response.NexusAgentResponse;
-import com.apriori.cic.agent.enums.NexusAPIEnum;
 import com.apriori.cic.api.models.request.AgentPort;
 import com.apriori.cic.api.models.request.ConnectorRequest;
 import com.apriori.cic.api.models.response.AgentConnectionInfo;
 import com.apriori.cic.api.models.response.AgentConnectionOptions;
 import com.apriori.cic.api.models.response.ConnectorInfo;
-import com.apriori.cic.api.utils.CicApiTestUtil;
-import com.apriori.shared.util.http.models.entity.RequestEntity;
-import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.nexus.models.response.NexusAgentItem;
+import com.apriori.shared.util.nexus.utils.NexusComponent;
+import com.apriori.shared.util.nexus.utils.NexusSearchParameters;
+import com.apriori.shared.util.nexus.utils.NexusUtil;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import com.jcraft.jsch.Channel;
@@ -25,9 +23,6 @@ import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpATTRS;
 import com.jcraft.jsch.SftpException;
-import io.restassured.RestAssured;
-import io.restassured.config.HttpClientConfig;
-import io.restassured.config.RestAssuredConfig;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.SneakyThrows;
@@ -36,30 +31,21 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpStatus;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Base64;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 @Slf4j
 @Data
@@ -75,16 +61,19 @@ public class AgentService {
     private NexusAgentItem nexusAgentItem = null;
     private AgentConnectionOptions agentConnectionOptions = null;
     private ConnectorInfo connectorInfo = null;
-    private AgentData agentData;
+    private NexusComponent agentData;
+    private NexusSearchParameters nexusSearchParameters;
     private AgentPort agentPort;
+    private RequestEntityUtil requestEntityUtil;
 
     private static final int SESSION_TIMEOUT = 10000;
     private static final int CHANNEL_TIMEOUT = 5000;
 
     public AgentService() {
         agentCredentials = new AgentCredentials().getAgentCredentials();
-        agentData = new AgentData();
+        agentData = new NexusComponent();
         agentPort = CicApiTestUtil.getAgentPortData();
+        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser("admin");
     }
 
     /**
@@ -205,50 +194,13 @@ public class AgentService {
      * @return current class object
      */
     public AgentService searchNexusRepositoryByGroup() {
-        Map<String, String> paramMap = new HashMap<>();
-        NexusAgentResponse nexusAgentResponse = null;
-        RequestEntity requestEntity;
-        String group = "/" + PropertiesContext.get("ci-connect.nexus_group") + "/" + PropertiesContext.get("ci-connect.nexus_version");
-        String credential = PropertiesContext.get("global.nexus.username") + ":" + PropertiesContext.get("global.nexus.password");
-        try {
-            requestEntity = RequestEntityUtil_Old.init(NexusAPIEnum.NEXUS_CIC_AGENT_SEARCH_BY_GROUP, NexusAgentResponse.class)
-                .inlineVariables(PropertiesContext.get("ci-connect.nexus_repository"), group)
-                .headers(new HashMap<String, String>() {
-                    {
-                        put("Authorization", "Basic " + Base64.getEncoder().encodeToString(credential.getBytes()));
-                    }
-                }).expectedResponseCode(HttpStatus.SC_OK);
-
-            nexusAgentResponse = (NexusAgentResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
-        } catch (NullPointerException nullPointerException) {
-            log.error(nullPointerException.getMessage() + "REPOSITORY NOT FOUND IN NEXUS - " + group);
-            throw new IllegalArgumentException(nullPointerException);
-        }
-
-        try {
-            while (nexusAgentResponse.getContinuationToken() != null) {
-                paramMap.put("continuationToken", nexusAgentResponse.getContinuationToken());
-                requestEntity = RequestEntityUtil_Old.init(NexusAPIEnum.NEXUS_CIC_AGENT_SEARCH_BY_GROUP, NexusAgentResponse.class)
-                    .inlineVariables(PropertiesContext.get("ci-connect.nexus_repository"), group)
-                    .headers(new HashMap<String, String>() {
-                        {
-                            put("Authorization", "Basic " + Base64.getEncoder().encodeToString(credential.getBytes()));
-                        }
-                    }).expectedResponseCode(HttpStatus.SC_OK);
-                nexusAgentResponse = (NexusAgentResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
-            }
-
-            nexusAgentItem = nexusAgentResponse.getItems().stream()
-                .filter(wf -> wf.getName().endsWith(PropertiesContext.get("ci-connect.nexus_extension")))
-                .findFirst()
-                .get();
-
-            String isRepositoryFound = (nexusAgentItem != null) ? "FOUND" : "NOT FOUND";
-            log.info(String.format("AGENT REPOSITORY %s WITH %s IN NEXUS", isRepositoryFound, group));
-        } catch (Exception e) {
-            log.error("AGENT INSTALLER NOT FOUND IN NEXUS REPOSITORY!!");
-        }
-
+        nexusSearchParameters = NexusSearchParameters.builder()
+            .repositoryName(PropertiesContext.get("ci-connect.nexus_repository"))
+            .groupName(PropertiesContext.get("ci-connect.nexus_group"))
+            .version(PropertiesContext.get("ci-connect.nexus_version"))
+            .fileExtension(PropertiesContext.get("ci-connect.nexus_extension"))
+            .build();
+        nexusAgentItem = NexusUtil.searchRepositoryByGroup(nexusSearchParameters);
         return this;
     }
 
@@ -258,27 +210,7 @@ public class AgentService {
      * @return current class object
      */
     public AgentService downloadAgentFile() {
-        try {
-            agentData.setBaseFolder(String.valueOf(FileResourceUtil.createTempDir(null)).toLowerCase());
-            agentData.setAgentZipFolder(agentData.getBaseFolder() + File.separator + StringUtils.substringAfterLast(nexusAgentItem.getName(), "/"));
-            agentData.setAgentUnZipFolder(agentData.getBaseFolder() + File.separator + FilenameUtils.removeExtension(StringUtils.substringAfterLast(nexusAgentItem.getName(), "/")));
-        } catch (Exception ioException) {
-            log.error("PATH NOT FOUND!!");
-        }
-
-        if (Boolean.valueOf(PropertiesContext.get("ci-connect.custom_install"))) {
-            NexusAPIEnum.NEXUS_CIC_AGENT_DOWNLOAD_URL.setEndpoint(nexusAgentItem.getAssets().get(0).getDownloadUrl());
-            downloadAgent(NexusAPIEnum.NEXUS_CIC_AGENT_DOWNLOAD_URL);
-        } else {
-            String lastModifiedDate = nexusAgentItem.getAssets().get(0).getLastModified().split("T")[0];
-            if (LocalDate.now().minusDays(8).isAfter(LocalDate.parse(lastModifiedDate))) {
-                log.info("AGENT INSTALLER IS NOT UPDATED " + nexusAgentItem.getName());
-                System.exit(0);
-            } else {
-                NexusAPIEnum.NEXUS_CIC_AGENT_DOWNLOAD_URL.setEndpoint(nexusAgentItem.getAssets().get(0).getDownloadUrl());
-                downloadAgent(NexusAPIEnum.NEXUS_CIC_AGENT_DOWNLOAD_URL);
-            }
-        }
+        agentData = NexusUtil.downloadComponent();
         return this;
     }
 
@@ -287,35 +219,7 @@ public class AgentService {
      * destDirectory (will be created if does not exists)
      */
     public AgentService unZip() {
-        ZipInputStream zipIn = null;
-        try {
-            File destDir = new File(agentData.getAgentUnZipFolder());
-            if (!destDir.exists()) {
-                destDir.mkdir();
-            } else {
-                FileUtils.cleanDirectory(destDir);
-            }
-            zipIn = new ZipInputStream(new FileInputStream(agentData.getAgentZipFolder()));
-            ZipEntry entry = zipIn.getNextEntry();
-            // iterates over entries in the zip file
-            while (entry != null) {
-                String filePath = agentData.getAgentUnZipFolder() + File.separator + entry.getName();
-                log.info(String.format("########## DOWNLOADED AGENT FOLDER --%s ###############", filePath));
-                if (!entry.isDirectory()) {
-                    // if the entry is a file, extracts it
-                    extractFile(zipIn, filePath);
-                } else {
-                    // if the entry is a directory, make the directory
-                    File dir = new File(filePath);
-                    dir.mkdirs();
-                }
-                zipIn.closeEntry();
-                entry = zipIn.getNextEntry();
-            }
-            zipIn.close();
-        } catch (IOException ioException) {
-            log.error(String.valueOf(ioException), ioException);
-        }
+        NexusUtil.extractZip();
         return this;
     }
 
@@ -479,7 +383,7 @@ public class AgentService {
 
     /**
      * Install certificates after installation of agent
-     *Amazing i
+     * Amazing i
      */
     public AgentService installCertificates() {
         String jreBinDirectory = StringUtils.EMPTY;
@@ -595,61 +499,6 @@ public class AgentService {
             log.error(e.getMessage());
         }
         return status;
-    }
-
-    /**
-     * Download agent from nexus download api url
-     *
-     * @param agentUrl NexusAPIEnum
-     */
-    private void downloadAgent(NexusAPIEnum agentUrl) {
-        InputStream inputStream = null;
-        try {
-            File agentZipFile = new File(agentData.getAgentZipFolder());
-            if (agentZipFile.exists()) {
-                agentZipFile.delete();
-            }
-            String userCredentials = PropertiesContext.get("global.nexus.username") + ":" + PropertiesContext.get("global.nexus.password");
-            inputStream = RestAssured.given()
-                .headers(new HashMap<String, String>() {
-                    {
-                        put("Authorization", "Basic " + Base64.getEncoder().encodeToString(userCredentials.getBytes()));
-                    }
-                })
-                .config(RestAssuredConfig.config()
-                    .httpClient(
-                        HttpClientConfig.httpClientConfig()
-                            .setParam("http.connection.timeout", 60000)
-                            .setParam("http.socket.timeout", 60000)
-                    ))
-                .get(agentUrl.NEXUS_CIC_AGENT_DOWNLOAD_URL.getEndpointString())
-                .asInputStream();
-
-            FileUtils.copyInputStreamToFile(inputStream, new File(agentData.getAgentZipFolder()));
-        } catch (Exception ex) {
-            log.error(ex.getMessage());
-            log.error("FAILED TO DOWNLOAD THE AGENT INSTALLER!!!!");
-        }
-    }
-
-    /**
-     * Extracts a zip entry (file entry)
-     *
-     * @param zipIn
-     * @param filePath
-     */
-    private void extractFile(ZipInputStream zipIn, String filePath) {
-        try {
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
-            byte[] bytesIn = new byte[4096];
-            int read = 0;
-            while ((read = zipIn.read(bytesIn)) != -1) {
-                bos.write(bytesIn, 0, read);
-            }
-            bos.close();
-        } catch (IOException ioException) {
-            log.error(String.valueOf(ioException), ioException);
-        }
     }
 
     /**

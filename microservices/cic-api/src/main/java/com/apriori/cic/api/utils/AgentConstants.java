@@ -1,4 +1,4 @@
-package com.apriori.cic.agent.utils;
+package com.apriori.cic.api.utils;
 
 public class AgentConstants {
     public static final String REMOTE_DOWNLOAD_FOLDER = "/cic-agents/download";
