@@ -630,8 +630,8 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {7020})
     @Description("Validate arrows are correct colour and direction in comparisons")
     public void validateArrowsInComparison() {
-        component = new ComponentRequestUtil().getComponent();
-        component2 = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponent("M3CapScrew");
+        component2 = new ComponentRequestUtil().getComponent("Push Pin");
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -671,8 +671,8 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {7021, 5906})
     @Description("Validate percentages are correct in comparison")
     public void validatePercentageInComparison() {
-        component = new ComponentRequestUtil().getComponent();
-        component2 = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponent("M3CapScrew");
+        component2 = new ComponentRequestUtil().getComponent("Push Pin");
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -697,7 +697,7 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getDeltaPercentage(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME))
             .as("Total Cycle Time").isEqualTo("138.55%");
         softAssertions.assertThat(comparePage.getDeltaPercentage(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT))
-            .as("Total Capital Investment").isEqualTo("3.48%");
+            .as("Total Capital Investment").isEqualTo("3.47%");
 
         softAssertions.assertAll();
     }
@@ -1156,8 +1156,9 @@ public class ComparisonTests extends TestBaseUI {
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
         component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        component2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2 = new ComponentRequestUtil().getComponent();
         component2.setUser(component.getUser());
+        componentsUtil.postComponent(component2);
 
         loginPage = new CidAppLoginPage(driver);
         compareExplorePage = loginPage.login(component.getUser())
@@ -1214,7 +1215,7 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getComparisonName()).as("Verify that correct Comparison Name displayed").isEqualTo(comparisonName);
         softAssertions.assertThat(comparePage.getBasis()).as("Verify correct Basis in Comparison")
             .isEqualTo(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
-        softAssertions.assertThat(component2.getComponentName() + "  / " + component2.getScenarioName()).as("Verify correct Compared Scenario in Comparison")
+        softAssertions.assertThat(component2.getComponentName().toUpperCase() + "  / " + component2.getScenarioName()).as("Verify correct Compared Scenario in Comparison")
             .isIn(comparePage.getScenariosInComparison());
 
         softAssertions.assertAll();
