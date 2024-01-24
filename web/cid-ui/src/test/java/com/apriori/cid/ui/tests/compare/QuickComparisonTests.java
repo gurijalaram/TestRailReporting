@@ -258,7 +258,7 @@ public class QuickComparisonTests extends TestBaseUI {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickScenarioCheckbox(component.getComponentName(), component.getScenarioName())
-            .clickScenarioCheckbox(component.getComponentName(), scenarioName)
+            .clickScenarioCheckbox(componentB.getComponentName(), scenarioName)
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getListOfBasis()).isEqualTo(0);
