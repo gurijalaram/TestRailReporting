@@ -123,7 +123,7 @@ pipeline {
 
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
-                        javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
+                        javaOpts = javaOpts + " -Dcustomer=\"${params.CUSTOMER}\""
                     }
 
                     default_aws_region = params.REGION
