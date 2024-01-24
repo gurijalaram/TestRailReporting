@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "anyOf": [{
-    "type": "object",
+  "anyOf": [{"type": "object",
     "properties": {
       "@odata.context": {
         "type": ["null", "string"]
@@ -15,20 +14,26 @@
       "LastModified": {
         "type": ["null", "string"]
       },
+      "APWScenarioLink": {
+        "type": ["null", "string"]
+      },
       "AlternateNumber": {
-        "type": ["null", "integer"]
+        "type": ["null", "number"]
+      },
+      "AnnualManufacturingCarbon": {
+        "type": ["null", "number"]
       },
       "AnnualVolume": {
-        "type": ["integer", "null"]
+        "type": ["null", "integer"]
       },
       "ApCycleTime": {
-        "type": ["number","null"]
+        "type": ["null", "number"]
       },
       "ApDFMRating": {
-        "type": ["string","null"]
+        "type": ["null", "string"]
       },
       "ApDFMRiskScore": {
-        "type": ["number","integer","null"]
+        "type": ["null", "number"]
       },
       "ApFBC": {
         "type": ["null", "number"]
@@ -130,7 +135,7 @@
         "type": ["null", "boolean"]
       },
       "GeneralStatus": {
-        "$ref": "PlmPartAttributeSchema.json"
+        "$ref": "PlmPartTypeIconSchema.json"
       },
       "Identity": {
         "type": ["null", "string"]
@@ -149,6 +154,15 @@
       },
       "LifeCycleTemplateName": {
         "type": ["null", "string"]
+      },
+      "LogisticsCarbon": {
+        "type": ["null", "number"]
+      },
+      "MachiningMode": {
+        "type": ["null", "string"]
+      },
+      "MaterialCarbon": {
+        "type": ["null", "number"]
       },
       "MaterialCost": {
         "type": ["null", "number"]
@@ -176,6 +190,9 @@
       },
       "PhantomManufacturingPart": {
         "type": ["null", "boolean"]
+      },
+      "ProcessCarbon": {
+        "type": ["null", "number"]
       },
       "ProductionLife": {
         "type": ["null", "number"]
@@ -235,13 +252,22 @@
         "type": ["null", "string"]
       },
       "String4": {
-        "type": ["null", "object"]
+        "type": ["null", "string"]
       },
       "Supersedes": {
-        "type": ["null", "object"]
+        "type": ["null", "string"]
+      },
+      "TargetCost": {
+        "type": ["null", "number"]
+      },
+      "TargetMass": {
+        "type": ["null", "number"]
+      },
+      "TotalCarbon": {
+        "type": ["null", "number"]
       },
       "TypeIcon": {
-        "$ref": "PlmPartAttributeSchema.json"
+        "$ref": "PlmPartTypeIconSchema.json"
       },
       "URL1": {
         "type": ["null", "string"]
@@ -261,6 +287,5 @@
       "View": {
         "type": ["null", "string"]
       }
-    }
-  }]
+    }}]
 }
