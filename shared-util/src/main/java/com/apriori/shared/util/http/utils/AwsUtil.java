@@ -54,11 +54,11 @@ public class AwsUtil {
      * @return
      */
     private static ProfileCredentialsProvider getProfileCredentialsProvider() {
-        if (PropertiesContext.get("env").equals("staging") && !isLocalRun()) {
-            return ProfileCredentialsProvider.create("staging");
-        }
+    //        if (PropertiesContext.get("env").equals("staging") && !isLocalRun()) {
+    //            return ProfileCredentialsProvider.create("staging");
+    //        }
 
-        return ProfileCredentialsProvider.create();
+        return ProfileCredentialsProvider.create("staging");
     }
 
     private static boolean isLocalRun() {
