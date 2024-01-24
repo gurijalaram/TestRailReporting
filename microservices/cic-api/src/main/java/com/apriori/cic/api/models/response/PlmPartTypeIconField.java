@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlmPartAttribute {
-    @JsonProperty("Value")
-    private String value;
-    @JsonProperty("Display")
-    private String display;
+public class PlmPartTypeIconField {
+    @JsonProperty("Path")
+    public String path;
+    @JsonProperty("Tooltip")
+    public String tooltip;
 }

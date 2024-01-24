@@ -32,8 +32,12 @@ public class PlmPartResponse {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssZ.class)
     @JsonProperty("LastModified")
     public LocalDateTime lastModified;
+    @JsonProperty("APWScenarioLink")
+    public String aPWScenarioLink;
     @JsonProperty("AlternateNumber")
     public Integer alternateNumber;
+    @JsonProperty("AnnualManufacturingCarbon")
+    public Integer annualManufacturingCarbon;
     @JsonProperty("AnnualVolume")
     public Integer annualVolume;
     @JsonProperty("ApCycleTime")
@@ -109,7 +113,7 @@ public class PlmPartResponse {
     @JsonProperty("GatheringPart")
     public Object gatheringPart;
     @JsonProperty("GeneralStatus")
-    public PlmPartAttribute generalStatus;
+    public PlmPartTypeIconField generalStatus;
     @JsonProperty("Identity")
     public String identity;
     @JsonProperty("Integer1")
@@ -122,6 +126,12 @@ public class PlmPartResponse {
     public String legalValList;
     @JsonProperty("LifeCycleTemplateName")
     public String lifeCycleTemplateName;
+    @JsonProperty("LogisticsCarbon")
+    public Integer logisticsCarbon;
+    @JsonProperty("MachiningMode")
+    public String machiningMode;
+    @JsonProperty("MaterialCarbon")
+    public Integer materialCarbon;
     @JsonProperty("MaterialCost")
     public Double materialCost;
     @JsonProperty("ModifiedBy")
@@ -140,6 +150,8 @@ public class PlmPartResponse {
     public Object partSummaryReport;
     @JsonProperty("PhantomManufacturingPart")
     public Object phantomManufacturingPart;
+    @JsonProperty("ProcessCarbon")
+    public Integer processCarbon;
     @JsonProperty("ProductionLife")
     public Double productionLife;
     @JsonProperty("ProjectNumber")
@@ -182,8 +194,14 @@ public class PlmPartResponse {
     public String string4;
     @JsonProperty("Supersedes")
     public Object supersedes;
+    @JsonProperty("TargetCost")
+    public Integer targetCost;
+    @JsonProperty("TargetMass")
+    public Integer targetMass;
+    @JsonProperty("TotalCarbon")
+    public Integer totalCarbon;
     @JsonProperty("TypeIcon")
-    public PlmPartAttribute typeIcon;
+    public PlmPartTypeIconField typeIcon;
     @JsonProperty("URL1")
     public String url1;
     @JsonProperty("Utilization")
