@@ -34,6 +34,7 @@ public class AppStreamPage extends LoadableComponent<AppStreamPage> {
         final String resourceNotAvailableWarning = "No streaming resources";
 
         if (isDisplayedResourceNotAvailableWarning(resourceNotAvailableWarning)) {
+            log.debug("Detected {}. Started short wait for resource to retry.", resourceNotAvailableWarning);
             pageUtils.waitFor(Duration.ofMinutes(3).toMillis()); // give a time for the streaming resource to appear
             pageUtils.waitForElementAndClick(By.xpath("//button[@id='modal-alert-retry']"));
 
@@ -49,6 +50,6 @@ public class AppStreamPage extends LoadableComponent<AppStreamPage> {
     }
 
     public Boolean isDisplayedResourceNotAvailableWarning(final String messageToCheck) {
-        return pageUtils.waitForWebElement(driver.findElement(By.xpath("//h1[contains(text(), '" + messageToCheck + "')]")));
+        return pageUtils.waitForVisibilityOfElement(By.xpath("//h1[contains(text(), '" + messageToCheck + "')]"));
     }
 }

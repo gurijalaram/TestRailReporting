@@ -1420,6 +1420,21 @@ public class PageUtils {
     }
 
     /**
+     * Waits for a Ui element to become visible.
+     *
+     * @return <b>True</b> if UI element is visible, <b>false</b> if not visible
+     */
+    public Boolean waitForVisibilityOfElement(By location) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(location));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    /**
      * Check if the checkbox is selected or not. Important: this is not a wait method, it only shows
      * the current status of the checkbox.
      *
