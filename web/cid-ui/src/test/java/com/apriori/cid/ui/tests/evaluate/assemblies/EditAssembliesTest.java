@@ -583,8 +583,8 @@ public class EditAssembliesTest extends TestBaseUI {
         componentAssembly = SerializationUtils.clone(preExistingComponentAssembly);
         componentAssembly.setScenarioName(new GenerateStringUtil().generateScenarioName());
 
-        ComponentInfoBuilder bolt = preExistingComponentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("bolt")).findFirst().get();
-        ComponentInfoBuilder nut = preExistingComponentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("nut")).findFirst().get();
+        ComponentInfoBuilder component1 = preExistingComponentAssembly.getSubComponents().get(0);
+        ComponentInfoBuilder component2 = preExistingComponentAssembly.getSubComponents().get(1);
 
         assemblyUtils.uploadSubComponents(preExistingComponentAssembly)
             .uploadAssembly(preExistingComponentAssembly);
@@ -602,7 +602,7 @@ public class EditAssembliesTest extends TestBaseUI {
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
-            .multiSelectSubcomponents(bolt.getComponentName() + "," + bolt.getScenarioName(), nut.getComponentName() + "," + nut.getScenarioName())
+            .multiSelectSubcomponents(component1.getComponentName() + "," + component1.getScenarioName(), component2.getComponentName() + "," + component2.getScenarioName())
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
             .enterScenarioName(preExistingComponentAssembly.getScenarioName())
@@ -780,6 +780,8 @@ public class EditAssembliesTest extends TestBaseUI {
 
         componentAssembly = assemblyRequestUtil.getAssembly("assy03A");
         componentAssembly2 = assemblyRequestUtil.getAssembly("assy03");
+        componentAssembly.setUser(componentAssembly.getUser());
+        componentAssembly2.getSubComponents().forEach(component -> component.setUser(componentAssembly.getUser()));
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
