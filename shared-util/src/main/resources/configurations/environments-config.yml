@@ -120,7 +120,8 @@ staging:
 ########################################################################################################################
 
 ######################################################## PRODUCTION #####################################################
-production:
+prod:
+  name: production
   aws_parameter_store_name: prod
   core_service_url_template: ${default.aws_region}.apriori.net/
 
