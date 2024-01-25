@@ -17,6 +17,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.apache.commons.lang3.SerializationUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
@@ -232,6 +233,7 @@ public class QuickComparisonTests extends TestBaseUI {
 
     @Test
     @TestRail(id = {26147})
+    @Issue("BA-3462")
     @Description("Validate scenarios can be deleted from quick comparison via modify comparison")
     public void testDeleteQuickComparison() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
