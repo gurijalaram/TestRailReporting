@@ -195,7 +195,7 @@ pipeline {
         stage("Test") {
             steps {
                 echo "Testing..."
-                echo \"${javaOpts}\"
+                echo "\"${javaOpts}\""
 
                 withCredentials([
                     file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
