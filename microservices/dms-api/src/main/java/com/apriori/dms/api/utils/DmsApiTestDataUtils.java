@@ -66,7 +66,7 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
             bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
             projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
             contentDesc = RandomStringUtils.randomAlphabetic(12);
-            componentInfoBuilder = new ScenariosUtil().postAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING));
+            componentInfoBuilder = new ScenariosUtil().postAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING, currentUser));
             scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
                     SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName()).get(0);
             if (scenarioItem != null) {

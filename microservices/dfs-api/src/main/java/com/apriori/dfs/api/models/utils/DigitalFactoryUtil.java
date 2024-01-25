@@ -5,6 +5,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.interfaces.EndpointEnum;
 
 public class DigitalFactoryUtil {
 
@@ -24,6 +25,26 @@ public class DigitalFactoryUtil {
             ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
 
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(path, expectedType)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(expectedResponseCode);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * FIND digital factories page
+     *
+     * @param endpoint - Target endpoint
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> findDigitalFactoriesPage(EndpointEnum endpoint,
+                                                        Integer expectedResponseCode,
+                                                        Class<T> expectedType,
+                                                        String... inlineVariables) {
+
+        final RequestEntity requestEntity =  RequestEntityUtil_Old.init(endpoint, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
 

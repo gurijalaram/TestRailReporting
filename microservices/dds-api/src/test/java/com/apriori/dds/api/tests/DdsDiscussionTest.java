@@ -37,12 +37,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.Collections;
 
 @ExtendWith(TestRulesAPI.class)
-public class DiscussionTest extends TestUtil {
+public class DdsDiscussionTest extends TestUtil {
 
-    private static String userContext;
-    private static SoftAssertions softAssertions;
-    private static ResponseWrapper<DiscussionResponse> discussionResponse;
-    private static String discussionDescription = StringUtils.EMPTY;
+    private String userContext;
+    private SoftAssertions softAssertions;
+    private ResponseWrapper<DiscussionResponse> discussionResponse;
+    private String discussionDescription = StringUtils.EMPTY;
 
     @BeforeEach
     public void testSetup() {
@@ -102,6 +102,9 @@ public class DiscussionTest extends TestUtil {
     @TestRail(id = {12407})
     @Description("update a valid discussion")
     public void updateValidDiscussion() {
+        String usrContext = new AuthUserContextUtil().getAuthUserContext(UserUtil.getUser().getEmail());
+        ResponseWrapper<DiscussionResponse> createDiscussionResponse = DdsApiTestUtils.createDiscussion(discussionDescription, usrContext);
+
         DiscussionsRequest discussionsRequest = DiscussionsRequest.builder()
             .discussion(DiscussionsRequestParameters.builder()
                 .status("RESOLVED")
@@ -109,10 +112,10 @@ public class DiscussionTest extends TestUtil {
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION, DiscussionResponse.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"), discussionResponse.getResponseEntity().getIdentity())
+            .inlineVariables(PropertiesContext.get("customer_identity"), createDiscussionResponse.getResponseEntity().getIdentity())
             .headers(DdsApiTestUtils.setUpHeader())
             .body(discussionsRequest)
-            .apUserContext(userContext)
+            .apUserContext(usrContext)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<DiscussionResponse> discussionResponse = HTTPRequest.build(requestEntity).patch();

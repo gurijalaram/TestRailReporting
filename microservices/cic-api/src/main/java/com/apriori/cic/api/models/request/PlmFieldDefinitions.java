@@ -25,6 +25,15 @@ public class PlmFieldDefinitions {
     @JsonProperty("MaterialCost")
     @Builder.Default
     private Double materialCost = 0.0;
+    @JsonProperty("TargetCost")
+    @Builder.Default
+    private Integer targetCost = 0;
+    @JsonProperty("TargetMass")
+    @Builder.Default
+    private Integer targetMass = 0;
+    @JsonProperty("TotalCarbon")
+    @Builder.Default
+    private Integer totalCarbon = 0;
     @JsonProperty("CapitalInvestment")
     @Builder.Default
     private Double capitalInvestment = 0.0;
@@ -78,4 +87,13 @@ public class PlmFieldDefinitions {
     @Builder.Default
     @JsonProperty("VPE")
     private String digitalFactory = "";
+    @JsonProperty("APWScenarioLink")
+    @Builder.Default
+    private String PWScenarioLink = "";
+    @JsonProperty("MachiningMode")
+    @Builder.Default
+    private String machiningMode = "";
+    @JsonProperty("StrEmail2")
+    @Builder.Default
+    private String strEmail2 = "";
 }

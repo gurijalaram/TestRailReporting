@@ -162,11 +162,11 @@
   },
   "required": [
     "cicStatus",
-    "partId",
-    "partNumber",
-    "revisionNumber"
+    "partId"
   ],
   "optional": [
+    "partNumber",
+    "revisionNumber",
     "errorMessage",
     "cidPartNumber",
     "cidPartLink",

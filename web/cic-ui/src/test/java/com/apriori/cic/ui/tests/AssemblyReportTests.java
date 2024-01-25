@@ -5,9 +5,9 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import com.apriori.cic.api.enums.CICPartSelectionType;
 import com.apriori.cic.api.enums.CICReportType;
 import com.apriori.cic.api.enums.CostingInputFields;
-import com.apriori.cic.api.enums.EmailRecipientType;
 import com.apriori.cic.api.enums.MappingRule;
 import com.apriori.cic.api.enums.PlmPartDataType;
+import com.apriori.cic.api.enums.PlmTypeAttributes;
 import com.apriori.cic.api.enums.QueryDefinitionFields;
 import com.apriori.cic.api.enums.ReportsEnum;
 import com.apriori.cic.api.models.response.AgentWorkflowJobResults;
@@ -58,15 +58,18 @@ public class AssemblyReportTests extends CicGuiTestUtil {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_ASSEMBLY, 6);
         this.cicGuiLogin();
         AgentWorkflowReportTemplates reportTemplateNames = CicApiTestUtil.getAgentReportTemplates(CICReportType.EMAIL, this.ciConnectHome.getSession());
+        String reportIdentity = CicApiTestUtil.getAgentReportTemplate(reportTemplateNames, ReportsEnum.DTC_COMPONENT_SUMMARY).getValue();
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter(QueryDefinitionFields.STRING1.getQueryDefinitionField(), "EQ", "Auto Asm Test 1")
             .setQueryFilters("AND")
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")
             .addCostingInputRow(CostingInputFields.MATERIAL, MappingRule.MAPPED_FROM_PLM, "")
             .addCostingInputRow(CostingInputFields.SCENARIO_NAME, MappingRule.CONSTANT, scenarioName)
-            .setEmailTemplate(true, "dfmPartSummary", EmailRecipientType.CONSTANT, PropertiesContext.get("global.report_email_address"))
-            .setEmailReport(true, CicApiTestUtil.getAgentReportTemplate(reportTemplateNames, ReportsEnum.DTC_COMPONENT_SUMMARY).getValue())
-            .setPlmWriteReport(true, CicApiTestUtil.getAgentReportTemplate(reportTemplateNames, ReportsEnum.DTC_COMPONENT_SUMMARY).getValue())
+            .isNotificationsIncluded(true, true,  reportIdentity)
+            .addNotificationAttachReportRow(PlmTypeAttributes.PLM_CURRENCY_CODE)
+            .addNotificationAttachReportRow(PlmTypeAttributes.PLM_COST_ROUNDING)
+            .isPublishResultsWriteFieldsInclude(false)
+            .isPublishResultsAttachReportInclude(true, reportIdentity)
             .useLatestRevision(true)
             .build();
 

@@ -15,6 +15,9 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
     DIGITAL_FACTORIES_WITH_KEY_PARAM("digital-factories?key=%s"),
     DIGITAL_FACTORIES_BY_PATH("digital-factories/%s"),
     DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM("digital-factories/%s?key=%s"),
+    DIGITAL_FACTORIES_BY_NAME("digital-factories?name[%s]=%s"),
+    DIGITAL_FACTORIES_SORTED_BY_NAME("digital-factories?pageSize=1000&pageNumber=1&sortBy[%s]=name"),
+    DIGITAL_FACTORIES_WITH_PAGE_SIZE_AND_PAGE_NUMBER("digital-factories?pageSize=%s&pageNumber=%s"),
 
     // PROCESS GROUP
     PROCESS_GROUPS("process-groups"),
