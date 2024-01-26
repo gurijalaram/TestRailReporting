@@ -172,7 +172,7 @@ pipeline {
             }
         }
 
-        /*stage("Build") {
+        stage("Build") {
             steps {
                 echo "Building..."
                 script {
@@ -191,7 +191,7 @@ pipeline {
                      """
                 }
             }
-        }*/
+        }
 
         stage("Test") {
             steps {
