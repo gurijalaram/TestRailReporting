@@ -123,7 +123,7 @@ pipeline {
 
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
-                        javaOpts = javaOpts + ' \\\"-Dcustomer='+ params.CUSTOMER + '\\\"'
+                        javaOpts = javaOpts + ' \"-Dcustomer='+ params.CUSTOMER + '\"'
                     }
 
                     default_aws_region = params.REGION
@@ -172,7 +172,7 @@ pipeline {
             }
         }
 
-        stage("Build") {
+        /*stage("Build") {
             steps {
                 echo "Building..."
                 script {
@@ -191,7 +191,7 @@ pipeline {
                      """
                 }
             }
-        }
+        }*/
 
         stage("Test") {
             steps {
