@@ -5,17 +5,25 @@ import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.web.app.util.PageUtils;
 import com.apriori.web.app.util.login.UserProfilePage;
 
+import io.qameta.allure.Allure;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 @Slf4j
 public class CloudHomePage extends LoadableComponent<CloudHomePage> {
@@ -26,7 +34,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
 
-    @FindBy(xpath = "//div[@class='user-dropdown dropdown']//button[@class='transparent dropdown-toggle btn btn-secondary']")
+    @FindBy(xpath = "//button[@class='transparent dropdown-toggle btn btn-secondary']")
     private WebElement userElement;
 
     @FindBy(xpath = "//div[@class='deployment-connection-info']/h5[3]")
@@ -124,16 +132,35 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
         try {
             T responsePage  = clickWebApplicationByName(applicationName, webPageType);
         } catch (Exception e) {
-            final String errorText = String.format("Failed to load application with the name %s and class type %s \n " +
-                "Error message: %s", applicationName, webPageType, e);
 
-            log.info(errorText);
+            captureApplicationScreenshot(applicationName);
+            final String errorText = String.format("Failed to load application with the name %s and class type %s \n " +
+                "Error message: %s", applicationName, webPageType, e.getMessage());
+
+            log.info(errorText, e);
             loadApplicationsErrors.append(errorText)
                 .append("\n");
         }
 
         driver.close();
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
+    }
+
+    @SneakyThrows
+    private void captureApplicationScreenshot(String applicationName) {
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+        String filename = File.separator
+            + "target"
+            + File.separator
+            + "screenshots"
+            + File.separator
+            + "screenshot-application-"
+            + applicationName + "-"
+            + this.getClass().getName() + "-" + "chrome" + 1 + ".png";
+        String filePath = new File(filename).getCanonicalPath();
+        FileUtils.copyFile(screenshot, new File(filename));
+        Allure.addAttachment(filename, FileUtils.openInputStream(screenshot));
     }
 
     /**
@@ -185,5 +212,13 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
      */
     public String getLoadApplicationsErrors() {
         return loadApplicationsErrors.toString();
+    }
+
+    public boolean isSwitchDeploymentButtonExist() {
+        this.clickUserPanel();
+        final boolean isSwitchButtonExist = pageUtils.isElementDisplayed(switchDeploymentButton);
+        this.clickUserPanel();
+
+        return isSwitchButtonExist;
     }
 }

@@ -61,10 +61,8 @@ public abstract class SDSTestUtil extends TestUtil {
 
     protected static String appApplicationContext;
     protected static Set<ScenarioItem> scenariosToDelete = new HashSet<>();
-    private static ScenarioItem testingComponent;
-
     protected static RequestEntityUtil requestEntityUtil;
-
+    private static ScenarioItem testingComponent;
 
     @BeforeAll
     public static void init() {
@@ -121,10 +119,11 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return object
      */
     protected static ScenarioItem postTestingComponentAndAddToRemoveList() {
-        final String componentName = "AGC0-LP-700144754.prt.1";
+        final String extension = ".prt.1";
+        final String componentName = "AGC0-LP-700144754" + extension;
         final ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
 
-        return postPart(componentName, processGroup);
+        return postPart(componentName, extension, processGroup);
     }
 
     /**
@@ -162,17 +161,17 @@ public abstract class SDSTestUtil extends TestUtil {
      * @param componentName - the part name
      * @return responsewrapper
      */
-    protected static ScenarioItem postPart(String componentName, ProcessGroupEnum processGroup) {
+    protected static ScenarioItem postPart(String componentName, String extension, ProcessGroupEnum processGroup) {
         final String uniqueScenarioName = new GenerateStringUtil().generateScenarioName();
         final File fileToUpload = FileResourceUtil.getS3FileAndSaveWithUniqueName(componentName,
             processGroup
         );
 
         ComponentInfoBuilder componentInfo = ComponentInfoBuilder.builder()
-            .resourceFiles(
-                Collections.singletonList(fileToUpload)
-            )
+            .resourceFile(fileToUpload)
+            .extension(extension)
             .scenarioName(uniqueScenarioName)
+            .processGroup(processGroup)
             .user(testingUser)
             .build();
 

@@ -32,7 +32,7 @@ public class SustainabilityTests extends TestBaseUI {
     @TestRail(id = {24103, 24100, 24360})
     @Description("Verify if Sustainability tab is presented on Evaluate page, and Material Carbon, Energy Carbon properties are visible")
     public void sustainabilityPropertiesTest() {
-        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent("PowderMetalShaft");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())

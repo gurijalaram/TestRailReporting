@@ -6,6 +6,7 @@ import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
+import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
@@ -35,11 +36,13 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GroupPublishTests extends TestBaseUI {
 
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final CssComponent cssComponent = new CssComponent();
+    private final ComponentsUtil componentsUtil = new ComponentsUtil();
     private final AssemblyUtils assemblyUtils = new AssemblyUtils();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private UserCredentials currentUser;
@@ -71,7 +74,7 @@ public class GroupPublishTests extends TestBaseUI {
             .close(ExplorePage.class);
 
         Arrays.asList(componentA, componentB).forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+            softAssertions.assertThat(cssComponent.getComponentParts(componentA.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh()
@@ -79,6 +82,39 @@ public class GroupPublishTests extends TestBaseUI {
 
         softAssertions.assertThat(explorePage.getListOfScenarios(componentA.getComponentName(), componentA.getScenarioName())).isEqualTo(1);
         softAssertions.assertThat(explorePage.getListOfScenarios(componentB.getComponentName(), componentB.getScenarioName())).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {16110})
+    @Description("Publish maximum of 10 components")
+    public void testMaxGroupPublishPartScenarios() {
+        List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(10);
+        List<String> multiSelectString = components.stream().map(component -> component.getComponentName() + ", " + component.getScenarioName()).collect(Collectors.toList());
+
+        componentsUtil.postCadUploadComponentSuccess(components);
+
+        loginPage = new CidAppLoginPage(driver);
+
+        explorePage = loginPage.login(components.get(0).getUser())
+            .multiSelectScenarios(multiSelectString.toArray(new String[components.size()]))
+            .publishScenario(PublishPage.class)
+            .override()
+            .clickContinue(PublishPage.class)
+            .publish(PublishPage.class)
+            .close(ExplorePage.class);
+
+        components.forEach(component ->
+            softAssertions.assertThat(cssComponent.getComponentParts(component.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
+
+        explorePage.refresh()
+            .selectFilter("Public");
+
+        components.forEach(component ->
+            softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()))
+                .as("Verify newly published components are visible in Public filter").isEqualTo(1));
 
         softAssertions.assertAll();
     }
@@ -219,7 +255,7 @@ public class GroupPublishTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
 
-        publishPage = loginPage.login(currentUser)
+        publishPage = loginPage.login(componentA.getUser())
             .uploadComponent(componentA)
             .uploadComponent(componentB)
             .refresh()
@@ -232,13 +268,13 @@ public class GroupPublishTests extends TestBaseUI {
 
         publishPage.selectStatus("Analysis")
             .selectCostMaturity("Low")
-            .selectAssignee(currentUser)
+            .selectAssignee(componentA.getUser())
             .publish(PublishPage.class);
 
         explorePage = publishPage.close(ExplorePage.class);
 
         Arrays.asList(componentA, componentB).forEach(component ->
-            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+            softAssertions.assertThat(cssComponent.getComponentParts(componentA.getUser(), COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         assignPage = explorePage.refresh()

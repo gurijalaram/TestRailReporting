@@ -93,7 +93,7 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6375, 6379, 6384, 6386, 6388, 6390})
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(component.getUser())
@@ -171,7 +171,7 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6377})
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         tolerancesPage = loginPage.login(component.getUser())
@@ -198,7 +198,7 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6385, 6393, 6394, 8333, 6469})
     @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
     public void sandCastingDTCIssues() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("SandCastIssues", ProcessGroupEnum.CASTING_SAND);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -237,7 +237,7 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6488})
     @Description("Failures/warnings tab - Verify costing failures are highlighted within the Design Guidance details tile Warnings tab with useful error message")
     public void errorMessagesInDesignGuidanceTab() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(component.getUser())
@@ -266,7 +266,7 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6387})
     @Description("MAX. thickness checks for Die casting-Al. 38.1mm MAX. for high pressure, 50.5mm MAX. for gravity die casting")
     public void maxThicknessForDieCasting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.PLASTIC_MOLDING);
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(component.getUser())

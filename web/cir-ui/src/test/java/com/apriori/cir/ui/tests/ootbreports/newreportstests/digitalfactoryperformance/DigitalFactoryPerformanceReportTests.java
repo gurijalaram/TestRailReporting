@@ -32,8 +32,8 @@ public class DigitalFactoryPerformanceReportTests extends JasperApiAuthenticatio
     }
 
     @Test
-    @TmsLink("13915")
-    @TestRail(id = 13915)
+    @TmsLink("28476")
+    @TestRail(id = 28476)
     @Description("Input Controls - Currency Code - Main Report")
     public void testCurrencyCode() {
         String gbpCurrency = CurrencyEnum.GBP.getCurrency();

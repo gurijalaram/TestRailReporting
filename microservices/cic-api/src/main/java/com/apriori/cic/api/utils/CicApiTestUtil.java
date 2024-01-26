@@ -316,7 +316,7 @@ public class CicApiTestUtil {
     @SneakyThrows
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
-        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
+        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
         while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
@@ -340,7 +340,7 @@ public class CicApiTestUtil {
     @SneakyThrows
     public static Boolean trackWorkflowJobStatus(String workflowID, String jobID, CicLoginUtil cicLoginUtil) {
         LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
-        List<String> jobStatusList = Arrays.asList(new String[]{"Finished", "Failed", "Errored", "Cancelled"});
+        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Failed", "Errored", "Cancelled"});
         String finalJobStatus;
         finalJobStatus = getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
         while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
@@ -731,6 +731,24 @@ public class CicApiTestUtil {
             .filter(a -> a.getPartNumber().equals(plmPartNumber))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with Plm Part Number " + plmPartNumber));
+    }
+
+    /**
+     * Get Matched part result using plm part id
+     *
+     * @param agentWorkflowJobResults - agentWorkflowJobResults
+     * @param plmPartID               - Plm Part ID
+     * @return AgentWorkflowJobPartsResult
+     */
+    public static AgentWorkflowJobPartsResult getMatchedPlmPartResultByPartId(AgentWorkflowJobResults
+                                                                                  agentWorkflowJobResults, String plmPartID) {
+        if (Objects.isNull(agentWorkflowJobResults)) {
+            throw new RuntimeException(String.format("Could not find matching workflow with plm part ID (%s)", plmPartID));
+        }
+        return agentWorkflowJobResults.stream()
+            .filter(a -> a.getPartId().equals(plmPartID))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with Plm Part ID " + plmPartID));
     }
 
     public static AgentPort getAgentPortData() {

@@ -15,9 +15,11 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Percentage;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class GroupCostingTests extends TestBaseUI {
@@ -27,9 +29,13 @@ public class GroupCostingTests extends TestBaseUI {
     private EvaluatePage evaluatePage;
     private ComponentsTreePage componentsTreePage;
     private ComponentBasicPage componentBasicPage;
+    private ComponentInfoBuilder componentAssembly;
 
-    public GroupCostingTests() {
-        super();
+    @AfterEach
+    public void deleteScenarios() {
+        if (componentAssembly != null) {
+            new AssemblyUtils().deleteAssemblyAndComponents(componentAssembly);
+        }
     }
 
     @Test
@@ -39,7 +45,7 @@ public class GroupCostingTests extends TestBaseUI {
 
         String blob = "500mmBlob";
 
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("RandomShapeAsm");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("RandomShapeAsm");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -50,11 +56,10 @@ public class GroupCostingTests extends TestBaseUI {
 
         componentsTreePage = evaluatePage.openComponents();
 
-
         softAssertions.assertThat(componentsTreePage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
-        componentAssembly.getSubComponents().stream().filter(o -> !o.getComponentName().equalsIgnoreCase(blob)).collect(Collectors.toList())
-            .forEach(subComponent -> componentsTreePage.multiSelectSubcomponents(subComponent.getComponentName(), subComponent.getScenarioName()));
+        List<ComponentInfoBuilder> subs = componentAssembly.getSubComponents().stream().filter(o -> !o.getComponentName().equalsIgnoreCase(blob)).collect(Collectors.toList());
+        subs.forEach(subComponent -> componentsTreePage.multiSelectSubcomponents(subComponent.getComponentName() + "," + subComponent.getScenarioName()));
 
         softAssertions.assertThat(componentsTreePage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
 
@@ -88,7 +93,7 @@ public class GroupCostingTests extends TestBaseUI {
         fullyBurdenedCosts.put(smallRing, 3.97);
         fullyBurdenedCosts.put(pin, 3.31);
 
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
+        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);

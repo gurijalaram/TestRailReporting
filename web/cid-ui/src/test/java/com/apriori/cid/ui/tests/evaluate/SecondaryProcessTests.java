@@ -234,7 +234,7 @@ public class SecondaryProcessTests extends TestBaseUI {
     @Test
     @Description("Test secondary process Stress Relief")
     public void secondaryProcessStressRelief() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("Casting", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -260,7 +260,7 @@ public class SecondaryProcessTests extends TestBaseUI {
     @Test
     @Description("Test secondary process Anodize")
     public void secondaryProcessAnodize() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("Casting", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())

@@ -60,6 +60,9 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")
             .addCostingInputRow(CostingInputFields.DIGITAL_FACTORY, MappingRule.MAPPED_FROM_PLM, "")
             .addCostingInputRow(CostingInputFields.MATERIAL, MappingRule.MAPPED_FROM_PLM, "")
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
             .build();
         this.workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartsDataBuilder(PlmPartDataType.PLM_MAPPED);
 
@@ -83,6 +86,9 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
             .addCostingInputRow(CostingInputFields.CUSTOM_NUMBER, MappingRule.CONSTANT, "222")
             .addCostingInputRow(CostingInputFields.CUSTOM_STRING, MappingRule.CONSTANT, "testValue1")
             .addCostingInputRow(CostingInputFields.CUSTOM_DATE, MappingRule.CONSTANT, DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ))
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
             .build();
         PartData plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_VALID_UDA);
         PlmSearchPart plmSearchPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
@@ -127,6 +133,9 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
             .addCostingInputRow(CostingInputFields.CUSTOM_NUMBER, MappingRule.CONSTANT, "222")
             .addCostingInputRow(CostingInputFields.CUSTOM_STRING, MappingRule.CONSTANT, "testValue1")
             .addCostingInputRow(CostingInputFields.CUSTOM_DATE, MappingRule.CONSTANT, DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ))
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
             .build();
         PartData plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_VALID_UDA);
         PlmSearchPart plmSearchPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
@@ -170,6 +179,9 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
             .addCostingInputRow(CostingInputFields.CUSTOM_NUMBER, MappingRule.MAPPED_FROM_PLM, "")
             .addCostingInputRow(CostingInputFields.CUSTOM_STRING, MappingRule.MAPPED_FROM_PLM, "")
             .addCostingInputRow(CostingInputFields.CUSTOM_DATE, MappingRule.MAPPED_FROM_PLM, "")
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
             .build();
         PartData plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_VALID_UDA);
         PlmSearchPart plmSearchPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
@@ -215,6 +227,9 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
             .addCostingInputRow(CostingInputFields.CUSTOM_NUMBER, MappingRule.CONSTANT, "222")
             .addCostingInputRow(CostingInputFields.CUSTOM_STRING, MappingRule.CONSTANT, "test rpl value1")
             .addCostingInputRow(CostingInputFields.CUSTOM_DATE, MappingRule.CONSTANT, DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ))
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
             .build();
         PartData plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_VALID_UDA);
         PlmSearchPart plmSearchPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
@@ -262,6 +277,9 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
             .addCostingInputRow(CostingInputFields.ANNUAL_VOLUME, MappingRule.CONSTANT, "3100")
             .addCostingInputRow(CostingInputFields.BATCH_SIZE, MappingRule.CONSTANT, "2100")
             .addCostingInputRow(CostingInputFields.PRODUCTION_LIFE, MappingRule.CONSTANT, "1")
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
             .build();
 
         PartData plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_VALID_UDA);
@@ -298,6 +316,9 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
     public void testWorkflowRunPartsOverrideMultiSelectUDA() {
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
             .addCostingInputRow(CostingInputFields.CUSTOM_MULTI, MappingRule.CONSTANT, "[\"Value 1\"]")
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
             .build();
         PartData plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_VALID_UDA);
         PlmSearchPart plmSearchPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
@@ -336,6 +357,9 @@ public class CicAgentRunUdaPartsTest extends WorkflowTestUtil {
     public void testWorkflowRunPartsWithNonSearchUda() {
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
             .addCostingInputRow(CostingInputFields.CUSTOM_STRING, MappingRule.CONSTANT, "testValue1")
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
             .build();
         PartData plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_VALID_UDA);
         PlmSearchPart plmSearchPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());

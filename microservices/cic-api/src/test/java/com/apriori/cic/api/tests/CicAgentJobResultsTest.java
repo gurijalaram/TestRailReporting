@@ -34,7 +34,12 @@ public class CicAgentJobResultsTest extends WorkflowTestUtil {
     public void testSetup() {
         softAssertions = new SoftAssertions();
         plmPartData = new PlmPartsUtil().getPlmPartData();
-        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST).emptyCostingInputRow().build();
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .emptyCostingInputRow()
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
+            .build();
         workflowPartsRequestDataBuilder = CicApiTestUtil.getWorkflowPartDataBuilder(1);
         currentUser = UserUtil.getUser();
     }

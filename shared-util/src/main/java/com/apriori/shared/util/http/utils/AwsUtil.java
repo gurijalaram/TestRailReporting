@@ -1,5 +1,8 @@
 package com.apriori.shared.util.http.utils;
 
+import com.apriori.shared.util.properties.PropertiesContext;
+
+import org.apache.commons.lang3.StringUtils;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -22,7 +25,8 @@ public class AwsUtil {
         return SsmClient.builder()
             .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
                 ? EnvironmentVariableCredentialsProvider.create()
-                : ProfileCredentialsProvider.create())
+                : getProfileCredentialsProvider()
+            )
             .region(S3_REGION_NAME)
             .build();
     }
@@ -35,11 +39,30 @@ public class AwsUtil {
      */
     protected static S3Client getS3ClientInstance() {
         return S3Client.builder()
-            .region(S3_REGION_NAME)
             .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
                 ? EnvironmentVariableCredentialsProvider.create()
-                : ProfileCredentialsProvider.create()
+                : getProfileCredentialsProvider()
             )
+            .region(S3_REGION_NAME)
             .build();
+    }
+
+    /**
+     * Get aws staging profile, if environment is staging and it is not local run
+     *  else
+     * get default aws profile
+     * @return
+     */
+    private static ProfileCredentialsProvider getProfileCredentialsProvider() {
+        if (PropertiesContext.get("env").equals("staging") && !isLocalRun()) {
+            return ProfileCredentialsProvider.create("staging");
+        }
+
+        return ProfileCredentialsProvider.create();
+    }
+
+    private static boolean isLocalRun() {
+        final String mode = System.getProperty("mode");
+        return mode == null || StringUtils.isEmpty(mode) || mode.equalsIgnoreCase("QA_LOCAL");
     }
 }

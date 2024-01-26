@@ -1218,12 +1218,12 @@ public class CdsTestUtil extends TestUtil {
      * @param inlineVariables
      * @return object ResponseWrapper
      */
-    public Roles getRoles(String... inlineVariables) {
+    public Roles getRoles(QueryParams queryParams, String... inlineVariables) {
 
         final RequestEntity requestEntity = RequestEntityUtil_Old
             .init(CDSAPIEnum.ROLES, Roles.class)
             .inlineVariables(inlineVariables)
-            .queryParams(new QueryParams().use("pageSize", "20"))
+            .queryParams(queryParams)
             .expectedResponseCode(HttpStatus.SC_OK);
         return (Roles) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }

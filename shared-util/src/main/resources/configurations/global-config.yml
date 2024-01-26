@@ -50,7 +50,7 @@ default:
   customer_aws_account_type: dev
 ###########################
 #  Core services
-  core_service_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
+  core_service_url_template: ${default.aws_region}.${env}.apriori.net/
 
   cloud:
     ui_url: https://cloud.${core_service_url_template}
@@ -161,7 +161,6 @@ default:
 
   dfs:
     api_url: https://dfs.${deployment_url_template}
-    authorization_key: DogCatMonkey
 
   gcd:
     api_url: https://gcd.${deployment_url_template}

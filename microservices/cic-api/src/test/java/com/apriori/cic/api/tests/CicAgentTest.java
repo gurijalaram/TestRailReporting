@@ -77,6 +77,9 @@ public class CicAgentTest extends WorkflowTestUtil {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
             .build();
 
         this.cicLogin()

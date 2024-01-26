@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "CommentsResponseSchema.json")
+@Schema(location = "DdsCommentsResponseSchema.json")
 public class CommentsResponse extends Pagination {
     public ArrayList<CommentResponse> items;
 }
