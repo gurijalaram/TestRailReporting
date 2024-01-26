@@ -100,7 +100,7 @@ public class BcmUtil extends TestUtil {
         final RequestEntity requestEntity =
             requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, ErrorResponse.class)
                 .body(body)
-                .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
+                .expectedResponseCode(HttpStatus.SC_CONFLICT);
         return HTTPRequest.build(requestEntity).post();
     }
 

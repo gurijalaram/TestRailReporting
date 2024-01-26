@@ -21,6 +21,7 @@ import com.apriori.cds.api.models.request.PostBatch;
 import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.AccessAuthorization;
 import com.apriori.cds.api.models.response.AccessControlResponse;
+import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.models.response.AssociationUserItems;
 import com.apriori.cds.api.models.response.AttributeMappings;
 import com.apriori.cds.api.models.response.CredentialsItems;
@@ -36,16 +37,20 @@ import com.apriori.cds.api.models.response.SubLicenseAssociationUser;
 import com.apriori.cds.api.models.response.UserPreference;
 import com.apriori.cds.api.models.response.UserRole;
 import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
+import com.apriori.shared.util.models.response.Application;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Customers;
 import com.apriori.shared.util.models.response.Deployment;
@@ -55,20 +60,42 @@ import com.apriori.shared.util.models.response.LicensedApplications;
 import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
+import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CdsTestUtil extends TestUtil {
+
+    protected static RequestEntityUtil requestEntityUtil;
+    protected static UserCredentials testingUser = UserUtil.getUser("admin");
+
+    @BeforeAll
+    public static  void init() {
+        requestEntityUtil = RequestEntityUtilBuilder
+            .useRandomUser("admin")
+            .useApUserContextInRequests();
+
+        testingUser = requestEntityUtil.getEmbeddedUser();
+    }
 
     /**
      * POST call to add a customer
@@ -1202,6 +1229,34 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
+     * GET user by email
+     * @param email  email of the user
+     * @return response object
+     */
+    public ResponseWrapper<Users> getUserByEmail(String email) {
+
+        final RequestEntity requestEntity =
+            requestEntityUtil.init(CDSAPIEnum.USERS, Users.class)
+                .queryParams(new QueryParams().use("email[EQ]", email))
+                .expectedResponseCode(HttpStatus.SC_OK);
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * GET enablement
+     * @return response object
+     */
+    public ResponseWrapper<Enablements> getEnablement(User user) {
+
+        final RequestEntity requestEntity =
+            requestEntityUtil.init(CDSAPIEnum.USER_ENABLEMENTS, Enablements.class)
+                .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
+                .expectedResponseCode(HttpStatus.SC_OK);
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+
+    /**
      * Creates or updates user enablements
      *
      * @param customerIdentity - customer identity
@@ -1234,5 +1289,36 @@ public class CdsTestUtil extends TestUtil {
             .expectedResponseCode(SC_CREATED);
 
         return HTTPRequest.build(requestEntity).put();
+    }
+
+    /**
+     * this method returns the list of the application which user is entitled for
+     */
+    public MultiValuedMap<String,Object> getUserApplications(User user) {
+        RequestEntity requestEntity =
+            requestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
+                .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
+                .expectedResponseCode(HttpStatus.SC_OK);
+        ResponseWrapper<AccessControls> accessControl = HTTPRequest.build(requestEntity).get();
+        List<AccessControlResponse> accessControlItems = accessControl.getResponseEntity().getItems();
+
+        MultiValuedMap<String, Object> result = new ArrayListValuedHashMap<>();
+        for (AccessControlResponse item : accessControlItems) {
+            RequestEntity requestEntityApp =
+                requestEntityUtil.init(CDSAPIEnum.APPLICATION_BY_ID, Application.class)
+                    .inlineVariables(item.getApplicationIdentity())
+                    .expectedResponseCode(HttpStatus.SC_OK);
+            ResponseWrapper<Application> application =
+                HTTPRequest.build(requestEntityApp).get();
+
+            RequestEntity requestEntityDep =
+                requestEntityUtil.init(CDSAPIEnum.DEPLOYMENT_BY_CUSTOMER_DEPLOYMENT_IDS, Deployment.class)
+                    .inlineVariables(user.getCustomerIdentity(), item.getDeploymentIdentity())
+                    .expectedResponseCode(HttpStatus.SC_OK);
+            ResponseWrapper<Deployment> deployment =
+                HTTPRequest.build(requestEntityDep).get();
+            result.put(application.getResponseEntity().getName(), deployment.getResponseEntity().getName());
+        }
+        return result;
     }
 }
