@@ -123,7 +123,7 @@ pipeline {
 
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
-                        javaOpts = javaOpts + " \\\"-Dcustomer=${params.CUSTOMER}\\\""
+                        javaOpts = javaOpts + " -Dcustomer='" + params.CUSTOMER} + "'"
                     }
 
                     default_aws_region = params.REGION
@@ -166,8 +166,7 @@ pipeline {
                         javaOpts = javaOpts + " " + addlJavaOpts
                     }
 
-                    javaOpts = "\'" + javaOpts + "\'"
-
+                    javaOpts = "\"" + javaOpts + "\""
                     echo "${javaOpts}"
                 }
             }
@@ -197,8 +196,6 @@ pipeline {
         stage("Test") {
             steps {
                 echo "Testing..."
-                echo "${javaOpts}"
-
                 withCredentials([
                     file(credentialsId: 'AWS_CONFIG_FILE', variable: 'AWS_CONFIG_SECRET_TXT'),
                     file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
@@ -214,7 +211,7 @@ pipeline {
                             --secret id=aws_creds,src=${AWS_CREDENTIALS_SECRET_TXT} \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
-                            --build-arg JAVAOPTS="${javaOpts}" \
+                            --build-arg JAVAOPTS=${javaOpts} \
                             --build-arg TESTS=${testSuite} \
                             .
                     """
