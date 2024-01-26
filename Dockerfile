@@ -25,4 +25,4 @@ RUN echo "**************************************  " + $JAVAOPTS
 
 RUN --mount=type=secret,id=aws_config,target=/root/.aws/config \
     --mount=type=secret,id=aws_creds,target=/root/.aws/credentials \
-    gradle --build-cache --info $JAVAOPTS :$FOLDER:$MODULE:test --tests $TESTS
+    "gradle --build-cache --info $JAVAOPTS :$FOLDER:$MODULE:test --tests $TESTS"
