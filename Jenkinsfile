@@ -166,7 +166,6 @@ pipeline {
                         javaOpts = javaOpts + " " + addlJavaOpts
                     }
 
-                    javaOpts = "\"" + javaOpts + "\""
                     echo "${javaOpts}"
                 }
             }
