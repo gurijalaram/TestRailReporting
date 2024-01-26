@@ -9,6 +9,7 @@ import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
 import com.apriori.shared.util.enums.ExportSetEnum;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -119,6 +120,29 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             false,
             partNames,
             "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TmsLink("10013")
+    @TestRail(id = {10013})
+    @Description("Verify currency code functionality works correctly - Plastic DTC Details Report")
+    public void testCurrencyCodeFunctionality() {
+        jasperApiUtils.genericDtcCurrencyTest(
+            JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName(),
+            false,
+            true
+        );
+    }
+
+    @Test
+    @TmsLink("29683")
+    @TestRail(id = {29683})
+    @Description("Test process group input control works correctly - Plastic DTC Details Report")
+    public void testProcessGroupFunctionality() {
+        jasperApiUtils.genericProcessGroupDtcDetailsTest(
+            partNames,
+            "Process Group", ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()
         );
     }
 }
