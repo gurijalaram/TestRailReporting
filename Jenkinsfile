@@ -171,7 +171,7 @@ pipeline {
             }
         }
 
-        /* stage("Build") {
+        stage("Build") {
             steps {
                 echo "Building..."
                 script {
@@ -236,7 +236,7 @@ pipeline {
                         reportName           : "${buildInfo.name} Test Report"
                 ])
             }
-        } */
+        }
     }
 
     post {
