@@ -40,7 +40,7 @@ def registry_password(profile = '', region = '') {
 
 pipeline {
     agent {
-        label "automation"
+        label "WALQSDOCKER01"
     }
 
     stages {
