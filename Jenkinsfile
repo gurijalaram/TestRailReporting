@@ -244,7 +244,7 @@ pipeline {
             echo "Cleaning up.."
 
             //sh "docker system prune --filter \"label=qa-automation\" --force"
-            sh "docker system prune --filter --force"
+            sh "docker system prune --force"
             cleanWs()
 
             script {
