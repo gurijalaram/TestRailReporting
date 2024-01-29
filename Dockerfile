@@ -16,7 +16,7 @@ RUN gradle --build-cache clean :$FOLDER:$MODULE:build -x test
 # Build & Test.
 FROM build as test
 
-ARG CUSTOMER_NAME="Hjhkjhkj kjhkjh 76768yu"
+ARG CUSTOMER_NAME=" '-Dcustomer=Hjhkjhkj kjhkjh 76768yu'"
 #ARG JAVAOPTS=' -Dmode=GRID -Denv=qa-test -DROOT_LOG_LEVEL=DEBUG -Dglobal_use_default_user=true -Dglobal_default_user_name=qa-automation-01@apriori.com -Dglobal_default_password=TrumpetSnakeFridgeToasty18!% "-Dcustomer=HGHG hg HG765HG" -Ddeployment=production'
 #ARG JAVAOPTS=' -Dmode=GRID -Denv=qa-test -DROOT_LOG_LEVEL=DEBUG -Dglobal_use_default_user=true -Dglobal_default_user_name=qa-automation-01@apriori.com -Dglobal_default_password=TrumpetSnakeFridgeToasty18!% \"-Dcustomer=HGHG hg HG765HG\" -Ddeployment=production'
 #ARG JAVAOPTS=" -Dmode=GRID -Denv=qa-test -DROOT_LOG_LEVEL=DEBUG -Dglobal_use_default_user=true -Dglobal_default_user_name=qa-automation-01@apriori.com -Dglobal_default_password=TrumpetSnakeFridgeToasty18!% '-Dcustomer=HGHG hg HG765HG' -Ddeployment=production"
@@ -28,6 +28,7 @@ ARG FOLDER
 ARG MODULE
 ARG TESTS
 
+
 RUN --mount=type=secret,id=aws_config,target=/root/.aws/config \
     --mount=type=secret,id=aws_creds,target=/root/.aws/credentials \
-    gradle --build-cache --info $JAVAOPTS  "'-Dcustomer=" + $CUSTOMER_NAME + "'" :$FOLDER:$MODULE:test --tests $TESTS
+    gradle --build-cache --info $JAVAOPTS $CUSTOMER_NAME   :$FOLDER:$MODULE:test --tests $TESTS
