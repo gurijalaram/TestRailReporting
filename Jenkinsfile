@@ -171,7 +171,7 @@ pipeline {
             }
         }
 
-        stage("Build") {
+        /* stage("Build") {
             steps {
                 echo "Building..."
                 script {
@@ -236,14 +236,15 @@ pipeline {
                         reportName           : "${buildInfo.name} Test Report"
                 ])
             }
-        }
+        }*/
     }
 
     post {
         always {
             echo "Cleaning up.."
 
-            sh "docker system prune --filter \"label=qa-automation\" --force"
+            //sh "docker system prune --filter \"label=qa-automation\" --force"
+            sh "docker system prune --filter --force"
             cleanWs()
 
             script {
