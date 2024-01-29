@@ -200,7 +200,7 @@ pipeline {
                     file(credentialsId: 'AWS_CREDENTIALS_FILE', variable: 'AWS_CREDENTIALS_SECRET_TXT')]) {
 
                     sh """
-                        docker build \
+                        docker build -t \
                             --target test \
                             --progress=plain \
                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
