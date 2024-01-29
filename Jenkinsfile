@@ -236,8 +236,8 @@ pipeline {
                         reportName           : "${buildInfo.name} Test Report"
                 ])
             }
-        }
-    } */
+        } */
+    }
 
     post {
         always {
