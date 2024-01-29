@@ -171,7 +171,7 @@ pipeline {
             }
         }
 
-        stage("Build") {
+        /* stage("Build") {
             steps {
                 echo "Building..."
                 script {
@@ -237,7 +237,7 @@ pipeline {
                 ])
             }
         }
-    }
+    } */
 
     post {
         always {
