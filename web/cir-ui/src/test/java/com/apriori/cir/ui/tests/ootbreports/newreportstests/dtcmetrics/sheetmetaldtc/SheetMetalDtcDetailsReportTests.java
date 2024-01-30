@@ -43,6 +43,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricPpc() {
         jasperApiUtils.genericDtcDetailsTest(
+            true,
             mostCommonPartNames,
             "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
@@ -54,6 +55,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricFbc() {
         jasperApiUtils.genericDtcDetailsTest(
+            true,
             mostCommonPartNames,
             "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
@@ -65,6 +67,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
+            true,
             mostCommonPartNames,
             "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
@@ -76,6 +79,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(
+            true,
             mostCommonPartNames,
             "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
@@ -232,11 +236,12 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreLow() {
         List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_0903238.getPartName(),
-            JasperCirApiPartsEnum.P_1100149.getPartName(),
-            JasperCirApiPartsEnum.P_1684443_OUTRIGGER_CAM.getPartName()
+            JasperCirApiPartsEnum.P_0903238.getPartName().substring(0, 7),
+            JasperCirApiPartsEnum.P_1100149.getPartName().substring(0, 7),
+            JasperCirApiPartsEnum.P_1684443_OUTRIGGER_CAM.getPartName().substring(0, 21)
         );
         jasperApiUtils.genericDtcDetailsTest(
+            true,
             partNames,
             "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
         );
@@ -248,11 +253,12 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreMedium() {
         List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.P_3574715.getPartName(),
-            JasperCirApiPartsEnum.P_3574688.getPartName(),
-            JasperCirApiPartsEnum.P_1684402_TOP_BRACKET.getPartName()
+            JasperCirApiPartsEnum.P_3574715.getPartName().substring(0, 7),
+            JasperCirApiPartsEnum.P_3574688.getPartName().substring(0, 7),
+            JasperCirApiPartsEnum.P_2980123_CLAMP.getPartName().substring(0, 13)
         );
         jasperApiUtils.genericDtcDetailsTest(
+            true,
             partNames,
             "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
@@ -264,8 +270,17 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreHigh() {
         jasperApiUtils.genericDtcDetailsTest(
+            true,
             mostCommonPartNames,
             "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
         );
+    }
+
+    @Test
+    @TmsLink("2320")
+    @TestRail(id = 2320)
+    @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Details Report")
+    public void testMinimumAnnualSpend() {
+        jasperApiUtils.genericMinAnnualSpendDtcDetailsTest(true);
     }
 }
