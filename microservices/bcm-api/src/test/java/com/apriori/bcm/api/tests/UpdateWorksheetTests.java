@@ -4,13 +4,16 @@ import com.apriori.bcm.api.models.response.ErrorResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+@ExtendWith(TestRulesAPI.class)
 public class UpdateWorksheetTests extends BcmUtil {
     private static SoftAssertions softAssertions = new SoftAssertions();
 
