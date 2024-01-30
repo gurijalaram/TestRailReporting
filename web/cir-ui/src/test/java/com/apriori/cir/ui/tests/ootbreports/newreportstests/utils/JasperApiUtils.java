@@ -554,8 +554,12 @@ public class JasperApiUtils {
         String minimumAnnualSpendValue = "7820000";
         JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
 
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().size()).isEqualTo(expectedBubbleNumber);
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(0).getAnnualSpend()).isNotEqualTo(minimumAnnualSpendValue);
+        if (expectedBubbleNumber == 0) {
+            softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString()).contains("No data available");
+        } else {
+            softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().size()).isEqualTo(expectedBubbleNumber);
+            softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(0).getAnnualSpend()).isNotEqualTo(minimumAnnualSpendValue);
+        }
 
         softAssertions.assertAll();
     }
@@ -563,13 +567,16 @@ public class JasperApiUtils {
     /**
      * Generic test for minimum annual spend input control on a dtc details report
      */
-    public void genericMinAnnualSpendDtcDetailsTest(boolean isSheetMetalDtcReport) {
+    public void genericMinAnnualSpendDtcDetailsTest(boolean isNoDataAvailableExpected) {
         String minimumAnnualSpendValue = "7820000";
         JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
 
-        if (isSheetMetalDtcReport) {
-            String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(11).text();
-            softAssertions.assertThat(minAnnualSpendValue).isEqualTo("8,264,352.15");
+        if (!isNoDataAvailableExpected) {
+            String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(15).text();
+            //String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(11).text();
+            //softAssertions.assertThat(minAnnualSpendValue).isEqualTo("8,264,352.15");
+            softAssertions.assertThat(minAnnualSpendValue).isEqualTo("34,661,340.98");
+            // expected above is only for sheet metal dtc and details reports (not comparison)
             softAssertions.assertThat(minAnnualSpendValue).isNotEqualTo(minimumAnnualSpendValue);
         } else {
             softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString()).contains("No data available");

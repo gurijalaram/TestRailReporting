@@ -184,9 +184,9 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TmsLink("2323")
-    @TestRail(id = 2323)
-    @Description("Verify minimum annual spend input control correctly filters list of available parts")
+    @TmsLink("29704")
+    @TestRail(id = 29704)
+    @Description("Verify Minimum Annual Spend input control functions correctly - Sheet Metal DTC Report")
     public void testMinimumAnnualSpend() {
         jasperApiUtils.genericMinAnnualSpendDtcTest(
             3

@@ -89,4 +89,14 @@ public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUt
             true
         );
     }
+
+    @Test
+    @TmsLink("29701")
+    @TestRail(id = 29701)
+    @Description("Verify Minimum Annual Spend input control functions correctly - Machining DTC Comparison Report")
+    public void testMinimumAnnualSpend() {
+        jasperApiUtils.genericMinAnnualSpendDtcTest(
+            18
+        );
+    }
 }

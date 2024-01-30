@@ -89,4 +89,14 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
             true
         );
     }
+
+    @Test
+    @TmsLink("29702")
+    @TestRail(id = 29702)
+    @Description("Verify Minimum Annual Spend input control functions correctly - Sheet Metal DTC Comparison Report")
+    public void testMinimumAnnualSpend() {
+        jasperApiUtils.genericMinAnnualSpendDtcTest(
+            3
+        );
+    }
 }

@@ -81,4 +81,24 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
             "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
+
+    @Test
+    @TmsLink("10011")
+    @TestRail(id = {10011})
+    @Description("Verify currency code input control function correctly - Machining DTC Details Report")
+    public void testCurrencyCodeFunctionality() {
+        jasperApiUtils.genericDtcCurrencyTest(
+            JasperCirApiPartsEnum.PUNCH.getPartName(),
+            false,
+            true
+        );
+    }
+
+    @Test
+    @TmsLink("29700")
+    @TestRail(id = 29700)
+    @Description("Verify Minimum Annual Spend input control functions correctly - Machining DTC Details Report")
+    public void testMinimumAnnualSpend() {
+        jasperApiUtils.genericMinAnnualSpendDtcDetailsTest(false);
+    }
 }
