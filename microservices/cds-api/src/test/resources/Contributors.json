@@ -1,0 +1,22 @@
+{
+  "appsList" :
+  [
+    {
+      "appAccessControlsEnum" : "Current User Service",
+      "environment" : "production",
+      "sss" : "ssss"
+    },
+    {
+      "appAccessControlsEnum" : "Cloud Search Service",
+      "environment" : "production"
+    },
+    {
+      "appAccessControlsEnum" : "aPriori Cloud Home",
+      "environment" : "production"
+    },
+    {
+      "appAccessControlsEnum" : "aP Workspace",
+      "environment" : "production"
+    }
+  ]
+}
