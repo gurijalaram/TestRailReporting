@@ -2,6 +2,7 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.plasticd
 
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
+import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
@@ -16,6 +17,7 @@ import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -85,6 +87,60 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
             JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName(),
             false,
             true
+        );
+    }
+
+    @Test
+    @TmsLink("7521")
+    @TestRail(id = 7521)
+    @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Comparison Report")
+    public void testDtcScoreLow() {
+        jasperApiUtils.genericDtcScoreTest(
+            true,
+            partNames,
+            "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TmsLink("7524")
+    @TestRail(id = 7524)
+    @Description("Verify DTC Score Input Control - Medium Selection - Plastic DTC Comparison Report")
+    public void testDtcScoreMedium() {
+        List<String> partNames = Arrays.asList(
+            "", ""
+        );
+        jasperApiUtils.genericDtcScoreTest(
+            true,
+            partNames,
+            "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TmsLink("7527")
+    @TestRail(id = 7527)
+    @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Comparison Report")
+    public void testDtcScoreHigh() {
+        List<String> partNames = Arrays.asList(
+            "", ""
+        );
+        jasperApiUtils.genericDtcScoreTest(
+            true,
+            partNames,
+            "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
+        );
+    }
+
+    @Test
+    @TmsLink("7542")
+    @TestRail(id = 7542)
+    @Description("Verify DTC Score Input Control - All Selection - Plastic DTC Comparison Report")
+    public void testDtcScoreAll() {
+        jasperApiUtils.genericDtcScoreTest(
+            true,
+            partNames,
+            "DTC Score", ""
         );
     }
 

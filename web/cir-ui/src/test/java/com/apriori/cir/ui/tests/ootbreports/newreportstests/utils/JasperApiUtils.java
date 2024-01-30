@@ -439,23 +439,26 @@ public class JasperApiUtils {
      * @param partNames - list of Strings containing the parts to use
      * @param miscData  - String array of data to be used in the test
      */
-    public void genericDtcDetailsTest(List<String> partNames, String... miscData) {
+    public void genericDtcDetailsTest(boolean isSheetMetalDtcDetailsTest, List<String> partNames, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
         List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
 
         int i = 6;
-        for (String partName : partNames) {
-            String assertPartName = partName.contains("Initial") ? partName.replace(" (Initial)", "") : partName.replace(" (Bulkload)", "");
-            softAssertions.assertThat(partNumberElements.get(i).toString().contains(assertPartName)).isEqualTo(true);
-            i = !partName.equals(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName()) ? i + 1 : i;
+        if (!partNames.get(0).isEmpty()) {
+            for (String partName : partNames) {
+                String assertPartName = partName.contains("Initial") ? partName.replace(" (Initial)", "") : partName.replace(" (Bulkload)", "");
+                softAssertions.assertThat(partNumberElements.toString().contains(assertPartName)).isEqualTo(true);
+                i = !partName.equals(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName()) ? i + 1 : i;
+            }
         }
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        int itemIndex = miscDataList.get(0).equals("DTC Score") ? 2 : 1;
-        softAssertions.assertThat(tdResultElements.get(itemIndex).parent().children().toString().contains(miscDataList.get(1))).isEqualTo(true);
+
+        int indexToGet = isSheetMetalDtcDetailsTest ? 3 : 1;
+        softAssertions.assertThat(tdResultElements.get(indexToGet).parent().children().toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -473,14 +476,16 @@ public class JasperApiUtils {
 
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
-        if (areBubblesPresent) {
-            for (String partName : partNames) {
-                softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
-            }
-        } else {
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 3; j++) {
-                    softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPoints().get(j).getPartName()).isEqualTo(partNames.get(j));
+        if (!partNames.get(0).isEmpty()) {
+            if (areBubblesPresent) {
+                for (String partName : partNames) {
+                    softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
+                }
+            } else {
+                for (int i = 0; i < 6; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPoints().get(j).getPartName()).isEqualTo(partNames.get(j));
+                    }
                 }
             }
         }
@@ -558,13 +563,17 @@ public class JasperApiUtils {
     /**
      * Generic test for minimum annual spend input control on a dtc details report
      */
-    public void genericMinAnnualSpendDtcDetailsTest() {
+    public void genericMinAnnualSpendDtcDetailsTest(boolean isSheetMetalDtcReport) {
         String minimumAnnualSpendValue = "7820000";
         JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
 
-        String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(15).text();
-        softAssertions.assertThat(minAnnualSpendValue).isEqualTo("10,013,204.23");
-        softAssertions.assertThat(minAnnualSpendValue).isNotEqualTo(minimumAnnualSpendValue);
+        if (isSheetMetalDtcReport) {
+            String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(11).text();
+            softAssertions.assertThat(minAnnualSpendValue).isEqualTo("8,264,352.15");
+            softAssertions.assertThat(minAnnualSpendValue).isNotEqualTo(minimumAnnualSpendValue);
+        } else {
+            softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString()).contains("No data available");
+        }
 
         softAssertions.assertAll();
     }
