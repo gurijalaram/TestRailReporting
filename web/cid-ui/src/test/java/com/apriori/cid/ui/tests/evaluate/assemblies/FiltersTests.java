@@ -197,10 +197,11 @@ public class FiltersTests extends TestBaseUI {
             .filter()
             .newFilter()
             .inputName(filterName)
-            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, "BIG RING")
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, componentAssembly.getSubComponents().get(0).getComponentName())
             .submit(ExplorePage.class);
 
-        softAssertions.assertThat(explorePage.getAllScenarioComponentName()).containsExactly("BIG RING");
+        softAssertions.assertThat(
+            explorePage.getAllScenarioComponentName()).containsExactly(componentAssembly.getSubComponents().get(0).getComponentName().toUpperCase());
 
         softAssertions.assertAll();
     }
