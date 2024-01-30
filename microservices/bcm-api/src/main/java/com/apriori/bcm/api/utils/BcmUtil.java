@@ -87,7 +87,12 @@ public class BcmUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-    // TODO: 15/01/2024 missing javadocs
+    /**
+     * Making error request with an existing name of worksheet
+     *
+     * @param name - worksheet name
+     * @return error response
+     */
     public ResponseWrapper<ErrorResponse> createWorksheetAlreadyExists(String name) {
 
         WorksheetRequest body = WorksheetRequest
@@ -105,11 +110,43 @@ public class BcmUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-    // TODO: 15/01/2024 missing javadocs
+    /**
+     * Get the list of worksheets
+     *
+     * @return object ResponseWrapper
+     */
     public ResponseWrapper<WorkSheets> getWorksheets() {
         final RequestEntity requestEntity =
             requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheets.class)
                 .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Updating worksheet request
+     *
+     * @param name - worksheet name
+     * @param description - worksheet description
+     * @param klass - class
+     * @param worksheetIdentity - worksheet identity
+     * @param expectedResponseCode = expected response code
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> updateWorksheet(String name, String description, Class<T> klass, String worksheetIdentity, Integer expectedResponseCode) {
+        WorksheetRequest body = WorksheetRequest
+            .builder()
+            .worksheet(Worksheet
+                .builder()
+                .name(name)
+                .description(description)
+                .build())
+            .build();
+
+        RequestEntity requestEntity =
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_BY_ID, klass)
+                .inlineVariables(worksheetIdentity)
+                .expectedResponseCode(expectedResponseCode)
+                .body(body);
+        return HTTPRequest.build(requestEntity).patch();
     }
 }
