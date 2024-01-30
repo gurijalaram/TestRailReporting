@@ -468,7 +468,7 @@ public class FiltersTests extends TestBaseUI {
             .isEqualTo("Private");
 
         explorePage.selectFilter("Recent")
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.ASCENDING);
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         topScenarioDetails = explorePage.getFirstScenarioDetails().split(",");
         topComponentName = topScenarioDetails[0];
