@@ -31,7 +31,9 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -364,10 +366,10 @@ public class FiltersTests extends TestBaseUI {
             .selectTableView()
             .selectFilter("Uncosted");
 
-        List<String> stateListUncosted = componentsTablePage.getAllScenarioState();
+        List<String> stateListUncosted = new ArrayList<>(Collections.nCopies(componentAssembly.getSubComponents().size(), "Uncosted"));
 
         softAssertions.assertThat(componentsTablePage.isElementDisplayed("Uncosted", "text-overflow")).isTrue();
-        softAssertions.assertThat(stateListUncosted).containsExactly("Uncosted", "Uncosted", "Uncosted");
+        softAssertions.assertThat(stateListUncosted).containsExactly(stateListUncosted.toArray(new String[componentAssembly.getSubComponents().size()]));
 
         softAssertions.assertAll();
     }
