@@ -1,11 +1,17 @@
 package com.apriori.cds.api.tests;
 
+import com.apriori.cds.api.enums.AppAccessControlsEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
+import com.apriori.cds.api.enums.CDSRolesEnum;
+import com.apriori.cds.api.models.Apps;
+import com.apriori.cds.api.models.AppsItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.User;
@@ -20,6 +26,10 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsUserEnablementsTests extends CdsTestUtil {
@@ -81,23 +91,17 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29550})
     @Description("verify Contributor role")
     public void verifyContributorRole() {
-        String email = "user-role_1@apriori.com";
-        User user = cdsTestUtil.getUserByEmail(email)
+        User user = cdsTestUtil.getUserByEmail("user-role_1@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        MultiValuedMap<String,Object> applicationsExpected = new ArrayListValuedHashMap<>();
-        applicationsExpected.put("Current User Service","Production");
-        applicationsExpected.put("Cloud Search Service","Production");
-        applicationsExpected.put("aPriori Cloud Home","Production");
-        applicationsExpected.put("aP Workspace","Production");
+        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.CONTRIBUTOR);
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
+        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.CONTRIBUTOR.getRole());
 
-        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo("APRIORI_CONTRIBUTOR");
-
-        MultiValuedMap<String,Object> applicationsResponse =  cdsTestUtil.getUserApplications(user);
-
-        soft.assertThat(applicationsResponse).isEqualTo(applicationsExpected);
+        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        soft.assertThatList(applicationsResponse.getAppsList())
+            .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
     }
 
@@ -105,24 +109,17 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29558})
     @Description("verify Analyst role")
     public void verifyAnalystRole() {
-        String email = "user-role_2@apriori.com";
-        User user = cdsTestUtil.getUserByEmail(email)
+        User user = cdsTestUtil.getUserByEmail("user-role_2@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        MultiValuedMap<String,Object> applicationsExpected = new ArrayListValuedHashMap<>();
-        applicationsExpected.put("Current User Service", "Production");
-        applicationsExpected.put("Cloud Search Service", "Production");
-        applicationsExpected.put("aPriori Cloud Home", "Production");
-        applicationsExpected.put("aP Workspace", "Production");
-        applicationsExpected.put("aP Analytics", "Production");
+        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.ANALYST);
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
+        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.ANALYST.getRole());
 
-        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo("APRIORI_ANALYST");
-
-        MultiValuedMap<String,Object> applicationsResponse =  cdsTestUtil.getUserApplications(user);
-
-        soft.assertThat(applicationsResponse).isEqualTo(applicationsExpected);
+        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        soft.assertThatList(applicationsResponse.getAppsList())
+            .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
     }
 
@@ -130,27 +127,17 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29562})
     @Description("verify Designer role")
     public void verifyDesignerRole() {
-        String email = "user-role_3@apriori.com";
-        User user = cdsTestUtil.getUserByEmail(email)
+        User user = cdsTestUtil.getUserByEmail("user-role_3@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        MultiValuedMap<String,Object> applicationsExpected = new ArrayListValuedHashMap<>();
-        applicationsExpected.put("Current User Service", "Production");
-        applicationsExpected.put("Cloud Search Service", "Production");
-        applicationsExpected.put("aPriori Cloud Home", "Production");
-        applicationsExpected.put("aP Workspace", "Production");
-        applicationsExpected.put("aP Analytics", "Production");
-        applicationsExpected.put("File Management Service", "Production");
-        applicationsExpected.put("Anonymized Costing Service", "Production");
-        applicationsExpected.put("aP Design", "Production");
+        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.DESIGNER);
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
+        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.DESIGNER.getRole());
 
-        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo("APRIORI_DESIGNER");
-
-        MultiValuedMap<String,Object> applicationsResponse =  cdsTestUtil.getUserApplications(user);
-
-        soft.assertThat(applicationsResponse).isEqualTo(applicationsExpected);
+        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        soft.assertThatList(applicationsResponse.getAppsList())
+            .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
     }
 
@@ -158,29 +145,17 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29561})
     @Description("verify Expert role")
     public void verifyExpertRole() {
-        String email = "user-role_4@apriori.com";
-        User user = cdsTestUtil.getUserByEmail(email)
+        User user = cdsTestUtil.getUserByEmail("user-role_4@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        MultiValuedMap<String,Object> applicationsExpected = new ArrayListValuedHashMap<>();
-        applicationsExpected.put("Current User Service", "Production");
-        applicationsExpected.put("Cloud Search Service", "Production");
-        applicationsExpected.put("aPriori Cloud Home", "Production");
-        applicationsExpected.put("aP Workspace", "Production");
-        applicationsExpected.put("aP Analytics", "Production");
-        applicationsExpected.put("File Management Service", "Production");
-        applicationsExpected.put("Anonymized Costing Service", "Production");
-        applicationsExpected.put("aP Design", "Production");
-        applicationsExpected.put("aP Pro", "Production");
-        applicationsExpected.put("Electronics Data Collection", "Production");
+        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.EXPERT);
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
+        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.EXPERT.getRole());
 
-        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo("APRIORI_EXPERT");
-
-        MultiValuedMap<String,Object> applicationsResponse =  cdsTestUtil.getUserApplications(user);
-
-        soft.assertThat(applicationsResponse).isEqualTo(applicationsExpected);
+        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        soft.assertThatList(applicationsResponse.getAppsList())
+            .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
     }
 
@@ -188,29 +163,17 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29560})
     @Description("verify Developer role")
     public void verifyDeveloperRole() {
-        String email = "user-role_5@apriori.com";
-        User user = cdsTestUtil.getUserByEmail(email)
+        User user = cdsTestUtil.getUserByEmail("user-role_5@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        MultiValuedMap<String,Object> applicationsExpected = new ArrayListValuedHashMap<>();
-        applicationsExpected.put("Current User Service", "Production");
-        applicationsExpected.put("Cloud Search Service", "Production");
-        applicationsExpected.put("aPriori Cloud Home", "Production");
-        applicationsExpected.put("aP Workspace", "Production");
-        applicationsExpected.put("aP Analytics", "Production");
-        applicationsExpected.put("File Management Service", "Production");
-        applicationsExpected.put("Anonymized Costing Service", "Production");
-        applicationsExpected.put("aP Design", "Production");
-        applicationsExpected.put("aP Pro", "Production");
-        applicationsExpected.put("Electronics Data Collection", "Production");
+        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.DEVELOPER);
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
+        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.DEVELOPER.getRole());
 
-        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo("APRIORI_DEVELOPER");
-
-        MultiValuedMap<String,Object> applicationsResponse =  cdsTestUtil.getUserApplications(user);
-
-        soft.assertThat(applicationsResponse).isEqualTo(applicationsExpected);
+        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        soft.assertThatList(applicationsResponse.getAppsList())
+            .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
     }
 
@@ -218,26 +181,19 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29559})
     @Description("verify Analyst with added enablement role")
     public void verifyAnalystWithEnablementRole() {
-        String email = "user-role_6@apriori.com";
-        User user = cdsTestUtil.getUserByEmail(email)
+        User user = cdsTestUtil.getUserByEmail("user-role_6@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        MultiValuedMap<String,Object> applicationsExpected = new ArrayListValuedHashMap<>();
-        applicationsExpected.put("Current User Service", "Production");
-        applicationsExpected.put("Cloud Search Service", "Production");
-        applicationsExpected.put("aPriori Cloud Home", "Production");
-        applicationsExpected.put("aP Workspace", "Production");
-        applicationsExpected.put("aP Analytics", "Production");
-        applicationsExpected.put("aP Connect", "Production");
+        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.ANALYST_CONNECT);
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
 
-        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo("APRIORI_ANALYST");
+        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.ANALYST.getRole());
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
 
-        MultiValuedMap<String,Object> applicationsResponse =  cdsTestUtil.getUserApplications(user);
-
-        soft.assertThat(applicationsResponse).isEqualTo(applicationsExpected);
+        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        soft.assertThatList(applicationsResponse.getAppsList())
+            .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
     }
 
@@ -245,31 +201,19 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29564})
     @Description("verify Designer with added enablements role")
     public void verifyDesignerWithEnablementRole() {
-        String email = "user-role_7@apriori.com";
-        User user = cdsTestUtil.getUserByEmail(email)
+        User user = cdsTestUtil.getUserByEmail("user-role_7@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        MultiValuedMap<String,Object> applicationsExpected = new ArrayListValuedHashMap<>();
-        applicationsExpected.put("Current User Service", "Production");
-        applicationsExpected.put("Cloud Search Service", "Production");
-        applicationsExpected.put("aPriori Cloud Home", "Production");
-        applicationsExpected.put("aP Workspace", "Production");
-        applicationsExpected.put("aP Analytics", "Production");
-        applicationsExpected.put("File Management Service", "Production");
-        applicationsExpected.put("Anonymized Costing Service", "Production");
-        applicationsExpected.put("aP Design", "Production");
-        applicationsExpected.put("aP Connect", "Production");
-        applicationsExpected.put("Customer Admin", "Production");
+        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.DESIGNER_CONNECT_USER);
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
-
-        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo("APRIORI_DESIGNER");
+        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.DESIGNER.getRole());
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
         soft.assertThat(enablements.getUserAdminEnabled()).isTrue();
 
-        MultiValuedMap<String,Object> applicationsResponse =  cdsTestUtil.getUserApplications(user);
-
-        soft.assertThat(applicationsResponse).isEqualTo(applicationsExpected);
+        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        soft.assertThatList(applicationsResponse.getAppsList())
+            .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
     }
 
@@ -277,77 +221,39 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29563})
     @Description("verify Expert with added enablements role")
     public void verifyExpertWithEnablementRole() {
-        String email = "user-role_8@apriori.com";
-        User user = cdsTestUtil.getUserByEmail(email)
+        User user = cdsTestUtil.getUserByEmail("user-role_8@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        MultiValuedMap<String,Object> applicationsExpected = new ArrayListValuedHashMap<>();
-        applicationsExpected.put("Current User Service", "Production");
-        applicationsExpected.put("Cloud Search Service", "Production");
-        applicationsExpected.put("aPriori Cloud Home", "Production");
-        applicationsExpected.put("aP Workspace", "Production");
-        applicationsExpected.put("aP Analytics", "Production");
-        applicationsExpected.put("File Management Service", "Production");
-        applicationsExpected.put("Anonymized Costing Service", "Production");
-        applicationsExpected.put("aP Design", "Production");
-        applicationsExpected.put("aP Pro", "Production");
-        applicationsExpected.put("Electronics Data Collection", "Production");
-        applicationsExpected.put("Customer Admin", "Production");
-        applicationsExpected.put("aP Connect", "Production");
+        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.EXPERT_CONNECT_USER);
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
-
-        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo("APRIORI_EXPERT");
+        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.EXPERT.getRole());
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
         soft.assertThat(enablements.getUserAdminEnabled()).isTrue();
 
-        MultiValuedMap<String,Object> applicationsResponse =  cdsTestUtil.getUserApplications(user);
-
-        soft.assertThat(applicationsResponse).isEqualTo(applicationsExpected);
+        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        soft.assertThatList(applicationsResponse.getAppsList())
+            .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
     }
 
     @Test
-    @TestRail(id = {29563})
+    @TestRail(id = {29693})
     @Description("verify Expert with added enablements role and sandbox deployment")
     public void verifyExpertWithEnablementRoleAndSandbox() {
-        String email = "user-role_9@apriori.com";
-        User user = cdsTestUtil.getUserByEmail(email)
+        User user = cdsTestUtil.getUserByEmail("user-role_9@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        MultiValuedMap<String,Object> applicationsExpected = new ArrayListValuedHashMap<>();
-        applicationsExpected.put("aPriori Cloud Home","Production");
-        applicationsExpected.put("aP Workspace","Production");
-        applicationsExpected.put("aP Workspace","Sandbox");
-        applicationsExpected.put("aP Analytics","Production");
-        applicationsExpected.put("aP Analytics","Sandbox");
-        applicationsExpected.put("aP Design","Production");
-        applicationsExpected.put("aP Design","Sandbox");
-        applicationsExpected.put("aP Pro","Production");
-        applicationsExpected.put("aP Pro","Sandbox");
-        applicationsExpected.put("aP Admin","Production");
-        applicationsExpected.put("aP Admin","Sandbox");
-        applicationsExpected.put("aP Connect","Production");
-        applicationsExpected.put("aP Connect","Sandbox");
-        applicationsExpected.put("Electronics Data Collection","Production");
-        applicationsExpected.put("Customer Admin","Production");
-        applicationsExpected.put("Current User Service", "Production");
-        applicationsExpected.put("File Management Service","Production");
-        applicationsExpected.put("File Management Service","Sandbox");
-        applicationsExpected.put("Anonymized Costing Service","Production");
-        applicationsExpected.put("Anonymized Costing Service","Sandbox");
-        applicationsExpected.put("Cloud Search Service","Production");
-        applicationsExpected.put("Cloud Search Service","Sandbox");
+        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.EXPERT_CONNECT_USER_SANDBOX);
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
-
-        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo("APRIORI_EXPERT");
+        soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.EXPERT.getRole());
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
         soft.assertThat(enablements.getUserAdminEnabled()).isTrue();
 
-        MultiValuedMap<String,Object> applicationsResponse =  cdsTestUtil.getUserApplications(user);
-
-        soft.assertThat(applicationsResponse).isEqualTo(applicationsExpected);
+        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        soft.assertThatList(applicationsResponse.getAppsList())
+            .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
     }
 
@@ -361,5 +267,69 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         String userName = generateStringUtil.generateUserName();
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
+    }
+
+    private AppsItems getExpectedAccessControlForRole(CDSRolesEnum role) {
+
+        AppsItems appsItems = new AppsItems();
+        switch (role) {
+            case CONTRIBUTOR: {
+                appsItems = JsonManager
+                    .deserializeJsonFromFile(FileResourceUtil
+                        .getResourceAsFile("Contributors.json").getPath(), AppsItems.class);
+                break;
+            }
+            case ANALYST: {
+                appsItems = JsonManager
+                    .deserializeJsonFromFile(FileResourceUtil
+                        .getResourceAsFile("Analyst.json").getPath(), AppsItems.class);
+                break;
+            }
+            case DESIGNER: {
+                appsItems = JsonManager
+                    .deserializeJsonFromFile(FileResourceUtil
+                        .getResourceAsFile("Designer.json").getPath(), AppsItems.class);
+                break;
+            }
+            case DEVELOPER: {
+                appsItems = JsonManager
+                    .deserializeJsonFromFile(FileResourceUtil
+                        .getResourceAsFile("Developer.json").getPath(), AppsItems.class);
+                break;
+            }
+            case EXPERT: {
+                appsItems = JsonManager
+                    .deserializeJsonFromFile(FileResourceUtil
+                        .getResourceAsFile("Expert.json").getPath(), AppsItems.class);
+                break;
+            }
+            case ANALYST_CONNECT: {
+                appsItems = JsonManager
+                    .deserializeJsonFromFile(FileResourceUtil
+                        .getResourceAsFile("AnalystConnectAdmin.json").getPath(), AppsItems.class);
+                break;
+            }
+            case DESIGNER_CONNECT_USER: {
+                appsItems = JsonManager
+                    .deserializeJsonFromFile(FileResourceUtil
+                        .getResourceAsFile("DesignerConnectUserAdmin.json").getPath(), AppsItems.class);
+                break;
+            }
+            case EXPERT_CONNECT_USER: {
+                appsItems = JsonManager
+                    .deserializeJsonFromFile(FileResourceUtil
+                        .getResourceAsFile("ExpertConnectUserAdmin.json").getPath(), AppsItems.class);
+                break;
+            }
+            case EXPERT_CONNECT_USER_SANDBOX: {
+                appsItems = JsonManager
+                    .deserializeJsonFromFile(FileResourceUtil
+                        .getResourceAsFile("ExpertConnectUserAdminSandbox.json").getPath(), AppsItems.class);
+                break;
+            }
+            default:
+                throw new IllegalArgumentException("Type not found");
+        }
+        return appsItems;
     }
 }

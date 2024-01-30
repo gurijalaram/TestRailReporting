@@ -1,0 +1,45 @@
+{
+  "appsList" :
+  [
+    {
+      "appAccessControlsEnum" : "ACH",
+      "environment" : "Production"
+    },
+    {
+      "appAccessControlsEnum" : "AW",
+      "environment" : "Production"
+    },
+    {
+      "appAccessControlsEnum" : "AA",
+      "environment" : "Production"
+    },
+    {
+      "appAccessControlsEnum" : "AD",
+      "environment" : "Production"
+    },
+    {
+      "appAccessControlsEnum" : "AP",
+      "environment" : "Production"
+    },
+    {
+      "appAccessControlsEnum" : "EDC",
+      "environment" : "Production"
+    },
+    {
+      "appAccessControlsEnum" : "CUS",
+      "environment" : "Production"
+    },
+    {
+      "appAccessControlsEnum" : "FMS",
+      "environment" : "Production"
+    },
+    {
+      "appAccessControlsEnum" : "ACS",
+      "environment" : "Production"
+    },
+    {
+      "appAccessControlsEnum" : "CSS",
+      "environment" : "Production"
+    }
+  ]
+}

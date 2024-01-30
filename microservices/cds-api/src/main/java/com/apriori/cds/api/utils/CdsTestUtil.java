@@ -4,8 +4,11 @@ package com.apriori.cds.api.utils;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
+import com.apriori.cds.api.enums.AppAccessControlsEnum;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
+import com.apriori.cds.api.models.Apps;
+import com.apriori.cds.api.models.AppsItems;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
 import com.apriori.cds.api.models.request.AccessControlRequest;
 import com.apriori.cds.api.models.request.ActivateLicense;
@@ -89,7 +92,7 @@ public class CdsTestUtil extends TestUtil {
     protected static UserCredentials testingUser = UserUtil.getUser("admin");
 
     @BeforeAll
-    public static  void init() {
+    public static void init() {
         requestEntityUtil = RequestEntityUtilBuilder
             .useRandomUser("admin")
             .useApUserContextInRequests();
@@ -253,9 +256,9 @@ public class CdsTestUtil extends TestUtil {
     /**
      * Creates user with set of enablements
      *
-     * @param customerIdentity - the customer id
-     * @param userName - the username
-     * @param domain - the customer name
+     * @param customerIdentity     - the customer id
+     * @param userName             - the username
+     * @param domain               - the customer name
      * @param customerAssignedRole - the customer assigned role
      * @return new object
      */
@@ -586,7 +589,7 @@ public class CdsTestUtil extends TestUtil {
      *
      * @return new object
      */
-    public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean workOrderStatusUpdatesEnabled,boolean bulkCosting) {
+    public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean workOrderStatusUpdatesEnabled, boolean bulkCosting) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
@@ -1230,7 +1233,8 @@ public class CdsTestUtil extends TestUtil {
 
     /**
      * GET user by email
-     * @param email  email of the user
+     *
+     * @param email email of the user
      * @return response object
      */
     public ResponseWrapper<Users> getUserByEmail(String email) {
@@ -1244,6 +1248,7 @@ public class CdsTestUtil extends TestUtil {
 
     /**
      * GET enablement
+     *
      * @return response object
      */
     public ResponseWrapper<Enablements> getEnablement(User user) {
@@ -1259,10 +1264,10 @@ public class CdsTestUtil extends TestUtil {
     /**
      * Creates or updates user enablements
      *
-     * @param customerIdentity - customer identity
-     * @param userIdentity - user identity
+     * @param customerIdentity     - customer identity
+     * @param userIdentity         - user identity
      * @param customerAssignedRole - customerAssignedRole
-     * @param highMem - true or false
+     * @param highMem              - true or false
      * @return new object
      */
     public ResponseWrapper<Enablements> createUpdateEnablements(
@@ -1294,7 +1299,7 @@ public class CdsTestUtil extends TestUtil {
     /**
      * this method returns the list of the application which user is entitled for
      */
-    public MultiValuedMap<String,Object> getUserApplications(User user) {
+    public AppsItems getUserApplications(User user) {
         RequestEntity requestEntity =
             requestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
                 .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
@@ -1302,7 +1307,7 @@ public class CdsTestUtil extends TestUtil {
         ResponseWrapper<AccessControls> accessControl = HTTPRequest.build(requestEntity).get();
         List<AccessControlResponse> accessControlItems = accessControl.getResponseEntity().getItems();
 
-        MultiValuedMap<String, Object> result = new ArrayListValuedHashMap<>();
+        List<Apps> appsList = new ArrayList<>();
         for (AccessControlResponse item : accessControlItems) {
             RequestEntity requestEntityApp =
                 requestEntityUtil.init(CDSAPIEnum.APPLICATION_BY_ID, Application.class)
@@ -1317,8 +1322,16 @@ public class CdsTestUtil extends TestUtil {
                     .expectedResponseCode(HttpStatus.SC_OK);
             ResponseWrapper<Deployment> deployment =
                 HTTPRequest.build(requestEntityDep).get();
-            result.put(application.getResponseEntity().getName(), deployment.getResponseEntity().getName());
+
+            appsList.add(Apps.builder()
+                .appAccessControlsEnum(AppAccessControlsEnum
+                    .fromString(application.getResponseEntity().getName()))
+                .environment(deployment.getResponseEntity().getName())
+                .build());
         }
-        return result;
+        return AppsItems
+            .builder()
+            .appsList(appsList)
+            .build();
     }
 }
