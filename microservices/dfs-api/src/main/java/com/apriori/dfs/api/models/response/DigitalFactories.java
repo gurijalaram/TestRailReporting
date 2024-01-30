@@ -15,8 +15,5 @@ import java.util.List;
 @Data
 public class DigitalFactories extends Pagination {
 
-    private Boolean isFirstPage;
-    private Boolean isLastPage;
-    private Boolean restrictedByAccessControl;
     private List<DigitalFactory> items;
 }
