@@ -52,6 +52,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ScenariosUtil {
 
+    private static final int CHUNK_SIZE = 10;
     private final int POLL_TIME = 2;
     private final int WAIT_TIME = 570;
     private final int SOCKET_TIMEOUT = 240000;
@@ -629,7 +630,7 @@ public class ScenariosUtil {
      */
     public ScenariosDeleteResponse deleteScenarios(List<ScenarioItem> scenarios, UserCredentials userCredentials) {
 
-        Lists.partition(scenarios, 10).forEach(partitionedScenario -> {
+        Lists.partition(scenarios, CHUNK_SIZE).forEach(partitionedScenario -> {
 
             final RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.DELETE_SCENARIOS, ScenariosDeleteResponse.class)
                 .body("groupItems", partitionedScenario.stream()
