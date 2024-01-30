@@ -24,7 +24,7 @@ public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUt
     private CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC_COMPARISON;
     private JasperApiUtils jasperApiUtils;
     private List<String> partNames = Arrays.asList(
-        JasperCirApiPartsEnum.DTCMACHINING_001_Toleranced.getPartName(),
+        JasperCirApiPartsEnum.DTCMACHINING_001_TOLERANCED.getPartName(),
         JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
         JasperCirApiPartsEnum.PUNCH_INITIAL.getPartName()
     );
@@ -75,6 +75,18 @@ public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUt
         jasperApiUtils.genericDtcTest(
             partNames,
             "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
+        );
+    }
+
+    @Test
+    @TmsLink("10012")
+    @TestRail(id = 10012)
+    @Description("Verify Currency Code input control functions correctly - Machining DTC Comparison Report")
+    public void currencyCodeTest() {
+        jasperApiUtils.genericDtcCurrencyTest(
+            JasperCirApiPartsEnum.DTCMACHINING_001_TOLERANCED.getPartName(),
+            false,
+            true
         );
     }
 }

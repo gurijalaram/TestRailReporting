@@ -77,4 +77,16 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
             "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
+
+    @Test
+    @TmsLink("7378")
+    @TestRail(id = 7378)
+    @Description("Verify Currency Code Input Control - Sheet Metal DTC Details Report")
+    public void currencyCodeTest() {
+        jasperApiUtils.genericDtcCurrencyTest(
+            JasperCirApiPartsEnum.P_1271576.getPartName(),
+            false,
+            true
+        );
+    }
 }

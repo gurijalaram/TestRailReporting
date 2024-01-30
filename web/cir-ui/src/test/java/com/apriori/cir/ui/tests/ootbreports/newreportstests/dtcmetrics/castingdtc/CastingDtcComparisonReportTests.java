@@ -151,4 +151,16 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             1
         );
     }
+
+    @Test
+    @TmsLink("10009")
+    @TestRail(id = 10009)
+    @Description("Verify Currency Code input control functions correctly - Casting DTC Comparison Report")
+    public void currencyCodeTest() {
+        jasperApiUtils.genericDtcCurrencyTest(
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            false,
+            true
+        );
+    }
 }
