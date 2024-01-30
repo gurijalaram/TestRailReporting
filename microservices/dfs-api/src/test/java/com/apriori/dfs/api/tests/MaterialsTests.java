@@ -12,9 +12,9 @@ import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
+import com.google.common.collect.Comparators;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,7 +24,6 @@ import software.amazon.awssdk.http.HttpStatusCode;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
@@ -470,9 +469,6 @@ public class MaterialsTests {
         softAssertions.assertAll();
     }
 
-    //TODO - should be added Test Rail id
-    //Temporally disabled. Should be enabled once COST-1326 be fixed
-    @Disabled
     @TestRail(id = {})
     @Description("Find all Materials sorted by name")
     @ParameterizedTest
@@ -496,30 +492,19 @@ public class MaterialsTests {
         List<Material> items = responseWrapper.getResponseEntity().getItems();
 
         softAssertions.assertThat(items).isNotNull();
-        softAssertions.assertThat(items).hasSize(70);
+        softAssertions.assertThat(items).hasSize(pageSize);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getPageNumber()).isEqualTo(pageNumber);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo(pageSize);
 
-        Comparator<String> comparator = "ASC".equals(sort) ? Comparator.naturalOrder() : Comparator.reverseOrder();
-        softAssertions.assertThat(isSorted(items, comparator)).isTrue();
+        Comparator<Material> comparator = Comparator.comparing(Material::getName);
+        if ("DESC".equals(sort)) {
+            comparator = comparator.reversed();
+        }
+
+        boolean isSorted = Comparators.isInOrder(items, comparator);
+
+        softAssertions.assertThat(isSorted).isTrue();
         softAssertions.assertAll();
-    }
-
-    private boolean isSorted(List<Material> employees, Comparator<String> materialsComparator) {
-        if (employees.isEmpty() || employees.size() == 1) {
-            return true;
-        }
-
-        Iterator<Material> iter = employees.iterator();
-        Material current, previous = iter.next();
-        while (iter.hasNext()) {
-            current = iter.next();
-            if (materialsComparator.compare(previous.getName(), current.getName()) > 0) {
-                return false;
-            }
-            previous = current;
-        }
-        return true;
     }
 
 }

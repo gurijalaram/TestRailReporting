@@ -14,9 +14,9 @@ import java.util.List;
 @Schema(location = "ProcessGroupsSchema.json")
 @Data
 public class ProcessGroups extends Pagination {
-    //cn - i have queried to see if these 3 fields should be there because they look like duplicates
-    private Boolean firstPage;
-    private Boolean lastPage;
+
+    private Boolean isFirstPage;
+    private Boolean isLastPage;
     private Boolean restrictedByAccessControl;
     private List<ProcessGroup> items;
 }
