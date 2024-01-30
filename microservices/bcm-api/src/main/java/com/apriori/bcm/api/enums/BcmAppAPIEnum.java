@@ -7,6 +7,7 @@ public enum BcmAppAPIEnum implements ExternalEndpointEnum {
 
     //WORKSHEETS
     WORKSHEETS("worksheets"),
+    WORKSHEET_BY_ID("worksheets/%s"),
     WORKSHEET_INPUT_NAME("worksheets/%s/inputRows");
 
 
