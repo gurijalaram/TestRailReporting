@@ -40,6 +40,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Details Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcDetailsTest(
+            false,
             partNames,
             "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
@@ -51,6 +52,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Details Report")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcDetailsTest(
+            false,
             partNames,
             "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
@@ -62,6 +64,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
+            false,
             partNames,
             "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
@@ -73,6 +76,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(
+            false,
             partNames,
             "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
