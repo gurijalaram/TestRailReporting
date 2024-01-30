@@ -89,7 +89,7 @@ import java.util.stream.Collectors;
 public class CdsTestUtil extends TestUtil {
 
     protected static RequestEntityUtil requestEntityUtil;
-    protected static UserCredentials testingUser = UserUtil.getUser("admin");
+    protected static UserCredentials testingUser;
 
     @BeforeAll
     public static void init() {
