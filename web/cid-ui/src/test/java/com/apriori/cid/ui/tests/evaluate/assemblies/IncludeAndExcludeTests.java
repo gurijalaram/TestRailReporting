@@ -320,26 +320,20 @@ public class IncludeAndExcludeTests extends TestBaseUI {
 
         final ProcessGroupEnum assemblyProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
         File assemblyResourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroupEnum, assemblyName + assemblyExtension);
-
-        List<String> subComponentNames = Arrays.asList(
-            "autoparthead", "autoparttorso", "autopartarm", "autoparthand", "autopartleg", "autopartfoot");
-        String componentName = "autoparthelm";
+        String missingComponentName = "autoparthelm";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
         final String componentExtension = ".prt.1";
-        File componentResourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + componentExtension);
+        File componentResourceFile = FileResourceUtil.getCloudFile(processGroupEnum, missingComponentName + componentExtension);
 
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly(assemblyName);
+        componentAssembly.setExtension(assemblyExtension);
+        componentAssembly.setResourceFile(assemblyResourceFile);
 
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            assemblyProcessGroupEnum,
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            scenarioName,
-            currentUser);
+        List<String> subComponentsToUpload = Arrays.asList(
+            "autoparthead", "autoparttorso", "autopartarm", "autoparthand", "autopartleg", "autopartfoot");
+        componentAssembly.getSubComponents().removeIf(subComponent -> !subComponentsToUpload.contains(subComponent.getComponentName()));
+
+
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
@@ -358,22 +352,23 @@ public class IncludeAndExcludeTests extends TestBaseUI {
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(componentName)).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(missingComponentName)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(missingComponentName)).isEqualTo(true);
 
-        componentsTreePage.clickScenarioCheckbox(componentName)
+        componentsTreePage.clickScenarioCheckbox(missingComponentName)
             .updateCadFile(componentResourceFile)
             .closePanel()
             .openComponents();
 
-        List<ScenarioItem> excludeComponentDetails = componentsUtil.getUnCostedComponent(componentName, scenarioName, currentUser);
+        List<ScenarioItem> excludeComponentDetails = componentsUtil.getUnCostedComponent(
+            missingComponentName, componentAssembly.getScenarioName(), componentAssembly.getUser());
 
         ComponentInfoBuilder excludedComponentInfo = ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
+            .componentName(missingComponentName)
+            .scenarioName(componentAssembly.getScenarioName())
             .scenarioIdentity(excludeComponentDetails.get(0).getScenarioIdentity())
             .componentIdentity(excludeComponentDetails.get(0).getComponentIdentity())
-            .user(currentUser)
+            .user(componentAssembly.getUser())
             .build();
 
         componentAssembly.getSubComponents().add(excludedComponentInfo);
@@ -381,7 +376,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
         componentsTreePage = componentsTreePage.closePanel()
             .clickRefresh(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(componentName)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(missingComponentName)).isEqualTo(false);
 
         softAssertions.assertAll();
     }
