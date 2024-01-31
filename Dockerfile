@@ -17,7 +17,6 @@ RUN gradle --build-cache clean :$FOLDER:$MODULE:build -x test
 FROM build as test
 
 ARG JAVAOPTS
-#=" -Dmode=GRID '-Dcustomer=Hjhkjhkj kjhkjh 76768yu' -Denv=qa-test -DROOT_LOG_LEVEL=DEBUG -Dglobal_use_default_user=true -Dglobal_default_user_name=qa-automation-01@apriori.com -Dglobal_default_password=TrumpetSnakeFridgeToasty18!% -Ddeployment=production"
 ARG FOLDER
 ARG MODULE
 ARG TESTS
