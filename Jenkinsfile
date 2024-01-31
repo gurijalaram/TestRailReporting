@@ -123,7 +123,7 @@ pipeline {
 
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
-                        javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
+                        javaOpts = javaOpts + " '-Dcustomer=${params.CUSTOMER}'"
                     }
 
                     default_aws_region = params.REGION
@@ -210,6 +210,7 @@ pipeline {
                             --secret id=aws_creds,src=${AWS_CREDENTIALS_SECRET_TXT} \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
+                            --build-arg JAVAOPTS='${javaOpts}' \
                             --build-arg TESTS=${testSuite} \
                             .
                     """
