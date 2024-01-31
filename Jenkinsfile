@@ -128,7 +128,7 @@ pipeline {
 
                     default_aws_region = params.REGION
                     if (default_aws_region && default_aws_region != "none") {
-                        javaOpts = javaOpts + " -Ddefault_aws_region=${params.REGION}"
+                        javaOpts = javaOpts + " \'-Ddefault_aws_region=${params.REGION}\'"
                     }
 
                     number_of_parts = params.NUMBER_OF_PARTS

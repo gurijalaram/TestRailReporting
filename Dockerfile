@@ -22,8 +22,6 @@ ARG FOLDER
 ARG MODULE
 ARG TESTS
 
-RUN echo "************************************"
-RUN echo $JAVA_OPTS
 ENV JAVA_OPTS="$JAVA_OPTS $JAVAOPTS"
 
 RUN --mount=type=secret,id=aws_config,target=/root/.aws/config \
