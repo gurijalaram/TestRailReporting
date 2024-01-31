@@ -29,6 +29,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @ExtendWith(TestRulesAPI.class)
@@ -99,7 +100,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.CONTRIBUTOR.getRole());
 
-        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
         soft.assertThatList(applicationsResponse.getAppsList())
             .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
@@ -117,7 +118,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.ANALYST.getRole());
 
-        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
         soft.assertThatList(applicationsResponse.getAppsList())
             .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
@@ -135,7 +136,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.DESIGNER.getRole());
 
-        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
         soft.assertThatList(applicationsResponse.getAppsList())
             .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
@@ -153,7 +154,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.EXPERT.getRole());
 
-        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
         soft.assertThatList(applicationsResponse.getAppsList())
             .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
@@ -171,7 +172,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.DEVELOPER.getRole());
 
-        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
         soft.assertThatList(applicationsResponse.getAppsList())
             .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
@@ -191,7 +192,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.ANALYST.getRole());
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
 
-        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
         soft.assertThatList(applicationsResponse.getAppsList())
             .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
@@ -211,7 +212,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
         soft.assertThat(enablements.getUserAdminEnabled()).isTrue();
 
-        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
         soft.assertThatList(applicationsResponse.getAppsList())
             .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
@@ -231,7 +232,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
         soft.assertThat(enablements.getUserAdminEnabled()).isTrue();
 
-        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
         soft.assertThatList(applicationsResponse.getAppsList())
             .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
@@ -251,7 +252,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
         soft.assertThat(enablements.getUserAdminEnabled()).isTrue();
 
-        AppsItems applicationsResponse =  cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
         soft.assertThatList(applicationsResponse.getAppsList())
             .containsExactlyInAnyOrder((appsItems.getAppsList()).toArray(new Apps[appsItems.getAppsList().size()]));
         soft.assertAll();
@@ -270,66 +271,134 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     }
 
     private AppsItems getExpectedAccessControlForRole(CDSRolesEnum role) {
+        List<AppAccessControlsEnum> filterProd = new ArrayList<>();
+        filterProd.add(AppAccessControlsEnum.CUS);
+        filterProd.add(AppAccessControlsEnum.CSS);
+        filterProd.add(AppAccessControlsEnum.ACH);
+        filterProd.add(AppAccessControlsEnum.AW);
 
+        List<AppAccessControlsEnum> filterSandbox = new ArrayList<>();
         AppsItems appsItems = new AppsItems();
         switch (role) {
             case CONTRIBUTOR: {
-                appsItems = JsonManager
-                    .deserializeJsonFromFile(FileResourceUtil
-                        .getResourceAsFile("Contributors.json").getPath(), AppsItems.class);
+                appsItems = filter(filterProd, null);
                 break;
             }
             case ANALYST: {
-                appsItems = JsonManager
-                    .deserializeJsonFromFile(FileResourceUtil
-                        .getResourceAsFile("Analyst.json").getPath(), AppsItems.class);
+                filterProd.add(AppAccessControlsEnum.AA);
+                appsItems = filter(filterProd, null);
                 break;
             }
             case DESIGNER: {
-                appsItems = JsonManager
-                    .deserializeJsonFromFile(FileResourceUtil
-                        .getResourceAsFile("Designer.json").getPath(), AppsItems.class);
+                filterProd.add(AppAccessControlsEnum.AA);
+                filterProd.add(AppAccessControlsEnum.AD);
+                filterProd.add(AppAccessControlsEnum.FMS);
+                filterProd.add(AppAccessControlsEnum.ACS);
+                appsItems = filter(filterProd, null);
                 break;
             }
             case DEVELOPER: {
-                appsItems = JsonManager
-                    .deserializeJsonFromFile(FileResourceUtil
-                        .getResourceAsFile("Developer.json").getPath(), AppsItems.class);
+                filterProd.add(AppAccessControlsEnum.AA);
+                filterProd.add(AppAccessControlsEnum.AD);
+                filterProd.add(AppAccessControlsEnum.FMS);
+                filterProd.add(AppAccessControlsEnum.ACS);
+                filterProd.add(AppAccessControlsEnum.EDC);
+                filterProd.add(AppAccessControlsEnum.AP);
+
+                appsItems = filter(filterProd, null);
                 break;
             }
             case EXPERT: {
-                appsItems = JsonManager
-                    .deserializeJsonFromFile(FileResourceUtil
-                        .getResourceAsFile("Expert.json").getPath(), AppsItems.class);
+                filterProd.add(AppAccessControlsEnum.AA);
+                filterProd.add(AppAccessControlsEnum.AD);
+                filterProd.add(AppAccessControlsEnum.FMS);
+                filterProd.add(AppAccessControlsEnum.ACS);
+                filterProd.add(AppAccessControlsEnum.EDC);
+                filterProd.add(AppAccessControlsEnum.AP);
                 break;
             }
             case ANALYST_CONNECT: {
-                appsItems = JsonManager
-                    .deserializeJsonFromFile(FileResourceUtil
-                        .getResourceAsFile("AnalystConnectAdmin.json").getPath(), AppsItems.class);
+                filterProd.add(AppAccessControlsEnum.AA);
+                filterProd.add(AppAccessControlsEnum.AC);
+                appsItems = filter(filterProd, null);
                 break;
             }
             case DESIGNER_CONNECT_USER: {
-                appsItems = JsonManager
-                    .deserializeJsonFromFile(FileResourceUtil
-                        .getResourceAsFile("DesignerConnectUserAdmin.json").getPath(), AppsItems.class);
+                filterProd.add(AppAccessControlsEnum.AA);
+                filterProd.add(AppAccessControlsEnum.AD);
+                filterProd.add(AppAccessControlsEnum.FMS);
+                filterProd.add(AppAccessControlsEnum.ACS);
+                filterProd.add(AppAccessControlsEnum.AC);
+                filterProd.add(AppAccessControlsEnum.CA);
+                appsItems = filter(filterProd, null);
                 break;
             }
             case EXPERT_CONNECT_USER: {
-                appsItems = JsonManager
-                    .deserializeJsonFromFile(FileResourceUtil
-                        .getResourceAsFile("ExpertConnectUserAdmin.json").getPath(), AppsItems.class);
+                filterProd.add(AppAccessControlsEnum.AA);
+                filterProd.add(AppAccessControlsEnum.AD);
+                filterProd.add(AppAccessControlsEnum.FMS);
+                filterProd.add(AppAccessControlsEnum.ACS);
+                filterProd.add(AppAccessControlsEnum.EDC);
+                filterProd.add(AppAccessControlsEnum.AP);
+                filterProd.add(AppAccessControlsEnum.AC);
+                filterProd.add(AppAccessControlsEnum.CA);
+                appsItems = filter(filterProd, null);
                 break;
             }
             case EXPERT_CONNECT_USER_SANDBOX: {
-                appsItems = JsonManager
-                    .deserializeJsonFromFile(FileResourceUtil
-                        .getResourceAsFile("ExpertConnectUserAdminSandbox.json").getPath(), AppsItems.class);
+                filterProd.add(AppAccessControlsEnum.AA);
+                filterProd.add(AppAccessControlsEnum.AD);
+                filterProd.add(AppAccessControlsEnum.FMS);
+                filterProd.add(AppAccessControlsEnum.ACS);
+                filterProd.add(AppAccessControlsEnum.EDC);
+                filterProd.add(AppAccessControlsEnum.AP);
+                filterProd.add(AppAccessControlsEnum.AC);
+                filterProd.add(AppAccessControlsEnum.CA);
+                filterProd.add(AppAccessControlsEnum.ADMIN);
+
+                filterSandbox.add(AppAccessControlsEnum.AW);
+                filterSandbox.add(AppAccessControlsEnum.AA);
+                filterSandbox.add(AppAccessControlsEnum.AD);
+                filterSandbox.add(AppAccessControlsEnum.AP);
+                filterSandbox.add(AppAccessControlsEnum.ADMIN);
+                filterSandbox.add(AppAccessControlsEnum.AC);
+                filterSandbox.add(AppAccessControlsEnum.FMS);
+                filterSandbox.add(AppAccessControlsEnum.ACS);
+                filterSandbox.add(AppAccessControlsEnum.CSS);
+                appsItems = filter(filterProd, filterSandbox);
                 break;
             }
             default:
                 throw new IllegalArgumentException("Type not found");
         }
         return appsItems;
+    }
+
+    private AppsItems filter(List<AppAccessControlsEnum> filterProd, List<AppAccessControlsEnum> filterSandbox) {
+
+        AppsItems appsItems = JsonManager
+            .deserializeJsonFromFile(FileResourceUtil
+                .getResourceAsFile("AllRolesProduction.json").getPath(), AppsItems.class);
+
+        List<Apps> listOutput =
+            appsItems.getAppsList().stream()
+                .filter(e -> filterProd.stream().map(AppAccessControlsEnum::getApp).anyMatch(name -> name.equals(e.getAppAccessControlsEnum().getApp())))
+                .collect(Collectors.toList());
+
+        if (filterSandbox != null) {
+            AppsItems appsItemsSbx = JsonManager
+                .deserializeJsonFromFile(FileResourceUtil
+                    .getResourceAsFile("AllRolesSandbox.json").getPath(), AppsItems.class);
+
+            List<Apps> listOutputSandBox =
+                appsItemsSbx.getAppsList().stream()
+                    .filter(e -> filterProd.stream().map(AppAccessControlsEnum::getApp).anyMatch(name -> name.equals(e.getAppAccessControlsEnum().getApp())))
+                    .collect(Collectors.toList());
+            listOutput.addAll(listOutputSandBox);
+        }
+
+        AppsItems result = new AppsItems();
+        result.setAppsList(listOutput);
+        return result;
     }
 }
