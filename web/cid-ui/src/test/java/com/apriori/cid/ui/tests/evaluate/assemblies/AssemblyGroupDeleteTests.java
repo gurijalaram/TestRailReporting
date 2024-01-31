@@ -68,7 +68,7 @@ public class AssemblyGroupDeleteTests extends TestBaseUI {
 
         includedSubcomponents.forEach(includedSubcomponent -> {
             componentsTreePage.multiSelectSubcomponents(
-                includedSubcomponent.getComponentName() + "," + componentAssembly.getScenarioName() );
+                includedSubcomponent.getComponentName() + "," + componentAssembly.getScenarioName());
         });
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.DELETE)).as("Delete Button Enabled").isTrue();

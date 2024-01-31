@@ -16,6 +16,11 @@ import com.apriori.cid.ui.utils.ColourEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.FileResourceUtil;
+import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -29,6 +34,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 public class IncludeAndExcludeTests extends TestBaseUI {
@@ -88,8 +95,8 @@ public class IncludeAndExcludeTests extends TestBaseUI {
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
-        componentAssembly.getSubComponents().forEach(componentName ->
-            assertThat(componentsTreePage.isTextDecorationStruckOut(componentName.toString()), is(true)));
+        componentAssembly.getSubComponents().forEach(component ->
+            assertThat(componentsTreePage.isTextDecorationStruckOut(component.getComponentName()), is(true)));
     }
 
     @Test
@@ -308,9 +315,31 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     @TestRail(id = {12135, 12052, 12138})
     @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
     public void testMissingSubcomponentIncludedOnUpdate() {
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly();
-        ComponentInfoBuilder excludedComponent = componentAssembly.getSubComponents().remove(componentAssembly.getSubComponents().size() - 1);
+        String assemblyName = "autobotasm";
+        final String assemblyExtension = ".asm.2";
 
+        final ProcessGroupEnum assemblyProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        File assemblyResourceFile = FileResourceUtil.getCloudFile(assemblyProcessGroupEnum, assemblyName + assemblyExtension);
+
+        List<String> subComponentNames = Arrays.asList(
+            "autoparthead", "autoparttorso", "autopartarm", "autoparthand", "autopartleg", "autopartfoot");
+        String componentName = "autoparthelm";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        final String componentExtension = ".prt.1";
+        File componentResourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + componentExtension);
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroupEnum,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
@@ -324,27 +353,27 @@ public class IncludeAndExcludeTests extends TestBaseUI {
 
         componentsTreePage.closePanel()
             .clickActions()
-            .updateCadFile(componentAssembly.getResourceFile())
+            .updateCadFile(assemblyResourceFile)
             .submit(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 5)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(excludedComponent.getComponentName())).isEqualTo(true);
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(excludedComponent.getComponentName())).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(componentName)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
 
-        componentsTreePage.clickScenarioCheckbox(excludedComponent.getComponentName())
-            .updateCadFile(excludedComponent.getResourceFile())
+        componentsTreePage.clickScenarioCheckbox(componentName)
+            .updateCadFile(componentResourceFile)
             .closePanel()
             .openComponents();
 
-        List<ScenarioItem> excludeComponentDetails = componentsUtil.getUnCostedComponent(excludedComponent.getComponentName(), excludedComponent.getScenarioName(), excludedComponent.getUser());
+        List<ScenarioItem> excludeComponentDetails = componentsUtil.getUnCostedComponent(componentName, scenarioName, currentUser);
 
         ComponentInfoBuilder excludedComponentInfo = ComponentInfoBuilder.builder()
-            .componentName(excludedComponent.getComponentName())
-            .scenarioName(excludedComponent.getScenarioName())
+            .componentName(componentName)
+            .scenarioName(scenarioName)
             .scenarioIdentity(excludeComponentDetails.get(0).getScenarioIdentity())
             .componentIdentity(excludeComponentDetails.get(0).getComponentIdentity())
-            .user(excludedComponent.getUser())
+            .user(currentUser)
             .build();
 
         componentAssembly.getSubComponents().add(excludedComponentInfo);
@@ -352,7 +381,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
         componentsTreePage = componentsTreePage.closePanel()
             .clickRefresh(ComponentsTreePage.class);
 
-        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(excludedComponent.getComponentName())).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isTextDecorationStruckOut(componentName)).isEqualTo(false);
 
         softAssertions.assertAll();
     }
