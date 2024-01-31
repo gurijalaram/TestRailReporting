@@ -170,7 +170,176 @@
   },
   "isSchedulerEnabled": false,
   "isEmailReportNameSelected": false,
+  "plmWriteConfiguration": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "identifier": {
+          "name": "identifier",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 3,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isDefault": {
+          "name": "isDefault",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 8,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isValid": {
+          "name": "isValid",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 7,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "key": {
+          "name": "key",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 4,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 6,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "writingRule": {
+          "name": "writingRule",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 5,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [],
+    "name": "",
+    "description": ""
+  },
   "selectedEmailReportName": "none",
+  "emailReportConfiguration": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "identifier": {
+          "name": "identifier",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 3,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isValid": {
+          "name": "isValid",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 4,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 2,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "key": {
+          "name": "key",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 1,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [
+    ],
+    "name": "",
+    "description": ""
+  },
+  "plmWriteReportConfiguration": {
+    "dataShape": {
+      "fieldDefinitions": {
+        "identifier": {
+          "name": "identifier",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 3,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "isValid": {
+          "name": "isValid",
+          "description": "",
+          "baseType": "BOOLEAN",
+          "ordinal": 4,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 2,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "key": {
+          "name": "key",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 1,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "rows": [
+      {
+        "identifier": "1f7b8768-761c-4470-bddf-7f5b42a222bf",
+        "isValid": true,
+        "value": "USD",
+        "key": "currencyCode",
+        "_isSelected": false
+      },
+      {
+        "identifier": "41d54b06-78a2-4c94-b109-96cc20fdadbd",
+        "isValid": true,
+        "value": "true",
+        "key": "roundToDollar",
+        "_isSelected": false
+      }
+    ],
+    "name": "",
+    "description": ""
+  },
   "isPlmWriteReportNameSelected": false,
   "selectedPlmWriteReportName": "none",
   "emailPartFilter": {},

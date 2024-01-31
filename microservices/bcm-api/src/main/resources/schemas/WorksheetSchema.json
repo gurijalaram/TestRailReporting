@@ -28,6 +28,15 @@
         },
         "costingEventIds": {
           "type": "array"
+        },
+        "description": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
         }
       },
       "required": [
@@ -38,6 +47,11 @@
         "createdBy",
         "name",
         "costingEventIds"
+      ],
+      "optional": [
+        "description",
+        "updatedAt",
+        "updatedBy"
       ]
     }
   },

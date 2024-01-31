@@ -1,6 +1,6 @@
-package com.apriori.cic.agent.tests;
+package com.apriori.cic.api.tests;
 
-import com.apriori.cic.agent.utils.AgentService;
+import com.apriori.cic.api.utils.AgentService;
 import com.apriori.cic.api.utils.CicLoginUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AgentInstallTest extends TestBaseUI {
+public class CicAgentInstallTest extends TestBaseUI {
 
     private static String loginSession;
     private static SoftAssertions softAssertions;
@@ -26,7 +26,7 @@ public class AgentInstallTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {4736, 4738, 4739, 4737})
+    @TestRail(id = {5043, 5061, 5062, 5058, 5057})
     @Description("1. Search Nexus Repository for cic agent and for latest version" +
         "2. Download the latest agent in zip format" +
         "3. Extract the zip file to a folder with agent version name " +
@@ -36,8 +36,8 @@ public class AgentInstallTest extends TestBaseUI {
         "7. Updated extracted options file with retrieved connector options" +
         "8. 4739 - Connect to agent remote server and uninstall existing agent" +
         "9. Upload the extracted agent folder to remote server and install the agent" +
-        "10. 4738 - Start / Stop Agent Service" +
-        "11. 4738,  4737 - Install the certificates and verify connector is connected to PLM system" +
+        "10. 5058, 5057 - Start / Stop Agent Service" +
+        "11. 5577 - Install the certificates and verify connector is connected to PLM system" +
         "12. This test covers installation and uninstallation of FileSystem, Windchill, and Teamcenter in CLI mode.")
     public void downloadAndInstallAgent() {
         agentService.searchNexusRepositoryByGroup()

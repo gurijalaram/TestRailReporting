@@ -1,4 +1,4 @@
-package com.apriori.cic.agent.utils;
+package com.apriori.cic.api.utils;
 
 import com.apriori.shared.util.http.utils.EncryptionUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;

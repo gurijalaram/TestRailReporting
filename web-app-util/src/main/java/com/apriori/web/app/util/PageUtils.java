@@ -500,6 +500,15 @@ public class PageUtils {
      * @param millis - time in milliseconds
      */
     public void waitFor(Integer millis) {
+        waitFor(millis.longValue());
+    }
+
+    /**
+     * Waits for a given time
+     *
+     * @param millis - time in milliseconds
+     */
+    public void waitFor(Long millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e1) {
@@ -1404,6 +1413,21 @@ public class PageUtils {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
             wait.until(ExpectedConditions.visibilityOf(element));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Waits for a Ui element to become visible.
+     *
+     * @return <b>True</b> if UI element is visible, <b>false</b> if not visible
+     */
+    public Boolean waitForVisibilityOfElement(By location) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(location));
             return true;
         } catch (TimeoutException e) {
             return false;
