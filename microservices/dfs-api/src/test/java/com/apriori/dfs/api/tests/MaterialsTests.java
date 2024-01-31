@@ -210,7 +210,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29639})
+    @TestRail(id = {29717})
     @Description("Get Bad Request Error when Digital factory identity is invalid")
     public void findMaterialsWithBadDigitalFactoryIdentityTest() {
 
@@ -227,7 +227,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29638})
+    @TestRail(id = {29718})
     @Description("Get Not Found Error when Digital factory identity is invalid")
     public void findMaterialsWithMissingDigitalFactoryTest() {
 
@@ -244,7 +244,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29636})
+    @TestRail(id = {29715})
     @Description("Get Bad Request Error when Process group identity is invalid")
     public void findMaterialsWithBadProcessGroupIdentityTest() {
 
@@ -261,7 +261,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29637})
+    @TestRail(id = {29716})
     @Description("Get Not Found Error when Process group identity is invalid")
     public void findMaterialsWithMissingProcessGroupTest() {
 
@@ -278,7 +278,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29591})
+    @TestRail(id = {29708})
     @Description("Gets a list of materials by digital factory and process group when shared secret is valid")
     public void findMaterialsWithValidSharedSecretTest() {
 
@@ -295,7 +295,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29592})
+    @TestRail(id = {29709})
     @Description("Gets no materials by digital factory and process group when shared secret isn't valid")
     public void findMaterialsWithInvalidSharedSecretTest() {
 
@@ -314,7 +314,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29594})
+    @TestRail(id = {29711})
     @Description("Gets no materials by digital factory and process group when shared secret is missed")
     public void findMaterialsWithoutSharedSecretTest() {
 
@@ -332,7 +332,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29593})
+    @TestRail(id = {29710})
     @Description("Gets no materials by digital factory and process group when shared secret is missed")
     public void findMaterialsWithEmptySharedSecretTest() {
 
@@ -351,7 +351,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29595})
+    @TestRail(id = {29712})
     @Description("Get Not Acceptable error when incorrect Accept Header is provided")
     public void findMaterialsWithIncorrectAcceptHeader() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DFSApiEnum.MATERIALS, ErrorMessage.class)
@@ -369,7 +369,7 @@ public class MaterialsTests {
         softAssertions.assertAll();
     }
 
-    @TestRail(id = {29645})
+    @TestRail(id = {29720})
     @Description("Find a page of Materials")
     @ParameterizedTest
     @CsvSource({
@@ -397,8 +397,7 @@ public class MaterialsTests {
         softAssertions.assertAll();
     }
 
-    //TODO - should be added Test Rail id
-    @TestRail(id = {})
+    @TestRail(id = {29719})
     @Description("Find invalid page number/page size of Materials")
     @ParameterizedTest
     @CsvSource({
@@ -423,7 +422,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29648})
+    @TestRail(id = {29722})
     @Description("Find a page of Materials matched by name")
     public void findMaterialsMatchedByName() {
 
@@ -448,7 +447,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29649})
+    @TestRail(id = {29723})
     @Description("Find a page of Process Groups not matched by name")
     public void findMaterialsNotMatchedByName() {
 
@@ -469,7 +468,7 @@ public class MaterialsTests {
         softAssertions.assertAll();
     }
 
-    @TestRail(id = {})
+    @TestRail(id = {29721})
     @Description("Find all Materials sorted by name")
     @ParameterizedTest
     @ValueSource(strings = { "ASC", "DESC" })
