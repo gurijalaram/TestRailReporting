@@ -6,6 +6,7 @@ import com.apriori.bcm.api.models.request.Worksheet;
 import com.apriori.bcm.api.models.request.WorksheetInputRowsRequest;
 import com.apriori.bcm.api.models.request.WorksheetRequest;
 import com.apriori.bcm.api.models.response.ErrorResponse;
+import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
@@ -87,6 +88,20 @@ public class BcmUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+
+    /**
+     * GET worksheet rows
+     * @param worksheetIdentity - identity of the worksheet
+     * @return
+     */
+    public ResponseWrapper<WorkSheetInputRowGetResponse> getWorkSheetInputRow(String worksheetIdentity) {
+        final RequestEntity requestEntity =
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_INPUT_NAME, WorkSheetInputRowGetResponse.class)
+                .inlineVariables(worksheetIdentity)
+                .expectedResponseCode(HttpStatus.SC_OK);
+        return HTTPRequest.build(requestEntity).get();
+    }
+
     /**
      * Making error request with an existing name of worksheet
      *
@@ -148,5 +163,22 @@ public class BcmUtil extends TestUtil {
                 .expectedResponseCode(expectedResponseCode)
                 .body(body);
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * GET worksheet by its identity
+     *
+     * @param klass - class
+     * @param worksheetIdentity - worksheet identity
+     * @param expectedResponseCode = expected response code
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> getWorksheet(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode) {
+
+        RequestEntity requestEntity =
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_BY_ID, klass)
+                .inlineVariables(worksheetIdentity)
+                .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).get();
     }
 }
