@@ -102,6 +102,7 @@ public class QmsApiTestUtils {
      */
     public static ScenarioItem createAndPublishScenarioViaCidApp(ProcessGroupEnum processGroupEnum, String componentName, UserCredentials currentUser) {
         ComponentInfoBuilder componentInfoBuilder = new ScenariosUtil().postAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(processGroupEnum, currentUser));
+
         ScenarioItem scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
             SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName()).get(0);
         return scenarioItem;
