@@ -394,8 +394,9 @@ public class IncludeAndExcludeTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())
-            .navigateToScenario(subSubAssembly)
+            .navigateToScenario(componentAssembly)
             .openComponents()
+            .expandSubAssembly(subSubAssembly.getComponentName(), subSubAssembly.getScenarioName())
             .multiSelectSubcomponents(subSubAssembly.getComponentName() + "," + subSubAssembly.getScenarioName(),
                 subSubAssembly.getSubComponents().get(0).getComponentName() + "," + subSubAssembly.getScenarioName());
 
