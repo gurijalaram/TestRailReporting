@@ -216,6 +216,9 @@ public class ScenariosUtil {
             groupCostResponse = HTTPRequest.build(requestEntity).post();
             groupCostResponseEntity = groupCostResponse.getResponseEntity();
         });
+
+        componentInfo.forEach(this::getScenarioCompleted);
+
         return groupCostResponseEntity;
     }
 
