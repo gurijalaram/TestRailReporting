@@ -325,7 +325,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
         final String componentExtension = ".prt.1";
         File componentResourceFile = FileResourceUtil.getCloudFile(processGroupEnum, missingComponentName + componentExtension);
 
-        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly(assemblyName);
+        componentAssembly = new AssemblyRequestUtil().getAssembly(assemblyName);
         componentAssembly.setExtension(assemblyExtension);
         componentAssembly.setResourceFile(assemblyResourceFile);
 
