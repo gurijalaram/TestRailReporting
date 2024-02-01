@@ -160,8 +160,9 @@ public class AssemblyUtils {
      * @param assembly - the assembly
      * @return list of scenario item
      */
-    public ScenarioResponse costAssembly(ComponentInfoBuilder assembly) {
-        return scenariosUtil.postCostScenario(assembly);
+    public AssemblyUtils costAssembly(ComponentInfoBuilder assembly) {
+        scenariosUtil.postGroupCostScenarios(assembly);
+        return this;
     }
 
     /**
