@@ -123,12 +123,12 @@ pipeline {
 
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
-                        javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
+                        javaOpts = javaOpts + " \'-Dcustomer=${params.CUSTOMER}\'"
                     }
 
                     default_aws_region = params.REGION
                     if (default_aws_region && default_aws_region != "none") {
-                        javaOpts = javaOpts + " -Ddefault_aws_region=${params.REGION}"
+                        javaOpts = javaOpts + " \'-Ddefault_aws_region=${params.REGION}\'"
                     }
 
                     number_of_parts = params.NUMBER_OF_PARTS
@@ -210,7 +210,7 @@ pipeline {
                             --secret id=aws_creds,src=${AWS_CREDENTIALS_SECRET_TXT} \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
-                            --build-arg JAVAOPTS='${javaOpts}' \
+                            --build-arg JAVAOPTS="${javaOpts}" \
                             --build-arg TESTS=${testSuite} \
                             .
                     """
