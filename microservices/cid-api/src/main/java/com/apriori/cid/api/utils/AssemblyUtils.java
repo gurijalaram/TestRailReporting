@@ -150,7 +150,7 @@ public class AssemblyUtils {
      * @return current object
      */
     public AssemblyUtils costSubComponents(ComponentInfoBuilder assemblySubComponent) {
-        assemblySubComponent.getSubComponents().forEach(subComponent -> scenariosUtil.postCostScenario(subComponent));
+        scenariosUtil.postGroupCostScenarios(assemblySubComponent.getSubComponents());
         return this;
     }
 

@@ -62,13 +62,13 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        ResponseWrapper<GroupCostResponse> groupCostResponse = scenariosUtil.postGroupCostScenarios(componentAssembly, subComponentNames.subList(0, noOfSubcomponentsToCost)
+        GroupCostResponse groupCostResponse = scenariosUtil.postGroupCostScenarios(componentAssembly, subComponentNames.subList(0, noOfSubcomponentsToCost)
             .toArray(new String[noOfSubcomponentsToCost]));
 
         softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(groupCostResponse.getResponseEntity().getSuccesses().size()).as("Group Cost Successes").isEqualTo(noOfSubcomponentsToCost);
-        softAssertions.assertThat(groupCostResponse.getResponseEntity().getFailures().size()).as("Group Cost Failures").isEqualTo(0);
+        softAssertions.assertThat(groupCostResponse.getSuccesses().size()).as("Group Cost Successes").isEqualTo(noOfSubcomponentsToCost);
+        softAssertions.assertThat(groupCostResponse.getFailures().size()).as("Group Cost Failures").isEqualTo(0);
 
         softAssertions.assertAll();
     }
