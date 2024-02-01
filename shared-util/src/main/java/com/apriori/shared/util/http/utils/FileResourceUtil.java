@@ -271,7 +271,7 @@ public class FileResourceUtil extends AwsUtil {
             return tempFile;
 
         } catch (RuntimeException | IOException e) {
-            throw new ResourceLoadException(String.format("File with name '%s' can not be saved: ", fileName, e));
+            throw new ResourceLoadException(String.format("File with name '%s' can not be saved: ", fileName));
         }
 
     }
@@ -282,7 +282,7 @@ public class FileResourceUtil extends AwsUtil {
             byte[] data = Base64.getMimeDecoder().decode(contentBytes.getBytes(StandardCharsets.UTF_8));
             out.write(data);
         } catch (Exception e) {
-            throw new ResourceLoadException(String.format("File with name '%s' can not be saved: ", fileName, e));
+            throw new ResourceLoadException(String.format("File with name '%s' can not be saved: ", fileName));
         }
         return tempFile;
     }
