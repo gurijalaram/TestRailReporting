@@ -832,19 +832,6 @@ public class ScenariosUtil {
     }
 
     /**
-     * PATCH scenario association and POST to cost scenario
-     *
-     * @param componentInfo         - the component info builder object
-     * @param excluded              - boolean
-     * @param componentScenarioName - component and scenario name
-     * @return response object
-     */
-    public ScenarioResponse patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
-        patchAssociations(componentInfo, excluded, componentScenarioName);
-        return postCostScenario(componentInfo);
-    }
-
-    /**
      * GET scenario routings
      *
      * @param currentUser     - the user details to obtain a token
