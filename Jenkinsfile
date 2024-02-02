@@ -163,7 +163,7 @@ pipeline {
 
                     addlJavaOpts = params.JAVAOPTS
                     if (addlJavaOpts && addlJavaOpts != "none") {
-                        javaOpts = javaOpts + " ${params.JAVAOPTS}"
+                        javaOpts = javaOpts + " " + addlJavaOpts
                     }
 
                     echo "${javaOpts}"
@@ -210,6 +210,7 @@ pipeline {
                             --secret id=aws_creds,src=${AWS_CREDENTIALS_SECRET_TXT} \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
+                            --build-arg JAVAOPTS="${javaOpts}" \
                             --build-arg TESTS=${testSuite} \
                             .
                     """
