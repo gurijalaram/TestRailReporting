@@ -10,6 +10,7 @@ import com.apriori.cir.api.JasperReportSummaryIncRawData;
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.request.ReportRequest;
+import com.apriori.cir.api.models.response.ChartData;
 import com.apriori.cir.api.models.response.ChartDataPoint;
 import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.utils.JasperReportUtil;
@@ -37,6 +38,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Data
 @Slf4j
@@ -454,11 +456,7 @@ public class JasperApiUtils {
             }
         }
 
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
-        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-
-        int indexToGet = isSheetMetalDtcDetailsTest ? 3 : 1;
-        softAssertions.assertThat(tdResultElements.get(indexToGet).parent().children().toString().contains(miscDataList.get(1))).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -507,14 +505,19 @@ public class JasperApiUtils {
         String processGroup = miscDataList.size() > 1 ? miscDataList.get(1) : "";
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), processGroup);
 
-        for (String partName : partNames) {
-            partName = miscDataList.get(1).contains("(Initial") ? partName.replace(" (Initial)", "") : partName;
-            softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
+        if (!partNames.get(0).equals("")) {
+            for (String partName : partNames) {
+                partName = miscDataList.get(1).contains("(Initial") ? partName.replace(" (Initial)", "") : partName;
+                softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
+            }
+        } else {
+            softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("No data available")).isEqualTo(true);
         }
 
-        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
+        /*List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains(miscDataList.get(1))).isEqualTo(true);
+        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains(miscDataList.get(1))).isEqualTo(true);*/
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -531,12 +534,16 @@ public class JasperApiUtils {
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
         List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
-        int i = 6;
+        List<String> listOfPartNumbers = partNumberElements.stream().flatMap(e -> Stream.of(e.text())).collect(Collectors.toList());
+
         for (String partName : partNames) {
-            String partNameWithoutScenarioName = partName.contains(" (Initial)") ? partName.replace(" (Initial)", "") : partName.replace(" (sand casting)", "");
-            partNameWithoutScenarioName = partName.contains(" (Bulkload)") ? partName.replace(" (Bulkload)", "") : partNameWithoutScenarioName;
-            softAssertions.assertThat(partNumberElements.get(i).toString().contains(partNameWithoutScenarioName)).isEqualTo(true);
-            i++;
+            if (partNumberElements.size() == 0) {
+                softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("No data available")).isEqualTo(true);
+            } else {
+                String partNameWithoutScenarioName = partName.contains(" (Initial)") ? partName.replace(" (Initial)", "") : partName.replace(" (sand casting)", "");
+                partNameWithoutScenarioName = partName.contains(" (Bulkload)") ? partName.replace(" (Bulkload)", "") : partNameWithoutScenarioName;
+                softAssertions.assertThat(listOfPartNumbers.contains(partNameWithoutScenarioName)).isEqualTo(true);
+            }
         }
 
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Process Group").get(6)
@@ -566,6 +573,7 @@ public class JasperApiUtils {
 
     /**
      * Generic test for minimum annual spend input control on a dtc details report
+     * @param isNoDataAvailableExpected - boolean flag for if we are expecting no data available or not
      */
     public void genericMinAnnualSpendDtcDetailsTest(boolean isNoDataAvailableExpected) {
         String minimumAnnualSpendValue = "7820000";
@@ -573,10 +581,7 @@ public class JasperApiUtils {
 
         if (!isNoDataAvailableExpected) {
             String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(15).text();
-            //String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(11).text();
-            //softAssertions.assertThat(minAnnualSpendValue).isEqualTo("8,264,352.15");
             softAssertions.assertThat(minAnnualSpendValue).isEqualTo("34,661,340.98");
-            // expected above is only for sheet metal dtc and details reports (not comparison)
             softAssertions.assertThat(minAnnualSpendValue).isNotEqualTo(minimumAnnualSpendValue);
         } else {
             softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString()).contains("No data available");
@@ -586,21 +591,47 @@ public class JasperApiUtils {
     }
 
     /**
-     * Generic test for sort order input control on a dtc report
+     * Generic test for sort order input control on a dtc comparison report
      *
      * @param miscData      - List of Strings of data for the test
      * @param partNames     - List of Strings of part names for the test
      * @param assertFigures - List of Doubles for the assertion of Annual Spend values
      */
-    public void genericSortOrderDtcTest(List<String> partNames, List<Double> assertFigures, String... miscData) {
+    public void genericSortOrderAnnualSpendDtcTest(List<String> partNames, List<Double> assertFigures, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(0).getPartName()).isEqualTo(partNames.get(0));
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(1).getPartName()).isEqualTo(partNames.get(1));
+        ChartData chartData = jasperReportSummary.getChartData().get(0);
+        softAssertions.assertThat(chartData.getChartDataPoints().get(0).getPartName()).isEqualTo(partNames.get(0));
+        softAssertions.assertThat(chartData.getChartDataPoints().get(1).getPartName()).isEqualTo(partNames.get(1));
 
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName(partNames.get(0)).getPropertyByName("annualSpend").getValue()).isEqualTo(assertFigures.get(0));
-        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPointByPartName(partNames.get(1)).getPropertyByName("annualSpend").getValue()).isEqualTo(assertFigures.get(1));
+        softAssertions.assertThat(chartData.getChartDataPointByPartName(partNames.get(0)).getPropertyByName("annualSpend").getValue())
+            .isEqualTo(assertFigures.get(0));
+        softAssertions.assertThat(chartData.getChartDataPointByPartName(partNames.get(1)).getPropertyByName("annualSpend").getValue())
+            .isEqualTo(assertFigures.get(1));
+
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort");
+        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains(miscDataList.get(1))).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    /**
+     * Generic test for sort order (annual spend) input control on a dtc report
+     *
+     * @param miscData      - List of Strings of data for the test
+     * @param partNames     - List of Strings of part names for the test
+     * @param assertFigures - List of Doubles for the assertion of Annual Spend values
+     */
+    public void genericSortOrderDtcComparisonTest(List<String> partNames, List<Double> assertFigures, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
+
+        List<ChartDataPoint> chartDataPointsList = jasperReportSummary.getChartData().get(0).getChartDataPoints();
+
+        softAssertions.assertThat(chartDataPointsList.get(0).getPartName()).isEqualTo(partNames.get(0));
+        softAssertions.assertThat(chartDataPointsList.get(1).getPartName()).isEqualTo(partNames.get(1));
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText("Sort");
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());

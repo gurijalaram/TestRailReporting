@@ -176,7 +176,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
             4406.160458693279,
             6753.127001618986
         );
-        jasperApiUtils.genericSortOrderDtcTest(
+        jasperApiUtils.genericSortOrderAnnualSpendDtcTest(
             partNames,
             assertFigures,
             "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
