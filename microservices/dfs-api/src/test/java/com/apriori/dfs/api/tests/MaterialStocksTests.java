@@ -14,7 +14,6 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -242,7 +241,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {1})
+    @TestRail(id = {29762})
     @Description("Get Bad Request Error when Digital factory identity is invalid")
     public void findMaterialStocksWithBadDigitalFactoryIdentityTest() {
 
@@ -260,7 +259,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {2})
+    @TestRail(id = {29761})
     @Description("Get Not Found Error when Digital factory identity is missing")
     public void findMaterialStocksWithMissingDigitalFactoryTest() {
 
@@ -278,7 +277,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {3})
+    @TestRail(id = {29760})
     @Description("Get Bad Request Error when Process group identity is invalid")
     public void findMaterialStocksWithBadProcessGroupIdentityTest() {
 
@@ -296,7 +295,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {4})
+    @TestRail(id = {29759})
     @Description("Get Not Found Error when Process group identity is missing")
     public void findMaterialStocksWithMissingProcessGroupTest() {
 
@@ -314,7 +313,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {5})
+    @TestRail(id = {29758})
     @Description("Get Bad Request Error when Material identity is invalid")
     public void findMaterialStocksWithBadMaterialIdentityTest() {
 
@@ -332,7 +331,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {6})
+    @TestRail(id = {29757})
     @Description("Get Not Found Error when Material identity is missing")
     public void findMaterialStocksWithMissingMaterialIdentityTest() {
 
@@ -350,7 +349,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {7})
+    @TestRail(id = {29752})
     @Description("Gets a list of material stocks by digital factory, process group and material when shared secret is valid")
     public void findMaterialStocksWithValidSharedSecretTest() {
 
@@ -368,7 +367,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {8})
+    @TestRail(id = {29753})
     @Description("Gets no material stocks when shared secret isn't valid")
     public void findMaterialStocksWithInvalidSharedSecretTest() {
 
@@ -388,7 +387,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {9})
+    @TestRail(id = {29755})
     @Description("Get no material stocks when shared secret is missed")
     public void findMaterialStocksWithoutSharedSecretTest() {
 
@@ -407,7 +406,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {10})
+    @TestRail(id = {29754})
     @Description("Gets no material stocks when shared secret is Empty")
     public void findMaterialStocksWithEmptySharedSecretTest() {
 
@@ -427,7 +426,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {11})
+    @TestRail(id = {29756})
     @Description("Get Not Acceptable error when incorrect Accept Header is provided")
     public void findMaterialStocksWithIncorrectAcceptHeader() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DFSApiEnum.MATERIAL_STOCKS, ErrorMessage.class)
@@ -445,7 +444,7 @@ public class MaterialStocksTests {
         softAssertions.assertAll();
     }
 
-    @TestRail(id = {12})
+    @TestRail(id = {29764})
     @Description("Find a page of Material Stocks")
     @ParameterizedTest
     @CsvSource({
@@ -474,7 +473,7 @@ public class MaterialStocksTests {
         softAssertions.assertAll();
     }
 
-    @TestRail(id = {13})
+    @TestRail(id = {29768})
     @Description("Find a page of Material Stocks which contains just 8 stocks" +
         " on the last page with page size is 20")
     @ParameterizedTest
@@ -504,7 +503,7 @@ public class MaterialStocksTests {
         softAssertions.assertAll();
     }
 
-    @TestRail(id = {14})
+    @TestRail(id = {29763})
     @Description("Find invalid page number/page size of Material Stocks")
     @ParameterizedTest
     @CsvSource({
@@ -530,7 +529,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {15})
+    @TestRail(id = {29766})
     @Description("Find a page of Material Stocks matched by name")
     public void findMaterialStocksMatchedByName() {
 
@@ -557,7 +556,7 @@ public class MaterialStocksTests {
     }
 
     @Test
-    @TestRail(id = {16})
+    @TestRail(id = {29767})
     @Description("Find a page of Material Stocks when name doesn't matched")
     public void findMaterialStocksWhenNameDoesNotMatched() {
 
@@ -579,7 +578,7 @@ public class MaterialStocksTests {
         softAssertions.assertAll();
     }
 
-    @TestRail(id = {17})
+    @TestRail(id = {29765})
     @Description("Find all Material Stocks sorted by name")
     @ParameterizedTest
     @ValueSource(strings = { "ASC", "DESC" })
