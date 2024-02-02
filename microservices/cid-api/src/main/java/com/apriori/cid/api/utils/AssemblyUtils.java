@@ -4,6 +4,7 @@ import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.ErrorMessage;
 
@@ -40,6 +41,7 @@ public class AssemblyUtils {
             subComponentName -> ComponentInfoBuilder.builder()
                 .componentName(subComponentName)
                 .extension(subComponentExtension)
+                .resourceFile(FileResourceUtil.getCloudFile(subComponentProcessGroup, subComponentName + subComponentExtension))
                 .scenarioName(scenarioName)
                 .processGroup(subComponentProcessGroup)
                 .user(currentUser)
@@ -74,6 +76,7 @@ public class AssemblyUtils {
             .extension(assemblyExtension)
             .scenarioName(scenarioName)
             .processGroup(assemblyProcessGroup)
+            .resourceFile(FileResourceUtil.getCloudFile(assemblyProcessGroup, assemblyName + assemblyExtension))
             .subComponents(buildSubComponents(subComponentNames,
                 subComponentExtension,
                 subComponentProcessGroup,

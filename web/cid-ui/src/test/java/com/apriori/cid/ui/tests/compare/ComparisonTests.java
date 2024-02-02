@@ -153,7 +153,7 @@ public class ComparisonTests extends TestBaseUI {
         evaluatePage.selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(component2, EvaluatePage.class)
+            .publish(component, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -285,7 +285,7 @@ public class ComparisonTests extends TestBaseUI {
         ComponentInfoBuilder component3 = new ComponentRequestUtil().getComponent();
         component3.setUser(component.getUser());
         ComponentInfoBuilder component4 = new ComponentRequestUtil().getComponent();
-        component2.setUser(component.getUser());
+        component4.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(component.getUser())
@@ -571,8 +571,8 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {5800, 6458, 6459})
     @Description("Publish private scenarios that are included in the comparison")
     public void publishScenarioOfComparison() {
-        component = new ComponentRequestUtil().getComponent();
-        component2 = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponent("bracket_basic");
+        component2 = new ComponentRequestUtil().getComponent("700-33770-01_A0");
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -630,8 +630,8 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {7020})
     @Description("Validate arrows are correct colour and direction in comparisons")
     public void validateArrowsInComparison() {
-        component = new ComponentRequestUtil().getComponent();
-        component2 = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponent("M3CapScrew");
+        component2 = new ComponentRequestUtil().getComponent("Push Pin");
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -671,8 +671,8 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {7021, 5906})
     @Description("Validate percentages are correct in comparison")
     public void validatePercentageInComparison() {
-        component = new ComponentRequestUtil().getComponent();
-        component2 = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponent("M3CapScrew");
+        component2 = new ComponentRequestUtil().getComponent("Push Pin");
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -697,7 +697,7 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getDeltaPercentage(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME))
             .as("Total Cycle Time").isEqualTo("138.55%");
         softAssertions.assertThat(comparePage.getDeltaPercentage(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT))
-            .as("Total Capital Investment").isEqualTo("3.48%");
+            .as("Total Capital Investment").isEqualTo("3.47%");
 
         softAssertions.assertAll();
     }
@@ -1156,8 +1156,9 @@ public class ComparisonTests extends TestBaseUI {
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
         component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        component2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2 = new ComponentRequestUtil().getComponent();
         component2.setUser(component.getUser());
+        componentsUtil.postComponent(component2);
 
         loginPage = new CidAppLoginPage(driver);
         compareExplorePage = loginPage.login(component.getUser())
@@ -1214,7 +1215,7 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getComparisonName()).as("Verify that correct Comparison Name displayed").isEqualTo(comparisonName);
         softAssertions.assertThat(comparePage.getBasis()).as("Verify correct Basis in Comparison")
             .isEqualTo(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
-        softAssertions.assertThat(component2.getComponentName() + "  / " + component2.getScenarioName()).as("Verify correct Compared Scenario in Comparison")
+        softAssertions.assertThat(component2.getComponentName().toUpperCase() + "  / " + component2.getScenarioName()).as("Verify correct Compared Scenario in Comparison")
             .isIn(comparePage.getScenariosInComparison());
 
         softAssertions.assertAll();
@@ -1232,8 +1233,9 @@ public class ComparisonTests extends TestBaseUI {
         String invalidCharacterErrorText = "Must only contain characters, numbers, spaces and the following special characters: . - _ ( )";
 
         component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        component2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2 = new ComponentRequestUtil().getComponent();
         component2.setUser(component.getUser());
+        componentsUtil.postComponent(component2);
 
         compareExplorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -1303,8 +1305,9 @@ public class ComparisonTests extends TestBaseUI {
         String comparisonName2 = new GenerateStringUtil().generateComparisonName();
 
         component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
-        component2 = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
+        component2 = new ComponentRequestUtil().getComponent();
         component2.setUser(component.getUser());
+        component2 = componentsUtil.postComponent(component2);
 
         comparePage = new CidAppLoginPage(driver)
             .login(component.getUser())
