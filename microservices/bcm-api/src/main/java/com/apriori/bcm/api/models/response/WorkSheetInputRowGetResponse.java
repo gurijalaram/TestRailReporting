@@ -20,8 +20,6 @@ import java.util.List;
 @NoArgsConstructor
 @JsonRootName("response")
 public class WorkSheetInputRowGetResponse extends Pagination {
-    private Boolean isFirstPage;
-    private Boolean isLastPage;
     private Integer pageNumber;
     private Integer pageSize;
     private Integer pageItemCount;

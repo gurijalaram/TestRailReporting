@@ -129,7 +129,12 @@ public class WorksheetTests extends BcmUtil {
     @TestRail(id = 29735)
     @Description("Verify getting specific worksheet 404 error worksheet does not exist")
     public void verifyGetWorkSheetDoesNotExist() {
-        bcmUtil.getWorksheet(ErrorResponse.class, "CYTTG999999L", HttpStatus.SC_NOT_FOUND);
+        ResponseWrapper<ErrorResponse> error =
+            bcmUtil.getWorksheet(ErrorResponse.class, "CYTTG999999L", HttpStatus.SC_NOT_FOUND);
+
+        softAssertions.assertThat(error.getResponseEntity().getMessage())
+            .isEqualTo("Resource 'Worksheet' with identity 'CYTTG999999L' was not found");
+        softAssertions.assertAll();
     }
 
     @Test
