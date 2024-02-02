@@ -232,13 +232,13 @@ public class ScenariosUtil {
     public GroupCostResponse postGroupCostScenarios(ComponentInfoBuilder componentInfo, String... componentName) {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
-            Arrays.stream(componentName)
-                .forEach(component -> subComponentInfo.add(componentInfo.getSubComponents().stream()
-                    .filter(subcomponent -> subcomponent.getComponentName().equalsIgnoreCase(component))
-                    .collect(Collectors.toList())
-                    .stream()
-                    .findFirst()
-                    .get()));
+        Arrays.stream(componentName)
+            .forEach(component -> subComponentInfo.add(componentInfo.getSubComponents().stream()
+                .filter(subcomponent -> subcomponent.getComponentName().equalsIgnoreCase(component))
+                .collect(Collectors.toList())
+                .stream()
+                .findFirst()
+                .get()));
 
         return postGroupCostScenarios(subComponentInfo);
     }
