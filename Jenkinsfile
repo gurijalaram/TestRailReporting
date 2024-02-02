@@ -163,7 +163,7 @@ pipeline {
 
                     addlJavaOpts = params.JAVAOPTS
                     if (addlJavaOpts && addlJavaOpts != "none") {
-                        javaOpts = javaOpts + " " + addlJavaOpts
+                        javaOpts = javaOpts + "  ${params.JAVAOPTS}"
                     }
 
                     echo "${javaOpts}"
