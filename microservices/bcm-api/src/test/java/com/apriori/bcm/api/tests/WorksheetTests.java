@@ -1,6 +1,7 @@
 package com.apriori.bcm.api.tests;
 
 import com.apriori.bcm.api.models.response.ErrorResponse;
+import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
@@ -8,12 +9,12 @@ import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.response.component.ComponentResponse;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -73,8 +74,14 @@ public class WorksheetTests extends BcmUtil {
     @Description("Verify creating input rows in the worksheet")
     public void verifyCreateInputRowInWorksheet() {
 
-        ScenarioItem scenarioItem = getPart();
-        String worksheetIdentity = createWorksheet();
+        ScenarioItem scenarioItem =
+            cssComponent.postSearchRequest(testingUser, componentType)
+                .getResponseEntity().getItems().stream()
+                .findFirst().orElse(null);
+
+        String worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"))
+            .getResponseEntity()
+            .getIdentity();
 
         ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow =
             bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
@@ -89,19 +96,87 @@ public class WorksheetTests extends BcmUtil {
         softAssertions.assertAll();
     }
 
-    // TODO: 15/01/2024 cn - krzy, move this to test if its only going to be used once
-    private ScenarioItem getPart() {
-        ResponseWrapper<ComponentResponse> components = cssComponent.postSearchRequest(testingUser, componentType);
-        return components.getResponseEntity().getItems().stream()
-            .findFirst().orElse(null);
+    @Test
+    @TestRail(id = 29733)
+    @Description("Verify getting specific worksheet")
+    public void verifyGetSpecificWorkSheet() {
+        ResponseWrapper<WorkSheetResponse> worksheetCreated =
+            bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"));
+
+        ResponseWrapper<WorkSheetResponse> worksheetGet =
+            bcmUtil.getWorksheet(WorkSheetResponse.class, worksheetCreated.getResponseEntity().getIdentity(), HttpStatus.SC_OK);
+
+        softAssertions.assertThat(worksheetGet.getResponseEntity())
+            .isEqualTo(worksheetCreated.getResponseEntity());
+        softAssertions.assertAll();
     }
 
-    // TODO: 15/01/2024 cn - krzy, what's the purpose of this private method when you can just call bcmUtil.createWorksheet in the test?
-    private String createWorksheet() {
-        String name = new GenerateStringUtil().saltString("name");
-        ResponseWrapper<WorkSheetResponse> worksheet =
-            bcmUtil.createWorksheet(name);
+    @Test
+    @TestRail(id = 29734)
+    @Description("Verify getting specific worksheet 400 error identity is invalid")
+    public void verifyGetWorkSheetWrongIdentity() {
+        ResponseWrapper<ErrorResponse> worksheetGet =
+            bcmUtil.getWorksheet(ErrorResponse.class, "fake9876", HttpStatus.SC_BAD_REQUEST);
 
-        return worksheet.getResponseEntity().getIdentity();
+        softAssertions.assertThat(worksheetGet.getResponseEntity().getMessage())
+            .isEqualTo("'identity' is not a valid identity.");
+        softAssertions.assertThat(worksheetGet.getResponseEntity().getPath())
+            .isEqualTo("/worksheets/fake9876");
+        softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(id = 29735)
+    @Description("Verify getting specific worksheet 404 error worksheet does not exist")
+    public void verifyGetWorkSheetDoesNotExist() {
+        ResponseWrapper<ErrorResponse> error =
+            bcmUtil.getWorksheet(ErrorResponse.class, "CYTTG999999L", HttpStatus.SC_NOT_FOUND);
+
+        softAssertions.assertThat(error.getResponseEntity().getMessage())
+            .isEqualTo("Resource 'Worksheet' with identity 'CYTTG999999L' was not found");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = 29736)
+    @Description("Verify getting worksheet rows")
+    public void verifyGetWorksheetRows() {
+        ScenarioItem scenarioItem =
+            cssComponent.postSearchRequest(testingUser, componentType)
+                .getResponseEntity().getItems().stream()
+                .findFirst().orElse(null);
+
+        String worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"))
+            .getResponseEntity()
+            .getIdentity();
+
+        ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow =
+            bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+                scenarioItem.getScenarioIdentity(),
+                worksheetIdentity);
+
+        ResponseWrapper<WorkSheetInputRowGetResponse> worksheetRow =
+            bcmUtil.getWorkSheetInputRow(worksheetIdentity);
+
+        softAssertions.assertThat(worksheetRow.getResponseEntity().getItems())
+            .isNotEmpty();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = 29740)
+    @Description("Verify getting worksheet rows for empty worksheet with no rows")
+    public void verifyGetWorksheetRowsWithoutRows() {
+        String worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"))
+            .getResponseEntity()
+            .getIdentity();
+
+        ResponseWrapper<WorkSheetInputRowGetResponse> worksheetRow =
+            bcmUtil.getWorkSheetInputRow(worksheetIdentity);
+
+        softAssertions.assertThat(worksheetRow.getResponseEntity().getItems())
+            .isEmpty();
+        softAssertions.assertAll();
+    }
+
 }
