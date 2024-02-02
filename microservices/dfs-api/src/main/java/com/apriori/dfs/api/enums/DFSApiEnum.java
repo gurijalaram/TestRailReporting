@@ -38,6 +38,11 @@ public enum DFSApiEnum implements ExternalEndpointEnum {
     MATERIAL_BY_PATH_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials/%s?key=%s"),
 
     // MATERIAL STOCKS
+    MATERIAL_STOCKS("digital-factories/%s/process-groups/%s/materials/%s/material-stocks"),
+    MATERIAL_STOCKS_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials/%s/material-stocks?key=%s"),
+    MATERIAL_STOCKS_BY_NAME("digital-factories/%s/process-groups/%s/materials/%s/material-stocks?name[%s]=%s"),
+    MATERIAL_STOCKS_SORTED_BY_NAME("digital-factories/%s/process-groups/%s/materials/%s/material-stocks?pageSize=%s&pageNumber=%s&sortBy[%s]=name"),
+    MATERIAL_STOCKS_WITH_PAGE_SIZE_AND_PAGE_NUMBER("digital-factories/%s/process-groups/%s/materials/%s/material-stocks?pageSize=%s&pageNumber=%s"),
     MATERIAL_STOCKS_BY_PATH("digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s"),
     MATERIAL_STOCKS_BY_PATH_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s?key=%s");
     private final String endpoint;
