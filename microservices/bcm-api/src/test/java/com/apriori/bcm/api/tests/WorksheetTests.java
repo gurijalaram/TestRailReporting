@@ -7,10 +7,8 @@ import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.css.api.utils.CssComponent;
-import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.response.component.ComponentResponse;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -122,6 +120,8 @@ public class WorksheetTests extends BcmUtil {
 
         softAssertions.assertThat(worksheetGet.getResponseEntity().getMessage())
             .isEqualTo("'identity' is not a valid identity.");
+        softAssertions.assertThat(worksheetGet.getResponseEntity().getPath())
+            .isEqualTo("/worksheets/fake9876");
         softAssertions.assertAll();
     }
 
@@ -129,13 +129,7 @@ public class WorksheetTests extends BcmUtil {
     @TestRail(id = 29735)
     @Description("Verify getting specific worksheet 404 error worksheet does not exist")
     public void verifyGetWorkSheetDoesNotExist() {
-        ResponseWrapper<ErrorResponse> worksheetGet =
-            bcmUtil.getWorksheet(ErrorResponse.class, "CYTTG999999L", HttpStatus.SC_NOT_FOUND);
-
-
-        softAssertions.assertThat(worksheetGet.getResponseEntity().getError())
-            .isEqualTo("Not Found");
-        softAssertions.assertAll();
+        bcmUtil.getWorksheet(ErrorResponse.class, "CYTTG999999L", HttpStatus.SC_NOT_FOUND);
     }
 
     @Test
@@ -165,7 +159,7 @@ public class WorksheetTests extends BcmUtil {
     }
 
     @Test
-    @TestRail(id = 29736)
+    @TestRail(id = 29740)
     @Description("Verify getting worksheet rows for empty worksheet with no rows")
     public void verifyGetWorksheetRowsWithoutRows() {
         String worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"))

@@ -1,6 +1,7 @@
 package com.apriori.bcm.api.models.response;
 
 import com.apriori.shared.util.annotations.Schema;
+import com.apriori.shared.util.models.response.Pagination;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -18,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonRootName("response")
-public class WorkSheetInputRowGetResponse {
+public class WorkSheetInputRowGetResponse extends Pagination {
     private Boolean isFirstPage;
     private Boolean isLastPage;
     private Integer pageNumber;
