@@ -23,15 +23,17 @@ public class DataCreationUtil {
     private String scenarioName;
     private ProcessGroupEnum processGroup;
     private File resourceFile;
+    private String extension;
     private UserCredentials userCredentials;
     private ComponentInfoBuilder componentBuilder;
     private CostingTemplate costingTemplate;
 
-    public DataCreationUtil(String componentName, String scenarioName, ProcessGroupEnum processGroup, File resourceFile, CostingTemplate costingTemplate, UserCredentials userCredentials) {
+    public DataCreationUtil(String componentName, String scenarioName, ProcessGroupEnum processGroup, File resourceFile, String extension, CostingTemplate costingTemplate, UserCredentials userCredentials) {
         this.componentName = componentName;
         this.scenarioName = scenarioName;
         this.processGroup = processGroup;
         this.resourceFile = resourceFile;
+        this.extension = extension;
         this.costingTemplate = costingTemplate;
         this.userCredentials = userCredentials;
 
@@ -40,6 +42,7 @@ public class DataCreationUtil {
             .scenarioName(this.scenarioName)
             .processGroup(this.processGroup)
             .resourceFile(this.resourceFile)
+            .extension(this.extension)
             .costingTemplate(this.costingTemplate)
             .user(this.userCredentials)
             .build();
@@ -98,7 +101,8 @@ public class DataCreationUtil {
     public ScenarioResponse createCostComponent() {
         createComponent();
 
-        return scenariosUtil.postCostScenario(this.componentBuilder);
+        scenariosUtil.postGroupCostScenarios(this.componentBuilder);
+        return scenariosUtil.getScenarioCompleted(this.componentBuilder);
     }
 
     /**
@@ -109,7 +113,7 @@ public class DataCreationUtil {
     public ScenarioResponse createCostPublishComponent() {
         ComponentInfoBuilder component = createComponent();
 
-        scenariosUtil.postCostScenario(this.componentBuilder);
+        scenariosUtil.postGroupCostScenarios(this.componentBuilder);
 
         ComponentInfoBuilder publishBuilder = ComponentInfoBuilder.builder()
             .componentName(this.componentBuilder.getComponentName())
