@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.core.StringContains.containsString;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
+import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.SetInputStatusPage;
@@ -33,6 +34,7 @@ import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
+import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -44,10 +46,14 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class EditAssembliesTest extends TestBaseUI {
 
     private static ComponentInfoBuilder componentAssembly;
     private static ComponentInfoBuilder componentAssembly2;
+    private static ComponentsUtil componentsUtil = new ComponentsUtil();
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static ScenariosUtil scenariosUtil = new ScenariosUtil();
     private AssemblyRequestUtil assemblyRequestUtil = new AssemblyRequestUtil();
@@ -583,8 +589,8 @@ public class EditAssembliesTest extends TestBaseUI {
         componentAssembly = SerializationUtils.clone(preExistingComponentAssembly);
         componentAssembly.setScenarioName(new GenerateStringUtil().generateScenarioName());
 
-        ComponentInfoBuilder bolt = preExistingComponentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("bolt")).findFirst().get();
-        ComponentInfoBuilder nut = preExistingComponentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("nut")).findFirst().get();
+        ComponentInfoBuilder component1 = preExistingComponentAssembly.getSubComponents().get(0);
+        ComponentInfoBuilder component2 = preExistingComponentAssembly.getSubComponents().get(1);
 
         assemblyUtils.uploadSubComponents(preExistingComponentAssembly)
             .uploadAssembly(preExistingComponentAssembly);
@@ -602,7 +608,7 @@ public class EditAssembliesTest extends TestBaseUI {
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
-            .multiSelectSubcomponents(bolt.getComponentName() + "," + bolt.getScenarioName(), nut.getComponentName() + "," + nut.getScenarioName())
+            .multiSelectSubcomponents(component1.getComponentName() + "," + component1.getScenarioName(), component2.getComponentName() + "," + component2.getScenarioName())
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
             .enterScenarioName(preExistingComponentAssembly.getScenarioName())
@@ -672,7 +678,7 @@ public class EditAssembliesTest extends TestBaseUI {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(componentAssembly.getUser())
+        evaluatePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
@@ -685,16 +691,29 @@ public class EditAssembliesTest extends TestBaseUI {
             .selectProcessGroup(ProcessGroupEnum.CASTING)
             .applyAndCost(SetInputStatusPage.class)
             .close(ComponentsTablePage.class)
-            .closePanel()
-            .clickExplore()
+            .closePanel();
+
+        List<ScenarioItem> privateBoltDetails = componentsUtil.getUnCostedComponent(BOLT, componentAssembly.getScenarioName(), componentAssembly.getUser())
+            .stream().filter(scenarioItem -> !scenarioItem.getScenarioPublished()).collect(Collectors.toList());
+
+        ComponentInfoBuilder privateBolt = ComponentInfoBuilder.builder()
+            .scenarioName(componentAssembly.getScenarioName())
+            .scenarioIdentity(privateBoltDetails.get(0).getScenarioIdentity())
+            .componentIdentity(privateBoltDetails.get(0).getComponentIdentity())
+            .componentName(BOLT)
+            .user(componentAssembly.getUser())
+            .build();
+
+        componentsTreePage = evaluatePage.clickExplore()
             .getCssComponents(componentAssembly.getUser(), "componentName[EQ], " + BOLT, "scenarioName[EQ], " + componentAssembly.getScenarioName(),
                 "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished[EQ], false", "iteration[EQ], 2")
             .refresh()
             .selectFilter("Private")
             .clickSearch(BOLT)
-            .multiSelectScenarios("" + BOLT + ", " + componentAssembly.getScenarioName() + "")
+            .multiSelectScenarios(BOLT + ", " + componentAssembly.getScenarioName())
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
+            .checkComponentDelete(privateBolt)
             .navigateToScenario(componentAssembly)
             .clickRefresh(EvaluatePage.class)
             .openComponents();
@@ -780,6 +799,8 @@ public class EditAssembliesTest extends TestBaseUI {
 
         componentAssembly = assemblyRequestUtil.getAssembly("assy03A");
         componentAssembly2 = assemblyRequestUtil.getAssembly("assy03");
+        componentAssembly.setUser(componentAssembly.getUser());
+        componentAssembly2.getSubComponents().forEach(component -> component.setUser(componentAssembly.getUser()));
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
@@ -981,9 +1002,9 @@ public class EditAssembliesTest extends TestBaseUI {
 
         softAssertions.assertThat(componentsTablePage.getRowDetails(big_ring, componentAssembly.getScenarioName())).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        componentsTablePage.selectTreeView();
+        componentsTreePage = componentsTablePage.selectTreeView();
 
-        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(componentAssembly.getScenarioName());
+        softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring.toUpperCase())).contains(componentAssembly.getScenarioName());
 
         componentsTreePage.closePanel()
             .editScenario(EditScenarioStatusPage.class)
@@ -993,7 +1014,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
         softAssertions.assertThat(componentsTablePage.getRowDetails(big_ring, componentAssembly.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
-        componentsTablePage.selectTreeView();
+        componentsTreePage = componentsTablePage.selectTreeView();
 
         softAssertions.assertThat(componentsTreePage.getSubcomponentScenarioName(big_ring)).contains(componentAssembly.getScenarioName());
 
@@ -1004,8 +1025,7 @@ public class EditAssembliesTest extends TestBaseUI {
             .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
             .closePanel()
             .clickRefresh(EvaluatePage.class)
-            .clickCostButton()
-            .confirmCost("Yes")
+            .costScenario()
             .openComponents()
             .selectTableView()
             .addColumn(ColumnsEnum.SCENARIO_TYPE);
