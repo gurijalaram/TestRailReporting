@@ -39,16 +39,14 @@ public class UpdateWorksheetTests extends BcmUtil {
     public void updateWorksheetNegativeTests() {
         String name = GenerateStringUtil.saltString("name");
         String updatedName = name + "updated";
+        WorkSheetResponse existingWorksheet = getWorksheets().getResponseEntity().getItems().get(0);
+        String existingNameWorksheet = existingWorksheet.getName();
         WorkSheetResponse newWorksheet = createWorksheet(name).getResponseEntity();
         String worksheetId = newWorksheet.getIdentity();
 
-        ErrorResponse sameName = updateWorksheet(name, null, ErrorResponse.class, worksheetId, HttpStatus.SC_CONFLICT).getResponseEntity();
+        ErrorResponse sameName = updateWorksheet(existingNameWorksheet, null, ErrorResponse.class, worksheetId, HttpStatus.SC_CONFLICT).getResponseEntity();
 
         softAssertions.assertThat(sameName.getMessage()).contains("already exists");
-
-        ErrorResponse noName = updateWorksheet(null, null, ErrorResponse.class, worksheetId, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
-
-        softAssertions.assertThat(noName.getMessage()).isEqualTo("'name' should not be null.");
 
         ErrorResponse invalidIdentity = updateWorksheet(updatedName, null, ErrorResponse.class, "0000000", HttpStatus.SC_BAD_REQUEST).getResponseEntity();
         softAssertions.assertThat(invalidIdentity.getMessage()).isEqualTo("'identity' is not a valid identity.");
@@ -63,11 +61,10 @@ public class UpdateWorksheetTests extends BcmUtil {
     @Description("Verify updating worksheet with a description")
     public void updateWorksheetWithDescription() {
         String name = GenerateStringUtil.saltString("name");
-        String updatedName = name + "updated";
         String description = new GenerateStringUtil().getRandomString();
         WorkSheetResponse newWorksheet = createWorksheet(name).getResponseEntity();
 
-        WorkSheetResponse updatedWorksheet = updateWorksheet(updatedName, description, WorkSheetResponse.class, newWorksheet.getIdentity(), HttpStatus.SC_OK).getResponseEntity();
+        WorkSheetResponse updatedWorksheet = updateWorksheet(null, description, WorkSheetResponse.class, newWorksheet.getIdentity(), HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(updatedWorksheet.getDescription()).isEqualTo(description);
         softAssertions.assertAll();
