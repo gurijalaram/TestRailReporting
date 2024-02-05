@@ -67,19 +67,15 @@ public class AssemblyGroupDeleteTests extends TestBaseUI {
         List<ComponentInfoBuilder> includedSubcomponents = componentAssembly.getSubComponents().stream().filter(o -> !o.getComponentName().equalsIgnoreCase(blob)).collect(Collectors.toList());
 
         includedSubcomponents.forEach(includedSubcomponent -> {
-            componentsTreePage.multiSelectSubcomponents(includedSubcomponent + "," + componentAssembly.getScenarioName(),
-                includedSubcomponent + "," + componentAssembly.getScenarioName(), includedSubcomponent + "," + componentAssembly.getScenarioName(),
-                includedSubcomponent + "," + componentAssembly.getScenarioName(), includedSubcomponent + "," + componentAssembly.getScenarioName(),
-                includedSubcomponent + "," + componentAssembly.getScenarioName(), includedSubcomponent + "," + componentAssembly.getScenarioName(),
-                includedSubcomponent + "," + componentAssembly.getScenarioName(), includedSubcomponent + "," + componentAssembly.getScenarioName(),
-                includedSubcomponent + "," + componentAssembly.getScenarioName());
+            componentsTreePage.multiSelectSubcomponents(
+                includedSubcomponent.getComponentName() + "," + componentAssembly.getScenarioName());
         });
 
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.DELETE)).as("Delete Button Enabled").isTrue();
 
         componentsTreePage.multiSelectSubcomponents(blob + "," + componentAssembly.getScenarioName());
 
-        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.DELETE)).as("Delete Button Enabled").isFalse();
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.DELETE)).as("Delete Button Disabled").isFalse();
 
         componentsTreePage.multiSelectSubcomponents(blob + "," + componentAssembly.getScenarioName());
 

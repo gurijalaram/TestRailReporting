@@ -161,6 +161,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectDigitalFactory(APRIORI_USA)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())).isEqualTo(true);
@@ -236,7 +237,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
     @TestRail(id = {6193, 5420, 5910, 6303})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMI() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponent("Machined Box AMERICAS");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())

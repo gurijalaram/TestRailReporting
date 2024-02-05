@@ -17,7 +17,8 @@ public class AwsUtil {
 
     /**
      * Configure instance for AWS Systems Manager
-     * Use AWS authorization type based on running environment
+     * Use AWS authorization type based on running environment,
+     * to download parameters from AWS Parameters Store
      *
      * @return SsmClient configured instance with appropriate credentials
      */
@@ -33,7 +34,8 @@ public class AwsUtil {
 
     /**
      * Configure instance for AWS S3
-     * Use AWS authorization type based on running environment
+     * Use AWS authorization type based on running environment,
+     * to download files from S3 bucket
      *
      * @return S3Client configured instance with appropriate credentials
      */
@@ -41,7 +43,9 @@ public class AwsUtil {
         return S3Client.builder()
             .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
                 ? EnvironmentVariableCredentialsProvider.create()
-                : getProfileCredentialsProvider()
+                : ProfileCredentialsProvider.create()
+                // TODO: a profile should be generated based on the environment, but qa Jenkins doesn't has an access for staging AWS profile
+                //getProfileCredentialsProvider()
             )
             .region(S3_REGION_NAME)
             .build();

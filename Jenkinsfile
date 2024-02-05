@@ -123,12 +123,12 @@ pipeline {
 
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
-                        javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
+                        javaOpts = javaOpts + " \'-Dcustomer=${params.CUSTOMER}\'"
                     }
 
                     default_aws_region = params.REGION
                     if (default_aws_region && default_aws_region != "none") {
-                        javaOpts = javaOpts + " -Ddefault_aws_region=${params.REGION}"
+                        javaOpts = javaOpts + " \'-Ddefault_aws_region=${params.REGION}\'"
                     }
 
                     number_of_parts = params.NUMBER_OF_PARTS
@@ -163,7 +163,7 @@ pipeline {
 
                     addlJavaOpts = params.JAVAOPTS
                     if (addlJavaOpts && addlJavaOpts != "none") {
-                        javaOpts = javaOpts + " " + addlJavaOpts
+                        javaOpts = javaOpts + "  ${params.JAVAOPTS}"
                     }
 
                     echo "${javaOpts}"
@@ -206,11 +206,11 @@ pipeline {
                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
                             --label \"build-date=${timeStamp}\" \
                             --label qa-automation \
-                            --secret id=aws_config,src=${AWS_CONFIG_SECRET_TXT} \
-                            --secret id=aws_creds,src=${AWS_CREDENTIALS_SECRET_TXT} \
+                            --secret id=aws_config,src=\"${AWS_CONFIG_SECRET_TXT}\" \
+                            --secret id=aws_creds,src=\"${AWS_CREDENTIALS_SECRET_TXT}\" \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
-                            --build-arg JAVAOPTS='${javaOpts}' \
+                            --build-arg JAVAOPTS="${javaOpts}" \
                             --build-arg TESTS=${testSuite} \
                             .
                     """
