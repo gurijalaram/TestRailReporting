@@ -8,13 +8,9 @@ import com.opencsv.CSVReaderBuilder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
@@ -22,10 +18,6 @@ import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
 import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.waiters.S3Waiter;
-import software.amazon.awssdk.services.ssm.SsmClient;
-import software.amazon.awssdk.services.ssm.model.GetParameterRequest;
-import software.amazon.awssdk.services.ssm.model.GetParameterResponse;
-import software.amazon.awssdk.services.ssm.model.SsmException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -258,7 +250,10 @@ public class FileResourceUtil extends AwsUtil {
             return null;
         }
 
-        File tempFile = new File(createTempDir(additionalPath), fileName);
+        final String[] TEMP_FILE = fileName.split("\\.", 2);
+        final String NEW_FILE_NAME = TEMP_FILE[0].concat(new GenerateStringUtil().getRandomString() + "." + TEMP_FILE[1]);
+
+        File tempFile = new File(createTempDir(additionalPath), NEW_FILE_NAME);
         tempFile.deleteOnExit();
 
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
@@ -271,7 +266,7 @@ public class FileResourceUtil extends AwsUtil {
             return tempFile;
 
         } catch (RuntimeException | IOException e) {
-            throw new ResourceLoadException(String.format("File with name '%s' can not be saved: ", fileName, e));
+            throw new ResourceLoadException(String.format("File with name '%s' cannot be saved: ", NEW_FILE_NAME, e));
         }
 
     }
@@ -282,7 +277,7 @@ public class FileResourceUtil extends AwsUtil {
             byte[] data = Base64.getMimeDecoder().decode(contentBytes.getBytes(StandardCharsets.UTF_8));
             out.write(data);
         } catch (Exception e) {
-            throw new ResourceLoadException(String.format("File with name '%s' can not be saved: ", fileName, e));
+            throw new ResourceLoadException(String.format("File with name '%s' cannot be saved: ", fileName, e));
         }
         return tempFile;
     }
