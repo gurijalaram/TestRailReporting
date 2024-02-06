@@ -33,7 +33,16 @@ public class DataCreationTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
-        ComponentInfoBuilder data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, extension, costingTemplate, currentUser).searchCreateComponent();
+        ComponentInfoBuilder data = new DataCreationUtil(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroup)
+            .resourceFile(resourceFile)
+            .extension(extension)
+            .costingTemplate(costingTemplate)
+            .user(currentUser)
+            .build())
+            .searchCreateComponent();
 
         softAssertions.assertThat(data.getScenarioIdentity()).isNotEmpty();
         softAssertions.assertThat(data.getComponentIdentity()).isNotEmpty();
@@ -51,7 +60,16 @@ public class DataCreationTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
-        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, extension, costingTemplate, currentUser).createCostComponent();
+        ScenarioResponse data = new DataCreationUtil(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroup)
+            .resourceFile(resourceFile)
+            .extension(extension)
+            .costingTemplate(costingTemplate)
+            .user(currentUser)
+            .build())
+            .createCostComponent();
 
         softAssertions.assertThat(data.getScenarioState()).isEqualTo(ScenarioStateEnum.COST_COMPLETE.getState());
 
@@ -68,7 +86,16 @@ public class DataCreationTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
-        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, extension, costingTemplate, currentUser).createPublishComponent();
+        ScenarioResponse data = new DataCreationUtil(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroup)
+            .resourceFile(resourceFile)
+            .extension(extension)
+            .costingTemplate(costingTemplate)
+            .user(currentUser)
+            .build())
+            .createPublishComponent();
 
         softAssertions.assertThat(data.getPublished()).isTrue();
 
@@ -85,7 +112,16 @@ public class DataCreationTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
-        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, extension, costingTemplate, currentUser).createCostPublishComponent();
+        ScenarioResponse data = new DataCreationUtil(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroup)
+            .resourceFile(resourceFile)
+            .extension(extension)
+            .costingTemplate(costingTemplate)
+            .user(currentUser)
+            .build())
+            .createCostPublishComponent();
 
         softAssertions.assertThat(data.getScenarioState()).isEqualTo(ScenarioStateEnum.COST_COMPLETE.getState());
         softAssertions.assertThat(data.getPublished()).isTrue();
