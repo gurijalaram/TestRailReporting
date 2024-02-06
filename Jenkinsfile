@@ -163,7 +163,7 @@ pipeline {
 
                     addlJavaOpts = params.JAVAOPTS
                     if (addlJavaOpts && addlJavaOpts != "none") {
-                        javaOpts = javaOpts + " " + addlJavaOpts
+                        javaOpts = javaOpts + "  ${params.JAVAOPTS}"
                     }
 
                     echo "${javaOpts}"
@@ -206,8 +206,8 @@ pipeline {
                             --tag ${buildInfo.name}-test-${timeStamp}:latest \
                             --label \"build-date=${timeStamp}\" \
                             --label qa-automation \
-                            --secret id=aws_config,src=${AWS_CONFIG_SECRET_TXT} \
-                            --secret id=aws_creds,src=${AWS_CREDENTIALS_SECRET_TXT} \
+                            --secret id=aws_config,src=\"${AWS_CONFIG_SECRET_TXT}\" \
+                            --secret id=aws_creds,src=\"${AWS_CREDENTIALS_SECRET_TXT}\" \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
                             --build-arg JAVAOPTS="${javaOpts}" \

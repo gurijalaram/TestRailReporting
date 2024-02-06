@@ -26,7 +26,7 @@
         "inputRowIds": {
           "type": "array"
         },
-        "costingEventIds": {
+        "analysisEvents": {
           "type": "array"
         },
         "description": {
@@ -37,6 +37,9 @@
         },
         "updatedAt": {
           "type": "string"
+        },
+        "status": {
+          "type": "string"
         }
       },
       "required": [
@@ -46,12 +49,13 @@
         "createdAt",
         "createdBy",
         "name",
-        "costingEventIds"
+        "analysisEvents"
       ],
       "optional": [
         "description",
         "updatedAt",
-        "updatedBy"
+        "updatedBy",
+        "status"
       ]
     }
   },
