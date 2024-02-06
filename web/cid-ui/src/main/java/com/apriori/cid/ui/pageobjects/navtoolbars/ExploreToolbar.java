@@ -19,6 +19,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -609,7 +610,8 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @return string
      */
-    public String returnLastUpdatedTimestamp() {
+    public String getUpdateTimestamp() {
+        pageUtils.waitForElementsToNotAppear(By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']"));
         return lastUpdatedAlert.getText();
     }
 }

@@ -10,6 +10,9 @@ import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.DirectionEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
+import com.apriori.cid.ui.utils.UploadStatusEnum;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -20,12 +23,15 @@ import org.joda.time.DateTime;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class TableHeadersTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ConfigurePage configurePage;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private ComponentInfoBuilder component;
 
     public TableHeadersTests() {
         super();
@@ -114,23 +120,55 @@ public class TableHeadersTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {})
-    @Description("Test")
+    @TestRail(id = {29433, 29434, 29436, 29437})
+    @Description("Test Last updated Timestamp")
     public void testLastUpdatedAlert() {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
 
-        String timestamp = explorePage.returnLastUpdatedTimestamp();
+        List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(2);
+        component = new ComponentRequestUtil().getComponent();
+
+        String timestamp1 = explorePage.getUpdateTimestamp();
         String formattedTime = DateTime.now().toString("h:mma");
 
-        softAssertions.assertThat(timestamp).as("Verify Last Updated Timestamp on initial load").contains("Last updated at " + formattedTime);
+        softAssertions.assertThat(timestamp1).as("Verify Last Updated Timestamp on initial load").contains("Last updated at " + formattedTime);
 
-        // I've thrown in an arbitrary refresh here to verify, but I think it should either be padded out with doing other tasks that'll take 1+ minutes to perform
-        explorePage.refresh();
-        timestamp = explorePage.returnLastUpdatedTimestamp();
+        explorePage.importCadFile()
+            .unTick("Apply to all")
+            .inputMultiComponentBuilderDetails(components)
+            .submit()
+            .clickClose();
+
+        String timestamp2 = explorePage.getUpdateTimestamp();
         formattedTime = DateTime.now().toString("h:mma");
 
-        softAssertions.assertThat(timestamp).as("Verify Last Updated Timestamp after Refresh").contains("Last updated at " + formattedTime);
+        softAssertions.assertThat(timestamp2).as("Verify Last Updated Timestamp is updated after scenario is created").contains("Last updated at " + formattedTime);
+
+        explorePage.importCadFile()
+            .inputComponentDetails(component.getScenarioName(), component.getResourceFile())
+            .waitForUploadStatus(component.getComponentName() + component.getExtension(), UploadStatusEnum.UPLOADED)
+            .submit()
+            .openComponent(component.getComponentName())
+            .clickExplore();
+
+        String timestamp3 = explorePage.getUpdateTimestamp();
+        formattedTime = DateTime.now().toString("h:mma");
+
+        softAssertions.assertThat(timestamp3).as("Verify Last Updated Timestamp after additional single upload").contains("Last updated at " + formattedTime);
+
+        explorePage.clickEvaluate()
+            .costScenario()
+            .clickExplore();
+
+        softAssertions.assertThat(timestamp3).as("Verify Last Updated Timestamp remains the same").contains("Last updated at " + formattedTime);
+
+        explorePage.refresh();
+
+        String timestamp4 = explorePage.getUpdateTimestamp();
+        formattedTime = DateTime.now().toString("h:mma");
+
+        softAssertions.assertThat(timestamp4).as("Verify Last Updated Timestamp after refresh").contains("Last updated at " + formattedTime);
 
         softAssertions.assertAll();
     }
