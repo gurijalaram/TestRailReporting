@@ -8,6 +8,7 @@ import com.opencsv.CSVReaderBuilder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
@@ -250,10 +251,7 @@ public class FileResourceUtil extends AwsUtil {
             return null;
         }
 
-        final String[] TEMP_FILE = fileName.split("\\.", 2);
-        final String NEW_FILE_NAME = TEMP_FILE[0].concat(new GenerateStringUtil().getRandomString() + "." + TEMP_FILE[1]);
-
-        File tempFile = new File(createTempDir(additionalPath), NEW_FILE_NAME);
+        File tempFile = new File(createTempDir(additionalPath), fileName);
         tempFile.deleteOnExit();
 
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
@@ -266,7 +264,7 @@ public class FileResourceUtil extends AwsUtil {
             return tempFile;
 
         } catch (RuntimeException | IOException e) {
-            throw new ResourceLoadException(String.format("File with name '%s' cannot be saved: ", NEW_FILE_NAME, e));
+            throw new ResourceLoadException(String.format("File with name '%s' cannot be saved: ", fileName, e));
         }
 
     }
