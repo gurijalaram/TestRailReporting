@@ -221,7 +221,7 @@ public class ComponentRequestUtil {
     }
 
     /**
-     * Gets a component specified by name
+     * Gets a component specified by name and saves it with a unique name
      *
      * @param componentName - the part name
      * @return component builder object
