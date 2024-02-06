@@ -30,9 +30,10 @@ public class ComponentRequestUtil {
 
         component = listOfComponents.stream().findFirst().get();
 
-        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getComponentName().concat(component.getExtension()), component.getProcessGroup()));
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
 
         return component;
     }
@@ -51,7 +52,8 @@ public class ComponentRequestUtil {
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
 
-        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getComponentName().concat(component.getExtension()), component.getProcessGroup()));
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
 
@@ -72,7 +74,8 @@ public class ComponentRequestUtil {
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
 
-        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getComponentName().concat(component.getExtension()), component.getProcessGroup()));
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
 
@@ -96,7 +99,8 @@ public class ComponentRequestUtil {
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
 
-        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getComponentName().concat(component.getExtension()), component.getProcessGroup()));
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
 
@@ -119,7 +123,8 @@ public class ComponentRequestUtil {
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
 
-        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getComponentName().concat(component.getExtension()), component.getProcessGroup()));
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
 
@@ -141,9 +146,10 @@ public class ComponentRequestUtil {
 
         final UserCredentials currentUser = UserUtil.getUser();
         components.forEach(component -> {
-            component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
-            component.setUser(currentUser);
+            component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getComponentName().concat(component.getExtension()), component.getProcessGroup()));
+            component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
             component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+            component.setUser(currentUser);
         });
 
         return components;
@@ -165,8 +171,9 @@ public class ComponentRequestUtil {
 
         ComponentInfoBuilder componentInfoExtension = componentExtension.stream().findFirst().get();
 
-        componentInfoExtension.setResourceFile(FileResourceUtil.getCloudFile(componentInfoExtension.getProcessGroup(),
-            componentInfoExtension.getComponentName() + componentInfoExtension.getExtension()));
+        componentInfoExtension.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(componentInfoExtension.getComponentName() + componentInfoExtension.getExtension(),
+            componentInfoExtension.getProcessGroup()));
+        componentInfoExtension.setComponentName(componentInfoExtension.getResourceFile().getName().split("\\.", 2)[0]);
         componentInfoExtension.setScenarioName(new GenerateStringUtil().generateScenarioName());
         componentInfoExtension.setUser(UserUtil.getUser());
 
@@ -188,8 +195,9 @@ public class ComponentRequestUtil {
 
         ComponentInfoBuilder componentInfoPG = componentPG.stream().findFirst().get();
 
-        componentInfoPG.setResourceFile(FileResourceUtil.getCloudFile(componentInfoPG.getProcessGroup(),
-            componentInfoPG.getComponentName() + componentInfoPG.getExtension()));
+        componentInfoPG.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(componentInfoPG.getComponentName() + componentInfoPG.getExtension(),
+            componentInfoPG.getProcessGroup()));
+        componentInfoPG.setComponentName(componentInfoPG.getResourceFile().getName().split("\\.", 2)[0]);
         componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
         componentInfoPG.setUser(UserUtil.getUser());
 
@@ -212,33 +220,12 @@ public class ComponentRequestUtil {
 
         ComponentInfoBuilder componentInfoPG = componentPG.stream().findFirst().get();
 
-        componentInfoPG.setResourceFile(FileResourceUtil.getCloudFile(componentInfoPG.getProcessGroup(),
-            componentInfoPG.getComponentName() + componentInfoPG.getExtension()));
+        componentInfoPG.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(componentInfoPG.getComponentName() + componentInfoPG.getExtension(),
+            componentInfoPG.getProcessGroup()));
+        componentInfoPG.setComponentName(componentInfoPG.getResourceFile().getName().split("\\.", 2)[0]);
         componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
         componentInfoPG.setUser(currentUser);
 
         return componentInfoPG;
-    }
-
-    /**
-     * Gets a component specified by name and saves it with a unique name
-     *
-     * @param componentName - the part name
-     * @return component builder object
-     */
-    public ComponentInfoBuilder getReturnComponentUniqueName(String componentName) {
-
-        component = COMPONENT_REQUEST.getComponents()
-            .stream()
-            .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
-            .findFirst()
-            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
-
-        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
-        component.setUser(UserUtil.getUser());
-        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getComponentName().concat(component.getExtension()), component.getProcessGroup()));
-        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
-
-        return component;
     }
 }
