@@ -2,6 +2,8 @@ package com.apriori.bcm.api.utils;
 
 import com.apriori.bcm.api.enums.BcmAppAPIEnum;
 import com.apriori.bcm.api.models.request.AddInputsRequest;
+import com.apriori.bcm.api.models.request.GroupItems;
+import com.apriori.bcm.api.models.request.InputRowDelete;
 import com.apriori.bcm.api.models.request.Inputrow;
 import com.apriori.bcm.api.models.request.Worksheet;
 import com.apriori.bcm.api.models.request.WorksheetInputRowsRequest;
@@ -27,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @Slf4j
@@ -211,4 +214,20 @@ public class BcmUtil extends TestUtil {
                 .expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).get();
     }
+
+    public <T> ResponseWrapper<T> deleteInputRow(Class<T> klass, String worksheetIdentity, String inputRowIdentity, Integer expectedResponseCode) {
+
+        RequestEntity requestEntity =
+            requestEntityUtil.init(BcmAppAPIEnum.DELETE_INPUTS, klass)
+                .inlineVariables(worksheetIdentity)
+                .body(InputRowDelete.builder()
+                    .groupItems(Arrays.asList(GroupItems
+                        .builder()
+                            .inputRowIdentity(inputRowIdentity)
+                        .build()))
+                    .build())
+                .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
 }
