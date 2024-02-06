@@ -622,9 +622,8 @@ public class JasperApiUtils {
      *
      * @param miscData      - List of Strings of data for the test
      * @param partNames     - List of Strings of part names for the test
-     * @param assertFigures - List of Doubles for the assertion of Annual Spend values
      */
-    public void genericSortOrderDtcComparisonTest(List<String> partNames, List<Double> assertFigures, String... miscData) {
+    public void genericSortOrderDtcComparisonTest(List<String> partNames, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 

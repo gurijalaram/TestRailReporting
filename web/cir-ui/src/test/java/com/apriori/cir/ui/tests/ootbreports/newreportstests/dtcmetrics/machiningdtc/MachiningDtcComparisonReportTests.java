@@ -222,13 +222,8 @@ public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUt
             JasperCirApiPartsEnum.DTCMACHINING_001_TOLERANCED.getPartName(),
             JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum()
         );
     }
@@ -242,13 +237,8 @@ public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUt
             JasperCirApiPartsEnum.DTCMACHINING_001_TOLERANCED.getPartName(),
             JasperCirApiPartsEnum.PUNCH_INITIAL.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum()
         );
     }
@@ -262,13 +252,8 @@ public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUt
             JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
             JasperCirApiPartsEnum.PARTBODY_1_INITIAL.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.TOLERANCES.getSortOrderEnum()
         );
     }
@@ -282,13 +267,8 @@ public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUt
             JasperCirApiPartsEnum.MACHININGDESIGN_TO_COST_INITIAL.getPartName(),
             JasperCirApiPartsEnum.DTCMACHINING_001_TOLERANCED.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum()
         );
     }
@@ -302,13 +282,8 @@ public class MachiningDtcComparisonReportTests extends JasperApiAuthenticationUt
             JasperCirApiPartsEnum.PMI_ROUGHNESS_CREO.getPartName(),
             JasperCirApiPartsEnum.PMI_PROFILE_OF_SURFACE_CREO.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
         );
     }

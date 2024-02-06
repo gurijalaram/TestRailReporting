@@ -192,13 +192,8 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
             JasperCirApiPartsEnum.P_1271576.getPartName(),
             JasperCirApiPartsEnum.BRACKET_V1_REV_1.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum()
         );
     }
@@ -212,13 +207,8 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
             JasperCirApiPartsEnum.BRACKET_SHORTENED_REV1.getPartName(),
             JasperCirApiPartsEnum.BRACKET_SHORTENED_ISSUES.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.BENDS.getSortOrderEnum()
         );
     }
@@ -232,13 +222,8 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
             JasperCirApiPartsEnum.BRACKET_V1_REV_1.getPartName(),
             JasperCirApiPartsEnum.BRACKET_V2_REV_1.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.TOLERANCES.getSortOrderEnum()
         );
     }
@@ -252,13 +237,8 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
             JasperCirApiPartsEnum.P_1271576.getPartName(),
             JasperCirApiPartsEnum.BRACKET_V3_REV1.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.MACHINING_TIME.getSortOrderEnum()
         );
     }
@@ -272,13 +252,8 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
             JasperCirApiPartsEnum.P_1271576.getPartName(),
             JasperCirApiPartsEnum.P_3575137.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
         );
     }

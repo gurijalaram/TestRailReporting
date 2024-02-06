@@ -220,13 +220,8 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName(),
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum()
         );
     }
@@ -240,13 +235,8 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             JasperCirApiPartsEnum.OBSTRUCTED_MACHINING.getPartName(),
             JasperCirApiPartsEnum.B2315.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum()
         );
     }
@@ -260,13 +250,8 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName(),
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.TOLERANCES.getSortOrderEnum()
         );
     }
@@ -280,13 +265,8 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName(),
             JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum()
         );
     }
@@ -300,13 +280,8 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             JasperCirApiPartsEnum.DU600051458.getPartName(),
             JasperCirApiPartsEnum.DU200068073_B.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum()
         );
     }
@@ -320,13 +295,8 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             JasperCirApiPartsEnum.E3_241_4_N.getPartName(),
             JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
         );
     }
@@ -340,13 +310,8 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
             JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
             JasperCirApiPartsEnum.GEAR_HOUSING.getPartName()
         );
-        List<Double> assertFigures = Arrays.asList(
-            0.0,
-            0.0
-        );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            assertFigures,
             "Sort Order", SortOrderEnum.CASTING_ISSUES.getSortOrderEnum()
         );
     }
