@@ -153,7 +153,7 @@ public class AssemblyUtils {
      * @return current object
      */
     public AssemblyUtils costSubComponents(ComponentInfoBuilder assemblySubComponent) {
-        assemblySubComponent.getSubComponents().forEach(subComponent -> scenariosUtil.postCostScenario(subComponent));
+        scenariosUtil.postGroupCostScenarios(assemblySubComponent.getSubComponents());
         return this;
     }
 
@@ -163,8 +163,9 @@ public class AssemblyUtils {
      * @param assembly - the assembly
      * @return list of scenario item
      */
-    public ScenarioResponse costAssembly(ComponentInfoBuilder assembly) {
-        return scenariosUtil.postCostScenario(assembly);
+    public AssemblyUtils costAssembly(ComponentInfoBuilder assembly) {
+        scenariosUtil.postGroupCostScenarios(assembly);
+        return this;
     }
 
     /**
