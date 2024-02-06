@@ -43,7 +43,12 @@ public class CicAgentSustainMetricsTest extends WorkflowTestUtil {
     @Issue("APG-1285")
     @Description("sustainability metrics NOT returned for unsupported Process Groups and verify in job and part results")
     public void testWorkflowNotSupportedSustainMetricsResults() {
-        this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST).build();
+        this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .emptyCostingInputRow()
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
+            .build();
         PartData plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL);
         PlmSearchPart plmSearchPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
         this.workflowPartsRequestDataBuilder = WorkflowParts.builder()
@@ -87,7 +92,12 @@ public class CicAgentSustainMetricsTest extends WorkflowTestUtil {
         "machiningMode field is not returned when set for a component costed with PG that does not support it" +
         "and verify in job and part results")
     public void testWorkflowOptionalInputNotSupportedResults() {
-        this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST).build();
+        this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .emptyCostingInputRow()
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
+            .build();
         PartData plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL);
         PlmSearchPart plmSearchPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
         this.workflowPartsRequestDataBuilder = WorkflowParts.builder()
@@ -124,7 +134,12 @@ public class CicAgentSustainMetricsTest extends WorkflowTestUtil {
         " Fields with value of zero are not omitted from response" +
         "verify in job and part results")
     public void testWorkflowSupportedProcessGroupResults() {
-        this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST).build();
+        this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
+            .emptyCostingInputRow()
+            .isNotificationsIncluded(false, false, "")
+            .isPublishResultsAttachReportInclude(false, "")
+            .isPublishResultsWriteFieldsInclude(false)
+            .build();
         PartData plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL);
         PlmSearchPart plmSearchPart = new PlmApiTestUtil().getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
         this.workflowPartsRequestDataBuilder = WorkflowParts.builder()

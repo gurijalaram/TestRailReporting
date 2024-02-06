@@ -207,7 +207,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
         jasperApiUtils.genericMinAnnualSpendDtcTest(
-            true
+            18
         );
     }
 }

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "anyOf": [
+    {
+      "type": ["object", "null"],
+      "properties": {
+        "Path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "Tooltip": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  ]
+}

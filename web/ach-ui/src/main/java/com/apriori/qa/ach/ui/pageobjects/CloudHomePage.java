@@ -15,7 +15,6 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -23,7 +22,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 @Slf4j
 public class CloudHomePage extends LoadableComponent<CloudHomePage> {
@@ -128,6 +126,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
      * @param webPageType
      * @return
      */
+
     public <T> void clickWebApplicationByNameAndCloseAfterLoad(String applicationName, Class<T> webPageType) {
         try {
             T responsePage  = clickWebApplicationByName(applicationName, webPageType);
@@ -142,6 +141,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
                 .append("\n");
         }
 
+        pageUtils.waitFor(10000); // workaround for OAUTH issue
         driver.close();
         driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
     }
@@ -158,7 +158,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
             + "screenshot-application-"
             + applicationName + "-"
             + this.getClass().getName() + "-" + "chrome" + 1 + ".png";
-        String filePath = new File(filename).getCanonicalPath();
+
         FileUtils.copyFile(screenshot, new File(filename));
         Allure.addAttachment(filename, FileUtils.openInputStream(screenshot));
     }

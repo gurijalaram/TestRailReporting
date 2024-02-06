@@ -76,17 +76,17 @@ public class DecimalPlaceTests extends TestBaseUI {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getMaterialResultText("Finish Mass").split("\\.")[1].length())
             .as("Finish Mass shown to 6 decimal places").isEqualTo(6);
-        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Utilization")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getMaterialResultText("Utilization").split("\\.")[1].length())
             .as("Utilization shown to 6 decimal places").isEqualTo(6);
         softAssertions.assertThat(evaluatePage.getProcessesResultText("Total Cycle Time").split("\\.")[1].length())
             .as("Total Cycle Time shown to 6 decimal places").isEqualTo(6);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Material Cost")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Material Cost").split("\\.")[1].length())
             .as("Material Cost shown to 6 decimal places").isEqualTo(6);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Piece Part Cost")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Piece Part Cost").split("\\.")[1].length())
             .as("Piece Part Cost shown to 6 decimal places").isEqualTo(6);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Fully Burdened Cost")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Fully Burdened Cost").split("\\.")[1].length())
             .as("Fully Burdened Cost shown to 6 decimal places").isEqualTo(6);
         softAssertions.assertThat(evaluatePage.getCostResultsText("Total Capital Investment").split("\\.")[1].length())
             .as("Total Capital Investment shown to 6 decimal places").isEqualTo(6);
@@ -158,9 +158,9 @@ public class DecimalPlaceTests extends TestBaseUI {
 
         softAssertions.assertThat(materialProcessPage.getTotalResultText("Cycle Time").split("\\.")[1].length())
             .as("Cycle Time shown to 4 decimal places").isEqualTo(4);
-        softAssertions.assertThat(Double.toString(materialProcessPage.getTotalResult("Piece Part Cost")).split("\\.")[1].length())
+        softAssertions.assertThat(materialProcessPage.getTotalResultText("Piece Part Cost").split("\\.")[1].length())
             .as("Piece Part Cost shown to 4 decimal places").isEqualTo(4);
-        softAssertions.assertThat(Double.toString(materialProcessPage.getTotalResult("Fully Burdened Cost")).split("\\.")[1].length())
+        softAssertions.assertThat(materialProcessPage.getTotalResultText("Fully Burdened Cost").split("\\.")[1].length())
             .as("Fully Burdened Cost shown to 4 decimal places").isEqualTo(4);
         softAssertions.assertThat(materialProcessPage.getTotalResultText("Total Capital Investment").split("\\.")[1].length())
             .as("Total Capital Investment shown to 4 decimal places").isEqualTo(4);
@@ -171,13 +171,13 @@ public class DecimalPlaceTests extends TestBaseUI {
         String value = Double.toString(costDetailsPage.getCostSumValue("Total Variable Cost"));
         softAssertions.assertThat(costDetailsPage.getCostSumValueAsString("Total Variable Cost").split("\\.")[1].length())
             .as("Total Variable Cost shown to 4 decimal places").isEqualTo(4);
-        softAssertions.assertThat(Double.toString(costDetailsPage.getCostContributionValue("Indirect Overhead")).split("\\.")[1].length())
+        softAssertions.assertThat(costDetailsPage.getCostContributionValueText("Indirect Overhead").split("\\.")[1].length())
             .as("Indirect Overhead shown to 4 decimal places").isEqualTo(4);
-        softAssertions.assertThat(Double.toString(costDetailsPage.getCostContributionValue("SG&A")).split("\\.")[1].length())
+        softAssertions.assertThat(costDetailsPage.getCostContributionValueText("SG&A").split("\\.")[1].length())
             .as("SG&A shown to 4 decimal places").isEqualTo(4);
         softAssertions.assertThat(costDetailsPage.getCostContributionValueText("Margin").split("\\.")[1].length())
             .as("Margin shown to 4 decimal places").isEqualTo(4);
-        softAssertions.assertThat(Double.toString(costDetailsPage.getCostSumValue("Piece Part Cost")).split("\\.")[1].length())
+        softAssertions.assertThat(costDetailsPage.getCostSumValueAsString("Piece Part Cost").split("\\.")[1].length())
             .as("Piece Part Cost shown to 4 decimal places").isEqualTo(4);
 
         costDetailsPage.closePanel();
@@ -186,17 +186,17 @@ public class DecimalPlaceTests extends TestBaseUI {
             .selectDecimalPlaces(DecimalPlaceEnum.FIVE)
             .submit(EvaluatePage.class);
 
-        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getMaterialResultText("Finish Mass").split("\\.")[1].length())
             .as("Finish Mass shown to 5 decimal places").isEqualTo(5);
-        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Utilization")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getMaterialResultText("Utilization").split("\\.")[1].length())
             .as("Utilization shown to 5 decimal places").isEqualTo(5);
         softAssertions.assertThat(evaluatePage.getProcessesResultText("Total Cycle Time").split("\\.")[1].length())
             .as("Total Cycle Time shown to 5 decimal places").isEqualTo(5);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Material Cost")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Material Cost").split("\\.")[1].length())
             .as("Material Cost shown to 5 decimal places").isEqualTo(5);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Piece Part Cost")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Piece Part Cost").split("\\.")[1].length())
             .as("Piece Part Cost shown to 5 decimal places").isEqualTo(5);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Fully Burdened Cost")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Fully Burdened Cost").split("\\.")[1].length())
             .as("Fully Burdened Cost shown to 5 decimal places").isEqualTo(5);
         softAssertions.assertThat(evaluatePage.getCostResultsText("Total Capital Investment").split("\\.")[1].length())
             .as("Total Capital Investment shown to 5 decimal places").isEqualTo(5);
@@ -204,17 +204,17 @@ public class DecimalPlaceTests extends TestBaseUI {
         evaluatePage.selectDigitalFactory(APRIORI_UNITED_KINGDOM)
             .costScenario();
 
-        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Finish Mass")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getMaterialResultText("Finish Mass").split("\\.")[1].length())
             .as("Finish Mass shown to 5 decimal places").isEqualTo(5);
-        softAssertions.assertThat(Double.toString(evaluatePage.getMaterialResult("Utilization")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getMaterialResultText("Utilization").split("\\.")[1].length())
             .as("Utilization shown to 5 decimal places").isEqualTo(5);
         softAssertions.assertThat(evaluatePage.getProcessesResultText("Total Cycle Time").split("\\.")[1].length())
             .as("Total Cycle Time shown to 5 decimal places").isEqualTo(5);
         softAssertions.assertThat(evaluatePage.getCostResultsText("Material Cost").split("\\.")[1].length())
             .as("Material Cost shown to 5 decimal places").isEqualTo(5);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Piece Part Cost")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Piece Part Cost").split("\\.")[1].length())
             .as("Piece Part Cost shown to 5 decimal places").isEqualTo(5);
-        softAssertions.assertThat(Double.toString(evaluatePage.getCostResults("Fully Burdened Cost")).split("\\.")[1].length())
+        softAssertions.assertThat(evaluatePage.getCostResultsText("Fully Burdened Cost").split("\\.")[1].length())
             .as("Fully Burdened Cost shown to 5 decimal places").isEqualTo(5);
         softAssertions.assertThat(evaluatePage.getCostResultsText("Total Capital Investment").split("\\.")[1].length())
             .as("Total Capital Investment shown to 5 decimal places").isEqualTo(5);

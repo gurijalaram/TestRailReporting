@@ -49,7 +49,7 @@ public class CostAllCadTests extends TestBaseUI {
     @TestRail(id = {5421, 6624, 6626})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponent("Machined Box AMERICAS");
 
         loginPage = new CidAppLoginPage(driver);
         costDetailsPage = loginPage.login(component.getUser())

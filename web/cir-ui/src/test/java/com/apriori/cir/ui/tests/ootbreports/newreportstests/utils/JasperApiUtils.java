@@ -165,25 +165,6 @@ public class JasperApiUtils {
     }
 
     /**
-     * Generic method for testing currency only, excluding date
-     *
-     * @param currencyToSet - currency that is to be set
-     * @return JasperReportSummary instance
-     */
-    public JasperReportSummary genericTestCoreCurrencyOnly(String currencyToSet) {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
-        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
-
-        Stopwatch timer = Stopwatch.createUnstarted();
-        timer.start();
-        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
-        timer.stop();
-        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
-
-        return jasperReportSummary;
-    }
-
-    /**
      * Generic method for testing currency and latest cost date only
      *
      * @param currencyToSet - currency that is to be set
@@ -324,33 +305,30 @@ public class JasperApiUtils {
      *
      * @param partName          - String of partName which is to be used
      * @param areBubblesPresent - boolean which states if bubbles are present or not
-     * @param isSheetMetalDtcDetails - boolean which states if current test is sheet metal dtc details report or not
+     * @param isDetailsOrComparisonReport - boolean which states if current test is sheet metal dtc details report or not
      */
-    public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent, boolean isSheetMetalDtcDetails) {
+    public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent, boolean isDetailsOrComparisonReport) {
         String currencyAssertValue = CurrencyEnum.USD.getCurrency();
         JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
 
-        String currentCurrencyAboveChart = isSheetMetalDtcDetails
-            ? getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryUsd)
+        String currentCurrencyAboveChart = isDetailsOrComparisonReport
+            ? getCurrentCurrencyFromAboveChartDtcDetailsOrComparisonReport(jasperReportSummaryUsd)
             : getCurrentCurrencyFromAboveChart(jasperReportSummaryUsd, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         currencyAssertValue = CurrencyEnum.GBP.getCurrency();
         JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
 
-        currentCurrencyAboveChart = isSheetMetalDtcDetails
-            ? getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(jasperReportSummaryGbp)
+        currentCurrencyAboveChart = isDetailsOrComparisonReport
+            ? getCurrentCurrencyFromAboveChartDtcDetailsOrComparisonReport(jasperReportSummaryGbp)
             : getCurrentCurrencyFromAboveChart(jasperReportSummaryGbp, areBubblesPresent);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
-        String usdCurrencyValue = areBubblesPresent
-            ? getCurrencyValueFromChart(jasperReportSummaryUsd, partName)
-            : getCurrencyValueFromChart(jasperReportSummaryUsd, "");
-        String gbpCurrencyValue = areBubblesPresent
-            ? getCurrencyValueFromChart(jasperReportSummaryGbp, partName)
-            : getCurrencyValueFromChart(jasperReportSummaryGbp, "");
-
-        softAssertions.assertThat(usdCurrencyValue).isNotEqualTo(gbpCurrencyValue);
+        if (areBubblesPresent) {
+            String usdCurrencyValue = getCurrencyValueFromChart(jasperReportSummaryUsd, partName);
+            String gbpCurrencyValue = getCurrencyValueFromChart(jasperReportSummaryGbp, partName);
+            softAssertions.assertThat(usdCurrencyValue).isNotEqualTo(gbpCurrencyValue);
+        }
 
         softAssertions.assertAll();
     }
@@ -461,23 +439,26 @@ public class JasperApiUtils {
      * @param partNames - list of Strings containing the parts to use
      * @param miscData  - String array of data to be used in the test
      */
-    public void genericDtcDetailsTest(List<String> partNames, String... miscData) {
+    public void genericDtcDetailsTest(boolean isSheetMetalDtcDetailsTest, List<String> partNames, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
         List<Element> partNumberElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5");
 
         int i = 6;
-        for (String partName : partNames) {
-            String assertPartName = partName.contains("Initial") ? partName.replace(" (Initial)", "") : partName.replace(" (Bulkload)", "");
-            softAssertions.assertThat(partNumberElements.get(i).toString().contains(assertPartName)).isEqualTo(true);
-            i = !partName.equals(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName()) ? i + 1 : i;
+        if (!partNames.get(0).isEmpty()) {
+            for (String partName : partNames) {
+                String assertPartName = partName.contains("Initial") ? partName.replace(" (Initial)", "") : partName.replace(" (Bulkload)", "");
+                softAssertions.assertThat(partNumberElements.toString().contains(assertPartName)).isEqualTo(true);
+                i = !partName.equals(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName()) ? i + 1 : i;
+            }
         }
 
         List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
         List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        int itemIndex = miscDataList.get(0).equals("DTC Score") ? 2 : 1;
-        softAssertions.assertThat(tdResultElements.get(itemIndex).parent().children().toString().contains(miscDataList.get(1))).isEqualTo(true);
+
+        int indexToGet = isSheetMetalDtcDetailsTest ? 3 : 1;
+        softAssertions.assertThat(tdResultElements.get(indexToGet).parent().children().toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -495,14 +476,16 @@ public class JasperApiUtils {
 
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
-        if (areBubblesPresent) {
-            for (String partName : partNames) {
-                softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
-            }
-        } else {
-            for (int i = 0; i < 6; i++) {
-                for (int j = 0; j < 3; j++) {
-                    softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPoints().get(j).getPartName()).isEqualTo(partNames.get(j));
+        if (!partNames.get(0).isEmpty()) {
+            if (areBubblesPresent) {
+                for (String partName : partNames) {
+                    softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
+                }
+            } else {
+                for (int i = 0; i < 6; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPoints().get(j).getPartName()).isEqualTo(partNames.get(j));
+                    }
                 }
             }
         }
@@ -565,23 +548,14 @@ public class JasperApiUtils {
     /**
      * Generic test for minimum annual spend input control on a dtc report
      *
-     * @param areBubblesPresent - boolean to specify the type of report
+     * @param expectedBubbleNumber - int to specify the number of chart data points to assert against
      */
-    public void genericMinAnnualSpendDtcTest(boolean areBubblesPresent) {
+    public void genericMinAnnualSpendDtcTest(int expectedBubbleNumber) {
         String minimumAnnualSpendValue = "7820000";
         JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
 
-        if (areBubblesPresent) {
-            if (!this.reportRequest.getReportUnitUri().contains("machiningDTC")) {
-                softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().size()).isEqualTo(1);
-            }
-            softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(0).getAnnualSpend()).isNotEqualTo(minimumAnnualSpendValue);
-        } else {
-            for (int i = 0; i < 6; i++) {
-                softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPoints().size()).isEqualTo(1);
-                softAssertions.assertThat(jasperReportSummary.getChartData().get(i).getChartDataPoints().get(0).getAnnualSpend()).isNotEqualTo(minimumAnnualSpendValue);
-            }
-        }
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().size()).isEqualTo(expectedBubbleNumber);
+        softAssertions.assertThat(jasperReportSummary.getChartData().get(0).getChartDataPoints().get(0).getAnnualSpend()).isNotEqualTo(minimumAnnualSpendValue);
 
         softAssertions.assertAll();
     }
@@ -589,13 +563,17 @@ public class JasperApiUtils {
     /**
      * Generic test for minimum annual spend input control on a dtc details report
      */
-    public void genericMinAnnualSpendDtcDetailsTest() {
+    public void genericMinAnnualSpendDtcDetailsTest(boolean isSheetMetalDtcReport) {
         String minimumAnnualSpendValue = "7820000";
         JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
 
-        String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(15).text();
-        softAssertions.assertThat(minAnnualSpendValue).isEqualTo("10,013,204.23");
-        softAssertions.assertThat(minAnnualSpendValue).isNotEqualTo(minimumAnnualSpendValue);
+        if (isSheetMetalDtcReport) {
+            String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(11).text();
+            softAssertions.assertThat(minAnnualSpendValue).isEqualTo("8,264,352.15");
+            softAssertions.assertThat(minAnnualSpendValue).isNotEqualTo(minimumAnnualSpendValue);
+        } else {
+            softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString()).contains("No data available");
+        }
 
         softAssertions.assertAll();
     }
@@ -862,8 +840,10 @@ public class JasperApiUtils {
         return assertValues;
     }
 
-    private String getCurrentCurrencyFromAboveChartSheetMetalDtcDetails(JasperReportSummary jasperReportSummary) {
-        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(6).text();
+    private String getCurrentCurrencyFromAboveChartDtcDetailsOrComparisonReport(JasperReportSummary jasperReportSummary) {
+        String valsToUse = jasperReportSummary.getReportHtmlPart().toString().contains("DTC Details") ? "3,6" : "2,17";
+        String[] valuesToUse = valsToUse.split(",");
+        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", valuesToUse[0]).get(Integer.parseInt(valuesToUse[1])).text();
     }
 
     private String getCurrentCurrencyFromAboveChart(JasperReportSummary jasperReportSummary, boolean areBubblesPresent) {

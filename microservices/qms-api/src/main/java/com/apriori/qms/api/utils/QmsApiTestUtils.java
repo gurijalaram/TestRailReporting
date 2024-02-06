@@ -2,10 +2,7 @@ package com.apriori.qms.api.utils;
 
 import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
-import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_EQ;
 
-import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
-import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.qms.api.controller.QmsBidPackageResources;
@@ -23,10 +20,9 @@ import com.apriori.qms.api.models.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.api.models.response.scenariodiscussion.DiscussionCommentResponse;
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
@@ -34,7 +30,6 @@ import com.apriori.shared.util.properties.PropertiesContext;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -106,26 +101,10 @@ public class QmsApiTestUtils {
      * @return ScenarioItem object
      */
     public static ScenarioItem createAndPublishScenarioViaCidApp(ProcessGroupEnum processGroupEnum, String componentName, UserCredentials currentUser) {
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        ComponentInfoBuilder componentInfoBuilder = ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build();
-        new ComponentsUtil().postComponents(componentInfoBuilder);
-        ScenarioItem scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
-                SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)
-            .get(0);
-        if (scenarioItem != null) {
-            componentInfoBuilder.setComponentIdentity(scenarioItem.getComponentIdentity());
-            componentInfoBuilder.setScenarioIdentity(scenarioItem.getScenarioIdentity());
-            new ScenariosUtil().publishScenario(componentInfoBuilder, ScenarioResponse.class, HttpStatus.SC_CREATED);
-            scenarioItem = new CssComponent().getWaitBaseCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
-                    SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)
-                .get(0);
-        }
+        ComponentInfoBuilder componentInfoBuilder = new ScenariosUtil().postAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(processGroupEnum, currentUser));
+
+        ScenarioItem scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
+            SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName()).get(0);
         return scenarioItem;
     }
 

@@ -15,8 +15,4 @@ public class PlmPartAttribute {
     private String value;
     @JsonProperty("Display")
     private String display;
-    @JsonProperty("Path")
-    public String path;
-    @JsonProperty("Tooltip")
-    public String tooltip;
 }
