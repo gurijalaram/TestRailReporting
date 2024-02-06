@@ -19,6 +19,8 @@ public class CustomAttributes {
     private String location;
     @JsonProperty(value = "UDA5")
     private List<String> uda5;
+    @JsonProperty(value = "UDA4")
+    private List<String> uda4;
     @JsonProperty(value = "UDA3")
     private String uda3;
     @JsonProperty(value = "UDA2")
