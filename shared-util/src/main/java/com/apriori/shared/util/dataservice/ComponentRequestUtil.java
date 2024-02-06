@@ -200,7 +200,7 @@ public class ComponentRequestUtil {
      * Gets random component by process group and by user
      *
      * @param processGroup - the process group
-     * @param currentUser - UserCredentiala
+     * @param currentUser  - UserCredentials
      * @return component builder object
      */
     public ComponentInfoBuilder getComponentByProcessGroup(ProcessGroupEnum processGroup, UserCredentials currentUser) {
@@ -237,7 +237,7 @@ public class ComponentRequestUtil {
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
         component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getComponentName().concat(component.getExtension()), component.getProcessGroup()));
-        component.setComponentName(component.getResourceFile().getName().split("\\.",2)[0]);
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
 
         return component;
     }
