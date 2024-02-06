@@ -123,11 +123,11 @@ public class TableHeadersTests extends TestBaseUI {
     @TestRail(id = {29433, 29434, 29436, 29437})
     @Description("Test Last updated Timestamp")
     public void testLastUpdatedAlert() {
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser());
-
         List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(2);
         component = new ComponentRequestUtil().getComponent();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser());
 
         String timestamp1 = explorePage.getUpdateTimestamp();
         String formattedTime = DateTime.now().toString("h:mma");
