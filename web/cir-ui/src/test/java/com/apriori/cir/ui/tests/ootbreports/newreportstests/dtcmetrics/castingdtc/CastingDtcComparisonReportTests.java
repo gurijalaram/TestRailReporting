@@ -5,6 +5,7 @@ import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
+import com.apriori.cir.ui.enums.SortOrderEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -207,6 +208,146 @@ public class CastingDtcComparisonReportTests extends JasperApiAuthenticationUtil
         jasperApiUtils.genericProcessGroupDtcTest(
             partNames,
             "Process Group", ""
+        );
+    }
+
+    @Test
+    @TmsLink("7637")
+    @TestRail(id = {7637})
+    @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Comparison Report")
+    public void testSortOrderManufacturingMachining() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName(),
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName()
+        );
+        List<Double> assertFigures = Arrays.asList(
+            0.0,
+            0.0
+        );
+        jasperApiUtils.genericSortOrderDtcComparisonTest(
+            partNames,
+            assertFigures,
+            "Sort Order", SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("7638")
+    @TestRail(id = {7638})
+    @Description("Verify Sort Order input control functions correctly - Material Scrap - Casting DTC Comparison Report")
+    public void testSortOrderMaterialScrap() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.OBSTRUCTED_MACHINING.getPartName(),
+            JasperCirApiPartsEnum.B2315.getPartName()
+        );
+        List<Double> assertFigures = Arrays.asList(
+            0.0,
+            0.0
+        );
+        jasperApiUtils.genericSortOrderDtcComparisonTest(
+            partNames,
+            assertFigures,
+            "Sort Order", SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("7639")
+    @TestRail(id = {7639})
+    @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Comparison Report")
+    public void testSortOrderTolerances() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName(),
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName()
+        );
+        List<Double> assertFigures = Arrays.asList(
+            0.0,
+            0.0
+        );
+        jasperApiUtils.genericSortOrderDtcComparisonTest(
+            partNames,
+            assertFigures,
+            "Sort Order", SortOrderEnum.TOLERANCES.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("7640")
+    @TestRail(id = {7640})
+    @Description("Verify Sort Order input control functions correctly - Slow Operations - Casting DTC Comparison Report")
+    public void testSortOrderSlowOperations() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName(),
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_SC.getPartName()
+        );
+        List<Double> assertFigures = Arrays.asList(
+            0.0,
+            0.0
+        );
+        jasperApiUtils.genericSortOrderDtcComparisonTest(
+            partNames,
+            assertFigures,
+            "Sort Order", SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("7641")
+    @TestRail(id = {7641})
+    @Description("Verify Sort Order input control functions correctly - Special Tooling - Casting DTC Comparison Report")
+    public void testSortOrderSpecialTooling() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.DU600051458.getPartName(),
+            JasperCirApiPartsEnum.DU200068073_B.getPartName()
+        );
+        List<Double> assertFigures = Arrays.asList(
+            0.0,
+            0.0
+        );
+        jasperApiUtils.genericSortOrderDtcComparisonTest(
+            partNames,
+            assertFigures,
+            "Sort Order", SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("7642")
+    @TestRail(id = {7642})
+    @Description("Verify Sort Order input control functions correctly - Annual Spend - Casting DTC Comparison Report")
+    public void testSortOrderAnnualSpend() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.E3_241_4_N.getPartName(),
+            JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName()
+        );
+        List<Double> assertFigures = Arrays.asList(
+            0.0,
+            0.0
+        );
+        jasperApiUtils.genericSortOrderDtcComparisonTest(
+            partNames,
+            assertFigures,
+            "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("7643")
+    @TestRail(id = {7643})
+    @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Sheet Metal DTC Comparison Report")
+    public void testSortOrderManufacturingCasting() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName()
+        );
+        List<Double> assertFigures = Arrays.asList(
+            0.0,
+            0.0
+        );
+        jasperApiUtils.genericSortOrderDtcComparisonTest(
+            partNames,
+            assertFigures,
+            "Sort Order", SortOrderEnum.CASTING_ISSUES.getSortOrderEnum()
         );
     }
 }
