@@ -261,6 +261,44 @@ public class CostingInputsPart extends CICBasePage {
         return expectedMappingFields.stream().allMatch(fieldValues::contains);
     }
 
+    /**
+     * verify Field
+     *
+     * @param expectedMappingFields - list of field values
+     * @return boolean
+     */
+    public Boolean isValuesExists(List<String> expectedMappingFieldValues) {
+        List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
+        pageUtils.waitForElementAndClick(ciStandardFieldFieldCols.get(3));
+        List<WebElement> fieldValueListElement = this.driver.findElements(By.cssSelector(OPTIONS_CONTENT_OPEN_DROPDOWN_CSS)).get(1)
+            .findElements(By.cssSelector("div[class='ss-option']"));
+        List<String> fieldValues = new ArrayList<String>();
+        fieldValueListElement.stream().forEach(element -> {
+            fieldValues.add(element.getText());
+        });
+        return expectedMappingFieldValues.stream().allMatch(fieldValues::contains);
+    }
+
+    /**
+     * verify Mapping field value
+     *
+     * @param mappingRule - MappingRule
+     * @return boolean
+     */
+    public Boolean isMappingRuleFieldEnabled() {
+        List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
+        return (ciStandardFieldFieldCols.get(1).findElement(By.tagName("select")).isEnabled()) ? true : false;
+    }
+
+    /**
+     * get Default selected value from Mapping Rule field
+     *
+     * @return default selected string
+     */
+    public String getMappingRuleField() {
+        List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
+        return ciStandardFieldFieldCols.get(1).getText();
+    }
 
     /**
      * Add Costing Inputs single field
@@ -330,6 +368,18 @@ public class CostingInputsPart extends CICBasePage {
         pageUtils.waitForElementAndClick(addRowBtn);
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         waitUntilRowsLoaded();
+        return this;
+    }
+
+    /**
+     * select CI Connect field in Standard mappings rows
+     *
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     */
+    public CostingInputsPart selectCiConnectField(PlmTypeAttributes plmTypeAttributes) {
+        List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
+        selectCiConnectField(ciStandardFieldFieldCols.get(0), plmTypeAttributes);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
 
