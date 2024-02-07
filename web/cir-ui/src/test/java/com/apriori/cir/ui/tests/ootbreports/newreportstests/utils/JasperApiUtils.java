@@ -514,9 +514,6 @@ public class JasperApiUtils {
             softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("No data available")).isEqualTo(true);
         }
 
-        /*List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsContainingText(miscDataList.get(0).split(" ")[0]);
-        List<Element> tdResultElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
-        softAssertions.assertThat(tdResultElements.get(0).parent().children().get(7).toString().contains(miscDataList.get(1))).isEqualTo(true);*/
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains(miscDataList.get(1))).isEqualTo(true);
 
         softAssertions.assertAll();
