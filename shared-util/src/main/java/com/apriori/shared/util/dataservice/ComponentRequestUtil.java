@@ -31,9 +31,9 @@ public class ComponentRequestUtil {
         component = listOfComponents.stream().findFirst().get();
 
         component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getComponentName().concat(component.getExtension()), component.getProcessGroup()));
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
-        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
 
         return component;
     }
