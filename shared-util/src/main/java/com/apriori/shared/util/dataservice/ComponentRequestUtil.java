@@ -20,6 +20,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets a random component
+     * N.B The part name is unique
      *
      * @return component builder object
      */
@@ -40,6 +41,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets a two model component
+     * N.B The part name is unique
      *
      * @param componentName - the part name
      * @return component builder object
@@ -62,6 +64,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets a component specified by name
+     * N.B The part name is unique
      *
      * @param componentName - the part name
      * @return component builder object
@@ -83,8 +86,31 @@ public class ComponentRequestUtil {
     }
 
     /**
+     * Gets a component specified by name
+     * N.B The part name is not unique
+     *
+     * @param componentName - the part name
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getCloudComponent(String componentName) {
+
+        component = COMPONENT_REQUEST.getComponents()
+            .stream()
+            .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
+
+        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setUser(UserUtil.getUser());
+
+        return component;
+    }
+
+    /**
      * Gets a component specified by name and extension
      * The first dot (.) should be ignored e.g. getComponentByExtension("stp")
+     * N.B The part name is unique
      *
      * @param componentName - the part name
      * @param extension     - the extension
@@ -109,6 +135,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets a component specified by name and process group
+     * N.B The part name is unique
      *
      * @param componentName - the part name
      * @param processGroup  - the process group
@@ -133,6 +160,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets a number of components
+     * N.B The part name is unique
      *
      * @param noOfComponents - the number of components
      * @return component builder object
@@ -158,6 +186,7 @@ public class ComponentRequestUtil {
     /**
      * Gets random component by extension
      * The first dot (.) should be ignored e.g. getComponentByExtension("stp")
+     * N.B The part name is unique
      *
      * @param extension - the extension
      * @return component builder object
@@ -182,6 +211,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets random component by process group
+     * N.B The part name is unique
      *
      * @param processGroup - the process group
      * @return component builder object
@@ -206,6 +236,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets random component by process group and by user
+     * N.B The part name is unique
      *
      * @param processGroup - the process group
      * @param currentUser  - UserCredentials
