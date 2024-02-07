@@ -211,7 +211,7 @@ public class QuickComparisonTests extends TestBaseUI {
                 .processGroupName(componentB.getProcessGroup().getProcessGroup())
                 .build()
         );
-        scenarioUtil.postCostScenario(componentB);
+        scenarioUtil.postGroupCostScenarios(componentB);
 
         comparePage = comparePage.clickExplore()
             .selectFilter("Recent")

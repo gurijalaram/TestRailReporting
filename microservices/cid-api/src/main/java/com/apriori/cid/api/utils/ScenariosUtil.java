@@ -34,6 +34,7 @@ import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 
+import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -52,11 +53,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ScenariosUtil {
 
+    private static final int CHUNK_SIZE = 10;
     private final int POLL_TIME = 2;
     private final int WAIT_TIME = 570;
     private final int SOCKET_TIMEOUT = 240000;
     private final int METHOD_TIMEOUT = 30;
-    ResponseWrapper<ScenariosDeleteResponse> deleteResponse;
+    private ResponseWrapper<ScenariosDeleteResponse> deleteResponse;
+    private ResponseWrapper<GroupCostResponse> groupCostResponse;
+    private GroupCostResponse groupCostResponseEntity;
     @Getter
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private CssComponent cssComponent = new CssComponent();
@@ -179,6 +183,72 @@ public class ScenariosUtil {
      * @param componentInfo - the cost component object
      * @return list of scenario items
      */
+    public GroupCostResponse postGroupCostScenarios(ComponentInfoBuilder componentInfo) {
+        return postGroupCostScenarios(List.of(componentInfo));
+    }
+
+    /**
+     * POST to cost a scenario
+     *
+     * @param componentInfo - the cost component object
+     * @return list of scenario items
+     */
+    public GroupCostResponse postGroupCostScenarios(List<ComponentInfoBuilder> componentInfo) {
+        CostingTemplate costingTemplate = postCostingTemplate(componentInfo.get(0));
+
+        Iterators.partition(componentInfo.iterator(), CHUNK_SIZE).forEachRemaining(partitioned -> {
+
+            final RequestEntity requestEntity =
+                RequestEntityUtil_Old.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)
+                    .body(GroupCostRequest.builder()
+                        .costingTemplateIdentity(costingTemplate.getIdentity())
+                        .groupItems(partitioned
+                            .stream()
+                            .map(component -> GroupItems.builder()
+                                .componentIdentity(component.getComponentIdentity())
+                                .scenarioIdentity(component.getScenarioIdentity())
+                                .build())
+                            .collect(Collectors.toList()))
+                        .build())
+                    .token(partitioned.get(0).getUser().getToken())
+                    .expectedResponseCode(HttpStatus.SC_OK);
+
+            groupCostResponse = HTTPRequest.build(requestEntity).post();
+            groupCostResponseEntity = groupCostResponse.getResponseEntity();
+        });
+
+        componentInfo.forEach(this::getScenarioCompleted);
+
+        return groupCostResponseEntity;
+    }
+
+    /**
+     * Post to cost a group of scenarios
+     *
+     * @param componentInfo - A number of copy component objects
+     * @param componentName - the component name
+     * @return response object
+     */
+    public GroupCostResponse postGroupCostScenarios(ComponentInfoBuilder componentInfo, String... componentName) {
+        List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
+
+        Arrays.stream(componentName)
+            .forEach(component -> subComponentInfo.add(componentInfo.getSubComponents().stream()
+                .filter(subcomponent -> subcomponent.getComponentName().equalsIgnoreCase(component))
+                .collect(Collectors.toList())
+                .stream()
+                .findFirst()
+                .get()));
+
+        return postGroupCostScenarios(subComponentInfo);
+    }
+
+    /**
+     * POST to cost a scenario
+     *
+     * @param componentInfo - the cost component object
+     * @return list of scenario items
+     */
     public ScenarioResponse postCostScenario(ComponentInfoBuilder componentInfo) {
         CostingTemplate costingTemplate = postCostingTemplate(componentInfo);
 
@@ -191,6 +261,27 @@ public class ScenariosUtil {
         HTTPRequest.build(requestEntity).post();
 
         return getScenarioCompleted(componentInfo);
+    }
+
+    /**
+     * Calls an api with the POST verb
+     *
+     * @param componentInfo - the component info object
+     * @return response object
+     */
+    public CostingTemplate postCostingTemplate(ComponentInfoBuilder componentInfo) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplate.class)
+                .token(componentInfo.getUser().getToken())
+                .body("costingTemplate", componentInfo.getCostingTemplate());
+
+        ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).post();
+
+        CostingTemplate template = response.getResponseEntity();
+        template.setCostingTemplateIdentity(template.getIdentity());
+        template.setDeleteTemplateAfterUse(template.getDeleteTemplateAfterUse());
+
+        return template;
     }
 
     /**
@@ -317,41 +408,6 @@ public class ScenariosUtil {
     }
 
     /**
-     * Post to cost a group of scenarios
-     *
-     * @param componentInfo - A number of copy component objects
-     * @param componentName - the component name
-     * @return response object
-     */
-    public ResponseWrapper<GroupCostResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfo, String... componentName) {
-        List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
-
-        Arrays.stream(componentName).forEach(component -> subComponentInfo.add(componentInfo.getSubComponents().stream()
-            .filter(subcomponent -> subcomponent.getComponentName().equalsIgnoreCase(component))
-            .collect(Collectors.toList())
-            .stream()
-            .findFirst()
-            .get()));
-
-        final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)
-                .body(GroupCostRequest.builder()
-                    .costingTemplateIdentity(postCostingTemplate(componentInfo.getSubComponents().get(0)).getIdentity())
-                    .groupItems(subComponentInfo
-                        .stream()
-                        .map(component -> GroupItems.builder()
-                            .componentIdentity(component.getComponentIdentity())
-                            .scenarioIdentity(component.getScenarioIdentity())
-                            .build())
-                        .collect(Collectors.toList()))
-                    .build())
-                .token(componentInfo.getUser().getToken())
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
      * Post to cost a group of null scenarios
      *
      * @param componentInfo - the component info object
@@ -401,27 +457,6 @@ public class ScenariosUtil {
                 .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Calls an api with the POST verb
-     *
-     * @param componentInfo - the component info object
-     * @return response object
-     */
-    public CostingTemplate postCostingTemplate(ComponentInfoBuilder componentInfo) {
-        final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplate.class)
-                .token(componentInfo.getUser().getToken())
-                .body("costingTemplate", componentInfo.getCostingTemplate());
-
-        ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).post();
-
-        CostingTemplate template = response.getResponseEntity();
-        template.setCostingTemplateIdentity(template.getIdentity());
-        template.setDeleteTemplateAfterUse(template.getDeleteTemplateAfterUse());
-
-        return template;
     }
 
     /**
@@ -629,7 +664,7 @@ public class ScenariosUtil {
      */
     public ScenariosDeleteResponse deleteScenarios(List<ScenarioItem> scenarios, UserCredentials userCredentials) {
 
-        Lists.partition(scenarios, 10).forEach(partitionedScenario -> {
+        Lists.partition(scenarios, CHUNK_SIZE).forEach(partitionedScenario -> {
 
             final RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.DELETE_SCENARIOS, ScenariosDeleteResponse.class)
                 .body("groupItems", partitionedScenario.stream()
@@ -794,19 +829,6 @@ public class ScenariosUtil {
                 .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).patch();
-    }
-
-    /**
-     * PATCH scenario association and POST to cost scenario
-     *
-     * @param componentInfo         - the component info builder object
-     * @param excluded              - boolean
-     * @param componentScenarioName - component and scenario name
-     * @return response object
-     */
-    public ScenarioResponse patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
-        patchAssociations(componentInfo, excluded, componentScenarioName);
-        return postCostScenario(componentInfo);
     }
 
     /**

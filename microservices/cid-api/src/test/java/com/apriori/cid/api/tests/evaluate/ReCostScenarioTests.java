@@ -169,7 +169,7 @@ public class ReCostScenarioTests {
                 .user(currentUser)
                 .build());
 
-        scenariosUtil.postCostScenario(
+        scenariosUtil.postGroupCostScenarios(
             ComponentInfoBuilder.builder()
                 .costingTemplate(CostingTemplate.builder()
                     .processGroupName(processGroupEnum.getProcessGroup())
@@ -200,7 +200,7 @@ public class ReCostScenarioTests {
     }
 
     private void postCostScenario(ProcessGroupEnum processGroupEnum, String componentName, String scenarioName, UserCredentials currentUser, ComponentInfoBuilder componentInfo, DigitalFactoryEnum digitalFactory) {
-        scenariosUtil.postCostScenario(
+        scenariosUtil.postGroupCostScenarios(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
