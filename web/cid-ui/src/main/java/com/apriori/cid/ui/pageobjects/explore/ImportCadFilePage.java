@@ -173,6 +173,20 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
+     * Input file scenario name
+     *
+     * @param fileName     - the name of the file
+     * @param scenarioName - the scenario name
+     * @return current page object
+     */
+    public ImportCadFilePage inputFileScenarioName(String fileName, String scenarioName) {
+        By fileScenarioName = By.xpath(String.format("//input[contains(@name,'%s')]", fileName));
+        pageUtils.clearValueOfElement(pageUtils.waitForElementToAppear(fileScenarioName));
+        driver.findElement(fileScenarioName).sendKeys(scenarioName);
+        return this;
+    }
+
+    /**
      * Inputs details of the file to upload
      *
      * @param filePath - the file path

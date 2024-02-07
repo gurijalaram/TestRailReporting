@@ -105,13 +105,16 @@ public class UploadComponentTests extends TestBaseUI {
     public void testUniqueScenarioNamesMultiUpload() {
 
         List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(3);
+        components.forEach(component -> component.setScenarioName(new GenerateStringUtil().generateScenarioName()));
 
-        explorePage = new CidAppLoginPage(driver)
+        importCadFilePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
             .importCadFile()
-            .unTick("Apply to all")
-            .inputMultiComponentBuilderDetails(components)
-            .submit()
+            .inputMultiComponentBuilderDetails(components);
+
+        components.forEach(component -> importCadFilePage.inputFileScenarioName(component.getResourceFile().getName(), component.getScenarioName()));
+
+        importCadFilePage.submit()
             .clickClose();
 
         components.forEach(component ->
@@ -261,7 +264,6 @@ public class UploadComponentTests extends TestBaseUI {
         importCadFilePage = new CidAppLoginPage(driver)
             .login(components.get(0).getUser())
             .importCadFile()
-            .unTick("Apply to all")
             .inputMultiComponentBuilderDetails(componentsToUpload)
             .enterMultiFilePath(components.remove(components.size() - 1).getResourceFile());
 
