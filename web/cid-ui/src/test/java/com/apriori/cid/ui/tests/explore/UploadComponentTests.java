@@ -91,7 +91,7 @@ public class UploadComponentTests extends TestBaseUI {
         importCadFilePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
             .importCadFile()
-            .inputScenarioName(new GenerateStringUtil().generateScenarioName())
+            .inputDefaultScenarioName(new GenerateStringUtil().generateScenarioName())
             .inputMultiComponentBuilderDetails(components);
 
         cadFileStatusPage = importCadFilePage.submit();
@@ -223,12 +223,12 @@ public class UploadComponentTests extends TestBaseUI {
         explorePage = new CidAppLoginPage(driver)
             .login(componentAssembly.getUser())
             .importCadFile()
-            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputDefaultScenarioName(componentAssembly.getScenarioName())
             .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose()
             .importCadFile()
-            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputDefaultScenarioName(componentAssembly.getScenarioName())
             .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose();
@@ -282,7 +282,7 @@ public class UploadComponentTests extends TestBaseUI {
             .login(componentAssembly.getUser())
             .importCadFile()
             .tick("Override existing scenario")
-            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputDefaultScenarioName(componentAssembly.getScenarioName())
             .inputMultiComponentBuilderDetails(componentAssembly.getSubComponents())
             .submit()
             .clickClose();
@@ -310,13 +310,13 @@ public class UploadComponentTests extends TestBaseUI {
         explorePage = new CidAppLoginPage(driver)
             .login(componentAssembly.getUser())
             .importCadFile()
-            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputDefaultScenarioName(componentAssembly.getScenarioName())
             .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose()
             .openComponent(componentAssembly.getComponentName().toUpperCase(), componentAssembly.getScenarioName(), componentAssembly.getUser())
             .importCadFile()
-            .inputScenarioName(scenarioName2)
+            .inputDefaultScenarioName(scenarioName2)
             .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose()
@@ -358,7 +358,7 @@ public class UploadComponentTests extends TestBaseUI {
         importCadFilePage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .importCadFile()
-            .inputScenarioName(component.getScenarioName())
+            .inputDefaultScenarioName(component.getScenarioName())
             .inputMultiComponentsBuilder(Arrays.asList(component, componentB));
 
         softAssertions.assertThat(importCadFilePage.getAlertWarning()).isEqualTo(component.getComponentName() + component.getExtension() + " is already selected.");
@@ -433,7 +433,7 @@ public class UploadComponentTests extends TestBaseUI {
         componentsTreePage.closePanel()
             .clickExplore()
             .importCadFile()
-            .inputScenarioName(scenarioName2)
+            .inputDefaultScenarioName(scenarioName2)
             .inputMultiComponentsBuilder(components)
             .submit()
             .clickClose()
@@ -460,7 +460,7 @@ public class UploadComponentTests extends TestBaseUI {
         componentsTreePage.closePanel()
             .clickExplore()
             .importCadFile()
-            .inputScenarioName(scenarioName)
+            .inputDefaultScenarioName(scenarioName)
             .inputMultiComponentsBuilder(components)
             .tick("Override existing scenario")
             .submit()

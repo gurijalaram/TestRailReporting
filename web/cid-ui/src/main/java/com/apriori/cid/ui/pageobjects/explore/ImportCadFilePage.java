@@ -39,7 +39,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     private WebElement fileInput;
 
     @FindBy(css = "input[name='primaryScenarioName']")
-    private WebElement scenarioNameInput;
+    private WebElement defaultScenarioNameInput;
 
     @FindBy(css = "div[class='Toastify__toast-body']")
     private WebElement alertWarning;
@@ -95,7 +95,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return current page object
      */
     public ImportCadFilePage inputComponentDetails(String scenarioName, File filePath) {
-        inputScenarioName(scenarioName)
+        inputDefaultScenarioName(scenarioName)
             .enterFilePath(filePath);
         return this;
     }
@@ -160,15 +160,15 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Input scenario name
+     * Input default scenario name
      *
      * @param scenarioName - the scenario name
      * @return current page object
      */
-    public ImportCadFilePage inputScenarioName(String scenarioName) {
-        pageUtils.waitForElementToAppear(scenarioNameInput);
-        pageUtils.clearInput(scenarioNameInput);
-        scenarioNameInput.sendKeys(scenarioName);
+    public ImportCadFilePage inputDefaultScenarioName(String scenarioName) {
+        pageUtils.waitForElementToAppear(defaultScenarioNameInput);
+        pageUtils.clearValueOfElement(defaultScenarioNameInput);
+        defaultScenarioNameInput.sendKeys(scenarioName);
         return this;
     }
 
@@ -369,7 +369,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return string
      */
     public String getDefaultScenarioName() {
-        return pageUtils.waitForElementToAppear(scenarioNameInput).getAttribute("value");
+        return pageUtils.waitForElementToAppear(defaultScenarioNameInput).getAttribute("value");
     }
 
     /**

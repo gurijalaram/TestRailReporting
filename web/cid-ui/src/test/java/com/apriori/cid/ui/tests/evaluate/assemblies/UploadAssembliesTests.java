@@ -257,7 +257,7 @@ public class UploadAssembliesTests extends TestBaseUI {
             .importCadFile()
             .inputMultiComponents(firstMultiComponentBatch)
             .inputMultiComponents(secondMultiComponentBatch)
-            .inputScenarioName(scenarioName)
+            .inputDefaultScenarioName(scenarioName)
             .submit()
             .clickClose()
             .openComponent(assemblyName1, scenarioName, currentUser)
@@ -324,7 +324,7 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         explorePage.importCadFile()
             .inputMultiComponents(secondAssemblyBatch)
-            .inputScenarioName(assemblyScenarioName1)
+            .inputDefaultScenarioName(assemblyScenarioName1)
             .submit()
             .clickClose()
             .selectFilter("Private");
@@ -351,7 +351,7 @@ public class UploadAssembliesTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .importCadFile()
-            .inputScenarioName(scenarioName)
+            .inputDefaultScenarioName(scenarioName)
             .inputMultiComponents(firstAssemblyBatch)
             .submit()
             .clickClose();
@@ -608,7 +608,7 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         explorePage = componentsTreePage.closePanel()
             .importCadFile()
-            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputDefaultScenarioName(componentAssembly.getScenarioName())
             .enterFilePath(autoSword.getResourceFile())
             .submit()
             .clickClose();
