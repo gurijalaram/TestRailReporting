@@ -198,7 +198,7 @@ public class ComponentRequestUtil {
      * Gets random component by process group and by user
      *
      * @param processGroup - the process group
-     * @param currentUser - UserCredentiala
+     * @param currentUser - UserCredentials
      * @return component builder object
      */
     public ComponentInfoBuilder getComponentByProcessGroup(ProcessGroupEnum processGroup, UserCredentials currentUser) {

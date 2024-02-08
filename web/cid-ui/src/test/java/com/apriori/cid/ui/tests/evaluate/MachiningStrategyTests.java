@@ -104,7 +104,7 @@ public class MachiningStrategyTests extends TestBaseUI {
     @TestRail(id = {15421})
     @Description("Evaluate page - Machinable PG can be selected and part can be costed with Do not machine this part checked")
     public void testCostWithMachiningOptionSelected() {
-        component = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
