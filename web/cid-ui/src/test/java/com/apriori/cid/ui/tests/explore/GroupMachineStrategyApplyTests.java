@@ -53,7 +53,7 @@ public class GroupMachineStrategyApplyTests extends TestBaseUI {
         softAssertions.assertThat(componentBasicPage.isMachineOptionsCheckBoxDisplayed()).isEqualTo(true);
         softAssertions.assertThat(componentBasicPage.isMachineOptionsCheckBoxSelected()).isEqualTo(false);
 
-        explorePage = componentBasicPage.selectMachineOptionCheckBox()
+        explorePage = componentBasicPage.tickDoNotMachinePart()
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class);
 
@@ -67,7 +67,7 @@ public class GroupMachineStrategyApplyTests extends TestBaseUI {
 
         softAssertions.assertThat(componentBasicPage.isMachineOptionsCheckBoxSelected()).isEqualTo(true);
 
-        explorePage = componentBasicPage.selectMachineOptionCheckBox()
+        explorePage = componentBasicPage.unTickDoNotMachinePart()
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class);
 
