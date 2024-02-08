@@ -873,12 +873,22 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Selects the Do not machine this part checkbox
+     * Ticks the Do not machine this part checkbox
      *
      * @return current page object
      */
-    public EvaluatePage selectMachineOptionsCheckbox() {
-        inputsController.selectMachineOptionsCheckbox(machinePartCheckbox);
+    public EvaluatePage tickDoNotMachinePart() {
+        inputsController.tickDoNotMachinePart(machinePartCheckbox);
+        return this;
+    }
+
+    /**
+     * Un-tick the Do not machine this part checkbox
+     *
+     * @return current page object
+     */
+    public EvaluatePage unTickDoNotMachinePart() {
+        inputsController.unTickDoNotMachinePart(machinePartCheckbox);
         return this;
     }
 
