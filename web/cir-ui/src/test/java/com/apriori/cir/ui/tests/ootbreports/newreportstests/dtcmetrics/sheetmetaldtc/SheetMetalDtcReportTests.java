@@ -176,7 +176,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
             4406.160458693279,
             6753.127001618986
         );
-        jasperApiUtils.genericSortOrderDtcTest(
+        jasperApiUtils.genericSortOrderAnnualSpendDtcTest(
             partNames,
             assertFigures,
             "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
@@ -184,10 +184,70 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @TmsLink("2323")
-    @TestRail(id = 2323)
-    @Description("Verify minimum annual spend input control correctly filters list of available parts")
-    public void testMinimumAnnualSpends() {
+    @TmsLink("29818")
+    @TestRail(id = 29818)
+    @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Sheet Metal DTC Report")
+    public void testSortOrderManufacturingIssues() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.P_2980123_CLAMP.getPartName(),
+            JasperCirApiPartsEnum.AP_BRACKET_HANGER.getPartName()
+        );
+        jasperApiUtils.genericSortOrderDtcComparisonTest(
+            partNames,
+            "Sort Order", SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("29819")
+    @TestRail(id = 29819)
+    @Description("Verify Sort Order input control functions correctly - Bends - Sheet Metal DTC Report")
+    public void testSortOrderBends() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.P_2980123_CLAMP.getPartName(),
+            JasperCirApiPartsEnum.AP_BRACKET_HANGER.getPartName()
+        );
+        jasperApiUtils.genericSortOrderDtcComparisonTest(
+            partNames,
+            "Sort Order", SortOrderEnum.BENDS.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("29820")
+    @TestRail(id = 29820)
+    @Description("Verify Sort Order input control functions correctly - Bends - Sheet Metal DTC Report")
+    public void testSortOrderTolerances() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.P_2980123_CLAMP.getPartName(),
+            JasperCirApiPartsEnum.AP_BRACKET_HANGER.getPartName()
+        );
+        jasperApiUtils.genericSortOrderDtcComparisonTest(
+            partNames,
+            "Sort Order", SortOrderEnum.TOLERANCES.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("29821")
+    @TestRail(id = 29821)
+    @Description("Verify Sort Order input control functions correctly - Machining Time - Sheet Metal DTC Report")
+    public void testSortOrderMachiningTime() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.P_2980123_CLAMP.getPartName(),
+            JasperCirApiPartsEnum.AP_BRACKET_HANGER.getPartName()
+        );
+        jasperApiUtils.genericSortOrderDtcComparisonTest(
+            partNames,
+            "Sort Order", SortOrderEnum.MACHINING_TIME.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("29704")
+    @TestRail(id = 29704)
+    @Description("Verify Minimum Annual Spend input control functions correctly - Sheet Metal DTC Report")
+    public void testMinimumAnnualSpend() {
         jasperApiUtils.genericMinAnnualSpendDtcTest(
             3
         );
