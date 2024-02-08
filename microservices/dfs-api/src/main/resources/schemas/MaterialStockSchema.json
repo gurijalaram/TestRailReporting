@@ -78,6 +78,12 @@
     },
     "createdBy": {
       "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
     }
   },
   "required": [

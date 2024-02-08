@@ -36,6 +36,7 @@ public class WorkSheetResponse {
     private LocalDateTime updatedAt;
     private String updatedBy;
     private String name;
-    private List costingEventIds;
+    private List analysisEvents;
     private String description;
+    private String status;
 }

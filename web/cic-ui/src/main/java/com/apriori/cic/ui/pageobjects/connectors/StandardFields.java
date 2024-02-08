@@ -22,6 +22,8 @@ public class StandardFields extends ConnectorMappings {
     @FindBy(xpath = "//div[@class='tabsv2-actual-tab-contents']//div[@tab-number='1']//button//span[text()='Add Row']")
     private WebElement addRowBtn;
 
+    private String standardFieldsTabTable = "div[class='tabsv2-actual-tab-contents'] div[tab-number='1'] div[class^='BMCollectionViewCellWrapper'] div[class$='tw-flex-row']";
+
     public StandardFields(WebDriver driver) {
         super(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -101,24 +103,58 @@ public class StandardFields extends ConnectorMappings {
      *
      * @return Current class object
      */
-    public StandardFields removeRow() {
-        selectedRow.findElements(By.cssSelector("button")).get(0).click();
+    public StandardFields deleteRow() {
+        WebElement webElement = getCurrentRow().findElement(By.cssSelector("button"));
+        pageUtils.waitForElementAndClick(webElement);
+        waitUntilRowsLoaded();
+        pageUtils.waitForElementNotVisible(webElement, 30);
         return this;
     }
 
-    public StandardFields selectRow() {
-        selectedRow = getStandardFieldsRows().get(getStandardFieldsRows().size() - 1);
-        return this;
+    /**
+     * verify Remove Row image button is displayed
+     *
+     * @return Boolean
+     */
+    public Boolean isRemoveRowBtnDisplayed() {
+        return pageUtils.isElementDisplayed(getCurrentRow().findElements(By.cssSelector("button")).get(0));
     }
 
+    /**
+     * Verify PLM Field text box is enabled
+     *
+     * @return Boolean
+     */
+    public Boolean isPlmFieldEnabled(PlmTypeAttributes plmTypeAttributes) {
+        WebElement element = getCurrentRow().findElements(By.cssSelector(cssTextboxSelector)).get(0);
+        return pageUtils.isElementEnabled(element);
+    }
+
+    /**
+     * Select CI Connect Field
+     *
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     * @return current class object
+     */
     public StandardFields selectCiConnectField(PlmTypeAttributes plmTypeAttributes) {
-        List<WebElement> ciStandardFieldFieldCols = selectedRow.findElements(By.cssSelector(cssColumnSelector));
+        List<WebElement> ciStandardFieldFieldCols = getCurrentRow().findElements(By.cssSelector(cssColumnSelector));
         selectCiConnectField(ciStandardFieldFieldCols.get(ConnectorColumnFields.CI_CONNECT_FIELD.getColumnIndex()), plmTypeAttributes);
         return this;
     }
 
+    /**
+     * verify CI Connect Field is Enabled
+     *
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     * @return boolean
+     */
+    public Boolean isCiConnectFieldEnabled(PlmTypeAttributes plmTypeAttributes) {
+        List<WebElement> ciStandardFieldFieldCols = getCurrentRow().findElements(By.cssSelector(cssColumnSelector));
+        return pageUtils.isElementEnabled(ciStandardFieldFieldCols.get(ConnectorColumnFields.CI_CONNECT_FIELD.getColumnIndex()).findElement(By.tagName("select")));
+    }
+
     public String getFieldDataType() {
-        return selectedRow.findElements(By.cssSelector(cssColumnSelector)).get(ConnectorColumnFields.DATA_TYPE.getColumnIndex() - 1).getText();
+        return getCurrentRow().findElements(By.cssSelector(cssColumnSelector)).get(ConnectorColumnFields.DATA_TYPE.getColumnIndex() - 1).getText();
     }
 
     /**
@@ -167,6 +203,7 @@ public class StandardFields extends ConnectorMappings {
      * click add row button in standard mappings tab
      */
     public StandardFields clickAddRowBtn() {
+        pageUtils.waitForSteadinessOfElement(By.xpath("//div[@class='tabsv2-actual-tab-contents']//div[@tab-number='1']//button//span[text()='Add Row']"));
         pageUtils.waitForElementAndClick(addRowBtn);
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
@@ -200,7 +237,9 @@ public class StandardFields extends ConnectorMappings {
      * @return list of standard mappings rows
      */
     public List<WebElement> getStandardFieldsRows() {
-        return driver.findElements(By.cssSelector("div[class='tabsv2-actual-tab-contents'] div[tab-number='1'] div[class^='BMCollectionViewCellWrapper'] div[class$='tw-flex-row']"));
+        String cssSelector = "div[class='tabsv2-actual-tab-contents'] div[tab-number='1'] div[class^='BMCollectionViewCellWrapper'] div[class$='tw-flex-row']";
+        pageUtils.waitForElementsToAppear(By.cssSelector(cssSelector));
+        return driver.findElements(By.cssSelector(cssSelector));
     }
 
     /**
@@ -250,5 +289,14 @@ public class StandardFields extends ConnectorMappings {
     private void selectUsageRule(WebElement webElement, UsageRule usageRule) {
         pageUtils.waitForElementAndClick(webElement);
         this.selectValueFromDDL(0, usageRule.getUsageRule());
+    }
+
+    /**
+     * get current row
+     *
+     * @return WebElement
+     */
+    private WebElement getCurrentRow() {
+        return getStandardFieldsRows().get(getStandardFieldsRows().size() - 1);
     }
 }

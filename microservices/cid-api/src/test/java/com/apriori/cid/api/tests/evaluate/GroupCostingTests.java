@@ -4,6 +4,7 @@ import com.apriori.cid.api.models.response.GroupCostResponse;
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -43,32 +44,20 @@ public class GroupCostingTests {
     @TestRail(id = {10620, 11845})
     @Description("Group Cost 10 components")
     public void testGroupCostTenParts() {
-
-        final ProcessGroupEnum asmProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        final ProcessGroupEnum prtProcessGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final int noOfSubcomponentsToCost = 10;
-        currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
-            assemblyExtension,
-            asmProcessGroupEnum,
-            subComponentNames,
-            subComponentExtension,
-            prtProcessGroupEnum,
-            scenarioName,
-            currentUser);
+        ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly(assemblyName);
+        componentAssembly.getSubComponents().forEach(subcomponent -> subcomponent.setProcessGroup(ProcessGroupEnum.SHEET_METAL));
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        ResponseWrapper<GroupCostResponse> groupCostResponse = scenariosUtil.postGroupCostScenarios(componentAssembly, subComponentNames.subList(0, noOfSubcomponentsToCost)
-            .toArray(new String[noOfSubcomponentsToCost]));
+        GroupCostResponse groupCostResponse = scenariosUtil.postGroupCostScenarios(componentAssembly.getSubComponents().subList(0, noOfSubcomponentsToCost));
 
         softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(groupCostResponse.getResponseEntity().getSuccesses().size()).as("Group Cost Successes").isEqualTo(noOfSubcomponentsToCost);
-        softAssertions.assertThat(groupCostResponse.getResponseEntity().getFailures().size()).as("Group Cost Failures").isEqualTo(0);
+        softAssertions.assertThat(groupCostResponse.getSuccesses().size()).as("Group Cost Successes").isEqualTo(noOfSubcomponentsToCost);
+        softAssertions.assertThat(groupCostResponse.getFailures().size()).as("Group Cost Failures").isEqualTo(0);
 
         softAssertions.assertAll();
     }

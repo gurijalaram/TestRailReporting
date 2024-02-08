@@ -4,6 +4,7 @@ import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.ErrorMessage;
 
@@ -40,6 +41,7 @@ public class AssemblyUtils {
             subComponentName -> ComponentInfoBuilder.builder()
                 .componentName(subComponentName)
                 .extension(subComponentExtension)
+                .resourceFile(FileResourceUtil.getCloudFile(subComponentProcessGroup, subComponentName + subComponentExtension))
                 .scenarioName(scenarioName)
                 .processGroup(subComponentProcessGroup)
                 .user(currentUser)
@@ -74,6 +76,7 @@ public class AssemblyUtils {
             .extension(assemblyExtension)
             .scenarioName(scenarioName)
             .processGroup(assemblyProcessGroup)
+            .resourceFile(FileResourceUtil.getCloudFile(assemblyProcessGroup, assemblyName + assemblyExtension))
             .subComponents(buildSubComponents(subComponentNames,
                 subComponentExtension,
                 subComponentProcessGroup,
@@ -150,7 +153,7 @@ public class AssemblyUtils {
      * @return current object
      */
     public AssemblyUtils costSubComponents(ComponentInfoBuilder assemblySubComponent) {
-        assemblySubComponent.getSubComponents().forEach(subComponent -> scenariosUtil.postCostScenario(subComponent));
+        scenariosUtil.postGroupCostScenarios(assemblySubComponent.getSubComponents());
         return this;
     }
 
@@ -160,8 +163,9 @@ public class AssemblyUtils {
      * @param assembly - the assembly
      * @return list of scenario item
      */
-    public ScenarioResponse costAssembly(ComponentInfoBuilder assembly) {
-        return scenariosUtil.postCostScenario(assembly);
+    public AssemblyUtils costAssembly(ComponentInfoBuilder assembly) {
+        scenariosUtil.postGroupCostScenarios(assembly);
+        return this;
     }
 
     /**

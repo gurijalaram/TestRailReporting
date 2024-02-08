@@ -48,7 +48,7 @@ public class FileUploadAPI {
             .user(currentUser)
             .build());
 
-        scenariosUtil.postCostScenario(
+        scenariosUtil.postGroupCostScenarios(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)

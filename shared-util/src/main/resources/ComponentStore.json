@@ -603,6 +603,11 @@
       "componentName": "partbody_2",
       "extension": ".stp",
       "processGroup": "WITHOUT_PG"
+    },
+    {
+      "componentName": "Square circle",
+      "extension": ".CATPart",
+      "processGroup": "STOCK_MACHINING"
     }
   ]
 }

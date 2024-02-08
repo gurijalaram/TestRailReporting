@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonRootName("response")
 public class Inputrow {
-    String componentIdentity;
-    String scenarioIdentity;
+    private String componentIdentity;
+    private String scenarioIdentity;
+    private String inputRowIdentity;
 }
