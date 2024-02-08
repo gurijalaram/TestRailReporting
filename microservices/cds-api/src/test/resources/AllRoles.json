@@ -1,0 +1,139 @@
+{
+  "CONTRIBUTOR": {
+    "deployment": "production",
+    "applications": [
+      "CUS",
+      "CSS",
+      "ACH",
+      "AW"
+    ]
+  },
+  "ANALYST": {
+    "deployment": "production",
+    "applications": [
+      "CUS",
+      "CSS",
+      "ACH",
+      "AW",
+      "AA"
+    ]
+  },
+  "DESIGNER": {
+    "deployment": "production",
+    "applications": [
+      "CUS",
+      "CSS",
+      "ACH",
+      "AW",
+      "AA",
+      "AD",
+      "FMS",
+      "ACS"
+    ]
+  },
+  "EXPERT": {
+    "deployment": "production",
+    "applications": [
+      "CUS",
+      "CSS",
+      "ACH",
+      "AW",
+      "AA",
+      "AD",
+      "FMS",
+      "ACS",
+      "EDC",
+      "AP"
+    ]
+  },
+  "DEVELOPER": {
+    "deployment": "production",
+    "applications": [
+      "CUS",
+      "CSS",
+      "ACH",
+      "AW",
+      "AA",
+      "AD",
+      "FMS",
+      "ACS",
+      "EDC",
+      "AP"
+    ]
+  },
+  "ANALYST_CONNECT": {
+    "deployment": "production",
+    "applications": [
+      "CUS",
+      "CSS",
+      "ACH",
+      "AW",
+      "AA",
+      "AC"
+    ]
+  },
+  "DESIGNER_CONNECT_USER": {
+    "deployment": "production",
+    "applications": [
+      "CUS",
+      "CSS",
+      "ACH",
+      "AW",
+      "AA",
+      "AD",
+      "FMS",
+      "ACS",
+      "AC",
+      "CA"
+    ]
+  },
+  "EXPERT_CONNECT_USER": {
+    "deployment": "production",
+    "applications": [
+      "CUS",
+      "CSS",
+      "ACH",
+      "AW",
+      "AA",
+      "AD",
+      "FMS",
+      "ACS",
+      "EDC",
+      "AP",
+      "AC",
+      "CA"
+    ]
+  },
+  "EXPERT_CONNECT_USER_ADMIN": {
+    "deployment": "production",
+    "applications": [
+      "CUS",
+      "CSS",
+      "ACH",
+      "AW",
+      "AA",
+      "AD",
+      "FMS",
+      "ACS",
+      "EDC",
+      "AP",
+      "AC",
+      "CA",
+      "ADMIN"
+    ]
+  },
+  "EXPERT_CONNECT_USER_SANDBOX": {
+    "deployment": "sandbox",
+    "applications": [
+      "AW",
+      "AA",
+      "AD",
+      "AP",
+      "ADMIN",
+      "AC",
+      "FMS",
+      "ACS",
+      "CSS"
+    ]
+  }
+}

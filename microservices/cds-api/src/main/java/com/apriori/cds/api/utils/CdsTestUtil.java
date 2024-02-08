@@ -1307,7 +1307,14 @@ public class CdsTestUtil extends TestUtil {
         ResponseWrapper<AccessControls> accessControl = HTTPRequest.build(requestEntity).get();
         List<AccessControlResponse> accessControlItems = accessControl.getResponseEntity().getItems();
 
-        List<Apps> appsList = new ArrayList<>();
+        Apps appsProd = Apps.builder()
+            .deployment("production")
+            .applications(new ArrayList<>())
+            .build();
+        Apps appsSandbox = Apps.builder()
+            .deployment("sandbox")
+            .applications(new ArrayList<>())
+            .build();
         for (AccessControlResponse item : accessControlItems) {
             RequestEntity requestEntityApp =
                 requestEntityUtil.init(CDSAPIEnum.APPLICATION_BY_ID, Application.class)
@@ -1323,15 +1330,24 @@ public class CdsTestUtil extends TestUtil {
             ResponseWrapper<Deployment> deployment =
                 HTTPRequest.build(requestEntityDep).get();
 
-            appsList.add(Apps.builder()
-                .appAccessControlsEnum(AppAccessControlsEnum
-                    .fromString(application.getResponseEntity().getName()))
-                .environment(deployment.getResponseEntity().getName())
-                .build());
+            if (deployment.getResponseEntity().getName().equals("Production")) {
+                appsProd.getApplications()
+                    .add(AppAccessControlsEnum.fromString(application.getResponseEntity().getName()));
+            }
+            if (deployment.getResponseEntity().getName().equals("Sandbox")) {
+                appsSandbox.getApplications()
+                    .add(AppAccessControlsEnum.fromString(application.getResponseEntity().getName()));
+            }
         }
-        return AppsItems
-            .builder()
-            .appsList(appsList)
-            .build();
+        AppsItems appsItems = new AppsItems();
+        appsItems.setAppsList(new ArrayList<>());
+
+        if (!appsProd.getApplications().isEmpty()) {
+            appsItems.getAppsList().add(appsProd);
+        }
+        if (!appsSandbox.getApplications().isEmpty()) {
+            appsItems.getAppsList().add(appsSandbox);
+        }
+        return appsItems;
     }
 }
