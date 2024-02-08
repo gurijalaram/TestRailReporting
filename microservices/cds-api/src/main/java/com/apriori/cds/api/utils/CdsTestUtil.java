@@ -7,6 +7,7 @@ import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 import com.apriori.cds.api.enums.AppAccessControlsEnum;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
+import com.apriori.cds.api.enums.DeploymentEnum;
 import com.apriori.cds.api.models.Apps;
 import com.apriori.cds.api.models.AppsItems;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
@@ -67,24 +68,19 @@ import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 public class CdsTestUtil extends TestUtil {
 
@@ -1299,7 +1295,7 @@ public class CdsTestUtil extends TestUtil {
     /**
      * this method returns the list of the application which user is entitled for
      */
-    public AppsItems getUserApplications(User user) {
+    public Apps getUserApplications(User user, DeploymentEnum deploymentVar) {
         RequestEntity requestEntity =
             requestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
                 .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
@@ -1307,12 +1303,8 @@ public class CdsTestUtil extends TestUtil {
         ResponseWrapper<AccessControls> accessControl = HTTPRequest.build(requestEntity).get();
         List<AccessControlResponse> accessControlItems = accessControl.getResponseEntity().getItems();
 
-        Apps appsProd = Apps.builder()
-            .deployment("production")
-            .applications(new ArrayList<>())
-            .build();
-        Apps appsSandbox = Apps.builder()
-            .deployment("sandbox")
+        Apps apps = Apps.builder()
+            .deployment(deploymentVar.getDeployment())
             .applications(new ArrayList<>())
             .build();
         for (AccessControlResponse item : accessControlItems) {
@@ -1330,24 +1322,11 @@ public class CdsTestUtil extends TestUtil {
             ResponseWrapper<Deployment> deployment =
                 HTTPRequest.build(requestEntityDep).get();
 
-            if (deployment.getResponseEntity().getName().equals("Production")) {
-                appsProd.getApplications()
-                    .add(AppAccessControlsEnum.fromString(application.getResponseEntity().getName()));
-            }
-            if (deployment.getResponseEntity().getName().equals("Sandbox")) {
-                appsSandbox.getApplications()
+            if (deployment.getResponseEntity().getName().equals(deploymentVar.getDeployment())) {
+                apps.getApplications()
                     .add(AppAccessControlsEnum.fromString(application.getResponseEntity().getName()));
             }
         }
-        AppsItems appsItems = new AppsItems();
-        appsItems.setAppsList(new ArrayList<>());
-
-        if (!appsProd.getApplications().isEmpty()) {
-            appsItems.getAppsList().add(appsProd);
-        }
-        if (!appsSandbox.getApplications().isEmpty()) {
-            appsItems.getAppsList().add(appsSandbox);
-        }
-        return appsItems;
+        return apps;
     }
 }

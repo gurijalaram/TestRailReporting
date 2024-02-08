@@ -3,6 +3,7 @@ package com.apriori.cds.api.tests;
 import com.apriori.cds.api.enums.AppAccessControlsEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.enums.CDSRolesEnum;
+import com.apriori.cds.api.enums.DeploymentEnum;
 import com.apriori.cds.api.models.Apps;
 import com.apriori.cds.api.models.AppsItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
@@ -30,7 +31,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @ExtendWith(TestRulesAPI.class)
@@ -96,16 +99,23 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         User user = cdsTestUtil.getUserByEmail("user-role_1@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.CONTRIBUTOR);
+        AppsItems appsItems = AppsItems.builder()
+            .appsList(Arrays.asList(Apps.builder()
+                .applications(CDSRolesEnum.CONTRIBUTOR.getApps())
+                .deployment(DeploymentEnum.PRODUCTION.getDeployment())
+                .build()))
+            .build();
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.CONTRIBUTOR.getRole());
 
-        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = AppsItems.builder()
+            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
                 .toArray(new AppAccessControlsEnum[appsItems.getAppsList().get(0).getApplications().size()]));
-        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo("production");
+        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo(DeploymentEnum.PRODUCTION.getDeployment());
         soft.assertAll();
     }
 
@@ -116,16 +126,23 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         User user = cdsTestUtil.getUserByEmail("user-role_2@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.ANALYST);
+        AppsItems appsItems = AppsItems.builder()
+            .appsList(Arrays.asList(Apps.builder()
+                .applications(CDSRolesEnum.ANALYST.getApps())
+                .deployment(DeploymentEnum.PRODUCTION.getDeployment())
+                .build()))
+            .build();
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.ANALYST.getRole());
 
-        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = AppsItems.builder()
+            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
                 .toArray(new AppAccessControlsEnum[appsItems.getAppsList().get(0).getApplications().size()]));
-        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo("production");
+        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo(DeploymentEnum.PRODUCTION.getDeployment());
         soft.assertAll();
     }
 
@@ -136,16 +153,23 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         User user = cdsTestUtil.getUserByEmail("user-role_3@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.DESIGNER);
+        AppsItems appsItems = AppsItems.builder()
+            .appsList(Arrays.asList(Apps.builder()
+                .applications(CDSRolesEnum.DESIGNER.getApps())
+                .deployment(DeploymentEnum.PRODUCTION.getDeployment())
+                .build()))
+            .build();
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.DESIGNER.getRole());
 
-        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = AppsItems.builder()
+            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
                 .toArray(new AppAccessControlsEnum[appsItems.getAppsList().get(0).getApplications().size()]));
-        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo("production");
+        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo(DeploymentEnum.PRODUCTION.getDeployment());
         soft.assertAll();
     }
 
@@ -156,16 +180,23 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         User user = cdsTestUtil.getUserByEmail("user-role_4@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.EXPERT);
+        AppsItems appsItems = AppsItems.builder()
+            .appsList(Arrays.asList(Apps.builder()
+                .applications(CDSRolesEnum.EXPERT.getApps())
+                .deployment(DeploymentEnum.PRODUCTION.getDeployment())
+                .build()))
+            .build();
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.EXPERT.getRole());
 
-        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = AppsItems.builder()
+            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
                 .toArray(new AppAccessControlsEnum[appsItems.getAppsList().get(0).getApplications().size()]));
-        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo("production");
+        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo(DeploymentEnum.PRODUCTION.getDeployment());
         soft.assertAll();
     }
 
@@ -176,16 +207,23 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         User user = cdsTestUtil.getUserByEmail("user-role_5@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.DEVELOPER);
+        AppsItems appsItems = AppsItems.builder()
+            .appsList(Arrays.asList(Apps.builder()
+                .applications(CDSRolesEnum.DEVELOPER.getApps())
+                .deployment(DeploymentEnum.PRODUCTION.getDeployment())
+                .build()))
+            .build();
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.DEVELOPER.getRole());
 
-        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = AppsItems.builder()
+            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
                 .toArray(new AppAccessControlsEnum[appsItems.getAppsList().get(0).getApplications().size()]));
-        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo("production");
+        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo(DeploymentEnum.PRODUCTION.getDeployment());
         soft.assertAll();
     }
 
@@ -196,18 +234,25 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         User user = cdsTestUtil.getUserByEmail("user-role_6@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.ANALYST_CONNECT);
+        AppsItems appsItems = AppsItems.builder()
+            .appsList(Arrays.asList(Apps.builder()
+                .applications(CDSRolesEnum.ANALYST_CONNECT.getApps())
+                .deployment(DeploymentEnum.PRODUCTION.getDeployment())
+                .build()))
+            .build();
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
 
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.ANALYST.getRole());
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
 
-        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = AppsItems.builder()
+            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
                 .toArray(new AppAccessControlsEnum[appsItems.getAppsList().get(0).getApplications().size()]));
-        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo("production");
+        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo(DeploymentEnum.PRODUCTION.getDeployment());
         soft.assertAll();
     }
 
@@ -218,18 +263,25 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         User user = cdsTestUtil.getUserByEmail("user-role_7@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.DESIGNER_CONNECT_USER);
+        AppsItems appsItems = AppsItems.builder()
+            .appsList(Arrays.asList(Apps.builder()
+                .applications(CDSRolesEnum.DESIGNER_CONNECT_USER.getApps())
+                .deployment(DeploymentEnum.PRODUCTION.getDeployment())
+                .build()))
+            .build();
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.DESIGNER.getRole());
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
         soft.assertThat(enablements.getUserAdminEnabled()).isTrue();
 
-        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = AppsItems.builder()
+            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
                 .toArray(new AppAccessControlsEnum[appsItems.getAppsList().get(0).getApplications().size()]));
-        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo("production");
+        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo(DeploymentEnum.PRODUCTION.getDeployment());
         soft.assertAll();
     }
 
@@ -240,18 +292,25 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         User user = cdsTestUtil.getUserByEmail("user-role_8@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.EXPERT_CONNECT_USER);
+        AppsItems appsItems = AppsItems.builder()
+            .appsList(Arrays.asList(Apps.builder()
+                .applications(CDSRolesEnum.EXPERT_CONNECT_USER.getApps())
+                .deployment(DeploymentEnum.PRODUCTION.getDeployment())
+                .build()))
+            .build();
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.EXPERT.getRole());
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
         soft.assertThat(enablements.getUserAdminEnabled()).isTrue();
 
-        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = AppsItems.builder()
+            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
                 .toArray(new AppAccessControlsEnum[appsItems.getAppsList().get(0).getApplications().size()]));
-        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo("production");
+        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo(DeploymentEnum.PRODUCTION.getDeployment());
         soft.assertAll();
     }
 
@@ -263,23 +322,38 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         User user = cdsTestUtil.getUserByEmail("user-role_9@apriori.com")
             .getResponseEntity().getItems().get(0);
 
-        AppsItems appsItems = getExpectedAccessControlForRole(CDSRolesEnum.EXPERT_CONNECT_USER_ADMIN, CDSRolesEnum.EXPERT_CONNECT_USER_SANDBOX);
+        AppsItems appsItems = AppsItems.builder()
+            .appsList(Arrays.asList(Apps.builder()
+                    .applications(CDSRolesEnum.EXPERT_CONNECT_USER_ADMIN.getApps())
+                    .deployment(DeploymentEnum.PRODUCTION.getDeployment())
+                    .build(),
+                Apps.builder()
+                    .applications(CDSRolesEnum.EXPERT_CONNECT_USER_SANDBOX.getApps())
+                    .deployment(DeploymentEnum.PRODUCTION.getDeployment())
+                    .build()))
+            .build();
 
         Enablements enablements = cdsTestUtil.getEnablement(user).getResponseEntity();
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.EXPERT.getRole());
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
         soft.assertThat(enablements.getUserAdminEnabled()).isTrue();
 
-        AppsItems applicationsResponse = cdsTestUtil.getUserApplications(user);
+        AppsItems applicationsResponse = AppsItems.builder()
+            .appsList(Arrays.asList(
+                cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION),
+                cdsTestUtil.getUserApplications(user, DeploymentEnum.SANDBOX)
+            ))
+            .build();
+
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
                 .toArray(new AppAccessControlsEnum[appsItems.getAppsList().get(0).getApplications().size()]));
-        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo("production");
+        soft.assertThat(applicationsResponse.getAppsList().get(0).getDeployment()).isEqualTo(DeploymentEnum.PRODUCTION.getDeployment());
 
         soft.assertThatList(applicationsResponse.getAppsList().get(1).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(1).getApplications())
                 .toArray(new AppAccessControlsEnum[appsItems.getAppsList().get(1).getApplications().size()]));
-        soft.assertThat(applicationsResponse.getAppsList().get(1).getDeployment()).isEqualTo("sandbox");
+        soft.assertThat(applicationsResponse.getAppsList().get(1).getDeployment()).isEqualTo(DeploymentEnum.SANDBOX.getDeployment());
         soft.assertAll();
     }
 
@@ -293,29 +367,5 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         String userName = generateStringUtil.generateUserName();
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
-    }
-
-    private AppsItems getExpectedAccessControlForRole(CDSRolesEnum... role) {
-
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode;
-        AppsItems appsItems = new AppsItems();
-        List<Apps> appsList = new ArrayList<>();
-        for (CDSRolesEnum item : role) {
-            Apps apps;
-            try {
-                jsonNode = mapper.readTree(new File(FileResourceUtil
-                    .getResourceAsFile("AllRoles.json").getPath()));
-                JsonNode node = jsonNode.get(item.toString());
-                apps = mapper.treeToValue(node, Apps.class);
-                appsList.add(apps);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        appsItems.setAppsList(appsList);
-        return appsItems;
     }
 }

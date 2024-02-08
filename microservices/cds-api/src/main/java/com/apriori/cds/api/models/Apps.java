@@ -14,6 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Apps {
-    String deployment;
-    List<AppAccessControlsEnum> applications;
+    public String deployment;
+    public List<AppAccessControlsEnum> applications;
 }
