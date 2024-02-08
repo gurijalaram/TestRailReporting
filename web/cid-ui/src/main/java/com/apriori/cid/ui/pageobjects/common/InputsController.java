@@ -145,17 +145,38 @@ public class InputsController {
     }
 
     /**
-     * Selects the Do not machine this part checkbox
+     * Tick the Do not machine this part checkbox
+     *
      * @param machineCheckbox - the machine checkbox webelement
      * @return current page object
      */
-    public InputsController selectMachineOptionsCheckbox(WebElement machineCheckbox) {
-        pageUtils.waitForElementAndClick(machineCheckbox);
+    public InputsController tickDoNotMachinePart(WebElement machineCheckbox) {
+        if (!isDoNotMachineContains(machineCheckbox)) {
+            machineCheckbox.click();
+        }
         return this;
     }
 
     /**
+     * Un-tick the Do not machine this part checkbox
+     *
+     * @param machineCheckbox - the machine checkbox webelement
+     * @return current page object
+     */
+    public InputsController unTickDoNotMachinePart(WebElement machineCheckbox) {
+        if (isDoNotMachineContains(machineCheckbox)) {
+            machineCheckbox.click();
+        }
+        return this;
+    }
+
+    private boolean isDoNotMachineContains(WebElement machineCheckbox) {
+        return pageUtils.waitForElementToAppear(machineCheckbox).getAttribute("class").contains("checked");
+    }
+
+    /**
      * Checks if the machine part checkbox is displayed
+     *
      * @param machineCheckbox - the machine checkbox webelement
      * @return boolean
      */
@@ -165,6 +186,7 @@ public class InputsController {
 
     /**
      * Checks if the machine part checkbox is selected
+     *
      * @param checkBoxInput - the machine checkbox webelement
      * @return boolean
      */
@@ -174,6 +196,7 @@ public class InputsController {
 
     /**
      * Checks if the select source model button is enabled
+     *
      * @param sourceComponentPencil - Source Model pencil icon
      * @return boolean
      */
@@ -184,7 +207,7 @@ public class InputsController {
     /**
      * Closes the source model invalid message
      *
-     * @param  closeButton
+     * @param closeButton
      * @return new page object
      */
     public InputsController closeMessagePanel(WebElement closeButton) {

@@ -36,7 +36,7 @@ public class MachiningStrategyTests extends TestBaseUI {
 
         softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxDisplayed()).isEqualTo(true);
 
-        evaluatePage.selectMachineOptionsCheckbox()
+        evaluatePage.tickDoNotMachinePart()
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isMachineOptionsCheckboxSelected()).isEqualTo(true);
@@ -110,13 +110,13 @@ public class MachiningStrategyTests extends TestBaseUI {
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
-            .selectMachineOptionsCheckbox()
+            .tickDoNotMachinePart()
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).doesNotContain("5 Axis Mill");
 
-        evaluatePage.selectMachineOptionsCheckbox()
+        evaluatePage.unTickDoNotMachinePart()
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
