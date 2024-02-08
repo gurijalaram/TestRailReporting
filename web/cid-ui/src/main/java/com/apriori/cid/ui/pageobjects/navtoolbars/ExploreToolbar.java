@@ -486,7 +486,7 @@ public class ExploreToolbar extends MainNavBar {
      */
     public ComponentsTreePage uploadAndOpenComponents(ComponentInfoBuilder componentInfoBuilder) {
         importCadFile()
-            .inputScenarioName(componentInfoBuilder.getScenarioName())
+            .inputDefaultScenarioName(componentInfoBuilder.getScenarioName())
             .inputMultiAssemblyBuilder(componentInfoBuilder)
             .submit()
             .clickClose()
