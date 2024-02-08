@@ -141,4 +141,14 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
             "Process Group", ProcessGroupEnum.CASTING_DIE.getProcessGroup()
         );
     }
+
+    @Test
+    @TmsLink("1371")
+    @TestRail(id = {1371})
+    @Description("Verify Minimum Annual Spend input control functions correctly - Plastic DTC Report")
+    public void testMinimumAnnualSpend() {
+        jasperApiUtils.genericMinAnnualSpendDtcTest(
+            1
+        );
+    }
 }
