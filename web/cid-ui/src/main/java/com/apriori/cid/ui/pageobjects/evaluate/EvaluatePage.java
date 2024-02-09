@@ -360,10 +360,19 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return new page object
      */
     public GuidanceIssuesPage openDesignGuidance() {
-        if (pageUtils.isElementDisplayed(designGuidanceDetailsButton)) {
+        if (isDesignGuidanceButtonDisplayed()) {
             designGuidanceDetailsButton.click();
         }
         return new GuidanceIssuesPage(driver);
+    }
+
+    /**
+     * Checks if design guidance button is displayed which inevitably means the window is open or not
+     *
+     * @return true/false
+     */
+    public boolean isDesignGuidanceButtonDisplayed() {
+        return pageUtils.isElementDisplayed(designGuidanceDetailsButton);
     }
 
     /**
