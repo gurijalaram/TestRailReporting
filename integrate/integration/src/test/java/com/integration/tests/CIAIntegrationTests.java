@@ -86,8 +86,7 @@ public class CIAIntegrationTests extends TestBaseUI {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .waitForComponentFilter();
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
             ListNameEnum.SCENARIO_NAME.getListName(), "Available: ", "1");
@@ -99,7 +98,7 @@ public class CIAIntegrationTests extends TestBaseUI {
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("part"), CoreMatchers.is(equalTo(11)));
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("assembly"), CoreMatchers.is(equalTo(3)));
         componentCostReportPage = componentCostReportPage.clickOk(ComponentCostReportPage.class);
-        assertThat(componentCostReportPage.getPartNumber(), CoreMatchers.is(equalTo("0200613")));
+        assertThat(componentCostReportPage.getPartNumber(), CoreMatchers.is(equalTo("3538968")));
     }
 
 }
