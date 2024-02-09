@@ -28,10 +28,10 @@ import java.util.List;
 @ExtendWith(TestRulesAPI.class)
 public class GroupCostingTests {
 
-    private static ComponentInfoBuilder componentAssembly;
     private final List<String> subComponentNames = Arrays.asList(
         "50mmArc", "50mmCube", "50mmEllipse", "50mmOctagon", "75mmCube", "75mmHexagon",
         "100mmCube", "100mmSlot", "150mmCuboid", "200mmCylinder", "500mmBlob");
+    private ComponentInfoBuilder componentAssembly;
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions;

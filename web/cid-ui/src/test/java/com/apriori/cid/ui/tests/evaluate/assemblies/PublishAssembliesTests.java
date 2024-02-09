@@ -34,8 +34,8 @@ import org.junit.jupiter.api.Test;
 
 public class PublishAssembliesTests extends TestBaseUI {
 
-    private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private ComponentInfoBuilder componentAssembly;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
@@ -89,7 +89,7 @@ public class PublishAssembliesTests extends TestBaseUI {
             .selectProcessGroup(ProcessGroupEnum.ASSEMBLY)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(componentAssembly, EvaluatePage.class);;
+            .publish(componentAssembly, EvaluatePage.class);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
     }

@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class LargeGroupAssemblyTests extends TestBaseUI {
 
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private static ComponentInfoBuilder componentAssembly;
+    private ComponentInfoBuilder componentAssembly;
     private CidAppLoginPage loginPage;
     private ComponentsTreePage componentsTreePage;
     private SoftAssertions softAssertions = new SoftAssertions();

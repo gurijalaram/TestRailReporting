@@ -23,7 +23,6 @@ import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -36,8 +35,7 @@ public class LargeGroupEditAssemblies extends TestBaseUI {
     private static String scenarioName;
     private static String scenarioName2;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private static UserCredentials currentUser;
-    private static ComponentInfoBuilder componentAssembly;
+    private ComponentInfoBuilder componentAssembly;
     private CidAppLoginPage loginPage;
     private ComponentsTablePage componentsTablePage;
     private SoftAssertions softAssertions = new SoftAssertions();
@@ -58,16 +56,16 @@ public class LargeGroupEditAssemblies extends TestBaseUI {
             .openComponents()
             .selectTableView()
             .multiSelectSubcomponents(CENTRE_BOLT.getPartName() + ", " + scenarioName,
-            CENTRE_WASHER.getPartName() + ", " + scenarioName,
-            DISPLAY.getPartName() + ", " + scenarioName,
-            GASKET.getPartName() + ", " + scenarioName,
-            HANDLE.getPartName() + ", " + scenarioName,
-            LEFT_PADDLE.getPartName() + ", " + scenarioName,
-            LEG_COVER.getPartName() + "," + scenarioName,
-            LEG.getPartName() + "," + scenarioName,
-            MECHANISM_BODY.getPartName() + "," + scenarioName,
-            PADDLE_BAR.getPartName() + "," + scenarioName,
-            PIN.getPartName() + "," + scenarioName);
+                CENTRE_WASHER.getPartName() + ", " + scenarioName,
+                DISPLAY.getPartName() + ", " + scenarioName,
+                GASKET.getPartName() + ", " + scenarioName,
+                HANDLE.getPartName() + ", " + scenarioName,
+                LEFT_PADDLE.getPartName() + ", " + scenarioName,
+                LEG_COVER.getPartName() + "," + scenarioName,
+                LEG.getPartName() + "," + scenarioName,
+                MECHANISM_BODY.getPartName() + "," + scenarioName,
+                PADDLE_BAR.getPartName() + "," + scenarioName,
+                PIN.getPartName() + "," + scenarioName);
 
         softAssertions.assertThat(componentsTablePage.isEditButtonDisabled()).isEqualTo(true);
 
