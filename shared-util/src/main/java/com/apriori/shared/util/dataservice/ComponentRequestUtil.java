@@ -20,6 +20,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets a random component
+     * N.B The part name is unique
      *
      * @return component builder object
      */
@@ -30,7 +31,8 @@ public class ComponentRequestUtil {
 
         component = listOfComponents.stream().findFirst().get();
 
-        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
 
@@ -39,6 +41,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets a two model component
+     * N.B The part name is unique
      *
      * @param componentName - the part name
      * @return component builder object
@@ -51,7 +54,8 @@ public class ComponentRequestUtil {
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
 
-        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
 
@@ -60,11 +64,35 @@ public class ComponentRequestUtil {
 
     /**
      * Gets a component specified by name
+     * N.B The part name is unique
      *
      * @param componentName - the part name
      * @return component builder object
      */
     public ComponentInfoBuilder getComponent(String componentName) {
+
+        component = COMPONENT_REQUEST.getComponents()
+            .stream()
+            .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
+
+        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
+        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setUser(UserUtil.getUser());
+
+        return component;
+    }
+
+    /**
+     * Gets a component specified by name
+     * N.B The part name is not unique
+     *
+     * @param componentName - the part name
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getCloudComponent(String componentName) {
 
         component = COMPONENT_REQUEST.getComponents()
             .stream()
@@ -82,6 +110,7 @@ public class ComponentRequestUtil {
     /**
      * Gets a component specified by name and extension
      * The first dot (.) should be ignored e.g. getComponentByExtension("stp")
+     * N.B The part name is unique
      *
      * @param componentName - the part name
      * @param extension     - the extension
@@ -96,7 +125,8 @@ public class ComponentRequestUtil {
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
 
-        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
 
@@ -105,6 +135,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets a component specified by name and process group
+     * N.B The part name is unique
      *
      * @param componentName - the part name
      * @param processGroup  - the process group
@@ -119,7 +150,8 @@ public class ComponentRequestUtil {
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
 
-        component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
+        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
         component.setScenarioName(new GenerateStringUtil().generateScenarioName());
         component.setUser(UserUtil.getUser());
 
@@ -128,6 +160,7 @@ public class ComponentRequestUtil {
 
     /**
      * Gets a number of components
+     * N.B The part name is unique
      *
      * @param noOfComponents - the number of components
      * @return component builder object
@@ -141,9 +174,10 @@ public class ComponentRequestUtil {
 
         final UserCredentials currentUser = UserUtil.getUser();
         components.forEach(component -> {
-            component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
-            component.setUser(currentUser);
+            component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
+            component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
             component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+            component.setUser(currentUser);
         });
 
         return components;
@@ -152,6 +186,7 @@ public class ComponentRequestUtil {
     /**
      * Gets random component by extension
      * The first dot (.) should be ignored e.g. getComponentByExtension("stp")
+     * N.B The part name is unique
      *
      * @param extension - the extension
      * @return component builder object
@@ -165,15 +200,17 @@ public class ComponentRequestUtil {
 
         ComponentInfoBuilder componentInfoExtension = componentExtension.stream().findFirst().get();
 
-        componentInfoExtension.setResourceFile(FileResourceUtil.getCloudFile(componentInfoExtension.getProcessGroup(),
-            componentInfoExtension.getComponentName() + componentInfoExtension.getExtension()));
+        componentInfoExtension.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(componentInfoExtension.getFileNameExtension(), componentInfoExtension.getProcessGroup()));
+        componentInfoExtension.setComponentName(componentInfoExtension.getResourceFile().getName().split("\\.", 2)[0]);
         componentInfoExtension.setScenarioName(new GenerateStringUtil().generateScenarioName());
         componentInfoExtension.setUser(UserUtil.getUser());
+
         return componentInfoExtension;
     }
 
     /**
      * Gets random component by process group
+     * N.B The part name is unique
      *
      * @param processGroup - the process group
      * @return component builder object
@@ -187,18 +224,20 @@ public class ComponentRequestUtil {
 
         ComponentInfoBuilder componentInfoPG = componentPG.stream().findFirst().get();
 
-        componentInfoPG.setResourceFile(FileResourceUtil.getCloudFile(componentInfoPG.getProcessGroup(),
-            componentInfoPG.getComponentName() + componentInfoPG.getExtension()));
+        componentInfoPG.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(componentInfoPG.getFileNameExtension(), componentInfoPG.getProcessGroup()));
+        componentInfoPG.setComponentName(componentInfoPG.getResourceFile().getName().split("\\.", 2)[0]);
         componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
         componentInfoPG.setUser(UserUtil.getUser());
+
         return componentInfoPG;
     }
 
     /**
      * Gets random component by process group and by user
+     * N.B The part name is unique
      *
      * @param processGroup - the process group
-     * @param currentUser - UserCredentials
+     * @param currentUser  - UserCredentials
      * @return component builder object
      */
     public ComponentInfoBuilder getComponentByProcessGroup(ProcessGroupEnum processGroup, UserCredentials currentUser) {
@@ -210,10 +249,11 @@ public class ComponentRequestUtil {
 
         ComponentInfoBuilder componentInfoPG = componentPG.stream().findFirst().get();
 
-        componentInfoPG.setResourceFile(FileResourceUtil.getCloudFile(componentInfoPG.getProcessGroup(),
-            componentInfoPG.getComponentName() + componentInfoPG.getExtension()));
+        componentInfoPG.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(componentInfoPG.getFileNameExtension(), componentInfoPG.getProcessGroup()));
+        componentInfoPG.setComponentName(componentInfoPG.getResourceFile().getName().split("\\.", 2)[0]);
         componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
         componentInfoPG.setUser(currentUser);
+
         return componentInfoPG;
     }
 }
