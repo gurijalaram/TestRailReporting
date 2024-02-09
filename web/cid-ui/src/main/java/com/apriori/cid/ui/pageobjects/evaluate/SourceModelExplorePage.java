@@ -80,7 +80,7 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
      * @return current page object
      */
     public SourceModelExplorePage setPagination() {
-        componentTableActions.setPagination(50);
+        componentTableActions.setPagination();
         return this;
     }
 

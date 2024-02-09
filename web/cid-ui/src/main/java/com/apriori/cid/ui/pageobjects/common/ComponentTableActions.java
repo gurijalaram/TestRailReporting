@@ -132,6 +132,15 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     /**
      * Sets pagination
      *
+     * @return parent method
+     */
+    public ComponentTableActions setPagination() {
+        return setPagination(50);
+    }
+
+    /**
+     * Sets pagination
+     *
      * @return current page object
      */
     public ComponentTableActions setPagination(int paged) {

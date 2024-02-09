@@ -174,7 +174,7 @@ public class GroupEditTests extends TestBaseUI {
             SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh()
-            .setPagination(50);
+            .setPagination();
         ten_components.forEach(component -> explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName()));
         explorePage.publishScenario(PublishPage.class)
             .override()
@@ -183,7 +183,7 @@ public class GroupEditTests extends TestBaseUI {
             .close(ExplorePage.class);
 
         explorePage.refresh()
-            .setPagination(50)
+            .setPagination()
             .selectFilter("Public");
         ten_components.forEach(component -> explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName()));
 

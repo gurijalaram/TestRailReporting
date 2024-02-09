@@ -850,7 +850,7 @@ public class EditAssembliesTest extends TestBaseUI {
             .close(EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
-            .setPagination(50);
+            .setPagination();
 
         softAssertions.assertThat(explorePage.getListOfScenarios(componentAssembly.getComponentName(), componentAssembly.getScenarioName())).isEqualTo(2);
         softAssertions.assertThat(explorePage.getListOfScenarios(FLANGE, componentAssembly.getScenarioName())).isEqualTo(1);

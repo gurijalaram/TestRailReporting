@@ -103,7 +103,7 @@ public class ExplorePage extends ExploreToolbar {
      */
     public ExplorePage selectFilter(String filter) {
         pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-explorer-filter-selector", filter);
-        setPagination(50);
+        setPagination();
         return new ExplorePage(driver);
     }
 
@@ -385,8 +385,8 @@ public class ExplorePage extends ExploreToolbar {
      *
      * @return current page object
      */
-    public ExplorePage setPagination(int paged) {
-        componentTableActions.setPagination(paged);
+    public ExplorePage setPagination() {
+        componentTableActions.setPagination();
         return this;
     }
 
