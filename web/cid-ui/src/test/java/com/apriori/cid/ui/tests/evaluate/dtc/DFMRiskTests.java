@@ -206,7 +206,7 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6472, 6824, 6473})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
-        component = new ComponentRequestUtil().getComponent("1379344");
+        component = new ComponentRequestUtil().getCloudComponent("1379344");
         cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
@@ -247,7 +247,7 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6480, 6481})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
-        component = new ComponentRequestUtil().getComponent("DTCPlasticIssues");
+        component = new ComponentRequestUtil().getCloudComponent("DTCPlasticIssues");
         cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
@@ -286,7 +286,7 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6474, 6475})
     @Description("Validate DFM Risk can be REDUCED for SHEET METAL")
     public void dfmReducedSheetMetal() {
-        component = new ComponentRequestUtil().getComponent("bracketdfm");
+        component = new ComponentRequestUtil().getCloudComponent("bracketdfm");
         cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
@@ -325,7 +325,7 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6476, 5439, 6477})
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
-        component = new ComponentRequestUtil().getComponent("manifold2");
+        component = new ComponentRequestUtil().getCloudComponent("manifold2");
         cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
@@ -363,7 +363,7 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6478, 6479, 6471})
     @Description("Validate DFM Risk can be REDUCED for SAND CAST")
     public void dfmReducedSandCast() {
-        component = new ComponentRequestUtil().getComponent("SandCastBox");
+        component = new ComponentRequestUtil().getCloudComponent("SandCastBox");
         cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
@@ -402,7 +402,7 @@ public class DFMRiskTests extends TestBaseUI {
     @TestRail(id = {6830})
     @Description("CAD file association can be updated & subsequently reverted")
     public void revertCADUpdate() {
-        component = new ComponentRequestUtil().getComponent("1379344");
+        component = new ComponentRequestUtil().getCloudComponent("1379344");
         cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         loginPage = new CidAppLoginPage(driver);
@@ -436,7 +436,7 @@ public class DFMRiskTests extends TestBaseUI {
     public void updateCADCreoVersion() {
         final String creoVersionFile = "bar_test1.prt.2";
 
-        component = new ComponentRequestUtil().getComponent("bar_test1");
+        component = new ComponentRequestUtil().getCloudComponent("bar_test1");
         cadResourceFile = FileResourceUtil.getCloudCadFile(component.getProcessGroup(), creoVersionFile);
 
         loginPage = new CidAppLoginPage(driver);

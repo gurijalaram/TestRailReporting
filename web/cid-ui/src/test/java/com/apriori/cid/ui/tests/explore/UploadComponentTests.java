@@ -119,8 +119,7 @@ public class UploadComponentTests extends TestBaseUI {
             .clickClose();
 
         components.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(equalTo(1))));
+            assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()), is(equalTo(1))));
     }
 
     @Test
@@ -130,18 +129,18 @@ public class UploadComponentTests extends TestBaseUI {
     public void testMultiUploadWithSameScenarioName() {
 
         List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(3);
+        components.forEach(component -> component.setScenarioName(components.get(0).getScenarioName()));
 
         explorePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
             .importCadFile()
-            .unTick("Apply to all")
-            .inputMultiComponentBuilderDetails(components)
+            .inputDefaultScenarioName(components.get(0).getScenarioName())
+            .inputMultiComponentsBuilder(components)
             .submit()
             .clickClose();
 
         components.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(equalTo(1))));
+            assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()), is(equalTo(1))));
     }
 
     @Test

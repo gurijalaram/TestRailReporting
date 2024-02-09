@@ -116,11 +116,12 @@ public class GenerateStringUtil {
 
         if (index != -1) {
             return componentName.substring(0, index)
+                + "_"
                 + randomSymbols
                 + componentName.substring(index);
         }
 
-        return componentName + randomSymbols;
+        return componentName + "_" + randomSymbols;
     }
 
     /**
