@@ -105,7 +105,7 @@ public class EvaluatePage extends EvaluateToolbar {
     private WebElement finishMass;
 
     @FindBy(css = ".design-guidance-summary-card button")
-    private WebElement designGuidanceDetailsButton;
+    private WebElement DetailsButton;
 
     @FindBy(css = ".process-summary-card button")
     private WebElement processesDetailsButton;
@@ -359,7 +359,7 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public GuidanceIssuesPage openDesignGuidance() {
+    public GuidanceIssuesPage open() {
         if (isDesignGuidanceButtonDisplayed()) {
             designGuidanceDetailsButton.click();
         }
@@ -367,7 +367,7 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Checks if design guidance button is displayed which inevitably means the window is open or not
+     * Checks if design guidance button is displayed which indicates if the window is open
      *
      * @return true/false
      */
