@@ -605,6 +605,11 @@
       "processGroup": "WITHOUT_PG"
     },
     {
+      "componentName": "ANKARA_SEHPA_SKETCHUP",
+      "extension": ".skp",
+      "processGroup": "WITHOUT_PG"
+    },
+    {
       "componentName": "Square circle",
       "extension": ".CATPart",
       "processGroup": "STOCK_MACHINING"

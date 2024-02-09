@@ -99,6 +99,7 @@ public class PublishExistingCostedTests extends TestBaseUI {
             .costScenario()
             .publishScenario(PublishPage.class)
             .publish(component, EvaluatePage.class)
+            .clickExplore()
             .uploadComponent(componentB)
             .selectFilter("Private")
             .enterKeySearch(component.getComponentName())
