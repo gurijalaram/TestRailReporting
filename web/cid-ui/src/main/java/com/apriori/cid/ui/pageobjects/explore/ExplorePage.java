@@ -199,6 +199,17 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Checks the scenario is not displayed
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return size of the element as int
+     */
+    public boolean isScenarioNotDisplayed(String componentName, String scenarioName) {
+        return scenarioTableController.isScenarioNotDisplayed(componentName, scenarioName);
+    }
+
+    /**
      * Gets the number of elements present on the page
      *
      * @param componentName - name of the part

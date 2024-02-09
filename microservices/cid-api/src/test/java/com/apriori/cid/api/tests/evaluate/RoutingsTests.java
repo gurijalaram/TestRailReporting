@@ -421,6 +421,7 @@ public class RoutingsTests {
         ComponentInfoBuilder componentResponse = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(component.getComponentName())
             .scenarioName(component.getScenarioName())
+            .extension(component.getExtension())
             .resourceFile(component.getResourceFile())
             .user(component.getUser())
             .costingTemplate(costingTemplate)

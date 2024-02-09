@@ -242,6 +242,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")

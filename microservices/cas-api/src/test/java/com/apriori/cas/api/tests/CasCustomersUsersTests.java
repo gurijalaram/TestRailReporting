@@ -145,7 +145,7 @@ public class CasCustomersUsersTests {
         customerIdentity = newCustomer.getIdentity();
         List<String> headers = Arrays.asList(
             "loginID", "email", "firstName", "lastName", "fullName", "isAdmin", "isVPEAdmin", "isJasperAdmin", "AppStream", "ReportUser", "defaultPassword", "resetPassword",
-            "userLicenseName", "preferredCurrency", "schemaPrivileges", "defaultSchema", "roles", "defaultRole", "roleName", "applicationList", "prefix", "suffix", "jobTitle",
+            "userLicenseName", "preferredCurrency", "schemaPrivileges", "defaultSchema", "rolesAccessControlsMapping", "defaultRole", "roleName", "applicationList", "prefix", "suffix", "jobTitle",
             "department", "city/town", "state/province", "county", "countryCode", "timezone"
         );
 
