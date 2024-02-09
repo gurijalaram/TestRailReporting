@@ -13,8 +13,11 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class AdminHomePage extends AdminPageHeader {
 
-    @FindBy(xpath = "//div[@class='index-welcome-text'][1]")
+    @FindBy(xpath = "//div[@class='devices']")
     private WebElement onPremWelcomeText;
+
+    @FindBy(xpath = "//div[@data-name='recentItemsBlock']/div/div")
+    private WebElement cloudReportsHomeText;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -71,7 +74,8 @@ public class AdminHomePage extends AdminPageHeader {
      */
     public void waitForReportsLogoutDisplayedToAppear() {
         pageUtils.switchToWindow(1);
-        pageUtils.waitForElementToAppear(onPremWelcomeText);
+        WebElement elementToUse = PropertiesContext.get("${env}").equals("onprem") ? onPremWelcomeText : cloudReportsHomeText;
+        pageUtils.waitForElementToAppear(elementToUse);
     }
 
     /**
@@ -80,7 +84,8 @@ public class AdminHomePage extends AdminPageHeader {
      * @return boolean
      */
     public boolean isReportsWelcomeTextDisplayed() {
-        return pageUtils.isElementDisplayed(onPremWelcomeText);
+        WebElement elementToUse = PropertiesContext.get("${env}").equals("onprem") ? onPremWelcomeText : cloudReportsHomeText;
+        return pageUtils.isElementDisplayed(elementToUse);
     }
 
     /**
@@ -89,6 +94,7 @@ public class AdminHomePage extends AdminPageHeader {
      * @return boolean
      */
     public boolean isReportsWelcomeTextEnabled() {
-        return pageUtils.isElementEnabled(onPremWelcomeText);
+        WebElement elementToUse = PropertiesContext.get("${env}").equals("onprem") ? onPremWelcomeText : cloudReportsHomeText;
+        return pageUtils.isElementEnabled(elementToUse);
     }
 }
