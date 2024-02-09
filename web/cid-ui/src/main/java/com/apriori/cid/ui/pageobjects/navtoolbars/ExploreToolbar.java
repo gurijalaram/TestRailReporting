@@ -101,6 +101,8 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[data-testid='apriori-alert']")
     private WebElement lastUpdatedAlert;
 
+    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -475,6 +477,8 @@ public class ExploreToolbar extends MainNavBar {
      */
     public ExplorePage refresh() {
         pageUtils.waitForElementAndClick(refreshButton);
+        pageUtils.waitForElementToAppear(refreshLabel);
+        pageUtils.waitForElementsToNotAppear(refreshLabel);
         return new ExplorePage(driver);
     }
 
@@ -611,7 +615,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return string
      */
     public String getUpdateTimestamp() {
-        pageUtils.waitForElementsToNotAppear(By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']"));
+        pageUtils.waitForElementsToNotAppear(refreshLabel);
         return lastUpdatedAlert.getText();
     }
 }
