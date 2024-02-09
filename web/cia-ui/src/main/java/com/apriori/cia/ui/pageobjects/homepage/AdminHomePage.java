@@ -21,6 +21,7 @@ public class AdminHomePage extends AdminPageHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    WebElement welcomeHomeElementToUse;
 
     public AdminHomePage(WebDriver driver) {
         super(driver);
@@ -29,6 +30,7 @@ public class AdminHomePage extends AdminPageHeader {
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
+        welcomeHomeElementToUse = PropertiesContext.get("${env}").equals("onprem") ? onPremWelcomeText : cloudReportsHomeText;
     }
 
     @Override
@@ -38,8 +40,8 @@ public class AdminHomePage extends AdminPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.isElementDisplayed(onPremWelcomeText);
-        pageUtils.isElementEnabled(onPremWelcomeText);
+        pageUtils.isElementDisplayed(welcomeHomeElementToUse);
+        pageUtils.isElementEnabled(welcomeHomeElementToUse);
     }
 
     /**
@@ -61,21 +63,11 @@ public class AdminHomePage extends AdminPageHeader {
     }
 
     /**
-     * Gets url to check
-     *
-     * @return String
-     */
-    public String getUrlToCheck() {
-        return PropertiesContext.get("base_url");
-    }
-
-    /**
      * Wait for element to appear
      */
     public void waitForReportsLogoutDisplayedToAppear() {
         pageUtils.switchToWindow(1);
-        WebElement elementToUse = PropertiesContext.get("${env}").equals("onprem") ? onPremWelcomeText : cloudReportsHomeText;
-        pageUtils.waitForElementToAppear(elementToUse);
+        pageUtils.waitForElementToAppear(welcomeHomeElementToUse);
     }
 
     /**
@@ -84,8 +76,7 @@ public class AdminHomePage extends AdminPageHeader {
      * @return boolean
      */
     public boolean isReportsWelcomeTextDisplayed() {
-        WebElement elementToUse = PropertiesContext.get("${env}").equals("onprem") ? onPremWelcomeText : cloudReportsHomeText;
-        return pageUtils.isElementDisplayed(elementToUse);
+        return pageUtils.isElementDisplayed(welcomeHomeElementToUse);
     }
 
     /**
@@ -94,7 +85,6 @@ public class AdminHomePage extends AdminPageHeader {
      * @return boolean
      */
     public boolean isReportsWelcomeTextEnabled() {
-        WebElement elementToUse = PropertiesContext.get("${env}").equals("onprem") ? onPremWelcomeText : cloudReportsHomeText;
-        return pageUtils.isElementEnabled(elementToUse);
+        return pageUtils.isElementEnabled(welcomeHomeElementToUse);
     }
 }
