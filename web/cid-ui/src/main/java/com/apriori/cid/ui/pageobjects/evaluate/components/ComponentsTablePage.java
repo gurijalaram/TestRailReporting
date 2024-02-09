@@ -106,7 +106,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
      * @return current page object
      */
     public ComponentsTablePage setPagination() {
-        componentTableActions.setPagination();
+        componentTableActions.setPagination(50);
         return this;
     }
 

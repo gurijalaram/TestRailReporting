@@ -207,7 +207,7 @@ public class UploadComponentTests extends TestBaseUI {
         explorePage = importCadFilePage
             .submit()
             .clickClose()
-            .setPagination()
+            .setPagination(50)
             .selectFilter("Recent");
 
         components.forEach(component ->
@@ -421,7 +421,7 @@ public class UploadComponentTests extends TestBaseUI {
 
         explorePage = new ExplorePage(driver);
         componentsTreePage = explorePage.refresh()
-            .setPagination()
+            .setPagination(50)
             .openScenario("MainAssembly", scenarioName)
             .openComponents()
             .expandSubAssembly("SubAssembly1", scenarioName);
@@ -448,7 +448,7 @@ public class UploadComponentTests extends TestBaseUI {
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh()
-            .setPagination()
+            .setPagination(50)
             .openScenario("MainAssembly", scenarioName2)
             .openComponents()
             .expandSubAssembly("SubAssembly1", scenarioName2);
@@ -476,7 +476,7 @@ public class UploadComponentTests extends TestBaseUI {
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh()
-            .setPagination()
+            .setPagination(50)
             .openScenario("MainAssembly", scenarioName)
             .openComponents()
             .expandSubAssembly("SubAssembly1", scenarioName);

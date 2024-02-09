@@ -337,7 +337,7 @@ public class GroupPublishTests extends TestBaseUI {
             .inputMultiComponents(multiComponents)
             .submit()
             .clickClose()
-            .setPagination()
+            .setPagination(50)
             .selectFilter("Recent")
             .multiSelectScenarios("" + "piston rod_model1" + ", " + scenarioName + "",
                 "" + "Part0005b" + ", " + scenarioName + "");
@@ -349,7 +349,7 @@ public class GroupPublishTests extends TestBaseUI {
                 SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED)).hasSizeGreaterThan(0));
 
         explorePage.refresh()
-            .setPagination()
+            .setPagination(50)
             .multiSelectScenarios("" + "piston rod_model1" + ", " + scenarioName + "",
                 "" + "Part0005b" + ", " + scenarioName + "",
                 "" + "piston cover_model1" + ", " + scenarioName + "",
