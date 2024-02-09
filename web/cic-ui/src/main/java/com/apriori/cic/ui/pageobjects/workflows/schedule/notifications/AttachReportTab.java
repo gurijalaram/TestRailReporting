@@ -1,5 +1,7 @@
 package com.apriori.cic.ui.pageobjects.workflows.schedule.notifications;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import com.apriori.cic.ui.utils.Constants;
 
 import org.openqa.selenium.By;
@@ -7,43 +9,33 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 /**
  * Attach Report tab in Notification part during workflow creation or modification
  */
 public class AttachReportTab extends NotificationsPart {
 
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_DrowpdownWidget-242'] > div > div > span.placeholder")
+    @FindBy(xpath = "//div[@tab-number='4']//div[@tab-number='2']//div[contains(@class, 'layout-vert-fluid-center ')]//div[@class='widget-content widget-dropdown']")
     private WebElement reportNameDropDownElement;
-
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_DrowpdownWidget-173'] > div > div > span.placeholder")
-    private WebElement currencyCode;
-
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_textbox-175'] > table > tbody > tr > td > input")
-    private WebElement recipientEmailAddressTxtElement;
 
     @FindBy(css = "#CIC_EmptyReport_MU-1_label-3 > span")
     private WebElement emptyReportLbl;
 
-    private String ciReportConfigDDCss = "#CIC_ReportConfigurationCell_MU-[ID]_DrowpdownWidget-25";
-    private String getCiCurrCdeSelected = ciReportConfigDDCss + " > div > div > span.placeholder";
-    private String initialFieldRow;
-    private Integer dmcsRootElementRowId;
+    @FindBy(xpath = "//div//span[@class='arrow-up']")
+    private WebElement ddlArrowUp;
+
+    @FindBy(xpath = "//div[contains(@class, 'ss-open')]//div[.='Single Part Reports']")
+    private WebElement reportNameDdlGroup;
 
     public AttachReportTab(WebDriver driver) {
         super(driver);
     }
 
-    public NotificationsPart setUpEmailConfiguration() {
-        this.selectReportName();
-        this.selectCurrencyCode();
-        this.selectCostRounding();
-        return new NotificationsPart(this.driver);
-    }
-
     /**
      * Select Report Name
      *
-     * @return
+     * @return current class object
      */
     public AttachReportTab selectReportName() {
         pageUtils.waitForElementAndClick(reportNameDropDownElement);
@@ -59,20 +51,12 @@ public class AttachReportTab extends NotificationsPart {
      * @return AttachReport object
      */
     public AttachReportTab selectCurrencyCode() {
-        if (workFlowData.getNotificationsData().getReportName().equals("DFM Multiple Components Summary [CIR]")) {
-            Integer rowID = getDmcsRootElementRowID() + 1;
-            return (AttachReportTab) driver.findElement(By.cssSelector(ciReportConfigDDCss.replace("[ID]", rowID.toString())));
-        } else {
-            Integer rowID = Integer.parseInt(this.driver.findElements(By.cssSelector(reportConfigRootElementsRowsCss)).get(0).getAttribute("id").split("-")[1].trim());
-            WebElement ciCurrenyCodeRootElement = driver.findElement(By.cssSelector(ciReportConfigDDCss.replace("[ID]", rowID.toString())));
-            WebElement ciCurrenyCodeSelectedElement = driver.findElement(By.cssSelector(getCiCurrCdeSelected.replace("[ID]", rowID.toString())));
-            if (!ciCurrenyCodeSelectedElement.getText().equals("USD")) {
-                pageUtils.waitForElementAndClick(ciCurrenyCodeRootElement);
-                this.selectValueFromDDL(workFlowData.getNotificationsData().getReportCurrencyCode());
-                pageUtils.waitFor(Constants.DEFAULT_WAIT);
-            }
-            return this;
+        if (!getCurrencyCodeDdl().getText().equals("USD")) {
+            pageUtils.waitForElementToAppear(getCurrencyCodeDdl());
+            pageUtils.waitForElementAndClick(getCurrencyCodeDdl());
+            this.selectValueFromDDL(workFlowData.getNotificationsData().getReportCurrencyCode());
         }
+        return this;
     }
 
     /**
@@ -81,12 +65,9 @@ public class AttachReportTab extends NotificationsPart {
      * @return AttachReport object
      */
     public AttachReportTab selectCostRounding() {
-        Integer rowID = Integer.parseInt(this.driver.findElements(By.cssSelector(reportConfigRootElementsRowsCss)).get(1).getAttribute("id").split("-")[1].trim());
-        WebElement ciCostRoundingElement = driver.findElement(By.cssSelector(ciReportConfigDDCss.replace("[ID]", rowID.toString())));
-        pageUtils.waitForElementAndClick(ciCostRoundingElement);
+        pageUtils.waitForElementToAppear(getCostRoundingDdl());
+        pageUtils.waitForElementAndClick(getCostRoundingDdl());
         this.selectValueFromDDL(workFlowData.getNotificationsData().getReportCostRounding());
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
-
         return this;
     }
 
@@ -106,11 +87,30 @@ public class AttachReportTab extends NotificationsPart {
      * @return WebElement
      */
     public WebElement getCostMetricDdl() {
+        WebElement costMetricElement = null;
         if (workFlowData.getNotificationsData().getReportName().equals("DFM Multiple Components Summary [CIR]")) {
-            pageUtils.waitForElementToAppear(driver.findElement(By.cssSelector(ciReportConfigDDCss.replace("[ID]", getDmcsRootElementRowID().toString()))));
-            return driver.findElement(By.cssSelector(ciReportConfigDDCss.replace("[ID]", getDmcsRootElementRowID().toString())));
+            WebElement currencyTextBoxElement = getAttachReportTextFields().stream()
+                .filter(webElement -> webElement.getAttribute("value").equals("Cost Metric"))
+                .findFirst()
+                .get();
+            costMetricElement = driver.findElement(with(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div[contains(@class, 'tw-flex-row')]//div[@class='widget-content widget-dropdown']"))
+                .toRightOf(currencyTextBoxElement));
         }
-        return null;
+        return costMetricElement;
+    }
+
+    /**
+     * Getter for Cost rounding element
+     *
+     * @return WebElement
+     */
+    public WebElement getCostRoundingDdl() {
+        WebElement currencyTextBoxElement = getAttachReportTextFields().stream()
+            .filter(webElement -> webElement.getAttribute("value").equals("Cost Rounding"))
+            .findFirst()
+            .get();
+        return driver.findElement(with(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div[contains(@class, 'tw-flex-row')]//div[@class='widget-content widget-dropdown']"))
+            .toRightOf(currencyTextBoxElement));
     }
 
     /**
@@ -119,19 +119,41 @@ public class AttachReportTab extends NotificationsPart {
      * @return WebElement
      */
     public WebElement getCurrencyCodeDdl() {
-        WebElement webElement;
-        if (workFlowData.getNotificationsData().getReportName().equals("DFM Multiple Components Summary [CIR]")) {
-            Integer rowID = getDmcsRootElementRowID() + 1;
-            webElement = driver.findElement(By.cssSelector(ciReportConfigDDCss.replace("[ID]", rowID.toString())));
-        } else {
-            Integer rowID = Integer.parseInt(this.driver.findElements(By.cssSelector(reportConfigRootElementsRowsCss)).get(0).getAttribute("id").split("-")[1].trim());
-            webElement = driver.findElement(By.cssSelector(ciReportConfigDDCss.replace("[ID]", rowID.toString())));
-        }
-        return webElement;
+        WebElement currencyTextBoxElement = getAttachReportTextFields().stream()
+            .filter(webElement -> webElement.getText().equals("Curreny Code"))
+            .findFirst()
+            .get();
+
+        return driver.findElement(with(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div[contains(@class, 'tw-flex-row')]//div[@class='widget-content widget-dropdown']"))
+            .toLeftOf(currencyTextBoxElement));
     }
 
-    private Integer getDmcsRootElementRowID() {
-        return Integer.parseInt(this.driver.findElements(By.cssSelector(reportConfigRootElementsRowsCss)).get(0).getAttribute("id").split("-")[1].trim());
+    /**
+     * get the list of standard mappings rows
+     *
+     * @return list of standard mappings rows
+     */
+    public List<WebElement> getAttachReportDropdownFields() {
+        return driver.findElements(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div[contains(@class, 'tw-flex-row')]//div[@class='widget-content widget-dropdown']"));
+    }
+
+    /**
+     * get all the text fields from notitifaction - attach report tab
+     *
+     * @return - list of webelements
+     */
+    public List<WebElement> getAttachReportTextFields() {
+        return driver.findElements(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div[contains(@class, 'tw-flex-row')]//div[@class='widget-content widget-textbox']//input[@disabled='disabled']"));
+    }
+
+    /**
+     * get report name dropdown element
+     *
+     * @return WebElement
+     */
+    private WebElement getReportNameDropdownElement() {
+        return driver.findElement(with(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div[@class='widget-content widget-dropdown']"))
+            .below(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div//span[.='Report Name']")));
     }
 
 }

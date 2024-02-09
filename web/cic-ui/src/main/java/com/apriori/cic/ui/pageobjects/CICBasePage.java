@@ -70,12 +70,7 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
     }
 
     protected void selectValueFromDDL(String ddlValue) {
-        this.driver.findElements(By.cssSelector(OPTIONS_CONTENT_OPEN_DROPDOWN_CSS)).get(1)
-            .findElements(By.cssSelector("div[class='ss-option']"))
-            .stream()
-            .filter(e -> e.getText().equals(ddlValue))
-            .findFirst()
-            .ifPresent(WebElement::click);
+        pageUtils.waitForElementAndClick(getDropDownValueElement(ddlValue));
     }
 
     protected void selectValueFromDDL(Integer index, String ddlValue) {
@@ -97,14 +92,19 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
         pageUtils.waitForElementToBeClickable(webElement);
     }
 
-    protected void waitUntilDropDownValuesAreLoaded(Integer index, String ddlValue) {
-        WebElement webElement = this.driver.findElements(By.cssSelector(OPTIONS_CONTENT_OPEN_DROPDOWN_CSS)).get(index)
-            .findElements(By.cssSelector("div[class='ss-option']"))
-            .stream()
-            .filter(e -> e.getText().equals(ddlValue))
-            .findFirst()
-            .get();
-        pageUtils.waitForElementToBeClickable(webElement);
+    protected WebElement getDropDownValueElement(String ddlValue) {
+        WebElement webElement = null;
+        try {
+            webElement = this.driver.findElements(By.cssSelector(OPTIONS_CONTENT_OPEN_DROPDOWN_CSS)).get(1)
+                .findElements(By.cssSelector("div[class='ss-option']"))
+                .stream()
+                .filter(e -> e.getText().equals(ddlValue))
+                .findFirst()
+                .get();
+        } catch (Exception e) {
+            log.debug("Value not found in drop down field!!");
+        }
+        return webElement;
     }
 
     protected WebElement getNextButtonElement() {
