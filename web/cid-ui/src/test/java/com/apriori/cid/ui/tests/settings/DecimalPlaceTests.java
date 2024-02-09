@@ -273,7 +273,7 @@ public class DecimalPlaceTests extends TestBaseUI {
             .openSettings()
             .selectDecimalPlaces(DecimalPlaceEnum.SIX)
             .submit(ExplorePage.class)
-            .openScenario(component.getComponentName(), component.getScenarioName());
+            .openScenario(componentAssembly.getComponentName(), componentAssembly.getScenarioName());
 
         softAssertions.assertThat(evaluatePage.getCostResultsText("Assembly Process Cost").split("\\.")[1].length())
             .as("Verify Assembly Process Cost displayed to 6 decimal places").isEqualTo(6);
