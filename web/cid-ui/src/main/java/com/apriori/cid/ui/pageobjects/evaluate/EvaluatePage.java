@@ -360,7 +360,9 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return new page object
      */
     public GuidanceIssuesPage openDesignGuidance() {
-        pageUtils.waitForElementAndClick(designGuidanceDetailsButton);
+        if (pageUtils.isElementDisplayed(designGuidanceDetailsButton)) {
+            designGuidanceDetailsButton.click();
+        }
         return new GuidanceIssuesPage(driver);
     }
 
@@ -732,6 +734,7 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Get list of property names in sustainability card
+     *
      * @return list of string
      */
     public List<String> getSustainabilityNames() {
