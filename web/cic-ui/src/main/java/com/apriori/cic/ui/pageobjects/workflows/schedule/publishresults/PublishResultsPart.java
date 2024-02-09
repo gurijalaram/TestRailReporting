@@ -29,11 +29,6 @@ public class PublishResultsPart extends CICBasePage {
     @FindBy(css = PARENT_ELEMENT + "[id$='-popup_button-288'] > button")
     protected WebElement saveButton;
 
-
-
-    protected String reportConfigRootElementsRowsCss = "div[class='BMCollectionViewCellWrapper'] div[class='BMCollectionViewCell BMCollectionViewCellHoverable'][id^='CIC_ReportConfigurationCell_MU-']";
-
-
     public PublishResultsPart(WebDriver driver) {
         super(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
