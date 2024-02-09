@@ -294,7 +294,7 @@ public class ProcessRoutingTests extends TestBaseUI {
 
     @Test
     @Disabled("Due to update 14/10/22 routings can't be change for additive manufacturing")
-    @TestRail(id = {7855, 14985, 15799, 29312})
+    @TestRail(id = {7855, 14985, 15799})
     @Description("Validate behaviour when forcing a material that will fail costing within CID")
     public void failCostingRouting() {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
@@ -311,7 +311,6 @@ public class ProcessRoutingTests extends TestBaseUI {
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isTrue();
-        softAssertions.assertThat(evaluatePage.isDesignGuidanceButtonDisplayed()).isTrue();
 
         evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Costing Failed", "Additive Manufacturing/Surface Treatment is infeasible", "Component:1");
@@ -610,7 +609,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {14989, 15803})
+    @TestRail(id = {14989, 15803, 29312})
     @Description("Validate routings Investment Cast")
     public void routingsInvestmentCasting() {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT);
@@ -628,6 +627,8 @@ public class ProcessRoutingTests extends TestBaseUI {
         routingSelectionPage.selectRoutingPreferenceByName("Abrasive Wheel Cut")
             .submit(EvaluatePage.class)
             .costScenario();
+
+        softAssertions.assertThat(evaluatePage.isDesignGuidanceButtonDisplayed()).isTrue();
 
         guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Costing Failed", "Casting - Investment/Machining is infeasible", "Component:1");
