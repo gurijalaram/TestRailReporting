@@ -105,7 +105,7 @@ public class EvaluatePage extends EvaluateToolbar {
     private WebElement finishMass;
 
     @FindBy(css = ".design-guidance-summary-card button")
-    private WebElement DetailsButton;
+    private WebElement designGuidanceDetailsButton;
 
     @FindBy(css = ".process-summary-card button")
     private WebElement processesDetailsButton;
@@ -359,7 +359,7 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return new page object
      */
-    public GuidanceIssuesPage open() {
+    public GuidanceIssuesPage openDesignGuidance() {
         if (isDesignGuidanceButtonDisplayed()) {
             designGuidanceDetailsButton.click();
         }
