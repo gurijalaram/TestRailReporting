@@ -339,15 +339,21 @@ public class CostingInputsPart extends CICBasePage {
         this.clickAddRowBtn();
         List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
         selectCiConnectField(ciStandardFieldFieldCols.get(0), plmTypeAttributes);
-        selectMappingRule(ciStandardFieldFieldCols.get(1), mappingRule);
-        if (plmTypeAttributes.getCicGuiField().equals("Process Group") || plmTypeAttributes.getCicGuiField().equals("Machining Mode")) {
-            pageUtils.waitForElementAndClick(ciStandardFieldFieldCols.get(2));
+        if (plmTypeAttributes.getCicGuiField().equals("Process Group") ||
+            plmTypeAttributes.getCicGuiField().equals("Digital Factory")) {
+            selectMappingRule(ciStandardFieldFieldCols.get(1), mappingRule);
+            selectFieldValue(ciStandardFieldFieldCols.get(3), fieldValue);
+        } else if (plmTypeAttributes.getCicGuiField().equals("Machining Mode")) {
+            pageUtils.checkDropdownOptions(ciStandardFieldFieldCols.get(3).findElement(By.tagName("select")), fieldValue);
+            pageUtils.waitForElementAndClick(ciStandardFieldFieldCols.get(3));
             this.selectValueFromDDL(fieldValue);
+        } else {
+            selectMappingRule(ciStandardFieldFieldCols.get(1), mappingRule);
+            enterRuleValue(ciStandardFieldFieldCols.get(2).findElement(By.cssSelector(cssTextboxSelector)), fieldValue);
         }
         if (plmTypeAttributes.getCicGuiField().contains("Date")) {
             selectDateForRuleValue(ciStandardFieldFieldCols.get(2));
         }
-        enterRuleValue(ciStandardFieldFieldCols.get(2).findElement(By.cssSelector(cssTextboxSelector)), fieldValue);
         return this;
     }
 
@@ -390,9 +396,8 @@ public class CostingInputsPart extends CICBasePage {
      * @param plmTypeAttributes - PlmTypeAttributes enum
      */
     private void selectCiConnectField(WebElement webElement, PlmTypeAttributes plmTypeAttributes) {
-        pageUtils.waitForElementToBeClickable(webElement);
+        pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(webElement);
-
         this.selectValueFromDDL(plmTypeAttributes.getCicGuiField());
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
     }
@@ -404,11 +409,25 @@ public class CostingInputsPart extends CICBasePage {
      * @param mappingRule - MappingRule
      */
     private void selectMappingRule(WebElement webElement, MappingRule mappingRule) {
+        pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
         WebElement mappingRuleElement = webElement.findElement(By.tagName("div")).findElement(By.tagName("div")).findElement(By.tagName("div"));
         pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
-        pageUtils.waitForElementToBeClickable(webElement);
         pageUtils.waitForElementAndClick(webElement);
         this.selectValueFromDDL(mappingRule.getMappingRule());
+    }
+
+    /**
+     * Select Usage Rule
+     *
+     * @param webElement - selected row element
+     * @param fieldValue - connector field value
+     */
+    private void selectFieldValue(WebElement webElement, String fieldValue) {
+        pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
+        WebElement mappingRuleElement = webElement.findElement(By.tagName("div")).findElement(By.tagName("div")).findElement(By.tagName("div"));
+        pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
+        pageUtils.waitForElementAndClick(webElement);
+        this.selectValueFromDDL(fieldValue);
     }
 
     /**
