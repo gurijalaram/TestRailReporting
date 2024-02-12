@@ -11,7 +11,7 @@
   "notificationsData": {
     "emailTemplate": "DFM Part Summary",
     "recipientEmailType": "Constant",
-    "recipientEmailAddress": "rgurijala@apriori.com",
+    "recipientEmailAddress": "nts-testing-mailbox@aprioritest.com",
     "reportName": "DTC Component Summary [CIR]",
     "reportCurrencyCode": "USD",
     "reportCostRounding": "No"
