@@ -123,16 +123,46 @@
         "category": "small"
       },
       "subComponents": [
-      ]
-    },
-    {
-      "componentName": "titan charger ass",
-      "extension": ".SLDASM",
-      "processGroup": "ASSEMBLY",
-      "metadata": {
-        "category": "small"
-      },
-      "subComponents": [
+        {
+          "componentName": "titan body RH",
+          "extension": ".SLDPRT",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "titan body LH",
+          "extension": ".SLDPRT",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "titan power switch",
+          "extension": ".SLDPRT",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "titan speed switch",
+          "extension": ".SLDPRT",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "titan bulk head",
+          "extension": ".SLDPRT",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "titan bit holder",
+          "extension": ".SLDPRT",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "titan forward reverse switch",
+          "extension": ".SLDPRT",
+          "processGroup": "SHEET_METAL"
+        },
+        {
+          "componentName": "titan torque setting",
+          "extension": ".SLDPRT",
+          "processGroup": "SHEET_METAL"
+        }
       ]
     },
     {
