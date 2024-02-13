@@ -310,7 +310,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isTrue();
 
         evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Costing Failed", "Additive Manufacturing/Surface Treatment is infeasible", "Component:1");
@@ -609,7 +609,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {14989, 15803})
+    @TestRail(id = {14989, 15803, 29312})
     @Description("Validate routings Investment Cast")
     public void routingsInvestmentCasting() {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT);
@@ -627,6 +627,8 @@ public class ProcessRoutingTests extends TestBaseUI {
         routingSelectionPage.selectRoutingPreferenceByName("Abrasive Wheel Cut")
             .submit(EvaluatePage.class)
             .costScenario();
+
+        softAssertions.assertThat(evaluatePage.isDesignGuidanceButtonDisplayed()).isTrue();
 
         guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Costing Failed", "Casting - Investment/Machining is infeasible", "Component:1");
