@@ -1177,7 +1177,19 @@ public class PageUtils {
         new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS / 2))
             .withMessage("Expected option not in dropdown: " + option + "Locator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
-            .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().stream().anyMatch(dropdownOptions -> dropdownOptions.getText().contains(option))));
+            .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().stream().anyMatch(dropdownOptions -> dropdownOptions.getAttribute("value").contains(option))));
+    }
+
+    /**
+     * waits for the dropdown to be loaded with the options
+     *
+     * @param locator - locator
+     */
+    public void waitUntilDropdownOptionsLoaded(WebElement locator) {
+        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
+            .withMessage("Expected option not in dropdown" + locator)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().size() > 1));
     }
 
     /**

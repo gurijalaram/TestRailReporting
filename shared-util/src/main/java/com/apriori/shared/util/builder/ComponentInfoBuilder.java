@@ -47,4 +47,8 @@ public class ComponentInfoBuilder implements Serializable {
         }
         return costingTemplate;
     }
+
+    public String getFileNameExtension() {
+        return this.componentName.concat(this.extension);
+    }
 }

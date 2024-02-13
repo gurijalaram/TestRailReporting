@@ -261,6 +261,44 @@ public class CostingInputsPart extends CICBasePage {
         return expectedMappingFields.stream().allMatch(fieldValues::contains);
     }
 
+    /**
+     * verify Field
+     *
+     * @param expectedMappingFields - list of field values
+     * @return boolean
+     */
+    public Boolean isValuesExists(List<String> expectedMappingFieldValues) {
+        List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
+        pageUtils.waitForElementAndClick(ciStandardFieldFieldCols.get(3));
+        List<WebElement> fieldValueListElement = this.driver.findElements(By.cssSelector(OPTIONS_CONTENT_OPEN_DROPDOWN_CSS)).get(1)
+            .findElements(By.cssSelector("div[class='ss-option']"));
+        List<String> fieldValues = new ArrayList<String>();
+        fieldValueListElement.stream().forEach(element -> {
+            fieldValues.add(element.getText());
+        });
+        return expectedMappingFieldValues.stream().allMatch(fieldValues::contains);
+    }
+
+    /**
+     * verify Mapping field value
+     *
+     * @param mappingRule - MappingRule
+     * @return boolean
+     */
+    public Boolean isMappingRuleFieldEnabled() {
+        List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
+        return (ciStandardFieldFieldCols.get(1).findElement(By.tagName("select")).isEnabled()) ? true : false;
+    }
+
+    /**
+     * get Default selected value from Mapping Rule field
+     *
+     * @return default selected string
+     */
+    public String getMappingRuleField() {
+        List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
+        return ciStandardFieldFieldCols.get(1).getText();
+    }
 
     /**
      * Add Costing Inputs single field
@@ -301,15 +339,21 @@ public class CostingInputsPart extends CICBasePage {
         this.clickAddRowBtn();
         List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
         selectCiConnectField(ciStandardFieldFieldCols.get(0), plmTypeAttributes);
-        selectMappingRule(ciStandardFieldFieldCols.get(1), mappingRule);
-        if (plmTypeAttributes.getCicGuiField().equals("Process Group") || plmTypeAttributes.getCicGuiField().equals("Machining Mode")) {
-            pageUtils.waitForElementAndClick(ciStandardFieldFieldCols.get(2));
+        if (plmTypeAttributes.getCicGuiField().equals("Process Group") ||
+            plmTypeAttributes.getCicGuiField().equals("Digital Factory")) {
+            selectMappingRule(ciStandardFieldFieldCols.get(1), mappingRule);
+            selectFieldValue(ciStandardFieldFieldCols.get(3), fieldValue);
+        } else if (plmTypeAttributes.getCicGuiField().equals("Machining Mode")) {
+            pageUtils.checkDropdownOptions(ciStandardFieldFieldCols.get(3).findElement(By.tagName("select")), fieldValue);
+            pageUtils.waitForElementAndClick(ciStandardFieldFieldCols.get(3));
             this.selectValueFromDDL(fieldValue);
+        } else {
+            selectMappingRule(ciStandardFieldFieldCols.get(1), mappingRule);
+            enterRuleValue(ciStandardFieldFieldCols.get(2).findElement(By.cssSelector(cssTextboxSelector)), fieldValue);
         }
         if (plmTypeAttributes.getCicGuiField().contains("Date")) {
             selectDateForRuleValue(ciStandardFieldFieldCols.get(2));
         }
-        enterRuleValue(ciStandardFieldFieldCols.get(2).findElement(By.cssSelector(cssTextboxSelector)), fieldValue);
         return this;
     }
 
@@ -336,13 +380,24 @@ public class CostingInputsPart extends CICBasePage {
     /**
      * select CI Connect field in Standard mappings rows
      *
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     */
+    public CostingInputsPart selectCiConnectField(PlmTypeAttributes plmTypeAttributes) {
+        List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
+        selectCiConnectField(ciStandardFieldFieldCols.get(0), plmTypeAttributes);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
+    }
+
+    /**
+     * select CI Connect field in Standard mappings rows
+     *
      * @param webElement        - selected row element
      * @param plmTypeAttributes - PlmTypeAttributes enum
      */
     private void selectCiConnectField(WebElement webElement, PlmTypeAttributes plmTypeAttributes) {
-        pageUtils.waitForElementToBeClickable(webElement);
+        pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(webElement);
-
         this.selectValueFromDDL(plmTypeAttributes.getCicGuiField());
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
     }
@@ -354,11 +409,25 @@ public class CostingInputsPart extends CICBasePage {
      * @param mappingRule - MappingRule
      */
     private void selectMappingRule(WebElement webElement, MappingRule mappingRule) {
+        pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
         WebElement mappingRuleElement = webElement.findElement(By.tagName("div")).findElement(By.tagName("div")).findElement(By.tagName("div"));
         pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
-        pageUtils.waitForElementToBeClickable(webElement);
         pageUtils.waitForElementAndClick(webElement);
         this.selectValueFromDDL(mappingRule.getMappingRule());
+    }
+
+    /**
+     * Select Usage Rule
+     *
+     * @param webElement - selected row element
+     * @param fieldValue - connector field value
+     */
+    private void selectFieldValue(WebElement webElement, String fieldValue) {
+        pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
+        WebElement mappingRuleElement = webElement.findElement(By.tagName("div")).findElement(By.tagName("div")).findElement(By.tagName("div"));
+        pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
+        pageUtils.waitForElementAndClick(webElement);
+        this.selectValueFromDDL(fieldValue);
     }
 
     /**

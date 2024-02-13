@@ -62,17 +62,16 @@ public class AdditionalPlmFields extends ConnectorMappings {
      *
      * @return current class object
      */
-    public AdditionalPlmFields selectRow() {
-        selectedRow = getAdditionalPlmFieldsRows().get(getAdditionalPlmFieldsRows().size() - 1);
-        return this;
+    public WebElement getCurrentRow() {
+        return getAdditionalPlmFieldsRows().get(getAdditionalPlmFieldsRows().size() - 1);
     }
 
     /**
      * Add row to a connector Mappings -> Standard Mappings Row
      *
-     * @param ciConnectFieldName - PlmTypeAttributes
-     * @param usageRule          - UsageRule Enum
-     * @param plmFieldName
+     * @param plmTypeAttributes - PlmTypeAttributes
+     * @param usageRule         - UsageRule Enum
+     * @param fieldDataType     - FieldDataTypeenum
      * @return Current class object
      */
     public AdditionalPlmFields addRow(PlmTypeAttributes plmTypeAttributes, UsageRule usageRule, FieldDataType fieldDataType) {
@@ -82,6 +81,36 @@ public class AdditionalPlmFields extends ConnectorMappings {
         enterPlmField(plmTypeAttributes.getValue());
         selectDataType(fieldDataType);
         return this;
+    }
+
+    /**
+     * is remove button displayed
+     * @return boolean
+     */
+    public Boolean isRemoveRowBtnDisplayed() {
+        return pageUtils.isElementDisplayed(getCurrentRow().findElements(By.cssSelector("button")).get(0));
+    }
+
+    /**
+     * Verify PLM Field text box is enabled
+     *
+     * @return Boolean
+     */
+    public Boolean isPlmFieldEnabled(PlmTypeAttributes plmTypeAttributes) {
+        WebElement element = getCurrentRow().findElements(By.cssSelector(cssTextboxSelector)).get(0);
+        return pageUtils.isElementEnabled(element);
+    }
+
+    /**
+     * verify CI Connect Field is Enabled
+     *
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     * @return boolean
+     */
+    public Boolean isCiConnectFieldEnabled(PlmTypeAttributes plmTypeAttributes) {
+        List<WebElement> ciStandardFieldFieldCols = getCurrentRow().findElements(By.cssSelector(cssColumnSelector));
+        return pageUtils.isElementEnabled(ciStandardFieldFieldCols.get(ConnectorColumnFields.CI_CONNECT_FIELD.getColumnIndex() + 1)
+            .findElement(By.cssSelector(cssTextboxSelector)));
     }
 
     /**

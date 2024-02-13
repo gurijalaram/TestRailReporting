@@ -24,7 +24,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     @FindBy(id = "qa-sub-component-detail-filter-button")
     private WebElement filterButton;
 
-    @FindBy(css = ".paginator .left")
+    @FindBy(css = "[data-testid='paginator'] .apriori-select")
     private WebElement paginatorDropdown;
 
     private PageUtils pageUtils;
@@ -130,15 +130,21 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     }
 
     /**
-     * Sets pagination to by default
+     * Sets pagination
+     *
+     * @return parent method
+     */
+    public ComponentTableActions setPagination() {
+        return setPagination(50);
+    }
+
+    /**
+     * Sets pagination
      *
      * @return current page object
      */
-    public ComponentTableActions setPagination() {
-        pageUtils.waitForElementAndClick(paginatorDropdown);
-        By paginator = By.xpath("//div[.='50']");
-        pageUtils.waitForElementToAppear(paginator);
-        pageUtils.waitForElementAndClick(paginator);
+    public ComponentTableActions setPagination(int paged) {
+        pageUtils.typeAheadSelect(pageUtils.waitForElementToAppear(paginatorDropdown), String.valueOf(paged));
         return this;
     }
 }

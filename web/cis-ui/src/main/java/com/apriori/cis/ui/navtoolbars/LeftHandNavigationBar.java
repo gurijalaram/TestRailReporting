@@ -194,7 +194,7 @@ public class LeftHandNavigationBar extends CisHeaderBar {
             .resourceFile(resourceFile)
             .user(userCredentials)
             .build());
-        scenariosUtil.postCostScenario(
+        scenariosUtil.postGroupCostScenarios(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)

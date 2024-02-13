@@ -21,20 +21,28 @@ import java.io.File;
 @ExtendWith(TestRulesAPI.class)
 public class DataCreationTests {
 
-    private SoftAssertions softAssertions;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
     public void dataCreateTest() {
         final ProcessGroupEnum processGroup = ProcessGroupEnum.STOCK_MACHINING;
         final String componentName = "Machined Box AMERICAS";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".SLDPRT");
+        final String extension = ".SLDPRT";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + extension);
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
-        ComponentInfoBuilder data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, costingTemplate, currentUser).searchCreateComponent();
-
-        softAssertions = new SoftAssertions();
+        ComponentInfoBuilder data = new DataCreationUtil(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroup)
+            .resourceFile(resourceFile)
+            .extension(extension)
+            .costingTemplate(costingTemplate)
+            .user(currentUser)
+            .build())
+            .searchCreateComponent();
 
         softAssertions.assertThat(data.getScenarioIdentity()).isNotEmpty();
         softAssertions.assertThat(data.getComponentIdentity()).isNotEmpty();
@@ -46,14 +54,22 @@ public class DataCreationTests {
     public void dataCreateCostTest() {
         final ProcessGroupEnum processGroup = ProcessGroupEnum.STOCK_MACHINING;
         final String componentName = "Machined Box AMERICAS";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".SLDPRT");
+        final String extension = ".SLDPRT";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + extension);
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
-        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, costingTemplate, currentUser).createCostComponent();
-
-        softAssertions = new SoftAssertions();
+        ScenarioResponse data = new DataCreationUtil(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroup)
+            .resourceFile(resourceFile)
+            .extension(extension)
+            .costingTemplate(costingTemplate)
+            .user(currentUser)
+            .build())
+            .createCostComponent();
 
         softAssertions.assertThat(data.getScenarioState()).isEqualTo(ScenarioStateEnum.COST_COMPLETE.getState());
 
@@ -64,14 +80,22 @@ public class DataCreationTests {
     public void dataCreatePublishTest() {
         final ProcessGroupEnum processGroup = ProcessGroupEnum.STOCK_MACHINING;
         final String componentName = "Machined Box AMERICAS";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".SLDPRT");
+        final String extension = ".SLDPRT";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + extension);
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
-        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, costingTemplate, currentUser).createPublishComponent();
-
-        softAssertions = new SoftAssertions();
+        ScenarioResponse data = new DataCreationUtil(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroup)
+            .resourceFile(resourceFile)
+            .extension(extension)
+            .costingTemplate(costingTemplate)
+            .user(currentUser)
+            .build())
+            .createPublishComponent();
 
         softAssertions.assertThat(data.getPublished()).isTrue();
 
@@ -82,14 +106,22 @@ public class DataCreationTests {
     public void dataCreateCostPublishTest() {
         final ProcessGroupEnum processGroup = ProcessGroupEnum.STOCK_MACHINING;
         final String componentName = "Machined Box AMERICAS";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".SLDPRT");
+        final String extension = ".SLDPRT";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + extension);
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(processGroup.getProcessGroup()).build();
-        ScenarioResponse data = new DataCreationUtil(componentName, scenarioName, processGroup, resourceFile, costingTemplate, currentUser).createCostPublishComponent();
-
-        softAssertions = new SoftAssertions();
+        ScenarioResponse data = new DataCreationUtil(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .processGroup(processGroup)
+            .resourceFile(resourceFile)
+            .extension(extension)
+            .costingTemplate(costingTemplate)
+            .user(currentUser)
+            .build())
+            .createCostPublishComponent();
 
         softAssertions.assertThat(data.getScenarioState()).isEqualTo(ScenarioStateEnum.COST_COMPLETE.getState());
         softAssertions.assertThat(data.getPublished()).isTrue();

@@ -40,7 +40,8 @@ public enum PlmTypeAttributes {
     PLM_MASS_METRIC("massMetric", "Finish Mass", "Mass Metric"),
     PLM_SORT_METRIC("sortMetric", "Part Number", "Sort Metric"),
     PLM_RISK_RATING("riskRating", "[\"All\"]", "Risk Rating"),
-    PLM_COST_ROUNDING("roundToDollar", "true", "Cost Rounding");
+    PLM_COST_ROUNDING("roundToDollar", "true", "Cost Rounding"),
+    PLM_MACHINING_MODE("machiningMode", "MAY_BE_MACHINED", "Machining Mode");
     
     private final String key;
     private final String value;

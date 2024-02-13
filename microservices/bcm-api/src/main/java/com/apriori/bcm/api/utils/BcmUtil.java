@@ -1,11 +1,16 @@
 package com.apriori.bcm.api.utils;
 
 import com.apriori.bcm.api.enums.BcmAppAPIEnum;
+import com.apriori.bcm.api.models.request.AddInputsRequest;
+import com.apriori.bcm.api.models.request.GroupItems;
+import com.apriori.bcm.api.models.request.InputRowDelete;
 import com.apriori.bcm.api.models.request.Inputrow;
 import com.apriori.bcm.api.models.request.Worksheet;
 import com.apriori.bcm.api.models.request.WorksheetInputRowsRequest;
 import com.apriori.bcm.api.models.request.WorksheetRequest;
+import com.apriori.bcm.api.models.response.AnalysisInput;
 import com.apriori.bcm.api.models.response.ErrorResponse;
+import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
@@ -13,14 +18,19 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.json.JsonManager;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 @Slf4j
 public class BcmUtil extends TestUtil {
@@ -87,6 +97,20 @@ public class BcmUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+
+    /**
+     * GET worksheet rows
+     * @param worksheetIdentity - identity of the worksheet
+     * @return
+     */
+    public ResponseWrapper<WorkSheetInputRowGetResponse> getWorkSheetInputRow(String worksheetIdentity) {
+        final RequestEntity requestEntity =
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_INPUT_NAME, WorkSheetInputRowGetResponse.class)
+                .inlineVariables(worksheetIdentity)
+                .expectedResponseCode(HttpStatus.SC_OK);
+        return HTTPRequest.build(requestEntity).get();
+    }
+
     /**
      * Making error request with an existing name of worksheet
      *
@@ -106,7 +130,7 @@ public class BcmUtil extends TestUtil {
         final RequestEntity requestEntity =
             requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, ErrorResponse.class)
                 .body(body)
-                .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
+                .expectedResponseCode(HttpStatus.SC_CONFLICT);
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -149,4 +173,61 @@ public class BcmUtil extends TestUtil {
                 .body(body);
         return HTTPRequest.build(requestEntity).patch();
     }
+
+    /**
+     * Adding analysis inputs for an input row
+     *
+     * @param klass - class
+     * @param processGroupName - process group name
+     * @param worksheetIdentity - identity of worksheet
+     * @param expectedResponseCode - expected response code
+     * @param inputRowIdentity - identity of input row
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> addAnalysisInputs(Class<T> klass, String processGroupName, String worksheetIdentity, Integer expectedResponseCode, String inputRowIdentity) {
+        AnalysisInput requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("AddAnalysisInputsData.json").getPath(), AnalysisInput.class);
+        requestBody.setProcessGroupName(processGroupName);
+
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.ANALYSIS_INPUTS, klass)
+            .inlineVariables(worksheetIdentity)
+            .expectedResponseCode(expectedResponseCode)
+            .body(AddInputsRequest.builder()
+                .groupItems(Collections.singletonList(Inputrow.builder().inputRowIdentity(inputRowIdentity).build()))
+                .analysisInput(requestBody).build());
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * GET worksheet by its identity
+     *
+     * @param klass - class
+     * @param worksheetIdentity - worksheet identity
+     * @param expectedResponseCode = expected response code
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> getWorksheet(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode) {
+
+        RequestEntity requestEntity =
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_BY_ID, klass)
+                .inlineVariables(worksheetIdentity)
+                .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    public <T> ResponseWrapper<T> deleteInputRow(Class<T> klass, String worksheetIdentity, String inputRowIdentity, Integer expectedResponseCode) {
+
+        RequestEntity requestEntity =
+            requestEntityUtil.init(BcmAppAPIEnum.DELETE_INPUTS, klass)
+                .inlineVariables(worksheetIdentity)
+                .body(InputRowDelete.builder()
+                    .groupItems(Arrays.asList(GroupItems
+                        .builder()
+                            .inputRowIdentity(inputRowIdentity)
+                        .build()))
+                    .build())
+                .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
 }

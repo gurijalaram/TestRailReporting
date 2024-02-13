@@ -194,8 +194,7 @@ public class ConnectorTabTests extends TestBaseUI {
             .selectStandardFieldsTab()
             .enterPlmField(PlmTypeAttributes.PLM_REVISION)
             .enterPlmField(PlmTypeAttributes.PLM_PART_NUMBER)
-            .clickAddRowBtn()
-            .selectRow();
+            .clickAddRowBtn();
 
         softAssertions.assertThat(standardFields.getStandardFieldsRows().size()).isEqualTo(4);
         softAssertions.assertThat(standardFields.selectCiConnectField(PlmTypeAttributes.PLM_DESCRIPTION).getFieldDataType()).isEqualTo(FieldDataType.DT_STRING.getDataType());
@@ -217,7 +216,7 @@ public class ConnectorTabTests extends TestBaseUI {
         softAssertions.assertThat(standardFields.selectCiConnectField(PlmTypeAttributes.PLM_CURRENCY_CODE).getFieldDataType()).isEqualTo(FieldDataType.DT_STRING.getDataType());
         softAssertions.assertThat(standardFields.selectCiConnectField(PlmTypeAttributes.PLM_SCENARIO_NAME).getFieldDataType()).isEqualTo(FieldDataType.DT_STRING.getDataType());
 
-        standardFields = standardFields.removeRow();
+        standardFields = standardFields.deleteRow();
         softAssertions.assertThat(standardFields.getStandardFieldsRows().size()).isEqualTo(3);
 
         ConnectorDetails connectorDetails = standardFields.clickPreviousBtn();
@@ -263,7 +262,7 @@ public class ConnectorTabTests extends TestBaseUI {
             .selectType(ConnectorType.FILE_SYSTEM)
             .clickNextBtn();
 
-        CIConnectHome ciConnectHome  = connectorMappings.selectStandardFieldsTab()
+        CIConnectHome ciConnectHome = connectorMappings.selectStandardFieldsTab()
             .enterPlmField(PlmTypeAttributes.PLM_PART_ID)
             .enterPlmField(PlmTypeAttributes.PLM_CAD_FILE_NAME)
             .enterPlmField(PlmTypeAttributes.PLM_APRIORI_PART_NUMBER)
@@ -309,12 +308,92 @@ public class ConnectorTabTests extends TestBaseUI {
         ConnectorDetails connectorDetails = new CicLoginPage(driver)
             .login(currentUser)
             .clickConnectorsMenu()
-                .selectConnector(CicApiTestUtil.getAgentPortData().getConnector()).clickEditBtn();
+            .selectConnector(CicApiTestUtil.getAgentPortData().getConnector()).clickEditBtn();
 
         softAssertions.assertThat(connectorDetails.getConnectorName()).isEqualTo(CicApiTestUtil.getAgentPortData().getConnector());
         ConnectorsPage connectorsPage = connectorDetails.clickCancelBtn();
         connectorDetails = connectorsPage.selectConnector(CicApiTestUtil.getAgentPortData(CICAgentType.TEAM_CENTER).getConnector()).clickEditBtn();
         softAssertions.assertThat(connectorDetails.getConnectorName()).isEqualTo(CicApiTestUtil.getAgentPortData(CICAgentType.TEAM_CENTER).getConnector());
+    }
+
+    @Test
+    @TestRail(id = {4004, 4108})
+    @Description("Connector type may not be changed and mappings may not be deleted")
+    public void testConnectorFieldRules() {
+        ConnectorsPage connectorsPage = new CicLoginPage(driver)
+            .login(currentUser)
+            .clickConnectorsMenu();
+
+        ConnectorDetails connectorDetails = connectorsPage.clickRefreshBtn()
+            .selectConnector(CicApiTestUtil.getAgentPortData().getConnector()).clickEditBtn();
+
+        softAssertions.assertThat(connectorDetails.getConnectorName()).isEqualTo(CicApiTestUtil.getAgentPortData().getConnector());
+        connectorDetails = connectorDetails.clickCancelBtn().clickEditBtn();
+        softAssertions.assertThat(connectorDetails.getConnectorName()).isEqualTo(CicApiTestUtil.getAgentPortData().getConnector());
+        softAssertions.assertThat(connectorDetails.getConnectorNameElement().isEnabled()).isTrue();
+        softAssertions.assertThat(connectorDetails.getDescriptionElement().isEnabled()).isTrue();
+        softAssertions.assertThat(connectorDetails.getNextBtnElement().isEnabled()).isTrue();
+        StandardFields standardFields = connectorDetails.clickNextBtn().selectStandardFieldsTab();
+        softAssertions.assertThat(standardFields.isRemoveRowBtnDisplayed()).isFalse();
+        softAssertions.assertThat(standardFields.isPlmFieldEnabled(PlmTypeAttributes.PLM_CURRENCY_CODE)).isTrue();
+        softAssertions.assertThat(standardFields.isCiConnectFieldEnabled(PlmTypeAttributes.PLM_ANNUAL_VOLUME)).isFalse();
+
+        AdditionalPlmFields additionalPlmFields = standardFields.selectAdditionalPlmFieldsTab();
+        softAssertions.assertThat(additionalPlmFields.isRemoveRowBtnDisplayed()).isFalse();
+        softAssertions.assertThat(additionalPlmFields.isPlmFieldEnabled(PlmTypeAttributes.PLM_CURRENCY_CODE)).isTrue();
+        softAssertions.assertThat(additionalPlmFields.isCiConnectFieldEnabled(PlmTypeAttributes.PLM_ANNUAL_VOLUME)).isFalse();
+    }
+
+    @Test
+    @TestRail(id = {4897})
+    @Description("Duplicate mapping cannot be created")
+    public void testConnectorDuplicateMappings() {
+        String connectorName = GenerateStringUtil.saltString("--CON");
+        ConnectorDetails connectorDetails = new CicLoginPage(driver)
+            .login(currentUser)
+            .clickConnectorsMenu()
+            .clickNewBtn();
+
+        StandardFields standardFields = connectorDetails.enterConnectorName(connectorName)
+            .enterConnectorDescription(connectorName)
+            .selectType(ConnectorType.WINDCHILL)
+            .clickNextBtn()
+            .selectStandardFieldsTab()
+            .enterPlmField(PlmTypeAttributes.PLM_REVISION)
+            .enterPlmField(PlmTypeAttributes.PLM_PART_NUMBER)
+            .clickAddRowBtn()
+            .selectCiConnectField(PlmTypeAttributes.PLM_REVISION);
+        CIConnectHome ciConnectHome = standardFields.clickSaveBtn();
+        softAssertions.assertThat(ciConnectHome.getStatusMessage().contains("The 'Revision Number' CI Connect Field is already in use by this connector")).isTrue();
+        ciConnectHome.closeMessageAlert();
+
+        ciConnectHome = standardFields.deleteRow()
+            .clickAddRowBtn()
+            .selectCiConnectField(PlmTypeAttributes.PLM_PROCESS_GROUP)
+            .clickAddRowBtn()
+            .selectCiConnectField(PlmTypeAttributes.PLM_PROCESS_GROUP).clickSaveBtn();
+
+        softAssertions.assertThat(ciConnectHome.getStatusMessage().contains("The 'Process Group' CI Connect Field is already in use by this connector")).isTrue();
+        ciConnectHome.closeMessageAlert();
+
+        ciConnectHome = standardFields.deleteRow().deleteRow()
+            .clickAddRowBtn()
+            .selectCiConnectField(PlmTypeAttributes.PLM_ANNUAL_VOLUME)
+            .clickAddRowBtn()
+            .selectCiConnectField(PlmTypeAttributes.PLM_ANNUAL_VOLUME).clickSaveBtn();
+
+        softAssertions.assertThat(ciConnectHome.getStatusMessage().contains("The 'Annual Volume' CI Connect Field is already in use by this connector")).isTrue();
+        ciConnectHome.closeMessageAlert();
+
+        ciConnectHome = standardFields.deleteRow()
+            .clickAddRowBtn()
+            .selectCiConnectField(PlmTypeAttributes.PLM_DFM_RISK)
+            .selectAdditionalPlmFieldsTab()
+            .addRow(PlmTypeAttributes.PLM_DFM_RISK, UsageRule.READ_FROM, FieldDataType.DT_STRING)
+            .clickSaveBtn();
+
+        softAssertions.assertThat(ciConnectHome.getStatusMessage().contains("DFM Risk Rating' CI Connect Field is already in use by this connector")).isTrue();
+        ciConnectHome.closeMessageAlert();
     }
 
     @AfterEach

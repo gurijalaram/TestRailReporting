@@ -91,7 +91,7 @@ public class UploadComponentTests extends TestBaseUI {
         importCadFilePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
             .importCadFile()
-            .inputScenarioName(new GenerateStringUtil().generateScenarioName())
+            .inputDefaultScenarioName(new GenerateStringUtil().generateScenarioName())
             .inputMultiComponentBuilderDetails(components);
 
         cadFileStatusPage = importCadFilePage.submit();
@@ -105,18 +105,21 @@ public class UploadComponentTests extends TestBaseUI {
     public void testUniqueScenarioNamesMultiUpload() {
 
         List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(3);
+        components.forEach(component -> component.setScenarioName(new GenerateStringUtil().generateScenarioName()));
 
-        explorePage = new CidAppLoginPage(driver)
+        importCadFilePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
             .importCadFile()
             .unTick("Apply to all")
-            .inputMultiComponentBuilderDetails(components)
-            .submit()
+            .inputMultiComponentBuilderDetails(components);
+
+        components.forEach(component -> importCadFilePage.inputFileScenarioName(component.getResourceFile().getName(), component.getScenarioName()));
+
+        importCadFilePage.submit()
             .clickClose();
 
         components.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(equalTo(1))));
+            assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()), is(equalTo(1))));
     }
 
     @Test
@@ -126,18 +129,18 @@ public class UploadComponentTests extends TestBaseUI {
     public void testMultiUploadWithSameScenarioName() {
 
         List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(3);
+        components.forEach(component -> component.setScenarioName(components.get(0).getScenarioName()));
 
         explorePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
             .importCadFile()
-            .unTick("Apply to all")
-            .inputMultiComponentBuilderDetails(components)
+            .inputDefaultScenarioName(components.get(0).getScenarioName())
+            .inputMultiComponentsBuilder(components)
             .submit()
             .clickClose();
 
         components.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(equalTo(1))));
+            assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()), is(equalTo(1))));
     }
 
     @Test
@@ -223,12 +226,12 @@ public class UploadComponentTests extends TestBaseUI {
         explorePage = new CidAppLoginPage(driver)
             .login(componentAssembly.getUser())
             .importCadFile()
-            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputDefaultScenarioName(componentAssembly.getScenarioName())
             .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose()
             .importCadFile()
-            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputDefaultScenarioName(componentAssembly.getScenarioName())
             .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose();
@@ -282,7 +285,7 @@ public class UploadComponentTests extends TestBaseUI {
             .login(componentAssembly.getUser())
             .importCadFile()
             .tick("Override existing scenario")
-            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputDefaultScenarioName(componentAssembly.getScenarioName())
             .inputMultiComponentBuilderDetails(componentAssembly.getSubComponents())
             .submit()
             .clickClose();
@@ -310,13 +313,13 @@ public class UploadComponentTests extends TestBaseUI {
         explorePage = new CidAppLoginPage(driver)
             .login(componentAssembly.getUser())
             .importCadFile()
-            .inputScenarioName(componentAssembly.getScenarioName())
+            .inputDefaultScenarioName(componentAssembly.getScenarioName())
             .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose()
             .openComponent(componentAssembly.getComponentName().toUpperCase(), componentAssembly.getScenarioName(), componentAssembly.getUser())
             .importCadFile()
-            .inputScenarioName(scenarioName2)
+            .inputDefaultScenarioName(scenarioName2)
             .inputMultiAssemblyBuilder(componentAssembly)
             .submit()
             .clickClose()
@@ -358,7 +361,7 @@ public class UploadComponentTests extends TestBaseUI {
         importCadFilePage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .importCadFile()
-            .inputScenarioName(component.getScenarioName())
+            .inputDefaultScenarioName(component.getScenarioName())
             .inputMultiComponentsBuilder(Arrays.asList(component, componentB));
 
         softAssertions.assertThat(importCadFilePage.getAlertWarning()).isEqualTo(component.getComponentName() + component.getExtension() + " is already selected.");
@@ -433,7 +436,7 @@ public class UploadComponentTests extends TestBaseUI {
         componentsTreePage.closePanel()
             .clickExplore()
             .importCadFile()
-            .inputScenarioName(scenarioName2)
+            .inputDefaultScenarioName(scenarioName2)
             .inputMultiComponentsBuilder(components)
             .submit()
             .clickClose()
@@ -460,7 +463,7 @@ public class UploadComponentTests extends TestBaseUI {
         componentsTreePage.closePanel()
             .clickExplore()
             .importCadFile()
-            .inputScenarioName(scenarioName)
+            .inputDefaultScenarioName(scenarioName)
             .inputMultiComponentsBuilder(components)
             .tick("Override existing scenario")
             .submit()
