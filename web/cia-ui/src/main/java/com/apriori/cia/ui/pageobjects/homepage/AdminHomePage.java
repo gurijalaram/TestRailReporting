@@ -69,22 +69,4 @@ public class AdminHomePage extends AdminPageHeader {
         pageUtils.switchToWindow(1);
         pageUtils.waitForElementToAppear(welcomeHomeElementToUse);
     }
-
-    /**
-     * Checks if Reports Logout button element is displayed
-     *
-     * @return boolean
-     */
-    public boolean isReportsWelcomeTextDisplayed() {
-        return pageUtils.isElementDisplayed(welcomeHomeElementToUse);
-    }
-
-    /**
-     * Checks if Reports Logout button element is enabled
-     *
-     * @return boolean
-     */
-    public boolean isReportsWelcomeTextEnabled() {
-        return pageUtils.isElementEnabled(welcomeHomeElementToUse);
-    }
 }

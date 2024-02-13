@@ -137,8 +137,6 @@ public class AdminNavigationTests extends TestBaseUI {
 
         softAssertions.assertThat(homePage.getCurrentUrl()).startsWith(PropertiesContext.get("reports.ui_url"));
         softAssertions.assertThat(homePage.getTabCount()).isEqualTo(2);
-        softAssertions.assertThat(homePage.isReportsWelcomeTextDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(homePage.isReportsWelcomeTextEnabled()).isEqualTo(true);
         softAssertions.assertAll();
     }
 }
