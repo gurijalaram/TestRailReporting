@@ -7,10 +7,7 @@ import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
-import org.bouncycastle.util.encoders.UTF8;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
