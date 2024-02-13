@@ -16,6 +16,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -24,11 +25,16 @@ import java.util.stream.Collectors;
 @ExtendWith(TestRulesAPI.class)
 public class WorksheetTests extends BcmUtil {
     private static SoftAssertions softAssertions = new SoftAssertions();
-    private final BcmUtil bcmUtil = new BcmUtil();
     private final String componentType = "PART";
     private CssComponent cssComponent = new CssComponent();
+    private String worksheetIdentity;
 
-    // TODO - add clean up method once API will be available
+    @AfterEach
+    public void cleanUp() {
+        if (worksheetIdentity != null) {
+            deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
+        }
+    }
 
     @Test
     @TestRail(id = 28963)
@@ -36,7 +42,8 @@ public class WorksheetTests extends BcmUtil {
     public void verifyWorksheetCreation() {
         String name = new GenerateStringUtil().saltString("name");
 
-        ResponseWrapper<WorkSheetResponse> response = bcmUtil.createWorksheet(name);
+        ResponseWrapper<WorkSheetResponse> response = createWorksheet(name);
+        worksheetIdentity = response.getResponseEntity().getIdentity();
         softAssertions.assertThat(response.getResponseEntity().getName()).isEqualTo(name);
         softAssertions.assertAll();
     }
@@ -47,11 +54,12 @@ public class WorksheetTests extends BcmUtil {
     public void verifyWorksheetCreationAlreadyExistError() {
         String name = new GenerateStringUtil().saltString("name");
 
-        ResponseWrapper<WorkSheetResponse> response = bcmUtil.createWorksheet(name);
+        ResponseWrapper<WorkSheetResponse> response = createWorksheet(name);
+        worksheetIdentity = response.getResponseEntity().getIdentity();
         softAssertions.assertThat(response.getResponseEntity().getName()).isEqualTo(name);
 
-        ResponseWrapper<ErrorResponse> responseError = bcmUtil.createWorksheetAlreadyExists(name);
-        softAssertions.assertThat((responseError.getResponseEntity().getMessage()).contains("already exists"));
+        ResponseWrapper<ErrorResponse> responseError = createWorksheetAlreadyExists(name);
+        softAssertions.assertThat(responseError.getResponseEntity().getMessage()).contains("already exists");
         softAssertions.assertAll();
     }
 
@@ -61,9 +69,9 @@ public class WorksheetTests extends BcmUtil {
     public void verifyWorksheetList() {
         String name = new GenerateStringUtil().saltString("name");
 
-        bcmUtil.createWorksheet(name);
+        worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
 
-        WorkSheets worksheetsList = bcmUtil.getWorksheets().getResponseEntity();
+        WorkSheets worksheetsList = getWorksheets().getResponseEntity();
         softAssertions.assertThat(worksheetsList.getTotalItemCount()).isGreaterThanOrEqualTo(1);
         softAssertions.assertThat(worksheetsList.getItems().stream().filter(worksheet -> worksheet.getName().equals(name)).collect(Collectors.toList()).get(0)).isNotNull();
         softAssertions.assertAll();
@@ -79,12 +87,12 @@ public class WorksheetTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        String worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
             .getResponseEntity()
             .getIdentity();
 
         ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow =
-            bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+            createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity);
 
@@ -101,10 +109,11 @@ public class WorksheetTests extends BcmUtil {
     @Description("Verify getting specific worksheet")
     public void verifyGetSpecificWorkSheet() {
         ResponseWrapper<WorkSheetResponse> worksheetCreated =
-            bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"));
+            createWorksheet(GenerateStringUtil.saltString("name"));
+        worksheetIdentity = worksheetCreated.getResponseEntity().getIdentity();
 
         ResponseWrapper<WorkSheetResponse> worksheetGet =
-            bcmUtil.getWorksheet(WorkSheetResponse.class, worksheetCreated.getResponseEntity().getIdentity(), HttpStatus.SC_OK);
+            getWorksheet(WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK);
 
         softAssertions.assertThat(worksheetGet.getResponseEntity())
             .isEqualTo(worksheetCreated.getResponseEntity());
@@ -116,7 +125,7 @@ public class WorksheetTests extends BcmUtil {
     @Description("Verify getting specific worksheet 400 error identity is invalid")
     public void verifyGetWorkSheetWrongIdentity() {
         ResponseWrapper<ErrorResponse> worksheetGet =
-            bcmUtil.getWorksheet(ErrorResponse.class, "fake9876", HttpStatus.SC_BAD_REQUEST);
+            getWorksheet(ErrorResponse.class, "fake9876", HttpStatus.SC_BAD_REQUEST);
 
         softAssertions.assertThat(worksheetGet.getResponseEntity().getMessage())
             .isEqualTo("'identity' is not a valid identity.");
@@ -130,7 +139,7 @@ public class WorksheetTests extends BcmUtil {
     @Description("Verify getting specific worksheet 404 error worksheet does not exist")
     public void verifyGetWorkSheetDoesNotExist() {
         ResponseWrapper<ErrorResponse> error =
-            bcmUtil.getWorksheet(ErrorResponse.class, "CYTTG999999L", HttpStatus.SC_NOT_FOUND);
+            getWorksheet(ErrorResponse.class, "CYTTG999999L", HttpStatus.SC_NOT_FOUND);
 
         softAssertions.assertThat(error.getResponseEntity().getMessage())
             .isEqualTo("Resource 'Worksheet' with identity 'CYTTG999999L' was not found");
@@ -146,17 +155,17 @@ public class WorksheetTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        String worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
             .getResponseEntity()
             .getIdentity();
 
         ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow =
-            bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+            createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity);
 
         ResponseWrapper<WorkSheetInputRowGetResponse> worksheetRow =
-            bcmUtil.getWorkSheetInputRow(worksheetIdentity);
+            getWorkSheetInputRow(worksheetIdentity);
 
         softAssertions.assertThat(worksheetRow.getResponseEntity().getItems())
             .isNotEmpty();
@@ -167,16 +176,15 @@ public class WorksheetTests extends BcmUtil {
     @TestRail(id = 29740)
     @Description("Verify getting worksheet rows for empty worksheet with no rows")
     public void verifyGetWorksheetRowsWithoutRows() {
-        String worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
             .getResponseEntity()
             .getIdentity();
 
         ResponseWrapper<WorkSheetInputRowGetResponse> worksheetRow =
-            bcmUtil.getWorkSheetInputRow(worksheetIdentity);
+            getWorkSheetInputRow(worksheetIdentity);
 
         softAssertions.assertThat(worksheetRow.getResponseEntity().getItems())
             .isEmpty();
         softAssertions.assertAll();
     }
-
 }
