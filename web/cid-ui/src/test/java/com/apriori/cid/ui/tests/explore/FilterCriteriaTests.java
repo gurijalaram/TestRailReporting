@@ -187,7 +187,7 @@ public class FilterCriteriaTests extends TestBaseUI {
 
         explorePage = new CidAppLoginPage(driver)
             .login(component.getUser())
-            .navigateToScenario(component)
+            .uploadComponentAndOpen(component)
             .publishScenario(PublishPage.class)
             .publish(component, EvaluatePage.class)
             .clickExplore()
