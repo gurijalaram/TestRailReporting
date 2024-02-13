@@ -108,14 +108,14 @@ public class UploadComponentTests extends TestBaseUI {
         components.forEach(component -> component.setScenarioName(new GenerateStringUtil().generateScenarioName()));
 
         importCadFilePage = new CidAppLoginPage(driver)
-            .login(UserUtil.getUser())
+            .login(components.get(0).getUser())
             .importCadFile()
             .unTick("Apply to all")
             .inputMultiComponentBuilderDetails(components);
 
         components.forEach(component -> importCadFilePage.inputFileScenarioName(component.getResourceFile().getName(), component.getScenarioName()));
 
-        importCadFilePage.submit()
+        explorePage = importCadFilePage.submit()
             .clickClose();
 
         components.forEach(component ->
