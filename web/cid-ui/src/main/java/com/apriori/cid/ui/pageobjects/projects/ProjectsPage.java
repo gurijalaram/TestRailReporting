@@ -28,6 +28,6 @@ public class ProjectsPage extends LoadableComponent<ProjectsPage> {
     }
 
     public boolean isOnProjectsPage() {
-        return driver.getCurrentUrl().contains("/projects");
+        return driver.getCurrentUrl().contains("/bulk-analysis");
     }
 }

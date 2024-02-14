@@ -67,7 +67,7 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
 
-    @FindBy(xpath = "//button[contains(.,'Projects')]")
+    @FindBy(xpath = "//button[contains(.,'Bulk Analysis')]")
     private WebElement projectsButton;
 
     private PageUtils pageUtils;
