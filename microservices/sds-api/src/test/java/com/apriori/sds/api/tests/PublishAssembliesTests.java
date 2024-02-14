@@ -22,7 +22,7 @@ import java.util.List;
 @ExtendWith(TestRulesAPI.class)
 public class PublishAssembliesTests extends SDSTestUtil {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private static ComponentInfoBuilder componentAssembly;
+    private ComponentInfoBuilder componentAssembly;
 
     @Test
     @TestRail(id = 12308)
