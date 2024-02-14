@@ -7,13 +7,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-@SuppressWarnings("unused")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BidPackageProjectItem {
-    private BidPackageItem bidPackageItem;
+public class BidPackageProjectItems {
+    private List<BidPackageProjectItemParameters> projectItems;
 
 }

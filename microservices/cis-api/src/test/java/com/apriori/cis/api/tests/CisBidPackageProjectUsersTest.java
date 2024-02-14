@@ -7,11 +7,11 @@ import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectUserReques
 import com.apriori.cis.api.models.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.cis.api.models.response.bidpackage.BidPackageProjectUsersPostResponse;
 import com.apriori.cis.api.models.response.bidpackage.BidPackageResponse;
+import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
-public class CisBidPackageProjectUsersTest extends TestUtil {
+public class CisBidPackageProjectUsersTest extends CISTestUtil {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
@@ -47,8 +47,8 @@ public class CisBidPackageProjectUsersTest extends TestUtil {
     }
 
     @Test
-    @TestRail(id = {24361})
-    @Description("Add Multiple Users to the Project")
+    @TestRail(id = {24361, 24366})
+    @Description("Add Multiple Users to the Project and Remove Multiple Users from the Project")
     public void testCreateBidPackageDefaultProjectUser() {
         String firstUserEmail = UserUtil.getUser().getEmail();
         String secondUserEmail = UserUtil.getUser().getEmail();

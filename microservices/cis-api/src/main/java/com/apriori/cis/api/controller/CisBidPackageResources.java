@@ -4,6 +4,7 @@ import com.apriori.cis.api.enums.CisAPIEnum;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageParameters;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageRequest;
 import com.apriori.cis.api.models.response.bidpackage.BidPackageResponse;
+import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -16,7 +17,7 @@ import org.apache.http.HttpStatus;
  * The type Cis bid package resources.
  */
 @SuppressWarnings("unchecked")
-public class CisBidPackageResources {
+public class CisBidPackageResources extends CISTestUtil {
 
     /**
      * Create bid package
@@ -34,7 +35,7 @@ public class CisBidPackageResources {
                 .build())
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGES, BidPackageResponse.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.BID_PACKAGES, BidPackageResponse.class)
             .body(bidPackageRequest)
             .token(currentUser.getToken())
             .expectedResponseCode(HttpStatus.SC_CREATED);
