@@ -51,15 +51,14 @@ import java.util.stream.Collectors;
 
 public class EditAssembliesTest extends TestBaseUI {
 
-    private static ComponentInfoBuilder componentAssembly;
-    private static ComponentInfoBuilder componentAssembly2;
     private static ComponentsUtil componentsUtil = new ComponentsUtil();
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private ComponentInfoBuilder componentAssembly;
+    private ComponentInfoBuilder componentAssembly2;
     private AssemblyRequestUtil assemblyRequestUtil = new AssemblyRequestUtil();
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private UserCredentials currentUser;
     private EditScenarioStatusPage editScenarioStatusPage;
     private ComponentsTablePage componentsTablePage;
     private ComponentsTreePage componentsTreePage;
