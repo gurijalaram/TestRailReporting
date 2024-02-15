@@ -6,6 +6,7 @@ import com.apriori.cis.ui.pageobjects.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.web.app.util.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 
+import java.time.Duration;
 import java.util.List;
 
 @Slf4j
@@ -494,8 +496,10 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * Method to wait until CAD loading complete
      */
     public void waitForCADViewerLoad() {
-        getPageUtils().waitForElementToAppear(spinner);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@class='layout-pane layout-pane-primary']//div[@data-testid='loader']"), 1);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"));
+        getPageUtils().waitForElementToAppear(By.xpath("//div[@id='card-1']"), Duration.ofSeconds(20));
+        getPageUtils().waitForElementToAppear(By.xpath("//button[@aria-label='Apply basic measurements to the model']"), Duration.ofSeconds(20));
+        getPageUtils().waitForElementToAppear(By.xpath("//div[@data-testid='comments-expanded']"), Duration.ofSeconds(20));
     }
 
     /**
@@ -2760,5 +2764,22 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public String getNonApplicableFields(String cardName) {
         return getPageUtils().waitForElementToAppear(By.xpath("//div[@data-testid='" + cardName + "']")).getAttribute("innerText");
+    }
+
+    /**
+     * verify process details
+     *
+     * @param softAssertions - SoftAssertions
+     * @return SoftAssertions
+     */
+    public SoftAssertions verifyProcessDetails(SoftAssertions softAssertions) {
+        softAssertions.assertThat(this.getProcessDetails("Process Group Name")).isNotEmpty();
+        softAssertions.assertThat(this.getProcessDetails("Process Name")).isNotEmpty();
+        softAssertions.assertThat(this.getProcessDetails("Machine Name")).isNotEmpty();
+        softAssertions.assertThat(this.getProcessDetails("Cycle Time")).isNotEmpty();
+        softAssertions.assertThat(this.getProcessDetails("Fully Burdened Cost")).isNotEmpty();
+        softAssertions.assertThat(this.getProcessDetails("Piece Part Cost")).isNotEmpty();
+        softAssertions.assertThat(this.getProcessDetails("Total Capital Investment")).isNotEmpty();
+        return softAssertions;
     }
 }
