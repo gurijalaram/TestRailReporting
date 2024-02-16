@@ -19,11 +19,9 @@ import com.apriori.cic.ui.pageobjects.login.CicLoginPage;
 import com.apriori.cic.ui.pageobjects.workflows.WorkflowHome;
 import com.apriori.cir.ui.pageobjects.header.ReportsHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
-import com.apriori.nts.api.reports.componentsummary.MultipleComponentSummary;
 import com.apriori.shared.util.PDFDocument;
 import com.apriori.shared.util.dataservice.TestDataService;
 import com.apriori.shared.util.email.GraphEmailService;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.models.response.EmailMessage;
@@ -78,7 +76,6 @@ public class CIRIntegrationTests extends TestBaseUI {
     @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow")
     public void testVerifyCIRReport() {
         WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowData.json", WorkFlowData.class);
-        MultipleComponentSummary pdfExpectedReportData = new TestDataService().getReportData("MultipleComponentsSummary.json", MultipleComponentSummary.class);
         String randomNumber = RandomStringUtils.randomNumeric(6);
         workflowName = "CIC_REPORT" + randomNumber;
         scenarioName = PropertiesContext.get("customer") + randomNumber;
@@ -98,7 +95,6 @@ public class CIRIntegrationTests extends TestBaseUI {
             .clickNextBtnInDetailsTab()
             .addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, plmPartNumber)
             .clickWFQueryDefNextBtn()
-            .addCostingInputRow(PlmTypeAttributes.PLM_PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, scenarioName)
             .clickCINextBtn()
             .selectEmailTab()
@@ -126,10 +122,12 @@ public class CIRIntegrationTests extends TestBaseUI {
         // Read the email and verify content and attached watch point report
         EmailMessage emailMessage = GraphEmailService.searchEmailMessageWithAttachments(scenarioName);
         softAssertions.assertThat(emailMessage.getBody().getContent()).contains(scenarioName);
-        softAssertions.assertThat(emailMessage.getBody().getContent()).contains("aPriori Cost Insight Generate Notification");
+        softAssertions.assertThat(emailMessage.getBody().getContent()).contains("aP Generate Analysis Summary");
         PDFDocument pdfDocument = (PDFDocument) emailMessage.emailMessageAttachment().getFileAttachment();
-        softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("DFM Multiple Components Summary Report");
-        softAssertions.assertThat(pdfDocument.getDocumentContents()).contains(pdfExpectedReportData.getCostMetric());
+        softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("GENERAL COST INFORMATION");
+        softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("PRODUCTION INFORMATION");
+        softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("COST INFORMATION");
+        softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("MATERIAL INFORMATION");
         softAssertions.assertThat(pdfDocument.getDocumentContents()).contains(scenarioName);
         emailMessage.deleteEmailMessage();
         CicApiTestUtil.deleteWorkFlow(workflowHome.getJsessionId(), CicApiTestUtil.getMatchedWorkflowId(workflowName));

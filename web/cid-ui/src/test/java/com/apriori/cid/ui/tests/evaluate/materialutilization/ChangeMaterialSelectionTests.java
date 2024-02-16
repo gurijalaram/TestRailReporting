@@ -294,7 +294,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
             .search("316")
             .selectMaterial(MaterialNameEnum.STAINLESS_STEEL_AISI_316.getMaterialName())
             .cancel(EvaluatePage.class)
-            .costScenario()
+            .clickCostButton()
             .confirmCost("Yes");
 
         softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())).isTrue();

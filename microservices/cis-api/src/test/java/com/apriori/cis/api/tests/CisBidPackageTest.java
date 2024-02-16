@@ -10,10 +10,10 @@ import com.apriori.cis.api.models.request.bidpackage.BidPackageRequest;
 import com.apriori.cis.api.models.response.bidpackage.BidPackageResponse;
 import com.apriori.cis.api.models.response.bidpackage.BidPackagesResponse;
 import com.apriori.cis.api.models.response.bidpackage.CisErrorMessage;
+import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class CisBidPackageTest extends TestUtil {
+public class CisBidPackageTest extends CISTestUtil {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;

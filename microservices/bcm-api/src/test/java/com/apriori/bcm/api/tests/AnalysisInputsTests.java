@@ -15,6 +15,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -24,8 +25,14 @@ public class AnalysisInputsTests extends BcmUtil {
     private final CssComponent cssComponent = new CssComponent();
     private final String componentType = "PART";
     private final String processGroupName = "Sheet Metal";
+    private String worksheetIdentity;
 
-    // TODO - add clean up method once API will be available
+    @AfterEach
+    public void cleanUp() {
+        if (worksheetIdentity != null) {
+            deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
+        }
+    }
 
     @Test
     @TestRail(id = {29672})
@@ -33,7 +40,7 @@ public class AnalysisInputsTests extends BcmUtil {
     public void settingInputs() {
         String name = GenerateStringUtil.saltString("name");
         WorkSheetResponse newWorksheet = createWorksheet(name).getResponseEntity();
-        String worksheetIdentity = newWorksheet.getIdentity();
+        worksheetIdentity = newWorksheet.getIdentity();
         ScenarioItem scenarioItem = cssComponent.postSearchRequest(testingUser, componentType).getResponseEntity().getItems().stream()
             .findFirst().orElse(null);
 

@@ -20,6 +20,7 @@ import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
+import com.apriori.shared.util.models.response.component.ScenarioItem;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -62,10 +63,11 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     private WebElement btnProjects;
 
     private LetNavigationBarController letNavigationBarController;
-    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private final ComponentsUtil componentsUtil = new ComponentsUtil();
-    private AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private CssComponent cssComponent = new CssComponent();
+    private ScenariosUtil scenariosUtil;
+    private ComponentsUtil componentsUtil;
+    private AssemblyUtils assemblyUtils;
+    private CssComponent cssComponent;
+    private ScenarioItem scenarioItem;
 
     public LeftHandNavigationBar(WebDriver driver) {
         this(driver, log);
@@ -74,6 +76,10 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     public LeftHandNavigationBar(WebDriver driver, Logger logger) {
         super(driver, logger);
         this.letNavigationBarController = new LetNavigationBarController(driver);
+        this.scenariosUtil = new ScenariosUtil();
+        this.componentsUtil = new ComponentsUtil();
+        this.assemblyUtils = new AssemblyUtils();
+        this.cssComponent = new CssComponent();
     }
 
     @Override
@@ -120,7 +126,7 @@ public class LeftHandNavigationBar extends CisHeaderBar {
 
     public MyUserPage clickUserIcon() {
         getPageUtils().waitForElementToAppear(spinner);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         getPageUtils().waitForElementAndClick(userIcon);
         return new MyUserPage(getDriver());
     }
@@ -298,5 +304,21 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     public ProjectsPage clickProjects() {
         getPageUtils().waitForElementAndClick(btnProjects);
         return new ProjectsPage(getDriver());
+    }
+
+    /**
+     * upload and cost scenario
+     *
+     * @param componentInfoBuilder - ComponentInfoBuilder
+     * @return current class object
+     */
+    public LeftHandNavigationBar uploadAndCostScenario(ComponentInfoBuilder componentInfoBuilder) {
+        ComponentInfoBuilder componentScenarioItem = componentsUtil.postComponentQueryCSSUncosted(componentInfoBuilder);
+
+        scenariosUtil.postCostScenario(componentInfoBuilder);
+        scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
+            SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + COST_COMPLETE).get(0);
+        scenariosUtil.postPublishScenario(componentScenarioItem);
+        return this;
     }
 }

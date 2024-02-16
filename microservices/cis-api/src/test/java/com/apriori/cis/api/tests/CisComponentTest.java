@@ -10,9 +10,9 @@ import com.apriori.cis.api.models.request.bidpackage.BidPackageItemParameters;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageItemRequest;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.cis.api.models.response.bidpackage.BidPackageProjectResponse;
-import com.apriori.cis.api.models.response.bidpackage.BidPackageResponse;
 import com.apriori.cis.api.models.response.component.AssignedComponentsResponse;
 import com.apriori.cis.api.models.response.component.ComponentParameters;
+import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.css.api.enums.CssSearch;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.serialization.util.DateFormattingUtils;
@@ -20,7 +20,6 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.DateUtil;
-import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -40,7 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
-public class CisComponentTest extends TestUtil {
+public class CisComponentTest extends CISTestUtil {
 
     private static SoftAssertions softAssertions;
     private static ScenarioItem scenarioItem;

@@ -1,5 +1,6 @@
 package com.apriori.cis.ui.common;
 
+import com.apriori.cis.ui.utils.CisGuiTestUtil;
 import com.apriori.web.app.util.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -9,8 +10,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Slf4j
 public class PartsAndAssemblyTableController extends EagerPageComponent<PartsAndAssemblyTableController> {
@@ -37,7 +36,7 @@ public class PartsAndAssemblyTableController extends EagerPageComponent<PartsAnd
      * @return list of string
      */
     public List<String> getTableHeaders() {
-        return Stream.of(tableHeaders.getAttribute("innerText").split("")).collect(Collectors.toList());
+        return CisGuiTestUtil.getAttributeDetails(tableHeaders);
     }
 
     /**
@@ -46,7 +45,7 @@ public class PartsAndAssemblyTableController extends EagerPageComponent<PartsAnd
      * @return list of string
      */
     public List<String> getPinnedTableHeaders() {
-        return Stream.of(pinnedTableHeaders.getAttribute("innerText").split("")).collect(Collectors.toList());
+        return CisGuiTestUtil.getAttributeDetails(pinnedTableHeaders);
     }
 
     /**

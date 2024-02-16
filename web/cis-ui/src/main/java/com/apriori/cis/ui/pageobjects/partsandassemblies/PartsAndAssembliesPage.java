@@ -6,6 +6,7 @@ import com.apriori.cis.ui.navtoolbars.LeftHandNavigationBar;
 import com.apriori.cis.ui.pageobjects.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.web.app.util.EagerPageComponent;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -85,14 +86,17 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(css = "div.MuiDataGrid-columnHeaderTitleContainerContent .MuiCheckbox-root")
     private WebElement checkAllCheckBox;
 
-    @FindBy(xpath = "//p[starts-with(@data-testid,'toolbar-Filter ')]")
+    @FindBy(xpath = "//button//p[starts-with(@data-testid,'toolbar-Filter ')]")
     private WebElement btnFilter;
 
     @FindBy(id = "popover-filter-control")
     private WebElement filterModal;
 
-    @FindBy(id = "add-condition-button-filter-control")
-    private WebElement addCondition;
+    @FindBy(xpath = " //div[@id='popover-filter-control']/div/div[1]/div")
+    private WebElement filterModalRows;
+
+    @FindBy(xpath = "//div/button[.='ADD CONDITION']")
+    private WebElement btnAddCondition;
 
     @FindBy(xpath = "//div[contains(@data-testid,'select-control-filter-field-select')]")
     private WebElement filterField;
@@ -175,6 +179,9 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//span[@data-testid='switch']//span")
     private WebElement statusField;
 
+    @FindBy(xpath = "//div/h3[.='Parts & Assemblies']")
+    private WebElement lblTitle;
+
     public PartsAndAssembliesPage(WebDriver driver) {
 
         this(driver, log);
@@ -202,7 +209,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      *
      * @return list of string
      */
-    public  List<String> getTableHeaders() {
+    public List<String> getTableHeaders() {
         return partsAndAssemblyTableController.getTableHeaders();
     }
 
@@ -211,7 +218,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public void waitForTableLoad() {
         getPageUtils().waitForElementToAppear(progressBar);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@role='grid']//span[@role='progressbar']"),1);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@role='grid']//span[@role='progressbar']"), 1);
     }
 
     /**
@@ -221,7 +228,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public String getComponentCheckBoxStatus() {
         if (getPageUtils().waitForElementsToAppear(tableRow).size() > 0) {
-            for (int i = 0;i < tableRow.size();i++) {
+            for (int i = 0; i < tableRow.size(); i++) {
                 getPageUtils().waitForElementToAppear(driver.findElement(By.xpath("//div[@data-rowindex='" + i + "']//span[contains(@class,'MuiCheckbox-root')]"))).click();
             }
         }
@@ -314,7 +321,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      *
      * @return list of string
      */
-    public  List<String> getPinnedTableHeaders() {
+    public List<String> getPinnedTableHeaders() {
         return partsAndAssemblyTableController.getPinnedTableHeaders();
     }
 
@@ -364,6 +371,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesPage enterAComponentName(String componentName) {
         getPageUtils().waitForElementToAppear(searchInputField).sendKeys(componentName);
         getPageUtils().waitForElementToAppear(filterRecords);
+        getPageUtils().waitForElementAndClick(lblTitle);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div/span[@role='progressbar']"));
         return this;
     }
 
@@ -520,7 +529,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage clickAddCondition() {
-        getPageUtils().waitForElementAndClick(addCondition);
+        getPageUtils().waitForElementAndClick(btnAddCondition);
         return this;
     }
 
@@ -781,8 +790,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      *
      * @return new page object
      */
+    @SneakyThrows
     public PartsAndAssembliesDetailsPage clickOnComponent(String componentName, String scenarioName) {
-        getPageUtils().waitForElementAndClick(driver.findElement(By.xpath(String.format("//div[@data-field='scenarioName']//p[text()='%s']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='%s']", scenarioName.trim(), componentName.trim()))));
+        String selector = String.format("//div[@data-field='scenarioName']//p[text()='%s']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='%s']", scenarioName.trim(), componentName.trim());
+        WebElement element = getPageUtils().waitForSteadinessOfElement(By.xpath(selector));
+        getPageUtils().waitForElementToBeClickable(element, 30L);
+        getPageUtils().waitForElementAndClick(element);
         return new PartsAndAssembliesDetailsPage(getDriver());
     }
 
@@ -819,7 +832,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public PartsAndAssembliesPage hideFilterModal() {
         getPageUtils().waitForElementAndClick(btnFilter);
-        getPageUtils().waitForElementsToNotAppear(By.id("popover-filter-control"),1);
+        getPageUtils().waitForElementsToNotAppear(By.id("popover-filter-control"), 1);
         return this;
     }
 
@@ -858,9 +871,9 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         if (getPageUtils().waitForElementToAppear(statusField).getAttribute("class").contains("Switch-checked")) {
             getPageUtils().waitForElementToAppear(toggleButton);
             getPageUtils().moveAndClick(toggleButton);
-            getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-field='scenarioState']"),3);
+            getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-field='scenarioState']"), 3);
         } else {
-            getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-field='scenarioState']"),3);
+            getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-field='scenarioState']"), 3);
         }
         return this;
     }
@@ -875,5 +888,19 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         getPageUtils().moveAndClick(toggleButton);
         getPageUtils().waitForElementToAppear(btnCheckedStatus);
         return this;
+    }
+
+    /**
+     * search and click component
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return PartsAndAssembliesDetailsPage object
+     */
+    public PartsAndAssembliesDetailsPage searchAndClickComponent(String componentName, String scenarioName) {
+        return this.clickSearchOption()
+            .clickOnSearchField()
+            .enterAComponentName(componentName)
+            .clickOnComponent(componentName, scenarioName);
     }
 }

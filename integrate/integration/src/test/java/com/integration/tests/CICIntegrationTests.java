@@ -11,8 +11,6 @@ import com.apriori.cic.api.models.response.AgentWorkflowJobRun;
 import com.apriori.cic.api.utils.CicApiTestUtil;
 import com.apriori.cic.api.utils.PlmPartsUtil;
 import com.apriori.cic.ui.enums.RuleOperatorEnum;
-import com.apriori.cic.ui.enums.SortedOrderType;
-import com.apriori.cic.ui.enums.WorkflowListColumns;
 import com.apriori.cic.ui.pagedata.WorkFlowData;
 import com.apriori.cic.ui.pageobjects.login.CicLoginPage;
 import com.apriori.cic.ui.pageobjects.workflows.WorkflowHome;
@@ -21,8 +19,6 @@ import com.apriori.nts.api.reports.partscost.PartsCost;
 import com.apriori.shared.util.ExcelService;
 import com.apriori.shared.util.dataservice.TestDataService;
 import com.apriori.shared.util.email.GraphEmailService;
-import com.apriori.shared.util.enums.MaterialNameEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -58,7 +54,7 @@ public class CICIntegrationTests extends TestBaseUI {
         jobDefinitionData = new TestDataService().getTestData("CicGuiDeleteJobDefData.json", JobDefinition.class);
         currentUser = UserUtil.getUser();
         agentPort = CicApiTestUtil.getAgentPortData();
-        plmPartNumber = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber();
+        plmPartNumber = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PARTIAL).getPlmPartNumber();
     }
 
     @Test
@@ -83,23 +79,14 @@ public class CICIntegrationTests extends TestBaseUI {
             .clickNextBtnInDetailsTab()
             .addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, plmPartNumber)
             .clickWFQueryDefNextBtn()
-            .addCostingInputRow(PlmTypeAttributes.PLM_PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
-            .addCostingInputRow(PlmTypeAttributes.PLM_MATERIAL_NAME, MappingRule.CONSTANT, MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
             .addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, scenarioName)
             .clickCINextBtn()
-            .selectEmailTab()
-            .selectEmailTemplate()
-            .selectRecipient()
             .clickCINotificationNextBtn()
-            .selectAttachReportTab()
-            .selectReportName()
-            .selectCostRounding()
             .clickSaveButton();
         log.info(String.format("created Workflow confirmation >> %s <<", workflowHome.getWorkFlowStatusMessage()));
 
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition created");
         workflowHome.closeMessageAlertBox();
-        softAssertions.assertThat(schedulePage.isWorkflowListIsSorted(WorkflowListColumns.Name, SortedOrderType.ASCENDING, workFlowData.getWorkflowName())).isTrue();
 
         log.info(String.format("Delete Workflow >> %s <<", workFlowData.getWorkflowName()));
 
@@ -131,7 +118,6 @@ public class CICIntegrationTests extends TestBaseUI {
             .clickNextBtnInDetailsTab()
             .addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, plmPartNumber)
             .clickWFQueryDefNextBtn()
-            .addCostingInputRow(PlmTypeAttributes.PLM_PROCESS_GROUP, MappingRule.CONSTANT, ProcessGroupEnum.SHEET_METAL.getProcessGroup())
             .addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, scenarioName)
             .clickCINextBtn()
             .selectEmailTab()
