@@ -7,7 +7,6 @@ import com.apriori.cia.ui.pageobjects.login.AdminLoginPage;
 import com.apriori.cia.ui.pageobjects.manage.ScenarioExport;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
-import com.apriori.cir.ui.pageobjects.create.CreateAdHocViewPage;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.cir.ui.pageobjects.view.reports.ComponentCostReportPage;
 import com.apriori.shared.util.dataservice.TestDataService;
@@ -20,8 +19,6 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
-import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 
