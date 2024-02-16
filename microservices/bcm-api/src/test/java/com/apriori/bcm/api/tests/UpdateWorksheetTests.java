@@ -2,6 +2,7 @@ package com.apriori.bcm.api.tests;
 
 import com.apriori.bcm.api.models.response.ErrorResponse;
 import com.apriori.bcm.api.models.response.InputRowDeleted;
+import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
@@ -89,7 +90,7 @@ public class UpdateWorksheetTests extends BcmUtil {
     }
 
     @Test
-    @TestRail(id = {29567})
+    @TestRail(id = {29567, 29839})
     @Description("Verify delete input row")
     public void deleteInputRow() {
         ScenarioItem scenarioItem =
@@ -112,6 +113,11 @@ public class UpdateWorksheetTests extends BcmUtil {
 
         softAssertions.assertThat(deletedInputRow.getResponseEntity().getSuccesses().get(0).getInputRowIdentity())
             .isEqualTo(responseWorksheetInputRow.getResponseEntity().getIdentity());
+
+        ResponseWrapper<WorkSheetInputRowGetResponse> worksheetRow =
+            getWorkSheetInputRow(worksheetIdentity);
+
+        softAssertions.assertThat(worksheetRow.getResponseEntity().getItems()).isEmpty();
         softAssertions.assertAll();
     }
 

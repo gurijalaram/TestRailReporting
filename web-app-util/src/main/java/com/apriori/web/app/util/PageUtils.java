@@ -828,6 +828,38 @@ public class PageUtils {
     /**
      * Wait for element to be clickable
      *
+     * @param element           - WebElement
+     * @param webDriverWaitTime - wait time
+     * @return WebElement
+     */
+    public WebElement waitForElementToBeClickable(WebElement element, Long webDriverWaitTime) {
+        int retries = 0;
+        int maxRetries = 12;
+        Exception ex;
+
+        while (retries < maxRetries) {
+            try {
+
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWaitTime))
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(elementToBeClickable(element));
+
+            } catch (Exception e) {
+                ex = e;
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
+            }
+
+            if (retries == maxRetries) {
+                throw new RuntimeException(String.format("Exception caught: %s", ex.getMessage()));
+            }
+        }
+        return element;
+    }
+
+    /**
+     * Wait for element to be clickable
+     *
      * @param element - the element
      * @return webelement
      */

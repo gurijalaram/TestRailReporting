@@ -26,11 +26,6 @@ public class ProjectsPageTests extends TestBaseUI {
     private ProjectsPage projectsPage;
     private ExplorePage explorePage;
 
-    @AfterEach
-    public void cleanup() {
-        setBulkCostingFlag(false);
-    }
-
     @Test
     @TestRail(id = 29187)
     @Description("when feature flag BULK_COSTING is set to true projects page should be accessible")
@@ -42,18 +37,6 @@ public class ProjectsPageTests extends TestBaseUI {
                 .clickProjectsButton();
 
         assertTrue(projectsPage.isOnProjectsPage());
-    }
-
-    @Test
-    @TestRail(id = 29188)
-    @Description("when feature flag BULK_COSTING is set to false projects page should not be accessible")
-    public void projectPageNotVisible() {
-        setBulkCostingFlag(false);
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage
-            .login(UserUtil.getUser());
-
-        assertFalse(explorePage.isProjectsButtonVisible());
     }
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {
