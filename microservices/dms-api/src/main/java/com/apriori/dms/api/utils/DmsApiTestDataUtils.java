@@ -4,6 +4,7 @@ import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.dms.api.models.response.DmsCommentResponse;
@@ -62,11 +63,12 @@ public abstract class DmsApiTestDataUtils extends TestUtil {
         try {
             currentUser = UserUtil.getUser("admin");
             softAssertionsTestData = new SoftAssertions();
-            componentInfoBuilder = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING);
+            componentInfoBuilder = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING, currentUser);
             bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
             projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
             contentDesc = RandomStringUtils.randomAlphabetic(12);
-            componentInfoBuilder = new ScenariosUtil().postAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING, currentUser));
+            componentInfoBuilder = new ComponentsUtil().postComponent(componentInfoBuilder);
+            new ScenariosUtil().postPublishScenario(componentInfoBuilder);
             scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
                     SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName()).get(0);
             if (scenarioItem != null) {
