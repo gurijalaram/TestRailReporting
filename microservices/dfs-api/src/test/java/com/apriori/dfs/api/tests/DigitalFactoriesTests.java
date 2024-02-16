@@ -4,6 +4,7 @@ import com.apriori.dfs.api.enums.DFSApiEnum;
 import com.apriori.dfs.api.models.response.DigitalFactories;
 import com.apriori.dfs.api.models.response.DigitalFactory;
 import com.apriori.dfs.api.models.utils.DigitalFactoryUtil;
+import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
@@ -257,6 +258,26 @@ public class DigitalFactoriesTests {
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(UNAUTHORIZED_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(INVALID_CREDENTIAL_MSG);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {})
+    @Description("Get NotFound Error when requested DF is not belonged to a customer of requested user")
+    public void getNoDigitalFactoryWithNotAuthorizedUserTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.getDigitalFactory(
+            HttpStatusCode.NOT_FOUND,
+            ErrorMessage.class,
+            new UserCredentials("testUser5@gadgets.aprioritest.com", "Test1"),
+            VALID_DIGITAL_FACTORY_ID
+        );
+
+        String expectedMessage =
+            String.format("Resource 'DigitalFactory' with identity '%s' was not found", VALID_DIGITAL_FACTORY_ID);
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND_ERROR);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(expectedMessage);
         softAssertions.assertAll();
     }
 
