@@ -51,9 +51,8 @@ public class CIAIntegrationTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("DEVTOOLS-145")
-    @TestRail(id = 12046)
-    @Description("Create and verify component cost OOTB report ")
+    @TestRail(id = 3326)
+    @Description("Create and verify component cost OOTB report")
     public void testCreateComponentCostOOTBReport() {
         componentCostReportPage = new ReportsLoginPage(driver)
             .login()
@@ -72,7 +71,7 @@ public class CIAIntegrationTests extends TestBaseUI {
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("part"), CoreMatchers.is(equalTo(11)));
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("assembly"), CoreMatchers.is(equalTo(3)));
         componentCostReportPage = componentCostReportPage.clickOk(ComponentCostReportPage.class);
-        assertThat(componentCostReportPage.getPartNumber(), CoreMatchers.is(equalTo("3538968")));
+        assertThat(componentCostReportPage.getPartNumber(), CoreMatchers.is(equalTo("3570823")));
     }
 
 }
