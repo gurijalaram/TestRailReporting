@@ -3,17 +3,23 @@ package com.apriori.cis.api.controller;
 import com.apriori.cis.api.enums.CisAPIEnum;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageItem;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectItemParameters;
-import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectItemRequest;
+import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectItems;
+import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectItemsRequest;
+import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.component.ScenarioItem;
 
 import org.apache.http.HttpStatus;
 
-@SuppressWarnings("unchecked")
-public class CisBidPackageProjectItemResources {
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class CisBidPackageProjectItemResources extends CISTestUtil {
 
     /**
      * Create bid package project item
@@ -27,11 +33,23 @@ public class CisBidPackageProjectItemResources {
      * @param <T>                       - response class type
      * @return response class object
      */
-    public static <T> T createBidPackageProjectItem(String bidPackageIdentity, String bidPackageItemIdentity, String bidPackageProjectIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
-        BidPackageProjectItemRequest projectItemRequest = getBidPackageProjectItemRequestBuilder(bidPackageItemIdentity);
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT_ITEMS, responseClass)
+    public static <T> T createBidPackageProjectItem(String bidPackageIdentity, String bidPackageProjectIdentity, ScenarioItem scenarioItem, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        BidPackageProjectItemsRequest projectItemRequest = getBidPackageProjectItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity());
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT_ITEMS, responseClass)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .body(projectItemRequest)
+            .token(currentUser.getToken())
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
+
+
+    public static <T> T createBidPackageProjectItem(String bidPackageIdentity, String bidPackageProjectIdentity, BidPackageProjectItemsRequest bidPackageProjectItemsRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT_ITEMS, responseClass)
+            .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
+            .body(bidPackageProjectItemsRequest)
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
 
@@ -45,10 +63,19 @@ public class CisBidPackageProjectItemResources {
      * @param bidPackageItemIdentity - bid package project item identity
      * @return BidPackageProjectRequest
      */
-    public static BidPackageProjectItemRequest getBidPackageProjectItemRequestBuilder(String bidPackageItemIdentity) {
-        return BidPackageProjectItemRequest.builder()
-            .projectItem(BidPackageProjectItemParameters.builder()
-                .bidPackageItem(BidPackageItem.builder().identity(bidPackageItemIdentity).build())
+    public static BidPackageProjectItemsRequest getBidPackageProjectItemRequestBuilder(String componentIdentity, String scenarioIdentity, String iterationIdentity) {
+        List<BidPackageProjectItemParameters> bidPackageProjectItemParameters = new ArrayList<>();
+        BidPackageProjectItemParameters bidPackageProjectItemParameter = BidPackageProjectItemParameters.builder()
+            .bidPackageItem(BidPackageItem.builder()
+                .componentIdentity(componentIdentity)
+                .scenarioIdentity(scenarioIdentity)
+                .iterationIdentity(iterationIdentity)
+                .build())
+            .build();
+        bidPackageProjectItemParameters.add(bidPackageProjectItemParameter);
+        return BidPackageProjectItemsRequest.builder()
+            .projectItems(BidPackageProjectItems.builder()
+                .projectItems(bidPackageProjectItemParameters)
                 .build())
             .build();
     }

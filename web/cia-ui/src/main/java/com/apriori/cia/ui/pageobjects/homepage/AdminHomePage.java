@@ -13,11 +13,15 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class AdminHomePage extends AdminPageHeader {
 
-    @FindBy(xpath = "//div[@class='index-welcome-text'][1]")
+    @FindBy(xpath = "//div[@class='devices']")
     private WebElement onPremWelcomeText;
+
+    @FindBy(xpath = "//div[@data-name='recentItemsBlock']/div/div")
+    private WebElement cloudReportsHomeText;
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    WebElement welcomeHomeElementToUse;
 
     public AdminHomePage(WebDriver driver) {
         super(driver);
@@ -26,6 +30,7 @@ public class AdminHomePage extends AdminPageHeader {
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
+        welcomeHomeElementToUse = PropertiesContext.get("${env}").equals("onprem") ? onPremWelcomeText : cloudReportsHomeText;
     }
 
     @Override
@@ -35,8 +40,8 @@ public class AdminHomePage extends AdminPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.isElementDisplayed(onPremWelcomeText);
-        pageUtils.isElementEnabled(onPremWelcomeText);
+        pageUtils.isElementDisplayed(welcomeHomeElementToUse);
+        pageUtils.isElementEnabled(welcomeHomeElementToUse);
     }
 
     /**
@@ -58,37 +63,10 @@ public class AdminHomePage extends AdminPageHeader {
     }
 
     /**
-     * Gets url to check
-     *
-     * @return String
-     */
-    public String getUrlToCheck() {
-        return PropertiesContext.get("base_url");
-    }
-
-    /**
      * Wait for element to appear
      */
     public void waitForReportsLogoutDisplayedToAppear() {
         pageUtils.switchToWindow(1);
-        pageUtils.waitForElementToAppear(onPremWelcomeText);
-    }
-
-    /**
-     * Checks if Reports Logout button element is displayed
-     *
-     * @return boolean
-     */
-    public boolean isReportsWelcomeTextDisplayed() {
-        return pageUtils.isElementDisplayed(onPremWelcomeText);
-    }
-
-    /**
-     * Checks if Reports Logout button element is enabled
-     *
-     * @return boolean
-     */
-    public boolean isReportsWelcomeTextEnabled() {
-        return pageUtils.isElementEnabled(onPremWelcomeText);
+        pageUtils.waitForElementToAppear(welcomeHomeElementToUse);
     }
 }

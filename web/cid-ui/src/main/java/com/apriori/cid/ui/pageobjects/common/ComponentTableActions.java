@@ -144,7 +144,18 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * @return current page object
      */
     public ComponentTableActions setPagination(int paged) {
-        pageUtils.typeAheadSelect(pageUtils.waitForElementToAppear(paginatorDropdown), String.valueOf(paged));
+        pageUtils.waitForElementAndClick(paginatorDropdown);
+
+        By updatingLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
+
+        if (pageUtils.isElementDisplayed(updatingLabel)) {
+            pageUtils.waitForElementsToNotAppear(updatingLabel);
+            pageUtils.waitForElementAndClick(paginatorDropdown);
+            return setPagination();
+        }
+        By paginator = By.xpath(String.format("//div[.='%d']", paged));
+        pageUtils.waitForElementToAppear(paginator);
+        pageUtils.waitForElementAndClick(paginator);
         return this;
     }
 }

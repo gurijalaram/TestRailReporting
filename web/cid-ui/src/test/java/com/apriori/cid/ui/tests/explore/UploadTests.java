@@ -157,30 +157,24 @@ public class UploadTests extends TestBaseUI {
     @TestRail(id = 5448)
     @Description("User can upload a file, after a failed file upload")
     public void uploadAfterFailedUpload() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
-
-        String componentName = "ANKARA_SEHPA_SKETCHUP";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".skp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
         String fileError;
 
-        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent("ANKARA_SEHPA_SKETCHUP");
+        ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
-        fileError = loginPage.login(currentUser)
+        fileError = loginPage.login(component.getUser())
             .importCadFile()
-            .inputComponentDetails(scenarioName, resourceFile)
+            .inputComponentDetails(component.getScenarioName(), component.getResourceFile())
             .getAlertWarning();
 
         softAssertions.assertThat(fileError).contains("The file type of the selected file is not supported");
 
         evaluatePage = new ExplorePage(driver)
-            .uploadComponentAndOpen(component);
+            .uploadComponentAndOpen(component2);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED)).isEqualTo(true);
-        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(component.getScenarioName());
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(component2.getScenarioName());
 
         softAssertions.assertAll();
     }

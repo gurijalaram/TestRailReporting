@@ -8,10 +8,10 @@ import com.apriori.cis.api.models.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.cis.api.models.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.cis.api.models.response.bidpackage.BidPackageResponse;
 import com.apriori.cis.api.models.response.bidpackage.CisErrorMessage;
+import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class CisBidPackageProjectsTest extends TestUtil {
+public class CisBidPackageProjectsTest extends CISTestUtil {
 
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
@@ -40,8 +40,6 @@ public class CisBidPackageProjectsTest extends TestUtil {
         String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
         projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
-        bidPackageProjectResponse = CisBidPackageProjectResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(),
-            BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
     }
 
     @Test
@@ -63,21 +61,29 @@ public class CisBidPackageProjectsTest extends TestUtil {
     @TestRail(id = {15151, 14384})
     @Description("Get list of all Bid Package Projects and verify pagination")
     public void testGetBidPackageProjects() {
+        bidPackageProjectResponse = CisBidPackageProjectResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(),
+            BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
         BidPackageProjectsResponse projectsResponse = CisBidPackageProjectResources.getBidPackageProjects(bidPackageResponse.getIdentity(), currentUser, BidPackageProjectsResponse.class, HttpStatus.SC_OK);
 
         softAssertions.assertThat(projectsResponse.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(projectsResponse.getIsFirstPage()).isTrue();
+        CisBidPackageProjectResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(),
+            HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
     @Test
     @TestRail(id = {14381, 14383, 14376})
     @Description("Find Project By ID")
     public void testGetBidPackageProject() {
+        bidPackageProjectResponse = CisBidPackageProjectResources.createBidPackageProject(projectName, bidPackageResponse.getIdentity(),
+            BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
         BidPackageProjectResponse getBidPackageProjectResponse = CisBidPackageProjectResources.getBidPackageProject(bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_OK, currentUser);
 
         softAssertions.assertThat(getBidPackageProjectResponse.getBidPackageIdentity())
             .isEqualTo(bidPackageResponse.getIdentity());
+        CisBidPackageProjectResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bidPackageProjectResponse.getIdentity(),
+            HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
     @Test
@@ -138,7 +144,6 @@ public class CisBidPackageProjectsTest extends TestUtil {
 
     @AfterEach
     public void testCleanup() {
-        CisBidPackageResources.deleteBidPackage(bidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
         softAssertions.assertAll();
     }
 }

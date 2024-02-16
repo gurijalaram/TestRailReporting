@@ -2,6 +2,7 @@ package com.apriori.bcm.api.tests;
 
 import com.apriori.bcm.api.models.response.ErrorResponse;
 import com.apriori.bcm.api.models.response.InputRowDeleted;
+import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
@@ -15,17 +16,27 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class UpdateWorksheetTests extends BcmUtil {
     private static SoftAssertions softAssertions = new SoftAssertions();
-    private final BcmUtil bcmUtil = new BcmUtil();
     private final String componentType = "PART";
     private CssComponent cssComponent = new CssComponent();
+    private String worksheetIdentity;
+    private String worksheetIdentity2;
 
-    // TODO - add clean up method once API will be available
+    @AfterEach
+    public void cleanUp() {
+        if (worksheetIdentity != null) {
+            deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
+        }
+        if (worksheetIdentity2 != null) {
+            deleteWorksheet(null, worksheetIdentity2, HttpStatus.SC_NO_CONTENT);
+        }
+    }
 
     @Test
     @TestRail(id = {29487})
@@ -33,9 +44,9 @@ public class UpdateWorksheetTests extends BcmUtil {
     public void updateWorksheet() {
         String name = GenerateStringUtil.saltString("name");
         String updatedName = name + "updated";
-        WorkSheetResponse newWorksheet = createWorksheet(name).getResponseEntity();
+        worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
 
-        WorkSheetResponse updatedWorksheet = updateWorksheet(updatedName, null, WorkSheetResponse.class, newWorksheet.getIdentity(), HttpStatus.SC_OK).getResponseEntity();
+        WorkSheetResponse updatedWorksheet = updateWorksheet(updatedName, null, WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(updatedWorksheet.getName()).isEqualTo(updatedName);
         softAssertions.assertAll();
@@ -49,10 +60,9 @@ public class UpdateWorksheetTests extends BcmUtil {
         String updatedName = name + "updated";
         WorkSheetResponse existingWorksheet = getWorksheets().getResponseEntity().getItems().get(0);
         String existingNameWorksheet = existingWorksheet.getName();
-        WorkSheetResponse newWorksheet = createWorksheet(name).getResponseEntity();
-        String worksheetId = newWorksheet.getIdentity();
+        worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
 
-        ErrorResponse sameName = updateWorksheet(existingNameWorksheet, null, ErrorResponse.class, worksheetId, HttpStatus.SC_CONFLICT).getResponseEntity();
+        ErrorResponse sameName = updateWorksheet(existingNameWorksheet, null, ErrorResponse.class, worksheetIdentity, HttpStatus.SC_CONFLICT).getResponseEntity();
 
         softAssertions.assertThat(sameName.getMessage()).contains("already exists");
 
@@ -70,16 +80,17 @@ public class UpdateWorksheetTests extends BcmUtil {
     public void updateWorksheetWithDescription() {
         String name = GenerateStringUtil.saltString("name");
         String description = new GenerateStringUtil().getRandomString();
-        WorkSheetResponse newWorksheet = createWorksheet(name).getResponseEntity();
+        worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
 
-        WorkSheetResponse updatedWorksheet = updateWorksheet(null, description, WorkSheetResponse.class, newWorksheet.getIdentity(), HttpStatus.SC_OK).getResponseEntity();
+
+        WorkSheetResponse updatedWorksheet = updateWorksheet(null, description, WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(updatedWorksheet.getDescription()).isEqualTo(description);
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(id = {29567})
+    @TestRail(id = {29567, 29839})
     @Description("Verify delete input row")
     public void deleteInputRow() {
         ScenarioItem scenarioItem =
@@ -87,21 +98,26 @@ public class UpdateWorksheetTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        String worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
             .getResponseEntity()
             .getIdentity();
 
         ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow =
-            bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+            createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity);
 
         ResponseWrapper<InputRowDeleted> deletedInputRow =
-            bcmUtil.deleteInputRow(InputRowDeleted.class, worksheetIdentity,
+            deleteInputRow(InputRowDeleted.class, worksheetIdentity,
                 responseWorksheetInputRow.getResponseEntity().getIdentity(), HttpStatus.SC_OK);
 
         softAssertions.assertThat(deletedInputRow.getResponseEntity().getSuccesses().get(0).getInputRowIdentity())
             .isEqualTo(responseWorksheetInputRow.getResponseEntity().getIdentity());
+
+        ResponseWrapper<WorkSheetInputRowGetResponse> worksheetRow =
+            getWorkSheetInputRow(worksheetIdentity);
+
+        softAssertions.assertThat(worksheetRow.getResponseEntity().getItems()).isEmpty();
         softAssertions.assertAll();
     }
 
@@ -115,17 +131,17 @@ public class UpdateWorksheetTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        String worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
             .getResponseEntity()
             .getIdentity();
 
         ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow =
-            bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+            createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity);
 
         ResponseWrapper<ErrorResponse> deletedInputRow =
-            bcmUtil.deleteInputRow(ErrorResponse.class, "fakeIdentity",
+            deleteInputRow(ErrorResponse.class, "fakeIdentity",
                 responseWorksheetInputRow.getResponseEntity().getIdentity(), HttpStatus.SC_NOT_FOUND);
 
         softAssertions.assertThat(deletedInputRow.getResponseEntity().getMessage())
@@ -143,37 +159,73 @@ public class UpdateWorksheetTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        String worksheetIdentity1 = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
             .getResponseEntity()
             .getIdentity();
 
         ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow1 =
-            bcmUtil.createWorkSheetInputRow(scenarioItem1.getComponentIdentity(),
+            createWorkSheetInputRow(scenarioItem1.getComponentIdentity(),
                 scenarioItem1.getScenarioIdentity(),
-                worksheetIdentity1);
+                worksheetIdentity);
 
         ScenarioItem scenarioItem2 =
             cssComponent.postSearchRequest(testingUser, componentType)
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        String worksheetIdentity2 = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity2 = createWorksheet(GenerateStringUtil.saltString("name"))
             .getResponseEntity()
             .getIdentity();
 
         ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow2 =
-            bcmUtil.createWorkSheetInputRow(scenarioItem2.getComponentIdentity(),
+            createWorkSheetInputRow(scenarioItem2.getComponentIdentity(),
                 scenarioItem2.getScenarioIdentity(),
                 worksheetIdentity2);
 
         ResponseWrapper<InputRowDeleted> deletedInputRow =
-            bcmUtil.deleteInputRow(InputRowDeleted.class, worksheetIdentity1,
+            deleteInputRow(InputRowDeleted.class, worksheetIdentity,
                 responseWorksheetInputRow2.getResponseEntity().getIdentity(), HttpStatus.SC_OK);
 
         softAssertions.assertThat(deletedInputRow.getResponseEntity().getFailures().get(0).getError())
             .isEqualTo(String.format("Input Row with Identity: '%s'  does not exist in Worksheet with Identity: '%s'",
-                responseWorksheetInputRow2.getResponseEntity().getIdentity(), worksheetIdentity1));
+                responseWorksheetInputRow2.getResponseEntity().getIdentity(), worksheetIdentity));
 
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29834, 29838})
+    @Description("Verify delete a single worksheet")
+    public void deleteWorksheet() {
+        String name = GenerateStringUtil.saltString("name");
+        String worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
+
+        deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
+        ErrorResponse deletedWorksheet = getWorksheet(ErrorResponse.class, worksheetIdentity, HttpStatus.SC_NOT_FOUND).getResponseEntity();
+
+        softAssertions.assertThat(deletedWorksheet.getMessage())
+            .isEqualTo(String.format("Resource 'Worksheet' with identity '%s' was not found", worksheetIdentity));
+
+        ErrorResponse deleteAlreadyDeleted = deleteWorksheet(ErrorResponse.class, worksheetIdentity, HttpStatus.SC_NOT_FOUND).getResponseEntity();
+        softAssertions.assertThat(deleteAlreadyDeleted.getMessage())
+            .isEqualTo(String.format("Resource 'Worksheet' with identity '%s' was not found", worksheetIdentity));
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29837})
+    @Description("Verify deleting the invalid worksheet")
+    public void deleteInvalidWorksheet() {
+        ErrorResponse noIdentity = deleteWorksheet(ErrorResponse.class, null, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
+
+        softAssertions.assertThat(noIdentity.getMessage())
+            .isEqualTo("'identity' is not a valid identity.");
+
+        ErrorResponse invalidIdentity = deleteWorksheet(ErrorResponse.class, "0000000", HttpStatus.SC_BAD_REQUEST).getResponseEntity();
+
+        softAssertions.assertThat(invalidIdentity.getMessage())
+            .isEqualTo("'identity' is not a valid identity.");
         softAssertions.assertAll();
     }
 }

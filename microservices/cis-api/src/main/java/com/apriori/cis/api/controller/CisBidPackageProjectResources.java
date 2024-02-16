@@ -6,6 +6,7 @@ import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectUserRequest;
 import com.apriori.cis.api.models.response.bidpackage.BidPackageProjectUsersDeleteResponse;
+import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -19,7 +20,7 @@ import org.apache.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CisBidPackageProjectResources {
+public class CisBidPackageProjectResources extends CISTestUtil {
 
     /**
      * Create bid package project
@@ -38,7 +39,7 @@ public class CisBidPackageProjectResources {
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         projectRequest.getProject().setItems(bidPackageProjectItemRequestList);
         projectRequest.getProject().setUsers(usersList);
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECTS, responseClass)
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECTS, responseClass)
             .inlineVariables(bidPackageIdentity)
             .body(projectRequest)
             .token(currentUser.getToken())

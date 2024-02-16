@@ -11,6 +11,11 @@
       "processGroup": "SHEET_METAL"
     },
     {
+      "componentName": "ChampferOut",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
       "componentName": "extremebends",
       "extension": ".prt.1",
       "processGroup": "SHEET_METAL"
@@ -194,6 +199,11 @@
       "componentName": "SheetMetal",
       "extension": ".prt",
       "processGroup": "SHEET_METAL_TRANSFER_DIE"
+    },
+    {
+      "componentName": "bluesky-latch-cover",
+      "extension": ".prt",
+      "processGroup": "CASTING_DIE"
     },
     {
       "componentName": "Casting",
@@ -602,6 +612,11 @@
     {
       "componentName": "partbody_2",
       "extension": ".stp",
+      "processGroup": "WITHOUT_PG"
+    },
+    {
+      "componentName": "ANKARA_SEHPA_SKETCHUP",
+      "extension": ".skp",
       "processGroup": "WITHOUT_PG"
     },
     {

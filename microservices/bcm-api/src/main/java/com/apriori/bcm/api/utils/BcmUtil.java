@@ -230,4 +230,16 @@ public class BcmUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * @param klass - class
+     * @param worksheetIdentity - worksheet identity
+     * @param expectedResponseCode - expected response code
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> deleteWorksheet(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode) {
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_BY_ID, klass)
+            .inlineVariables(worksheetIdentity)
+            .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).delete();
+    }
 }

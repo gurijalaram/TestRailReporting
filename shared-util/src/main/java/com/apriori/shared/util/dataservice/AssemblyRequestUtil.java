@@ -6,6 +6,8 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 
+import io.qameta.allure.Allure;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -119,6 +121,9 @@ public class AssemblyRequestUtil {
                 iterateSetSubcomponents(subcomponent);
             }
         });
+        Allure.attachment("Assembly Name", assembly.getComponentName() + assembly.getExtension());
+        assembly.getSubComponents().forEach(component -> Allure.attachment("Subcomponent Name", component.getComponentName() + component.getExtension()));
+
         return assembly;
     }
 }
