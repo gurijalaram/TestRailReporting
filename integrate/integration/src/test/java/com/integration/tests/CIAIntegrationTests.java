@@ -70,5 +70,4 @@ public class CIAIntegrationTests extends TestBaseUI {
         componentCostReportPage = componentCostReportPage.clickOk(ComponentCostReportPage.class);
         assertThat(componentCostReportPage.getPartNumber(), CoreMatchers.is(equalTo("3570823")));
     }
-
 }
