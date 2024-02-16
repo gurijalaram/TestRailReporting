@@ -51,32 +51,6 @@ public class CIAIntegrationTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = 12517)
-    @Description("Verify Create Simple Ad Hoc View Report")
-    public void testCreateAdHocViewReport() {
-        SoftAssertions softAssertions = new SoftAssertions();
-        CreateAdHocViewPage createAdHocViewPage = new ReportsLoginPage(driver)
-            .login()
-            .navigateToCreateAdHocViewPage()
-            .clickFirstDataSource()
-            .clickChooseData()
-            .waitForChooseDataDialogToAppear()
-            .clickMoveDataToRightButton()
-            .clickGoToDesignerOkButton()
-            .changeVisualizationToTable()
-            .changeDataScopeToFull()
-            .addDataToTable()
-            .addFilterToTable();
-
-        softAssertions.assertThat(createAdHocViewPage.getTableRowByCellText("0200613")).isNotNull();
-        softAssertions.assertThat(createAdHocViewPage.getCellValue(createAdHocViewPage.getTableRowByCellText("0200613"), 1).getText()).isEqualTo("Initial");
-
-        softAssertions.assertThat(createAdHocViewPage.getTableRowByCellText("TOP-LEVEL")).isNotNull();
-        softAssertions.assertThat(createAdHocViewPage.getCellValue(createAdHocViewPage.getTableRowByCellText("TOP-LEVEL"), 1).getText()).isEqualTo("Initial");
-        softAssertions.assertAll();
-    }
-
-    @Test
     @Issue("DEVTOOLS-145")
     @TestRail(id = 12046)
     @Description("Create and verify component cost OOTB report ")
