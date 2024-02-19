@@ -18,6 +18,7 @@ import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.OperationEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -71,7 +72,7 @@ public class PreviewPanelTests extends TestBaseUI {
     @Description("Validate user can see information and metrics for the selected scenario in the preview panel")
     @TestRail(id = {6351, 6201, 6352})
     public void previewPanelMetrics() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponent("225_gasket-1-solid1");
 
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(component.getUser())

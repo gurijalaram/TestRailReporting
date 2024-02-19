@@ -45,7 +45,7 @@ public class CostingTemplateTests {
 
         componentsUtil.postComponent(component);
 
-        scenariosUtil.postCostScenario(component);
+        scenariosUtil.postGroupCostScenarios(component);
 
         CostingTemplate costingTemplate = scenariosUtil.getCostingTemplateIdentity(component.getUser(), costingTemplateId.getIdentity());
 

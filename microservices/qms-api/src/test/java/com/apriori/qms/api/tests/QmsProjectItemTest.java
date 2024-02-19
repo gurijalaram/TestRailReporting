@@ -4,6 +4,7 @@ import com.apriori.qms.api.controller.QmsProjectResources;
 import com.apriori.qms.api.models.response.bidpackage.BidPackageItemResponse;
 import com.apriori.qms.api.models.response.bidpackage.BidPackageProjectItemsResponse;
 import com.apriori.qms.api.models.response.bidpackage.BidPackageProjectResponse;
+import com.apriori.qms.api.models.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.api.models.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.api.utils.QmsApiTestUtils;
@@ -100,6 +101,23 @@ public class QmsProjectItemTest extends TestUtil {
                 .isEqualTo(bidPackageItemResponse.getScenarioIdentity());
             softAssertions.assertThat(bpPItemResponse.getItems().get(0).getBidPackageItem().getIterationIdentity())
                 .isEqualTo(bidPackageItemResponse.getIterationIdentity());
+        }
+    }
+
+    @Test
+    @TestRail(id = {13774})
+    @Description("Find all project Item for particular project (Pagination)")
+    public void getProjectItemsWithPageSize() {
+        String[] params = {"pageSize,2"};
+        BidPackageProjectsResponse filteredProjectsResponse = QmsProjectResources.getFilteredProjects(currentUser, params);
+        softAssertions.assertThat(filteredProjectsResponse.getIsFirstPage()).isTrue();
+        softAssertions.assertThat(filteredProjectsResponse.getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(filteredProjectsResponse.getPageSize()).isEqualTo(2);
+        if (softAssertions.wasSuccess()) {
+            BidPackageProjectResponse bidPackageProjectResponse = filteredProjectsResponse.getItems().get(0);
+            BidPackageProjectItemsResponse bidPackageProjectItemsResponse = QmsProjectResources.getFilteredProjectItems(bidPackageProjectResponse.getBidPackageIdentity(), bidPackageProjectResponse.getIdentity(),
+                BidPackageProjectItemsResponse.class, HttpStatus.SC_OK, currentUser, params);
+            softAssertions.assertThat(bidPackageProjectItemsResponse.getPageSize()).isEqualTo(2);
         }
     }
 }

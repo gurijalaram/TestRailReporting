@@ -360,8 +360,19 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return new page object
      */
     public GuidanceIssuesPage openDesignGuidance() {
-        pageUtils.waitForElementAndClick(designGuidanceDetailsButton);
+        if (isDesignGuidanceButtonDisplayed()) {
+            designGuidanceDetailsButton.click();
+        }
         return new GuidanceIssuesPage(driver);
+    }
+
+    /**
+     * Checks if design guidance button is displayed which indicates if the window is open
+     *
+     * @return true/false
+     */
+    public boolean isDesignGuidanceButtonDisplayed() {
+        return pageUtils.isElementDisplayed(designGuidanceDetailsButton);
     }
 
     /**
@@ -732,6 +743,7 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Get list of property names in sustainability card
+     *
      * @return list of string
      */
     public List<String> getSustainabilityNames() {
@@ -873,12 +885,22 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Selects the Do not machine this part checkbox
+     * Ticks the Do not machine this part checkbox
      *
      * @return current page object
      */
-    public EvaluatePage selectMachineOptionsCheckbox() {
-        inputsController.selectMachineOptionsCheckbox(machinePartCheckbox);
+    public EvaluatePage tickDoNotMachinePart() {
+        inputsController.tickDoNotMachinePart(machinePartCheckbox);
+        return this;
+    }
+
+    /**
+     * Un-tick the Do not machine this part checkbox
+     *
+     * @return current page object
+     */
+    public EvaluatePage unTickDoNotMachinePart() {
+        inputsController.unTickDoNotMachinePart(machinePartCheckbox);
         return this;
     }
 

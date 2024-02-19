@@ -26,7 +26,7 @@ import org.junit.jupiter.api.Test;
 public class LargeGroupEditAssemblies2 extends TestBaseUI {
 
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private static ComponentInfoBuilder componentAssembly;
+    private ComponentInfoBuilder componentAssembly;
     private CidAppLoginPage loginPage;
     private ComponentsTablePage componentsTablePage;
     private SoftAssertions softAssertions = new SoftAssertions();

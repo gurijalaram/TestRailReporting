@@ -1,0 +1,149 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "successes",
+        "failures"
+      ],
+      "properties": {
+        "successes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "identity",
+              "customerIdentity",
+              "createdAt",
+              "createdBy",
+              "worksheetId",
+              "componentIdentity",
+              "scenarioIdentity",
+              "iterationIds",
+              "analysisInput"
+            ],
+            "optional": [
+              "updatedBy",
+              "updatedAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "identity": {
+                "type": "string"
+              },
+              "customerIdentity": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "createdBy": {
+                "type": "string"
+              },
+              "updatedAt": {
+                "type": "string"
+              },
+              "updatedBy": {
+                "type": "string"
+              },
+              "worksheetId": {
+                "type": "string"
+              },
+              "componentIdentity": {
+                "type": "string"
+              },
+              "scenarioIdentity": {
+                "type": "string"
+              },
+              "iterationIds": {
+                "type": "array",
+                "items": {}
+              },
+              "analysisInput": {
+                "type": "object",
+                "required": [
+                  "identity",
+                  "customerIdentity",
+                  "createdAt",
+                  "createdBy",
+                  "annualVolume",
+                  "processGroupName",
+                  "productionLife",
+                  "digitalFactoryName"
+                ],
+                "optional": [
+                  "updatedBy",
+                  "updatedAt",
+                  "customAttributes",
+                  "gcdProperties",
+                  "routingNodeOptions",
+                  "secondaryDigitalFactories",
+                  "secondaryProcesses"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "customerIdentity": {
+                    "type": "string"
+                  },
+                  "createdAt": {
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "type": "string"
+                  },
+                  "updatedAt": {
+                    "type": "string"
+                  },
+                  "updatedBy": {
+                    "type": "string"
+                  },
+                  "annualVolume": {
+                    "type": "integer"
+                  },
+                  "customAttributes": {
+                    "type": "object"
+                  },
+                  "gcdProperties": {
+                    "type": "object"
+                  },
+                  "processGroupName": {
+                    "type": "string"
+                  },
+                  "productionLife": {
+                    "type": "number"
+                  },
+                  "routingNodeOptions": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "secondaryDigitalFactories": {
+                    "type": "object"
+                  },
+                  "secondaryProcesses": {
+                    "type": "object"
+                  },
+                  "digitalFactoryName": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "failures": {
+          "type": "array",
+          "items": {}
+        }
+      }
+    }
+  }
+}

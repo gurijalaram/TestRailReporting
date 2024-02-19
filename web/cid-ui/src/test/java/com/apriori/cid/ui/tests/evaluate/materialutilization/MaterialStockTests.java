@@ -121,7 +121,7 @@ public class MaterialStockTests extends TestBaseUI {
     @TestRail(id = {5154, 5155, 5156})
     @Description("check that Stock Form is accurate and updates correctly")
     public void stockForm() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponent("Square circle");
 
         loginPage = new CidAppLoginPage(driver);
         stockPage = loginPage.login(component.getUser())

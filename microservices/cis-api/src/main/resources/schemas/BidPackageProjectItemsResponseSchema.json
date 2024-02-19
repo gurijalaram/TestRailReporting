@@ -1,21 +1,26 @@
 {
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "default": {},
-  "required": [
-    "response"
-  ],
   "properties": {
     "response": {
-      "$ref": "common/PaginationSchema.json",
-      "required": [
-        "items"
-      ],
-      "items": {
-        "type": "array",
-        "items": {
-          "$ref": "BidPackageProjectItemResponseSchema.json"
+      "type": "object",
+      "properties": {
+        "projectItem": {
+          "type": "array",
+          "items": [
+            {
+              "$ref": "BidPackageProjectItemResponseSchema.json"
+            }
+          ]
         }
-      }
+      },
+      "required": [
+        "projectItem"
+      ]
     }
-  }
+  },
+  "required": [
+    "response"
+  ]
 }

@@ -19,6 +19,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -96,6 +97,11 @@ public class ExploreToolbar extends MainNavBar {
 
     @FindBy(id = "qa-action-bar-download-report")
     private WebElement downloadReportButton;
+
+    @FindBy(css = "[data-testid='apriori-alert']")
+    private WebElement lastUpdatedAlert;
+
+    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -471,6 +477,8 @@ public class ExploreToolbar extends MainNavBar {
      */
     public ExplorePage refresh() {
         pageUtils.waitForElementAndClick(refreshButton);
+        pageUtils.waitForElementToAppear(refreshLabel);
+        pageUtils.waitForElementsToNotAppear(refreshLabel);
         return new ExplorePage(driver);
     }
 
@@ -482,7 +490,7 @@ public class ExploreToolbar extends MainNavBar {
      */
     public ComponentsTreePage uploadAndOpenComponents(ComponentInfoBuilder componentInfoBuilder) {
         importCadFile()
-            .inputScenarioName(componentInfoBuilder.getScenarioName())
+            .inputDefaultScenarioName(componentInfoBuilder.getScenarioName())
             .inputMultiAssemblyBuilder(componentInfoBuilder)
             .submit()
             .clickClose()
@@ -599,5 +607,15 @@ public class ExploreToolbar extends MainNavBar {
         file.deleteOnExit();
 
         return file;
+    }
+
+    /**
+     * Gets the Last updated timestamp
+     *
+     * @return string
+     */
+    public String getUpdateTimestamp() {
+        pageUtils.waitForElementsToNotAppear(refreshLabel);
+        return lastUpdatedAlert.getText();
     }
 }

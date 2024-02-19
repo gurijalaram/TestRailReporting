@@ -140,6 +140,17 @@ public class ConnectorsPage extends CICBasePage {
     }
 
     /**
+     * click refresh button
+     *
+     * @return ConnectorDetails page object
+     */
+    public ConnectorsPage clickRefreshBtn() {
+        pageUtils.waitForElementAndClick(getRefreshConnectorStatusBtn());
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
+    }
+
+    /**
      * click delete button model dialog confirmation pop up window
      *
      * @return current class object

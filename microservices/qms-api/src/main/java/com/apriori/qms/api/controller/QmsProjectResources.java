@@ -204,4 +204,28 @@ public class QmsProjectResources {
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
         return responseWrapper.getResponseEntity();
     }
+
+    /**
+     * get filtered bid package project items
+     *
+     * @param bidPackageIdentity - BidPackageIdentity
+     * @param projectIdentity    - Project Identity
+     * @param responseClass      - expected response class
+     * @param httpStatus         - expected http status code
+     * @param currentUser        - UserCredentials
+     * @param paramKeysValues    - query parameters (ex: pageSize, 2)
+     * @param <T>                - expected response class type
+     * @return - expected response class object
+     */
+    public static <T> T getFilteredProjectItems(String bidPackageIdentity, String projectIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser, String... paramKeysValues) {
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(QMSAPIEnum.BID_PACKAGE_PROJECT_ITEMS, responseClass)
+            .inlineVariables(bidPackageIdentity, projectIdentity)
+            .queryParams(new KeyValueUtil().keyValue(paramKeysValues, ","))
+            .headers(QmsApiTestUtils.setUpHeader(currentUser.generateCloudContext().getCloudContext()))
+            .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> filteredProjectsResponse = HTTPRequest.build(requestEntity).get();
+        return filteredProjectsResponse.getResponseEntity();
+    }
 }

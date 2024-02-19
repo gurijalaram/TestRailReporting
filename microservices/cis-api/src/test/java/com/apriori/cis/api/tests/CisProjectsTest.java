@@ -1,19 +1,23 @@
 package com.apriori.cis.api.tests;
 
+import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
+
+import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cis.api.controller.CisBidPackageProjectResources;
 import com.apriori.cis.api.controller.CisProjectResources;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageItemParameters;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageItemRequest;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.cis.api.models.response.bidpackage.BidPackageProjectResponse;
-import com.apriori.css.api.enums.CssSearch;
+import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.css.api.utils.CssComponent;
-import com.apriori.serialization.util.DateFormattingUtils;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
-import com.apriori.shared.util.http.utils.DateUtil;
-import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -32,17 +36,20 @@ import java.util.HashMap;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
-public class CisProjectsTest extends TestUtil {
+public class CisProjectsTest extends CISTestUtil {
 
     private static SoftAssertions softAssertions;
     private static UserCredentials currentUser;
     private static ScenarioItem scenarioItem;
+    private static ComponentInfoBuilder componentInfoBuilder;
 
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
-        scenarioItem = new CssComponent().getBaseCssComponents(currentUser, CssSearch.SCENARIO_CREATED_AT_GT.getKey() + DateUtil.getDateDaysBefore(90, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ), CssSearch.COMPONENT_TYPE_EQ.getKey() + "PART").get(0);
+        componentInfoBuilder = new ScenariosUtil().postAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING, currentUser));
+        scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
+            SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName()).get(0);
     }
 
     @Test
@@ -60,8 +67,8 @@ public class CisProjectsTest extends TestUtil {
             .build());
 
         usersList.add(BidPackageProjectUserParameters.builder()
-                .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
-                .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
+            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
             .build());
 
         BidPackageProjectResponse bppResponse = CisProjectResources.createProject(new HashMap<>(),
@@ -79,6 +86,7 @@ public class CisProjectsTest extends TestUtil {
 
     @AfterEach
     public void testCleanup() {
+        new ScenariosUtil().deleteScenario(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), currentUser);
         softAssertions.assertAll();
     }
 }

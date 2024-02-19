@@ -15,8 +15,5 @@ import java.util.List;
 @Data
 public class Materials extends Pagination {
 
-    private Boolean firstPage;
-    private Boolean lastPage;
-    private Boolean restrictedByAccessControl;
     private List<Material> items;
 }

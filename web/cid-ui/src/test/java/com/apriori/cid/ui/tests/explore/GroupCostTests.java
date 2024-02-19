@@ -100,7 +100,7 @@ public class GroupCostTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .importCadFile()
-            .inputScenarioName(scenarioName)
+            .inputDefaultScenarioName(scenarioName)
             .inputMultiComponents(multiComponents)
             .submit()
             .clickClose()
@@ -207,7 +207,7 @@ public class GroupCostTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .importCadFile()
-            .inputScenarioName(scenarioName)
+            .inputDefaultScenarioName(scenarioName)
             .inputMultiComponents(multiComponents)
             .submit()
             .clickClose()

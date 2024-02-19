@@ -73,7 +73,7 @@ public class IncludeAndExcludeTests {
 
         softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isEqualTo(4);
 
-        scenariosUtil.postCostScenario(componentAssembly);
+        scenariosUtil.postGroupCostScenarios(componentAssembly);
 
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0001, scenarioName)).isEqualTo(true);
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0002, scenarioName)).isEqualTo(true);
@@ -119,7 +119,7 @@ public class IncludeAndExcludeTests {
 
         softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isEqualTo(1);
 
-        scenariosUtil.postCostScenario(componentAssembly);
+        scenariosUtil.postGroupCostScenarios(componentAssembly);
 
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0001, scenarioName)).isEqualTo(true);
 
@@ -127,7 +127,7 @@ public class IncludeAndExcludeTests {
 
         softAssertions.assertThat(patchResponse2.getResponseEntity().getSuccesses().size()).isEqualTo(2);
 
-        scenariosUtil.postCostScenario(componentAssembly);
+        scenariosUtil.postGroupCostScenarios(componentAssembly);
 
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0002, scenarioName)).isEqualTo(true);
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0003, scenarioName)).isEqualTo(true);
@@ -172,13 +172,13 @@ public class IncludeAndExcludeTests {
 
         softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isEqualTo(4);
 
-        scenariosUtil.postCostScenario(componentAssembly);
+        scenariosUtil.postGroupCostScenarios(componentAssembly);
 
         ResponseWrapper<AssociationSuccessesFailures> patchResponse2 = scenariosUtil.patchAssociations(componentAssembly, false, PART_0001 + ", " + scenarioName);
 
         softAssertions.assertThat(patchResponse2.getResponseEntity().getSuccesses().size()).isEqualTo(1);
 
-        scenariosUtil.postCostScenario(componentAssembly);
+        scenariosUtil.postGroupCostScenarios(componentAssembly);
 
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0001, scenarioName)).isEqualTo(false);
 
@@ -186,7 +186,7 @@ public class IncludeAndExcludeTests {
 
         softAssertions.assertThat(patchResponse3.getResponseEntity().getSuccesses().size()).isEqualTo(2);
 
-        scenariosUtil.postCostScenario(componentAssembly);
+        scenariosUtil.postGroupCostScenarios(componentAssembly);
 
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0002, scenarioName)).isEqualTo(false);
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0003, scenarioName)).isEqualTo(false);
@@ -231,7 +231,7 @@ public class IncludeAndExcludeTests {
 
         softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isEqualTo(4);
 
-        scenariosUtil.postCostScenario(componentAssembly);
+        scenariosUtil.postGroupCostScenarios(componentAssembly);
 
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0001, scenarioName)).isEqualTo(false);
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0002, scenarioName)).isEqualTo(false);
@@ -292,7 +292,7 @@ public class IncludeAndExcludeTests {
 
         softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isEqualTo(2);
 
-        scenariosUtil.postCostScenario(componentAssembly);
+        scenariosUtil.postGroupCostScenarios(componentAssembly);
 
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0001, scenarioName)).isEqualTo(true);
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0002, scenarioName)).isEqualTo(false);

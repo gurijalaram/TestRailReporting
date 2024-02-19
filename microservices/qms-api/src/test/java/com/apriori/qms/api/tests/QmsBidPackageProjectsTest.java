@@ -43,7 +43,7 @@ import java.util.HashMap;
 
 @ExtendWith(TestRulesAPI.class)
 public class QmsBidPackageProjectsTest extends TestUtil {
-    private static final UserCredentials currentUser = UserUtil.getUser();
+    private static UserCredentials currentUser;
     private static SoftAssertions softAssertions;
     private static BidPackageResponse bidPackageResponse;
     private static BidPackageProjectResponse bidPackageProjectResponse;
@@ -52,23 +52,26 @@ public class QmsBidPackageProjectsTest extends TestUtil {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
+        currentUser = UserUtil.getUser();
         bidPackageName = new GenerateStringUtil().getRandomString();
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
     }
 
     @Test
-    @TestRail(id = {13742, 13752, 22955, 14738, 25962})
-    @Description("Create and Delete Bid Package Project")
+    @TestRail(id = {13742, 13752, 22955, 14738, 25962, 13754})
+    @Description("Create, Delete Bid Package Project and verify project is deleted")
     public void createAndDeleteProject() {
-        String ownerIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
+        UserCredentials projectUser = UserUtil.getUser();
+        BidPackageResponse packageResponse = QmsBidPackageResources.createBidPackage(new GenerateStringUtil().getRandomString(), projectUser);
         BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(),
-            bidPackageResponse.getIdentity(),
+            packageResponse.getIdentity(),
             BidPackageProjectResponse.class,
             HttpStatus.SC_CREATED,
-            currentUser);
+            projectUser);
+        String ownerIdentity = new AuthUserContextUtil().getAuthUserIdentity(projectUser.getEmail());
         softAssertions.assertThat(bppResponse.getItems().size()).isZero();
-        softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(bidPackageResponse.getIdentity());
+        softAssertions.assertThat(bppResponse.getBidPackageIdentity()).isEqualTo(packageResponse.getIdentity());
         softAssertions.assertThat(bppResponse.getOwner()).isEqualTo(ownerIdentity);
         softAssertions.assertThat(bppResponse.getOwnerUserIdentity()).isNotNull();
         if (softAssertions.wasSuccess()) {
@@ -88,7 +91,7 @@ public class QmsBidPackageProjectsTest extends TestUtil {
                         .isEqualTo(bidPackageProjectUserResponse.getUser().getUserProfile().getGivenName().concat(" ")
                             .concat(bidPackageProjectUserResponse.getUser().getUserProfile().getFamilyName())));
         }
-        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
+        QmsBidPackageResources.deleteBidPackageProject(packageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, projectUser);
     }
 
     @Test
@@ -227,7 +230,6 @@ public class QmsBidPackageProjectsTest extends TestUtil {
             HttpStatus.SC_CREATED,
             currentUser);
         softAssertions.assertThat(bppResponse.getDescription()).isEqualTo(projectDescription);
-        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
     @Test
@@ -823,7 +825,6 @@ public class QmsBidPackageProjectsTest extends TestUtil {
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(bppResponse.getStatus()).isEqualTo("OPEN");
         }
-        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 
         //IN_PROGRESS
         prjAttributesMap = new HashMap<>();
@@ -834,7 +835,6 @@ public class QmsBidPackageProjectsTest extends TestUtil {
         if (softAssertions.wasSuccess()) {
             softAssertions.assertThat(bppResponse.getStatus()).isEqualTo("IN_PROGRESS");
         }
-        QmsBidPackageResources.deleteBidPackageProject(bidPackageResponse.getIdentity(), bppResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
     @AfterEach

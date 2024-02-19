@@ -77,7 +77,7 @@ public class MaterialSelectionTests {
                 .build()
         );
 
-        scenariosUtil.postCostScenario(
+        scenariosUtil.postGroupCostScenarios(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)

@@ -324,15 +324,33 @@ public class RoutingsTests {
         component2.setUser(component.getUser());
 
         CostingTemplate costingTemplate1 = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build();
-        ScenarioResponse scenarioResponse1 = new DataCreationUtil(component.getComponentName(), component.getScenarioName(), component.getProcessGroup(),
-            component.getResourceFile(), costingTemplate1, component.getUser()).createCostComponent();
 
-        CostingTemplate costingTemplate2 = CostingTemplate.builder().processGroupName(component2.getProcessGroup().getProcessGroup()).twoModelSourceScenarioIdentity(scenarioResponse1.getIdentity()).build();
-        ScenarioResponse scenarioResponse2 = new DataCreationUtil(component2.getComponentName(), component.getScenarioName(), component2.getProcessGroup(), component2.getResourceFile(), costingTemplate2,
-            component.getUser()).createCostComponent();
+        ScenarioResponse scenarioResponse1 = new DataCreationUtil(ComponentInfoBuilder.builder()
+            .componentName(component.getComponentName())
+            .scenarioName(component.getScenarioName())
+            .processGroup(component.getProcessGroup())
+            .resourceFile(component.getResourceFile())
+            .extension(component.getExtension())
+            .costingTemplate(costingTemplate1)
+            .user(component.getUser())
+            .build())
+            .createCostComponent();
 
-        Routings routings = scenariosUtil.getRoutings(component.getUser(), Routings.class, new CssComponent().findFirst(component2.getComponentName(), component.getScenarioName(), component.getUser()).getComponentIdentity(),
-            scenarioResponse2.getIdentity(), costingTemplate2.getVpeName(), ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()).getResponseEntity();
+        CostingTemplate costingTemplate2 = CostingTemplate.builder().processGroupName(component2.getProcessGroup().getProcessGroup())
+            .twoModelSourceScenarioIdentity(scenarioResponse1.getIdentity()).build();
+
+        ScenarioResponse scenarioResponse2 = new DataCreationUtil(ComponentInfoBuilder.builder()
+            .componentName(component2.getComponentName())
+            .scenarioName(component.getScenarioName())
+            .processGroup(component2.getProcessGroup())
+            .resourceFile(component2.getResourceFile())
+            .extension(component2.getExtension())
+            .costingTemplate(costingTemplate2)
+            .user(component.getUser())
+            .build()).createCostComponent();
+
+        Routings routings = scenariosUtil.getRoutings(component.getUser(), Routings.class, new CssComponent().findFirst(component2.getComponentName(), component.getScenarioName(),
+            component.getUser()).getComponentIdentity(), scenarioResponse2.getIdentity(), costingTemplate2.getVpeName(), ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()).getResponseEntity();
 
         softAssertions.assertThat(routings.getItems().size()).isGreaterThan(0);
         softAssertions.assertThat(routings.getItems()).extracting("name").containsExactlyInAnyOrder("3 Axis Mill Routing", "4 Axis Mill Routing", "5 Axis Mill Routing", "2AL+3AM Routing",
@@ -353,7 +371,7 @@ public class RoutingsTests {
 
         ComponentInfoBuilder componentResponse = componentsUtil.postComponent(component);
 
-        scenariosUtil.postCostScenario(componentResponse);
+        scenariosUtil.postGroupCostScenarios(componentResponse);
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(componentResponse);
 
@@ -368,7 +386,7 @@ public class RoutingsTests {
         CostingTemplate costingTemplateWithRouting = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).routingNodeOptions(routingNodeOptions).build();
 
         componentResponse.setCostingTemplate(costingTemplateWithRouting);
-        scenariosUtil.postCostScenario(componentResponse);
+        scenariosUtil.postGroupCostScenarios(componentResponse);
 
         ResponseWrapper<ComponentIteration> componentIterationResponseWithRouting = iterationsUtil.getComponentIterationLatest(componentResponse);
 
@@ -381,16 +399,19 @@ public class RoutingsTests {
 
     private Routings getRoutings(ComponentInfoBuilder component) {
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build();
-        ScenarioResponse scenarioResponse = new DataCreationUtil(component.getComponentName(), component.getScenarioName(), component.getProcessGroup(),
-            component.getResourceFile(), costingTemplate, component.getUser())
+        ScenarioResponse scenarioResponse = new DataCreationUtil(ComponentInfoBuilder.builder()
+            .componentName(component.getComponentName())
+            .scenarioName(component.getScenarioName())
+            .processGroup(component.getProcessGroup())
+            .resourceFile(component.getResourceFile())
+            .extension(component.getExtension())
+            .costingTemplate(costingTemplate)
+            .user(component.getUser())
+            .build())
             .createCostComponent();
 
         return scenariosUtil.getRoutings(component.getUser(), Routings.class, new CssComponent().findFirst(component.getComponentName(), component.getScenarioName(),
-                    component.getUser())
-                .getComponentIdentity(),
-            scenarioResponse.getIdentity(),
-            component.getCostingTemplate().getVpeName(),
-            component.getProcessGroup().getProcessGroup()).getResponseEntity();
+            component.getUser()).getComponentIdentity(), scenarioResponse.getIdentity(), component.getCostingTemplate().getVpeName(), component.getProcessGroup().getProcessGroup()).getResponseEntity();
     }
 
     private ResponseWrapper<ComponentIteration> getIterationLatest(ComponentInfoBuilder component, NewCostingLabelEnum costingLabel) {
@@ -400,12 +421,13 @@ public class RoutingsTests {
         ComponentInfoBuilder componentResponse = componentsUtil.postComponent(ComponentInfoBuilder.builder()
             .componentName(component.getComponentName())
             .scenarioName(component.getScenarioName())
+            .extension(component.getExtension())
             .resourceFile(component.getResourceFile())
             .user(component.getUser())
             .costingTemplate(costingTemplate)
             .build());
 
-        scenariosUtil.postCostScenario(componentResponse);
+        scenariosUtil.postGroupCostScenarios(componentResponse);
 
         ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(componentResponse);
 

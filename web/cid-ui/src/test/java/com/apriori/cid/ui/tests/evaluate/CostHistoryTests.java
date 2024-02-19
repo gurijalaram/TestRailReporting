@@ -47,26 +47,26 @@ public class CostHistoryTests extends TestBaseUI {
 
         ComponentInfoBuilder castingPart = new ComponentRequestUtil().getComponentWithProcessGroup("Casting", ProcessGroupEnum.CASTING_DIE);
 
-        scenariosUtil.postCostScenario(castingPart);
+        scenariosUtil.postGroupCostScenarios(castingPart);
 
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .processGroupName(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
                 .build());
-        scenariosUtil.postCostScenario(castingPart);
+        scenariosUtil.postGroupCostScenarios(castingPart);
 
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .processGroupName(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
                 .annualVolume(4096)
                 .build());
-        scenariosUtil.postCostScenario(castingPart);
+        scenariosUtil.postGroupCostScenarios(castingPart);
 
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .materialName(MaterialNameEnum.COPPER_UNS_C11000.getMaterialName())
                 .build());
-        scenariosUtil.postCostScenario(castingPart);
+        scenariosUtil.postGroupCostScenarios(castingPart);
 
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
@@ -74,31 +74,31 @@ public class CostHistoryTests extends TestBaseUI {
                     .heatTreatment(Arrays.asList("Certification"))
                     .build())
                 .build());
-        scenariosUtil.postCostScenario(castingPart);
+        scenariosUtil.postGroupCostScenarios(castingPart);
 
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .vpeName(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory())
                 .build());
-        scenariosUtil.postCostScenario(castingPart);
+        scenariosUtil.postGroupCostScenarios(castingPart);
 
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .vpeName(DigitalFactoryEnum.APRIORI_WESTERN_EUROPE.getDigitalFactory())
                 .build());
-        scenariosUtil.postCostScenario(castingPart);
+        scenariosUtil.postGroupCostScenarios(castingPart);
 
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .annualVolume(289)
                 .build());
-        scenariosUtil.postCostScenario(castingPart);
+        scenariosUtil.postGroupCostScenarios(castingPart);
 
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .batchSize(275)
                 .build());
-        scenariosUtil.postCostScenario(castingPart);
+        scenariosUtil.postGroupCostScenarios(castingPart);
 
         SecondaryDigitalFactories secondaryDF = new SecondaryDigitalFactories();
         secondaryDF.setHeatTreatment(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
@@ -110,7 +110,7 @@ public class CostHistoryTests extends TestBaseUI {
                 .usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories(Boolean.FALSE)
                 .secondaryDigitalFactories(secondaryDF)
                 .build());
-        scenariosUtil.postCostScenario(castingPart);
+        scenariosUtil.postGroupCostScenarios(castingPart);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(castingPart.getUser())

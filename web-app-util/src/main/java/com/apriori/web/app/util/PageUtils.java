@@ -500,6 +500,15 @@ public class PageUtils {
      * @param millis - time in milliseconds
      */
     public void waitFor(Integer millis) {
+        waitFor(millis.longValue());
+    }
+
+    /**
+     * Waits for a given time
+     *
+     * @param millis - time in milliseconds
+     */
+    public void waitFor(Long millis) {
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e1) {
@@ -800,6 +809,38 @@ public class PageUtils {
             try {
 
                 return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(elementToBeClickable(element));
+
+            } catch (Exception e) {
+                ex = e;
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
+            }
+
+            if (retries == maxRetries) {
+                throw new RuntimeException(String.format("Exception caught: %s", ex.getMessage()));
+            }
+        }
+        return element;
+    }
+
+    /**
+     * Wait for element to be clickable
+     *
+     * @param element           - WebElement
+     * @param webDriverWaitTime - wait time
+     * @return WebElement
+     */
+    public WebElement waitForElementToBeClickable(WebElement element, Long webDriverWaitTime) {
+        int retries = 0;
+        int maxRetries = 12;
+        Exception ex;
+
+        while (retries < maxRetries) {
+            try {
+
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWaitTime))
                     .ignoreAll(ignoredWebDriverExceptions)
                     .until(elementToBeClickable(element));
 
@@ -1168,7 +1209,19 @@ public class PageUtils {
         new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS / 2))
             .withMessage("Expected option not in dropdown: " + option + "Locator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
-            .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().stream().anyMatch(dropdownOptions -> dropdownOptions.getText().contains(option))));
+            .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().stream().anyMatch(dropdownOptions -> dropdownOptions.getAttribute("value").contains(option))));
+    }
+
+    /**
+     * waits for the dropdown to be loaded with the options
+     *
+     * @param locator - locator
+     */
+    public void waitUntilDropdownOptionsLoaded(WebElement locator) {
+        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
+            .withMessage("Expected option not in dropdown" + locator)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().size() > 1));
     }
 
     /**
@@ -1404,6 +1457,21 @@ public class PageUtils {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
             wait.until(ExpectedConditions.visibilityOf(element));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Waits for a Ui element to become visible.
+     *
+     * @return <b>True</b> if UI element is visible, <b>false</b> if not visible
+     */
+    public Boolean waitForVisibilityOfElement(By location) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(location));
             return true;
         } catch (TimeoutException e) {
             return false;

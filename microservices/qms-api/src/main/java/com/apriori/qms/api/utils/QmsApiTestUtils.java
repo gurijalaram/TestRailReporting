@@ -3,6 +3,7 @@ package com.apriori.qms.api.utils;
 import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 
+import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.qms.api.controller.QmsBidPackageResources;
@@ -101,9 +102,14 @@ public class QmsApiTestUtils {
      * @return ScenarioItem object
      */
     public static ScenarioItem createAndPublishScenarioViaCidApp(ProcessGroupEnum processGroupEnum, String componentName, UserCredentials currentUser) {
-        ComponentInfoBuilder componentInfoBuilder = new ScenariosUtil().postAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(processGroupEnum, currentUser));
+        ComponentInfoBuilder componentInfoBuilder = new ComponentsUtil().postComponent(new ComponentRequestUtil().getComponentByProcessGroup(processGroupEnum, currentUser));
+        new ScenariosUtil().postPublishScenario(componentInfoBuilder);
+
         ScenarioItem scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
             SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName()).get(0);
+        if (scenarioItem == null) {
+            throw new RuntimeException("Failed to retrieve scenario from CSS!!  " + componentInfoBuilder.getScenarioName());
+        }
         return scenarioItem;
     }
 

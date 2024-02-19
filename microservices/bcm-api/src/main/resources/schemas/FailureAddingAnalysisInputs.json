@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "successes",
+        "failures"
+      ],
+      "properties": {
+        "successes": {
+          "type": "array",
+          "items": {}
+        },
+        "failures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "error",
+              "inputRowIdentity"
+            ],
+            "properties": {
+              "error": {
+                "type": "string"
+              },
+              "inputRowIdentity": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

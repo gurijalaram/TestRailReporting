@@ -156,6 +156,62 @@ public class CostingInputTabTests extends WorkflowTestUtil {
         softAssertions.assertThat(costingInputsPart.getCustomDateFieldValueElement().isDisplayed()).isTrue();
     }
 
+    @Test
+    @TestRail(id = {28346})
+    @Description("Machining Mode set via drop-down when Mapping Rule 'Constant' or 'Default if No PLM' is selected")
+    public void testVerifyMachiningModeMappingRule() {
+        WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputCustomDateTestData.json", WorkFlowData.class);
+        String[] mappingRuleFields = new String[] {"Constant"};
+        String[] fieldValues = new String[] {"MAY_BE_MACHINED", "NOT_MACHINED"};
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
+        CostingInputsPart costingInputsPart = new CicLoginPage(driver)
+            .login(currentUser)
+            .clickWorkflowMenu()
+            .setTestData(workFlowData)
+            .selectScheduleTab()
+            .clickNewButton()
+            .enterWorkflowNameField(workFlowData.getWorkflowName())
+            .selectWorkflowConnector(agentPort.getConnector())
+            .selectEnabledCheckbox("off")
+            .clickNextBtnInDetailsTab()
+            .addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber())
+            .clickWFQueryDefNextBtn()
+                .clickAddRowButton()
+                    .selectCiConnectField(PlmTypeAttributes.PLM_MACHINING_MODE);
+
+        softAssertions.assertThat(costingInputsPart.isMappingRuleFieldEnabled());
+        softAssertions.assertThat(costingInputsPart.getMappingRuleField().equals(MappingRule.CONSTANT.getMappingRule()));
+        softAssertions.assertThat(costingInputsPart.isValuesExists(Arrays.asList(fieldValues)));
+    }
+
+    @Test
+    @TestRail(id = {7763})
+    @Description("Verify Duplicate CI Connect fields disable next button")
+    public void testVerifyDuplicateCIConnectField() {
+        WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputCustomDateTestData.json", WorkFlowData.class);
+        String[] mappingRuleFields = new String[] {"Constant"};
+        String[] fieldValues = new String[] {"MAY_BE_MACHINED", "NOT_MACHINED"};
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
+        CostingInputsPart costingInputsPart = new CicLoginPage(driver)
+            .login(currentUser)
+            .clickWorkflowMenu()
+            .setTestData(workFlowData)
+            .selectScheduleTab()
+            .clickNewButton()
+            .enterWorkflowNameField(workFlowData.getWorkflowName())
+            .selectWorkflowConnector(agentPort.getConnector())
+            .selectEnabledCheckbox("off")
+            .clickNextBtnInDetailsTab()
+            .addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber())
+            .clickWFQueryDefNextBtn()
+            .clickAddRowButton();
+
+        softAssertions.assertThat(costingInputsPart.getCiNextButton().isEnabled()).isFalse();
+        softAssertions.assertThat(costingInputsPart.isMappingRuleFieldEnabled());
+        softAssertions.assertThat(costingInputsPart.getMappingRuleField().equals(MappingRule.CONSTANT.getMappingRule()));
+        softAssertions.assertThat(costingInputsPart.isValuesExists(Arrays.asList(fieldValues)));
+    }
+
     @AfterEach
     public void cleanup() {
         softAssertions.assertAll();

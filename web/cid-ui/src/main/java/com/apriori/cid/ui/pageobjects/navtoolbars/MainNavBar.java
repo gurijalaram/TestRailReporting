@@ -123,7 +123,7 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
      * @return new page object
      */
     public EvaluatePage clickEvaluate() {
-        pageUtils.waitForElementAndClick(exploreButton);
+        pageUtils.waitForElementAndClick(evaluateButton);
         return new EvaluatePage(driver);
     }
 

@@ -12,9 +12,9 @@ import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
+import com.google.common.collect.Comparators;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,7 +24,6 @@ import software.amazon.awssdk.http.HttpStatusCode;
 
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
@@ -211,7 +210,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29639})
+    @TestRail(id = {29717})
     @Description("Get Bad Request Error when Digital factory identity is invalid")
     public void findMaterialsWithBadDigitalFactoryIdentityTest() {
 
@@ -228,7 +227,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29638})
+    @TestRail(id = {29718})
     @Description("Get Not Found Error when Digital factory identity is invalid")
     public void findMaterialsWithMissingDigitalFactoryTest() {
 
@@ -245,7 +244,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29636})
+    @TestRail(id = {29715})
     @Description("Get Bad Request Error when Process group identity is invalid")
     public void findMaterialsWithBadProcessGroupIdentityTest() {
 
@@ -262,7 +261,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29637})
+    @TestRail(id = {29716})
     @Description("Get Not Found Error when Process group identity is invalid")
     public void findMaterialsWithMissingProcessGroupTest() {
 
@@ -279,7 +278,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29591})
+    @TestRail(id = {29708})
     @Description("Gets a list of materials by digital factory and process group when shared secret is valid")
     public void findMaterialsWithValidSharedSecretTest() {
 
@@ -296,7 +295,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29592})
+    @TestRail(id = {29709})
     @Description("Gets no materials by digital factory and process group when shared secret isn't valid")
     public void findMaterialsWithInvalidSharedSecretTest() {
 
@@ -315,7 +314,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29594})
+    @TestRail(id = {29711})
     @Description("Gets no materials by digital factory and process group when shared secret is missed")
     public void findMaterialsWithoutSharedSecretTest() {
 
@@ -333,7 +332,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29593})
+    @TestRail(id = {29710})
     @Description("Gets no materials by digital factory and process group when shared secret is missed")
     public void findMaterialsWithEmptySharedSecretTest() {
 
@@ -352,7 +351,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29595})
+    @TestRail(id = {29712})
     @Description("Get Not Acceptable error when incorrect Accept Header is provided")
     public void findMaterialsWithIncorrectAcceptHeader() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DFSApiEnum.MATERIALS, ErrorMessage.class)
@@ -370,7 +369,7 @@ public class MaterialsTests {
         softAssertions.assertAll();
     }
 
-    @TestRail(id = {29645})
+    @TestRail(id = {29720})
     @Description("Find a page of Materials")
     @ParameterizedTest
     @CsvSource({
@@ -398,8 +397,7 @@ public class MaterialsTests {
         softAssertions.assertAll();
     }
 
-    //TODO - should be added Test Rail id
-    @TestRail(id = {})
+    @TestRail(id = {29719})
     @Description("Find invalid page number/page size of Materials")
     @ParameterizedTest
     @CsvSource({
@@ -424,7 +422,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29648})
+    @TestRail(id = {29722})
     @Description("Find a page of Materials matched by name")
     public void findMaterialsMatchedByName() {
 
@@ -449,7 +447,7 @@ public class MaterialsTests {
     }
 
     @Test
-    @TestRail(id = {29649})
+    @TestRail(id = {29723})
     @Description("Find a page of Process Groups not matched by name")
     public void findMaterialsNotMatchedByName() {
 
@@ -470,10 +468,7 @@ public class MaterialsTests {
         softAssertions.assertAll();
     }
 
-    //TODO - should be added Test Rail id
-    //Temporally disabled. Should be enabled once COST-1326 be fixed
-    @Disabled
-    @TestRail(id = {})
+    @TestRail(id = {29721})
     @Description("Find all Materials sorted by name")
     @ParameterizedTest
     @ValueSource(strings = { "ASC", "DESC" })
@@ -496,30 +491,19 @@ public class MaterialsTests {
         List<Material> items = responseWrapper.getResponseEntity().getItems();
 
         softAssertions.assertThat(items).isNotNull();
-        softAssertions.assertThat(items).hasSize(70);
+        softAssertions.assertThat(items).hasSize(pageSize);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getPageNumber()).isEqualTo(pageNumber);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getPageSize()).isEqualTo(pageSize);
 
-        Comparator<String> comparator = "ASC".equals(sort) ? Comparator.naturalOrder() : Comparator.reverseOrder();
-        softAssertions.assertThat(isSorted(items, comparator)).isTrue();
+        Comparator<Material> comparator = Comparator.comparing(Material::getName);
+        if ("DESC".equals(sort)) {
+            comparator = comparator.reversed();
+        }
+
+        boolean isSorted = Comparators.isInOrder(items, comparator);
+
+        softAssertions.assertThat(isSorted).isTrue();
         softAssertions.assertAll();
-    }
-
-    private boolean isSorted(List<Material> employees, Comparator<String> materialsComparator) {
-        if (employees.isEmpty() || employees.size() == 1) {
-            return true;
-        }
-
-        Iterator<Material> iter = employees.iterator();
-        Material current, previous = iter.next();
-        while (iter.hasNext()) {
-            current = iter.next();
-            if (materialsComparator.compare(previous.getName(), current.getName()) > 0) {
-                return false;
-            }
-            previous = current;
-        }
-        return true;
     }
 
 }

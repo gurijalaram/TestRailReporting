@@ -10,6 +10,7 @@ import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
 import com.apriori.shared.util.enums.ExportSetEnum;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -311,6 +312,54 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             assertFigures,
             "Sort Order",
             SortOrderEnum.DTC_RANK.getSortOrderEnum()
+        );
+    }
+
+    @Test
+    @TmsLink("29730")
+    @TestRail(id = 29730)
+    @Description("Verify process group input control functionality - Sand Casting - Casting DTC Details Report")
+    public void testSingleProcessGroupSandCasting() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName().substring(0, 12),
+            JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName().substring(0, 13)
+        );
+        jasperApiUtils.genericProcessGroupDtcDetailsTest(
+            partNames,
+            "Process Group",
+            ProcessGroupEnum.CASTING_SAND.getProcessGroup()
+        );
+    }
+
+    @Test
+    @TmsLink("29731")
+    @TestRail(id = 29731)
+    @Description("Verify process group input control functionality - Die Casting - Casting DTC Details Report")
+    public void testSingleProcessGroupDieCasting() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName().substring(0, 30),
+            JasperCirApiPartsEnum.DTC_CASTING_ISSUES_I.getPartName().substring(0, 16)
+        );
+        jasperApiUtils.genericProcessGroupDtcDetailsTest(
+            partNames,
+            "Process Group",
+            ProcessGroupEnum.CASTING_DIE.getProcessGroup()
+        );
+    }
+
+    @Test
+    @TmsLink("29732")
+    @TestRail(id = 29732)
+    @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Details Report")
+    public void testBothProcessGroups() {
+        List<String> partNames = Arrays.asList(
+            JasperCirApiPartsEnum.GEAR_HOUSING.getPartName().substring(0, 12),
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName().substring(0, 30)
+        );
+        jasperApiUtils.genericProcessGroupDtcDetailsTest(
+            partNames,
+            "Process Group",
+            ""
         );
     }
 }
