@@ -519,6 +519,20 @@ public class ScenariosUtil {
     }
 
     /**
+     * Upload and Publish a subcomponent/assembly
+     *
+     * @param componentInfo - the copy component object
+     * @return response object
+     */
+    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfo) {
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(componentInfo);
+
+        postPublishScenario(postComponentResponse);
+
+        return postComponentResponse;
+    }
+
+    /**
      * POST to publish scenario
      *
      * @param componentInfo - the component info builder object
@@ -622,20 +636,6 @@ public class ScenariosUtil {
                 .token(publishRequest.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Upload and Publish a subcomponent/assembly
-     *
-     * @param componentInfo - the copy component object
-     * @return response object
-     */
-    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfo) {
-        ComponentInfoBuilder postComponentResponse = componentsUtil.setFilePostComponentQueryCID(componentInfo);
-
-        postPublishScenario(postComponentResponse);
-
-        return postComponentResponse;
     }
 
     /**
