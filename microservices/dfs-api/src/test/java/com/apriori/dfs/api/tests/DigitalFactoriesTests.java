@@ -211,6 +211,24 @@ public class DigitalFactoriesTests {
     }
 
     @Test
+    @TestRail(id = {})
+    @Description("Return no Digital Factories for anauthorized user")
+    public void findDigitalFactoriesByFakeUser() {
+
+        UserCredentials fakeUser = new UserCredentials("testUser5@gadgets.aprioritest.com", "Test1");
+
+        ResponseWrapper<DigitalFactories> responseWrapper = digitalFactoryUtil.findDigitalFactories(
+            HttpStatusCode.OK,
+            DigitalFactories.class,
+            fakeUser
+        );
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().size()).isEqualTo(0);
+        softAssertions.assertAll();
+    }
+
+    @Test
     @TestRail(id = {28959})
     @Description("Gets a digital factory by identity when shared secret/identity are valid")
     public void getDigitalFactoryByIdentityTest() {
@@ -266,10 +284,12 @@ public class DigitalFactoriesTests {
     @Description("Get NotFound Error when requested DF is not belonged to a customer of requested user")
     public void getNoDigitalFactoryWithNotAuthorizedUserTest() {
 
+        UserCredentials fakeUser = new UserCredentials("testUser5@gadgets.aprioritest.com", "Test1");
+
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.getDigitalFactory(
             HttpStatusCode.NOT_FOUND,
             ErrorMessage.class,
-            new UserCredentials("testUser5@gadgets.aprioritest.com", "Test1"),
+            fakeUser,
             VALID_DIGITAL_FACTORY_ID
         );
 
