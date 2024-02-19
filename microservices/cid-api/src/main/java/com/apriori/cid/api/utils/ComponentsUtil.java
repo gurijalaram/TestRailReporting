@@ -187,7 +187,8 @@ public class ComponentsUtil {
                                 new ScenariosUtil().getScenarioCompleted(subcomponent);
                             }
                         }
-                    ));
+                    )
+                );
         });
 
         return componentInfo;
