@@ -68,6 +68,6 @@ public class CIAIntegrationTests extends TestBaseUI {
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("part"), CoreMatchers.is(equalTo(11)));
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("assembly"), CoreMatchers.is(equalTo(3)));
         componentCostReportPage = componentCostReportPage.clickOk(ComponentCostReportPage.class);
-        assertThat(componentCostReportPage.getPartNumber(), CoreMatchers.is(equalTo("3570823")));
+        assertThat(componentCostReportPage.getPartNumber(), CoreMatchers.is(equalTo("SUB-SUB-ASM")));
     }
 }
