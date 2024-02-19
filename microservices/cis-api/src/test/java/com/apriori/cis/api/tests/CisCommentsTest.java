@@ -40,7 +40,7 @@ public class CisCommentsTest extends CISTestUtil {
 
     @BeforeAll
     public static void beforeClass() {
-        componentInfoBuilder = new ScenariosUtil().postAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING));
+        componentInfoBuilder = new ScenariosUtil().uploadAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING));
     }
 
     @BeforeEach

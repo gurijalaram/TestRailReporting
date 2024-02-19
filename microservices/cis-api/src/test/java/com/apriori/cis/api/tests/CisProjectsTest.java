@@ -47,7 +47,7 @@ public class CisProjectsTest extends CISTestUtil {
     public void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
-        componentInfoBuilder = new ScenariosUtil().postAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING, currentUser));
+        componentInfoBuilder = new ScenariosUtil().uploadAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING, currentUser));
         scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
             SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName()).get(0);
     }

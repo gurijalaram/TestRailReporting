@@ -524,7 +524,7 @@ public class ScenariosUtil {
      * @param componentInfo - the copy component object
      * @return response object
      */
-    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfo) {
+    public ComponentInfoBuilder uploadAndPublishComponent(ComponentInfoBuilder componentInfo) {
         ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(componentInfo);
 
         postPublishScenario(postComponentResponse);
