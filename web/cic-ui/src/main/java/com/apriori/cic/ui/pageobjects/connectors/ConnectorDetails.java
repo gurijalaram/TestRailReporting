@@ -106,7 +106,7 @@ public class ConnectorDetails extends CICBasePage {
         if (pageUtils.isElementDisplayed(openDdlElement)) {
             pageUtils.waitForElementAndClick(openDdlElement);
         }
-        pageUtils.waitForElementAndClick(connectorDetailsNextBtn);
+        pageUtils.waitForElementAndClick(getNextBtnElement());
         pageUtils.waitForElementAppear(activeTabElement);
         return new ConnectorMappings(driver);
     }
@@ -206,20 +206,11 @@ public class ConnectorDetails extends CICBasePage {
     }
 
     /**
-     * get webelement for connector type
-     *
-     * @return WebElement
-     */
-    private WebElement getConnectorTypeDropDownElement() {
-        return driver.findElement(with(By.xpath("//div[@class='widget-content widget-dropdown']")).below(By.xpath("//span[.='Type']")));
-    }
-
-    /**
      * get webelement for connector Name
      *
      * @return WebElement
      */
-    private WebElement getConnectorNameElement() {
+    public WebElement getConnectorNameElement() {
         return driver.findElement(with(By.xpath("//input")).below(By.xpath("//span[.='Name']")));
     }
 
@@ -228,7 +219,21 @@ public class ConnectorDetails extends CICBasePage {
      *
      * @return WebElement
      */
-    private WebElement getDescriptionElement() {
+    public WebElement getDescriptionElement() {
         return driver.findElement(with(By.xpath("//textarea")).below(By.xpath("//span[.='Description']")));
     }
+
+    public WebElement getNextBtnElement() {
+        return connectorDetailsNextBtn;
+    }
+
+    /**
+     * get webelement for connector type
+     *
+     * @return WebElement
+     */
+    private WebElement getConnectorTypeDropDownElement() {
+        return driver.findElement(with(By.xpath("//div[@class='widget-content widget-dropdown']")).below(By.xpath("//span[.='Type']")));
+    }
+
 }

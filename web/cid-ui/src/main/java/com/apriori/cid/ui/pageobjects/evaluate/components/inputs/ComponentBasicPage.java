@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.cid.ui.pageobjects.common.InputsController;
 import com.apriori.cid.ui.pageobjects.common.ModalDialogController;
+import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.MaterialSelectorPage;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -276,12 +277,22 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
     }
 
     /**
-     * Selects the Do not machine this part checkbox
+     * Ticks the Do not machine this part checkbox
      *
      * @return current page object
      */
-    public ComponentBasicPage selectMachineOptionCheckBox() {
-        inputsController.selectMachineOptionsCheckbox(machiningStrategyCheckbox);
+    public ComponentBasicPage tickDoNotMachinePart() {
+        inputsController.tickDoNotMachinePart(machiningStrategyCheckbox);
+        return this;
+    }
+
+    /**
+     * Un-tick the Do not machine this part checkbox
+     *
+     * @return current page object
+     */
+    public ComponentBasicPage unTickDoNotMachinePart() {
+        inputsController.unTickDoNotMachinePart(machiningStrategyCheckbox);
         return this;
     }
 

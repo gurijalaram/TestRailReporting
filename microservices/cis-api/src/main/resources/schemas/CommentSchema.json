@@ -59,10 +59,10 @@
     "publishedAt",
     "commentView",
     "mentionedUsers",
-    "creatorAvatarColor",
     "customerIdentity"
   ],
   "optional": [
-    "updatedByName"
+    "updatedByName",
+    "creatorAvatarColor"
   ]
 }

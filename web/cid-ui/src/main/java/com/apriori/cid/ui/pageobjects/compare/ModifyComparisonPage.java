@@ -36,7 +36,7 @@ public class ModifyComparisonPage extends LoadableComponent<ModifyComparisonPage
     @FindBy(id = "qa-scenario-selector-table-filter-button")
     private WebElement filterButton;
 
-    @FindBy(css = "[data-testid='scenario-selector-table'] [type='submit']")
+    @FindBy(css = "[data-testid='primary-button'] ")
     private WebElement submitButton;
 
     private PageUtils pageUtils;

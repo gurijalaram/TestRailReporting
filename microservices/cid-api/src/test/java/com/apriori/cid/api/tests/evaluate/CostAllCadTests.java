@@ -2,9 +2,6 @@ package com.apriori.cid.api.tests.evaluate;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.cid.api.utils.ComponentsUtil;
@@ -13,13 +10,7 @@ import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.componentiteration.AnalysisOfScenario;
 import com.apriori.shared.util.models.response.component.componentiteration.ComponentIteration;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -32,8 +23,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
-import java.io.File;
 
 @ExtendWith(TestRulesAPI.class)
 public class CostAllCadTests {
@@ -147,7 +136,7 @@ public class CostAllCadTests {
     private void uploadCostCadPartAndAssert(ComponentInfoBuilder component) {
         ComponentInfoBuilder componentResponse = componentsUtil.postComponent(component);
 
-        scenariosUtil.postCostScenario(component);
+        scenariosUtil.postGroupCostScenarios(component);
 
         ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(componentResponse);
 

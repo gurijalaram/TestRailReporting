@@ -19,14 +19,22 @@ public class CustomAttributes {
     private String location;
     @JsonProperty(value = "UDA5")
     private List<String> uda5;
+    @JsonProperty(value = "UDA4")
+    private List<String> uda4;
     @JsonProperty(value = "UDA3")
     private String uda3;
     @JsonProperty(value = "UDA2")
     private String uda2;
     @JsonProperty(value = "UDA1")
     private String uda1;
+    private String completedEstimate;
+    private String officialScenario;
+    private String lamScalingOverride;
+    @JsonProperty("ManuallyCostedFlag")
+    private String manuallyCostedFlag;
+    private String topLevel;
     private String department;
-    private int workspaceId;
+    private Integer workspaceId;
     private String defaultRole;
     private String grainingRequired;
     private String ccmRequired;

@@ -3,6 +3,8 @@ package testsuites;
 import com.apriori.cis.ui.tests.messages.MessagesTest;
 import com.apriori.cis.ui.tests.navigation.NavigationPanelTest;
 import com.apriori.cis.ui.tests.partsandassemblies.PartsAndAssemblyTest;
+import com.apriori.cis.ui.tests.partsandassembliesdetails.PartAndAssemblyViewCommentsTest;
+import com.apriori.cis.ui.tests.partsandassembliesdetails.PartAndAssemblyViewInsightsTest;
 import com.apriori.cis.ui.tests.partsandassembliesdetails.PartsAndAssembliesDetailsTest;
 import com.apriori.cis.ui.tests.projectdetails.ProjectsDetailsTest;
 import com.apriori.cis.ui.tests.projects.ProjectsTest;
@@ -19,7 +21,9 @@ import org.junit.platform.suite.api.Suite;
     PartsAndAssembliesDetailsTest.class,
     PartsAndAssemblyTest.class,
     ProjectsTest.class,
-    ProjectsDetailsTest.class
+    ProjectsDetailsTest.class,
+    PartAndAssemblyViewInsightsTest.class,
+    PartAndAssemblyViewCommentsTest.class
 })
 public class CISRegressionTestSuite {
 }

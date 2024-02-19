@@ -195,6 +195,18 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Checks the scenario is not displayed
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return true/false
+     */
+    public boolean isScenarioNotDisplayed(String componentName, String scenarioName) {
+        pageUtils.waitForElementsToNotAppear(byScenarioName(componentName, scenarioName));
+        return !pageUtils.isElementDisplayed(byScenarioName(componentName, scenarioName));
+    }
+
+    /**
      * Checks if the component is present on the page by size == 0 or > 0
      *
      * @param componentName - component name

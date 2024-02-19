@@ -53,6 +53,21 @@
             "customAttributes": {
               "type": "object",
               "properties": {
+                "completedEstimate": {
+                  "type": "string"
+                },
+                "officialScenario": {
+                  "type": "string"
+                },
+                "lamScalingOverride": {
+                  "type": "string"
+                },
+                "ManuallyCostedFlag": {
+                  "type": "string"
+                },
+                "topLevel": {
+                  "type": "string"
+                },
                 "language": {
                   "type": "string"
                 },
@@ -96,7 +111,12 @@
                 "UDA4",
                 "UDA3",
                 "UDA2",
-                "UDA1"
+                "UDA1",
+                "completedEstimate",
+                "officialScenario",
+                "lamScalingOverride",
+                "ManuallyCostedFlag",
+                "topLevel"
               ]
             },
             "machiningMode": {

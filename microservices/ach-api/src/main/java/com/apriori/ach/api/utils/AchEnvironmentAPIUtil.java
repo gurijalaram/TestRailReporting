@@ -45,11 +45,13 @@ public class AchEnvironmentAPIUtil extends TestUtil {
      * @return
      */
     public UserCredentials getAwsCustomerUserCredentials() {
+        String username;
+        String password;
 
-        String username = PropertiesContext.get("global.default_user_name");
-        String password = PropertiesContext.get("global.default_password");
-
-        if (!Boolean.parseBoolean(PropertiesContext.get("global.use_default_user"))) {
+        if (Boolean.parseBoolean(PropertiesContext.get("global.use_default_user"))) {
+            username = PropertiesContext.get("global.default_user_name");
+            password = PropertiesContext.get("global.default_password");
+        } else {
             username = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUsername1");
             password = AwsParameterStoreUtil.getSystemParameter("/qaautomation/cloudTestUserPass1");
         }

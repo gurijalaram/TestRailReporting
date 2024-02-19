@@ -284,6 +284,7 @@ public class SchedulePage extends CICBasePage {
         switch (sortType.toString()) {
             case "DESCENDING":
                 pageUtils.waitForElementAndClick(webElement);
+                pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
                 pageUtils.waitForElementToBeClickable(workflowList);
                 if (!webElement.getAttribute("class").equals("dhxgrid_sort_desc_col")) {
                     pageUtils.waitForElementAndClick(webElement);

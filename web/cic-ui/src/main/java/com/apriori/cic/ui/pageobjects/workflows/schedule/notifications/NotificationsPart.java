@@ -19,29 +19,23 @@ public class NotificationsPart extends CICBasePage {
 
     public static final String PARENT_ELEMENT = "div[id*='root_pagemashupcontainer-1_navigation-']";
 
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_tabsv2-154'] > div.tab-content > div.tabsv2-viewport > div > div > div[class^='tabsv2-tab'][tab-value='email']")
+    @FindBy(xpath = "//div[@tab-number='4']//div[@title='Email']")
     protected WebElement emailTab;
 
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_tabsv2-154'] > div.tab-content > div.tabsv2-viewport > div > div > div[class^='tabsv2-tab'][tab-value='attach-email-report']")
+    @FindBy(xpath = "//div[@tab-number='4']//div[@title='Attach Report']")
     protected WebElement attachReportTab;
 
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_tabsv2-154'] > div.tab-content > div.tabsv2-viewport > div > div > div[class^='tabsv2-tab'][tab-value='email-filter']")
+    @FindBy(xpath = "//div[@tab-number='4']//div[@title='Filter']")
     protected WebElement filterTab;
 
-    @FindBy(css = "div[class='BMCollectionViewCellWrapper'] div[class='BMCollectionViewCell BMCollectionViewCellHoverable']")
-    protected WebElement ciReportConfigurationRowElement;
-
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_button-43'] > button")
+    @FindBy(xpath = "//div[@tab-number='4']//button[.='Next']")
     protected WebElement notificationNextButton;
-
-    protected String reportConfigRootElementsRowsCss = "div[class='BMCollectionViewCellWrapper'] div[class='BMCollectionViewCell BMCollectionViewCellHoverable'][id^='CIC_ReportConfigurationCell_MU-']";
 
     public NotificationsPart(WebDriver driver) {
         super(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
-
 
     /**
      * Navigate to Email Tab in notifications part

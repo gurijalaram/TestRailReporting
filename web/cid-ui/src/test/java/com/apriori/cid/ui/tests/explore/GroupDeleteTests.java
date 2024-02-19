@@ -75,7 +75,6 @@ public class GroupDeleteTests extends TestBaseUI {
 
         explorePage = loginPage.login(component.getUser())
             .uploadComponent(component)
-            .clickExplore()
             .selectFilter("Recent")
             .refresh()
             .multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName())
@@ -133,8 +132,8 @@ public class GroupDeleteTests extends TestBaseUI {
             .checkComponentDelete(assemblyB)
             .refresh();
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(assembly.getComponentName(), assembly.getScenarioName())).isEqualTo(0);
-        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyB.getComponentName(), assemblyB.getScenarioName())).isEqualTo(0);
+        softAssertions.assertThat(explorePage.isScenarioNotDisplayed(assembly.getComponentName(), assembly.getScenarioName())).isTrue();
+        softAssertions.assertThat(explorePage.isScenarioNotDisplayed(assemblyB.getComponentName(), assemblyB.getScenarioName())).isTrue();
 
         softAssertions.assertAll();
     }

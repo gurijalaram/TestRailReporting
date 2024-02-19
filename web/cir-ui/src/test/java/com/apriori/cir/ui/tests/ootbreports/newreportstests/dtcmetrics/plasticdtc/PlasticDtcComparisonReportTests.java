@@ -79,8 +79,8 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @TmsLink("10014")
-    @TestRail(id = {10014})
+    @TmsLink("1370")
+    @TestRail(id = {1370})
     @Description("Verify currency code functionality works correctly - Plastic DTC Comparison Report")
     public void testCurrencyCodeFunctionality() {
         jasperApiUtils.genericDtcCurrencyTest(
@@ -152,6 +152,16 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
         jasperApiUtils.genericProcessGroupDtcTest(
             partNames,
             "Process Group", ProcessGroupEnum.CASTING_DIE.getProcessGroup()
+        );
+    }
+
+    @Test
+    @TmsLink("29703")
+    @TestRail(id = 29703)
+    @Description("Verify Minimum Annual Spend input control functions correctly - Plastic DTC Comparison Report")
+    public void testMinimumAnnualSpend() {
+        jasperApiUtils.genericMinAnnualSpendDtcTest(
+            0
         );
     }
 }

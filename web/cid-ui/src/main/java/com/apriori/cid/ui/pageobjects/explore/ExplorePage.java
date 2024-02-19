@@ -67,7 +67,7 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
 
-    @FindBy(xpath = "//button[contains(.,'Projects')]")
+    @FindBy(xpath = "//button[contains(.,'Bulk Analysis')]")
     private WebElement projectsButton;
 
     private PageUtils pageUtils;
@@ -196,6 +196,17 @@ public class ExplorePage extends ExploreToolbar {
     public ExplorePage highlightScenario(String componentName, String scenarioName) {
         scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
+    }
+
+    /**
+     * Checks the scenario is not displayed
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return size of the element as int
+     */
+    public boolean isScenarioNotDisplayed(String componentName, String scenarioName) {
+        return scenarioTableController.isScenarioNotDisplayed(componentName, scenarioName);
     }
 
     /**

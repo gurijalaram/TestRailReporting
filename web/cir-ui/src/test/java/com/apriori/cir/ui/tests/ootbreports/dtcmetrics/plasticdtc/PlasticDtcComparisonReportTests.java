@@ -256,9 +256,9 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
-    @TmsLink("1371")
-    @TestRail(id = {1371})
-    @Description("Verify Minimum Annual Spend input control functions correctly")
+    @TmsLink("29703")
+    @TestRail(id = {29703})
+    @Description("Verify Minimum Annual Spend input control functions correctly - Plastic DTC Comparison Report")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMinimumAnnualSpendComparisonReports(

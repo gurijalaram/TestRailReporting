@@ -328,9 +328,9 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({@Tag(REPORTS),
         @Tag(ON_PREM)})
-    @TmsLink("3027")
-    @TestRail(id = {3027})
-    @Description("Verify Minimum Annual Spend input control functions correctly")
+    @TmsLink("29700")
+    @TestRail(id = {29700})
+    @Description("Verify Minimum Annual Spend input control functions correctly - Machining DTC Details Report")
     public void testMinimumAnnualSpend() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testMinimumAnnualSpendDetailsReports(

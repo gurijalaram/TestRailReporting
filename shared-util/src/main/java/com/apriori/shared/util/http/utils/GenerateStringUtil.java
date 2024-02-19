@@ -112,15 +112,16 @@ public class GenerateStringUtil {
     @Attachment
     public String generateComponentName(String componentName) {
         final int index = componentName.indexOf(".");
-        final String randomSymbols = new Random().nextInt(1000) + "-" + System.nanoTime();
+        final String randomSymbols = RandomStringUtils.randomNumeric(12);
 
         if (index != -1) {
             return componentName.substring(0, index)
+                + "_"
                 + randomSymbols
                 + componentName.substring(index);
         }
 
-        return componentName + randomSymbols;
+        return componentName + "_" + randomSymbols;
     }
 
     /**
