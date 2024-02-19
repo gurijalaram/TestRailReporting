@@ -14,7 +14,7 @@ import com.apriori.shared.util.models.response.User;
 public class DigitalFactoryUtil {
 
     /**
-     * FIND digital factories
+     * FIND digital factories with default user credentials
      *
      * @param expectedResponseCode - Expected HTTP status code
      * @param expectedType - Expected type from body of HTTP response
@@ -25,14 +25,33 @@ public class DigitalFactoryUtil {
                                                        Class<T> expectedType,
                                                        String... inlineVariables) {
 
-        DFSApiEnum path = inlineVariables.length == 0
-            ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
+        UserCredentials userCredentials = UserUtil.getUser("common");
 
-        return findDigitalFactoriesPage(path, expectedResponseCode, expectedType, inlineVariables);
+        return findDigitalFactories(expectedResponseCode, expectedType, userCredentials, inlineVariables);
     }
 
     /**
-     * FIND digital factories page
+     * FIND digital factories
+     *
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType - Expected type from body of HTTP response
+     * @param userCredentials - Specified user credentials
+     * @param inlineVariables - secret
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> findDigitalFactories(Integer expectedResponseCode,
+                                                       Class<T> expectedType,
+                                                       UserCredentials userCredentials,
+                                                       String... inlineVariables) {
+
+        DFSApiEnum path = inlineVariables.length == 0
+            ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
+
+        return findDigitalFactoriesPage(path, expectedResponseCode, expectedType, userCredentials, inlineVariables);
+    }
+
+    /**
+     * FIND digital factories page with default user credentials
      *
      * @param endpoint - Target endpoint
      * @param expectedResponseCode - Expected HTTP status code
@@ -46,6 +65,23 @@ public class DigitalFactoryUtil {
 
         UserCredentials userCredentials = UserUtil.getUser("common");
         
+        return findDigitalFactoriesPage(endpoint, expectedResponseCode, expectedType, userCredentials, inlineVariables);
+    }
+
+    /**
+     * FIND digital factories page
+     *
+     * @param endpoint - Target endpoint
+     * @param expectedResponseCode - Expected HTTP status code
+     * @param expectedType Expected type from body of HTTP response
+     * @return Response object
+     */
+    public <T> ResponseWrapper<T> findDigitalFactoriesPage(EndpointEnum endpoint,
+                                                           Integer expectedResponseCode,
+                                                           Class<T> expectedType,
+                                                           UserCredentials userCredentials,
+                                                           String... inlineVariables) {
+
         final RequestEntity requestEntity =  RequestEntityUtil_Old.init(endpoint, expectedType)
             .token(userCredentials.getToken())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
