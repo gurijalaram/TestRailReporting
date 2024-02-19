@@ -45,7 +45,7 @@ public class ComponentCostReportPage extends GenericReportPage {
     @FindBy(xpath = "//table[contains(@class, 'jrPage')]/tbody/tr[3]//span")
     private WebElement componentCostReportTitle;
 
-    @FindBy(xpath = "(//td[@colspan='3'])[9]/span")
+    @FindBy(xpath = "(//td[@colspan='5'])[1]/span")
     private WebElement componentCostReportPartNumber;
 
     private PageUtils pageUtils;
