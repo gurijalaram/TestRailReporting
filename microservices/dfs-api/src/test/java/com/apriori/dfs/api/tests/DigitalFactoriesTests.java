@@ -44,6 +44,7 @@ public class DigitalFactoriesTests {
     private static final String NO_SHARED_SECRET = "";
     private static final String VALID_DIGITAL_FACTORY_ID = "ABCDEFGHIJK2";
     private static final String NON_EXISTENT_DIGITAL_FACTORY_ID = "ABCDEFGHIJK5";
+    private static final String USER_CONTEXT_NOT_FOUND_MSG = "'ap-user-context' was not found.";
     private static final String UNAUTHORIZED_ERROR = "Unauthorized";
     private static final String NOT_ACCEPTABLE = "Not Acceptable";
     private static final String NOT_ACCEPTABLE_MSG = "Could not find acceptable representation";
@@ -211,7 +212,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29855})
     @Description("Return no Digital Factories for anauthorized user")
     public void findDigitalFactoriesByFakeUser() {
 
@@ -225,6 +226,22 @@ public class DigitalFactoriesTests {
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
         softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().size()).isEqualTo(0);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {})
+    @Description("Find Digital Factory when user context is missed")
+    public void findDigitalFactoriesWithNoUserContextTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.findDigitalFactories(
+            HttpStatusCode.BAD_REQUEST,
+            ErrorMessage.class,
+            (UserCredentials) null
+        );
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(USER_CONTEXT_NOT_FOUND_MSG);
         softAssertions.assertAll();
     }
 
@@ -282,7 +299,7 @@ public class DigitalFactoriesTests {
     @Test
     @TestRail(id = {29853})
     @Description("Get NotFound Error when requested DF is not belonged to a customer of requested user")
-    public void getNoDigitalFactoryWithNotAuthorizedUserTest() {
+    public void getDigitalFactoryWithAnotherCustomerUserTest() {
 
         UserCredentials fakeUser = new UserCredentials("testUser5@gadgets.aprioritest.com", "Test1");
 
@@ -298,6 +315,23 @@ public class DigitalFactoriesTests {
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(expectedMessage);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {})
+    @Description("Get Bad Request Error when user context is missed")
+    public void getDigitalFactoryWithNoUserContextTest() {
+
+        ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.getDigitalFactory(
+            HttpStatusCode.BAD_REQUEST,
+            ErrorMessage.class,
+            (UserCredentials) null,
+            VALID_DIGITAL_FACTORY_ID
+        );
+
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(USER_CONTEXT_NOT_FOUND_MSG);
         softAssertions.assertAll();
     }
 

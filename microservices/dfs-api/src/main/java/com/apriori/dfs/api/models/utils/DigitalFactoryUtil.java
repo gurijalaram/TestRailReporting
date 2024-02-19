@@ -83,10 +83,13 @@ public class DigitalFactoryUtil {
                                                            String... inlineVariables) {
 
         final RequestEntity requestEntity =  RequestEntityUtil_Old.init(endpoint, expectedType)
-            .token(userCredentials.getToken())
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
+
+        if (userCredentials != null) {
+            requestEntity.token(userCredentials.getToken())
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
+        }
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -214,10 +217,15 @@ public class DigitalFactoryUtil {
         DFSApiEnum path = inlineVariables.length == 1
             ? DFSApiEnum.DIGITAL_FACTORIES_BY_PATH : DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM;
 
-        return RequestEntityUtil_Old.init(path, expectedType)
-            .token(userCredentials.getToken())
-            .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()))
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(path, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
+
+        if (userCredentials != null) {
+            requestEntity.token(userCredentials.getToken())
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
+        }
+
+        return requestEntity;
     }
 }
