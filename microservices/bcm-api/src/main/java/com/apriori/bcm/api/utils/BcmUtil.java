@@ -39,7 +39,7 @@ public class BcmUtil extends TestUtil {
     protected static RequestEntityUtil requestEntityUtil;
 
     @BeforeAll
-    public static  void init() {
+    public static void init() {
         requestEntityUtil = RequestEntityUtilBuilder
             .useRandomUser("admin")
             .useApUserContextInRequests();
@@ -223,7 +223,7 @@ public class BcmUtil extends TestUtil {
                 .body(InputRowDelete.builder()
                     .groupItems(Arrays.asList(GroupItems
                         .builder()
-                            .inputRowIdentity(inputRowIdentity)
+                        .inputRowIdentity(inputRowIdentity)
                         .build()))
                     .build())
                 .expectedResponseCode(expectedResponseCode);
@@ -231,6 +231,8 @@ public class BcmUtil extends TestUtil {
     }
 
     /**
+     * Deletes worksheet
+     *
      * @param klass - class
      * @param worksheetIdentity - worksheet identity
      * @param expectedResponseCode - expected response code
@@ -241,5 +243,26 @@ public class BcmUtil extends TestUtil {
             .inlineVariables(worksheetIdentity)
             .expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).delete();
+    }
+
+    /**
+     * Edits public input row
+     *
+     * @param klass - class
+     * @param worksheetIdentity - worksheet identity
+     * @param inputRowIdentity - identity of input row
+     * @param expectedResponseCode - expected response code
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> editPublicInputRow(Class<T> klass, String worksheetIdentity, String inputRowIdentity, Integer expectedResponseCode) {
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.EDIT_INPUTS, klass)
+            .inlineVariables(worksheetIdentity)
+            .body(InputRowDelete.builder()
+                .groupItems(Collections.singletonList(GroupItems.builder()
+                    .inputRowIdentity(inputRowIdentity)
+                    .build()))
+                .build())
+            .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).post();
     }
 }
