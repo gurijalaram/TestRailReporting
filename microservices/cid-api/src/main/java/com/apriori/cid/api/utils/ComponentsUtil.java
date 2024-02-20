@@ -14,7 +14,6 @@ import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -26,7 +25,6 @@ import com.apriori.shared.util.models.response.component.componentiteration.Comp
 import com.google.common.collect.Iterators;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -234,20 +232,6 @@ public class ComponentsUtil {
                     scenarioItem.stream().findFirst().get().getScenarioState())));
 
         return scenarioItem;
-    }
-
-    /**
-     * Upload a component via CID
-     *
-     * @param componentInfo - the component
-     * @return response object
-     */
-    public ComponentInfoBuilder setFilePostComponentQueryCID(ComponentInfoBuilder componentInfo) {
-        File resourceFile = FileResourceUtil.getCloudFile(componentInfo.getProcessGroup(), componentInfo.getComponentName() + componentInfo.getExtension());
-
-        componentInfo.setResourceFile(resourceFile);
-
-        return postComponent(componentInfo);
     }
 
     /**

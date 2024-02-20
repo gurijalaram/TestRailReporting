@@ -1070,7 +1070,7 @@ public class ComparisonTests extends TestBaseUI {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String comparisonName = new GenerateStringUtil().generateComparisonName();
 
-        scenariosUtil.postAndPublishComponent(ComponentInfoBuilder.builder()
+        scenariosUtil.uploadAndPublishComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .extension(".ipt")
             .scenarioName(scenarioName)
@@ -1078,7 +1078,7 @@ public class ComparisonTests extends TestBaseUI {
             .user(currentUser)
             .build());
 
-        ComponentInfoBuilder panel = scenariosUtil.postAndPublishComponent(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder panel = scenariosUtil.uploadAndPublishComponent(ComponentInfoBuilder.builder()
             .componentName(componentName2)
             .extension(".stp")
             .scenarioName(scenarioName2)
