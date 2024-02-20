@@ -14,23 +14,6 @@ import com.apriori.shared.util.models.response.User;
 public class DigitalFactoryUtil {
 
     /**
-     * FIND digital factories with default user credentials
-     *
-     * @param expectedResponseCode - Expected HTTP status code
-     * @param expectedType - Expected type from body of HTTP response
-     * @param inlineVariables - secret
-     * @return Response object
-     */
-    public <T> ResponseWrapper<T> findDigitalFactories(Integer expectedResponseCode,
-                                                       Class<T> expectedType,
-                                                       String... inlineVariables) {
-
-        UserCredentials userCredentials = UserUtil.getUser("common");
-
-        return findDigitalFactories(expectedResponseCode, expectedType, userCredentials, inlineVariables);
-    }
-
-    /**
      * FIND digital factories
      *
      * @param expectedResponseCode - Expected HTTP status code
@@ -48,24 +31,6 @@ public class DigitalFactoryUtil {
             ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
 
         return findDigitalFactoriesPage(path, expectedResponseCode, expectedType, userCredentials, inlineVariables);
-    }
-
-    /**
-     * FIND digital factories page with default user credentials
-     *
-     * @param endpoint - Target endpoint
-     * @param expectedResponseCode - Expected HTTP status code
-     * @param expectedType Expected type from body of HTTP response
-     * @return Response object
-     */
-    public <T> ResponseWrapper<T> findDigitalFactoriesPage(EndpointEnum endpoint,
-                                                        Integer expectedResponseCode,
-                                                        Class<T> expectedType,
-                                                        String... inlineVariables) {
-
-        UserCredentials userCredentials = UserUtil.getUser("common");
-        
-        return findDigitalFactoriesPage(endpoint, expectedResponseCode, expectedType, userCredentials, inlineVariables);
     }
 
     /**
@@ -92,21 +57,6 @@ public class DigitalFactoryUtil {
         }
 
         return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
-     * GET digital factory with default user credentials
-     *
-     * @param expectedResponseCode - Expected HTTP status code
-     * @param expectedType Expected type from body of HTTP response
-     * @param inlineVariables - identity or identity/secret
-     * @return Response object
-     */
-    public <T> ResponseWrapper<T> getDigitalFactory(Integer expectedResponseCode,
-                                                    Class<T> expectedType,
-                                                    String... inlineVariables) {
-
-        return getDigitalFactory(expectedResponseCode, expectedType, UserUtil.getUser("common"), inlineVariables);
     }
 
     /**
