@@ -19,13 +19,13 @@ import java.util.List;
 @NoArgsConstructor
 @JsonRootName("response")
 public class WorkSheetInputRowResponse {
-    String id;
-    String identity;
-    String customerIdentity;
-    String createdAt;
-    String createdBy;
-    String worksheetId;
-    String componentIdentity;
-    String scenarioIdentity;
-    List<String> iterationIds;
+    private String id;
+    private String identity;
+    private String customerIdentity;
+    private String createdAt;
+    private String createdBy;
+    private String worksheetId;
+    private String componentIdentity;
+    private String scenarioIdentity;
+    private List<String> iterationIds;
 }

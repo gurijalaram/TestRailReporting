@@ -1,6 +1,7 @@
 package com.apriori.bcm.api.tests;
 
 import com.apriori.bcm.api.models.response.ErrorResponse;
+import com.apriori.bcm.api.models.response.InputRowDeleted;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
@@ -185,6 +186,40 @@ public class WorksheetTests extends BcmUtil {
 
         softAssertions.assertThat(worksheetRow.getResponseEntity().getItems())
             .isEmpty();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29742, 29744, 29745})
+    @Description("Verify Edit of public input row")
+    public void editPublicInputRow() {
+        String notExistingRowIdentity = "000000000000";
+        ScenarioItem scenarioItem =
+            cssComponent.postSearchRequest(testingUser, componentType)
+                .getResponseEntity().getItems().stream().filter(item -> item.getScenarioPublished().equals(true))
+                .findFirst().orElse(null);
+
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
+            .getResponseEntity()
+            .getIdentity();
+
+        String inputRowIdentity = createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+            scenarioItem.getScenarioIdentity(),
+            worksheetIdentity).getResponseEntity().getIdentity();
+
+        ErrorResponse editInvalidInputRow =
+            editPublicInputRow(ErrorResponse.class, worksheetIdentity, "0000000", HttpStatus.SC_BAD_REQUEST).getResponseEntity();
+        softAssertions.assertThat(editInvalidInputRow.getMessage()).isEqualTo("'inputRowIdentity' is not a valid identity.");
+
+        InputRowDeleted editNotExistingInputRow =
+            editPublicInputRow(InputRowDeleted.class, worksheetIdentity, notExistingRowIdentity, HttpStatus.SC_OK).getResponseEntity();
+        softAssertions.assertThat(editNotExistingInputRow.getFailures().get(0).getError())
+            .isEqualTo(String.format("Input Row with Identity: '%s'  does not exist in Worksheet with Identity: '%s'", notExistingRowIdentity, worksheetIdentity));
+
+        InputRowDeleted editedRows =
+            editPublicInputRow(InputRowDeleted.class, worksheetIdentity, inputRowIdentity, HttpStatus.SC_OK).getResponseEntity();
+        softAssertions.assertThat(editedRows.getSuccesses().get(0).getInputRowIdentity())
+            .isEqualTo(inputRowIdentity);
         softAssertions.assertAll();
     }
 }
