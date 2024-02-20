@@ -19,5 +19,5 @@ import lombok.NoArgsConstructor;
 @CreatableModel("worksheet")
 @JsonRootName("response")
 public class WorksheetInputRowsRequest {
-    Inputrow inputRow;
+    private Inputrow inputRow;
 }

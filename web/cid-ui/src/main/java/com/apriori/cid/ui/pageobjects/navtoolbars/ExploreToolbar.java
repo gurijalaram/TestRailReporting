@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
-import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.compare.CreateComparePage;
@@ -10,7 +9,6 @@ import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.explore.ImportCadFilePage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.PostComponentResponse;
@@ -35,74 +33,51 @@ import java.util.List;
 @Slf4j
 public class ExploreToolbar extends MainNavBar {
 
+    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
     @FindBy(css = "[id='qa-sub-header-new-component']")
     private WebElement componentButton;
-
     @FindBy(css = "[id='qa-sub-header-import-button']")
     private WebElement importButton;
-
     @FindBy(css = "[id='qa-sub-header-copy-button']")
     private WebElement copyButton;
-
     @FindBy(css = "[id='qa-sub-header-import-component']")
     private WebElement cadButton;
-
     @FindBy(css = "[id='qa-sub-header-revert-button']")
     private WebElement revertButton;
-
     @FindBy(css = "[id='qa-sub-header-delete-button'] button")
     private WebElement deleteButton;
-
     @FindBy(css = "[id='qa-action-bar-actions-dropdown'] .btn-secondary")
     private WebElement actionsButton;
-
     @FindBy(css = "[id='qa-sub-header-edit-button'] button")
     private WebElement editButton;
-
     @FindBy(css = "[id='qa-sub-header-new-scenario']")
     private WebElement scenarioButton;
-
     @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
     private WebElement refreshButton;
-
     @FindBy(css = "[id='qa-action-bar-action-info']")
     private WebElement infoButton;
-
     @FindBy(id = "qa-sub-header-action-lock")
     private WebElement lockButton;
-
     @FindBy(id = "qa-sub-header-action-unlock")
     private WebElement unlockButton;
-
     @FindBy(id = "qa-sub-header-new-comparison")
     private WebElement comparisonButton;
-
     @FindBy(id = "qa-action-bar-action-assign")
     private WebElement assignButton;
-
     @FindBy(id = "qa-action-bar-action-update-cad-file")
     private WebElement cadFileButton;
-
     @FindBy(css = "[id='qa-sub-header-publish-button'] button")
     private WebElement publishButton;
-
     @FindBy(css = "[id='qa-sub-header-cost-button'] button")
     private WebElement costButton;
-
     @FindBy(css = "[id='qa-action-bar-reports-dropdown'] .btn-secondary")
     private WebElement reportButton;
-
     @FindBy(id = "qa-action-bar-generate-report")
     private WebElement generateReportButton;
-
     @FindBy(id = "qa-action-bar-download-report")
     private WebElement downloadReportButton;
-
     @FindBy(css = "[data-testid='apriori-alert']")
     private WebElement lastUpdatedAlert;
-
-    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
-
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -174,87 +149,6 @@ public class ExploreToolbar extends MainNavBar {
 
         ScenarioItem assemblyComponent = itemResponses.stream().filter(item -> item.getComponentName().equalsIgnoreCase(componentName)).findFirst().get();
         return navigateToScenario(assemblyComponent);
-    }
-
-    /**
-     * uploads an assembly with all subcomponents and publish them all
-     *
-     * @param subComponentNames  - the subcomponent names
-     * @param componentExtension - the subcomponent extension
-     * @param processGroupEnum   - the process group enum
-     * @param assemblyName       - the assembly name
-     * @param assemblyExtension  -  the assembly extension
-     * @param scenarioName       - the scenario name
-     * @param currentUser        - the current user
-     * @return - a new page object
-     */
-    public EvaluatePage uploadPublishAndOpenAssembly(List<String> subComponentNames,
-                                                     String componentExtension,
-                                                     ProcessGroupEnum processGroupEnum,
-                                                     String assemblyName,
-                                                     String assemblyExtension,
-                                                     String scenarioName,
-                                                     UserCredentials currentUser) {
-
-        ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadAndPublishAssembly(
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            assemblyName,
-            assemblyExtension,
-            scenarioName,
-            currentUser);
-
-        return navigateToScenario(myAssembly);
-    }
-
-    /**
-     * uploads an assembly with all subcomponents, cost and publish them all
-     *
-     * @param assemblyName             - the assembly name
-     * @param assemblyExtension        - the assembly extension
-     * @param assemblyProcessGroup     - the assembly process group
-     * @param subComponentNames        - the subcomponent names
-     * @param subComponentExtension    - the subcomponent extension
-     * @param subComponentProcessGroup - the subcomponent process group
-     * @param scenarioName             - the scenario name
-     * @param mode                     - the mode
-     * @param material                 - the material
-     * @param currentUser              - the current user
-     * @return - a new page object
-     */
-    public EvaluatePage uploadCostPublishAndOpenAssemblySubcomponents(String assemblyName,
-                                                                      String assemblyExtension,
-                                                                      ProcessGroupEnum assemblyProcessGroup,
-                                                                      List<String> subComponentNames,
-                                                                      String subComponentExtension,
-                                                                      ProcessGroupEnum subComponentProcessGroup,
-                                                                      String scenarioName,
-                                                                      String mode,
-                                                                      String material,
-                                                                      UserCredentials currentUser) {
-
-        final AssemblyUtils assemblyUtils = new AssemblyUtils();
-
-        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            assemblyProcessGroup,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
-
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-
-        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
-
-        assemblyUtils.publishSubComponents(componentAssembly);
-
-        assemblyUtils.publishAssembly(componentAssembly);
-
-        return navigateToScenario(componentAssembly);
     }
 
     /**

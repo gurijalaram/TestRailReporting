@@ -19,5 +19,5 @@ import lombok.NoArgsConstructor;
 @CreatableModel("worksheet")
 @JsonRootName("response")
 public class WorksheetRequest {
-    Worksheet worksheet;
+    private Worksheet worksheet;
 }

@@ -169,52 +169,6 @@ public class AssemblyUtils {
     }
 
     /**
-     * This method uploads an assembly with all subcomponents and publish all
-     *
-     * @param subComponentNames  - the subcomponent names
-     * @param componentExtension - the subcomponent extension
-     * @param processGroupEnum   - the process group enum
-     * @param assemblyName       - the assembly name
-     * @param assemblyExtension  -  the assembly extension
-     * @param scenarioName       - the scenario name
-     * @param currentUser        - the current user
-     * @return - the object of ComponentInfoBuilder
-     */
-    public ComponentInfoBuilder uploadAndPublishAssembly(List<String> subComponentNames,
-                                                         String componentExtension,
-                                                         ProcessGroupEnum processGroupEnum,
-                                                         String assemblyName,
-                                                         String assemblyExtension,
-                                                         String scenarioName,
-                                                         UserCredentials currentUser) {
-
-        for (String subComponentName : subComponentNames) {
-            scenariosUtil.postAndPublishComponent(ComponentInfoBuilder.builder()
-                .componentName(subComponentName)
-                .extension(componentExtension)
-                .scenarioName(scenarioName)
-                .processGroup(processGroupEnum)
-                .user(currentUser)
-                .build());
-        }
-
-        ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
-            .componentName(assemblyName)
-            .extension(assemblyExtension)
-            .scenarioName(scenarioName)
-            .processGroup(ProcessGroupEnum.ASSEMBLY)
-            .user(currentUser)
-            .build();
-
-        ComponentInfoBuilder assemblyUploadResponse = scenariosUtil.postAndPublishComponent(myAssembly);
-
-        myAssembly.setComponentIdentity(assemblyUploadResponse.getComponentIdentity());
-        myAssembly.setScenarioIdentity(assemblyUploadResponse.getScenarioIdentity());
-
-        return myAssembly;
-    }
-
-    /**
      * Uploads an assembly with all subcomponents, cost and publish all
      *
      * @param assemblyName             - the assembly name
