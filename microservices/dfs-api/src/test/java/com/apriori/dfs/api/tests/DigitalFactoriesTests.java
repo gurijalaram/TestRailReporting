@@ -230,7 +230,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29857})
     @Description("Find Digital Factory when user context is missed")
     public void findDigitalFactoriesWithNoUserContextTest() {
 
@@ -319,7 +319,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {})
+    @TestRail(id = {29856})
     @Description("Get Bad Request Error when user context is missed")
     public void getDigitalFactoryWithNoUserContextTest() {
 
