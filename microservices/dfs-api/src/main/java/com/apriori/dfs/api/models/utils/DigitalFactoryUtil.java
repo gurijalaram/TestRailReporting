@@ -1,11 +1,15 @@
 package com.apriori.dfs.api.models.utils;
 
 import com.apriori.dfs.api.enums.DFSApiEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.interfaces.EndpointEnum;
+import com.apriori.shared.util.models.response.User;
 
 public class DigitalFactoryUtil {
 
@@ -14,21 +18,19 @@ public class DigitalFactoryUtil {
      *
      * @param expectedResponseCode - Expected HTTP status code
      * @param expectedType - Expected type from body of HTTP response
+     * @param userCredentials - Specified user credentials
      * @param inlineVariables - secret
      * @return Response object
      */
     public <T> ResponseWrapper<T> findDigitalFactories(Integer expectedResponseCode,
                                                        Class<T> expectedType,
+                                                       UserCredentials userCredentials,
                                                        String... inlineVariables) {
 
         DFSApiEnum path = inlineVariables.length == 0
             ? DFSApiEnum.DIGITAL_FACTORIES : DFSApiEnum.DIGITAL_FACTORIES_WITH_KEY_PARAM;
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old.init(path, expectedType)
-            .inlineVariables(inlineVariables)
-            .expectedResponseCode(expectedResponseCode);
-
-        return HTTPRequest.build(requestEntity).get();
+        return findDigitalFactoriesPage(path, expectedResponseCode, expectedType, userCredentials, inlineVariables);
     }
 
     /**
@@ -40,13 +42,19 @@ public class DigitalFactoryUtil {
      * @return Response object
      */
     public <T> ResponseWrapper<T> findDigitalFactoriesPage(EndpointEnum endpoint,
-                                                        Integer expectedResponseCode,
-                                                        Class<T> expectedType,
-                                                        String... inlineVariables) {
+                                                           Integer expectedResponseCode,
+                                                           Class<T> expectedType,
+                                                           UserCredentials userCredentials,
+                                                           String... inlineVariables) {
 
         final RequestEntity requestEntity =  RequestEntityUtil_Old.init(endpoint, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
+
+        if (userCredentials != null) {
+            requestEntity.token(userCredentials.getToken())
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
+        }
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -56,14 +64,17 @@ public class DigitalFactoryUtil {
      *
      * @param expectedResponseCode - Expected HTTP status code
      * @param expectedType Expected type from body of HTTP response
+     * @param userCredentials Specified user credentials
      * @param inlineVariables - identity or identity/secret
      * @return Response object
      */
     public <T> ResponseWrapper<T> getDigitalFactory(Integer expectedResponseCode,
                                                     Class<T> expectedType,
+                                                    UserCredentials userCredentials,
                                                     String... inlineVariables) {
 
-        return HTTPRequest.build(getRequestEntity(expectedResponseCode, expectedType, inlineVariables)).get();
+        return HTTPRequest.build(getRequestEntity(expectedResponseCode, expectedType, userCredentials, inlineVariables))
+            .get();
     }
 
     /**
@@ -143,18 +154,28 @@ public class DigitalFactoryUtil {
                                                        Class<T> expectedType,
                                                        String... inlineVariables) {
 
-        return HTTPRequest.build(getRequestEntity(expectedResponseCode, expectedType, inlineVariables)).delete();
+        return HTTPRequest.build(
+            getRequestEntity(expectedResponseCode, expectedType, UserUtil.getUser("common"), inlineVariables))
+            .delete();
     }
 
     private <T> RequestEntity getRequestEntity(Integer expectedResponseCode,
                                                Class<T> expectedType,
+                                               UserCredentials userCredentials,
                                                String... inlineVariables) {
 
         DFSApiEnum path = inlineVariables.length == 1
             ? DFSApiEnum.DIGITAL_FACTORIES_BY_PATH : DFSApiEnum.DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM;
 
-        return RequestEntityUtil_Old.init(path, expectedType)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(path, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
+
+        if (userCredentials != null) {
+            requestEntity.token(userCredentials.getToken())
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
+        }
+
+        return requestEntity;
     }
 }
