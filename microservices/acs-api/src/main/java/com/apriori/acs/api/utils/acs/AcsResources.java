@@ -78,6 +78,7 @@ public class AcsResources {
         UserCredentials user = UserUtil.getUserOnPrem();
         token = new OldAuthorizationUtil().getTokenAsString();
         validUsername = user.getUsername();
+        // TODO: 20/02/2024 why not split on '@' then concat?
         invalidUsername = user.getUsername().substring(0, 14).concat("41");
     }
 

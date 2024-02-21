@@ -199,7 +199,7 @@ public class GroupEditTests {
 
         assemblyUtils.publishSubComponents(componentAssembly);
 
-        clonedComponentAssembly = (ComponentInfoBuilder) SerializationUtils.clone(componentAssembly);
+        clonedComponentAssembly = SerializationUtils.clone(componentAssembly);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
@@ -240,7 +240,7 @@ public class GroupEditTests {
 
         assemblyUtils.publishSubComponents(componentAssembly);
 
-        clonedComponentAssembly = (ComponentInfoBuilder) SerializationUtils.clone(componentAssembly);
+        clonedComponentAssembly = SerializationUtils.clone(componentAssembly);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
@@ -278,7 +278,7 @@ public class GroupEditTests {
 
         assemblyUtils.publishSubComponents(componentAssembly);
 
-        clonedComponentAssembly = (ComponentInfoBuilder) SerializationUtils.clone(componentAssembly);
+        clonedComponentAssembly = SerializationUtils.clone(componentAssembly);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
@@ -317,7 +317,7 @@ public class GroupEditTests {
 
         assemblyUtils.publishSubComponents(componentAssembly);
 
-        clonedComponentAssembly = (ComponentInfoBuilder) SerializationUtils.clone(componentAssembly);
+        clonedComponentAssembly = SerializationUtils.clone(componentAssembly);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
