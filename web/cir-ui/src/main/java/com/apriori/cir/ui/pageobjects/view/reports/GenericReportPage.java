@@ -1726,13 +1726,7 @@ public class GenericReportPage extends ReportsPageHeader {
         Actions actions = new Actions(driver);
         actions.moveToElement(componentSelectDropdown).perform();
         actions.click().perform();
-        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a[contains(@class, 'jr-isOpen')]"));
-        pageUtils.waitForElementAndClick(componentSelectSearchInput);
-        componentSelectSearchInput.clear();
-        pageUtils.waitForSteadinessOfElement(By.xpath("//label[@title='Component Select']//input"));
-        componentSelectSearchInput.sendKeys(componentName);
-        By componentToSelectLocator = By.xpath(String.format("//a[contains(text(), '%s')]", componentName));
-        pageUtils.waitForElementAndClick(componentToSelectLocator);
+        pageUtils.waitForElementAndClick(By.xpath(String.format("//li[contains(@title, '%s')]//a", componentName)));
         return this;
     }
 
