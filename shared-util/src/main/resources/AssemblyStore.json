@@ -116,52 +116,74 @@
       ]
     },
     {
-      "componentName": "titan cordless drill",
+      "componentName": "titan cordless drill_2",
       "extension": ".SLDASM",
       "processGroup": "ASSEMBLY",
       "metadata": {
-        "category": "small"
+        "category": "large"
       },
       "subComponents": [
         {
           "componentName": "titan body RH",
           "extension": ".SLDPRT",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_PLASTIC"
         },
         {
           "componentName": "titan body LH",
           "extension": ".SLDPRT",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_PLASTIC"
         },
         {
           "componentName": "titan power switch",
           "extension": ".SLDPRT",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "PLASTIC_MOLDING"
         },
         {
           "componentName": "titan speed switch",
           "extension": ".SLDPRT",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "PLASTIC_MOLDING"
         },
         {
           "componentName": "titan bulk head",
           "extension": ".SLDPRT",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "PLASTIC_MOLDING"
         },
         {
           "componentName": "titan bit holder",
           "extension": ".SLDPRT",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "CASTING_DIE"
         },
         {
           "componentName": "titan forward reverse switch",
           "extension": ".SLDPRT",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "PLASTIC_MOLDING"
         },
         {
           "componentName": "titan torque setting",
           "extension": ".SLDPRT",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "5mm drill bit",
+          "extension": ".SLDPRT",
+          "processGroup": "CASTING"
+        },
+        {
+          "componentName": "titan battery ass",
+          "extension": ".SLDASM",
+          "processGroup": "ASSEMBLY",
+          "subComponents": [
+            {
+              "componentName": "titan battery release",
+              "extension": ".SLDPRT",
+              "processGroup": "PLASTIC_MOLDING"
+            },
+            {
+              "componentName": "titan battery",
+              "extension": ".SLDPRT",
+              "processGroup": "STOCK_MACHINING"
+            }
+          ]
         }
       ]
     },

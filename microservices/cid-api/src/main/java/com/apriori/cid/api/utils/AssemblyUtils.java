@@ -128,11 +128,17 @@ public class AssemblyUtils {
     /**
      * Publish sub-components
      *
-     * @param assemblySubComponent - assembly sub-components
+     * @param componentAssembly - assembly
      * @return current object
      */
-    public AssemblyUtils publishSubComponents(ComponentInfoBuilder assemblySubComponent) {
-        assemblySubComponent.getSubComponents().forEach(subComponent -> scenariosUtil.postPublishScenario(subComponent));
+    public AssemblyUtils publishSubComponents(ComponentInfoBuilder componentAssembly) {
+
+        List<ComponentInfoBuilder> subAssemblies = componentAssembly.getSubComponents().stream()
+            .filter(component -> component.getSubComponents() != null).collect(Collectors.toList());
+
+        subAssemblies.forEach(this::publishSubComponents);
+
+        componentAssembly.getSubComponents().forEach(subComponent -> scenariosUtil.postPublishScenario(subComponent));
         return this;
     }
 
@@ -164,6 +170,12 @@ public class AssemblyUtils {
      * @return list of scenario item
      */
     public AssemblyUtils costAssembly(ComponentInfoBuilder assembly) {
+
+        List<ComponentInfoBuilder> subAssemblies = assembly.getSubComponents().stream()
+            .filter(subComponent -> subComponent.getSubComponents() != null).collect(Collectors.toList());
+
+        subAssemblies.forEach(subAsm -> scenariosUtil.postGroupCostScenarios(subAsm));
+
         scenariosUtil.postGroupCostScenarios(assembly);
         return this;
     }

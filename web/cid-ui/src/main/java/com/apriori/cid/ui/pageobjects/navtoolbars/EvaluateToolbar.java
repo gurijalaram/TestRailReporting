@@ -2,6 +2,7 @@ package com.apriori.cid.ui.pageobjects.navtoolbars;
 
 import com.apriori.cid.ui.pageobjects.evaluate.CostHistoryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
+import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.web.app.util.PageUtils;
 
@@ -33,6 +34,9 @@ public class EvaluateToolbar extends ExploreToolbar {
 
     @FindBy(css = ".scenario-state-preview [data-icon='cog']")
     private List<WebElement> cogIcon;
+
+    @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
+    private WebElement refreshButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -151,5 +155,15 @@ public class EvaluateToolbar extends ExploreToolbar {
         By byButton = By.xpath(String.format("//button[contains(text(),'%s')]", buttonLabel));
         pageUtils.waitForElementAndClick(byButton);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Clicks on the Refresh button
+     *
+     * @return new page object
+     */
+    public ExplorePage refresh() {
+        pageUtils.waitForElementAndClick(refreshButton);
+        return new ExplorePage(driver);
     }
 }
