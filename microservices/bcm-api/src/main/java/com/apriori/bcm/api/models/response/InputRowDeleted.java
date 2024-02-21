@@ -19,6 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @JsonRootName("response")
 public class InputRowDeleted {
-    List<Successes> successes;
-    List<FailureAnalysisInputs> failures;
+    private List<Successes> successes;
+    private List<FailureAnalysisInputs> failures;
 }

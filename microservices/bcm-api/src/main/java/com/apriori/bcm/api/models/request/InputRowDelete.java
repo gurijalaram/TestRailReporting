@@ -16,5 +16,5 @@ import java.util.List;
 @NoArgsConstructor
 @JsonRootName("response")
 public class InputRowDelete {
-    List<GroupItems> groupItems;
+    private List<GroupItems> groupItems;
 }

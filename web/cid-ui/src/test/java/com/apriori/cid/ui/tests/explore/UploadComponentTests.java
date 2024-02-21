@@ -48,7 +48,7 @@ import java.util.stream.Collectors;
 
 public class UploadComponentTests extends TestBaseUI {
 
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ComponentInfoBuilder componentAssembly;
     private ComponentInfoBuilder component;
     private File resourceFile;
@@ -62,6 +62,7 @@ public class UploadComponentTests extends TestBaseUI {
 
     @Test
     @Tag(SANITY)
+    @TestRail(id = 29854)
     @Description("Test uploading a component")
     public void testUploadComponent() {
 
