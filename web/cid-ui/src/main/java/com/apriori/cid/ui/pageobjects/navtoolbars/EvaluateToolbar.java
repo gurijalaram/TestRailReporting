@@ -156,14 +156,4 @@ public class EvaluateToolbar extends ExploreToolbar {
         pageUtils.waitForElementAndClick(byButton);
         return new EvaluatePage(driver);
     }
-
-    /**
-     * Clicks on the Refresh button
-     *
-     * @return new page object
-     */
-    public ExplorePage refresh() {
-        pageUtils.waitForElementAndClick(refreshButton);
-        return new ExplorePage(driver);
-    }
 }
