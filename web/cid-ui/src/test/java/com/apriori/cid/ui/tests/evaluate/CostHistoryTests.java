@@ -27,6 +27,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.List;
 
 public class CostHistoryTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
@@ -47,7 +48,8 @@ public class CostHistoryTests extends TestBaseUI {
 
         ComponentInfoBuilder castingPart = new ComponentRequestUtil().getComponentWithProcessGroup("Casting", ProcessGroupEnum.CASTING_DIE);
 
-        scenariosUtil.postGroupCostScenarios(castingPart);
+        ComponentsUtil componentsUtil = new ComponentsUtil();
+        componentsUtil.postComponent(castingPart);
 
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
@@ -120,6 +122,8 @@ public class CostHistoryTests extends TestBaseUI {
 
         costHistoryPage = evaluatePage.clickHistory();
         ChangeSummaryPage changeSummary = costHistoryPage.openChangeSummary(2);
+
+        List<String> iteratrionNames = costHistoryPage.displayedChartIterations();
 
         softAssertions.assertThat(changeSummary.changedFromHeader()).as("Verify Left Column is Iteration 1").isEqualTo("Iteration 1");
         softAssertions.assertThat(changeSummary.changedToHeader()).as("Verify Right Column is Iteration 1").isEqualTo("Iteration 2");

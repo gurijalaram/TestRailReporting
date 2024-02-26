@@ -12,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
@@ -29,6 +30,12 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
 
     @FindBy(id = "qa-change-summary-column-1-Secondary Processes-Machining")
     private WebElement leftColSecondaryProcessMachining;
+
+    @FindBy(css="g[class*='xAxis']")
+    private WebElement xAxis;
+
+    @FindBy(css="g[class*='recharts-xAxis xAxis'] tspan")
+    private List<WebElement> displayedChartIterations;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -83,6 +90,15 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
         pageUtils.waitForElementToAppear(iterationInfoTooltipIcon(iterationNum));
         pageUtils.mouseMove(iterationInfoTooltipIcon(iterationNum));
         return new ChangeSummaryPage(driver);
+    }
+
+    /**
+     * Get list of displayed iterations in chart x-axis
+     *
+     * @return List of strings of displayed iterations
+     */
+    public List<String> displayedChartIterations() {
+        return displayedChartIterations.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     /**
