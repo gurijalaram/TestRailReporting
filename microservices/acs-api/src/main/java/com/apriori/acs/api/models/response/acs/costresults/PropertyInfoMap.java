@@ -145,6 +145,8 @@ public class PropertyInfoMap {
     private PropertyInfoMapItem marginPercent;
     private PropertyInfoMapItem lastPublished;
     private PropertyInfoMapItem programmingCostPerPart;
+    private PropertyInfoMapItem calculatedDirectOverheadRate;
+    private PropertyInfoMapItem calculatedIndirectOverheadRate;
     private PropertyInfoMapItem indirectOverheadPercent;
     private PropertyInfoMapItem virtualMaterialStockName;
     private PropertyInfoMapItem annualMaintenanceFactor;
