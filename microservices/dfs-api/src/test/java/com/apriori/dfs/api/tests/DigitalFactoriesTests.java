@@ -45,7 +45,7 @@ public class DigitalFactoriesTests {
     private static final String NO_SHARED_SECRET = "";
     private static final String VALID_DIGITAL_FACTORY_ID = "ABCDEFGHIJK2";
     private static final String NON_EXISTENT_DIGITAL_FACTORY_ID = "ABCDEFGHIJK5";
-    private static final String USER_CONTEXT_NOT_FOUND_MSG = "'ap-user-context' was not found.";
+    private static final String USER_CONTEXT_NOT_FOUND_MSG = "'ap-user-context' is required";
     private static final String UNAUTHORIZED_ERROR = "Unauthorized";
     private static final String NOT_ACCEPTABLE = "Not Acceptable";
     private static final String NOT_ACCEPTABLE_MSG = "Could not find acceptable representation";
