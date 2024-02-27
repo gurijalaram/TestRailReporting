@@ -7,23 +7,29 @@ import com.apriori.cic.api.models.response.AgentWorkflow;
 import com.apriori.cic.api.models.response.AgentWorkflowJobPartsResult;
 import com.apriori.cic.api.models.response.AgentWorkflowJobResults;
 import com.apriori.cic.api.models.response.AgentWorkflowJobRun;
+import com.apriori.cic.api.models.response.ConnectorJobPart;
+import com.apriori.cic.api.models.response.ConnectorJobParts;
 import com.apriori.shared.util.PDFDocument;
 import com.apriori.shared.util.file.part.PartData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.EmailMessageAttachments;
-import com.apriori.shared.util.testconfig.TestBaseUI;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class WorkflowTestUtil extends TestBaseUI {
+public class WorkflowTestUtil extends CicUtil {
+
+    private static final int WAIT_TIME = 30;
     protected AgentWorkflow agentWorkflowResponse;
     protected ResponseWrapper<String> workflowResponse;
     protected AgentWorkflowJobRun agentWorkflowJobRunResponse;
@@ -403,4 +409,87 @@ public class WorkflowTestUtil extends TestBaseUI {
                     )
             );
     }
+
+
+    /**
+     * wait until parts are costed to expected status get Job Parts
+     *
+     * @param jobID          - Job ID
+     * @param expectedCount  - Expected parts count
+     * @param expectedStatus - expected part status
+     * @param session        - web Session
+     * @return ConnectorJobParts
+     */
+    @SneakyThrows
+    public List<ConnectorJobPart> getWorkflowJobCostedResult(String jobID, Integer expectedCount, ConnectorJobPart connectorJobPart, String session) {
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
+        Boolean isCountMatched = true;
+        ConnectorJobParts connectorJobParts = ThingworxUtils.getJobParts(session, jobID);
+        while (getPartsCount(connectorJobParts, connectorJobPart).size() != expectedCount) {
+            if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
+                isCountMatched = false;
+            }
+            TimeUnit.SECONDS.sleep(5);
+            connectorJobParts = ThingworxUtils.getJobParts(session, jobID);
+            driver.navigate().refresh();
+        }
+        if (isCountMatched) {
+            return getPartsCount(connectorJobParts, connectorJobPart);
+        } else {
+            throw new RuntimeException("Failed Costing!!");
+        }
+    }
+
+
+    /**
+     * verify workflow job is invoked
+     *
+     * @param workflowID - Workflow ID
+     * @param jobID      - Job ID
+     * @return Boolean
+     */
+    @SneakyThrows
+    public Boolean isWorkflowJobStarted(String workflowID, String jobID) {
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(WAIT_TIME);
+        List<String> jobStatusList = Arrays.asList(new String[] {"Created", "Pending", "Failed", "Errored", "Cancelled"});
+        String finalJobStatus = CicApiTestUtil.getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
+        while (!jobStatusList.stream().anyMatch(finalJobStatus::contains)) {
+            if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
+                return false;
+            }
+            TimeUnit.SECONDS.sleep(10);
+            finalJobStatus = CicApiTestUtil.getCicAgentWorkflowJobStatus(workflowID, jobID).getStatus();
+            log.debug(String.format("Job ID  >>%s<< ::: Job Status  >>%s<<", jobID, finalJobStatus));
+        }
+        return true;
+    }
+
+    /**
+     * get the parts count by part status
+     *
+     * @param connectorJobParts - ConnectorJobParts
+     * @param expectedStatus    - expected part status
+     * @return Integer
+     */
+    public List<ConnectorJobPart> getPartsCount(ConnectorJobParts connectorJobParts, ConnectorJobPart expectedJobPart) {
+        return connectorJobParts.rows.stream()
+            .filter(jobPart -> jobPart.getStatus().equals(expectedJobPart.getStatus()) && jobPart.getPartType().equals(expectedJobPart.getPartType()))
+            .collect(Collectors.toList());
+    }
+
+    public Boolean verifyParts(List<ConnectorJobPart> connectorJobParts, List<String> partList) {
+        return connectorJobParts.stream()
+            .map(part -> part.getPartNumber())
+            .anyMatch(part ->
+                partList.stream()
+                    .peek(partData -> {
+                        if (!part.equals(partData)) {
+                            log.debug(String.format("ACTUAL Part content : (%s) <=> EXPECTED PART NAME : (%s)", part, partData));
+                        }
+                    })
+                    .anyMatch(partData -> part.equals(partData)
+                    )
+            );
+    }
+
 }
