@@ -1,5 +1,6 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
+import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
@@ -14,6 +15,8 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import org.assertj.core.api.SoftAssertions;
+import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -152,5 +155,24 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Details Report")
     public void testMinimumAnnualSpend() {
         jasperApiUtils.genericMinAnnualSpendDtcDetailsTest(true);
+    }
+
+    @Test
+    @TmsLink("1378")
+    @TestRail(id = 1378)
+    @Description("Verify DTC issue counts are correct")
+    public void testVerifyDtcIssueCountsAreCorrect() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        JasperApiUtils jasperApiUtils1 = new JasperApiUtils(
+            jSessionId, ExportSetEnum.ALL_PG_CURRENT.getExportSetName(), reportsJsonFileName, reportsNameForInputControls);
+        JasperReportSummary jasperReportSummary = jasperApiUtils1.genericTestCore("", "");
+
+        List<Element> elementsList = jasperReportSummary.getReportHtmlPart().getElementsContainingText("INJECTIONMOLDING").get(5).children();
+
+        softAssertions.assertThat(elementsList.get(25).text()).isEqualTo("2");
+        softAssertions.assertThat(elementsList.get(28).text()).isEqualTo("43");
+        softAssertions.assertThat(elementsList.get(30).text()).isEqualTo("686");
+
+        softAssertions.assertAll();
     }
 }

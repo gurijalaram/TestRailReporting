@@ -1,5 +1,6 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
+import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
@@ -15,6 +16,8 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import org.assertj.core.api.SoftAssertions;
+import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -361,5 +364,22 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "Process Group",
             ""
         );
+    }
+
+    @Test
+    @TmsLink("7644")
+    @TestRail(id = 7644)
+    @Description("Verify DTC issue counts are correct - Casting DTC Details Report")
+    public void testVerifyDtcIssueCountsAreCorrect() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("", "");
+
+        List<Element> elementsList = jasperReportSummary.getReportHtmlPart().getElementsContainingText("CYLINDER HEAD").get(5).children();
+
+        softAssertions.assertThat(elementsList.get(29).text()).isEqualTo("77");
+        softAssertions.assertThat(elementsList.get(31).text()).isEqualTo("351");
+        softAssertions.assertThat(elementsList.get(33).text()).isEqualTo("327");
+
+        softAssertions.assertAll();
     }
 }

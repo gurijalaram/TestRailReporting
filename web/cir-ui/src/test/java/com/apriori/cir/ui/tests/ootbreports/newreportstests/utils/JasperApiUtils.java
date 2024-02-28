@@ -175,9 +175,9 @@ public class JasperApiUtils {
     public JasperReportSummary genericTestCoreCurrencyLatestCostDateOnly(String currencyToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
-        setReportParameterByName(InputControlsEnum.LATEST_COST_DATE.getInputControlId(),
+        /*setReportParameterByName(InputControlsEnum.LATEST_COST_DATE.getInputControlId(),
             DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now())
-        );
+        );*/
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
