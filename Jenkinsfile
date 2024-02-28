@@ -244,7 +244,7 @@ pipeline {
         always {
             echo "Cleaning up.."
 
-            sh "docker system prune --all --force --volumes"
+            sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest -f"
             cleanWs()
 
             script {
