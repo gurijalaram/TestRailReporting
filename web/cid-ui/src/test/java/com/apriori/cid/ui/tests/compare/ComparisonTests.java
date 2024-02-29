@@ -40,6 +40,7 @@ import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -462,8 +463,8 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {5797})
     @Description("All Design Guidance from scenarios respected in comparison when scenario is added")
     public void designGuidanceInComparison() {
-        component = new ComponentRequestUtil().getComponent();
-        component2 = new ComponentRequestUtil().getComponent();
+        component = new ComponentRequestUtil().getComponent("testpart-4");
+        component2 = new ComponentRequestUtil().getComponent("prt0001");
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
@@ -697,7 +698,7 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getDeltaPercentage(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME))
             .as("Total Cycle Time").isEqualTo("138.55%");
         softAssertions.assertThat(comparePage.getDeltaPercentage(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT))
-            .as("Total Capital Investment").isEqualTo("3.47%");
+            .as("Total Capital Investment").isEqualTo("3.48%");
 
         softAssertions.assertAll();
     }
@@ -1076,6 +1077,7 @@ public class ComparisonTests extends TestBaseUI {
             .scenarioName(scenarioName)
             .processGroup(processGroupEnum)
             .user(currentUser)
+            .resourceFile(FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".ipt"))
             .build());
 
         ComponentInfoBuilder panel = scenariosUtil.uploadAndPublishComponent(ComponentInfoBuilder.builder()
@@ -1084,6 +1086,7 @@ public class ComparisonTests extends TestBaseUI {
             .scenarioName(scenarioName2)
             .processGroup(processGroupEnum)
             .user(currentUser)
+            .resourceFile(FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp"))
             .build());
 
         loginPage = new CidAppLoginPage(driver);
