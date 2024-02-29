@@ -6,7 +6,9 @@ public enum CICAgentStatus {
     PENDING("Pending"),
     CANCELLED("Cancelled"),
     COSTING("Costing"),
-    PLM_WRITE_ACTION("PLM Write Action In Progress");
+    PLM_WRITE_ACTION("PLM Write Action In Progress"),
+    COMPLETED("Completed"),
+    ERRORED("Errored");
 
     private final String agentStatus;
 
