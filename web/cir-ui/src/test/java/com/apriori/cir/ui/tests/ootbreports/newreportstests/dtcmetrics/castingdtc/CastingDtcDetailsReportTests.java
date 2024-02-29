@@ -33,6 +33,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
         JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
     );
+    private SoftAssertions softAssertions = new SoftAssertions();
     private JasperApiUtils jasperApiUtils;
 
 
@@ -371,7 +372,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = 7644)
     @Description("Verify DTC issue counts are correct - Casting DTC Details Report")
     public void testVerifyDtcIssueCountsAreCorrect() {
-        SoftAssertions softAssertions = new SoftAssertions();
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("", "");
 
         List<Element> elementsList = jasperReportSummary.getReportHtmlPart().getElementsContainingText("CYLINDER HEAD").get(5).children();

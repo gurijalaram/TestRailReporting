@@ -29,6 +29,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.PLASTIC_DTC_DETAILS.getEndpoint();
     private CirApiEnum reportsNameForInputControls = CirApiEnum.PLASTIC_DTC_DETAILS;
     private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private SoftAssertions softAssertions = new SoftAssertions();
     private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
@@ -162,10 +163,9 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = 1378)
     @Description("Verify DTC issue counts are correct")
     public void testVerifyDtcIssueCountsAreCorrect() {
-        SoftAssertions softAssertions = new SoftAssertions();
-        JasperApiUtils jasperApiUtils1 = new JasperApiUtils(
+        JasperApiUtils jasperApiUtilsDifferent = new JasperApiUtils(
             jSessionId, ExportSetEnum.ALL_PG_CURRENT.getExportSetName(), reportsJsonFileName, reportsNameForInputControls);
-        JasperReportSummary jasperReportSummary = jasperApiUtils1.genericTestCore("", "");
+        JasperReportSummary jasperReportSummary = jasperApiUtilsDifferent.genericTestCore("", "");
 
         List<Element> elementsList = jasperReportSummary.getReportHtmlPart().getElementsContainingText("INJECTIONMOLDING").get(5).children();
 
