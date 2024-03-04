@@ -584,12 +584,14 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Validate an error message appears if any issues occur")
     public void testEditWithExistingPrivateScenarioName() {
 
-        ComponentInfoBuilder preExistingComponentAssembly = new AssemblyRequestUtil().getAssembly();
+        ComponentInfoBuilder preExistingComponentAssembly = new AssemblyRequestUtil().getAssembly("Titan Battery Ass");
         componentAssembly = SerializationUtils.clone(preExistingComponentAssembly);
-        componentAssembly.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        String asmScenarioName = new GenerateStringUtil().generateScenarioName();
+        componentAssembly.setScenarioName(asmScenarioName);
+        componentAssembly.getSubComponents().forEach(component -> component.setScenarioName(asmScenarioName));
 
-        ComponentInfoBuilder component1 = preExistingComponentAssembly.getSubComponents().get(0);
-        ComponentInfoBuilder component2 = preExistingComponentAssembly.getSubComponents().get(1);
+        ComponentInfoBuilder component1 = componentAssembly.getSubComponents().get(0);
+        ComponentInfoBuilder component2 = componentAssembly.getSubComponents().get(1);
 
         assemblyUtils.uploadSubComponents(preExistingComponentAssembly)
             .uploadAssembly(preExistingComponentAssembly);

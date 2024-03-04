@@ -241,11 +241,6 @@
       },
       "subComponents": [
         {
-          "componentName": "piston_pin",
-          "extension": ".prt.1",
-          "processGroup": "PLASTIC_MOLDING"
-        },
-        {
           "componentName": "piston cover_model1",
           "extension": ".prt",
           "processGroup": "PLASTIC_MOLDING"
