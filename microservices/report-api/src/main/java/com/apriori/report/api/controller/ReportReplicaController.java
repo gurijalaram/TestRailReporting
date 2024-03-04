@@ -10,9 +10,13 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class ReportReplicaController {
 
     /**
@@ -21,18 +25,40 @@ public class ReportReplicaController {
      * @return report object
      */
     public Report getRequestStatus(String customerId, String executionId) {
-        final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.get_REPORT_RESULTS, Report.class)
-            .inlineVariables(customerId, executionId)
-            .headers(new HashMap<>() {
-                {
-                    put("x-token", "eM1PPjIBYc23eKotQdvUy8ygrEWkz7KC7ATFEYDF");
-                    put("x-api-key", "eYxPlF5iwP2yZN3JajrbU7Ey2GR784ZL3lQhvyGK");
-                }
-            });
+        final long START_TIME = System.currentTimeMillis() / 1000;
+        ResponseWrapper<Report> reportResponse;
+        int WAIT_TIME = 20;
 
-        ResponseWrapper<Report> reportResponse = HTTPRequest.build(requestEntity).get();
-        return reportResponse.getResponseEntity();
+        do {
+            try {
+                int POLL_TIME = 500;
+                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
+
+                final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.get_REPORT_RESULTS, Report.class)
+                    .inlineVariables(customerId, executionId)
+                    .headers(new HashMap<>() {
+                        {
+                            put("x-token", "eM1PPjIBYc23eKotQdvUy8ygrEWkz7KC7ATFEYDF");
+                            put("x-api-key", "eYxPlF5iwP2yZN3JajrbU7Ey2GR784ZL3lQhvyGK");
+                        }
+                    });
+
+                reportResponse = HTTPRequest.build(requestEntity).get();
+
+                if (reportResponse != null && reportResponse.getResponseEntity().getStatus().equalsIgnoreCase("succeeded")) {
+                    return reportResponse.getResponseEntity();
+                }
+
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+        }
+        while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        throw new RuntimeException("Report status is not correct");
     }
+
 // TODO: 29/02/2024 POST first then take id from response then GET then verify csv fields against some newly created object
 
     /**
