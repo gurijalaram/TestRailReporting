@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
-import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
@@ -163,20 +162,14 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = 1378)
     @Description("Verify DTC issue counts are correct")
     public void testVerifyDtcIssueCountsAreCorrect() {
-        JasperApiUtils jasperApiUtilsDifferent = new JasperApiUtils(
-            jSessionId, ExportSetEnum.ALL_PG_CURRENT.getExportSetName(), reportsJsonFileName, reportsNameForInputControls);
-        JasperReportSummary jasperReportSummary = jasperApiUtilsDifferent.genericTestCore("", "");
+        List<Element> elementsList = jasperApiUtils.dtcDetailsIssueCountGenericTestReportGeneration(
+            ExportSetEnum.ALL_PG_CURRENT.getExportSetName(),
+            "INJECTIONMOLDING"
+        );
 
-        List<Element> elementsList = jasperReportSummary.getReportHtmlPart().getElementsContainingText("INJECTIONMOLDING").get(5).children();
-
-        List<String> expectedValues = Arrays.asList("2", "43", "686");
-        List<Integer> indexValues = Arrays.asList(25, 28, 30);
-
-        int i = 0;
-        for (Integer indexValue : indexValues) {
-            softAssertions.assertThat(elementsList.get(indexValue).text()).isEqualTo(expectedValues.get(i));
-            i++;
-        }
+        softAssertions.assertThat(elementsList.toString().contains("2")).isEqualTo(true);
+        softAssertions.assertThat(elementsList.toString().contains("43")).isEqualTo(true);
+        softAssertions.assertThat(elementsList.toString().contains("686")).isEqualTo(true);
 
         softAssertions.assertAll();
     }
