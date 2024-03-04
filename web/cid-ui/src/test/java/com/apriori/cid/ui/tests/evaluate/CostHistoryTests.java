@@ -34,6 +34,7 @@ public class CostHistoryTests extends TestBaseUI {
     private CostHistoryPage costHistoryPage;
 
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public CostHistoryTests() {
@@ -46,6 +47,8 @@ public class CostHistoryTests extends TestBaseUI {
     public void testCostHistory() {
 
         ComponentInfoBuilder castingPart = new ComponentRequestUtil().getComponentWithProcessGroup("Casting", ProcessGroupEnum.CASTING_DIE);
+
+        componentsUtil.postComponent(castingPart);
 
         scenariosUtil.postGroupCostScenarios(castingPart);
 
