@@ -21,6 +21,7 @@ import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -376,9 +377,12 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
 
         List<Element> elementsList = jasperReportSummary.getReportHtmlPart().getElementsContainingText("CYLINDER HEAD").get(5).children();
 
-        softAssertions.assertThat(elementsList.get(29).text()).isEqualTo("77");
-        softAssertions.assertThat(elementsList.get(31).text()).isEqualTo("351");
-        softAssertions.assertThat(elementsList.get(33).text()).isEqualTo("327");
+        List<String> expectedValues = Arrays.asList("77", "351", "327");
+        int i = 0;
+        for (int j = 29; j < 34; j += 2) {
+            softAssertions.assertThat(elementsList.get(j).text()).isEqualTo(expectedValues.get(i));
+            i++;
+        }
 
         softAssertions.assertAll();
     }

@@ -169,9 +169,14 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
 
         List<Element> elementsList = jasperReportSummary.getReportHtmlPart().getElementsContainingText("INJECTIONMOLDING").get(5).children();
 
-        softAssertions.assertThat(elementsList.get(25).text()).isEqualTo("2");
-        softAssertions.assertThat(elementsList.get(28).text()).isEqualTo("43");
-        softAssertions.assertThat(elementsList.get(30).text()).isEqualTo("686");
+        List<String> expectedValues = Arrays.asList("2", "43", "686");
+        List<Integer> indexValues = Arrays.asList(25, 28, 30);
+
+        int i = 0;
+        for (Integer indexValue : indexValues) {
+            softAssertions.assertThat(elementsList.get(indexValue).text()).isEqualTo(expectedValues.get(i));
+            i++;
+        }
 
         softAssertions.assertAll();
     }
