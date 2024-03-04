@@ -7,6 +7,7 @@ import com.apriori.report.api.models.ReportRequest;
 import com.apriori.report.api.models.Settings;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
@@ -14,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.hc.core5.http.HttpStatus;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -38,12 +38,8 @@ public class ReportReplicaController {
                 final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.get_REPORT_RESULTS, Report.class)
                     .inlineVariables(customerId, executionId)
                     .expectedResponseCode(HttpStatus.SC_OK)
-                    .headers(new HashMap<>() {
-                        {
-                            put("x-token", "eM1PPjIBYc23eKotQdvUy8ygrEWkz7KC7ATFEYDF");
-                            put("x-api-key", "eYxPlF5iwP2yZN3JajrbU7Ey2GR784ZL3lQhvyGK");
-                        }
-                    });
+                    .headers(new QueryParams().use("x-token", "eM1PPjIBYc23eKotQdvUy8ygrEWkz7KC7ATFEYDF")
+                        .use("x-api-key", "eYxPlF5iwP2yZN3JajrbU7Ey2GR784ZL3lQhvyGK"));
 
                 reportResponse = HTTPRequest.build(requestEntity).get();
 
@@ -71,12 +67,8 @@ public class ReportReplicaController {
     public Report postExecuteReport(String customerId) {
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.post_CREATE_REPORT, Report.class)
             .inlineVariables(customerId)
-            .headers(new HashMap<>() {
-                {
-                    put("x-token", "eM1PPjIBYc23eKotQdvUy8ygrEWkz7KC7ATFEYDF");
-                    put("x-api-key", "eYxPlF5iwP2yZN3JajrbU7Ey2GR784ZL3lQhvyGK");
-                }
-            })
+            .headers(new QueryParams().use("x-token", "eM1PPjIBYc23eKotQdvUy8ygrEWkz7KC7ATFEYDF")
+                .use("x-api-key", "eYxPlF5iwP2yZN3JajrbU7Ey2GR784ZL3lQhvyGK"))
             .body(ReportRequest.builder()
                 .params(Collections.singletonList(
                     Params.builder()

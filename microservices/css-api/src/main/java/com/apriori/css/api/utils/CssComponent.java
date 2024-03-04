@@ -147,7 +147,7 @@ public class CssComponent {
      */
     private ResponseWrapper<ComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
-            .headers(new ContentParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
+            .headers(new QueryParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
             .queryParams(queryParams)
             .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT)
@@ -166,7 +166,7 @@ public class CssComponent {
     public ResponseWrapper<ComponentResponse> postSearchRequest(UserCredentials userCredentials, String componentType) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
             .token(userCredentials.getToken())
-            .headers(new ContentParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
+            .headers(new QueryParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
             .xwwwwFormUrlEncodeds(Collections.singletonList(new HashMap<String, String>() {
                 {
                     put("pageNumber", "1");
