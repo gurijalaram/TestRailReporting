@@ -51,7 +51,8 @@ public class ReportReplicaController {
             })
             .body(ReportRequest.builder()
                 .params(Collections.singletonList(
-                    Params.builder().name("last_up")
+                    Params.builder()
+                        .name("last_up")
                         .value("2023-10-08T00:00:00Z")
                         .type("timestamp")
                         .build()))
