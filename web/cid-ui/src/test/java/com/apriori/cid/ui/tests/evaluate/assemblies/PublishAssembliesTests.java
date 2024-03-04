@@ -10,6 +10,7 @@ import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTablePage;
+import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
 import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
@@ -41,6 +42,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private PublishPage publishPage;
     private ComponentsTablePage componentsTablePage;
+    private ComponentsTreePage componentsTreePage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private ExplorePage explorePage;
     private InfoPage infoPage;
@@ -255,29 +257,32 @@ public class PublishAssembliesTests extends TestBaseUI {
             .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(componentAssembly.getUser())
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .selectTableView()
             .multiSelectSubcomponents(pinSubcomponent.getComponentName() + "," + pinSubcomponent.getScenarioName());
 
-        softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
+        softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
 
-        componentsTablePage = componentsTablePage.publishSubcomponent()
-            .publish(ComponentsTablePage.class)
-            .multiSelectSubcomponents(bigRingSubcomponent.getComponentName() + "," + bigRingSubcomponent.getScenarioName(), smallRingSubcomponent.getComponentName() + "," + bigRingSubcomponent.getScenarioName())
+        componentsTreePage = componentsTreePage.multiSelectSubcomponents(
+            bigRingSubcomponent.getComponentName() + "," + bigRingSubcomponent.getScenarioName(),
+                smallRingSubcomponent.getComponentName() + "," + bigRingSubcomponent.getScenarioName())
             .publishSubcomponent()
             .override()
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
-            .close(ComponentsTablePage.class);
+            .close(ComponentsTreePage.class)
+            .checkSubcomponentState(componentAssembly, BIG_RING, PIN, SMALL_RING)
+            .closePanel()
+            .clickRefresh(EvaluatePage.class)
+            .openComponents();
 
-        softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(bigRingSubcomponent.getComponentName(), bigRingSubcomponent.getScenarioName(), ScenarioStateEnum.COST_COMPLETE)).isEqualTo(true);
-        softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(smallRingSubcomponent.getComponentName(), smallRingSubcomponent.getScenarioName(), ScenarioStateEnum.COST_COMPLETE)).isEqualTo(true);
-        softAssertions.assertThat(componentsTablePage.getRowDetails(bigRingSubcomponent.getComponentName(), bigRingSubcomponent.getScenarioName())).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-        softAssertions.assertThat(componentsTablePage.getRowDetails(smallRingSubcomponent.getComponentName(), smallRingSubcomponent.getScenarioName())).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getListOfScenariosWithStatus(bigRingSubcomponent.getComponentName(), bigRingSubcomponent.getScenarioName(), ScenarioStateEnum.COST_COMPLETE)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.getListOfScenariosWithStatus(smallRingSubcomponent.getComponentName(), smallRingSubcomponent.getScenarioName(), ScenarioStateEnum.COST_COMPLETE)).isEqualTo(true);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(bigRingSubcomponent.getComponentName(), bigRingSubcomponent.getScenarioName())).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(smallRingSubcomponent.getComponentName(), smallRingSubcomponent.getScenarioName())).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
-        explorePage = componentsTablePage.closePanel()
+        explorePage = componentsTreePage.closePanel()
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentAssembly.getComponentName());

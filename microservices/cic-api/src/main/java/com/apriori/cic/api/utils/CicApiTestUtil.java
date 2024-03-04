@@ -55,9 +55,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class CicApiTestUtil {
+public class CicApiTestUtil extends CicUtil {
 
     private static final int WAIT_TIME = 30;
+
 
     /**
      * Deserialize workflow data from json file to string.
@@ -751,6 +752,11 @@ public class CicApiTestUtil {
             .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with Plm Part ID " + plmPartID));
     }
 
+    /**
+     * get Agent port data
+     *
+     * @return AgentPort
+     */
     public static AgentPort getAgentPortData() {
         ConcurrentLinkedQueue<AgentPort> cicAgentPortsQueue = new InitFileData().initRows(AgentPort.class,
             FileResourceUtil.getResourceAsFile("cic_agent_ports.csv"));
@@ -807,7 +813,7 @@ public class CicApiTestUtil {
      * @param session - JSESSION
      * @return Map
      */
-    private static Map<String, String> initHeadersWithJSession(String session) {
+    protected static Map<String, String> initHeadersWithJSession(String session) {
         return new HashMap<String, String>() {
             {
                 put("Accept", "*/*");

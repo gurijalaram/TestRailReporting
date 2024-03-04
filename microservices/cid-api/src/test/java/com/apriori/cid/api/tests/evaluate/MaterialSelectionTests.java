@@ -73,6 +73,7 @@ public class MaterialSelectionTests {
                 .componentName(componentName)
                 .scenarioName(scenarioName)
                 .resourceFile(resourceFile)
+                .extension(componentExt)
                 .user(currentUser)
                 .build()
         );

@@ -14,6 +14,7 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.apache.commons.lang3.SerializationUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -54,7 +55,7 @@ public class MissingAssemblyAssociationsTests extends TestBaseUI {
 
         userPreferencesUtil.updatePreferences(componentAssembly.getUser(), updateStrategy);
 
-        ComponentInfoBuilder componentAssemblyB = componentAssembly;
+        ComponentInfoBuilder componentAssemblyB = SerializationUtils.clone(componentAssembly);
         componentAssemblyB.setScenarioName(newScenarioName);
         ComponentInfoBuilder conductor = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("Miss_conductor")).findFirst().get();
         ComponentInfoBuilder housing = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("Miss_Fuse_Connector_Housing")).findFirst().get();
@@ -71,19 +72,18 @@ public class MissingAssemblyAssociationsTests extends TestBaseUI {
             .addColumn(ColumnsEnum.SCENARIO_TYPE)
             .addColumn(ColumnsEnum.PUBLISHED);
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor.getComponentName(), componentAssembly.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor.getComponentName(), componentAssembly.getScenarioName())).contains(StatusIconEnum.MISSING.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName(), componentAssembly.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName(), componentAssembly.getScenarioName())).contains(StatusIconEnum.VERIFIED.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor.getComponentName().toUpperCase(), componentAssembly.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName().toUpperCase(), componentAssembly.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName().toUpperCase(), componentAssembly.getScenarioName())).contains(StatusIconEnum.VERIFIED.getStatusIcon());
 
         componentsTreePage.closePanel()
             .navigateToScenario(componentAssemblyB)
             .openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor.getComponentName(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor.getComponentName(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.MISSING.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.MISSING.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor.getComponentName().toUpperCase(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(conductor.getComponentName().toUpperCase(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.MISSING.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName().toUpperCase(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsTreePage.getRowDetails(housing.getComponentName().toUpperCase(), componentAssemblyB.getScenarioName())).contains(StatusIconEnum.MISSING.getStatusIcon());
 
         softAssertions.assertAll();
     }

@@ -6,9 +6,6 @@ import com.apriori.cic.api.utils.CicApiTestUtil;
 import com.apriori.cic.api.utils.WorkflowTestUtil;
 import com.apriori.cic.ui.pageobjects.home.CIConnectHome;
 import com.apriori.cic.ui.pageobjects.login.CicLoginPage;
-import com.apriori.shared.util.PDFDocument;
-import com.apriori.shared.util.file.part.PartData;
-import com.apriori.shared.util.models.response.EmailMessageAttachments;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -128,6 +125,4 @@ public class CicGuiTestUtil extends WorkflowTestUtil {
             .trackWorkflow()
             .getJobResult();
     }
-
-
 }
