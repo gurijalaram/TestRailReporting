@@ -174,3 +174,6 @@ default:
 # Other URL
   cnh:
     api_url: https://f2jdom33dk.execute-api.us-east-1.amazonaws.com/
+
+  report_replica:
+    api_url: https://nj8yrxjv9h.execute-api.us-east-1.amazonaws.com/${env}
