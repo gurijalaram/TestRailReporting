@@ -11,6 +11,7 @@ import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.core5.http.HttpStatus;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,6 +37,7 @@ public class ReportReplicaController {
 
                 final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.get_REPORT_RESULTS, Report.class)
                     .inlineVariables(customerId, executionId)
+                    .expectedResponseCode(HttpStatus.SC_OK)
                     .headers(new HashMap<>() {
                         {
                             put("x-token", "eM1PPjIBYc23eKotQdvUy8ygrEWkz7KC7ATFEYDF");
@@ -85,7 +87,8 @@ public class ReportReplicaController {
                 .settings(Settings.builder()
                     .decimalPrecision(6)
                     .build())
-                .build());
+                .build())
+            .expectedResponseCode(HttpStatus.SC_ACCEPTED);
 
         ResponseWrapper<Report> reportResponse = HTTPRequest.build(requestEntity).post();
         return reportResponse.getResponseEntity();
