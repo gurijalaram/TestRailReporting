@@ -23,7 +23,8 @@ public enum CssAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return String.format(PropertiesContext.get("css.api_url").concat("%s"), String.format(getEndpointString(), variables));
+        return PropertiesContext.get("css.api_url")
+            + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 }
 

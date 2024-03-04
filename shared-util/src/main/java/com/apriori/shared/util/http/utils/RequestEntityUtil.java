@@ -88,7 +88,7 @@ public class RequestEntityUtil {
         return new RequestEntity()
             .returnType(returnType)
             .endpoint(endpoint)
-            .token(token != null ? userCredentials.getToken() : null)
+            .token(token)
             .apUserContext(apUserContext != null ? new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()) : null);
     }
 }
