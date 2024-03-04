@@ -49,8 +49,6 @@ public class CostHistoryTests extends TestBaseUI {
 
         ComponentInfoBuilder castingPart = new ComponentRequestUtil().getComponentWithProcessGroup("Casting", ProcessGroupEnum.CASTING_DIE);
 
-        ComponentsUtil componentsUtil = new ComponentsUtil();
-        componentsUtil.postComponent(castingPart);
         componentsUtil.postComponent(castingPart);
 
         scenariosUtil.postGroupCostScenarios(castingPart);
@@ -77,7 +75,7 @@ public class CostHistoryTests extends TestBaseUI {
         castingPart.setCostingTemplate(
             CostingTemplate.builder()
                 .secondaryProcesses(SecondaryProcesses.builder()
-                    .heatTreatment(Arrays.asList("Certification"))
+                    .heatTreatment(List.of("Certification"))
                     .build())
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
@@ -125,9 +123,8 @@ public class CostHistoryTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.isProgressButtonEnabled()).as("Verify Progress button disabled before initial cost").isTrue();
 
         costHistoryPage = evaluatePage.clickHistory();
-        ChangeSummaryPage changeSummary = costHistoryPage.openChangeSummary(2);
 
-        List<String> iteratrionNames = costHistoryPage.displayedChartIterations();
+        ChangeSummaryPage changeSummary = costHistoryPage.openChangeSummary(2);
 
         softAssertions.assertThat(changeSummary.changedFromHeader()).as("Verify Left Column is Iteration 1").isEqualTo("Iteration 1");
         softAssertions.assertThat(changeSummary.changedToHeader()).as("Verify Right Column is Iteration 1").isEqualTo("Iteration 2");

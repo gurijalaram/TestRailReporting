@@ -80,6 +80,18 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     }
 
     /**
+     * Get WebElement for iteration hide/show icon
+     *
+     * @param iterationNum - The number of the specified iteration
+     *
+     * @return String with value of data-icon attribute
+     */
+    public String iterationDisplayIcon(Integer iterationNum) {
+        By locator = By.xpath(String.format(iterationXPath, iterationNum) + "/../following-sibling::button/span/*[name()='svg']");
+        return driver.findElement(locator).getAttribute("data-icon");
+    }
+
+    /**
      * Hover over info icon for given iteration
      *
      * @param iterationNum - The number of the specified iteration
