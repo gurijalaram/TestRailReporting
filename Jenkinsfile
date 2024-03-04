@@ -244,7 +244,7 @@ pipeline {
         always {
             echo "Cleaning up.."
 
-            sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest -f"
+            sh "docker system prune --filter \"label=qa-automation\" -f -a"
             cleanWs()
 
             script {
