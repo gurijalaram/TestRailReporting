@@ -18,8 +18,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Params {
     private String name;
-//    @JsonSerialize(using = ToStringSerializer.class)
-//    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssZ.class)
     private String value;
     private String type;
 }

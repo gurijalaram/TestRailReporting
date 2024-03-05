@@ -10,11 +10,25 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.utils.CsvReader;
 
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.core5.http.HttpStatus;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.net.URL;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -57,8 +71,6 @@ public class ReportReplicaController {
         throw new RuntimeException("Report status is not correct");
     }
 
-// TODO: 29/02/2024 POST first then take id from response then GET then verify csv fields against some newly created object
-
     /**
      * Calls an API with POST verb
      *
@@ -84,5 +96,29 @@ public class ReportReplicaController {
 
         ResponseWrapper<Report> reportResponse = HTTPRequest.build(requestEntity).post();
         return reportResponse.getResponseEntity();
+    }
+
+    /**
+     * Opens a connection and downloads the report
+     *
+     * @param url - the url to the csv file
+     */
+    public <T> List<T> getReport(String url, char separator, Class<T> klass) {
+        final String filename = StringUtils.substringBetween(url, "/reports/", "?AWSAccessKeyId");
+        String fileLocation = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + filename;
+
+        byte[] dataBuffer;
+
+        try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
+             FileOutputStream fileOutputStream = new FileOutputStream(fileLocation)) {
+            dataBuffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
+                fileOutputStream.write(dataBuffer, 0, bytesRead);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return new CsvReader().csvReader(fileLocation, separator, klass);
     }
 }
