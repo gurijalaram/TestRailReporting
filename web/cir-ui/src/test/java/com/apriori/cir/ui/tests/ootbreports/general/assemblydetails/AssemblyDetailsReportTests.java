@@ -1004,8 +1004,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         BigDecimal actualVariance = assemblyDetailsReportPage.getComponentCostReportValue("Variance");
-        BigDecimal actualLifetimeCost = assemblyDetailsReportPage.getComponentCostReportValue("Lifetime Cost");
         BigDecimal actualPercentageOfTarget = assemblyDetailsReportPage.getComponentCostReportValue("% of Target");
+        BigDecimal actualLifetimeCost = assemblyDetailsReportPage.getComponentCostReportValue("Lifetime Cost");
         BigDecimal actualLifetimeProjectedCostDifference =
             assemblyDetailsReportPage.getComponentCostReportValue("Lifetime Projected Cost");
 

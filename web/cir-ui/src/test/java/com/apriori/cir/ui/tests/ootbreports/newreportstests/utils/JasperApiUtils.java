@@ -35,7 +35,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -44,6 +46,7 @@ import java.util.stream.Stream;
 @Slf4j
 public class JasperApiUtils {
     private Logger logger = LoggerFactory.getLogger(JasperApiUtils.class);
+    private final Map<String, String> inputControlsEnumMap = new HashMap<>();
     private SoftAssertions softAssertions = new SoftAssertions();
     private CirApiEnum reportValueForInputControls;
     private ReportRequest reportRequest;
@@ -65,6 +68,7 @@ public class JasperApiUtils {
         this.jasperSessionID = jasperSessionID;
         this.exportSetName = exportSetName;
         this.reportsJsonFileName = reportsJsonFileName;
+        initialiseInputControlsEnumMap();
     }
 
     /**
@@ -81,6 +85,7 @@ public class JasperApiUtils {
         this.exportSetName = exportSetName;
         this.processGroupName = processGroup.getProcessGroup();
         this.reportsJsonFileName = reportsJsonFileName;
+        initialiseInputControlsEnumMap();
     }
 
     /**
@@ -98,7 +103,7 @@ public class JasperApiUtils {
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
-            setReportParameterByName(InputControlsEnum.valueOf(keyToSet.toUpperCase().replace(" ", "_")).getInputControlId(), valueToSet);
+            setReportParameterByName(InputControlsEnum.valueOf(inputControlsEnumMap.get(keyToSet)).getInputControlId(), valueToSet);
         }
 
         if (processGroupName != null) {
@@ -913,5 +918,28 @@ public class JasperApiUtils {
 
     private String getCurrencySettingValueFromChartComponentCost(JasperReportSummary jasperReportSummary) {
         return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(5).text();
+    }
+
+    private void initialiseInputControlsEnumMap() {
+        inputControlsEnumMap.put("assemblySelect", "ASSEMBLY_SELECT");
+        inputControlsEnumMap.put("currency", "CURRENCY");
+        inputControlsEnumMap.put("componentCostCurrency", "COMPONENT_COST_CURRENCY");
+        inputControlsEnumMap.put("componentSelect", "COMPONENT_SELECT");
+        inputControlsEnumMap.put("costMetric", "COST_METRIC");
+        inputControlsEnumMap.put("earliestExportDate", "EARLIEST_EXPORT_DATE");
+        inputControlsEnumMap.put("endDate", "END_DATE");
+        inputControlsEnumMap.put("exportDate", "EXPORT_DATE");
+        inputControlsEnumMap.put("exportSetName", "EXPORT_SET_NAME");
+        inputControlsEnumMap.put("massMetric", "MASS_METRIC");
+        inputControlsEnumMap.put("dtcScore", "DTC_SCORE");
+        inputControlsEnumMap.put("latestCostDate", "LATEST_COST_DATE");
+        inputControlsEnumMap.put("latestExportDate", "LATEST_EXPORT_DATE");
+        inputControlsEnumMap.put("minimumAnnualSpend", "MINIMUM_ANNUAL_SPEND");
+        inputControlsEnumMap.put("processGroup", "PROCESS_GROUP");
+        inputControlsEnumMap.put("projectRollup", "PROJECT_ROLLUP");
+        inputControlsEnumMap.put("rollup", "ROLLUP");
+        inputControlsEnumMap.put("sortOrder", "SORT_ORDER");
+        inputControlsEnumMap.put("startDate", "START_DATE");
+        inputControlsEnumMap.put("trendingPeriod", "TRENDING_PERIOD");
     }
 }
