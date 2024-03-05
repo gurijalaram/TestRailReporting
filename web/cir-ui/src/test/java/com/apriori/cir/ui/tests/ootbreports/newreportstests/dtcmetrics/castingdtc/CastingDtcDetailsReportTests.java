@@ -15,6 +15,8 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import org.assertj.core.api.SoftAssertions;
+import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +32,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         JasperCirApiPartsEnum.GEAR_HOUSING.getPartName(),
         JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
     );
+    private SoftAssertions softAssertions = new SoftAssertions();
     private JasperApiUtils jasperApiUtils;
 
 
@@ -361,5 +364,22 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "Process Group",
             ""
         );
+    }
+
+    @Test
+    @TmsLink("7644")
+    @TestRail(id = 7644)
+    @Description("Verify DTC issue counts are correct - Casting DTC Details Report")
+    public void testVerifyDtcIssueCountsAreCorrect() {
+        List<Element> elementsList = jasperApiUtils.dtcDetailsIssueCountGenericTestReportGeneration(
+            "",
+            "CYLINDER HEAD"
+        );
+
+        softAssertions.assertThat(elementsList.toString().contains("77")).isEqualTo(true);
+        softAssertions.assertThat(elementsList.toString().contains("351")).isEqualTo(true);
+        softAssertions.assertThat(elementsList.toString().contains("327")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 }
