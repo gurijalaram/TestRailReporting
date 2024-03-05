@@ -40,6 +40,16 @@
     "name": {
       "type": "string"
     },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          }
+        ]
+      }
+    },
     "processGroups": {
       "type": "array",
       "items": {
@@ -54,6 +64,9 @@
       "type": "number"
     },
     "revision": {
+      "type": "string"
+    },
+    "subjectIdentity": {
       "type": "string"
     },
     "updatedAt": {

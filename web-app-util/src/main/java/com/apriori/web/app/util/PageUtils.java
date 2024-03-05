@@ -1084,6 +1084,18 @@ public class PageUtils {
     }
 
     /**
+     * Waits for the element to become disabled
+     *
+     * @param locator - the locator of the element
+     * @return
+     */
+    public void waitForElementNotEnabled(WebElement locator, int timeoutInMinutes) {
+        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(not((ExpectedCondition<Boolean>) element -> (locator).isEnabled()));
+    }
+
+    /**
      * Waits for the element to become invisible
      *
      * @param locator - the locator of the element
@@ -1190,9 +1202,9 @@ public class PageUtils {
      * Waits for the element and checks the first selected option
      *
      * @param locator - the locator of the element
-     * @return
+     * @return Boolean
      */
-    public boolean checkElementFirstOption(WebElement locator, String text) {
+    public Boolean checkElementFirstOption(WebElement locator, String text) {
         return new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS / 2))
             .withMessage("Expected option not in dropdown: " + text + "Locator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
@@ -1204,9 +1216,10 @@ public class PageUtils {
      *
      * @param locator - the locator
      * @param option  - the option
+     * @return Boolean
      */
-    public void checkDropdownOptions(WebElement locator, String option) {
-        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS / 2))
+    public Boolean checkDropdownOptions(WebElement locator, String option) {
+        return new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS / 2))
             .withMessage("Expected option not in dropdown: " + option + "Locator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().stream().anyMatch(dropdownOptions -> dropdownOptions.getAttribute("value").contains(option))));
@@ -1222,6 +1235,18 @@ public class PageUtils {
             .withMessage("Expected option not in dropdown" + locator)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().size() > 1));
+    }
+
+    /**
+     * waits for the web elements to be loaded
+     *
+     * @param locator - List<WebElements>
+     */
+    public void waitUntilWebElementsLoaded(By locator) {
+        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
+            .withMessage("Expected web elements not loaded ")
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until((ExpectedCondition<Boolean>) element -> (driver.findElements(locator).size() > 0));
     }
 
     /**

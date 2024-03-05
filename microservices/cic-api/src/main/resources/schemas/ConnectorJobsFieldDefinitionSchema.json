@@ -1,0 +1,160 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "annualManufacturingCarbon": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "checkInUser": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "cidPartLink": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "costingResult": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "customerUuid": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "cycleTime": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "description": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "dfmRisk": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "dfmScore": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "errorMessage": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "finishMass": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "fullyBurdenedCost": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "jobUuid": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "laborTime": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "logisticsCarbon": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "machiningMode": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "material": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "materialCarbon": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "materialCost": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "partId": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "partIdentity": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "partName": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "partNumber": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "partType": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "piecePartCost": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "processCarbon": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "processGroup": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "processRouting": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "revisionNumber": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "roughMass": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "scenarioName": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "status": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "targetCost": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "targetMass": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "totalCarbon": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "utilization": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "uuid": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    },
+    "vpe": {
+      "$ref": "AgentConnectorPropertiesSchema.json"
+    }
+  },
+  "optional": [
+    "annualManufacturingCarbon",
+    "checkInUser",
+    "cidPartLink",
+    "costingResult",
+    "customerUuid",
+    "cycleTime",
+    "description",
+    "dfmRisk",
+    "dfmScore",
+    "errorMessage",
+    "finishMass",
+    "fullyBurdenedCost",
+    "jobUuid",
+    "laborTime",
+    "logisticsCarbon",
+    "machiningMode",
+    "material",
+    "materialCarbon",
+    "materialCost",
+    "partId",
+    "partIdentity",
+    "partName",
+    "partNumber",
+    "partType",
+    "piecePartCost",
+    "processCarbon",
+    "processGroup",
+    "processRouting",
+    "revisionNumber",
+    "roughMass",
+    "scenarioName",
+    "status",
+    "targetCost",
+    "targetMass",
+    "totalCarbon",
+    "utilization",
+    "uuid",
+    "vpe"
+  ]
+}

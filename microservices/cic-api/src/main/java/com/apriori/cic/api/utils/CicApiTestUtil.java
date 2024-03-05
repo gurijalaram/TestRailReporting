@@ -55,9 +55,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class CicApiTestUtil {
+public class CicApiTestUtil extends CicUtil {
 
     private static final int WAIT_TIME = 30;
+
 
     /**
      * Deserialize workflow data from json file to string.
@@ -751,6 +752,11 @@ public class CicApiTestUtil {
             .orElseThrow(() -> new IllegalArgumentException("Could not find matching workflow with Plm Part ID " + plmPartID));
     }
 
+    /**
+     * get Agent port data
+     *
+     * @return AgentPort
+     */
     public static AgentPort getAgentPortData() {
         ConcurrentLinkedQueue<AgentPort> cicAgentPortsQueue = new InitFileData().initRows(AgentPort.class,
             FileResourceUtil.getResourceAsFile("cic_agent_ports.csv"));
@@ -787,7 +793,8 @@ public class CicApiTestUtil {
             while (true) {
                 if (cicAgentPorts.getEnvironment().equals(PropertiesContext.get("env")) &&
                     cicAgentPorts.getCustomer().equals(PropertiesContext.get("customer")) &&
-                    cicAgentPorts.getAgentType().equals(agentType.getAgentType())) {
+                    cicAgentPorts.getAgentType().equals((agentType.getAgentType()).contains("_")
+                        ? agentType.getAgentType().replace("_", "") : agentType.getAgentType())) {
                     log.debug(String.format("PORT for Environment >>%s<< - Customer >>%s<< - Agent Type >>%s<< is >>%s<<", PropertiesContext.get("env"),
                         PropertiesContext.get("customer"),
                         PropertiesContext.get("ci-connect.agent_type"),
@@ -807,7 +814,7 @@ public class CicApiTestUtil {
      * @param session - JSESSION
      * @return Map
      */
-    private static Map<String, String> initHeadersWithJSession(String session) {
+    protected static Map<String, String> initHeadersWithJSession(String session) {
         return new HashMap<String, String>() {
             {
                 put("Accept", "*/*");

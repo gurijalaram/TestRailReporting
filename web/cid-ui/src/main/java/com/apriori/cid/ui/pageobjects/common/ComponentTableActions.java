@@ -153,7 +153,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
             pageUtils.waitForElementAndClick(paginatorDropdown);
             return setPagination();
         }
-        By paginator = By.xpath(String.format("//div[.='%d']", paged));
+        By paginator = By.xpath(String.format("//div[@data-testid='paginator']//div[.='%d']", paged));
         pageUtils.waitForElementToAppear(paginator);
         pageUtils.waitForElementAndClick(paginator);
         return this;

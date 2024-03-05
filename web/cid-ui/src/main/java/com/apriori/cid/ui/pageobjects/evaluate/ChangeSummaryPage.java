@@ -16,10 +16,10 @@ public class ChangeSummaryPage extends LoadableComponent<ChangeSummaryPage> {
     @FindBy(css = "div[role='presentation']")
     private WebElement changeSummary;
 
-    @FindBy(xpath = "(//div[@role='presentation']//h3)[2]")
+    @FindBy(css = "div[data-testid='change-summary-initial-values'] h3")
     private WebElement changedFromHeader;
 
-    @FindBy(xpath = "(//div[@role='presentation']//h3)[3]")
+    @FindBy(css = "div[data-testid='change-summary-modified-values'] h3")
     private WebElement changedToHeader;
 
     private String changedValueID = "qa-change-summary-column-%1$d-%2$s";

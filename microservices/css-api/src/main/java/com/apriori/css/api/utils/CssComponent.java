@@ -10,8 +10,10 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.ContentParams;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.component.ComponentResponse;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.utils.KeyValueUtil;
@@ -31,7 +33,7 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Slf4j
-public class CssComponent {
+public class CssComponent extends TestUtil {
 
     private final int SOCKET_TIMEOUT = 630000;
     private final int POLL_TIME = 2;
@@ -146,10 +148,9 @@ public class CssComponent {
      * @return the response wrapper that contains the response data
      */
     private ResponseWrapper<ComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
-            .headers(new QueryParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
+        RequestEntity requestEntity = getRequestEntityUtil(userCredentials).init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
+            .headers(new ContentParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
             .queryParams(queryParams)
-            .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT)
             .expectedResponseCode(HttpStatus.SC_OK);
 
@@ -164,9 +165,8 @@ public class CssComponent {
      * @return the response wrapper that contains the response data
      */
     public ResponseWrapper<ComponentResponse> postSearchRequest(UserCredentials userCredentials, String componentType) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
-            .token(userCredentials.getToken())
-            .headers(new QueryParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
+        RequestEntity requestEntity = getRequestEntityUtil(userCredentials).init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
+            .headers(new ContentParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
             .xwwwwFormUrlEncodeds(Collections.singletonList(new HashMap<String, String>() {
                 {
                     put("pageNumber", "1");
@@ -187,9 +187,21 @@ public class CssComponent {
      * @return The response wrapper that contains the response data.
      */
     public ResponseWrapper<ComponentResponse> getIterationsRequest(UserCredentials userCredentials) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS, ComponentResponse.class)
+        RequestEntity requestEntity = getRequestEntityUtil(userCredentials).init(CssAPIEnum.SCENARIO_ITERATIONS, ComponentResponse.class)
             .expectedResponseCode(HttpStatus.SC_OK)
             .token(userCredentials.getToken());
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * get custom user request entity util
+     *
+     * @param userCredentials - UserCredentials
+     * @return RequestEntityUtil
+     */
+    private RequestEntityUtil getRequestEntityUtil(UserCredentials userCredentials) {
+        RequestEntityUtil requestEntityUtil = RequestEntityUtilBuilder.useCustomUser(userCredentials)
+            .useApUserContextInRequests();
+        return requestEntityUtil;
     }
 }
