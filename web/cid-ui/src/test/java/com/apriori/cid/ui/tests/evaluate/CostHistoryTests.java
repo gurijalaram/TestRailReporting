@@ -215,6 +215,15 @@ public class CostHistoryTests extends TestBaseUI {
             .back();
 
         softAssertions.assertThat(costHistoryPage.iterationCount()).as("Something to test").isGreaterThan(1);
+
+        softAssertions.assertThat(costHistoryPage.iterationDisplayIcon(4)).as("Verify iteration is marked as hidden in table")
+            .isEqualTo("eye");
+        costHistoryPage.showHideIteration(4);
+        softAssertions.assertThat(costHistoryPage.iterationDisplayIcon(4)).as("Verify iteration is marked as hidden in table")
+            .isEqualTo("eye-slash");
+        costHistoryPage.showHideIteration(4);
+        softAssertions.assertThat(costHistoryPage.iterationDisplayIcon(4)).as("Verify iteration is marked as hidden in table")
+            .isEqualTo("eye");
         softAssertions.assertAll();
     }
 }

@@ -93,11 +93,22 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      *
      * @param iterationNum - The number of the specified iteration
      *
-     * @return String with value of data-icon attribute
+     * @return String with value of data-icon attribute | eye or eye-slash
      */
     public String iterationDisplayIcon(Integer iterationNum) {
-        By locator = By.xpath(String.format(iterationXPath, iterationNum) + "/../following-sibling::button/span/*[name()='svg']");
-        return driver.findElement(locator).getAttribute("data-icon");
+        return showHideIterationButton(iterationNum).getAttribute("data-icon");
+    }
+
+    /**
+     * Show/Hide a given iteration
+     *
+     * @param iterationNum - The number of the specified iteration
+     *
+     * @return - This PO
+     */
+    public CostHistoryPage showHideIteration(Integer iterationNum) {
+        pageUtils.waitForElementAndClick(showHideIterationButton(iterationNum));
+        return this;
     }
 
     /**
@@ -197,6 +208,18 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      */
     private WebElement iterationInfoTooltipIcon(Integer iterationNum) {
         By locator = By.xpath(String.format(iterationXPath, iterationNum) + "//*[@data-icon='circle-info']");
+        return driver.findElement(locator);
+    }
+
+    /**
+     * Get WebElement for show/hide iteration button
+     *
+     * @param iterationNum - The number of the specified iteration
+     *
+     * @return - WebElement of the specified iteration's button
+     */
+    private WebElement showHideIterationButton(Integer iterationNum) {
+        By locator = By.xpath(String.format(iterationXPath, iterationNum) + "/../following-sibling::button/span/*[name()='svg']");
         return driver.findElement(locator);
     }
 }
