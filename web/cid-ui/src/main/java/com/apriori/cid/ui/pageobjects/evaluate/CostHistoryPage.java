@@ -37,6 +37,15 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(css="g[class*='recharts-xAxis xAxis'] tspan")
     private List<WebElement> displayedChartIterations;
 
+    @FindBy(css="button[aria-label='Download as image']")
+    private WebElement downloadViewButton;
+
+    @FindBy(css="div[data-testid='scenario-history-download-preview'] button[data-testid='secondary-button']")
+    private WebElement back;
+
+    @FindBy(css="div[data-testid='scenario-history-download-preview'] button[data-testid='primary-button']")
+    private WebElement download;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -114,6 +123,36 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     }
 
     /**
+     * Click the Download button
+     *
+     * @return - this PO
+     */
+    public CostHistoryPage openDownloadView() {
+        pageUtils.waitForElementAndClick(downloadViewButton);
+        return this;
+    }
+
+    /**
+     * Clicks back button from Download View
+     *
+     * @return - This PO
+     */
+    public CostHistoryPage back() {
+        pageUtils.waitForElementAndClick(back);
+        return this;
+    }
+
+    /**
+     * Clicks download button from Download View
+     *
+     * @return - This PO
+     */
+    public CostHistoryPage download() {
+        pageUtils.waitForElementAndClick(download);
+        return this;
+    }
+
+    /**
      * Get Web Element for specified iteration div
      *
      * @param iterationNum - The number of the specified iteration
@@ -124,6 +163,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
         By locator = By.xpath(String.format(iterationXPath, iterationNum) + "/..");
         return driver.findElement(locator);
     }
+
 
     /**
      * Get By for specified iteration div

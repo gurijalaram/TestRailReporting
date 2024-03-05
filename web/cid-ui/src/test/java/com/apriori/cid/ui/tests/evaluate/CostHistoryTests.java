@@ -23,6 +23,8 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -34,20 +36,19 @@ public class CostHistoryTests extends TestBaseUI {
     private EvaluatePage evaluatePage;
     private CostHistoryPage costHistoryPage;
 
-    private ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private ComponentsUtil componentsUtil = new ComponentsUtil();
+    private static ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private static ComponentsUtil componentsUtil = new ComponentsUtil();
     private SoftAssertions softAssertions = new SoftAssertions();
+
+    private static ComponentInfoBuilder castingPart;
 
     public CostHistoryTests() {
         super();
     }
 
-    @Test
-    @TestRail(id = {28442, 28443, 28444, 28447})
-    @Description("Verify Cost History available")
-    public void testCostHistory() {
-
-        ComponentInfoBuilder castingPart = new ComponentRequestUtil().getComponentWithProcessGroup("Casting", ProcessGroupEnum.CASTING_DIE);
+    @BeforeAll
+    public static void createMultiCostedScenario() {
+        castingPart = new ComponentRequestUtil().getComponentWithProcessGroup("Casting", ProcessGroupEnum.CASTING_DIE);
 
         componentsUtil.postComponent(castingPart);
 
@@ -115,6 +116,12 @@ public class CostHistoryTests extends TestBaseUI {
                 .secondaryDigitalFactories(secondaryDF)
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
+    }
+
+    @Test
+    @TestRail(id = {28442, 28443, 28444, 28447})
+    @Description("Verify Cost History available")
+    public void testCostHistory() {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(castingPart.getUser())
@@ -192,6 +199,22 @@ public class CostHistoryTests extends TestBaseUI {
         softAssertions.assertThat(changeSummary.getChangedTo("Secondary Digital Factories-Surface Treatment"))
             .as("Verify changed to in Secondary Digital Factories-Surface Treatment").isEqualTo(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory());
 
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29943, 29944})
+    @Description("Verify Download as Image")
+    public void testDownloadAsImage() {
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(castingPart.getUser())
+            .openScenario(castingPart.getComponentName(), castingPart.getScenarioName());
+
+        costHistoryPage = evaluatePage.clickHistory()
+            .openDownloadView()
+            .back();
+
+        softAssertions.assertThat(costHistoryPage.iterationCount()).as("Something to test").isGreaterThan(1);
         softAssertions.assertAll();
     }
 }
