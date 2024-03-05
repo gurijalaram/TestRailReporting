@@ -50,6 +50,9 @@
             "batchSize": {
               "type": "integer"
             },
+            "costMode": {
+              "type": "string"
+            },
             "customAttributes": {
               "type": "object",
               "properties": {

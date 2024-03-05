@@ -25,6 +25,7 @@ import java.util.List;
 @Schema(location = "CostingTemplate.json")
 @JsonRootName("response")
 public class CostingTemplate implements Serializable {
+    @Builder.Default
     private String identity = null;
     private String costingTemplateIdentity;
     @JsonSerialize(using = ToStringSerializer.class)

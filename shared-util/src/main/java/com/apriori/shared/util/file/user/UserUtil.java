@@ -46,8 +46,7 @@ public class UserUtil {
      * @return User
      */
     public static synchronized UserCredentials getUser() {
-        UserCredentials user = UserCommonService.getUser()
-            .generateToken();
+        UserCredentials user = UserCommonService.getUser();
         logInfo(user);
         return user;
     }
@@ -59,8 +58,7 @@ public class UserUtil {
      * @return User
      */
     public static UserCredentials getUser(String accessLevel) {
-        UserCredentials user = UserSecurityService.getUser(accessLevel).generateToken()
-            .generateCloudContext();
+        UserCredentials user = UserSecurityService.getUser(accessLevel);
         logInfo(user);
         return user;
     }

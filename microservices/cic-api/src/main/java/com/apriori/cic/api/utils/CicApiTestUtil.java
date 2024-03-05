@@ -793,7 +793,8 @@ public class CicApiTestUtil extends CicUtil {
             while (true) {
                 if (cicAgentPorts.getEnvironment().equals(PropertiesContext.get("env")) &&
                     cicAgentPorts.getCustomer().equals(PropertiesContext.get("customer")) &&
-                    cicAgentPorts.getAgentType().equals(agentType.getAgentType())) {
+                    cicAgentPorts.getAgentType().equals((agentType.getAgentType()).contains("_")
+                        ? agentType.getAgentType().replace("_", "") : agentType.getAgentType())) {
                     log.debug(String.format("PORT for Environment >>%s<< - Customer >>%s<< - Agent Type >>%s<< is >>%s<<", PropertiesContext.get("env"),
                         PropertiesContext.get("customer"),
                         PropertiesContext.get("ci-connect.agent_type"),

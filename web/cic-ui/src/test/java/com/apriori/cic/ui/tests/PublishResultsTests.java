@@ -72,7 +72,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
     public void testPublishResultsAttachReportTab() {
         WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
         workFlowData.setConnectorName(agentPort.getConnector());
-        workFlowData.getQueryDefinitionsData().get(0).setFieldValue("000001042");
+        workFlowData.getQueryDefinitionsData().get(0).setFieldValue(plmPartNumber);
         softAssertions = new SoftAssertions();
         DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)

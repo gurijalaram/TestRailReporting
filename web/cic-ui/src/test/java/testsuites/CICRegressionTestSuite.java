@@ -14,6 +14,7 @@ import com.apriori.cic.ui.tests.PlmQueryDefStrEmailRuleTests;
 import com.apriori.cic.ui.tests.PlmUdaTests;
 import com.apriori.cic.ui.tests.PlmWorkflowRevisionTests;
 import com.apriori.cic.ui.tests.PublishResultsTests;
+import com.apriori.cic.ui.tests.PublishResultsWriteFieldTests;
 import com.apriori.cic.ui.tests.QueryDefinitionTests;
 import com.apriori.cic.ui.tests.UsersTests;
 import com.apriori.cic.ui.tests.WorkflowHistoryTests;
@@ -43,6 +44,7 @@ import org.junit.platform.suite.api.Suite;
     PlmQueryDefIntRuleTests.class,
     PlmQueryDefRealRuleTests.class,
     PlmQueryDefStrEmailRuleTests.class,
+    PublishResultsWriteFieldTests.class,
     AssemblyReportTests.class
 })
 public class CICRegressionTestSuite {
