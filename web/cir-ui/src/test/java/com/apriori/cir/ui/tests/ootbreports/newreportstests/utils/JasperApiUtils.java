@@ -88,6 +88,28 @@ public class JasperApiUtils {
         initialiseInputControlsEnumMap();
     }
 
+    public JasperReportSummary genericTestCoreNoParameters() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        String processGroupId = inputControls.getProcessGroup().getOption(processGroupName).getValue();
+        setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(), processGroupId);
+
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
     /**
      * Generic method that sets one particular value in the input controls
      *
@@ -208,7 +230,7 @@ public class JasperApiUtils {
 
         String rollupValue = inputControlState.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
 
-        setExportNameParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), valueOneToSet, valueTwoToSet);
+        setTwoExportSetsParametersByName(valueOneToSet, valueTwoToSet);
         setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(), rollupValue);
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
         setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
@@ -691,12 +713,12 @@ public class JasperApiUtils {
     /**
      * Sets export set name to more than one
      *
-     * @param valueToGet String the key of the value to set
      * @param valueOneToSet String of the first value which to set
      * @param valueTwoToSet String of the second value which to set
      */
-    public void setExportNameParameterByName(String valueToGet, String valueOneToSet, String valueTwoToSet) {
-        this.reportRequest.getParameters().getReportParameterByName(valueToGet)
+    public void setTwoExportSetsParametersByName(String valueOneToSet, String valueTwoToSet) {
+        this.exportSetName = exportSetName;
+        this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId())
             .setValue(Arrays.asList(valueOneToSet, valueTwoToSet));
     }
 
@@ -803,6 +825,22 @@ public class JasperApiUtils {
     }
 
     /**
+     * Generic DTC Details Issue Count Report Generation
+     *
+     * @param exportSetName - String - export set to use
+     * @param partToFind - String - part to find in list
+     * @return - List of Elements
+     */
+    public List<Element> dtcDetailsIssueCountGenericTestReportGeneration(String exportSetName, String partToFind) {
+        if (!exportSetName.isEmpty()) {
+            setExportSetName(exportSetName);
+        }
+        JasperReportSummary jasperReportSummary = genericTestCore("", "");
+
+        return jasperReportSummary.getReportHtmlPart().getElementsContainingText(partToFind).get(5).children();
+    }
+
+    /**
      * Generates report for Scenario Activity excluding Raw Data
      *
      * @return ArrayList of Jasper Report Summary instances
@@ -856,6 +894,14 @@ public class JasperApiUtils {
      */
     public ArrayList<Element> getElementsForScenarioActivityReportTests(JasperReportSummary jasperReportSummary) {
         return jasperReportSummary.getReportHtmlPart().select("[class='jrxtcolfloating jrxtcolheader']");
+    }
+
+    /**
+     * Sets export set name (used when different from usual setting on a certain report)
+     * @param exportSetName - String export set name to set
+     */
+    public void setExportSetName(String exportSetName) {
+        this.exportSetName = exportSetName;
     }
 
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
