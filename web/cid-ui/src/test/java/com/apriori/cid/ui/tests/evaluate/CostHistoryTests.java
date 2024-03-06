@@ -203,6 +203,52 @@ public class CostHistoryTests extends TestBaseUI {
     }
 
     @Test
+    @TestRail(id={29698})
+    @Description("Verify that History Graph axes are retained after closing modal / scenario")
+    public void testGraphAxisRetention() {
+        String primaryAxis = "Design Warnings";
+        String secondaryAxis = "Material Carbon";
+
+        ComponentInfoBuilder secondComponent = new ComponentRequestUtil().getComponent();
+        componentsUtil.postComponent(secondComponent);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(castingPart.getUser())
+            .openScenario(castingPart.getComponentName(), castingPart.getScenarioName());
+
+        costHistoryPage = evaluatePage.clickHistory();
+
+        costHistoryPage.setPrimaryAxis(primaryAxis);
+        costHistoryPage.setSecondaryAxis(secondaryAxis);
+
+        costHistoryPage = costHistoryPage.close()
+            .clickHistory();
+
+        softAssertions.assertThat(costHistoryPage.selectedPrimaryAxis()).as("Primary Axis retained after close").isEqualTo(primaryAxis);
+        softAssertions.assertThat(costHistoryPage.selectedSecondaryAxis()).as("Secondary Axis retained after close").isEqualTo(secondaryAxis);
+
+        costHistoryPage = costHistoryPage.close()
+            .clickExplore()
+            .openScenario(secondComponent.getComponentName(), secondComponent.getScenarioName())
+            .clickHistory();
+
+        softAssertions.assertThat(costHistoryPage.selectedPrimaryAxis()).as("Primary Axis retained in different scenario").isEqualTo(primaryAxis);
+        softAssertions.assertThat(costHistoryPage.selectedSecondaryAxis()).as("Secondary Axis retained in different scenario").isEqualTo(secondaryAxis);
+
+        costHistoryPage = costHistoryPage.close()
+            .clickExplore()
+            .openScenario(castingPart.getComponentName(), castingPart.getScenarioName())
+            .clickHistory();
+
+        softAssertions.assertThat(costHistoryPage.selectedPrimaryAxis()).as("Primary Axis retained after opening another scenario")
+            .isEqualTo(primaryAxis);
+        softAssertions.assertThat(costHistoryPage.selectedSecondaryAxis()).as("Secondary Axis retained after opening another scenario")
+            .isEqualTo(secondaryAxis);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
     @TestRail(id = {29943, 29944})
     @Description("Verify Download as Image")
     public void testDownloadAsImage() {
@@ -210,9 +256,23 @@ public class CostHistoryTests extends TestBaseUI {
         evaluatePage = loginPage.login(castingPart.getUser())
             .openScenario(castingPart.getComponentName(), castingPart.getScenarioName());
 
-        costHistoryPage = evaluatePage.clickHistory()
-            .openDownloadView()
-            .back();
+        costHistoryPage = evaluatePage.clickHistory();
+
+        costHistoryPage.setPrimaryAxis("Total Cycle Time");
+        costHistoryPage.setSecondaryAxis("DFM Risk");
+        softAssertions.assertThat(costHistoryPage.selectedPrimaryAxis()).as("Selected Primary Axis").isEqualTo("Total Cycle Time");
+        softAssertions.assertThat(costHistoryPage.selectedSecondaryAxis()).as("Selected Secondary Axis").isEqualTo("DFM Risk");
+
+        costHistoryPage.openDownloadView();
+
+        softAssertions.assertThat(costHistoryPage.downloadPreviewTitle()).as("Verify Preview Title")
+            .isEqualTo(castingPart.getComponentName() + " / " + castingPart.getScenarioName() + " Total Cycle Time and DFM Risk");
+        softAssertions.assertThat(costHistoryPage.downloadPreviewDate()).as("Verify Displayed Date").isEqualTo("March 6, 2024");
+        softAssertions.assertThat(costHistoryPage.downloadPreviewFirstAxisName()).as("First Axis Name").isEqualTo("Total Cycle Time");
+        softAssertions.assertThat(costHistoryPage.downloadPreviewSecondAxisName()).as("Second Axis Name").isEqualTo("DFM Risk");
+        softAssertions.assertThat(costHistoryPage.downloadPreviewWatermarkDisplayed()).as("Verify Watermark Displayed").isTrue();
+
+        costHistoryPage.back();
 
         softAssertions.assertThat(costHistoryPage.iterationCount()).as("Something to test").isGreaterThan(1);
 

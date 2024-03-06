@@ -37,8 +37,30 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(css="g[class*='recharts-xAxis xAxis'] tspan")
     private List<WebElement> displayedChartIterations;
 
+    @FindBy(id="qa-scenario-history-primary-select")
+    private WebElement primaryAxisDropDown;
+
+    @FindBy(id="qa-scenario-history-secondary-select")
+    private WebElement secondaryAxisDropDown;
+
     @FindBy(css="button[aria-label='Download as image']")
     private WebElement downloadViewButton;
+
+    @FindBy(css="div[data-testid='scenario-history-download-preview'] h1")
+    private WebElement downloadPreviewTitle;
+
+    @FindBy(css="div[data-testid='scenario-history-download-preview'] h1 + p")
+    private WebElement downloadPreviewDate;
+
+    @FindBy(css="div[data-testid='scenario-history-download-preview'] div:nth-of-type(2) div p")
+    private WebElement downloadPreviewFirstAxisLegend;
+
+    //@FindBy(css="div[data-testid='scenario-history-download-preview'] div:nth-of-type(3) div p")
+    @FindBy(css="div[data-testid='SecondaryAxisLegend']")
+    private WebElement downloadPreviewSecondAxisLegend;
+
+    @FindBy(css="svg[data-testid='logo']")
+    private WebElement downloadPreviewWatermark;
 
     @FindBy(css="div[data-testid='scenario-history-download-preview'] button[data-testid='secondary-button']")
     private WebElement back;
@@ -89,7 +111,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     }
 
     /**
-     * Get WebElement for iteration hide/show icon
+     * Get name of iteration hide/show icon
      *
      * @param iterationNum - The number of the specified iteration
      *
@@ -106,9 +128,8 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      *
      * @return - This PO
      */
-    public CostHistoryPage showHideIteration(Integer iterationNum) {
+    public void showHideIteration(Integer iterationNum) {
         pageUtils.waitForElementAndClick(showHideIterationButton(iterationNum));
-        return this;
     }
 
     /**
@@ -122,6 +143,48 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
         pageUtils.waitForElementToAppear(iterationInfoTooltipIcon(iterationNum));
         pageUtils.mouseMove(iterationInfoTooltipIcon(iterationNum));
         return new ChangeSummaryPage(driver);
+    }
+
+    /**
+     * Get currently selected primary axis
+     *
+     * @return - String of currently selected value for primary axis
+     */
+    public String selectedPrimaryAxis() {
+        return primaryAxisDropDown.getText();
+    }
+
+    /**
+     * Select value for primary axis
+     *
+     * @param axisName - Name of specified axis
+     */
+    public void setPrimaryAxis(String axisName) {
+        By requestedAxis = By.xpath(String.format("//div[.='%s']/div/div", axisName));
+
+        primaryAxisDropDown.click();
+        pageUtils.waitForElementAndClick(requestedAxis);
+    }
+
+    /**
+     * Get currently selected secondary axis
+     *
+     * @return - String of currently selected value for primary axis
+     */
+    public String selectedSecondaryAxis() {
+        return secondaryAxisDropDown.getText();
+    }
+
+    /**
+     * Select value for secondary axis
+     *
+     * @param axisName - Name of specified axis
+     */
+    public void setSecondaryAxis(String axisName) {
+        By requestedAxis = By.xpath(String.format("//div[.='%s']/div/div", axisName));
+
+        secondaryAxisDropDown.click();
+        pageUtils.waitForElementAndClick(requestedAxis);
     }
 
     /**
@@ -141,6 +204,51 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     public CostHistoryPage openDownloadView() {
         pageUtils.waitForElementAndClick(downloadViewButton);
         return this;
+    }
+
+    /**
+     * Get the Download Preview Title
+     *
+     * @return - String of graph title
+     */
+    public String downloadPreviewTitle() {
+        return downloadPreviewTitle.getText();
+    }
+
+    /**
+     * Get the Download Preview Date
+     *
+     * @return - String of Date
+     */
+    public String downloadPreviewDate() {
+        return downloadPreviewDate.getText();
+    }
+
+    /**
+     * Get the Download Preview First Axis Name
+     *
+     * @return - String of First Axis Name
+     */
+    public String downloadPreviewFirstAxisName() {
+        return downloadPreviewFirstAxisLegend.getText();
+    }
+
+    /**
+     * Get the Download Preview Second Axis Name
+     *
+     * @return - String of Second Axis Name
+     */
+    public String downloadPreviewSecondAxisName() {
+        return downloadPreviewSecondAxisLegend.getText();
+    }
+
+    /**
+     * Get the display state of Download Preview watermark
+     *
+     * @return - Boolean of display status of watrermark
+     */
+    public Boolean downloadPreviewWatermarkDisplayed() {
+        return downloadPreviewWatermark.isDisplayed();
     }
 
     /**
