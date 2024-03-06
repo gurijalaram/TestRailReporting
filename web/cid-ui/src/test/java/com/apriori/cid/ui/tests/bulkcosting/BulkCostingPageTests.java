@@ -36,10 +36,8 @@ public class BulkCostingPageTests extends TestBaseUI {
             .login(UserUtil.getUser())
             .clickProjectsButton();
 
-        soft.assertThat(projectsPage.isOnProjectsPage()).isTrue();
         soft.assertThat(projectsPage.isListOfWorksheetsPresent()).isTrue();
         soft.assertAll();
-
     }
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {

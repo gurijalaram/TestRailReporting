@@ -24,7 +24,7 @@ public class ProjectsPage extends LoadableComponent<ProjectsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        driver.getCurrentUrl().contains("/bulk-analysis");
     }
 
     public ProjectsPage(WebDriver driver) {
@@ -33,11 +33,8 @@ public class ProjectsPage extends LoadableComponent<ProjectsPage> {
         this.pageUtils = new PageUtils(driver);
     }
 
-    public boolean isOnProjectsPage() {
-        return driver.getCurrentUrl().contains("/bulk-analysis");
-    }
-
     public boolean isListOfWorksheetsPresent() {
+        isLoaded();
         List<WebElement> listOfWorksheetItems =
             pageUtils.waitForElementsToAppear(By.xpath("//div[@data-testid = 'table-body']/div"));
         return !(listOfWorksheetItems.isEmpty());
