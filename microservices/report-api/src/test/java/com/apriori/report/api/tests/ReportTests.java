@@ -24,7 +24,7 @@ public class ReportTests {
         ReportReplicaController reportReplicaController = new ReportReplicaController();
         Report postResponse = reportReplicaController.postExecuteReport(customerId);
 
-        Report reportResponse = reportReplicaController.getRequestStatus(customerId, postResponse.getExecutionId());
+        Report reportResponse = reportReplicaController.getReportStatus(customerId, postResponse.getExecutionId());
 
         softAssertions.assertThat(reportResponse.getExecutionId()).isNotEmpty();
         softAssertions.assertThat(reportResponse.getStatus()).isEqualTo("SUCCEEDED");

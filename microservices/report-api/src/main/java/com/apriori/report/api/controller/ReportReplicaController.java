@@ -33,7 +33,7 @@ public class ReportReplicaController {
      *
      * @return report object
      */
-    public Report getRequestStatus(String customerId, String executionId) {
+    public Report getReportStatus(String customerId, String executionId) {
         final long START_TIME = System.currentTimeMillis() / 1000;
         ResponseWrapper<Report> reportResponse;
         int WAIT_TIME = 20;
