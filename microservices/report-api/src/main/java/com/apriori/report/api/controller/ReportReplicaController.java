@@ -7,6 +7,7 @@ import com.apriori.report.api.models.ReportRequest;
 import com.apriori.report.api.models.Settings;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -24,6 +25,9 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class ReportReplicaController {
+
+    final String TOKEN = AwsParameterStoreUtil.getSystemParameter("/qa-test-reporting-api/clients/6C1F8C1D4D75/token");
+    final String API_KEY = AwsParameterStoreUtil.getSystemParameter("/qa-test-reporting-api/clients/6C1F8C1D4D75/api-key");
 
     /**
      * Calls an API with GET verb
@@ -43,8 +47,8 @@ public class ReportReplicaController {
                 final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.REPORT_STATUS, Report.class)
                     .inlineVariables(customerId, executionId)
                     .expectedResponseCode(HttpStatus.SC_OK)
-                    .headers(new QueryParams().use("x-token", "eM1PPjIBYc23eKotQdvUy8ygrEWkz7KC7ATFEYDF")
-                        .use("x-api-key", "eYxPlF5iwP2yZN3JajrbU7Ey2GR784ZL3lQhvyGK"));
+                    .headers(new QueryParams().use("x-token",TOKEN)
+                        .use("x-api-key", API_KEY));
 
                 reportResponse = HTTPRequest.build(requestEntity).get();
 
@@ -69,8 +73,8 @@ public class ReportReplicaController {
     public Report postExecuteReport(String customerId) {
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.REPORT_EXECUTE, Report.class)
             .inlineVariables(customerId)
-            .headers(new QueryParams().use("x-token", "eM1PPjIBYc23eKotQdvUy8ygrEWkz7KC7ATFEYDF")
-                .use("x-api-key", "eYxPlF5iwP2yZN3JajrbU7Ey2GR784ZL3lQhvyGK"))
+            .headers(new QueryParams().use("x-token", TOKEN)
+                .use("x-api-key", API_KEY))
             .body(ReportRequest.builder()
                 .params(Collections.singletonList(
                     Params.builder()
