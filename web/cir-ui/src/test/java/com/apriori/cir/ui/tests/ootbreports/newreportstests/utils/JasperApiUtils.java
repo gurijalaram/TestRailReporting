@@ -29,7 +29,9 @@ import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -902,6 +904,88 @@ public class JasperApiUtils {
      */
     public void setExportSetName(String exportSetName) {
         this.exportSetName = exportSetName;
+    }
+
+    /**
+     * Ensures two values are almost near (within 0.03)
+     *
+     * @param valueOne BigDecimal
+     * @param valueTwo BigDecimal
+     * @return boolean
+     */
+    public boolean areValuesAlmostEqual(BigDecimal valueOne, BigDecimal valueTwo) {
+        BigDecimal largerValue = valueOne.max(valueTwo);
+        BigDecimal smallerValue = valueOne.min(valueTwo);
+        BigDecimal difference = largerValue.subtract(smallerValue);
+        return difference.compareTo(new BigDecimal("0.00")) >= 0 &&
+            difference.compareTo(new BigDecimal("0.03")) <= 0;
+    }
+
+    /**
+     * Gets sub total and total values from Assembly Details report
+     *
+     * @param jasperReportSummary - JasperReportSummary to use to retrieve values
+     * @param elementType - String type of element
+     * @param indexesToGet - List of Integers
+     * @return ArrayList of BigDecimals
+     */
+    public ArrayList<BigDecimal> getSubTotalAndTotalValuesAssemblyDetails(JasperReportSummary jasperReportSummary, String elementType, List<Integer> indexesToGet) {
+        ArrayList<BigDecimal> returnList = new ArrayList<>();
+        returnList.add(convertStringToBigDecimalValue(jasperReportSummary.getReportHtmlPart().getElementsContainingText(elementType).get(12).siblingElements().get(indexesToGet.get(0)).text()));
+        returnList.add(convertStringToBigDecimalValue(jasperReportSummary.getReportHtmlPart().getElementsContainingText(elementType).get(12).siblingElements().get(indexesToGet.get(1)).text()));
+        returnList.add(convertStringToBigDecimalValue(jasperReportSummary.getReportHtmlPart().getElementsContainingText(elementType).get(12).siblingElements().get(indexesToGet.get(2)).text()));
+        returnList.add(convertStringToBigDecimalValue(jasperReportSummary.getReportHtmlPart().getElementsContainingText(elementType).get(12).siblingElements().get(indexesToGet.get(3)).text()));
+        return returnList;
+    }
+
+    /**
+     * Takes in a string and returns it as a BigDecimal value
+     *
+     * @param valueToConvert - String to convert
+     * @return BigDecimal of String value
+     */
+    public BigDecimal convertStringToBigDecimalValue(String valueToConvert) {
+        return new BigDecimal(valueToConvert.replaceAll(",", ""));
+    }
+
+    /**
+     * Gets Assembly Details values at level one
+     *
+     * @param jasperReportSummary - JasperReportSummary to retrieve values from
+     * @return List of BigDecimal values
+     */
+    public List<BigDecimal> getAssemblyDetailsValuesLevelOne(JasperReportSummary jasperReportSummary) {
+        List<BigDecimal> returnValues = new ArrayList<>();
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("style", "height:15px");
+        for (int i = 3; i < 9; i++) {
+            returnValues.add(convertStringToBigDecimalValue(elements.get(i).children().get(23).children().get(0).text()));
+        }
+        return returnValues;
+    }
+
+    /**
+     * Get Assembly Details total values
+     *
+     * @param jasperReportSummary - JasperReportSummary to retrieve values from
+     * @return List of BigDecimal values
+     */
+    public List<BigDecimal> getAssemblyDetailsValuesTotals(JasperReportSummary jasperReportSummary) {
+        List<BigDecimal> totalValues = new ArrayList<>();
+        List<String> heightList = Arrays.asList("13", "15", "15");
+        List<Integer> firstIndexList = Arrays.asList(0, 12, 13);
+        List<Integer> secondIndexList = Arrays.asList(14, 24, 24);
+        int i = 0;
+        for (String heightValue : heightList) {
+            totalValues.add(
+                convertStringToBigDecimalValue(
+                    jasperReportSummary.getReportHtmlPart()
+                        .getElementsByAttributeValue("style", String.format("height:%spx", heightValue))
+                        .get(firstIndexList.get(i)).children().get(secondIndexList.get(i)).children().get(0).text()
+                )
+            );
+            i++;
+        }
+        return totalValues;
     }
 
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
