@@ -30,7 +30,7 @@ public class ReportTests {
         softAssertions.assertThat(reportResponse.getStatus()).isEqualTo("SUCCEEDED");
         softAssertions.assertThat(reportResponse.getUrl()).isNotEmpty();
 
-        List<ReportBean> reportCsv = reportReplicaController.getReport(reportResponse.getUrl(), '|', ReportBean.class);
+        List<ReportBean> reportCsv = reportReplicaController.downloadReadReport(reportResponse.getUrl(), '|', ReportBean.class);
 
         reportCsv.subList(0, 5).forEach(row -> {
             softAssertions.assertThat(row).isNotNull();

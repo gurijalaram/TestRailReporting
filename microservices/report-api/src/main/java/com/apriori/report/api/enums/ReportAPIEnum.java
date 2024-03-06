@@ -5,8 +5,8 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum ReportAPIEnum implements ExternalEndpointEnum {
 
-    post_CREATE_REPORT("/customers/%s/reports/report-1/execute"),
-    get_REPORT_RESULTS("/customers/%s/reports/report-1/executions/%s/status");
+    REPORT_EXECUTE("/customers/%s/reports/report-1/execute"),
+    REPORT_STATUS("/customers/%s/reports/report-1/executions/%s/status");
 
     private final String endpoint;
 

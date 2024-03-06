@@ -43,7 +43,7 @@ public class ReportReplicaController {
                 int POLL_TIME = 500;
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-                final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.get_REPORT_RESULTS, Report.class)
+                final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.REPORT_STATUS, Report.class)
                     .inlineVariables(customerId, executionId)
                     .expectedResponseCode(HttpStatus.SC_OK)
                     .headers(new QueryParams().use("x-token", "eM1PPjIBYc23eKotQdvUy8ygrEWkz7KC7ATFEYDF")
@@ -59,8 +59,7 @@ public class ReportReplicaController {
                 log.error(e.getMessage());
                 Thread.currentThread().interrupt();
             }
-        }
-        while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+        } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
 
         throw new RuntimeException("Report status is not correct");
     }
@@ -71,7 +70,7 @@ public class ReportReplicaController {
      * @return report object
      */
     public Report postExecuteReport(String customerId) {
-        final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.post_CREATE_REPORT, Report.class)
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.REPORT_EXECUTE, Report.class)
             .inlineVariables(customerId)
             .headers(new QueryParams().use("x-token", "eM1PPjIBYc23eKotQdvUy8ygrEWkz7KC7ATFEYDF")
                 .use("x-api-key", "eYxPlF5iwP2yZN3JajrbU7Ey2GR784ZL3lQhvyGK"))
@@ -97,7 +96,7 @@ public class ReportReplicaController {
      *
      * @param url - the url to the csv file
      */
-    public <T> List<T> getReport(String url, char separator, Class<T> klass) {
+    public <T> List<T> downloadReadReport(String url, char separator, Class<T> klass) {
         final String filename = StringUtils.substringBetween(url, "/reports/", "?AWSAccessKeyId");
         String fileLocation = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + filename;
 

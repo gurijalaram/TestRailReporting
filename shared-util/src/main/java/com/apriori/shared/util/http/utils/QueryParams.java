@@ -29,16 +29,4 @@ public class QueryParams extends HashMap<String, String> {
         this.putAll(paramMap);
         return this;
     }
-
-    /**
-     * Accepts key, value of mime type
-     *
-     * @param key   - the key
-     * @param value - the value
-     * @return current object
-     */
-    public QueryParams use(String key, ContentType value) {
-        this.put(key, value.getMimeType());
-        return this;
-    }
 }
