@@ -200,8 +200,10 @@ public class DesignOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("2006")
     @TestRail(id = {2006})
     @Description("Validate the reports correct with user overrides")

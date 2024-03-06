@@ -301,8 +301,10 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("6985")
     @TestRail(id = {6985})
     @Description("Percent difference threshold filter works - details report")

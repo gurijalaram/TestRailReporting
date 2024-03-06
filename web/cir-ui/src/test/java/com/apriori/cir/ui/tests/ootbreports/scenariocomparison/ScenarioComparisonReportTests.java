@@ -64,8 +64,10 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("3245")
     @TestRail(id = {3245})
     @Description("Validate report is available by search")
@@ -75,8 +77,10 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("3246")
     @TestRail(id = {3246})
     @Description("Verify Export Set input control functions correctly")
@@ -340,8 +344,10 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("3248")
     @TestRail(id = {3248})
     @Description("Verify Component Type input control functions correctly")
@@ -394,8 +400,10 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("3306")
     @TestRail(id = {3306})
     @Description("Verify Part Number Search Criteria input control works correctly")

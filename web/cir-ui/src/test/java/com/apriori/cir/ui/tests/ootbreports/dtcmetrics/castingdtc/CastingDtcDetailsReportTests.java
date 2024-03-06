@@ -72,8 +72,10 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7249")
     @TestRail(id = {7249})
     @Description("Verify report is available by search - Casting DTC Details Report")
@@ -93,8 +95,10 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7655")
     @TestRail(id = {7655})
     @Description("Verify Roll-up input control functions correctly - Casting DTC Details Report")
@@ -107,8 +111,10 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7344")
     @TestRail(id = {7344})
     @Description("Verify apply button functionality - Casting DTC Details Report")
@@ -122,8 +128,10 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7349")
     @TestRail(id = {7349})
     @Description("Verify cancel button functionality - Casting DTC Details Report")
@@ -133,8 +141,10 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7351")
     @TestRail(id = {7351})
     @Description("Verify reset button functionality - Casting DTC Details Report")
@@ -170,8 +180,10 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7429")
     @TestRail(id = {7429})
     @Description("Verify export date filters correctly filters export sets - Input - Casting DTC Details Report")
@@ -232,8 +244,10 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7412")
     @TestRail(id = {7412})
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Details Report")
@@ -261,8 +275,10 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7392")
     @TestRail(id = {7392})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Details Report")
@@ -303,8 +319,10 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7513")
     @TestRail(id = {7513})
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Details Report")
@@ -332,8 +350,10 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7657")
     @TestRail(id = {7657})
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Details Report")
@@ -390,8 +410,10 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7632")
     @TestRail(id = {7632})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Details Report")
