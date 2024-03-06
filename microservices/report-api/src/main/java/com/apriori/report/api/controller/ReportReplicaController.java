@@ -10,17 +10,14 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.URLFileUtil;
 import com.apriori.shared.util.utils.CsvReader;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.core5.http.HttpStatus;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -92,26 +89,17 @@ public class ReportReplicaController {
     }
 
     /**
-     * Opens a connection and downloads the report
+     * Downloads and reads a report
      *
-     * @param url - the url to the csv file
+     * @param url       - the url to the csv file
+     * @param separator - the separator in the csv
+     * @param klass     - the class bean
      */
     public <T> List<T> downloadReadReport(String url, char separator, Class<T> klass) {
         final String filename = StringUtils.substringBetween(url, "/reports/", "?AWSAccessKeyId");
         String fileLocation = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + filename;
 
-        byte[] dataBuffer;
-
-        try (BufferedInputStream in = new BufferedInputStream(new URL(url).openStream());
-             FileOutputStream fileOutputStream = new FileOutputStream(fileLocation)) {
-            dataBuffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = in.read(dataBuffer, 0, 1024)) != -1) {
-                fileOutputStream.write(dataBuffer, 0, bytesRead);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        new URLFileUtil().downloadFileFromURL(url, fileLocation);
         return new CsvReader().csvReader(fileLocation, separator, klass);
     }
 }
