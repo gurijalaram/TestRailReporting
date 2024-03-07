@@ -41,8 +41,8 @@ public class ReportReplicaController {
 
         do {
             try {
-                int POLL_TIME = 500;
-                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
+                int POLL_TIME = 3;
+                TimeUnit.SECONDS.sleep(POLL_TIME);
 
                 final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.REPORT_STATUS, Report.class)
                     .inlineVariables(customerId, executionId)
