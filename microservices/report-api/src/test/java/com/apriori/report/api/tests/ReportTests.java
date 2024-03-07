@@ -6,11 +6,13 @@ import com.apriori.report.api.models.ReportBean;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+@Slf4j
 public class ReportTests {
 
     SoftAssertions softAssertions = new SoftAssertions();
@@ -40,6 +42,8 @@ public class ReportTests {
             softAssertions.assertThat(row.getId()).isNotNull();
             softAssertions.assertThat(row.getCostingMessage()).isNotEmpty();
             softAssertions.assertThat(row.getProcessGroupId()).isNotNull();
+
+            log.info(row.toString());
         });
 
         softAssertions.assertAll();
