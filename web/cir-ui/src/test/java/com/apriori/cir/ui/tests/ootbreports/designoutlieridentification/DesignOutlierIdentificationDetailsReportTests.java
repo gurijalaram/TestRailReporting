@@ -122,8 +122,10 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("1995")
     @TestRail(id = {1995})
     @Description("Export date lists all available versions from selected export set(s)")

@@ -43,8 +43,10 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("1944")
     @TestRail(id = {1944})
     @Description("Validate report is available by navigation - menu")
@@ -76,8 +78,10 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("1954")
     @TestRail(id = {1954})
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
@@ -118,8 +122,10 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("6253")
     @TestRail(id = {6253})
     @Description("Min and max cost filter - junk value test")
@@ -179,8 +185,10 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("6986")
     @TestRail(id = {6986})
     @Description("Percent difference threshold filter - main report - junk value")
@@ -219,8 +227,10 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7023")
     @TestRail(id = {7023})
     @Description("Annualised potential savings threshold filter - main report - no data available")
@@ -295,8 +305,10 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("1957")
     @TestRail(id = {1957})
     @Description("Annualised potential savings threshold filter - main report")

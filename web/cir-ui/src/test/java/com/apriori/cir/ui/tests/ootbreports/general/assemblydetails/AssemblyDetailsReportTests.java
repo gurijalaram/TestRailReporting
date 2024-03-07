@@ -75,9 +75,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
+    @Tag(REPORTS)
     @TmsLink("3060")
     @TestRail(id = {3060})
     @Description("Validate report is available by library")
@@ -87,9 +85,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
+    @Tag(REPORTS)
     @TmsLink("1916")
     @TestRail(id = {1916})
     @Description("Validate report is available by search")
@@ -100,7 +96,6 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
-        @Tag(REPORTS),
         @Tag(ON_PREM)
     })
     @TmsLink("1922")
@@ -136,9 +131,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
+    @Tag(REPORTS)
     @TmsLink("3205")
     @TestRail(id = {3205})
     @Description("Verifies that currency change and then reversion works")
@@ -187,9 +180,6 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Tags({
-        @Tag(REPORTS)
-    })
     @TmsLink("3067")
     @TmsLink("1929")
     @TestRail(id = {3067, 1929})
@@ -234,7 +224,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Tags({@Tag(REPORTS),
+    @Tags({
+        @Tag(REPORTS),
         @Tag(ON_PREM)
     })
     @TmsLink("3068")
@@ -345,9 +336,6 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
     @TmsLink("3231")
     @TmsLink("1929")
     @TestRail(id = {3231, 1929})
@@ -398,9 +386,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
+    @Tag(REPORTS)
     @TmsLink("3232")
     @TmsLink("1929")
     @TestRail(id = {3232, 1929})
@@ -537,9 +523,6 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
     @TmsLink("1930")
     @TestRail(id = {1930})
     @Description("Test Export Set with costing failures costing incomplete")
@@ -714,9 +697,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
+    @Tag(REPORTS)
     @TmsLink("1921")
     @TestRail(id = {1921})
     @Description("Export Set search function works - Assembly Details Report")
@@ -735,9 +716,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
+    @Tag(REPORTS)
     @TmsLink("7683")
     @TestRail(id = {7683})
     @Description("Verify Created By Filter Search")
@@ -750,9 +729,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
+    @Tag(REPORTS)
     @TmsLink("7684")
     @TestRail(id = {7684})
     @Description("Verify Created By Filter Operation")
@@ -801,9 +778,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
+    @Tag(REPORTS)
     @TmsLink("7685")
     @TestRail(id = {7685})
     @Description("Verify Created By Filter Buttons")
@@ -817,9 +792,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
+    @Tag(REPORTS)
     @TmsLink("7686")
     @TestRail(id = {7686})
     @Description("Verify Last Modified By Filter Search")
@@ -832,9 +805,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
+    @Tag(REPORTS)
     @TmsLink("7687")
     @TestRail(id = {7687})
     @Description("Verify Last Modified By Filter Operation")
@@ -871,9 +842,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
+    @Tag(REPORTS)
     @TmsLink("7688")
     @TestRail(id = {7688})
     @Description("Verify Last Modified By Filter Buttons")
@@ -950,9 +919,6 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
     @TmsLink("1928")
     @TestRail(id = {1928})
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
@@ -985,9 +951,6 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS)
-    })
     @TmsLink("1933")
     @TestRail(id = {1933})
     @Description("Verify component subassembly report details")
@@ -1004,8 +967,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         BigDecimal actualVariance = assemblyDetailsReportPage.getComponentCostReportValue("Variance");
-        BigDecimal actualLifetimeCost = assemblyDetailsReportPage.getComponentCostReportValue("Lifetime Cost");
         BigDecimal actualPercentageOfTarget = assemblyDetailsReportPage.getComponentCostReportValue("% of Target");
+        BigDecimal actualLifetimeCost = assemblyDetailsReportPage.getComponentCostReportValue("Lifetime Cost");
         BigDecimal actualLifetimeProjectedCostDifference =
             assemblyDetailsReportPage.getComponentCostReportValue("Lifetime Projected Cost");
 

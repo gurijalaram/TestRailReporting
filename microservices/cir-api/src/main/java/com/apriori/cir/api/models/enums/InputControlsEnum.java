@@ -1,9 +1,11 @@
 package com.apriori.cir.api.models.enums;
 
 public enum InputControlsEnum {
+    ASSEMBLY_SELECT("assemblySelect"),
 
     CURRENCY("currencyCode"),
     COMPONENT_COST_CURRENCY("componentCostCurrencyCode"),
+    COMPONENT_SELECT("componentSelect"),
     COST_METRIC("costMetric"),
     END_DATE("endDate"),
     EXPORT_SET_NAME("exportSetName"),
