@@ -22,6 +22,9 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(css = "h2 button")
     private WebElement close;
 
+    @FindBy(css="div[role='dialog'] div div div:nth-of-type(2) p")
+    private WebElement noPlotMessage;
+
     @FindBy(css = "div[role='dialog'] p:first-child")
     private List<WebElement> iterationList;
 
@@ -36,6 +39,12 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
 
     @FindBy(css="g[class*='recharts-xAxis xAxis'] tspan")
     private List<WebElement> displayedChartIterations;
+
+    @FindBy(css="g line[orientation='left'] + g g")
+    private List<WebElement> leftAxisTicks;
+
+    @FindBy(css="g line[orientation='right'] + g g")
+    private List<WebElement> rightAxisTicks;
 
     @FindBy(id="qa-scenario-history-primary-select")
     private WebElement primaryAxisDropDown;
@@ -52,11 +61,10 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(css="div[data-testid='scenario-history-download-preview'] h1 + p")
     private WebElement downloadPreviewDate;
 
-    @FindBy(css="div[data-testid='scenario-history-download-preview'] div:nth-of-type(2) div p")
+    @FindBy(css="div[data-testid='scenario-history-download-primary-key'")
     private WebElement downloadPreviewFirstAxisLegend;
 
-    //@FindBy(css="div[data-testid='scenario-history-download-preview'] div:nth-of-type(3) div p")
-    @FindBy(css="div[data-testid='SecondaryAxisLegend']")
+    @FindBy(css="div[data-testid='scenario-history-download-secondary-key']")
     private WebElement downloadPreviewSecondAxisLegend;
 
     @FindBy(css="svg[data-testid='logo']")
@@ -102,6 +110,16 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     }
 
     /**
+     * Get the message displayed if no graph is available
+     *
+     * @return - String containing displayed message
+     */
+    public String getPlotAvailableMessage() {
+        pageUtils.waitForElementToAppear(noPlotMessage);
+        return noPlotMessage.getText();
+    }
+
+    /**
      * Get the number of displayed iterations
      *
      * @return - Integer of the number of iterations displayed
@@ -118,7 +136,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * @return String with value of data-icon attribute | eye or eye-slash
      */
     public String iterationDisplayIcon(Integer iterationNum) {
-        return showHideIterationButton(iterationNum).getAttribute("data-icon");
+        return showHideIterationIcon(iterationNum).getAttribute("data-icon");
     }
 
     /**
@@ -151,6 +169,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * @return - String of currently selected value for primary axis
      */
     public String selectedPrimaryAxis() {
+        pageUtils.waitForElementToAppear(primaryAxisDropDown);
         return primaryAxisDropDown.getText();
     }
 
@@ -162,7 +181,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     public void setPrimaryAxis(String axisName) {
         By requestedAxis = By.xpath(String.format("//div[.='%s']/div/div", axisName));
 
-        primaryAxisDropDown.click();
+        pageUtils.waitForElementAndClick(primaryAxisDropDown);
         pageUtils.waitForElementAndClick(requestedAxis);
     }
 
@@ -172,6 +191,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * @return - String of currently selected value for primary axis
      */
     public String selectedSecondaryAxis() {
+        pageUtils.waitForElementToAppear(primaryAxisDropDown);
         return secondaryAxisDropDown.getText();
     }
 
@@ -183,7 +203,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     public void setSecondaryAxis(String axisName) {
         By requestedAxis = By.xpath(String.format("//div[.='%s']/div/div", axisName));
 
-        secondaryAxisDropDown.click();
+        pageUtils.waitForElementAndClick(secondaryAxisDropDown);
         pageUtils.waitForElementAndClick(requestedAxis);
     }
 
@@ -193,7 +213,28 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * @return List of strings of displayed iterations
      */
     public List<String> displayedChartIterations() {
+        pageUtils.waitForElementsToAppear(displayedChartIterations);
         return displayedChartIterations.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Get list of tick labels from left axis
+     *
+     * @return List of strings containing tick labels
+     */
+    public List<String> leftAxisLabels() {
+        pageUtils.waitForElementsToAppear(leftAxisTicks);
+        return leftAxisTicks.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Get list of tick labels from left axis
+     *
+     * @return List of strings containing tick labels
+     */
+    public List<String> rightAxisLabels() {
+        pageUtils.waitForElementsToAppear(rightAxisTicks);
+        return rightAxisTicks.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     /**
@@ -327,7 +368,21 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * @return - WebElement of the specified iteration's button
      */
     private WebElement showHideIterationButton(Integer iterationNum) {
+        By locator = By.xpath(String.format(iterationXPath, iterationNum) + "/../following-sibling::button");
+        pageUtils.waitForElementToAppear(locator);
+        return driver.findElement(locator);
+    }
+
+    /**
+     * Get WebElement for show/hide iteration button
+     *
+     * @param iterationNum - The number of the specified iteration
+     *
+     * @return - WebElement of the specified iteration's button
+     */
+    private WebElement showHideIterationIcon(Integer iterationNum) {
         By locator = By.xpath(String.format(iterationXPath, iterationNum) + "/../following-sibling::button/span/*[name()='svg']");
+        pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator);
     }
 }

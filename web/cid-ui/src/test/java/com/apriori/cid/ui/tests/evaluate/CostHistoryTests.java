@@ -23,11 +23,13 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.joda.time.DateTime;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -203,8 +205,8 @@ public class CostHistoryTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id={29698})
-    @Description("Verify that History Graph axes are retained after closing modal / scenario")
+    @TestRail(id={29698, 28927})
+    @Description("Verify that History Graph axes are retained after closing modal / scenario | Test axes update accordingly when DFM risk selected")
     public void testGraphAxisRetention() {
         String primaryAxis = "Design Warnings";
         String secondaryAxis = "Material Carbon";
@@ -232,8 +234,8 @@ public class CostHistoryTests extends TestBaseUI {
             .openScenario(secondComponent.getComponentName(), secondComponent.getScenarioName())
             .clickHistory();
 
-        softAssertions.assertThat(costHistoryPage.selectedPrimaryAxis()).as("Primary Axis retained in different scenario").isEqualTo(primaryAxis);
-        softAssertions.assertThat(costHistoryPage.selectedSecondaryAxis()).as("Secondary Axis retained in different scenario").isEqualTo(secondaryAxis);
+        softAssertions.assertThat(costHistoryPage.getPlotAvailableMessage()).as("Verify that message displayed")
+            .isEqualTo("Historical plots will be available when the scenario has been successfully costed more than once.");
 
         costHistoryPage = costHistoryPage.close()
             .clickExplore()
@@ -249,9 +251,73 @@ public class CostHistoryTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {29943, 29944})
-    @Description("Verify Download as Image")
+    @TestRail(id={29940, 29947, 29948})
+    @Description("Verify Iterations can be hidden / displayed in graph")
+    public void testShowHideIterations() {
+        List<String> graphIterationNames = Arrays.asList("Iteration 2", "Iteration 3", "Iteration 4", "Iteration 5",
+            "Iteration 6", "Iteration 7", "Iteration 8", "Iteration 9", "Iteration 10", "Iteration 11");
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(castingPart.getUser())
+            .openScenario(castingPart.getComponentName(), castingPart.getScenarioName());
+
+        costHistoryPage = evaluatePage.clickHistory();
+
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify all 10 expected iterations displayed")
+            .isEqualTo(graphIterationNames.size());
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify all 10 expected iterations displayed")
+            .isEqualTo(graphIterationNames);
+
+        softAssertions.assertThat(costHistoryPage.iterationDisplayIcon(4)).as("Verify hide iteration icon").isEqualTo("eye");
+
+        costHistoryPage.showHideIteration(4);
+        softAssertions.assertThat(costHistoryPage.iterationDisplayIcon(4)).as("Verify show iteration icon").isEqualTo("eye-slash");
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify only 9 iterations displayed")
+            .isEqualTo(graphIterationNames.size() - 1);
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 4 removed").doesNotContain("Iteration 4");
+
+        costHistoryPage.showHideIteration(8);
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify only 8 iterations displayed")
+            .isEqualTo(graphIterationNames.size() - 2);
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 8 removed")
+            .doesNotContain("Iteration 4", "Iteration 8");
+
+        costHistoryPage.showHideIteration(4);
+        softAssertions.assertThat(costHistoryPage.iterationDisplayIcon(4)).as("Verify hide iteration icon updated").isEqualTo("eye");
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify 9 iterations displayed")
+            .isEqualTo(graphIterationNames.size() - 1);
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 4 displayed").contains("Iteration 4");
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify iteration 8 remains removed").doesNotContain("Iteration 8");
+
+        costHistoryPage.showHideIteration(8);
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify all 10 expected iterations displayed")
+            .isEqualTo(graphIterationNames.size());
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify all iterations displayed").isEqualTo(graphIterationNames);
+
+        costHistoryPage.showHideIteration(1);
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify hiding Iteration 1 does not change graph")
+            .isEqualTo(graphIterationNames.size());
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify hiding Iteration 1 does not change graph")
+            .isEqualTo(graphIterationNames);
+
+        graphIterationNames.forEach(iteration -> costHistoryPage.showHideIteration(Integer.parseInt(iteration.split(" ")[1])));
+        //ToDo:- Add validation of empty chart message when APD-2732 lands
+
+        graphIterationNames.forEach(iteration -> costHistoryPage.showHideIteration(Integer.parseInt(iteration.split(" ")[1])));
+
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify all 10 expected iterations displayed")
+            .isEqualTo(graphIterationNames.size());
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations()).as("Verify all iterations displayed").isEqualTo(graphIterationNames);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {29943, 29944, 29953, 29954})
+    @Description("Verify Download as Image Preview ")
     public void testDownloadAsImage() {
+        String testDate = DateTime.now().toString("MMMM d, yyyy");
+
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(castingPart.getUser())
             .openScenario(castingPart.getComponentName(), castingPart.getScenarioName());
@@ -267,23 +333,16 @@ public class CostHistoryTests extends TestBaseUI {
 
         softAssertions.assertThat(costHistoryPage.downloadPreviewTitle()).as("Verify Preview Title")
             .isEqualTo(castingPart.getComponentName() + " / " + castingPart.getScenarioName() + " Total Cycle Time and DFM Risk");
-        softAssertions.assertThat(costHistoryPage.downloadPreviewDate()).as("Verify Displayed Date").isEqualTo("March 6, 2024");
+        softAssertions.assertThat(costHistoryPage.downloadPreviewDate()).as("Verify Displayed Date").isEqualTo(testDate);
         softAssertions.assertThat(costHistoryPage.downloadPreviewFirstAxisName()).as("First Axis Name").isEqualTo("Total Cycle Time");
         softAssertions.assertThat(costHistoryPage.downloadPreviewSecondAxisName()).as("Second Axis Name").isEqualTo("DFM Risk");
         softAssertions.assertThat(costHistoryPage.downloadPreviewWatermarkDisplayed()).as("Verify Watermark Displayed").isTrue();
 
+        softAssertions.assertThat(costHistoryPage.displayedChartIterations().size()).as("Verify only displayed iterations included in preview")
+            .isEqualTo(10);
+
         costHistoryPage.back();
 
-        softAssertions.assertThat(costHistoryPage.iterationCount()).as("Something to test").isGreaterThan(1);
-
-        softAssertions.assertThat(costHistoryPage.iterationDisplayIcon(4)).as("Verify iteration is marked as hidden in table")
-            .isEqualTo("eye");
-        costHistoryPage.showHideIteration(4);
-        softAssertions.assertThat(costHistoryPage.iterationDisplayIcon(4)).as("Verify iteration is marked as hidden in table")
-            .isEqualTo("eye-slash");
-        costHistoryPage.showHideIteration(4);
-        softAssertions.assertThat(costHistoryPage.iterationDisplayIcon(4)).as("Verify iteration is marked as hidden in table")
-            .isEqualTo("eye");
         softAssertions.assertAll();
     }
 }
