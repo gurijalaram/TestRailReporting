@@ -5,7 +5,7 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.IGNORE;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SANITY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
-import com.apriori.cid.ui.tests.bulkcosting.ProjectsPageTests;
+import com.apriori.cid.ui.tests.bulkcosting.BulkCostingPageTests;
 import com.apriori.cid.ui.tests.compare.ComparisonTests;
 import com.apriori.cid.ui.tests.compare.QuickComparisonTests;
 import com.apriori.cid.ui.tests.evaluate.CostAllCadTests;
@@ -126,7 +126,7 @@ import org.junit.platform.suite.api.Suite;
     SustainabilityFieldsTests.class,
     CostHistoryTests.class,
     PublishAssembliesTests.class,
-    ProjectsPageTests.class
+    BulkCostingPageTests.class
 })
 public class RegressionTestSuite {
 }
