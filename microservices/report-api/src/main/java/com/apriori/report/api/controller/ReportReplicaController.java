@@ -103,6 +103,6 @@ public class ReportReplicaController {
         final String filename = StringUtils.substringBetween(url, "/reports/", "?AWSAccessKeyId");
 
         new URLFileUtil().downloadFileFromURL(url, filename);
-        return new InitFileData().csvReader(new File(filename), separator, klass);
+        return new InitFileData().readCsv(new File(filename), separator, klass);
     }
 }

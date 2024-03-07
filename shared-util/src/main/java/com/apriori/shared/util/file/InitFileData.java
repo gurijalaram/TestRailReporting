@@ -100,7 +100,7 @@ public class InitFileData {
      * @param <T>       - the generic type
      * @return generic list
      */
-    public <T> List<T> csvReader(File file, char separator, Class<T> klass) {
+    public <T> List<T> readCsv(File file, char separator, Class<T> klass) {
         Reader reader;
         try {
             reader = new BufferedReader(new FileReader(file));
