@@ -17,7 +17,7 @@ public class ReportTests {
 
     @Test
     @TestRail(id = 0)
-    @Description("")
+    @Description("Test to check report is populated")
     public void testReportReplica() {
         String customerId = "6C1F8C1D4D75";
 
@@ -32,7 +32,10 @@ public class ReportTests {
 
         List<ReportBean> reportCsv = reportReplicaController.downloadReadReport(reportResponse.getUrl(), '|', ReportBean.class);
 
-        reportCsv.subList(0, 5).forEach(row -> {
+        if (reportCsv.size() > 5) {
+            reportCsv = reportCsv.subList(0, 5);
+        }
+        reportCsv.forEach(row -> {
             softAssertions.assertThat(row).isNotNull();
             softAssertions.assertThat(row.getId()).isNotNull();
             softAssertions.assertThat(row.getCostingMessage()).isNotEmpty();

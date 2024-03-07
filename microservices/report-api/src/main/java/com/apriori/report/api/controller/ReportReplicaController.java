@@ -5,6 +5,7 @@ import com.apriori.report.api.models.Params;
 import com.apriori.report.api.models.Report;
 import com.apriori.report.api.models.ReportRequest;
 import com.apriori.report.api.models.Settings;
+import com.apriori.shared.util.file.InitFileData;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
@@ -12,7 +13,6 @@ import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.URLFileUtil;
-import com.apriori.shared.util.utils.CsvReader;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -95,15 +95,14 @@ public class ReportReplicaController {
     /**
      * Downloads and reads a report
      *
-     * @param url       - the url to the csv file
+     * @param url       - the url
      * @param separator - the separator in the csv
      * @param klass     - the class bean
      */
     public <T> List<T> downloadReadReport(String url, char separator, Class<T> klass) {
         final String filename = StringUtils.substringBetween(url, "/reports/", "?AWSAccessKeyId");
-        String fileLocation = System.getProperty("user.home") + File.separator + "Downloads" + File.separator + filename;
 
-        new URLFileUtil().downloadFileFromURL(url, fileLocation);
-        return new CsvReader().csvReader(fileLocation, separator, klass);
+        new URLFileUtil().downloadFileFromURL(url, filename);
+        return new InitFileData().csvReader(new File(filename), separator, klass);
     }
 }

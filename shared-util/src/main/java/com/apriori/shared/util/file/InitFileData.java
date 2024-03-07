@@ -5,14 +5,19 @@ import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -84,5 +89,32 @@ public class InitFileData {
 
         return elementsQueue;
 
+    }
+
+    /**
+     * Reads a csv file
+     *
+     * @param file      - the file
+     * @param separator - the separator for the columns
+     * @param klass     - the class
+     * @param <T>       - the generic type
+     * @return generic list
+     */
+    public <T> List<T> csvReader(File file, char separator, Class<T> klass) {
+        Reader reader;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        CsvToBean<T> csvReader = new CsvToBeanBuilder<T>(reader)
+            .withType(klass)
+            .withSeparator(separator)
+            .withIgnoreLeadingWhiteSpace(true)
+            .withIgnoreEmptyLine(true)
+            .build();
+
+        return csvReader.parse();
     }
 }
