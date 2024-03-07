@@ -34,7 +34,6 @@ public class ProjectsPage extends LoadableComponent<ProjectsPage> {
     }
 
     public boolean isListOfWorksheetsPresent() {
-        isLoaded();
         List<WebElement> listOfWorksheetItems =
             pageUtils.waitForElementsToAppear(By.xpath("//div[@data-testid = 'table-body']/div"));
         return !(listOfWorksheetItems.isEmpty());
