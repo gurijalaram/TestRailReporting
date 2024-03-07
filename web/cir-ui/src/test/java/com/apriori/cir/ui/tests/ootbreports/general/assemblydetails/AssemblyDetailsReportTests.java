@@ -523,9 +523,6 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    /*@Tags({
-        @Tag(REPORTS)
-    })*/
     @TmsLink("1930")
     @TestRail(id = {1930})
     @Description("Test Export Set with costing failures costing incomplete")

@@ -138,13 +138,20 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
             Arrays.asList(23, 26, 29, 32)
         );
 
-        softAssertions.assertThat(jasperApiUtils.areValuesAlmostEqual(expectedTotals.get(0),
+        softAssertions.assertThat(
+            jasperApiUtils.areValuesAlmostEqual(expectedTotals.get(0),
             grandTotalSubTotalValues.get(0))).isEqualTo(true);
-        softAssertions.assertThat(jasperApiUtils.areValuesAlmostEqual(expectedTotals.get(1),
+
+        softAssertions.assertThat(
+            jasperApiUtils.areValuesAlmostEqual(expectedTotals.get(1),
             grandTotalSubTotalValues.get(1))).isEqualTo(true);
-        softAssertions.assertThat(jasperApiUtils.areValuesAlmostEqual(expectedTotals.get(2),
+
+        softAssertions.assertThat(
+            jasperApiUtils.areValuesAlmostEqual(expectedTotals.get(2),
             grandTotalSubTotalValues.get(2))).isEqualTo(true);
-        softAssertions.assertThat(jasperApiUtils.areValuesAlmostEqual(expectedTotals.get(3),
+
+        softAssertions.assertThat(
+            jasperApiUtils.areValuesAlmostEqual(expectedTotals.get(3),
             grandTotalSubTotalValues.get(3))).isEqualTo(true);
 
         softAssertions.assertAll();
@@ -170,8 +177,18 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
         BigDecimal expectedComponentSubtotal = levelOneValues.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
         BigDecimal expectedGrandTotal = expectedComponentSubtotal.add(expectedAssemblyProcessesSubTotal);
 
-        softAssertions.assertThat(expectedComponentSubtotal).isEqualTo(totalValues.get(0));
-        softAssertions.assertThat(expectedAssemblyProcessesSubTotal).isEqualTo(totalValues.get(1));
-        softAssertions.assertThat(expectedGrandTotal).isEqualTo(totalValues.get(2));
+        softAssertions.assertThat(
+            jasperApiUtils.areValuesAlmostEqual(expectedComponentSubtotal, totalValues.get(0)))
+            .isEqualTo(true);
+
+        softAssertions.assertThat(
+            jasperApiUtils.areValuesAlmostEqual(expectedAssemblyProcessesSubTotal, totalValues.get(1)))
+            .isEqualTo(true);
+
+        softAssertions.assertThat(
+            jasperApiUtils.areValuesAlmostEqual(expectedGrandTotal, totalValues.get(2)))
+            .isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 }

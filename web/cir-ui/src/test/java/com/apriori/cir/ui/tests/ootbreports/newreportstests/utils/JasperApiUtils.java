@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Data
@@ -974,17 +975,18 @@ public class JasperApiUtils {
         List<String> heightList = Arrays.asList("13", "15", "15");
         List<Integer> firstIndexList = Arrays.asList(0, 12, 13);
         List<Integer> secondIndexList = Arrays.asList(14, 24, 24);
-        int i = 0;
-        for (String heightValue : heightList) {
-            totalValues.add(
+
+        IntStream.range(0, firstIndexList.size()).forEach(
+            idx -> totalValues.add(
                 convertStringToBigDecimalValue(
                     jasperReportSummary.getReportHtmlPart()
-                        .getElementsByAttributeValue("style", String.format("height:%spx", heightValue))
-                        .get(firstIndexList.get(i)).children().get(secondIndexList.get(i)).children().get(0).text()
+                        .getElementsByAttributeValue("style", String.format("height:%spx", heightList.get(idx)))
+                        .get(firstIndexList.get(idx)).children()
+                        .get(secondIndexList.get(idx)).children()
+                        .get(0).text()
                 )
-            );
-            i++;
-        }
+            )
+        );
         return totalValues;
     }
 
