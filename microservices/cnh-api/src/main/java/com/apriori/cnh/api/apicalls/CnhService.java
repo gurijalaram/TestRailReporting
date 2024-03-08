@@ -1,12 +1,12 @@
-package com.apriori.cnh.entity.apicalls;
+package com.apriori.cnh.api.apicalls;
 
-import com.apriori.cnh.entity.enums.CNHAPIEnum;
-import com.apriori.cnh.entity.request.ExecuteRequest;
-import com.apriori.cnh.entity.response.ExecuteResponse;
-
-
-
-
+import com.apriori.cnh.api.enums.CNHAPIEnum;
+import com.apriori.cnh.api.request.ExecuteRequest;
+import com.apriori.cnh.api.response.ExecuteResponse;
+import com.apriori.shared.util.http.models.entity.RequestEntity;
+import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +25,7 @@ public class CnhService {
      *
      * @param executeRequest - pass the body
      */
-    public ResponseWrapper<ExecuteResponse> execute(ExecuteRequest executeRequest,String... inlineVariables) {
+    public ResponseWrapper<ExecuteResponse> execute(ExecuteRequest executeRequest, String... inlineVariables) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CNHAPIEnum.EXECUTE, ExecuteResponse.class)
             .headers(headers)
             .body(executeRequest)

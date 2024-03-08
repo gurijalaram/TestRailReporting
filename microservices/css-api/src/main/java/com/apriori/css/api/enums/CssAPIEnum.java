@@ -6,9 +6,9 @@ import com.apriori.shared.util.properties.PropertiesContext;
 public enum CssAPIEnum implements ExternalEndpointEnum {
 
     //SCENARIO
-    SCENARIO_ITERATIONS("scenario-iterations"),
-    SCENARIO_ITERATIONS_SEARCH("scenario-iterations/search"),
-    SCENARIO_ITERATIONS_QUERY("scenario-iterations/query");
+    SCENARIO_ITERATIONS("/scenario-iterations"),
+    SCENARIO_ITERATIONS_SEARCH("/scenario-iterations/search"),
+    SCENARIO_ITERATIONS_QUERY("/scenario-iterations/query");
 
     private final String endpoint;
 

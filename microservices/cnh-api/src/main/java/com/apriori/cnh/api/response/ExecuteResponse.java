@@ -1,6 +1,6 @@
-package com.apriori.cnh.entity.response;
+package com.apriori.cnh.api.response;
 
-
+import com.apriori.shared.util.annotations.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

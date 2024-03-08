@@ -5,8 +5,8 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum FMSAPIEnum implements ExternalEndpointEnum {
 
-    FILES("files"),
-    FILE_BY_ID("files/%s");
+    FILES("/files"),
+    FILE_BY_ID("/files/%s");
 
     private final String endpoint;
 

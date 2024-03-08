@@ -5,8 +5,8 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum CMPAPIEnum implements ExternalEndpointEnum {
 
-    COMPARISONS("comparisons"),
-    COMPARISON_BY_IDENTITY("comparisons/%s");
+    COMPARISONS("/comparisons"),
+    COMPARISON_BY_IDENTITY("/comparisons/%s");
 
     private final String endpoint;
 
