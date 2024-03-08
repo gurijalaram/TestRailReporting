@@ -19,7 +19,7 @@ public class ReportTests {
 
     @Test
     @TestRail(id = 0)
-    @Description("Test to check report is populated")
+    @Description("Test report is populated")
     public void testReportReplica() {
         String customerId = "6C1F8C1D4D75";
 
