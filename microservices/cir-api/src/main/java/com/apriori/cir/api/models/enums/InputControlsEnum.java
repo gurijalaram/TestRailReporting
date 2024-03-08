@@ -13,6 +13,7 @@ public enum InputControlsEnum {
     PROCESS_GROUP("processGroup"),
     DTC_SCORE("dtcScore"),
     MINIMUM_ANNUAL_SPEND("annualSpendMin"),
+    PERCENT_DIFFERENCE_THRESHOLD("percentDifferenceThreshold"),
     SORT_ORDER("sortOrder"),
     START_DATE("startDate"),
     TRENDING_PERIOD("trendingPeriod"),
