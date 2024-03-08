@@ -50,8 +50,10 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7303")
     @TestRail(id = {7303})
     @Description("Validate report is available by navigation - Plastic DTC Report")

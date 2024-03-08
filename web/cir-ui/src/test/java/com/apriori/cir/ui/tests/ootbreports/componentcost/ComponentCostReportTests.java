@@ -60,8 +60,10 @@ public class ComponentCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7133")
     @TestRail(id = {7133})
     @Description("Validate report is available by navigation")
@@ -212,8 +214,10 @@ public class ComponentCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("3328")
     @TestRail(id = {3328})
     @Description("Verify latest export date input control functions correctly")

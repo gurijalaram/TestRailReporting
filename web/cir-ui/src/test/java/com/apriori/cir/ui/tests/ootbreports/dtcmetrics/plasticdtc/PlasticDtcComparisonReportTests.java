@@ -50,8 +50,10 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7307")
     @TestRail(id = {7307})
     @Description("Validate report is available by library - Plastic DTC Comparison Report")
@@ -89,8 +91,10 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7358")
     @TestRail(id = {7358})
     @Description("Verify cancel button functionality - Plastic DTC Comparison Report")
@@ -126,8 +130,10 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7364")
     @TestRail(id = {7404})
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Comparison Report")
@@ -169,8 +175,10 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7384")
     @TestRail(id = {7384})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Comparison Report")
@@ -197,8 +205,10 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7521")
     @TestRail(id = {7521})
     @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Comparison Report")
@@ -254,8 +264,10 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("29703")
     @TestRail(id = {29703})
     @Description("Verify Minimum Annual Spend input control functions correctly - Plastic DTC Comparison Report")
