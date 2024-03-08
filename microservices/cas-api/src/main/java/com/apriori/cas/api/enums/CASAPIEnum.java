@@ -6,7 +6,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 public enum CASAPIEnum implements ExternalEndpointEnum {
 
     //CUSTOMERS
-    CUSTOMERS("customers"),
+    CUSTOMERS("/customers"),
     CUSTOMER(CUSTOMERS.getEndpointString().concat("/%s")),
 
     //CUSTOMER ASSOCIATIONS
@@ -54,14 +54,14 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     BATCH_ITEM(BATCH_ITEMS.getEndpointString().concat("/%s")),
 
     //CONFIGURATIONS
-    CONFIGURATIONS("configurations/ap-versions"),
+    CONFIGURATIONS("/configurations/ap-versions"),
 
     //CUSTOMER DEPLOYMENTS
     DEPLOYMENTS(CUSTOMER.getEndpointString().concat("/deployments")),
     CUSTOMER_DEPLOYMENT(DEPLOYMENTS.getEndpointString().concat("/%s")),
 
     //CURRENT USER
-    CURRENT_USER("users/current"),
+    CURRENT_USER("/users/current"),
 
     //CUSTOMER USER ACCESS CONTROLS
     ACCESS_CONTROLS(USER.getEndpointString().concat("/access-controls")),

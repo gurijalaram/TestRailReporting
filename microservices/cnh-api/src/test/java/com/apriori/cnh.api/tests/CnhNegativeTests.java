@@ -1,12 +1,12 @@
-package com.apriori.tests;
+package com.apriori.cnh.api.tests;
 
-import com.apriori.cnh.entity.apicalls.CnhService;
-import com.apriori.cnh.entity.request.ExecuteRequest;
-import com.apriori.cnh.entity.response.ExecuteResponse;
-
-
-
-
+import com.apriori.cnh.api.apicalls.CnhService;
+import com.apriori.cnh.api.request.ExecuteRequest;
+import com.apriori.cnh.api.response.ExecuteResponse;
+import com.apriori.shared.util.http.utils.FileResourceUtil;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.json.JsonManager;
+import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;

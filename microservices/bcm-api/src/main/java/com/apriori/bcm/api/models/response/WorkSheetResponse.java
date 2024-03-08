@@ -39,4 +39,6 @@ public class WorkSheetResponse {
     private List analysisEvents;
     private String description;
     private String status;
+    private String createdByName;
+    private String updatedByName;
 }

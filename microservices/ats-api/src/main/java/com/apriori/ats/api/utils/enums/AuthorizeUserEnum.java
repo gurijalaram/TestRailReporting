@@ -5,7 +5,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum AuthorizeUserEnum implements ExternalEndpointEnum {
     //AUTHORIZE_USER
-    POST_AUTHORIZE_BY_BASE_URL_SECRET("authorize");
+    POST_AUTHORIZE_BY_BASE_URL_SECRET("/authorize");
 
     private final String endpoint;
 

@@ -1,4 +1,4 @@
-package com.apriori.cnh.entity.request;
+package com.apriori.cnh.api.request;
 
 import lombok.Getter;
 import lombok.Setter;
