@@ -1027,6 +1027,23 @@ public class JasperApiUtils {
         return totalValues;
     }
 
+    /**
+     * Gets chart count on a report
+     *
+     * @param chartDataRaw - String of report data
+     * @return int - chart count
+     */
+    public int getChartUuidCount(String chartDataRaw) {
+        int count = 0;
+        String[] textArray = chartDataRaw.split(" ");
+        for (String s : textArray) {
+            if (s.contains("chartUuid")) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
         return genericTestCoreCurrencyAndDateOnlyCycleTimeReport(currencyToGet)
             .getFirstChartData().getChartDataPoints()
@@ -1090,9 +1107,15 @@ public class JasperApiUtils {
     }
 
     private void initialiseInputControlsEnumMap() {
+        inputControlsEnumMap.put("aPrioriCostMax", "APRIORI_COST_MAX");
+        inputControlsEnumMap.put("aPrioriCostMin", "APRIORI_COST_MIN");
+        inputControlsEnumMap.put("aPrioriMassMax", "APRIORI_MASS_MAX");
+        inputControlsEnumMap.put("aPrioriMassMin", "APRIORI_MASS_MIN");
         inputControlsEnumMap.put("assemblySelect", "ASSEMBLY_SELECT");
         inputControlsEnumMap.put("currency", "CURRENCY");
         inputControlsEnumMap.put("componentCostCurrency", "COMPONENT_COST_CURRENCY");
+        inputControlsEnumMap.put("componentCostMin", "COMPONENT_COST_MIN");
+        inputControlsEnumMap.put("componentCostMax", "COMPONENT_COST_MAX");
         inputControlsEnumMap.put("componentSelect", "COMPONENT_SELECT");
         inputControlsEnumMap.put("costMetric", "COST_METRIC");
         inputControlsEnumMap.put("dtcScore", "DTC_SCORE");
