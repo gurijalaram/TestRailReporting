@@ -51,8 +51,8 @@ public class WorkflowTests extends TestBaseUI {
         currentUser = UserUtil.getUser();
         agentPort = CicApiTestUtil.getAgentPortData();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
-        scenarioName = "AUTO_SN" + new GenerateStringUtil().getRandomNumbers();
-        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
+        scenarioName = new GenerateStringUtil().generateScenarioName();
+        workFlowData.setWorkflowName(workFlowData.getWorkflowName() + new GenerateStringUtil().getRandomNumbers());
         workFlowData.getQueryDefinitionsData().get(0).setFieldName(PlmTypeAttributes.PLM_PART_NUMBER.getCicGuiField());
         workFlowData.getQueryDefinitionsData().get(0).setFieldOperator(RuleOperatorEnum.EQUAL.getRuleOperator());
         workFlowData.getQueryDefinitionsData().get(0).setFieldValue(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber());
@@ -87,7 +87,7 @@ public class WorkflowTests extends TestBaseUI {
         DetailsPart detailsPart = workflowHome.selectScheduleTab()
             .selectWorkflow(workFlowData.getWorkflowName())
             .clickEditWorkflowBtn();
-        workFlowData.setWorkflowName(GenerateStringUtil.saltString("- - - 0 0 Auto_Upd"));
+        workFlowData.setWorkflowName(GenerateStringUtil.saltString("- - 0 0 Auto_Upd"));
         workflowHome = detailsPart.enterWorkflowNameField(workFlowData.getWorkflowName())
             .clickNextBtnInDetailsTab()
             .clickWFQueryDefNextBtn()

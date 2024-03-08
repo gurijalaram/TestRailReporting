@@ -60,9 +60,9 @@ public class WorkflowHistoryTests extends TestBaseUI {
     @TestRail(id = {3589})
     @Description("Test creating, editing and deletion of a worflow")
     public void testStartAndTrackJob() {
-        workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFC"));
+        workFlowData.setWorkflowName(workFlowData.getWorkflowName() + new GenerateStringUtil().getRandomNumbers());
         workFlowData.getQueryDefinitionsData().get(0).setFieldValue(plmPartNumber);
-        String scenarioName = "AUTO_SN" + new GenerateStringUtil().getRandomNumbers();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String plmPartNumber = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber();
 
         // CREATE WORK FLOW
@@ -97,9 +97,8 @@ public class WorkflowHistoryTests extends TestBaseUI {
         "Test Job Details list control panel " +
         "Test the Job Details Dialog")
     public void testVerifyJobDetailsOfWorkflow() {
-        workFlowData.setWorkflowName(GenerateStringUtil.saltString("----0WFC"));
-        String scenarioName = "AUTO_SN" + new GenerateStringUtil().getRandomNumbers();
-        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        workFlowData.setWorkflowName(workFlowData.getWorkflowName() + new GenerateStringUtil().getRandomNumbers());
         String date = DateUtil.getCurrentDate(DateFormattingUtils.dtf_MMddyyyyHHmmss_hyphen);
         workflowHome = new CicLoginPage(driver)
             .login(currentUser)
