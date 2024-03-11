@@ -45,8 +45,10 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7312")
     @TestRail(id = {7312})
     @Description("Validate report is available by navigation - Sheet Metal DTC Report")
@@ -78,8 +80,10 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("3038")
     @TestRail(id = {3038})
     @Description("Verify Export Sets are available for selection")

@@ -81,6 +81,6 @@ public class Constants {
             secretKey = AwsParameterStoreUtil.getSystemParameter("/" + PropertiesContext.get("aws_parameter_store_name") + "/shared/environment-secret-key");
         }
 
-        return PropertiesContext.get("cds.api_url").concat("%s?key=").concat(secretKey);
+        return PropertiesContext.get("cds.api_url").concat("/%s?key=").concat(secretKey);
     }
 }

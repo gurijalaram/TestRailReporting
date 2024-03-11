@@ -244,20 +244,7 @@ public class GroupCostingTests {
     @TestRail(id = 11850)
     @Description("Verify Error Response for Empty Group Item List")
     public void testEmptyGroupItemList() {
-
-        final ProcessGroupEnum asmProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        final ProcessGroupEnum prtProcessGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        currentUser = UserUtil.getUser();
-
-        ComponentInfoBuilder componentAssembly = ComponentInfoBuilder.builder()
-            .componentName(assemblyName)
-            .extension(assemblyExtension)
-            .scenarioName(scenarioName)
-            .processGroup(asmProcessGroupEnum)
-            .user(currentUser)
-            .build();
+        componentAssembly = new AssemblyRequestUtil().getAssembly();
 
         assemblyUtils.uploadAssembly(componentAssembly);
 

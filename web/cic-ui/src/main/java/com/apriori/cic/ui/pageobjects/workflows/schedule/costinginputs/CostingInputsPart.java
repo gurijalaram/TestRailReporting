@@ -2,6 +2,7 @@ package com.apriori.cic.ui.pageobjects.workflows.schedule.costinginputs;
 
 import com.apriori.cic.api.enums.MappingRule;
 import com.apriori.cic.api.enums.PlmTypeAttributes;
+import com.apriori.cic.ui.enums.CICFieldType;
 import com.apriori.cic.ui.pageobjects.CICBasePage;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.details.DetailsPart;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.notifications.NotificationsPart;
@@ -262,10 +263,10 @@ public class CostingInputsPart extends CICBasePage {
     }
 
     /**
-     * verify Field
+     * verify value exist in mapping rule drop down
      *
-     * @param expectedMappingFields - list of field values
-     * @return boolean
+     * @param expectedMappingFieldValues
+     * @return Boolean
      */
     public Boolean isValuesExists(List<String> expectedMappingFieldValues) {
         List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
@@ -282,7 +283,6 @@ public class CostingInputsPart extends CICBasePage {
     /**
      * verify Mapping field value
      *
-     * @param mappingRule - MappingRule
      * @return boolean
      */
     public Boolean isMappingRuleFieldEnabled() {
@@ -340,17 +340,20 @@ public class CostingInputsPart extends CICBasePage {
         List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
         selectCiConnectField(ciStandardFieldFieldCols.get(0), plmTypeAttributes);
         if (plmTypeAttributes.getCicGuiField().equals("Process Group") ||
-            plmTypeAttributes.getCicGuiField().equals("Digital Factory")) {
+            plmTypeAttributes.getCicGuiField().equals("Digital Factory") ||
+            plmTypeAttributes.getCicGuiField().equals("Machining Mode")) {
             selectMappingRule(ciStandardFieldFieldCols.get(1), mappingRule);
             selectFieldValue(ciStandardFieldFieldCols.get(3), fieldValue);
-        } else if (plmTypeAttributes.getCicGuiField().equals("Machining Mode")) {
-            pageUtils.checkDropdownOptions(ciStandardFieldFieldCols.get(3).findElement(By.tagName("select")), fieldValue);
-            pageUtils.waitForElementAndClick(ciStandardFieldFieldCols.get(3));
-            this.selectValueFromDDL(fieldValue);
         } else {
             selectMappingRule(ciStandardFieldFieldCols.get(1), mappingRule);
+        }
+
+        if (fieldValue.isEmpty()) {
+            pageUtils.checkElementAttribute(getFieldValueElement(CICFieldType.TEXT_BOX), "class", "cic-input-disabled");
+        } else {
             enterRuleValue(ciStandardFieldFieldCols.get(2).findElement(By.cssSelector(cssTextboxSelector)), fieldValue);
         }
+
         if (plmTypeAttributes.getCicGuiField().contains("Date")) {
             selectDateForRuleValue(ciStandardFieldFieldCols.get(2));
         }
@@ -423,11 +426,13 @@ public class CostingInputsPart extends CICBasePage {
      * @param fieldValue - connector field value
      */
     private void selectFieldValue(WebElement webElement, String fieldValue) {
-        pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
-        WebElement mappingRuleElement = webElement.findElement(By.tagName("div")).findElement(By.tagName("div")).findElement(By.tagName("div"));
-        pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
-        pageUtils.waitForElementAndClick(webElement);
-        this.selectValueFromDDL(fieldValue);
+        if (!fieldValue.isEmpty()) {
+            pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
+            WebElement mappingRuleElement = webElement.findElement(By.tagName("div")).findElement(By.tagName("div")).findElement(By.tagName("div"));
+            pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
+            pageUtils.waitForElementAndClick(webElement);
+            this.selectValueFromDDL(fieldValue);
+        }
     }
 
     /**
@@ -448,10 +453,12 @@ public class CostingInputsPart extends CICBasePage {
      * @param ruleValue  - MappingRule
      */
     private void enterRuleValue(WebElement webElement, String ruleValue) {
-        pageUtils.waitForElementToBeClickable(webElement);
-        pageUtils.clearValueOfElement(webElement);
-        pageUtils.setValueOfElement(webElement, ruleValue);
-        pageUtils.waitForElementToBeClickable(webElement);
+        if (!ruleValue.isEmpty()) {
+            pageUtils.waitForElementToBeClickable(webElement);
+            pageUtils.clearValueOfElement(webElement);
+            pageUtils.setValueOfElement(webElement, ruleValue);
+            pageUtils.waitForElementToBeClickable(webElement);
+        }
     }
 
     /**
@@ -514,4 +521,27 @@ public class CostingInputsPart extends CICBasePage {
         }
     }
 
+    /**
+     * get Field value element from current row
+     *
+     * @param cicFieldType - CICFieldType enum
+     * @return WebElement
+     */
+    private WebElement getFieldValueElement(CICFieldType cicFieldType) {
+        return pageUtils.waitForElementToAppear(getCostingInputRows().get(getCostingInputRows().size() - 1)
+            .findElements(getColumnSelector())
+            .stream()
+            .filter(webElement1 -> webElement1.getAttribute("class").contains(cicFieldType.getFieldType()))
+            .findFirst()
+            .get());
+    }
+
+    /**
+     * get the selector for Write Field Tab rows by fields
+     *
+     * @return By
+     */
+    private By getColumnSelector() {
+        return By.cssSelector("div[class*='cic-input']");
+    }
 }

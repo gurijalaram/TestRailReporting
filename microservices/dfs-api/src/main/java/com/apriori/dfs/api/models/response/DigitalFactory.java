@@ -31,11 +31,15 @@ public class DigitalFactory {
 
     private String name;
 
+    private List<PermissionType> permissions;
+
     private List<String> processGroups;
 
     private Integer productionLife;
 
     private String revision;
+
+    private String subjectIdentity;
 
     private String type;
 

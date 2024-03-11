@@ -50,7 +50,7 @@ default:
   customer_aws_account_type: dev
 ###########################
 #  Core services
-  core_service_url_template: ${default.aws_region}.${env}.apriori.net/
+  core_service_url_template: ${default.aws_region}.${env}.apriori.net
 
   cloud:
     ui_url: https://cloud.${core_service_url_template}
@@ -91,7 +91,7 @@ default:
 
 ###########################
 #  Deployment URL
-  deployment_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net/
+  deployment_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net
 
   admin:
     ui_url: https://${deployment_url_template}apriori/login
@@ -173,4 +173,4 @@ default:
 ###########################
 # Other URL
   cnh:
-    api_url: https://f2jdom33dk.execute-api.us-east-1.amazonaws.com/
+    api_url: https://f2jdom33dk.execute-api.us-east-1.amazonaws.com

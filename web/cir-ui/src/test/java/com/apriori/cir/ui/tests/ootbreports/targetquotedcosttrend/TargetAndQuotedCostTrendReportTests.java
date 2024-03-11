@@ -225,8 +225,10 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("3361")
     @TestRail(id = {3361})
     @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking report - Final Milestone")

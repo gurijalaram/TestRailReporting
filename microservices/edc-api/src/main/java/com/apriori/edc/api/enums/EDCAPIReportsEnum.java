@@ -6,7 +6,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 public enum EDCAPIReportsEnum implements ExternalEndpointEnum {
 
     //Reports
-    REPORTS("reports");
+    REPORTS("/reports");
 
     private final String endpoint;
 

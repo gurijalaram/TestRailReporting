@@ -41,7 +41,8 @@ public enum PlmTypeAttributes {
     PLM_SORT_METRIC("sortMetric", "Part Number", "Sort Metric"),
     PLM_RISK_RATING("riskRating", "[\"All\"]", "Risk Rating"),
     PLM_COST_ROUNDING("roundToDollar", "true", "Cost Rounding"),
-    PLM_MACHINING_MODE("machiningMode", "MAY_BE_MACHINED", "Machining Mode");
+    PLM_MACHINING_MODE("machiningMode", "MAY_BE_MACHINED", "Machining Mode"),
+    PLM_STRING1("String1", "String1", "String1");
     
     private final String key;
     private final String value;

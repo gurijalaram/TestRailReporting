@@ -10,6 +10,7 @@ sourceSets {
 
 dependencies {
     implementation project(':shared-util')
+    implementation project(':microservices:bcs-api')
     implementation project(':microservices:cic-api')
     implementation project(':microservices:cid-api')
     implementation project(':web-app-util')

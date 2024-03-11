@@ -50,8 +50,10 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7308")
     @TestRail(id = {7308})
     @Description("Validate report is available by library - Plastic DTC Details Report")
@@ -89,8 +91,10 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7359")
     @TestRail(id = {7359})
     @Description("Verify cancel button functionality - Plastic DTC Details Report")
@@ -140,8 +144,10 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7407")
     @TestRail(id = {7407})
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Details Report ")
@@ -155,8 +161,10 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7381")
     @TestRail(id = {7381})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Details Report")
@@ -184,8 +192,10 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7519")
     @TestRail(id = {7519})
     @Description("Verify DTC Score Input Control - No Selection - Plastic DTC Details Report")
@@ -226,8 +236,10 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7528")
     @TestRail(id = {7528})
     @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Details Report")
@@ -241,8 +253,10 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("29702")
     @TestRail(id = {29702})
     @Description("Verify Minimum Annual Spend input control functions correctly - Plastic DTC Details Report")
@@ -255,8 +269,10 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("1369")
     @TestRail(id = {1369})
     @Description("Verify Sort Order input control functions correctly")

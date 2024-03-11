@@ -491,7 +491,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return webelement
      */
     private WebElement findScenarioCheckbox(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[.='%s']/ancestor::div[@role='row']//span[@data-testid='checkbox']",
+        By scenario = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[.='%s']/ancestor::div[@role='row']//span[@data-testid='checkbox']",
             componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);

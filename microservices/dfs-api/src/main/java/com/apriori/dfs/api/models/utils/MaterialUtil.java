@@ -1,8 +1,10 @@
 package com.apriori.dfs.api.models.utils;
 
 import com.apriori.dfs.api.enums.DFSApiEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.interfaces.EndpointEnum;
@@ -19,11 +21,13 @@ public class MaterialUtil {
      * @param inlineVariables - path and query parameters
      * @return Response object
      */
-    public <T> ResponseWrapper<T> findMaterials(Integer expectedResponseCode,
-                                                Class<T> expectedType,
-                                                String... inlineVariables) {
+    public <T> ResponseWrapper<T> findMaterials(
+        Integer expectedResponseCode,
+        Class<T> expectedType,
+        UserCredentials userCredentials,
+        String... inlineVariables) {
 
-        return findMaterials(expectedResponseCode, expectedType, true, inlineVariables);
+        return findMaterials(expectedResponseCode, expectedType, true, userCredentials, inlineVariables);
     }
 
     /**
@@ -35,15 +39,17 @@ public class MaterialUtil {
      * @param inlineVariables - path and query parameters
      * @return Response object
      */
-    public <T> ResponseWrapper<T> findMaterials(Integer expectedResponseCode,
-                                                Class<T> expectedType,
-                                                Boolean withSharedSecretKey,
-                                                String... inlineVariables) {
+    public <T> ResponseWrapper<T> findMaterials(
+        Integer expectedResponseCode,
+        Class<T> expectedType,
+        Boolean withSharedSecretKey,
+        UserCredentials userCredentials,
+        String... inlineVariables) {
 
         DFSApiEnum path = inlineVariables.length < 3
             ? DFSApiEnum.MATERIALS : DFSApiEnum.MATERIALS_WITH_KEY_PARAM;
 
-        return findMaterials(path, expectedResponseCode, expectedType, withSharedSecretKey, inlineVariables);
+        return findMaterials(path, expectedResponseCode, expectedType, withSharedSecretKey, userCredentials, inlineVariables);
     }
 
     /**
@@ -54,12 +60,14 @@ public class MaterialUtil {
      * @param inlineVariables - path and query parameters
      * @return Response object
      */
-    public <T> ResponseWrapper<T> findMaterials(DFSApiEnum path,
-                                                Integer expectedResponseCode,
-                                                Class<T> expectedType,
-                                                String... inlineVariables) {
+    public <T> ResponseWrapper<T> findMaterials(
+        DFSApiEnum path,
+        Integer expectedResponseCode,
+        Class<T> expectedType,
+        UserCredentials userCredentials,
+        String... inlineVariables) {
 
-        return findMaterials(path, expectedResponseCode, expectedType, null, inlineVariables);
+        return findMaterials(path, expectedResponseCode, expectedType, null, userCredentials, inlineVariables);
     }
 
     /**
@@ -71,10 +79,11 @@ public class MaterialUtil {
      * @return Response object
      */
     public <T> ResponseWrapper<T> findMaterials(DFSApiEnum path,
-                                                Integer expectedResponseCode,
-                                                Class<T> expectedType,
-                                                Boolean withSharedSecretKey,
-                                                String... inlineVariables) {
+        Integer expectedResponseCode,
+        Class<T> expectedType,
+        Boolean withSharedSecretKey,
+        UserCredentials userCredentials,
+        String... inlineVariables) {
 
         path.setWithSharedSecret(withSharedSecretKey);
 
@@ -82,6 +91,10 @@ public class MaterialUtil {
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
 
+        if (userCredentials != null) {
+            requestEntity.token(userCredentials.getToken())
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
+        }
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -93,10 +106,14 @@ public class MaterialUtil {
      * @param inlineVariables      - identity or identity/secret
      * @return Response object
      */
-    public <T> ResponseWrapper<T> getMaterial(EndpointEnum endpointEnum, Integer expectedResponseCode,
-                                              Class<T> expectedType, String... inlineVariables) {
+    public <T> ResponseWrapper<T> getMaterial(
+        EndpointEnum endpointEnum,
+        Integer expectedResponseCode,
+        Class<T> expectedType,
+        UserCredentials userCredentials,
+        String... inlineVariables) {
 
-        return HTTPRequest.build(getRequestEntity(endpointEnum, expectedResponseCode, expectedType, inlineVariables)).get();
+        return HTTPRequest.build(getRequestEntity(endpointEnum, expectedResponseCode, expectedType, userCredentials, inlineVariables)).get();
     }
 
     /**
@@ -107,10 +124,11 @@ public class MaterialUtil {
      * @param inlineVariables             - inlineVariables
      * @return Response object
      */
-    public <T> ResponseWrapper<T> getMaterialWithoutKeyParameter(EndpointEnum endpointEnum,
-                                                                 Integer expectedResponseCode,
-                                                                 Class<T> expectedType,
-                                                                 String... inlineVariables) {
+    public <T> ResponseWrapper<T> getMaterialWithoutKeyParameter(
+        EndpointEnum endpointEnum,
+        Integer expectedResponseCode,
+        Class<T> expectedType,
+        String... inlineVariables) {
 
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(endpointEnum, expectedType)
             .inlineVariables(inlineVariables)
@@ -119,11 +137,21 @@ public class MaterialUtil {
         return HTTPRequest.build(requestEntity).get();
     }
 
-    private <T> RequestEntity getRequestEntity(EndpointEnum endpointEnum, Integer expectedResponseCode,
-                                               Class<T> expectedType, String... inlineVariables) {
+    private <T> RequestEntity getRequestEntity(
+        EndpointEnum endpointEnum,
+        Integer expectedResponseCode,
+        Class<T> expectedType,
+        UserCredentials userCredentials,
+        String... inlineVariables) {
 
-        return RequestEntityUtil_Old.init(endpointEnum, expectedType)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(endpointEnum, expectedType)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode);
+
+        if (userCredentials != null) {
+            requestEntity.token(userCredentials.getToken())
+                    .apUserContext(new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
+        }
+        return requestEntity;
     }
 }

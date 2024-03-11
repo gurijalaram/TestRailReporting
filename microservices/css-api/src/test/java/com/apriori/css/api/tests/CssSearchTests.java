@@ -8,6 +8,7 @@ import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.component.ComponentResponse;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -23,8 +24,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
-public class CssSearchTests {
-    SoftAssertions soft = new SoftAssertions();
+public class CssSearchTests extends TestUtil {
+    SoftAssertions softAssertions = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();
     private static UserCredentials currentUser;
     private final String componentType = "PART";
@@ -32,6 +33,7 @@ public class CssSearchTests {
 
     @BeforeEach
     public void setupUser() {
+        softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
     }
 
@@ -46,11 +48,11 @@ public class CssSearchTests {
             SCENARIO_IDENTITY_EQ.getKey() + scenarioIdentity);
 
         cssComponentResponses.forEach(o -> {
-            soft.assertThat(o.getComponentIdentity()).isEqualTo(componentIdentity);
-            soft.assertThat(o.getScenarioIdentity()).isEqualTo(scenarioIdentity);
+            softAssertions.assertThat(o.getComponentIdentity()).isEqualTo(componentIdentity);
+            softAssertions.assertThat(o.getScenarioIdentity()).isEqualTo(scenarioIdentity);
         });
 
-        soft.assertAll();
+        softAssertions.assertAll();
     }
 
     @Test
@@ -59,9 +61,8 @@ public class CssSearchTests {
     @Description("Find scenario iterations for a given customer matching a specified query.")
     public void searchPartComponentScenarios() {
         ResponseWrapper<ComponentResponse> components = cssComponent.postSearchRequest(currentUser, componentType);
-
-        soft.assertThat(components.getResponseEntity().getPageItemCount()).isGreaterThanOrEqualTo(1);
-        soft.assertThat(components.getResponseEntity().getItems().get(0).getComponentType()).isEqualTo(componentType);
-        soft.assertAll();
+        softAssertions.assertThat(components.getResponseEntity().getPageItemCount()).isGreaterThanOrEqualTo(1);
+        softAssertions.assertThat(components.getResponseEntity().getItems().get(0).getComponentType()).isEqualTo(componentType);
+        softAssertions.assertAll();
     }
 }

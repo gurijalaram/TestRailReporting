@@ -62,8 +62,10 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7425")
     @TestRail(id = {7425})
     @Description("Validate Cost Metric Input Control - PPC - Target and Quoted Cost Value Tracking Details Report")
@@ -76,8 +78,10 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7426")
     @TestRail(id = {7426})
     @Description("Validate Cost Metric Input Control - FBC - Target and Quoted Cost Value Tracking Details Report")
