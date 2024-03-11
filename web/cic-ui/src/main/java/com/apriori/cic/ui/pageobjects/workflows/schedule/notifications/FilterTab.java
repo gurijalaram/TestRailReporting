@@ -17,10 +17,10 @@ public class FilterTab extends NotificationsPart {
         super(driver);
     }
 
-    @FindBy(css = PARENT_ELEMENT + "[id$='popup_checkbox-367']")
+    @FindBy(css = NOTIFICATIONS_TAB_ELEMENT + "[id$='popup_checkbox-367']")
     private WebElement emailCheckbox;
 
-    @FindBy(css = PARENT_ELEMENT + "[id$='popup_checkbox-368']")
+    @FindBy(css = NOTIFICATIONS_TAB_ELEMENT + "[id$='popup_checkbox-368']")
     private WebElement attachReportCheckbox;
 
     /**
