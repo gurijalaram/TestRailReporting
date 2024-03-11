@@ -1,7 +1,7 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
 def buildVersion = "latest"
-def runType = "docker-test"
+def runType = "qa-final"
 def environment = [profile: 'development', region: 'us-east-1']
 def ecrDockerRegistry = '563229348140.dkr.ecr.us-east-1.amazonaws.com/apriori-qa'
 
@@ -100,7 +100,10 @@ pipeline {
                 axes {
                     axis {
                         name 'MODULE'
-                        values 'cid-ui'
+                        values 'cid-ui', 'cas-ui', 'ach-ui', 'cis-ui',
+                                'cid-api', 'cas-api', 'cds-api', 'ats-api', 'cus-api', 'css-api', 'vds-api', 'nts-api',
+                                'fms-api', 'sds-api', 'ach-api', 'cmp-api', 'bcs-api', 'cis-api', 'dds-api',
+                                'dms-api', 'qds-api', 'qms-api', 'edc-api', 'bcm-api', 'gcd-api'
                     }
                 }
 
