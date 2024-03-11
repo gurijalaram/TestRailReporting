@@ -6,10 +6,10 @@ import com.apriori.shared.util.properties.PropertiesContext;
 public enum CustomersApiEnum implements ExternalEndpointEnum {
 
     // SITES
-    SITES_BY_CUSTOMER_ID("customers/%s/sites"),
+    SITES_BY_CUSTOMER_ID("/customers/%s/sites"),
 
     //CUSTOMERS
-    CUSTOMERS("customers");
+    CUSTOMERS("/customers");
 
     private final String endpoint;
 

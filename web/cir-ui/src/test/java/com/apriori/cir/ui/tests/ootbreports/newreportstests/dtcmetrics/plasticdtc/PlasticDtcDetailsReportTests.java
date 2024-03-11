@@ -14,6 +14,8 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import org.assertj.core.api.SoftAssertions;
+import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +28,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.PLASTIC_DTC_DETAILS.getEndpoint();
     private CirApiEnum reportsNameForInputControls = CirApiEnum.PLASTIC_DTC_DETAILS;
     private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
+    private SoftAssertions softAssertions = new SoftAssertions();
     private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
@@ -152,5 +155,22 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Details Report")
     public void testMinimumAnnualSpend() {
         jasperApiUtils.genericMinAnnualSpendDtcDetailsTest(true);
+    }
+
+    @Test
+    @TmsLink("1378")
+    @TestRail(id = 1378)
+    @Description("Verify DTC issue counts are correct")
+    public void testVerifyDtcIssueCountsAreCorrect() {
+        List<Element> elementsList = jasperApiUtils.dtcDetailsIssueCountGenericTestReportGeneration(
+            ExportSetEnum.ALL_PG_CURRENT.getExportSetName(),
+            "INJECTIONMOLDING"
+        );
+
+        softAssertions.assertThat(elementsList.toString().contains("2")).isEqualTo(true);
+        softAssertions.assertThat(elementsList.toString().contains("43")).isEqualTo(true);
+        softAssertions.assertThat(elementsList.toString().contains("686")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 }

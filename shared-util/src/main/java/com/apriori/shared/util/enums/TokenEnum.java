@@ -5,8 +5,8 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum TokenEnum implements ExternalEndpointEnum {
 
-    POST_TOKEN("tokens"),
-    PATCH_USER_PASSWORD_BY_USERNAME("users/%s/password");
+    POST_TOKEN("/tokens"),
+    PATCH_USER_PASSWORD_BY_USERNAME("/users/%s/password");
 
     private final String endpoint;
 

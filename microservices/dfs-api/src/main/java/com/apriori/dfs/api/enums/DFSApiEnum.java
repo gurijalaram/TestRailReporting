@@ -11,40 +11,40 @@ import java.util.Arrays;
 public enum DFSApiEnum implements ExternalEndpointEnum {
 
     // DIGITAL FACTORY
-    DIGITAL_FACTORIES("digital-factories"),
-    DIGITAL_FACTORIES_WITH_KEY_PARAM("digital-factories?key=%s"),
-    DIGITAL_FACTORIES_BY_PATH("digital-factories/%s"),
-    DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM("digital-factories/%s?key=%s"),
-    DIGITAL_FACTORIES_BY_NAME("digital-factories?name[%s]=%s"),
-    DIGITAL_FACTORIES_SORTED_BY_NAME("digital-factories?pageSize=1000&pageNumber=1&sortBy[%s]=name"),
-    DIGITAL_FACTORIES_WITH_PAGE_SIZE_AND_PAGE_NUMBER("digital-factories?pageSize=%s&pageNumber=%s"),
+    DIGITAL_FACTORIES("/digital-factories"),
+    DIGITAL_FACTORIES_WITH_KEY_PARAM("/digital-factories?key=%s"),
+    DIGITAL_FACTORIES_BY_PATH("/digital-factories/%s"),
+    DIGITAL_FACTORIES_BY_PATH_WITH_KEY_PARAM("/digital-factories/%s?key=%s"),
+    DIGITAL_FACTORIES_BY_NAME("/digital-factories?name[%s]=%s"),
+    DIGITAL_FACTORIES_SORTED_BY_NAME("/digital-factories?pageSize=1000&pageNumber=1&sortBy[%s]=name"),
+    DIGITAL_FACTORIES_WITH_PAGE_SIZE_AND_PAGE_NUMBER("/digital-factories?pageSize=%s&pageNumber=%s"),
 
     // PROCESS GROUP
-    PROCESS_GROUPS("process-groups"),
-    PROCESS_GROUPS_WITH_KEY_PARAM("digital-factories?key=%s"),
-    PROCESS_GROUPS_BY_PATH("process-groups/%s"),
-    PROCESS_GROUPS_BY_PATH_WITH_KEY_PARAM("process-groups/%s?key=%s"),
-    PROCESS_GROUPS_BY_NAME("process-groups?name[%s]=%s"),
-    PROCESS_GROUPS_SORTED_BY_NAME("process-groups?pageSize=100&pageNumber=1&sortBy[%s]=name"),
-    PROCESS_GROUPS_WITH_PAGE_SIZE_AND_PAGE_NUMBER("process-groups?pageSize=%s&pageNumber=%s"),
+    PROCESS_GROUPS("/process-groups"),
+    PROCESS_GROUPS_WITH_KEY_PARAM("/digital-factories?key=%s"),
+    PROCESS_GROUPS_BY_PATH("/process-groups/%s"),
+    PROCESS_GROUPS_BY_PATH_WITH_KEY_PARAM("/process-groups/%s?key=%s"),
+    PROCESS_GROUPS_BY_NAME("/process-groups?name[%s]=%s"),
+    PROCESS_GROUPS_SORTED_BY_NAME("/process-groups?pageSize=100&pageNumber=1&sortBy[%s]=name"),
+    PROCESS_GROUPS_WITH_PAGE_SIZE_AND_PAGE_NUMBER("/process-groups?pageSize=%s&pageNumber=%s"),
 
     // MATERIALS
-    MATERIALS("digital-factories/%s/process-groups/%s/materials"),
-    MATERIALS_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials?key=%s"),
-    MATERIALS_BY_NAME("digital-factories/%s/process-groups/%s/materials?name[%s]=%s"),
-    MATERIALS_SORTED_BY_NAME("digital-factories/%s/process-groups/%s/materials?pageSize=%s&pageNumber=%s&sortBy[%s]=name"),
-    MATERIALS_WITH_PAGE_SIZE_AND_PAGE_NUMBER("digital-factories/%s/process-groups/%s/materials?pageSize=%s&pageNumber=%s"),
-    MATERIAL_BY_PATH("digital-factories/%s/process-groups/%s/materials/%s"),
-    MATERIAL_BY_PATH_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials/%s?key=%s"),
+    MATERIALS("/digital-factories/%s/process-groups/%s/materials"),
+    MATERIALS_WITH_KEY_PARAM("/digital-factories/%s/process-groups/%s/materials?key=%s"),
+    MATERIALS_BY_NAME("/digital-factories/%s/process-groups/%s/materials?name[%s]=%s"),
+    MATERIALS_SORTED_BY_NAME("/digital-factories/%s/process-groups/%s/materials?pageSize=%s&pageNumber=%s&sortBy[%s]=name"),
+    MATERIALS_WITH_PAGE_SIZE_AND_PAGE_NUMBER("/digital-factories/%s/process-groups/%s/materials?pageSize=%s&pageNumber=%s"),
+    MATERIAL_BY_PATH("/digital-factories/%s/process-groups/%s/materials/%s"),
+    MATERIAL_BY_PATH_WITH_KEY_PARAM("/digital-factories/%s/process-groups/%s/materials/%s?key=%s"),
 
     // MATERIAL STOCKS
-    MATERIAL_STOCKS("digital-factories/%s/process-groups/%s/materials/%s/material-stocks"),
-    MATERIAL_STOCKS_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials/%s/material-stocks?key=%s"),
-    MATERIAL_STOCKS_BY_NAME("digital-factories/%s/process-groups/%s/materials/%s/material-stocks?name[%s]=%s"),
-    MATERIAL_STOCKS_SORTED_BY_NAME("digital-factories/%s/process-groups/%s/materials/%s/material-stocks?pageSize=%s&pageNumber=%s&sortBy[%s]=name"),
-    MATERIAL_STOCKS_WITH_PAGE_SIZE_AND_PAGE_NUMBER("digital-factories/%s/process-groups/%s/materials/%s/material-stocks?pageSize=%s&pageNumber=%s"),
-    MATERIAL_STOCKS_BY_PATH("digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s"),
-    MATERIAL_STOCKS_BY_PATH_WITH_KEY_PARAM("digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s?key=%s");
+    MATERIAL_STOCKS("/digital-factories/%s/process-groups/%s/materials/%s/material-stocks"),
+    MATERIAL_STOCKS_WITH_KEY_PARAM("/digital-factories/%s/process-groups/%s/materials/%s/material-stocks?key=%s"),
+    MATERIAL_STOCKS_BY_NAME("/digital-factories/%s/process-groups/%s/materials/%s/material-stocks?name[%s]=%s"),
+    MATERIAL_STOCKS_SORTED_BY_NAME("/digital-factories/%s/process-groups/%s/materials/%s/material-stocks?pageSize=%s&pageNumber=%s&sortBy[%s]=name"),
+    MATERIAL_STOCKS_WITH_PAGE_SIZE_AND_PAGE_NUMBER("/digital-factories/%s/process-groups/%s/materials/%s/material-stocks?pageSize=%s&pageNumber=%s"),
+    MATERIAL_STOCKS_BY_PATH("/digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s"),
+    MATERIAL_STOCKS_BY_PATH_WITH_KEY_PARAM("/digital-factories/%s/process-groups/%s/materials/%s/material-stocks/%s?key=%s");
     private final String endpoint;
 
     @Getter

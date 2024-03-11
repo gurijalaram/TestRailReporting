@@ -18,25 +18,26 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.AfterEach;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-public class ProjectsPageTests extends TestBaseUI {
+public class BulkCostingPageTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private ProjectsPage projectsPage;
-    private ExplorePage explorePage;
 
     @Test
-    @TestRail(id = 29187)
-    @Description("when feature flag BULK_COSTING is set to true projects page should be accessible")
-    public void projectPageVisible() {
+    @TestRail(id = {29187, 29874})
+    @Description("bulk costing  page should be accessible and list of worksheet visible")
+    public void bulkCostingPageVisible() {
+        SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
         projectsPage = loginPage
-                .login(UserUtil.getUser())
-                .clickProjectsButton();
+            .login(UserUtil.getUser())
+            .clickProjectsButton();
 
-        assertTrue(projectsPage.isOnProjectsPage());
+        soft.assertThat(projectsPage.isListOfWorksheetsPresent()).isTrue();
+        soft.assertAll();
     }
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {

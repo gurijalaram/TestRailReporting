@@ -5,11 +5,11 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum NTSAPIEnum implements ExternalEndpointEnum {
 
-    POST_EMAIL("emails"),
-    GET_EMAILS("emails"),
-    GET_EMAILS_BY_ID("emails?identity[EQ]=%s"),
-    GET_EMAIL_BY_ID("emails/%s"),
-    GET_NOTIFICATIONS("notifications");
+    POST_EMAIL("/emails"),
+    GET_EMAILS("/emails"),
+    GET_EMAILS_BY_ID("/emails?identity[EQ]=%s"),
+    GET_EMAIL_BY_ID("/emails/%s"),
+    GET_NOTIFICATIONS("/notifications");
 
     private final String endpoint;
 

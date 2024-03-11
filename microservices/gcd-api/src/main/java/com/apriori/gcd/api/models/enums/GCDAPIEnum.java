@@ -5,7 +5,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum GCDAPIEnum implements ExternalEndpointEnum {
 
-    TREE_DIFF("gcd-tree/diff");
+    TREE_DIFF("/gcd-tree/diff");
 
     private final String endpoint;
 

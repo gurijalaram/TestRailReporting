@@ -6,8 +6,8 @@ import com.apriori.shared.util.properties.PropertiesContext;
 public enum CASCustomerEnum implements ExternalEndpointEnum {
 
     //CUSTOMERS
-    CUSTOMERS("customers"),
-    CUSTOMERS_BATCH("customers/%s/batches/");
+    CUSTOMERS("/customers"),
+    CUSTOMERS_BATCH("/customers/%s/batches/");
 
     private final String endpoint;
 

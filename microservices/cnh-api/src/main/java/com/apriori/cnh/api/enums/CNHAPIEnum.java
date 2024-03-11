@@ -1,12 +1,13 @@
-package com.apriori.cnh.entity.enums;
+package com.apriori.cnh.api.enums;
 
 
-
+import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
+import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum CNHAPIEnum implements ExternalEndpointEnum {
 
-    EXECUTE("dev/customers/%s/reports/%s/execute"),
-    STATUS("dev/customers/%s/reports/%s/executions/%s/status");
+    EXECUTE("/dev/customers/%s/reports/%s/execute"),
+    STATUS("/dev/customers/%s/reports/%s/executions/%s/status");
 
 
     private final String endpoint;

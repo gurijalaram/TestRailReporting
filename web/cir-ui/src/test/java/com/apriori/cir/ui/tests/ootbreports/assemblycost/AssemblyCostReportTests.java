@@ -70,8 +70,10 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7129")
     @TestRail(id = {7129})
     @Description("Validate report is available by library (Assembly Cost A4 Report)")
@@ -81,8 +83,10 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7131")
     @TestRail(id = 7131)
     @Description("Validate report is available by library (Assembly Cost Letter Report)")
@@ -92,8 +96,10 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("3008")
     @TestRail(id = {3008})
     @Description("Verify Export Set drop-down functions correctly - Top-Level - Assembly Cost (A4) Report")
@@ -119,8 +125,10 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7622")
     @TestRail(id = {7622})
     @Description("Verify Export Set drop-down functions correctly - Sub-Assembly - Assembly Cost (A4) Report")
@@ -159,8 +167,10 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7625")
     @TestRail(id = {7625})
     @Description("Verify Scenario Name drop-down functions correctly - Assembly Cost (Letter) Report")
@@ -183,8 +193,10 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("7626")
     @TestRail(id = {7626})
     @Description("Verify the user can select sub assemblies from within assembly Export Sets - Assembly Cost (Letter) Report")

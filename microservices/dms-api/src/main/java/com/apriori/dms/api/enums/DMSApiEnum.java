@@ -6,7 +6,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 public enum DMSApiEnum implements ExternalEndpointEnum {
 
     //
-    CUSTOMER_DISCUSSIONS("%s/discussions"),
+    CUSTOMER_DISCUSSIONS("/%s/discussions"),
     CUSTOMER_DISCUSSION(CUSTOMER_DISCUSSIONS.getEndpointString().concat("/%s")),
     CUSTOMER_DISCUSSION_COMMENTS(CUSTOMER_DISCUSSION.getEndpointString().concat("/comments")),
     CUSTOMER_DISCUSSION_COMMENT(CUSTOMER_DISCUSSION_COMMENTS.getEndpointString().concat("/%s")),
@@ -30,7 +30,7 @@ public enum DMSApiEnum implements ExternalEndpointEnum {
     @Override
     public String getEndpoint(Object... variables) {
 
-        return PropertiesContext.get("dms.api_url") + "customers/"
+        return PropertiesContext.get("dms.api_url") + "/customers"
             + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 }

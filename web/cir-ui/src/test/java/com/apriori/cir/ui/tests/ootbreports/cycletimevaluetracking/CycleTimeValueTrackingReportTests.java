@@ -89,8 +89,10 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("2332")
     @TestRail(id = {2332})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Report")
@@ -112,8 +114,10 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
 
     @Test
     @Issue("AP-66960")
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(ON_PREM)
+    })
     @TmsLink("2335")
     @TestRail(id = {2335})
     @Description("Validate Cycle Time Value Tracking Report hyperlinks to Details and then to Component Cost report")

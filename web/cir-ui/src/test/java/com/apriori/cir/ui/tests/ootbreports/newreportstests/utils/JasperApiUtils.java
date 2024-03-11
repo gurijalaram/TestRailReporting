@@ -29,21 +29,27 @@ import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Data
 @Slf4j
 public class JasperApiUtils {
     private Logger logger = LoggerFactory.getLogger(JasperApiUtils.class);
+    private final Map<String, String> inputControlsEnumMap = new HashMap<>();
     private SoftAssertions softAssertions = new SoftAssertions();
     private CirApiEnum reportValueForInputControls;
     private ReportRequest reportRequest;
@@ -65,6 +71,7 @@ public class JasperApiUtils {
         this.jasperSessionID = jasperSessionID;
         this.exportSetName = exportSetName;
         this.reportsJsonFileName = reportsJsonFileName;
+        initialiseInputControlsEnumMap();
     }
 
     /**
@@ -81,6 +88,29 @@ public class JasperApiUtils {
         this.exportSetName = exportSetName;
         this.processGroupName = processGroup.getProcessGroup();
         this.reportsJsonFileName = reportsJsonFileName;
+        initialiseInputControlsEnumMap();
+    }
+
+    public JasperReportSummary genericTestCoreNoParameters() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        String processGroupId = inputControls.getProcessGroup().getOption(processGroupName).getValue();
+        setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(), processGroupId);
+
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
     }
 
     /**
@@ -98,7 +128,7 @@ public class JasperApiUtils {
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
-            setReportParameterByName(InputControlsEnum.valueOf(keyToSet.toUpperCase().replace(" ", "_")).getInputControlId(), valueToSet);
+            setReportParameterByName(InputControlsEnum.valueOf(inputControlsEnumMap.get(keyToSet)).getInputControlId(), valueToSet);
         }
 
         if (processGroupName != null) {
@@ -203,7 +233,7 @@ public class JasperApiUtils {
 
         String rollupValue = inputControlState.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
 
-        setExportNameParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), valueOneToSet, valueTwoToSet);
+        setTwoExportSetsParametersByName(valueOneToSet, valueTwoToSet);
         setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(), rollupValue);
         setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
         setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
@@ -686,12 +716,12 @@ public class JasperApiUtils {
     /**
      * Sets export set name to more than one
      *
-     * @param valueToGet String the key of the value to set
      * @param valueOneToSet String of the first value which to set
      * @param valueTwoToSet String of the second value which to set
      */
-    public void setExportNameParameterByName(String valueToGet, String valueOneToSet, String valueTwoToSet) {
-        this.reportRequest.getParameters().getReportParameterByName(valueToGet)
+    public void setTwoExportSetsParametersByName(String valueOneToSet, String valueTwoToSet) {
+        this.exportSetName = exportSetName;
+        this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId())
             .setValue(Arrays.asList(valueOneToSet, valueTwoToSet));
     }
 
@@ -798,6 +828,22 @@ public class JasperApiUtils {
     }
 
     /**
+     * Generic DTC Details Issue Count Report Generation
+     *
+     * @param exportSetName - String - export set to use
+     * @param partToFind - String - part to find in list
+     * @return - List of Elements
+     */
+    public List<Element> dtcDetailsIssueCountGenericTestReportGeneration(String exportSetName, String partToFind) {
+        if (!exportSetName.isEmpty()) {
+            setExportSetName(exportSetName);
+        }
+        JasperReportSummary jasperReportSummary = genericTestCore("", "");
+
+        return jasperReportSummary.getReportHtmlPart().getElementsContainingText(partToFind).get(5).children();
+    }
+
+    /**
      * Generates report for Scenario Activity excluding Raw Data
      *
      * @return ArrayList of Jasper Report Summary instances
@@ -851,6 +897,97 @@ public class JasperApiUtils {
      */
     public ArrayList<Element> getElementsForScenarioActivityReportTests(JasperReportSummary jasperReportSummary) {
         return jasperReportSummary.getReportHtmlPart().select("[class='jrxtcolfloating jrxtcolheader']");
+    }
+
+    /**
+     * Sets export set name (used when different from usual setting on a certain report)
+     * @param exportSetName - String export set name to set
+     */
+    public void setExportSetName(String exportSetName) {
+        this.exportSetName = exportSetName;
+    }
+
+    /**
+     * Ensures two values are almost near (within 0.03)
+     *
+     * @param valueOne BigDecimal
+     * @param valueTwo BigDecimal
+     * @return boolean
+     */
+    public boolean areValuesAlmostEqual(BigDecimal valueOne, BigDecimal valueTwo) {
+        BigDecimal largerValue = valueOne.max(valueTwo);
+        BigDecimal smallerValue = valueOne.min(valueTwo);
+        BigDecimal difference = largerValue.subtract(smallerValue);
+        return difference.compareTo(new BigDecimal("0.00")) >= 0 &&
+            difference.compareTo(new BigDecimal("0.03")) <= 0;
+    }
+
+    /**
+     * Gets sub total and total values from Assembly Details report
+     *
+     * @param jasperReportSummary - JasperReportSummary to use to retrieve values
+     * @param elementType - String type of element
+     * @param indexesToGet - List of Integers
+     * @return ArrayList of BigDecimals
+     */
+    public ArrayList<BigDecimal> getSubTotalAndTotalValuesAssemblyDetails(JasperReportSummary jasperReportSummary, String elementType, List<Integer> indexesToGet) {
+        ArrayList<BigDecimal> returnList = new ArrayList<>();
+        returnList.add(convertStringToBigDecimalValue(jasperReportSummary.getReportHtmlPart().getElementsContainingText(elementType).get(12).siblingElements().get(indexesToGet.get(0)).text()));
+        returnList.add(convertStringToBigDecimalValue(jasperReportSummary.getReportHtmlPart().getElementsContainingText(elementType).get(12).siblingElements().get(indexesToGet.get(1)).text()));
+        returnList.add(convertStringToBigDecimalValue(jasperReportSummary.getReportHtmlPart().getElementsContainingText(elementType).get(12).siblingElements().get(indexesToGet.get(2)).text()));
+        returnList.add(convertStringToBigDecimalValue(jasperReportSummary.getReportHtmlPart().getElementsContainingText(elementType).get(12).siblingElements().get(indexesToGet.get(3)).text()));
+        return returnList;
+    }
+
+    /**
+     * Takes in a string and returns it as a BigDecimal value
+     *
+     * @param valueToConvert - String to convert
+     * @return BigDecimal of String value
+     */
+    public BigDecimal convertStringToBigDecimalValue(String valueToConvert) {
+        return new BigDecimal(valueToConvert.replaceAll(",", ""));
+    }
+
+    /**
+     * Gets Assembly Details values at level one
+     *
+     * @param jasperReportSummary - JasperReportSummary to retrieve values from
+     * @return List of BigDecimal values
+     */
+    public List<BigDecimal> getAssemblyDetailsValuesLevelOne(JasperReportSummary jasperReportSummary) {
+        List<BigDecimal> returnValues = new ArrayList<>();
+        List<Element> elements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("style", "height:15px");
+        for (int i = 3; i < 9; i++) {
+            returnValues.add(convertStringToBigDecimalValue(elements.get(i).children().get(23).children().get(0).text()));
+        }
+        return returnValues;
+    }
+
+    /**
+     * Get Assembly Details total values
+     *
+     * @param jasperReportSummary - JasperReportSummary to retrieve values from
+     * @return List of BigDecimal values
+     */
+    public List<BigDecimal> getAssemblyDetailsValuesTotals(JasperReportSummary jasperReportSummary) {
+        List<BigDecimal> totalValues = new ArrayList<>();
+        List<String> heightList = Arrays.asList("13", "15", "15");
+        List<Integer> firstIndexList = Arrays.asList(0, 12, 13);
+        List<Integer> secondIndexList = Arrays.asList(14, 24, 24);
+
+        IntStream.range(0, firstIndexList.size()).forEach(
+            idx -> totalValues.add(
+                convertStringToBigDecimalValue(
+                    jasperReportSummary.getReportHtmlPart()
+                        .getElementsByAttributeValue("style", String.format("height:%spx", heightList.get(idx)))
+                        .get(firstIndexList.get(idx)).children()
+                        .get(secondIndexList.get(idx)).children()
+                        .get(0).text()
+                )
+            )
+        );
+        return totalValues;
     }
 
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
@@ -913,5 +1050,28 @@ public class JasperApiUtils {
 
     private String getCurrencySettingValueFromChartComponentCost(JasperReportSummary jasperReportSummary) {
         return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(5).text();
+    }
+
+    private void initialiseInputControlsEnumMap() {
+        inputControlsEnumMap.put("assemblySelect", "ASSEMBLY_SELECT");
+        inputControlsEnumMap.put("currency", "CURRENCY");
+        inputControlsEnumMap.put("componentCostCurrency", "COMPONENT_COST_CURRENCY");
+        inputControlsEnumMap.put("componentSelect", "COMPONENT_SELECT");
+        inputControlsEnumMap.put("costMetric", "COST_METRIC");
+        inputControlsEnumMap.put("earliestExportDate", "EARLIEST_EXPORT_DATE");
+        inputControlsEnumMap.put("endDate", "END_DATE");
+        inputControlsEnumMap.put("exportDate", "EXPORT_DATE");
+        inputControlsEnumMap.put("exportSetName", "EXPORT_SET_NAME");
+        inputControlsEnumMap.put("massMetric", "MASS_METRIC");
+        inputControlsEnumMap.put("dtcScore", "DTC_SCORE");
+        inputControlsEnumMap.put("latestCostDate", "LATEST_COST_DATE");
+        inputControlsEnumMap.put("latestExportDate", "LATEST_EXPORT_DATE");
+        inputControlsEnumMap.put("minimumAnnualSpend", "MINIMUM_ANNUAL_SPEND");
+        inputControlsEnumMap.put("processGroup", "PROCESS_GROUP");
+        inputControlsEnumMap.put("projectRollup", "PROJECT_ROLLUP");
+        inputControlsEnumMap.put("rollup", "ROLLUP");
+        inputControlsEnumMap.put("sortOrder", "SORT_ORDER");
+        inputControlsEnumMap.put("startDate", "START_DATE");
+        inputControlsEnumMap.put("trendingPeriod", "TRENDING_PERIOD");
     }
 }
