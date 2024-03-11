@@ -47,6 +47,7 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
 
     sh """
             docker build -f ./qa-stacks/Dockerfile \
+            --label qa-stacks \
             --build-arg FOLDER=${folder} \
             --build-arg MODULE=${module} \
             --tag ${buildInfo}-${module}-${runType}:${buildVersion} \
@@ -71,7 +72,7 @@ def tag_n_push_image(module = '', profile = '', region='', ecrDockerRegistry = '
 
 def remove_image(module = '', buildInfo = '', runType = '', buildVersion = '') {
     echo "Cleaning..."
-    sh "docker rmi ${buildInfo}-${module}-${runType}:${buildVersion}"
+    sh "docker system prune --filter \"label=qa-stacks\" -f -a"
 }
 
 pipeline {
