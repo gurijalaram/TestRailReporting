@@ -198,7 +198,7 @@ public class CostHistoryTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id={29698, 28927})
+    @TestRail(id = {29698, 28927})
     @Description("Verify that History Graph axes are retained after closing modal / scenario | Test axes update accordingly when DFM risk selected")
     public void testGraphAxisRetention() {
         String primaryAxis = "Design Warnings";
@@ -244,7 +244,7 @@ public class CostHistoryTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id={29940, 29947, 29948})
+    @TestRail(id = {29940, 29947, 29948})
     @Description("Verify Iterations can be hidden / displayed in graph")
     public void testShowHideIterations() {
         List<String> graphIterationNames = Arrays.asList("Iteration 2", "Iteration 3", "Iteration 4", "Iteration 5",

@@ -22,7 +22,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(css = "h2 button")
     private WebElement close;
 
-    @FindBy(css="div[role='dialog'] div div div:nth-of-type(2) p")
+    @FindBy(css = "div[role='dialog'] div div div:nth-of-type(2) p")
     private WebElement noPlotMessage;
 
     @FindBy(css = "div[role='dialog'] p:first-child")
@@ -34,46 +34,46 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(id = "qa-change-summary-column-1-Secondary Processes-Machining")
     private WebElement leftColSecondaryProcessMachining;
 
-    @FindBy(css="g[class*='xAxis']")
+    @FindBy(css = "g[class*='xAxis']")
     private WebElement xAxis;
 
-    @FindBy(css="g[class*='recharts-xAxis xAxis'] tspan")
+    @FindBy(css = "g[class*='recharts-xAxis xAxis'] tspan")
     private List<WebElement> displayedChartIterations;
 
-    @FindBy(css="g line[orientation='left'] + g g")
+    @FindBy(css = "g line[orientation='left'] + g g")
     private List<WebElement> leftAxisTicks;
 
-    @FindBy(css="g line[orientation='right'] + g g")
+    @FindBy(css = "g line[orientation='right'] + g g")
     private List<WebElement> rightAxisTicks;
 
-    @FindBy(id="qa-scenario-history-primary-select")
+    @FindBy(id = "qa-scenario-history-primary-select")
     private WebElement primaryAxisDropDown;
 
-    @FindBy(id="qa-scenario-history-secondary-select")
+    @FindBy(id = "qa-scenario-history-secondary-select")
     private WebElement secondaryAxisDropDown;
 
-    @FindBy(css="button[aria-label='Download as image']")
+    @FindBy(css = "button[aria-label='Download as image']")
     private WebElement downloadViewButton;
 
-    @FindBy(css="div[data-testid='scenario-history-download-preview'] h1")
+    @FindBy(css = "div[data-testid='scenario-history-download-preview'] h1")
     private WebElement downloadPreviewTitle;
 
-    @FindBy(css="div[data-testid='scenario-history-download-preview'] h1 + p")
+    @FindBy(css = "div[data-testid='scenario-history-download-preview'] h1 + p")
     private WebElement downloadPreviewDate;
 
-    @FindBy(css="div[data-testid='scenario-history-download-primary-key'")
+    @FindBy(css = "div[data-testid='scenario-history-download-primary-key'")
     private WebElement downloadPreviewFirstAxisLegend;
 
-    @FindBy(css="div[data-testid='scenario-history-download-secondary-key']")
+    @FindBy(css = "div[data-testid='scenario-history-download-secondary-key']")
     private WebElement downloadPreviewSecondAxisLegend;
 
-    @FindBy(css="svg[data-testid='logo']")
+    @FindBy(css = "svg[data-testid='logo']")
     private WebElement downloadPreviewWatermark;
 
-    @FindBy(css="div[data-testid='scenario-history-download-preview'] button[data-testid='secondary-button']")
+    @FindBy(css = "div[data-testid='scenario-history-download-preview'] button[data-testid='secondary-button']")
     private WebElement back;
 
-    @FindBy(css="div[data-testid='scenario-history-download-preview'] button[data-testid='primary-button']")
+    @FindBy(css = "div[data-testid='scenario-history-download-preview'] button[data-testid='primary-button']")
     private WebElement download;
 
     private PageUtils pageUtils;
