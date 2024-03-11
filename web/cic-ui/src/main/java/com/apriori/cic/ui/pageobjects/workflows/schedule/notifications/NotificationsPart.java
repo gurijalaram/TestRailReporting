@@ -17,19 +17,25 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class NotificationsPart extends CICBasePage {
 
-    public static final String PARENT_ELEMENT = "div[id*='root_pagemashupcontainer-1_navigation-']";
+    protected static final String NOTIFICATIONS_TAB_ELEMENT = "//div[@tab-number='4']";
 
-    @FindBy(xpath = "//div[@tab-number='4']//div[@title='Email']")
+    @FindBy(xpath = NOTIFICATIONS_TAB_ELEMENT + "//div[@title='Email']")
     protected WebElement emailTab;
 
-    @FindBy(xpath = "//div[@tab-number='4']//div[@title='Attach Report']")
+    @FindBy(xpath = NOTIFICATIONS_TAB_ELEMENT + "//div[@title='Attach Report']")
     protected WebElement attachReportTab;
 
-    @FindBy(xpath = "//div[@tab-number='4']//div[@title='Filter']")
+    @FindBy(xpath = NOTIFICATIONS_TAB_ELEMENT + "//div[@title='Filter']")
     protected WebElement filterTab;
 
-    @FindBy(xpath = "//div[@tab-number='4']//button[.='Next']")
+    @FindBy(xpath = NOTIFICATIONS_TAB_ELEMENT + "//div[@title='Monitoring']")
+    protected WebElement monitoringTab;
+
+    @FindBy(xpath = NOTIFICATIONS_TAB_ELEMENT + "//button[.='Next']")
     protected WebElement notificationNextButton;
+
+    @FindBy(xpath = NOTIFICATIONS_TAB_ELEMENT + "//div[@tab-number='4']//span[.='Job Monitoring Notification Configuration:']")
+    protected WebElement monitoringTabConfigElement;
 
     public NotificationsPart(WebDriver driver) {
         super(driver);
@@ -72,6 +78,20 @@ public class NotificationsPart extends CICBasePage {
         }
         return new AttachReportTab(driver);
     }
+
+    /**
+     * Navigate to Monitoring Tab in notifications part
+     *
+     * @return Monitoring  Tab
+     */
+    public MonitoringTab selectMonitoringTab() {
+        if (this.monitoringTab.isEnabled()) {
+            pageUtils.waitForElementAndClick(monitoringTab);
+            pageUtils.waitForElementToAppear(monitoringTabConfigElement);
+        }
+        return new MonitoringTab(driver);
+    }
+
 
     /**
      * Click Previous Workflow button
