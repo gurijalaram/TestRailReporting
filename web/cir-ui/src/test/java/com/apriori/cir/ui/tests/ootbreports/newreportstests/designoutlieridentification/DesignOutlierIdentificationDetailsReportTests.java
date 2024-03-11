@@ -1,9 +1,6 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.designoutlieridentification;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
-
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -19,7 +16,6 @@ import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
