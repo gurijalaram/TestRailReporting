@@ -11,10 +11,6 @@ import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.SecondaryDigitalFactories;
 import com.apriori.shared.util.models.response.component.SecondaryProcesses;
@@ -24,12 +20,9 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.joda.time.DateTime;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -315,7 +308,7 @@ public class CostHistoryTests extends TestBaseUI {
     @Test
     @TestRail(id = {29943, 29944, 29953, 29954})
     @Description("Verify Download as Image Preview ")
-    public void testDownloadAsImage() {
+    public void testDownloadAsImagePreview() {
         String testDate = DateTime.now().toString("MMMM d, yyyy");
 
         loginPage = new CidAppLoginPage(driver);
