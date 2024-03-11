@@ -6,7 +6,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 public enum QDSAPIEnum implements ExternalEndpointEnum {
 
     //BID PACKAGE
-    BID_PACKAGES("bid-packages"),
+    BID_PACKAGES("/bid-packages"),
     BID_PACKAGE(BID_PACKAGES.getEndpointString().concat("/%s")),
     BID_PACKAGE_PROJECTS(BID_PACKAGE.getEndpointString().concat("/projects")),
     BID_PACKAGE_PROJECT(BID_PACKAGE_PROJECTS.getEndpointString().concat("/%s")),
@@ -18,19 +18,19 @@ public enum QDSAPIEnum implements ExternalEndpointEnum {
     BID_PACKAGE_ITEM(BID_PACKAGE_ITEMS.getEndpointString().concat("/%s")),
 
     //LAYOUTS AND VIEW ELEMENTS
-    LAYOUTS("layouts"),
+    LAYOUTS("/layouts"),
     LAYOUT(LAYOUTS.getEndpointString().concat("/%s")),
     LAYOUT_VIEW_ELEMENTS(LAYOUT.getEndpointString().concat("/view-elements")),
     LAYOUT_VIEW_ELEMENT(LAYOUT_VIEW_ELEMENTS.getEndpointString().concat("/%s")),
 
-    VIEW_ELEMENTS("view-elements"),
+    VIEW_ELEMENTS("/view-elements"),
     VIEW_ELEMENT(VIEW_ELEMENTS.getEndpointString().concat("/%s")),
     VIEW_ELEMENT_LAYOUT_CONFIGURATIONS(VIEW_ELEMENT.getEndpointString().concat("/layout-configurations")),
     VIEW_ELEMENT_LAYOUT_CONFIGURATION(VIEW_ELEMENT_LAYOUT_CONFIGURATIONS.getEndpointString().concat("/%s")),
     VIEW_ELEMENT_LAYOUT_CONFIGURATION_SHARE(VIEW_ELEMENT_LAYOUT_CONFIGURATION.getEndpointString().concat("/share")),
 
     //PROJECTS AND PROJECT ITEMS
-    PROJECTS("projects"),
+    PROJECTS("/projects"),
     PROJECT(PROJECTS.getEndpointString().concat("/%s")),
     PROJECT_ITEMS(PROJECT.getEndpointString().concat("/project-items")),
     PROJECT_ITEM(PROJECT_ITEMS.getEndpointString().concat("/%s"));

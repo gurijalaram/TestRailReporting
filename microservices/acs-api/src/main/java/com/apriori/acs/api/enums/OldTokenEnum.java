@@ -4,7 +4,7 @@ import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum OldTokenEnum implements ExternalEndpointEnum {
-    POST_TOKEN("ws/auth/token");
+    POST_TOKEN("/ws/auth/token");
 
     private final String endpoint;
 

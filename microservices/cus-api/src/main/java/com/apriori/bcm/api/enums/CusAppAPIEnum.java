@@ -6,10 +6,10 @@ import com.apriori.shared.util.properties.PropertiesContext;
 public enum CusAppAPIEnum implements ExternalEndpointEnum {
 
     //PREFERENCES
-    PREFERENCES("users/current/preferences"),
+    PREFERENCES("/users/current/preferences"),
 
     //USER
-    CURRENT_USER("user/current");
+    CURRENT_USER("/user/current");
 
     private final String endpoint;
 

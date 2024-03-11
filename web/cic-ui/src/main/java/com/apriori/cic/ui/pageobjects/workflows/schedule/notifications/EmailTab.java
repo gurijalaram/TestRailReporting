@@ -1,73 +1,62 @@
 package com.apriori.cic.ui.pageobjects.workflows.schedule.notifications;
 
-import com.apriori.cic.ui.utils.Constants;
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 
 /**
  * Email tab in Notification part during workflow creation or modification
  */
 public class EmailTab extends NotificationsPart {
 
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_DrowpdownWidget-171'] > div > div > span.placeholder")
-    private WebElement emailTemplate;
-
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_DrowpdownWidget-173'] > div > div > span.placeholder")
-    private WebElement recipientDropdownElement;
-
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_textbox-175'] > table > tbody > tr > td > input")
-    private WebElement recipientEmailAddressTxtElement;
-
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_DrowpdownWidget-173'] > div > div > span.ss-arrow > span.arrow-down")
-    private WebElement emailDropdownArrowDownImg;
-
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_DrowpdownWidget-173'] > div > div > span.ss-arrow > span.arrow-up")
-    private WebElement emailDropdownArrowUpImg;
-
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_DrowpdownWidget-180']")
-    private WebElement emailConfigCostRoundingElement;
-
-    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_DrowpdownWidget-181'] > div > div > span.placeholder")
-    private WebElement emailConfigAprioriCostElement;
-
+    private static final String EMAIL_TAB_ELEMENT = NOTIFICATIONS_TAB_ELEMENT + "//div[@tab-number='1']";
 
     public EmailTab(WebDriver driver) {
         super(driver);
     }
 
-    public NotificationsPart setUpEmailConfiguration() {
-        this.selectEmailTemplate();
-        this.selectRecipient();
-        return new NotificationsPart(this.driver);
-    }
-
     public EmailTab selectEmailTemplate() {
-        pageUtils.waitForElementAndClick(emailTemplate);
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
-        this.waitUntilDropDownValuesAreLoaded(workFlowData.getNotificationsData().getEmailTemplate());
+        pageUtils.waitUntilDropdownOptionsLoaded(getEmailTemplateElement().findElement(By.tagName("select")));
+        pageUtils.waitForElementAndClick(getEmailTemplateElement());
         this.selectValueFromDDL(workFlowData.getNotificationsData().getEmailTemplate());
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
 
     public EmailTab selectRecipient() {
-        pageUtils.waitForElementAndClick(recipientDropdownElement);
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
+        pageUtils.waitUntilDropdownOptionsLoaded(getEmailRecipientElement().findElement(By.tagName("select")));
+        pageUtils.waitForElementAndClick(getEmailRecipientElement());
         this.selectValueFromDDL(workFlowData.getNotificationsData().getRecipientEmailType());
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
-        recipientEmailAddressTxtElement.sendKeys(workFlowData.getNotificationsData().getRecipientEmailAddress() + Keys.TAB);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.setValueOfElement(getEmailRecipientTxtElement(), workFlowData.getNotificationsData().getRecipientEmailAddress());
         pageUtils.waitForJavascriptLoadComplete();
         return this;
     }
 
+    public WebElement getEmailTemplateElement() {
+        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
+            .below(By.xpath(EMAIL_TAB_ELEMENT + "//span[.='Template']")));
+    }
+
+    public WebElement getEmailRecipientElement() {
+        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
+            .below(By.xpath(EMAIL_TAB_ELEMENT + "//span[.='Recipient']")));
+    }
+
     public WebElement getEmailConfigCostRoundingElement() {
-        return emailConfigCostRoundingElement;
+        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
+            .toRightOf(By.xpath(EMAIL_TAB_ELEMENT + "//input[@value='Cost Rounding']")));
     }
 
     public WebElement getEmailConfigAprioriCostElement() {
-        return emailConfigAprioriCostElement;
+        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
+            .toRightOf(By.xpath(EMAIL_TAB_ELEMENT + "//input[@value='aPriori Cost']")));
+    }
+
+    public WebElement getEmailRecipientTxtElement() {
+        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//input[type='text']"))
+            .toRightOf(getEmailRecipientElement()));
     }
 }

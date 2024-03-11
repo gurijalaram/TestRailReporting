@@ -6,12 +6,12 @@ import com.apriori.shared.util.properties.PropertiesContext;
 public enum BcmAppAPIEnum implements ExternalEndpointEnum {
 
     //WORKSHEETS
-    WORKSHEETS("worksheets"),
-    WORKSHEET_BY_ID("worksheets/%s"),
-    WORKSHEET_INPUT_NAME("worksheets/%s/inputRows"),
-    ANALYSIS_INPUTS("worksheets/%s/analysisInputs"),
-    DELETE_INPUTS("worksheets/%s/inputRows/delete"),
-    EDIT_INPUTS("worksheets/%s/inputRows/edit");
+    WORKSHEETS("/worksheets"),
+    WORKSHEET_BY_ID("/worksheets/%s"),
+    WORKSHEET_INPUT_NAME("/worksheets/%s/inputRows"),
+    ANALYSIS_INPUTS("/worksheets/%s/analysisInputs"),
+    DELETE_INPUTS("/worksheets/%s/inputRows/delete"),
+    EDIT_INPUTS("/worksheets/%s/inputRows/edit");
 
 
     private final String endpoint;

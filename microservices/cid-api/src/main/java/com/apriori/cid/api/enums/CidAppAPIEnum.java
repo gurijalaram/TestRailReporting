@@ -6,57 +6,57 @@ import com.apriori.shared.util.properties.PropertiesContext;
 public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     //COMPONENT GROUP
-    COMPONENTS_CREATE("components/create"),
+    COMPONENTS_CREATE("/components/create"),
 
     //COMPONENTS
-    COMPONENTS("components"),
-    COMPONENTS_BY_COMPONENT_ID("components/%s"),
-    HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/hoops-image"),
-    SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s"),
-    COMPONENT_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/cost"),
-    GROUP_COST_COMPONENTS("scenarios/cost"),
+    COMPONENTS("/components"),
+    COMPONENTS_BY_COMPONENT_ID("/components/%s"),
+    HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS("/components/%s/scenarios/%s/hoops-image"),
+    SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS("/components/%s/scenarios/%s"),
+    COMPONENT_BY_COMPONENT_SCENARIO_IDS("/components/%s/scenarios/%s/cost"),
+    GROUP_COST_COMPONENTS("/scenarios/cost"),
 
     //CAD FILES
-    CAD_FILES("cad-files"),
+    CAD_FILES("/cad-files"),
 
     //ITERATIONS
-    COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/iterations/latest"),
+    COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS("/components/%s/scenarios/%s/iterations/latest"),
 
     //ROUTINGS
-    ROUTINGS("components/%s/scenarios/%s/digital-factories/%s/process-groups/%s/available-routings"),
+    ROUTINGS("/components/%s/scenarios/%s/digital-factories/%s/process-groups/%s/available-routings"),
 
     //SCENARIO
-    COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/cost"),
-    COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/copy"),
-    EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/fork"),
-    MANIFEST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/manifest"),
-    EDIT_SCENARIOS("scenarios/fork"),
-    DELETE_SCENARIO("components/%s/scenarios/%s"),
-    REPORTS("components/%s/scenarios/%s/watchpoint-report"),
-    DELETE_SCENARIOS("scenarios/delete"),
+    COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("/components/%s/scenarios/%s/cost"),
+    COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs("/components/%s/scenarios/%s/copy"),
+    EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs("/components/%s/scenarios/%s/fork"),
+    MANIFEST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("/components/%s/scenarios/%s/manifest"),
+    EDIT_SCENARIOS("/scenarios/fork"),
+    DELETE_SCENARIO("/components/%s/scenarios/%s"),
+    REPORTS("/components/%s/scenarios/%s/watchpoint-report"),
+    DELETE_SCENARIOS("/scenarios/delete"),
 
     //COSTING TEMPLATES
-    COSTING_TEMPLATES("costing-templates"),
-    COSTING_TEMPLATES_ID("costing-templates/%s"),
+    COSTING_TEMPLATES("/costing-templates"),
+    COSTING_TEMPLATES_ID("/costing-templates/%s"),
 
     //PUBLISH
-    PUBLISH_SCENARIO("components/%s/scenarios/%s/publish"),
-    PUBLISH_SCENARIOS("scenarios/publish"),
+    PUBLISH_SCENARIO("/components/%s/scenarios/%s/publish"),
+    PUBLISH_SCENARIOS("/scenarios/publish"),
 
     //PEOPLE
-    CURRENT_PERSON("people?username[EQ]=%s"),
+    CURRENT_PERSON("/people?username[EQ]=%s"),
 
     //CUSTOMIZATIONS
-    CUSTOMIZATIONS("customizations"),
+    CUSTOMIZATIONS("/customizations"),
 
     //SCENARIO ASSOCIATION GROUP OPERATIONS
-    SCENARIO_ASSOCIATIONS("components/%s/scenarios/%s/associations"),
+    SCENARIO_ASSOCIATIONS("/components/%s/scenarios/%s/associations"),
 
     //PREFERENCES
-    PREFERENCES("users/current/preferences"),
+    PREFERENCES("/users/current/preferences"),
 
     //APPLICATION METADATA
-    APPLICATION_METADATA("application-metadata");
+    APPLICATION_METADATA("/application-metadata");
 
     private final String endpoint;
 
