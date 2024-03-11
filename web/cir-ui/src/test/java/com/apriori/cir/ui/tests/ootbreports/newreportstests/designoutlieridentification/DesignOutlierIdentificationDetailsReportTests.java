@@ -61,7 +61,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     @Test
     @TmsLink("6249")
     @TestRail(id = 6249)
-    @Description("Min and max cost filter works")
+    @Description("Min and max cost filter works - details report")
     public void testMinAndMaxCostFilter() {
         jasperApiUtils.genericTestCore(
             InputControlsEnum.APRIORI_COST_MIN.getInputControlId(),

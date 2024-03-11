@@ -84,7 +84,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     @TestRail(id = 1956)
     @Description("Min & Max costs filter works")
     public void testMinMaxAprioriCost() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+        jasperApiUtils.genericTestCore(
             InputControlsEnum.COMPONENT_COST_MIN.getInputControlId(),
             "1"
         );
