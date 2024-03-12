@@ -22,7 +22,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     @FindBy(css = "h2 button")
     private WebElement close;
 
-    @FindBy(css = "div[role='dialog'] div div div:nth-of-type(2) p")
+    @FindBy(css = "p[data-testid='scenario-history-dialog-error-message']")
     private WebElement noPlotMessage;
 
     @FindBy(css = "div[role='dialog'] p:first-child")
@@ -69,6 +69,12 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
 
     @FindBy(css = "svg[data-testid='logo']")
     private WebElement downloadPreviewWatermark;
+
+    @FindBy(css = "div[role='dialog'] span[data-testid='checkbox']")
+    private WebElement dataTableCheckbox;
+
+    @FindBy(xpath = "//p[contains(text(),'Iteration')]")
+    private List<WebElement> dataTableIterations;
 
     @FindBy(css = "div[data-testid='scenario-history-download-preview'] button[data-testid='secondary-button']")
     private WebElement back;
@@ -129,6 +135,16 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     }
 
     /**
+     * Get List of all iterations in table
+     *
+     * @return List of Strings containing iteration names displayed in table
+     */
+    public List<String> displayedTableIterations() {
+        return iterationList.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+
+    /**
      * Get name of iteration hide/show icon
      *
      * @param iterationNum - The number of the specified iteration
@@ -137,6 +153,18 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      */
     public String iterationDisplayIcon(Integer iterationNum) {
         return showHideIterationIcon(iterationNum).getAttribute("data-icon");
+    }
+
+    /**
+     * Is specified Show/Hide icon displayed
+     *
+     * @param iterationNum - The number of the specified iteration
+     *
+     * @return Boolean representation of icon visibility
+     */
+    public Boolean showHideIconDisplayed(Integer iterationNum) {
+        By locator = By.xpath(String.format(iterationXPath, iterationNum) + "/../following-sibling::button");
+        return pageUtils.waitForVisibilityOfElement(locator);
     }
 
     /**
@@ -290,6 +318,26 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      */
     public Boolean downloadPreviewWatermarkDisplayed() {
         return downloadPreviewWatermark.isDisplayed();
+    }
+
+    /**
+     * Click the Data Table checkbox
+     *
+     * @return this PO
+     */
+    public CostHistoryPage clickDataTableCheckbox() {
+        pageUtils.waitForElementToAppear(dataTableCheckbox);
+        dataTableCheckbox.click();
+        return this;
+    }
+
+    /**
+     * Get list of iterations shown in Data Table
+     *
+     * @return List of Strings of Iterations shown in Data Table
+     */
+    public List<String> dataTableIterationsList() {
+        return dataTableIterations.stream().map(WebElement::getText).collect(Collectors.toList());
     }
 
     /**
