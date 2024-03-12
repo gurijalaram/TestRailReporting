@@ -24,6 +24,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -104,7 +105,8 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Tag(REPORTS)
+    @Disabled("CID integration not working well")
     @TmsLink("6823")
     @TestRail(id = {6823})
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Details Report")

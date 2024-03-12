@@ -31,7 +31,6 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
 
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
-    private GenericReportPage genericReportPage;
 
     public PlasticDtcComparisonReportTests() {
         super();
@@ -117,7 +116,8 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7364")
     @TestRail(id = {7364})
     @Description("Verify save button functionality - Plastic DTC Comparison Report ")
@@ -285,7 +285,7 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     @TestRail(id = {1369})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
-        genericReportPage = new ReportsLoginPage(driver)
+        GenericReportPage genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), GenericReportPage.class)
@@ -311,7 +311,8 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Tag(REPORTS)
+    @Disabled("CID integration not working well")
     @TmsLink("1378")
     @TestRail(id = {1378})
     @Description("Verify DTC issue counts are correct")

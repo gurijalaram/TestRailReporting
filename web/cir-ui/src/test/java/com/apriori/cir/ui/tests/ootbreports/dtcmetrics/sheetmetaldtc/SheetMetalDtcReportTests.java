@@ -155,7 +155,8 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7375")
     @TestRail(id = {7375})
     @Description("Verify save button functionality - Sheet Metal DTC Report")

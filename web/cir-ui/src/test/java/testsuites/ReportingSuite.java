@@ -1,5 +1,7 @@
 package testsuites;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
+
 import com.apriori.cir.ui.tests.ootbreports.assemblycost.AssemblyCostReportTests;
 import com.apriori.cir.ui.tests.ootbreports.componentcost.ComponentCostReportTests;
 import com.apriori.cir.ui.tests.ootbreports.costoutlieridentification.CostOutlierIdentificationDetailsReportTests;
@@ -26,11 +28,15 @@ import com.apriori.cir.ui.tests.ootbreports.targetquotedcosttrend.TargetAndQuote
 import com.apriori.cir.ui.tests.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingDetailsReportTests;
 import com.apriori.cir.ui.tests.ootbreports.targetquotedcosttrend.TargetAndQuotedCostValueTrackingReportTests;
 
+import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectClasses({
+@SelectPackages("com.apriori.cir.ui.tests.ootbreports")
+@IncludeTags(REPORTS)
+/*@SelectClasses({
     AssemblyDetailsReportTests.class,
     AssemblyCostReportTests.class,
     CastingDtcComparisonReportTests.class,
@@ -56,6 +62,6 @@ import org.junit.platform.suite.api.Suite;
     TargetAndQuotedCostTrendReportTests.class,
     TargetAndQuotedCostValueTrackingDetailsReportTests.class,
     TargetAndQuotedCostValueTrackingReportTests.class
-})
+})*/
 public class ReportingSuite {
 }

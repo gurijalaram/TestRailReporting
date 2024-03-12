@@ -13,6 +13,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -206,7 +207,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Tag(REPORTS)
+    @Disabled("CID integration not working well")
     @TmsLink("2998")
     @TestRail(id = {2998})
     @Description("Validate report content aligns to aP desktop or CID values (simple case) - Assembly Cost (A4) Report")
@@ -216,7 +218,8 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Tag(REPORTS)
+    @Disabled("CID integration not working well")
     @TmsLink("7624")
     @TestRail(id = {7624})
     @Description("Validate report content aligns to aP desktop or CID values (simple case) - Assembly Cost (Letter) Report")

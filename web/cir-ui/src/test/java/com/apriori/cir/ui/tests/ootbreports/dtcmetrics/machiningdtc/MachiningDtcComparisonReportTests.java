@@ -34,10 +34,8 @@ import org.junit.jupiter.api.Test;
 
 public class MachiningDtcComparisonReportTests extends TestBaseUI {
 
-    private MachiningDtcReportPage machiningDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
-    private GenericReportPage genericReportPage;
 
     public MachiningDtcComparisonReportTests() {
         super();
@@ -129,7 +127,8 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7340")
     @TestRail(id = {7340})
     @Description("Verify save button functionality - Machining DTC Comparison Report")
@@ -327,7 +326,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     @TestRail(id = {2039})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
-        machiningDtcReportPage = new ReportsLoginPage(driver)
+        MachiningDtcReportPage machiningDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(), MachiningDtcReportPage.class)

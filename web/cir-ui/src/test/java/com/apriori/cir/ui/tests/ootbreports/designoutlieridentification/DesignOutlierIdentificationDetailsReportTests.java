@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 
 public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
-    private DesignOutlierIdentificationReportPage designOutlierIdentificationReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
@@ -130,7 +129,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
     @TestRail(id = {1995})
     @Description("Export date lists all available versions from selected export set(s)")
     public void testExportDateAvailability() {
-        designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
+        DesignOutlierIdentificationReportPage designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),

@@ -35,6 +35,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.TmsLink;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -96,6 +97,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tags({
+        @Tag(REPORTS),
         @Tag(ON_PREM)
     })
     @TmsLink("1922")
@@ -178,6 +180,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(REPORTS)
     @Issue("AP-58059")
     @Issue("AP-53537")
     @TmsLink("3067")
@@ -336,6 +339,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(REPORTS)
     @TmsLink("3231")
     @TmsLink("1929")
     @TestRail(id = {3231, 1929})
@@ -523,6 +527,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(REPORTS)
+    @Disabled("CID integration hasn't worked well in a while")
     @TmsLink("1930")
     @TestRail(id = {1930})
     @Description("Test Export Set with costing failures costing incomplete")
@@ -873,7 +879,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Tag(REPORTS)
+    @Disabled("As above, CID integration not working well")
     @TmsLink("1924")
     @TestRail(id = {1924})
     @Description("Verify report figures from CI Design")
@@ -919,6 +926,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(REPORTS)
     @TmsLink("1928")
     @TestRail(id = {1928})
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
@@ -951,6 +959,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(REPORTS)
     @TmsLink("1933")
     @TestRail(id = {1933})
     @Description("Verify component subassembly report details")
@@ -980,7 +989,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Tag(REPORTS)
+    @Disabled("As above, CID integration not working well")
     @TmsLink("1927")
     @TestRail(id = {1927})
     @Description("Validate multiple VPE usage aligns to CID usage")

@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 
 public class MachiningDtcDetailsReportTests extends TestBaseUI {
 
-    private MachiningDtcReportPage machiningDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
@@ -131,7 +130,8 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7341")
     @TestRail(id = {7341})
     @Description("Verify save button functionality - Machining DTC Details Report")
@@ -307,7 +307,7 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     @TestRail(id = {2039})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
-        machiningDtcReportPage = new ReportsLoginPage(driver)
+        MachiningDtcReportPage machiningDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), MachiningDtcReportPage.class)

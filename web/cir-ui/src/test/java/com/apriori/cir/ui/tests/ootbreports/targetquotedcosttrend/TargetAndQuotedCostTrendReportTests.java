@@ -21,6 +21,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -195,7 +196,8 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Disabled("CID integration not working well")
+    @Tag(REPORTS)
     @TmsLink("3360")
     @TestRail(id = {3360})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
@@ -205,7 +207,8 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Disabled("CID integration not working well")
+    @Tag(REPORTS)
     @TmsLink("3360")
     @TestRail(id = {3360})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")

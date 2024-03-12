@@ -157,7 +157,8 @@ public class CastingDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7353")
     @TestRail(id = {7353})
     @Description("Verify save button functionality - Casting DTC Details Report")

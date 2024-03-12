@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 
 public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
 
-    private SheetMetalDtcReportPage sheetMetalDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
@@ -90,7 +89,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
             ReportNamesEnum.SHEET_METAL_DTC.getReportName().toUpperCase(),
             Constants.DEFAULT_SCENARIO_NAME
         );
-        sheetMetalDtcReportPage = new ReportsLoginPage(driver)
+        SheetMetalDtcReportPage sheetMetalDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(), SheetMetalDtcReportPage.class)
@@ -157,7 +156,8 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7376")
     @TestRail(id = {7376})
     @Description("Verify save button functionality - Sheet Metal DTC Comparison Report")

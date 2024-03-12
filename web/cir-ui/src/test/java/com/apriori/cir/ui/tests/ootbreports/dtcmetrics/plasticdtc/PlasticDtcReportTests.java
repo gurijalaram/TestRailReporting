@@ -40,7 +40,6 @@ import java.math.BigDecimal;
 
 public class PlasticDtcReportTests extends TestBaseUI {
 
-    private PlasticDtcReportPage plasticDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
@@ -257,7 +256,8 @@ public class PlasticDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7363")
     @TestRail(id = {7363})
     @Description("Verify save button functionality - Plastic DTC Report ")
@@ -439,7 +439,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
     @TestRail(id = {2320})
     @Description("Verify minimum annual spend input control correctly filters list of available parts")
     public void testMinimumAnnualSpendFiltersPartList() {
-        plasticDtcReportPage = new ReportsLoginPage(driver)
+        PlasticDtcReportPage plasticDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), PlasticDtcReportPage.class)

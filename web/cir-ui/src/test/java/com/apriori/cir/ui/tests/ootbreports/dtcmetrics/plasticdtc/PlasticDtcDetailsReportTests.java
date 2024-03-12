@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 
 public class PlasticDtcDetailsReportTests extends TestBaseUI {
 
-    private PlasticDtcReportPage plasticDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
@@ -117,7 +116,8 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7365")
     @TestRail(id = {7365})
     @Description("Verify save button functionality - Plastic DTC Details Report")
@@ -277,7 +277,7 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     @TestRail(id = {1369})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
-        plasticDtcReportPage = new ReportsLoginPage(driver)
+        PlasticDtcReportPage plasticDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), PlasticDtcReportPage.class)
@@ -292,7 +292,8 @@ public class PlasticDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Tag(REPORTS)
+    @Disabled("CID integration not working well")
     @TmsLink("1378")
     @TestRail(id = {1378})
     @Description("Verify DTC issue counts are correct")
