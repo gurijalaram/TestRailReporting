@@ -80,7 +80,7 @@ public class NavBarTests extends WorkflowTestUtil {
 
     @Test
     @TestRail(id = {3655})
-    public void testCicUserGuideNavigation() throws Exception {
+    public void testCicUserGuideNavigation() {
         CicUserGuide cicUserGuide = new CicLoginPage(driver)
             .login(currentUser)
             .navigateToCicUserGuide()
