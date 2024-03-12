@@ -4,6 +4,7 @@ import com.apriori.cic.ui.tests.AssemblyReportTests;
 import com.apriori.cic.ui.tests.ConnectorTabTests;
 import com.apriori.cic.ui.tests.CostingInputTabTests;
 import com.apriori.cic.ui.tests.CostingPreferencesTests;
+import com.apriori.cic.ui.tests.JobMonitoringEmailTests;
 import com.apriori.cic.ui.tests.NavBarTests;
 import com.apriori.cic.ui.tests.NotificationTests;
 import com.apriori.cic.ui.tests.PlmIntegrationTests;
@@ -45,7 +46,8 @@ import org.junit.platform.suite.api.Suite;
     PlmQueryDefRealRuleTests.class,
     PlmQueryDefStrEmailRuleTests.class,
     PublishResultsWriteFieldTests.class,
-    AssemblyReportTests.class
+    AssemblyReportTests.class,
+    JobMonitoringEmailTests.class
 })
 public class CICRegressionTestSuite {
 }

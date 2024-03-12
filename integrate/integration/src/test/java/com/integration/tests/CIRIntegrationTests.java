@@ -9,7 +9,6 @@ import com.apriori.cic.api.enums.PlmTypeAttributes;
 import com.apriori.cic.api.enums.ReportsEnum;
 import com.apriori.cic.api.models.request.AgentPort;
 import com.apriori.cic.api.models.request.JobDefinition;
-import com.apriori.cic.api.models.response.AgentWorkflow;
 import com.apriori.cic.api.models.response.AgentWorkflowJobRun;
 import com.apriori.cic.api.utils.CicApiTestUtil;
 import com.apriori.cic.api.utils.PlmPartsUtil;
@@ -17,16 +16,15 @@ import com.apriori.cic.ui.enums.RuleOperatorEnum;
 import com.apriori.cic.ui.pagedata.WorkFlowData;
 import com.apriori.cic.ui.pageobjects.login.CicLoginPage;
 import com.apriori.cic.ui.pageobjects.workflows.WorkflowHome;
+import com.apriori.cic.ui.utils.CicGuiTestUtil;
 import com.apriori.cir.ui.pageobjects.header.ReportsHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.shared.util.PDFDocument;
 import com.apriori.shared.util.dataservice.TestDataService;
 import com.apriori.shared.util.email.GraphEmailService;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.models.response.EmailMessage;
 import com.apriori.shared.util.properties.PropertiesContext;
-import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -40,15 +38,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class CIRIntegrationTests extends TestBaseUI {
+public class CIRIntegrationTests extends CicGuiTestUtil {
 
-    private AgentWorkflow agentWorkflowResponse;
     private JobDefinition jobDefinitionData;
-    private AgentWorkflowJobRun agentWorkflowJobRunResponse;
     private String workflowName;
     private String scenarioName;
     private SoftAssertions softAssertions;
-    private UserCredentials currentUser;
     private AgentPort agentPort;
     private String plmPartNumber;
 
@@ -83,9 +78,10 @@ public class CIRIntegrationTests extends TestBaseUI {
         workFlowData.getNotificationsData().setReportName(ReportsEnum.DTC_COMPONENT_SUMMARY.getReportName());
         workFlowData.getPublishResultsData().setReportName(ReportsEnum.DTC_COMPONENT_SUMMARY.getReportName());
         log.info(String.format("Start Creating Workflow >> %s <<", workFlowData.getWorkflowName()));
-        WorkflowHome workflowHome = new CicLoginPage(driver)
-            .login(currentUser)
-            .clickWorkflowMenu()
+        this.ciConnectHome = new CicLoginPage(driver)
+            .login(currentUser);
+
+        WorkflowHome workflowHome = this.ciConnectHome.clickWorkflowMenu()
             .setTestData(workFlowData)
             .selectScheduleTab()
             .clickNewButton()
@@ -110,16 +106,14 @@ public class CIRIntegrationTests extends TestBaseUI {
             .clickSaveButton();
 
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition created");
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowName);
-        softAssertions.assertThat(agentWorkflowResponse.getId()).isNotNull();
-        //Run the workflow
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
+        this.agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(workflowName);
+        softAssertions.assertThat(this.agentWorkflowResponse.getId()).isNotNull();
+
+        this.agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflow(this.agentWorkflowResponse.getId(), AgentWorkflowJobRun.class, HttpStatus.SC_OK);
         softAssertions.assertThat(agentWorkflowJobRunResponse.getJobId()).isNotNull();
 
-        // Verify workflow job is finished.
-        softAssertions.assertThat(CicApiTestUtil.trackWorkflowJobStatus(agentWorkflowResponse.getId(), agentWorkflowJobRunResponse.getJobId())).isTrue();
+        this.trackWorkflow();
 
-        // Read the email and verify content and attached watch point report
         EmailMessage emailMessage = GraphEmailService.searchEmailMessageWithAttachments(scenarioName);
         softAssertions.assertThat(emailMessage.getBody().getContent()).contains(scenarioName);
         softAssertions.assertThat(emailMessage.getBody().getContent()).contains("aP Generate Analysis Summary");
@@ -130,7 +124,7 @@ public class CIRIntegrationTests extends TestBaseUI {
         softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("MATERIAL INFORMATION");
         softAssertions.assertThat(pdfDocument.getDocumentContents()).contains(scenarioName);
         emailMessage.deleteEmailMessage();
-        CicApiTestUtil.deleteWorkFlow(workflowHome.getJsessionId(), CicApiTestUtil.getMatchedWorkflowId(workflowName));
+        CicApiTestUtil.deleteWorkFlow(this.ciConnectHome.getSession(), CicApiTestUtil.getMatchedWorkflowId(workflowName));
     }
 
     @AfterEach

@@ -121,6 +121,8 @@ public class DdsDiscussionTest extends TestUtil {
         ResponseWrapper<DiscussionResponse> discussionResponse = HTTPRequest.build(requestEntity).patch();
 
         softAssertions.assertThat(discussionResponse.getResponseEntity().getStatus()).isEqualTo("RESOLVED");
+
+        DdsApiTestUtils.deleteDiscussion(discussionResponse.getResponseEntity().getIdentity(), usrContext);
     }
 
     @Test
