@@ -1,10 +1,10 @@
 package testsuites;
 
-import com.apriori.cir.ui.tests.ootbreports.costoutlieridentification.CostOutlierIdentificationDetailsReportTests;
-import com.apriori.cir.ui.tests.ootbreports.costoutlieridentification.CostOutlierIdentificationReportTests;
-import com.apriori.cir.ui.tests.ootbreports.dtcmetrics.machiningdtc.MachiningDtcDetailsReportTests;
-import com.apriori.cir.ui.tests.ootbreports.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsReportTests;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
+
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.componentcost.ComponentCostReportTests;
+import com.apriori.cir.ui.tests.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationDetailsReportTests;
+import com.apriori.cir.ui.tests.ootbreports.newreportstests.costoutlieridentification.CostOutlierIdentificationReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.cycletimevaluetracking.CycleTimeValueTrackingDetailsReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.cycletimevaluetracking.CycleTimeValueTrackingReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.designoutlieridentification.DesignOutlierIdentificationDetailsReportTests;
@@ -15,11 +15,13 @@ import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.castingdt
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcDetailsReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.machiningdtc.MachiningDtcComparisonReportTests;
+import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.machiningdtc.MachiningDtcDetailsReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.machiningdtc.MachiningDtcReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.plasticdtc.PlasticDtcComparisonReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.plasticdtc.PlasticDtcDetailsReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.plasticdtc.PlasticDtcReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcComparisonReportTests;
+import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcDetailsReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc.SheetMetalDtcReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.general.assemblycost.AssemblyCostA4ReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.general.assemblycost.AssemblyCostLetterReportTests;
@@ -48,11 +50,15 @@ import com.apriori.cir.ui.tests.ootbreports.newreportstests.targetquotedcosttren
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.upgradecomparison.UpgradeComparisonReportTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.upgradecomparison.UpgradePartComparisonReportTests;
 
+import org.junit.platform.suite.api.IncludeTags;
 import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectClasses({
+@SelectPackages("com.apriori.cir.ui.tests.ootbreports.newreportstests")
+@IncludeTags(REPORTS)
+/*@SelectClasses({
     AssemblyCostA4ReportTests.class,
     AssemblyCostLetterReportTests.class,
     AssemblyDetailsReportTests.class,
@@ -101,6 +107,6 @@ import org.junit.platform.suite.api.Suite;
     TargetAndQuotedCostValueTrackingDetailsReportTests.class,
     UpgradeComparisonReportTests.class,
     UpgradePartComparisonReportTests.class
-})
+})*/
 public class ReportsApiTestSuite {
 }

@@ -36,32 +36,5 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @SelectPackages("com.apriori.cir.ui.tests.ootbreports")
 @IncludeTags(REPORTS)
-/*@SelectClasses({
-    AssemblyDetailsReportTests.class,
-    AssemblyCostReportTests.class,
-    CastingDtcComparisonReportTests.class,
-    CastingDtcDetailsReportTests.class,
-    CastingDtcReportTests.class,
-    ComponentCostReportTests.class,
-    CostOutlierIdentificationDetailsReportTests.class,
-    CostOutlierIdentificationReportTests.class,
-    CycleTimeValueTrackingDetailsReportTests.class,
-    CycleTimeValueTrackingReportTests.class,
-    DesignOutlierIdentificationDetailsReportTests.class,
-    DesignOutlierIdentificationReportTests.class,
-    MachiningDtcComparisonReportTests.class,
-    MachiningDtcDetailsReportTests.class,
-    MachiningDtcReportTests.class,
-    PlasticDtcComparisonReportTests.class,
-    PlasticDtcDetailsReportTests.class,
-    PlasticDtcReportTests.class,
-    ScenarioComparisonReportTests.class,
-    SheetMetalDtcComparisonReportTests.class,
-    SheetMetalDtcDetailsReportTests.class,
-    SheetMetalDtcReportTests.class,
-    TargetAndQuotedCostTrendReportTests.class,
-    TargetAndQuotedCostValueTrackingDetailsReportTests.class,
-    TargetAndQuotedCostValueTrackingReportTests.class
-})*/
 public class ReportingSuite {
 }

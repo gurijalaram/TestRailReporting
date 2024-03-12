@@ -1,6 +1,8 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.cycletimevaluetracking;
 
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
@@ -19,6 +21,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +44,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("26911")
     @TestRail(id = 26911)
     @Description("Verify Currency Code input control is working correctly")
