@@ -2,8 +2,11 @@ package com.apriori.cid.ui.tests.evaluate;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.CUSTOMER;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SANITY;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.StringContains.containsString;
 
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
+import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
@@ -77,6 +80,10 @@ public class CostScenarioTests extends TestBaseUI {
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.VERIFIED)).isEqualTo((true));
+
+        evaluatePage.clickDeleteIcon()
+            .clickDelete(ExplorePage.class)
+            .checkComponentDelete(component);
 
         softAssertions.assertAll();
     }
