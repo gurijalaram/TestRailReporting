@@ -10,11 +10,11 @@ deployment: production
 customer: ap-int
 
 # Deployment
-production:
+Production:
   name: Production
   url_part: ${env}
 
-sandbox:
+Sandbox:
   url_part: sandbox.${env}
 #==========================================================
 

@@ -8,7 +8,7 @@ qa-test:
   aws_parameter_store_name: qa-test
   application_name: cid
   base_url: https://na-1-install.${${customer}.cloud_reference_name}.qa-test.apriori.net/
-  installation_name: core-na-1 - Production
+  installation_name: core-na-1 - ${deployment}
   customer_identity: 6C1F8C1D4D75
   widgets_customer_identity: 52IC4D3J98GN
   secret_key: PG9E795ML3P4
