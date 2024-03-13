@@ -33,7 +33,7 @@ public class CostWorksheetTests extends BcmUtil {
     }
 
     @Test
-    @TestRail(id = {29815, 29816, 29817, 29973})
+    @TestRail(id = {29815, 29816, 29817, 29973, 29976})
     @Description("Verify costing worksheet")
     public void costWorksheet() {
         String name = GenerateStringUtil.saltString("name");
@@ -60,17 +60,11 @@ public class CostWorksheetTests extends BcmUtil {
 
         softAssertions.assertThat(returnWorksheet.getStatus()).containsAnyOf("IN_PROGRESS", "COMPLETE");
         softAssertions.assertThat(returnWorksheet.getAnalysisEvents()).isNotEmpty();
-        softAssertions.assertAll();
-    }
 
-    @Test
-    @TestRail(id = 29976)
-    @Description("Verify costing not existing worksheet - negative test")
-    public void costNotExistingWorksheet() {
         String notExistingIdentity = "000000000000";
         ErrorResponse notExistingWorksheet = costWorksheet(ErrorResponse.class, notExistingIdentity, HttpStatus.SC_NOT_FOUND).getResponseEntity();
-
-        softAssertions.assertThat(notExistingWorksheet.getMessage()).isEqualTo(String.format("Worksheet: '%s' doesn't exists for a user.", notExistingIdentity));
+        softAssertions.assertThat(notExistingWorksheet.getMessage())
+            .isEqualTo(String.format("Worksheet: '%s' doesn't exists for a user.", notExistingIdentity));
         softAssertions.assertAll();
     }
 }
