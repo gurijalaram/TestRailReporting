@@ -1,6 +1,5 @@
 package testsuites;
 
-import com.apriori.acs.api.tests.ActiveAxesByScenarioIterationKeyTests;
 import com.apriori.acs.api.tests.ActiveDimensionsByScenarioIterationKeyTests;
 import com.apriori.acs.api.tests.AllMaterialStocksInfoTests;
 import com.apriori.acs.api.tests.ArtifactPropertiesTests;
@@ -32,7 +31,6 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @SelectClasses({
     AvailableRoutingsTests.class,
-    ActiveAxesByScenarioIterationKeyTests.class,
     ActiveDimensionsByScenarioIterationKeyTests.class,
     AllMaterialStocksInfoTests.class,
     ArtifactTableInfoTests.class,

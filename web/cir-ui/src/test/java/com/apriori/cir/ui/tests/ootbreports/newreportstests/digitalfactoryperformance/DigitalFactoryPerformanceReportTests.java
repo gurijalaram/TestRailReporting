@@ -1,5 +1,6 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.digitalfactoryperformance;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -16,6 +17,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class DigitalFactoryPerformanceReportTests extends JasperApiAuthenticatio
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("28476")
     @TestRail(id = 28476)
     @Description("Input Controls - Currency Code - Main Report")

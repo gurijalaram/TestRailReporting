@@ -1,11 +1,13 @@
 package testsuites;
 
-import com.apriori.cia.ui.tests.navigation.AdminNavigationTests;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ADMIN;
 
-import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.IncludeTags;
+import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
 
 @Suite
-@SelectClasses(AdminNavigationTests.class)
+@SelectPackages("com.apriori.cia.ui.tests.navigation")
+@IncludeTags(ADMIN)
 public class AdminSuite {
 }

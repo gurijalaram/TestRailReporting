@@ -1,5 +1,7 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.recommendedtestparts;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
@@ -21,6 +23,7 @@ import io.qameta.allure.TmsLink;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -40,6 +43,7 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("14000")
     @TestRail(id = 14000)
     @Description("Input controls - Test Process Groups")

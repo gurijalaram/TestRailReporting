@@ -1,5 +1,6 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.general.basiccostavoidance;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,6 +17,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ public class BasicCostAvoidanceReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("8948")
     @TestRail(id = 8948)
     @Description("Input Controls - Currency Code")
