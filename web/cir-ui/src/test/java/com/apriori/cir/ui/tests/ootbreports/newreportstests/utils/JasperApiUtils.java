@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.JasperReportSummaryIncRawData;
+import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.request.ReportRequest;
@@ -145,6 +146,42 @@ public class JasperApiUtils {
         log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
+    }
+
+    /**
+     * Generic method that sets one particular value in the input controls
+     *
+     * @param keyToSet   String - key of the value to set
+     * @param valueToSet String - value which to set
+     * @return JasperReportSummary instance
+     */
+    public JasperReportSummaryIncRawDataAsString genericTestCoreRawAsString(String keyToSet, String valueToSet) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
+
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        if (!valueToSet.isEmpty()) {
+            setReportParameterByName(InputControlsEnum.valueOf(inputControlsEnumMap.get(keyToSet)).getInputControlId(), valueToSet);
+        }
+
+        if (processGroupName != null) {
+            String processGroupId = inputControls.getProcessGroup().getOption(processGroupName).getValue();
+            setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(), processGroupId);
+        }
+
+        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummaryIncRawDataAsString jasperReportSummaryIncRawDataAsString = jasperReportUtil
+            .generateJasperReportSummaryIncRawDataAsString(reportRequest);
+        timer.stop();
+        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummaryIncRawDataAsString;
     }
 
     /**
@@ -989,6 +1026,23 @@ public class JasperApiUtils {
         return totalValues;
     }
 
+    /**
+     * Gets chart count on a report
+     *
+     * @param chartDataRaw - String of report data
+     * @return int - chart count
+     */
+    public int getChartUuidCount(String chartDataRaw) {
+        int count = 0;
+        String[] textArray = chartDataRaw.split(" ");
+        for (String s : textArray) {
+            if (s.contains("chartUuid")) {
+                count += 1;
+            }
+        }
+        return count;
+    }
+
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
         return genericTestCoreCurrencyAndDateOnlyCycleTimeReport(currencyToGet)
             .getFirstChartData().getChartDataPoints()
@@ -1052,20 +1106,27 @@ public class JasperApiUtils {
     }
 
     private void initialiseInputControlsEnumMap() {
+        inputControlsEnumMap.put("aPrioriCostMax", "APRIORI_COST_MAX");
+        inputControlsEnumMap.put("aPrioriCostMin", "APRIORI_COST_MIN");
+        inputControlsEnumMap.put("aPrioriMassMax", "APRIORI_MASS_MAX");
+        inputControlsEnumMap.put("aPrioriMassMin", "APRIORI_MASS_MIN");
         inputControlsEnumMap.put("assemblySelect", "ASSEMBLY_SELECT");
         inputControlsEnumMap.put("currency", "CURRENCY");
         inputControlsEnumMap.put("componentCostCurrency", "COMPONENT_COST_CURRENCY");
+        inputControlsEnumMap.put("componentCostMin", "COMPONENT_COST_MIN");
+        inputControlsEnumMap.put("componentCostMax", "COMPONENT_COST_MAX");
         inputControlsEnumMap.put("componentSelect", "COMPONENT_SELECT");
         inputControlsEnumMap.put("costMetric", "COST_METRIC");
+        inputControlsEnumMap.put("dtcScore", "DTC_SCORE");
         inputControlsEnumMap.put("earliestExportDate", "EARLIEST_EXPORT_DATE");
         inputControlsEnumMap.put("endDate", "END_DATE");
         inputControlsEnumMap.put("exportDate", "EXPORT_DATE");
         inputControlsEnumMap.put("exportSetName", "EXPORT_SET_NAME");
-        inputControlsEnumMap.put("massMetric", "MASS_METRIC");
-        inputControlsEnumMap.put("dtcScore", "DTC_SCORE");
         inputControlsEnumMap.put("latestCostDate", "LATEST_COST_DATE");
         inputControlsEnumMap.put("latestExportDate", "LATEST_EXPORT_DATE");
+        inputControlsEnumMap.put("massMetric", "MASS_METRIC");
         inputControlsEnumMap.put("minimumAnnualSpend", "MINIMUM_ANNUAL_SPEND");
+        inputControlsEnumMap.put("percentDifferenceThreshold", "PERCENT_DIFFERENCE_THRESHOLD");
         inputControlsEnumMap.put("processGroup", "PROCESS_GROUP");
         inputControlsEnumMap.put("projectRollup", "PROJECT_ROLLUP");
         inputControlsEnumMap.put("rollup", "ROLLUP");

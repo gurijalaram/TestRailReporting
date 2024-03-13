@@ -56,9 +56,9 @@ public class ScenarioActivityReportTests extends JasperApiAuthenticationUtil {
         assertThat(getTrendingValueAboveChart(jasperReportSummaryYearly), is(equalTo("Yearly")));
 
         String currentDayOfMonth = DateTimeFormatter.ofPattern("dd").format(LocalDateTime.now());
-        String currentMonth = String.valueOf(LocalDateTime.now().getMonthValue());
+        String currentMonth = DateTimeFormatter.ofPattern("MM").format(LocalDateTime.now());
         assertThat(getXCategories(jasperReportSummaryDaily), is(equalTo("[[2019/07/29, 2019/07/30, 2021/04/07]]")));
-        assertThat(getXCategories(jasperReportSummaryYearly), is(equalTo(String.format("[[2018/%s/%s, 2020/%s/%s]]", currentMonth, currentDayOfMonth, currentMonth, currentDayOfMonth))));
+        assertThat(getXCategories(jasperReportSummaryYearly), is(equalTo(String.format("[[2019/%s/%s, 2021/%s/%s]]", currentMonth, currentDayOfMonth, currentMonth, currentDayOfMonth))));
     }
 
     private String getTrendingValueAboveChart(JasperReportSummaryIncRawData jasperReportSummary) {
