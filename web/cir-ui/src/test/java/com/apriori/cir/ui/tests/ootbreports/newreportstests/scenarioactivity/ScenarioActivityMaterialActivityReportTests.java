@@ -1,5 +1,6 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.scenarioactivity;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,6 +16,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -33,6 +35,7 @@ public class ScenarioActivityMaterialActivityReportTests extends JasperApiAuthen
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("28003")
     @TestRail(id = 28003)
     @Description("Input Controls - Trending period - Material Activity Report")

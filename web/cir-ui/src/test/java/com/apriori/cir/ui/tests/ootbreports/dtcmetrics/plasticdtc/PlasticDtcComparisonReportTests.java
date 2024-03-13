@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.dtcmetrics.plasticdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -24,14 +23,12 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 public class PlasticDtcComparisonReportTests extends TestBaseUI {
 
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
-    private GenericReportPage genericReportPage;
 
     public PlasticDtcComparisonReportTests() {
         super();
@@ -50,10 +47,7 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7307")
     @TestRail(id = {7307})
     @Description("Validate report is available by library - Plastic DTC Comparison Report")
@@ -91,10 +85,7 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7358")
     @TestRail(id = {7358})
     @Description("Verify cancel button functionality - Plastic DTC Comparison Report")
@@ -117,7 +108,8 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7364")
     @TestRail(id = {7364})
     @Description("Verify save button functionality - Plastic DTC Comparison Report ")
@@ -130,10 +122,7 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7364")
     @TestRail(id = {7404})
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Comparison Report")
@@ -175,10 +164,7 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7384")
     @TestRail(id = {7384})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Comparison Report")
@@ -205,10 +191,7 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7521")
     @TestRail(id = {7521})
     @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Comparison Report")
@@ -264,10 +247,7 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("29703")
     @TestRail(id = {29703})
     @Description("Verify Minimum Annual Spend input control functions correctly - Plastic DTC Comparison Report")
@@ -285,7 +265,7 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     @TestRail(id = {1369})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlManufacturingIssues() {
-        genericReportPage = new ReportsLoginPage(driver)
+        GenericReportPage genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC_COMPARISON.getReportName(), GenericReportPage.class)
@@ -311,7 +291,8 @@ public class PlasticDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Tag(REPORTS)
+    @Disabled("CID integration not working consistently well")
     @TmsLink("1378")
     @TestRail(id = {1378})
     @Description("Verify DTC issue counts are correct")

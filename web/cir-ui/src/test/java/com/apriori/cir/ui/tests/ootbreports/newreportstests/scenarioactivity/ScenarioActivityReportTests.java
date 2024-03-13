@@ -1,5 +1,6 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.scenarioactivity;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -17,6 +18,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -39,6 +41,7 @@ public class ScenarioActivityReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("16195")
     @TestRail(id = 16195)
     @Description("Input Controls - Trending Period - Main Report")

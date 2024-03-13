@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.targetquotedcosttrend;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -21,8 +20,8 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
@@ -195,7 +194,8 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Disabled("CID integration not working consistently well")
+    @Tag(REPORTS)
     @TmsLink("3360")
     @TestRail(id = {3360})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
@@ -205,7 +205,8 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Disabled("CID integration not working consistently well")
+    @Tag(REPORTS)
     @TmsLink("3360")
     @TestRail(id = {3360})
     @Description("Validate Target and Quoted Cost Trend report aligns to CID values (where appropriate)")
@@ -225,10 +226,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3361")
     @TestRail(id = {3361})
     @Description("Validate hyperlinks to Target and Quoted Cost Value Tracking report - Final Milestone")

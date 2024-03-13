@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.dtcmetrics.castingdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -32,7 +31,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 public class CastingDtcComparisonReportTests extends TestBaseUI {
@@ -138,7 +136,8 @@ public class CastingDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7352")
     @TestRail(id = {7352})
     @Description("Verify save button functionality - Casting DTC Comparison Report")
@@ -350,10 +349,7 @@ public class CastingDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7643")
     @TestRail(id = {7643})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Casting DTC Comparison Report")
@@ -367,10 +363,7 @@ public class CastingDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7637")
     @TestRail(id = {7637})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Comparison Report")
@@ -384,10 +377,7 @@ public class CastingDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7638")
     @TestRail(id = {7638})
     @Description("Verify Sort Order input control functions correctly - Material Scrap - Casting DTC Comparison Report")
@@ -401,10 +391,7 @@ public class CastingDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7639")
     @TestRail(id = {7639})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Comparison Report")
@@ -418,10 +405,7 @@ public class CastingDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7640")
     @TestRail(id = {7640})
     @Description("Verify Sort Order input control functions correctly - Slow Operations - Casting DTC Comparison Report")
@@ -435,10 +419,7 @@ public class CastingDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7641")
     @TestRail(id = {7641})
     @Description("Verify Sort Order input control functions correctly - Special Tooling - Casting DTC Comparison Report ")
@@ -452,10 +433,7 @@ public class CastingDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7642")
     @TestRail(id = {7642})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Casting DTC Comparison Report")
