@@ -208,6 +208,7 @@ public class CostHistoryTests extends TestBaseUI {
         String secondaryAxis = "Material Carbon";
 
         ComponentInfoBuilder secondComponent = new ComponentRequestUtil().getComponent();
+        secondComponent.setUser(castingPart.getUser());
         componentsUtil.postComponent(secondComponent);
 
         loginPage = new CidAppLoginPage(driver);
