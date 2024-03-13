@@ -5,7 +5,6 @@ import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.ChangeSummaryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.CostHistoryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
-import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
@@ -24,9 +23,7 @@ import org.joda.time.DateTime;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class CostHistoryTests extends TestBaseUI {
@@ -340,7 +337,7 @@ public class CostHistoryTests extends TestBaseUI {
         softAssertions.assertThat(costHistoryPage.dataTableIterationsList()).as("Verify all iterations in graph shown in table")
                 .isEqualTo(defaultGraphIterationNames);
 
-        costHistoryPage.back();
+        costHistoryPage.clickBackButton();
         costHistoryPage.setPrimaryAxis("Piece Part Cost");
         costHistoryPage.setSecondaryAxis("Finish Mass");
         costHistoryPage.showHideIteration(2);

@@ -174,8 +174,9 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      *
      * @return - This PO
      */
-    public void showHideIteration(Integer iterationNum) {
+    public CostHistoryPage showHideIteration(Integer iterationNum) {
         pageUtils.waitForElementAndClick(showHideIterationButton(iterationNum));
+        return this;
     }
 
     /**
@@ -205,12 +206,15 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * Select value for primary axis
      *
      * @param axisName - Name of specified axis
+     *
+     * @return This PO
      */
-    public void setPrimaryAxis(String axisName) {
+    public CostHistoryPage setPrimaryAxis(String axisName) {
         By requestedAxis = By.xpath(String.format("//div[.='%s']/div/div", axisName));
 
         pageUtils.waitForElementAndClick(primaryAxisDropDown);
-        pageUtils.waitForElementAndClick(requestedAxis);
+
+        return this;
     }
 
     /**
@@ -227,12 +231,15 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * Select value for secondary axis
      *
      * @param axisName - Name of specified axis
+     *
+     * @return This PO
      */
-    public void setSecondaryAxis(String axisName) {
+    public CostHistoryPage setSecondaryAxis(String axisName) {
         By requestedAxis = By.xpath(String.format("//div[.='%s']/div/div", axisName));
 
         pageUtils.waitForElementAndClick(secondaryAxisDropDown);
         pageUtils.waitForElementAndClick(requestedAxis);
+        return this;
     }
 
     /**
@@ -345,7 +352,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      *
      * @return - This PO
      */
-    public CostHistoryPage back() {
+    public CostHistoryPage clickBackButton() {
         pageUtils.waitForElementAndClick(back);
         return this;
     }
@@ -355,7 +362,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      *
      * @return - This PO
      */
-    public CostHistoryPage download() {
+    public CostHistoryPage clickDownloadButton() {
         pageUtils.waitForElementAndClick(download);
         return this;
     }
