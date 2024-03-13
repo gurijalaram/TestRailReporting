@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.costoutlieridentification;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -26,7 +25,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
@@ -106,7 +104,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @Disabled("CID integration not working well")
+    @Disabled("CID integration not working consistently well")
     @TmsLink("6823")
     @TestRail(id = {6823})
     @Description("Validate report content aligns to aP desktop or CID (where appropriate) - Details Report")
@@ -303,10 +301,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("6985")
     @TestRail(id = {6985})
     @Description("Percent difference threshold filter works - details report")

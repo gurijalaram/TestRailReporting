@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.dtcmetrics.machiningdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,7 +13,6 @@ import com.apriori.cir.ui.enums.RollupEnum;
 import com.apriori.cir.ui.enums.SortOrderEnum;
 import com.apriori.cir.ui.enums.SortOrderItemsEnum;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
-import com.apriori.cir.ui.pageobjects.view.reports.GenericReportPage;
 import com.apriori.cir.ui.pageobjects.view.reports.MachiningDtcReportPage;
 import com.apriori.cir.ui.tests.inputcontrols.InputControlsTests;
 import com.apriori.cir.ui.tests.navigation.CommonReportTests;
@@ -29,7 +27,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 public class MachiningDtcComparisonReportTests extends TestBaseUI {
@@ -64,10 +61,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7253")
     @TestRail(id = {7253})
     @Description("Validate report is available by search - Machining DTC Comparison Report")
@@ -87,10 +81,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7337")
     @TestRail(id = {7337})
     @Description("Verify reset button functionality - Machining DTC Comparison Report")
@@ -141,10 +132,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3567")
     @TestRail(id = {3567})
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
@@ -156,10 +144,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)}
-    )
+    @Tag(REPORTS)
     @TmsLink("7433")
     @TestRail(id = {7433})
     @Description("Verify export date filters correctly filters export sets - Picker - Machining DTC Comparison Report")
@@ -195,10 +180,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7415")
     @TestRail(id = {7415})
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Comparison Report")
@@ -212,10 +194,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7394")
     @TestRail(id = {7394})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Comparison Report")
@@ -256,10 +235,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7496")
     @TestRail(id = {7496})
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Comparison Report")
@@ -301,10 +277,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7543")
     @TestRail(id = {7543})
     @Description("Verify DTC Score Input Control - All Selection - Machining DTC Comparison Report")
@@ -318,10 +291,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("2039")
     @TestRail(id = {2039})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
@@ -361,10 +331,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("29701")
     @TestRail(id = {29701})
     @Description("Verify Minimum Annual Spend input control functions correctly - Machining DTC Comparison Report")
@@ -449,10 +416,7 @@ public class MachiningDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3025")
     @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")

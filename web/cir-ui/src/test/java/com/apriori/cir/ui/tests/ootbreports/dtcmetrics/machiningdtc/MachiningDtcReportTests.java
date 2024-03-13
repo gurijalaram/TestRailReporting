@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.dtcmetrics.machiningdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -30,7 +29,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 public class MachiningDtcReportTests extends TestBaseUI {
@@ -56,10 +54,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3415")
     @TestRail(id = {3415})
     @Description("Validate report is available by library - Machining DTC Report")
@@ -92,10 +87,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3567")
     @TestRail(id = {3567})
     @Description("Verify that earlier and latest export fields throw an error when letters and special characters are entered")
@@ -374,10 +366,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("2039")
     @TestRail(id = {2039})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
@@ -410,10 +399,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3572")
     @TestRail(id = {3572})
     @Description("Verify that hours value greater than hours in day in both earliest and latest export date field fails")
@@ -426,10 +412,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3573")
     @TestRail(id = {3573})
     @Description("Verify that minutes value greater than 60 minutes in both earliest and latest export date field fails")
@@ -442,10 +425,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3575")
     @TestRail(id = {3575})
     @Description("Verify that invalid date (year) fails in both earliest and latest export date field")
@@ -458,10 +438,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3576")
     @TestRail(id = {3576})
     @Description("Verify that invalid date (month) fails in both earliest and latest export date field")
@@ -474,10 +451,7 @@ public class MachiningDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3577")
     @TestRail(id = {3577})
     @Description("Verify that invalid date (day) fails in both earliest and latest export date field")

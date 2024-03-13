@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.dtcmetrics.sheetmetaldtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -28,7 +27,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
@@ -41,10 +39,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7313")
     @TestRail(id = {7313})
     @Description("Validate report is available by navigation - Sheet Metal DTC Comparison Report")
@@ -76,10 +71,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3038")
     @TestRail(id = {3038})
     @Description("Verify Export Sets are available for selection")
@@ -130,10 +122,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7370")
     @TestRail(id = {7370})
     @Description("Verify cancel button functionality - Sheet Metal DTC Comparison Report")
@@ -206,10 +195,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7419")
     @TestRail(id = {7419})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Comparison Report")
@@ -251,10 +237,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7400")
     @TestRail(id = {7400})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Comparison Report")
@@ -283,10 +266,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7673")
     @TestRail(id = {7673})
     @Description("Verify Sort Order input control functions correctly - Bends - Sheet Metal DTC Comparison Report")
@@ -346,10 +326,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7378")
     @TestRail(id = {7378})
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Comparison Report")
@@ -416,10 +393,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7533")
     @TestRail(id = {7533})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
@@ -461,10 +435,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7541")
     @TestRail(id = {7541})
     @Description("Verify DTC Score Input Control - All Selection - Sheet Metal DTC Comparison Report")

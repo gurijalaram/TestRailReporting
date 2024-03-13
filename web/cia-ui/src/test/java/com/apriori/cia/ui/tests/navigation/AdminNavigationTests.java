@@ -35,7 +35,7 @@ public class AdminNavigationTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(ADMIN)
+    @Tag(ADMIN)
     @TmsLink("2980")
     @TestRail(id = {2980})
     @Description("Ensure that the Manage Scenario Export Link works")

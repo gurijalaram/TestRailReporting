@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.assemblycost;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 
 import com.apriori.cir.ui.enums.AssemblySetEnum;
@@ -15,7 +14,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 public class AssemblyCostReportTests extends TestBaseUI {
@@ -71,10 +69,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7129")
     @TestRail(id = {7129})
     @Description("Validate report is available by library (Assembly Cost A4 Report)")
@@ -84,10 +79,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7131")
     @TestRail(id = 7131)
     @Description("Validate report is available by library (Assembly Cost Letter Report)")
@@ -97,10 +89,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3008")
     @TestRail(id = {3008})
     @Description("Verify Export Set drop-down functions correctly - Top-Level - Assembly Cost (A4) Report")
@@ -126,10 +115,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7622")
     @TestRail(id = {7622})
     @Description("Verify Export Set drop-down functions correctly - Sub-Assembly - Assembly Cost (A4) Report")
@@ -168,10 +154,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7625")
     @TestRail(id = {7625})
     @Description("Verify Scenario Name drop-down functions correctly - Assembly Cost (Letter) Report")
@@ -194,10 +177,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7626")
     @TestRail(id = {7626})
     @Description("Verify the user can select sub assemblies from within assembly Export Sets - Assembly Cost (Letter) Report")
@@ -208,7 +188,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @Disabled("CID integration not working well")
+    @Disabled("CID integration not working consistently well")
     @TmsLink("2998")
     @TestRail(id = {2998})
     @Description("Validate report content aligns to aP desktop or CID values (simple case) - Assembly Cost (A4) Report")
@@ -219,7 +199,7 @@ public class AssemblyCostReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @Disabled("CID integration not working well")
+    @Disabled("CID integration not working consistently well")
     @TmsLink("7624")
     @TestRail(id = {7624})
     @Description("Validate report content aligns to aP desktop or CID values (simple case) - Assembly Cost (Letter) Report")

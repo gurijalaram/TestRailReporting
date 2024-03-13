@@ -25,6 +25,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil {
+    private static final Logger logger = LoggerFactory.getLogger(RecommendedTestPartsReportTests.class);
     private String reportsJsonFileName = JasperApiEnum.RECOMMENDED_TEST_PARTS.getEndpoint();
     private CirApiEnum reportsNameForInputControls = CirApiEnum.RECOMMENDED_TEST_PARTS;
     private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
@@ -75,7 +78,7 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }

@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.machiningdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 
 import com.apriori.cir.api.JasperReportSummary;
