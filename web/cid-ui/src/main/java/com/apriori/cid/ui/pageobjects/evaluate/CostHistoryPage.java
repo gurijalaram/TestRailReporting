@@ -122,7 +122,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      */
     public String getPlotAvailableMessage() {
         pageUtils.waitForElementToAppear(noPlotMessage);
-        return noPlotMessage.getText();
+        return noPlotMessage.getAttribute("textContent");
     }
 
     /**
@@ -199,7 +199,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      */
     public String selectedPrimaryAxis() {
         pageUtils.waitForElementToAppear(primaryAxisDropDown);
-        return primaryAxisDropDown.getText();
+        return primaryAxisDropDown.getAttribute("textContent");
     }
 
     /**
@@ -213,7 +213,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
         By requestedAxis = By.xpath(String.format("//div[.='%s']/div/div", axisName));
 
         pageUtils.waitForElementAndClick(primaryAxisDropDown);
-
+        pageUtils.waitForElementAndClick(requestedAxis);
         return this;
     }
 
@@ -223,7 +223,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * @return - String of currently selected value for primary axis
      */
     public String selectedSecondaryAxis() {
-        pageUtils.waitForElementToAppear(primaryAxisDropDown);
+        pageUtils.waitForElementToAppear(secondaryAxisDropDown);
         return secondaryAxisDropDown.getText();
     }
 
@@ -288,7 +288,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * @return - String of graph title
      */
     public String downloadPreviewTitle() {
-        return downloadPreviewTitle.getText();
+        return downloadPreviewTitle.getAttribute("textContent");
     }
 
     /**
@@ -297,7 +297,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * @return - String of Date
      */
     public String downloadPreviewDate() {
-        return downloadPreviewDate.getText();
+        return downloadPreviewDate.getAttribute("textContent");
     }
 
     /**
@@ -306,7 +306,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * @return - String of First Axis Name
      */
     public String downloadPreviewFirstAxisName() {
-        return downloadPreviewFirstAxisLegend.getText();
+        return downloadPreviewFirstAxisLegend.getAttribute("textContent");
     }
 
     /**
@@ -315,7 +315,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
      * @return - String of Second Axis Name
      */
     public String downloadPreviewSecondAxisName() {
-        return downloadPreviewSecondAxisLegend.getText();
+        return downloadPreviewSecondAxisLegend.getAttribute("textContent");
     }
 
     /**
