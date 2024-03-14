@@ -22,17 +22,6 @@ def registry_password(profile = '', region = '') {
     }
 }
 
-//def docker_registry_password() {
-//    withCredentials([usernamePassword(
-//            credentialsId: 'NEXUS_APRIORI_COM',
-//            passwordVariable: 'NEXUS_PASS',
-//            usernameVariable: 'NEXUS_USER')]) {
-//        sh """
-//            docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
-//        """
-//    }
-//}
-
 def tag_n_push_version(currentVersion = '', targetVersion = '') {
     // Tag & push version.
     sh "docker tag ${currentVersion} ${targetVersion}"
@@ -60,10 +49,6 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
 def tag_n_push_image(module = '', profile = '', region = '', ecrDockerRegistry = '', buildInfo = '', runType = '', buildVersion = '') {
     echo "Tagging and Pushing..."
     script {
-        // Prepare aws login command.
-//        def registryPwd = registry_password("${profile}", "${region}")
-
-//        sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
         def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
 
@@ -79,7 +64,7 @@ def remove_image(module = '', buildInfo = '', runType = '', buildVersion = '') {
 
 pipeline {
     agent {
-        label "WALQSDOCKER01"
+        label "automation"
     }
 
     stages {
@@ -102,7 +87,9 @@ pipeline {
                 axes {
                     axis {
                         name 'MODULE'
-                        values 'cid-ui'
+                        values 'cid-ui', 'cas-ui', 'ach-ui', 'cis-ui', 'cid-api', 'cas-api', 'cds-api', 'ats-api',
+                                'cus-api', 'css-api', 'vds-api', 'nts-api', 'fms-api', 'sds-api', 'ach-api', 'cmp-api',
+                                'bcs-api', 'cis-api', 'dds-api', 'dms-api', 'qds-api', 'qms-api', 'edc-api', 'bcm-api', 'gcd-api'
                     }
                 }
 
