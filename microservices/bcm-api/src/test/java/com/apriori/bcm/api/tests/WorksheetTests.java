@@ -1,9 +1,9 @@
 package com.apriori.bcm.api.tests;
 
 import com.apriori.bcm.api.models.response.ErrorResponse;
-import com.apriori.bcm.api.models.response.InputRowDeleted;
+import com.apriori.bcm.api.models.response.InputRowPostResponse;
+import com.apriori.bcm.api.models.response.InputRowsGroupsResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
-import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
 import com.apriori.bcm.api.utils.BcmUtil;
@@ -92,7 +92,7 @@ public class WorksheetTests extends BcmUtil {
             .getResponseEntity()
             .getIdentity();
 
-        ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow =
+        ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow =
             createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity);
@@ -160,7 +160,7 @@ public class WorksheetTests extends BcmUtil {
             .getResponseEntity()
             .getIdentity();
 
-        ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow =
+        ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow =
             createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity);
@@ -211,13 +211,13 @@ public class WorksheetTests extends BcmUtil {
             editPublicInputRow(ErrorResponse.class, worksheetIdentity, "0000000", HttpStatus.SC_BAD_REQUEST).getResponseEntity();
         softAssertions.assertThat(editInvalidInputRow.getMessage()).isEqualTo("'inputRowIdentity' is not a valid identity.");
 
-        InputRowDeleted editNotExistingInputRow =
-            editPublicInputRow(InputRowDeleted.class, worksheetIdentity, notExistingRowIdentity, HttpStatus.SC_OK).getResponseEntity();
+        InputRowsGroupsResponse editNotExistingInputRow =
+            editPublicInputRow(InputRowsGroupsResponse.class, worksheetIdentity, notExistingRowIdentity, HttpStatus.SC_OK).getResponseEntity();
         softAssertions.assertThat(editNotExistingInputRow.getFailures().get(0).getError())
             .isEqualTo(String.format("Input Row with Identity: '%s'  does not exist in Worksheet with Identity: '%s'", notExistingRowIdentity, worksheetIdentity));
 
-        InputRowDeleted editedRows =
-            editPublicInputRow(InputRowDeleted.class, worksheetIdentity, inputRowIdentity, HttpStatus.SC_OK).getResponseEntity();
+        InputRowsGroupsResponse editedRows =
+            editPublicInputRow(InputRowsGroupsResponse.class, worksheetIdentity, inputRowIdentity, HttpStatus.SC_OK).getResponseEntity();
         softAssertions.assertThat(editedRows.getSuccesses().get(0).getInputRowIdentity())
             .isEqualTo(inputRowIdentity);
         softAssertions.assertAll();

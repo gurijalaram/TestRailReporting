@@ -1,9 +1,9 @@
 package com.apriori.bcm.api.tests;
 
 import com.apriori.bcm.api.models.response.ErrorResponse;
-import com.apriori.bcm.api.models.response.InputRowDeleted;
+import com.apriori.bcm.api.models.response.InputRowPostResponse;
+import com.apriori.bcm.api.models.response.InputRowsGroupsResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
-import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.css.api.utils.CssComponent;
@@ -102,13 +102,13 @@ public class UpdateWorksheetTests extends BcmUtil {
             .getResponseEntity()
             .getIdentity();
 
-        ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow =
+        ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow =
             createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity);
 
-        ResponseWrapper<InputRowDeleted> deletedInputRow =
-            deleteInputRow(InputRowDeleted.class, worksheetIdentity,
+        ResponseWrapper<InputRowsGroupsResponse> deletedInputRow =
+            deleteInputRow(InputRowsGroupsResponse.class, worksheetIdentity,
                 responseWorksheetInputRow.getResponseEntity().getIdentity(), HttpStatus.SC_OK);
 
         softAssertions.assertThat(deletedInputRow.getResponseEntity().getSuccesses().get(0).getInputRowIdentity())
@@ -135,7 +135,7 @@ public class UpdateWorksheetTests extends BcmUtil {
             .getResponseEntity()
             .getIdentity();
 
-        ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow =
+        ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow =
             createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity);
@@ -163,7 +163,7 @@ public class UpdateWorksheetTests extends BcmUtil {
             .getResponseEntity()
             .getIdentity();
 
-        ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow1 =
+        ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow1 =
             createWorkSheetInputRow(scenarioItem1.getComponentIdentity(),
                 scenarioItem1.getScenarioIdentity(),
                 worksheetIdentity);
@@ -177,13 +177,13 @@ public class UpdateWorksheetTests extends BcmUtil {
             .getResponseEntity()
             .getIdentity();
 
-        ResponseWrapper<WorkSheetInputRowResponse> responseWorksheetInputRow2 =
+        ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow2 =
             createWorkSheetInputRow(scenarioItem2.getComponentIdentity(),
                 scenarioItem2.getScenarioIdentity(),
                 worksheetIdentity2);
 
-        ResponseWrapper<InputRowDeleted> deletedInputRow =
-            deleteInputRow(InputRowDeleted.class, worksheetIdentity,
+        ResponseWrapper<InputRowsGroupsResponse> deletedInputRow =
+            deleteInputRow(InputRowsGroupsResponse.class, worksheetIdentity,
                 responseWorksheetInputRow2.getResponseEntity().getIdentity(), HttpStatus.SC_OK);
 
         softAssertions.assertThat(deletedInputRow.getResponseEntity().getFailures().get(0).getError())
