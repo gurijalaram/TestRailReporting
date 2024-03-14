@@ -129,7 +129,7 @@ public class AuthorizationUtil {
 
         try {
             // TODO : should be removed when AWS data will be available for staging too
-            tokenSubject = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
+            tokenSubject = PropertiesContext.get("${customer}.${env}.token_subject");
         } catch (IllegalArgumentException e) {
             tokenSubject = generateTokenSubject();
         }
