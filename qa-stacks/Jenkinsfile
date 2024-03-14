@@ -40,10 +40,12 @@ def tag_n_push_version(currentVersion = '', targetVersion = '') {
 
 }
 
-def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVersion = '') {
+def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVersion = '', profile = '', region='', ecrDockerRegistry = '') {
     echo "Building..."
 
-    docker_registry_password()
+    def registryPwd = registry_password("${profile}", "${region}")
+
+    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
     sh """
             docker build -f ./qa-stacks/Dockerfile \
@@ -77,7 +79,7 @@ def remove_image(module = '', buildInfo = '', runType = '', buildVersion = '') {
 
 pipeline {
     agent {
-        label "automation"
+        label "WALQSDOCKER01"
     }
 
     stages {
