@@ -112,7 +112,7 @@ pipeline {
                             expression { MODULE.contains('-ui') }
                         }
                         steps {
-                            buildImage("web", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            buildImage("web", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}","${environment.profile}", "${environment.region}", "${ecrDockerRegistry}")
 
                             tag_n_push_image("${MODULE}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
 
@@ -124,7 +124,7 @@ pipeline {
                             expression { MODULE.contains('-api') }
                         }
                         steps {
-                            buildImage("microservices", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            buildImage("microservices", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}")
 
                             tag_n_push_image("${MODULE}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
 
