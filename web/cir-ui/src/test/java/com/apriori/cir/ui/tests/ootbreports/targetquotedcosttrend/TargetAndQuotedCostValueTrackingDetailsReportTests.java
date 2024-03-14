@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.targetquotedcosttrend;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 
 import com.apriori.cir.ui.enums.CostMetricEnum;
@@ -13,7 +12,6 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBaseUI {
@@ -62,10 +60,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7425")
     @TestRail(id = {7425})
     @Description("Validate Cost Metric Input Control - PPC - Target and Quoted Cost Value Tracking Details Report")
@@ -78,10 +73,7 @@ public class TargetAndQuotedCostValueTrackingDetailsReportTests extends TestBase
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7426")
     @TestRail(id = {7426})
     @Description("Validate Cost Metric Input Control - FBC - Target and Quoted Cost Value Tracking Details Report")

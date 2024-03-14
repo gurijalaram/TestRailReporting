@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.costoutlieridentification;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -26,7 +25,6 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -43,10 +41,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("1944")
     @TestRail(id = {1944})
     @Description("Validate report is available by navigation - menu")
@@ -78,10 +73,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("1954")
     @TestRail(id = {1954})
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
@@ -122,10 +114,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("6253")
     @TestRail(id = {6253})
     @Description("Min and max cost filter - junk value test")
@@ -185,10 +174,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("6986")
     @TestRail(id = {6986})
     @Description("Percent difference threshold filter - main report - junk value")
@@ -227,10 +213,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7023")
     @TestRail(id = {7023})
     @Description("Annualised potential savings threshold filter - main report - no data available")
@@ -305,10 +288,7 @@ public class CostOutlierIdentificationReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("1957")
     @TestRail(id = {1957})
     @Description("Annualised potential savings threshold filter - main report")

@@ -1,5 +1,7 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.general.assemblydetails;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
@@ -13,6 +15,7 @@ import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -34,6 +37,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("1922")
     @TestRail(id = 1922)
     @Description("Verifies that the currency code works properly")
@@ -46,6 +50,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("1928")
     @TestRail(id = 1928)
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
@@ -69,6 +74,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("1933")
     @TestRail(id = 1933)
     @Description("Verify component subassembly report details")
@@ -107,6 +113,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("3231")
     @TmsLink("1929")
     @TestRail(id = {3231, 1929})
@@ -158,6 +165,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("3067")
     @TmsLink("1929")
     @TestRail(id = {3067, 1929})

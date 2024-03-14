@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.scenariocomparison;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -25,7 +24,6 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -64,10 +62,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3245")
     @TestRail(id = {3245})
     @Description("Validate report is available by search")
@@ -77,10 +72,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3246")
     @TestRail(id = {3246})
     @Description("Verify Export Set input control functions correctly")
@@ -344,10 +336,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3248")
     @TestRail(id = {3248})
     @Description("Verify Component Type input control functions correctly")
@@ -400,10 +389,7 @@ public class ScenarioComparisonReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3306")
     @TestRail(id = {3306})
     @Description("Verify Part Number Search Criteria input control works correctly")

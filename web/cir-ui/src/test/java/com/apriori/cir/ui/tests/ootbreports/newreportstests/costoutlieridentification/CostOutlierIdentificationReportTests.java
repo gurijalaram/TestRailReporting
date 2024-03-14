@@ -1,5 +1,7 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.costoutlieridentification;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
 import com.apriori.cir.api.enums.CirApiEnum;
@@ -17,6 +19,7 @@ import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -34,6 +37,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("13925")
     @TestRail(id = 13925)
     @Description("Input controls - Cost Metric - FBC")
@@ -44,6 +48,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("29651")
     @TestRail(id = 29651)
     @Description("Input controls - Cost Metric - PPC")

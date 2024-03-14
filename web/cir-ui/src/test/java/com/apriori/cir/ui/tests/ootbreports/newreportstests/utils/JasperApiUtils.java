@@ -377,7 +377,7 @@ public class JasperApiUtils {
      */
     public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent, boolean isDetailsOrComparisonReport) {
         String currencyAssertValue = CurrencyEnum.USD.getCurrency();
-        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Currency", currencyAssertValue);
+        JasperReportSummary jasperReportSummaryUsd = genericTestCore("currency", currencyAssertValue);
 
         String currentCurrencyAboveChart = isDetailsOrComparisonReport
             ? getCurrentCurrencyFromAboveChartDtcDetailsOrComparisonReport(jasperReportSummaryUsd)
@@ -385,7 +385,7 @@ public class JasperApiUtils {
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         currencyAssertValue = CurrencyEnum.GBP.getCurrency();
-        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Currency", currencyAssertValue);
+        JasperReportSummary jasperReportSummaryGbp = genericTestCore("currency", currencyAssertValue);
 
         currentCurrencyAboveChart = isDetailsOrComparisonReport
             ? getCurrentCurrencyFromAboveChartDtcDetailsOrComparisonReport(jasperReportSummaryGbp)

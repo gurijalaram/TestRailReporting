@@ -1,5 +1,7 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.designoutlieridentification;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
@@ -12,6 +14,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -33,6 +36,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("1997")
     @TestRail(id = 1997)
     @Description("Verify mass metric - finish mass - Design Outlier Identification Report")
@@ -44,6 +48,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
+    @Tag(REPORTS_API)
     @TmsLink("7385")
     @TestRail(id = 7385)
     @Description("Verify mass metric - rough mass - Design Outlier Identification Report")

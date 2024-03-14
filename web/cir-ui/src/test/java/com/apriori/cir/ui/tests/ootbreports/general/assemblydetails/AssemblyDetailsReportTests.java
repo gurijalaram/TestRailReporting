@@ -1,7 +1,6 @@
 package com.apriori.cir.ui.tests.ootbreports.general.assemblydetails;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.CUSTOMER;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -35,6 +34,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.TmsLink;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
@@ -61,7 +61,6 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Tags({
         @Tag(REPORTS),
-        @Tag(ON_PREM),
         @Tag(CUSTOMER)
     })
     @TmsLink("1915")
@@ -95,9 +94,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("1922")
     @TestRail(id = {1922})
     @Description("Verifies that the currency code works properly")
@@ -178,6 +175,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(REPORTS)
     @Issue("AP-58059")
     @Issue("AP-53537")
     @TmsLink("3067")
@@ -224,10 +222,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3068")
     @TmsLink("1929")
     @TestRail(id = {3068, 1929})
@@ -336,6 +331,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(REPORTS)
     @TmsLink("3231")
     @TmsLink("1929")
     @TestRail(id = {3231, 1929})
@@ -439,10 +435,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3233")
     @TmsLink("1929")
     @TestRail(id = {3233, 1929})
@@ -495,10 +488,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("1919")
     @TestRail(id = {1919})
     @Description("Ensuring latest export date filter works properly (uses date input field)")
@@ -510,10 +500,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3244")
     @TestRail(id = {3244})
     @Description("Ensuring latest export date filter works properly (using date picker)")
@@ -523,6 +510,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(REPORTS)
+    @Disabled("CID integration not working consistently well")
     @TmsLink("1930")
     @TestRail(id = {1930})
     @Description("Test Export Set with costing failures costing incomplete")
@@ -610,10 +599,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("1918")
     @TestRail(id = {1918})
     @Description("Verify Export set of a part file is not available for selection")
@@ -646,10 +632,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("1920")
     @TestRail(id = {1920})
     @Description("Export set count is correct")
@@ -659,10 +642,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("1931")
     @TestRail(id = {1931})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
@@ -856,10 +836,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7689")
     @TmsLink("1921")
     @TestRail(id = {7689, 1921})
@@ -873,7 +850,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Tag(REPORTS)
+    @Disabled("\"CID integration not working consistently well")
     @TmsLink("1924")
     @TestRail(id = {1924})
     @Description("Verify report figures from CI Design")
@@ -919,6 +897,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(REPORTS)
     @TmsLink("1928")
     @TestRail(id = {1928})
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
@@ -951,6 +930,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(REPORTS)
     @TmsLink("1933")
     @TestRail(id = {1933})
     @Description("Verify component subassembly report details")
@@ -980,7 +960,8 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    //@Tag(REPORTS)
+    @Tag(REPORTS)
+    @Disabled("\"CID integration not working consistently well")
     @TmsLink("1927")
     @TestRail(id = {1927})
     @Description("Validate multiple VPE usage aligns to CID usage")
