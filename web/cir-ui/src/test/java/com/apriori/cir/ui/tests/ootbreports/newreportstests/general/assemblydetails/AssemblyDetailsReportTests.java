@@ -4,6 +4,7 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS
 
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -80,7 +81,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
-            "assemblySelect",
+            InputControlsEnum.ASSEMBLY_SELECT.getInputControlId(),
             "SUB-ASSEMBLY (Initial) [assembly] "
         );
 
@@ -92,7 +93,10 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
             JasperApiEnum.COMPONENT_COST.getEndpoint(),
             CirApiEnum.COMPONENT_COST
         );
-        jasperReportSummary = jasperApiUtils.genericTestCore("componentSelect", "10");
+        jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.COMPONENT_SELECT.getInputControlId(),
+            "10"
+        );
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().isEmpty()).isEqualTo(false);
 
         String varianceValue = jasperReportSummary.getReportHtmlPart()

@@ -3,6 +3,7 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.castingd
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 
 import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -51,7 +52,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             mostCommonPartNames,
             "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
@@ -64,7 +64,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Details Report")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             mostCommonPartNames,
             "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
@@ -77,7 +76,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             mostCommonPartNames,
             "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
@@ -90,7 +88,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             mostCommonPartNames,
             "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
@@ -108,7 +105,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             JasperCirApiPartsEnum.DU100024720_G.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
         );
@@ -126,7 +122,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
@@ -144,7 +139,6 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             JasperCirApiPartsEnum.BARCO_R8552931.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
         );
@@ -156,7 +150,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = 7657)
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Details Report")
     public void testMinimumAnnualSpend() {
-        jasperApiUtils.genericMinAnnualSpendDtcDetailsTest(false);
+        jasperApiUtils.genericMinAnnualSpendDtcDetailsTest(true);
     }
 
     @Test
@@ -178,7 +172,8 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order", SortOrderEnum.CASTING_ISSUES.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
+            SortOrderEnum.CASTING_ISSUES.getSortOrderEnum()
         );
     }
 
@@ -200,7 +195,8 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order", SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
+            SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum()
         );
     }
 
@@ -222,7 +218,8 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order", SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
+            SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum()
         );
     }
 
@@ -244,7 +241,8 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order", SortOrderEnum.TOLERANCES.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
+            SortOrderEnum.TOLERANCES.getSortOrderEnum()
         );
     }
 
@@ -266,7 +264,8 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order", SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
+            SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum()
         );
     }
 
@@ -288,7 +287,8 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order", SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
+            SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum()
         );
     }
 
@@ -310,7 +310,8 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
+            SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
         );
     }
 
@@ -332,7 +333,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order",
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
             SortOrderEnum.DTC_RANK.getSortOrderEnum()
         );
     }

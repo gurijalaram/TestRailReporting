@@ -3,6 +3,7 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.machinin
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
 
 import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -47,7 +48,6 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Details Report")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
@@ -60,7 +60,6 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Details Report")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
@@ -73,7 +72,6 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
@@ -86,7 +84,6 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Details Report")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
@@ -125,7 +122,6 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
             JasperCirApiPartsEnum.P_0362752_CAD_INITIAL.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames1,
             "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
         );
@@ -142,7 +138,6 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
             JasperCirApiPartsEnum.P_3538968_CAD_INITIAL.getPartName()
         );
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames1,
             "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
@@ -159,7 +154,6 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
             JasperCirApiPartsEnum.DTCMACHINING_001_TOLERANCED.getPartName().substring(0, 16)
         );
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
         );
@@ -221,7 +215,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order",
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
             SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum()
         );
     }
@@ -243,7 +237,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order",
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
             SortOrderEnum.DESIGN_STANDARDS.getSortOrderEnum()
         );
     }
@@ -265,7 +259,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order",
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
             SortOrderEnum.TOLERANCES.getSortOrderEnum()
         );
     }
@@ -287,7 +281,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order",
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
             SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum()
         );
     }
@@ -309,7 +303,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order",
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
             SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
         );
     }
@@ -331,7 +325,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
             assertFigures,
-            "Sort Order",
+            InputControlsEnum.SORT_ORDER.getInputControlId(),
             SortOrderEnum.DTC_RANK.getSortOrderEnum()
         );
     }
