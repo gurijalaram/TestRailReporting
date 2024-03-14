@@ -28,8 +28,6 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -37,9 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -48,8 +44,6 @@ import java.util.stream.Stream;
 @Data
 @Slf4j
 public class JasperApiUtils {
-    private Logger logger = LoggerFactory.getLogger(JasperApiUtils.class);
-    private final Map<String, String> inputControlsEnumMap = new HashMap<>();
     private SoftAssertions softAssertions = new SoftAssertions();
     private JasperApiInputControlsPathEnum reportValueForInputControls;
     private ReportRequest reportRequest;
@@ -61,9 +55,10 @@ public class JasperApiUtils {
     /**
      * Default constructor for this class
      *
-     * @param jasperSessionID          - String for authentication/session
-     * @param exportSetName       - String of the export set which should be set
-     * @param reportsJsonFileName - String of the right json file to use to be sent to the api
+     * @param jasperSessionID            - String for authentication/session
+     * @param exportSetName              - String of the export set which should be set
+     * @param reportsJsonFileName        - String of the right json file to use to be sent to the api
+     * @param reportNameForInputControls - String of the report name to use to retrieve input controls
      */
     public JasperApiUtils(String jasperSessionID, String exportSetName, String reportsJsonFileName, JasperApiInputControlsPathEnum reportNameForInputControls) {
         this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
@@ -71,11 +66,10 @@ public class JasperApiUtils {
         this.jasperSessionID = jasperSessionID;
         this.exportSetName = exportSetName;
         this.reportsJsonFileName = reportsJsonFileName;
-        initialiseInputControlsEnumMap();
     }
 
     /**
-     * Second constructor for this class (not default)
+     * Second constructor for this class (not default), without reportValueForInputControls
      *
      * @param jasperSessionID - String for authentication/session
      * @param exportSetName - String of the export set which should be set
@@ -88,7 +82,6 @@ public class JasperApiUtils {
         this.exportSetName = exportSetName;
         this.processGroupName = processGroup.getProcessGroup();
         this.reportsJsonFileName = reportsJsonFileName;
-        initialiseInputControlsEnumMap();
     }
 
     /**
@@ -106,7 +99,8 @@ public class JasperApiUtils {
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
-            setReportParameterByName(InputControlsEnum.valueOf(inputControlsEnumMap.get(keyToSet)).getInputControlId(), valueToSet);
+            //setReportParameterByName(InputControlsEnum.valueOf(inputControlsEnumMap.get(keyToSet)).getInputControlId(), valueToSet);
+            setReportParameterByName(keyToSet, valueToSet);
         }
 
         if (processGroupName != null) {
@@ -141,7 +135,8 @@ public class JasperApiUtils {
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
-            setReportParameterByName(InputControlsEnum.valueOf(inputControlsEnumMap.get(keyToSet)).getInputControlId(), valueToSet);
+            //setReportParameterByName(InputControlsEnum.valueOf(inputControlsEnumMap.get(keyToSet)).getInputControlId(), valueToSet);
+            setReportParameterByName(keyToSet, valueToSet);
         }
 
         if (processGroupName != null) {
@@ -179,7 +174,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }
@@ -205,7 +200,7 @@ public class JasperApiUtils {
         timer.start();
         JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
         timer.stop();
-        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return jasperReportSummary;
     }
@@ -355,7 +350,10 @@ public class JasperApiUtils {
      */
     public void genericDtcCurrencyTest(String partName, boolean areBubblesPresent, boolean isDetailsOrComparisonReport) {
         String currencyAssertValue = CurrencyEnum.USD.getCurrency();
-        JasperReportSummary jasperReportSummaryUsd = genericTestCore("currency", currencyAssertValue);
+        JasperReportSummary jasperReportSummaryUsd = genericTestCore(
+            InputControlsEnum.CURRENCY.getInputControlId(),
+            currencyAssertValue
+        );
 
         String currentCurrencyAboveChart = isDetailsOrComparisonReport
             ? getCurrentCurrencyFromAboveChartDtcDetailsOrComparisonReport(jasperReportSummaryUsd)
@@ -363,7 +361,10 @@ public class JasperApiUtils {
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         currencyAssertValue = CurrencyEnum.GBP.getCurrency();
-        JasperReportSummary jasperReportSummaryGbp = genericTestCore("currency", currencyAssertValue);
+        JasperReportSummary jasperReportSummaryGbp = genericTestCore(
+            InputControlsEnum.CURRENCY.getInputControlId(),
+            currencyAssertValue
+        );
 
         currentCurrencyAboveChart = isDetailsOrComparisonReport
             ? getCurrentCurrencyFromAboveChartDtcDetailsOrComparisonReport(jasperReportSummaryGbp)
@@ -402,13 +403,19 @@ public class JasperApiUtils {
      */
     public void genericComponentCostCurrencyTest() {
         String currencyAssertValue = CurrencyEnum.USD.getCurrency();
-        JasperReportSummary jasperReportSummaryUsd = genericTestCore("Component Cost Currency", currencyAssertValue);
+        JasperReportSummary jasperReportSummaryUsd = genericTestCore(
+            InputControlsEnum.COMPONENT_COST_CURRENCY.getInputControlId(),
+            currencyAssertValue
+        );
 
         String currentCurrencyAboveChart = getCurrencySettingValueFromChartComponentCost(jasperReportSummaryUsd).substring(10);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
 
         currencyAssertValue = CurrencyEnum.GBP.getCurrency();
-        JasperReportSummary jasperReportSummaryGbp = genericTestCore("Component Cost Currency", currencyAssertValue);
+        JasperReportSummary jasperReportSummaryGbp = genericTestCore(
+            InputControlsEnum.COMPONENT_COST_CURRENCY.getInputControlId(),
+            currencyAssertValue
+        );
 
         currentCurrencyAboveChart = getCurrencySettingValueFromChartComponentCost(jasperReportSummaryGbp).substring(10);
         softAssertions.assertThat(currentCurrencyAboveChart).isEqualTo(currencyAssertValue);
@@ -485,7 +492,7 @@ public class JasperApiUtils {
      * @param partNames - list of Strings containing the parts to use
      * @param miscData  - String array of data to be used in the test
      */
-    public void genericDtcDetailsTest(boolean isSheetMetalDtcDetailsTest, List<String> partNames, String... miscData) {
+    public void genericDtcDetailsTest(List<String> partNames, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), miscDataList.get(1));
 
@@ -549,7 +556,7 @@ public class JasperApiUtils {
         String processGroup = miscDataList.size() > 1 ? miscDataList.get(1) : "";
         JasperReportSummary jasperReportSummary = genericTestCore(miscDataList.get(0), processGroup);
 
-        if (!partNames.get(0).equals("")) {
+        if (!partNames.get(0).isEmpty()) {
             for (String partName : partNames) {
                 partName = miscDataList.get(1).contains("(Initial") ? partName.replace(" (Initial)", "") : partName;
                 softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().toString().contains(partName)).isEqualTo(true);
@@ -578,7 +585,7 @@ public class JasperApiUtils {
         List<String> listOfPartNumbers = partNumberElements.stream().flatMap(e -> Stream.of(e.text())).collect(Collectors.toList());
 
         for (String partName : partNames) {
-            if (partNumberElements.size() == 0) {
+            if (partNumberElements.isEmpty()) {
                 softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("No data available")).isEqualTo(true);
             } else {
                 String partNameWithoutScenarioName = partName.contains(" (Initial)") ? partName.replace(" (Initial)", "") : partName.replace(" (sand casting)", "");
@@ -600,7 +607,10 @@ public class JasperApiUtils {
      */
     public void genericMinAnnualSpendDtcTest(int expectedBubbleNumber) {
         String minimumAnnualSpendValue = "7820000";
-        JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
+        JasperReportSummary jasperReportSummary = genericTestCore(
+            InputControlsEnum.MINIMUM_ANNUAL_SPEND.getInputControlId(),
+            minimumAnnualSpendValue
+        );
 
         if (expectedBubbleNumber == 0) {
             softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString()).contains("No data available");
@@ -618,7 +628,10 @@ public class JasperApiUtils {
      */
     public void genericMinAnnualSpendDtcDetailsTest(boolean isNoDataAvailableExpected) {
         String minimumAnnualSpendValue = "7820000";
-        JasperReportSummary jasperReportSummary = genericTestCore("Minimum Annual Spend", minimumAnnualSpendValue);
+        JasperReportSummary jasperReportSummary = genericTestCore(
+            InputControlsEnum.MINIMUM_ANNUAL_SPEND.getInputControlId(),
+            minimumAnnualSpendValue
+        );
 
         if (!isNoDataAvailableExpected) {
             String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "3").get(15).text();
@@ -826,7 +839,7 @@ public class JasperApiUtils {
 
         JasperReportSummaryIncRawData jasperReportSummaryDaily = jasperReportUtil.generateJasperReportSummaryIncRawData(getReportRequest());
         timer.stop();
-        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         setReportParameterByName(InputControlsEnum.TRENDING_PERIOD.getInputControlId(), "Yearly");
 
@@ -836,7 +849,7 @@ public class JasperApiUtils {
         setReportParameterByName(InputControlsEnum.END_DATE.getInputControlId(), DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(currentDateTime1));
         JasperReportSummaryIncRawData jasperReportSummaryYearly = jasperReportUtil.generateJasperReportSummaryIncRawData(getReportRequest());
         timer.stop();
-        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return new ArrayList<>(Arrays.asList(jasperReportSummaryDaily, jasperReportSummaryYearly));
     }
@@ -876,7 +889,7 @@ public class JasperApiUtils {
 
         JasperReportSummary jasperReportSummaryDaily = jasperReportUtil.generateJasperReportSummary(getReportRequest());
         timer.stop();
-        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         setReportParameterByName(InputControlsEnum.TRENDING_PERIOD.getInputControlId(), "Yearly");
 
@@ -888,7 +901,7 @@ public class JasperApiUtils {
 
         JasperReportSummary jasperReportSummaryYearly = jasperReportUtil.generateJasperReportSummary(getReportRequest());
         timer.stop();
-        logger.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
+        log.debug(String.format("Report generation took: %s seconds", timer.elapsed(TimeUnit.SECONDS)));
 
         return new ArrayList<>(Arrays.asList(jasperReportSummaryDaily, jasperReportSummaryYearly));
     }
@@ -1081,35 +1094,5 @@ public class JasperApiUtils {
 
     private String getCurrencySettingValueFromChartComponentCost(JasperReportSummary jasperReportSummary) {
         return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(5).text();
-    }
-
-    private void initialiseInputControlsEnumMap() {
-        inputControlsEnumMap.put("aPrioriCostMax", "APRIORI_COST_MAX");
-        inputControlsEnumMap.put("aPrioriCostMin", "APRIORI_COST_MIN");
-        inputControlsEnumMap.put("aPrioriMassMax", "APRIORI_MASS_MAX");
-        inputControlsEnumMap.put("aPrioriMassMin", "APRIORI_MASS_MIN");
-        inputControlsEnumMap.put("assemblySelect", "ASSEMBLY_SELECT");
-        inputControlsEnumMap.put("currency", "CURRENCY");
-        inputControlsEnumMap.put("componentCostCurrency", "COMPONENT_COST_CURRENCY");
-        inputControlsEnumMap.put("componentCostMin", "COMPONENT_COST_MIN");
-        inputControlsEnumMap.put("componentCostMax", "COMPONENT_COST_MAX");
-        inputControlsEnumMap.put("componentSelect", "COMPONENT_SELECT");
-        inputControlsEnumMap.put("costMetric", "COST_METRIC");
-        inputControlsEnumMap.put("dtcScore", "DTC_SCORE");
-        inputControlsEnumMap.put("earliestExportDate", "EARLIEST_EXPORT_DATE");
-        inputControlsEnumMap.put("endDate", "END_DATE");
-        inputControlsEnumMap.put("exportDate", "EXPORT_DATE");
-        inputControlsEnumMap.put("exportSetName", "EXPORT_SET_NAME");
-        inputControlsEnumMap.put("latestCostDate", "LATEST_COST_DATE");
-        inputControlsEnumMap.put("latestExportDate", "LATEST_EXPORT_DATE");
-        inputControlsEnumMap.put("massMetric", "MASS_METRIC");
-        inputControlsEnumMap.put("minimumAnnualSpend", "MINIMUM_ANNUAL_SPEND");
-        inputControlsEnumMap.put("percentDifferenceThreshold", "PERCENT_DIFFERENCE_THRESHOLD");
-        inputControlsEnumMap.put("processGroup", "PROCESS_GROUP");
-        inputControlsEnumMap.put("projectRollup", "PROJECT_ROLLUP");
-        inputControlsEnumMap.put("rollup", "ROLLUP");
-        inputControlsEnumMap.put("sortOrder", "SORT_ORDER");
-        inputControlsEnumMap.put("startDate", "START_DATE");
-        inputControlsEnumMap.put("trendingPeriod", "TRENDING_PERIOD");
     }
 }

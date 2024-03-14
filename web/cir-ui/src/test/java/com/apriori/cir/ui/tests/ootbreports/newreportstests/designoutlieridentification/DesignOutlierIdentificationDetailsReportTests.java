@@ -158,7 +158,10 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     }
 
     private void genericMassMetricTest(String massMetricToUse) {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Mass Metric", massMetricToUse);
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.MASS_METRIC.getInputControlId(),
+            massMetricToUse
+        );
 
         String aboveChartMassMetricValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5").get(2)
             .siblingElements().get(9).child(0).text();

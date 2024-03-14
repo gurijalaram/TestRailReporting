@@ -4,6 +4,8 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_
 
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
+import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -57,7 +59,10 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     }
 
     private List<String> currencyTestCore(String currencyToUse) {
-        JasperReportSummary jasperReportSummaryGbp = jasperApiUtils.genericTestCore("Currency", currencyToUse);
+        JasperReportSummary jasperReportSummaryGbp = jasperApiUtils.genericTestCore(
+            InputControlsEnum.CURRENCY.getInputControlId(),
+            currencyToUse
+        );
 
         String currencySettingValueGBP = jasperReportSummaryGbp.getReportHtmlPart()
             .getElementsContainingText("Currency").get(5).children().get(3).text();

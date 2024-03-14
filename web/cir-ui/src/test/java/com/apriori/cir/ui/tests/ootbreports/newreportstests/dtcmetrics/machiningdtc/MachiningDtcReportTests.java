@@ -3,10 +3,11 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.machinin
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
+import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
-import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
@@ -126,7 +127,10 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = {7451})
     @Description("Verify process group input control functionality - 2 Model Machining - Machining DTC Report")
     public void testProcessGroupTwoModelMachiningOnly() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Process Group", ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup());
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(),
+            ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
+        );
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jasperReportSummary.getChartData().isEmpty()).isEqualTo(true);
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().concat("No data available")).isEqualTo(true);
