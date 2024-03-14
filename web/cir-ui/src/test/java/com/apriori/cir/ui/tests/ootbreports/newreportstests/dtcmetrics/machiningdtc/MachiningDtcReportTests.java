@@ -4,6 +4,7 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS
 
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -126,7 +127,10 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = {7451})
     @Description("Verify process group input control functionality - 2 Model Machining - Machining DTC Report")
     public void testProcessGroupTwoModelMachiningOnly() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Process Group", ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup());
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(),
+            ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
+        );
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jasperReportSummary.getChartData().isEmpty()).isEqualTo(true);
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().concat("No data available")).isEqualTo(true);
