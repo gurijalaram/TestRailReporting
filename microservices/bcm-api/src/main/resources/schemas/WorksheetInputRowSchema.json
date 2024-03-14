@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
     "response": {
@@ -31,6 +30,727 @@
         },
         "iterationIds": {
           "type": "array"
+        },
+        "scenarioIteration": {
+          "type": "object",
+          "required": [
+            "identity",
+            "subjectIdentity",
+            "permissions",
+            "customerIdentity",
+            "componentIdentity",
+            "componentName",
+            "componentDisplayName",
+            "componentType",
+            "componentFilename",
+            "componentCreatedAt",
+            "componentCreatedBy",
+            "componentCreatedByName",
+            "componentUpdatedAt",
+            "componentUpdatedBy",
+            "componentUpdatedByName",
+            "scenarioIdentity",
+            "scenarioName",
+            "scenarioType",
+            "scenarioState",
+            "previousScenarioState",
+            "lastAction",
+            "scenarioOwnedBy",
+            "scenarioOwnedByName",
+            "scenarioLocked",
+            "scenarioPublished",
+            "scenarioSystemLocked",
+            "scenarioCreatedAt",
+            "scenarioCreatedBy",
+            "scenarioCreatedByName",
+            "scenarioUpdatedAt",
+            "scenarioUpdatedBy",
+            "scenarioUpdatedByName",
+            "iterationIdentity",
+            "iteration",
+            "latest",
+            "scenarioIterationKey",
+            "scenarioKey",
+            "iterationHasCustomImage",
+            "iterationHasWatchpointReport",
+            "iterationHasWebImage",
+            "iterationIsCadConnected",
+            "iterationCreatedAt",
+            "iterationCreatedBy",
+            "iterationCreatedByName",
+            "iterationUpdatedAt",
+            "iterationUpdatedBy",
+            "iterationUpdatedByName",
+            "analysisOfChildren",
+            "analysisOfScenario",
+            "analysisOfScenarioAndChildren",
+            "costingInput",
+            "scenarioCustomAttributes",
+            "scenarioDesignIssues",
+            "thumbnail"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "subjectIdentity": {
+              "type": "string"
+            },
+            "permissions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "customerIdentity": {
+              "type": "string"
+            },
+            "componentIdentity": {
+              "type": "string"
+            },
+            "componentName": {
+              "type": "string"
+            },
+            "componentDisplayName": {
+              "type": "string"
+            },
+            "componentType": {
+              "type": "string"
+            },
+            "componentFilename": {
+              "type": "string"
+            },
+            "componentCreatedAt": {
+              "type": "string"
+            },
+            "componentCreatedBy": {
+              "type": "string"
+            },
+            "componentCreatedByName": {
+              "type": "string"
+            },
+            "componentUpdatedAt": {
+              "type": "string"
+            },
+            "componentUpdatedBy": {
+              "type": "string"
+            },
+            "componentUpdatedByName": {
+              "type": "string"
+            },
+            "scenarioIdentity": {
+              "type": "string"
+            },
+            "scenarioName": {
+              "type": "string"
+            },
+            "scenarioType": {
+              "type": "string"
+            },
+            "scenarioState": {
+              "type": "string"
+            },
+            "previousScenarioState": {
+              "type": "string"
+            },
+            "lastAction": {
+              "type": "string"
+            },
+            "scenarioOwnedBy": {
+              "type": "string"
+            },
+            "scenarioOwnedByName": {
+              "type": "string"
+            },
+            "scenarioLocked": {
+              "type": "boolean"
+            },
+            "scenarioPublished": {
+              "type": "boolean"
+            },
+            "scenarioSystemLocked": {
+              "type": "boolean"
+            },
+            "scenarioCreatedAt": {
+              "type": "string"
+            },
+            "scenarioCreatedBy": {
+              "type": "string"
+            },
+            "scenarioCreatedByName": {
+              "type": "string"
+            },
+            "scenarioUpdatedAt": {
+              "type": "string"
+            },
+            "scenarioUpdatedBy": {
+              "type": "string"
+            },
+            "scenarioUpdatedByName": {
+              "type": "string"
+            },
+            "iterationIdentity": {
+              "type": "string"
+            },
+            "iteration": {
+              "type": "integer"
+            },
+            "latest": {
+              "type": "boolean"
+            },
+            "scenarioIterationKey": {
+              "type": "object",
+              "required": [
+                "iteration",
+                "scenarioKey"
+              ],
+              "properties": {
+                "iteration": {
+                  "type": "integer"
+                },
+                "scenarioKey": {
+                  "type": "object",
+                  "required": [
+                    "typeName",
+                    "masterName",
+                    "stateName",
+                    "workspaceId"
+                  ],
+                  "properties": {
+                    "typeName": {
+                      "type": "string"
+                    },
+                    "masterName": {
+                      "type": "string"
+                    },
+                    "stateName": {
+                      "type": "string"
+                    },
+                    "workspaceId": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            },
+            "scenarioKey": {
+              "type": "string"
+            },
+            "iterationHasCustomImage": {
+              "type": "boolean"
+            },
+            "iterationHasWatchpointReport": {
+              "type": "boolean"
+            },
+            "iterationHasWebImage": {
+              "type": "boolean"
+            },
+            "iterationIsCadConnected": {
+              "type": "boolean"
+            },
+            "iterationCreatedAt": {
+              "type": "string"
+            },
+            "iterationCreatedBy": {
+              "type": "string"
+            },
+            "iterationCreatedByName": {
+              "type": "string"
+            },
+            "iterationUpdatedAt": {
+              "type": "string"
+            },
+            "iterationUpdatedBy": {
+              "type": "string"
+            },
+            "iterationUpdatedByName": {
+              "type": "string"
+            },
+            "analysisOfChildren": {
+              "type": "object"
+            },
+            "analysisOfScenario": {
+              "type": "object",
+              "required": [
+                "identity",
+                "additionalAmortizedInvestment",
+                "additionalDirectCosts",
+                "amortizedInvestment",
+                "annualCost",
+                "annualManufacturingCarbon",
+                "annualVolume",
+                "batchCost",
+                "batchSetupTime",
+                "batchSize",
+                "capitalInvestment",
+                "cycleTime",
+                "digitalFactoryDefaultMaterialName",
+                "directOverheadCost",
+                "dtcMessagesCount",
+                "elapsedTime",
+                "expendableToolingCostPerPart",
+                "extraCosts",
+                "failedGcdsCount",
+                "failuresWarningsCount",
+                "finalYield",
+                "finishMass",
+                "fixtureCost",
+                "fixtureCostPerPart",
+                "fullyBurdenedCost",
+                "gcdWithTolerancesCount",
+                "goodPartYield",
+                "hardToolingCost",
+                "height",
+                "laborCost",
+                "laborTime",
+                "lastCosted",
+                "length",
+                "lifetimeCost",
+                "logisticsCarbon",
+                "logisticsCost",
+                "margin",
+                "marginPercent",
+                "materialCarbon",
+                "materialCost",
+                "materialMode",
+                "materialName",
+                "materialOverheadCost",
+                "materialUnitCost",
+                "materialUtilizationMode",
+                "notSupportedGcdsCount",
+                "numberOfParts",
+                "numPartsPerSheet",
+                "numScrapParts",
+                "partsPerHour",
+                "periodOverhead",
+                "pieceAndPeriod",
+                "pieceCost",
+                "processCarbon",
+                "processRoutingName",
+                "productionLife",
+                "programmingCost",
+                "programmingCostPerPart",
+                "roughMass",
+                "scrapMass",
+                "setupCostPerPart",
+                "sgaCost",
+                "stripNestingPitch",
+                "toolingCostPerPart",
+                "totalCarbon",
+                "totalCost",
+                "totalProductionVolume",
+                "otherDirectCosts",
+                "utilization",
+                "utilizationWithAddendum",
+                "utilizationWithoutAddendum",
+                "width"
+              ],
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "additionalAmortizedInvestment": {
+                  "type": "number"
+                },
+                "additionalDirectCosts": {
+                  "type": "number"
+                },
+                "amortizedInvestment": {
+                  "type": "number"
+                },
+                "annualCost": {
+                  "type": "number"
+                },
+                "annualManufacturingCarbon": {
+                  "type": "number"
+                },
+                "annualVolume": {
+                  "type": "integer"
+                },
+                "batchCost": {
+                  "type": "number"
+                },
+                "batchSetupTime": {
+                  "type": "number"
+                },
+                "batchSize": {
+                  "type": "integer"
+                },
+                "capitalInvestment": {
+                  "type": "number"
+                },
+                "cycleTime": {
+                  "type": "number"
+                },
+                "digitalFactoryDefaultMaterialName": {
+                  "type": "string"
+                },
+                "directOverheadCost": {
+                  "type": "number"
+                },
+                "dtcMessagesCount": {
+                  "type": "integer"
+                },
+                "elapsedTime": {
+                  "type": "number"
+                },
+                "expendableToolingCostPerPart": {
+                  "type": "number"
+                },
+                "extraCosts": {
+                  "type": "number"
+                },
+                "failedGcdsCount": {
+                  "type": "integer"
+                },
+                "failuresWarningsCount": {
+                  "type": "integer"
+                },
+                "finalYield": {
+                  "type": "number"
+                },
+                "finishMass": {
+                  "type": "number"
+                },
+                "fixtureCost": {
+                  "type": "number"
+                },
+                "fixtureCostPerPart": {
+                  "type": "number"
+                },
+                "fullyBurdenedCost": {
+                  "type": "number"
+                },
+                "gcdWithTolerancesCount": {
+                  "type": "integer"
+                },
+                "goodPartYield": {
+                  "type": "number"
+                },
+                "hardToolingCost": {
+                  "type": "number"
+                },
+                "height": {
+                  "type": "number"
+                },
+                "laborCost": {
+                  "type": "number"
+                },
+                "laborTime": {
+                  "type": "number"
+                },
+                "lastCosted": {
+                  "type": "string"
+                },
+                "length": {
+                  "type": "number"
+                },
+                "lifetimeCost": {
+                  "type": "number"
+                },
+                "logisticsCarbon": {
+                  "type": "number"
+                },
+                "logisticsCost": {
+                  "type": "number"
+                },
+                "margin": {
+                  "type": "number"
+                },
+                "marginPercent": {
+                  "type": "number"
+                },
+                "materialCarbon": {
+                  "type": "number"
+                },
+                "materialCost": {
+                  "type": "number"
+                },
+                "materialMode": {
+                  "type": "string"
+                },
+                "materialName": {
+                  "type": "string"
+                },
+                "materialOverheadCost": {
+                  "type": "number"
+                },
+                "materialUnitCost": {
+                  "type": "number"
+                },
+                "materialUtilizationMode": {
+                  "type": "string"
+                },
+                "notSupportedGcdsCount": {
+                  "type": "integer"
+                },
+                "numberOfParts": {
+                  "type": "number"
+                },
+                "numPartsPerSheet": {
+                  "type": "number"
+                },
+                "numScrapParts": {
+                  "type": "number"
+                },
+                "partsPerHour": {
+                  "type": "number"
+                },
+                "periodOverhead": {
+                  "type": "number"
+                },
+                "pieceAndPeriod": {
+                  "type": "number"
+                },
+                "pieceCost": {
+                  "type": "number"
+                },
+                "processCarbon": {
+                  "type": "number"
+                },
+                "processRoutingName": {
+                  "type": "string"
+                },
+                "productionLife": {
+                  "type": "number"
+                },
+                "programmingCost": {
+                  "type": "number"
+                },
+                "programmingCostPerPart": {
+                  "type": "number"
+                },
+                "roughMass": {
+                  "type": "number"
+                },
+                "scrapMass": {
+                  "type": "number"
+                },
+                "setupCostPerPart": {
+                  "type": "number"
+                },
+                "sgaCost": {
+                  "type": "number"
+                },
+                "stripNestingPitch": {
+                  "type": "number"
+                },
+                "toolingCostPerPart": {
+                  "type": "number"
+                },
+                "totalCarbon": {
+                  "type": "number"
+                },
+                "totalCost": {
+                  "type": "number"
+                },
+                "totalProductionVolume": {
+                  "type": "number"
+                },
+                "otherDirectCosts": {
+                  "type": "number"
+                },
+                "utilization": {
+                  "type": "number"
+                },
+                "utilizationWithAddendum": {
+                  "type": "number"
+                },
+                "utilizationWithoutAddendum": {
+                  "type": "number"
+                },
+                "width": {
+                  "type": "number"
+                }
+              }
+            },
+            "analysisOfScenarioAndChildren": {
+              "type": "object"
+            },
+            "costingInput": {
+              "type": "object",
+              "required": [
+                "identity",
+                "annualVolume",
+                "costMode",
+                "customAttributes",
+                "gcdProperties",
+                "machiningMode",
+                "materialMode",
+                "processGroupName",
+                "processSetupOptions",
+                "productionLife",
+                "routingNodeOptions",
+                "secondaryDigitalFactories",
+                "secondaryProcesses",
+                "usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories",
+                "vpeName"
+              ],
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "annualVolume": {
+                  "type": "integer"
+                },
+                "costMode": {
+                  "type": "string"
+                },
+                "customAttributes": {
+                  "type": "object",
+                  "required": [
+                    "UDA5"
+                  ],
+                  "properties": {
+                    "UDA5": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "gcdProperties": {
+                "type": "object"
+              },
+              "machiningMode": {
+                "type": "string"
+              },
+              "materialMode": {
+                "type": "string"
+              },
+              "processGroupName": {
+                "type": "string"
+              },
+              "processSetupOptions": {
+                "type": "object"
+              },
+              "productionLife": {
+                "type": "number"
+              },
+              "routingNodeOptions": {
+                "type": "array",
+                "items": {}
+              },
+              "secondaryDigitalFactories": {
+                "type": "object"
+              },
+              "secondaryProcesses": {
+                "type": "object"
+              },
+              "usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories": {
+                "type": "boolean"
+              },
+              "vpeName": {
+                "type": "string"
+              }
+            }
+          },
+          "scenarioCustomAttributes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "identity",
+                "key",
+                "value",
+                "valueType"
+              ],
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "key": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "array"
+                }
+              },
+              "valueType": {
+                "type": "string"
+              }
+            }
+          },
+          "scenarioDesignIssues": {
+            "type": "array",
+            "items": {}
+          },
+          "thumbnail": {
+            "type": "object",
+            "required": [
+              "identity",
+              "image"
+            ],
+            "properties": {
+              "identity": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "analysisInput": {
+          "type": "object",
+          "required": [
+            "identity",
+            "customerIdentity",
+            "createdAt",
+            "createdBy",
+            "annualVolume",
+            "customAttributes",
+            "gcdProperties",
+            "processGroupName",
+            "productionLife",
+            "routingNodeOptions",
+            "secondaryDigitalFactories",
+            "secondaryProcesses",
+            "digitalFactoryName"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "customerIdentity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "annualVolume": {
+              "type": "integer"
+            },
+            "customAttributes": {
+              "type": "object"
+            },
+            "gcdProperties": {
+              "type": "object"
+            },
+            "processGroupName": {
+              "type": "string"
+            },
+            "productionLife": {
+              "type": "number"
+            },
+            "routingNodeOptions": {
+              "type": "array"
+            },
+            "secondaryDigitalFactories": {
+              "type": "object"
+            },
+            "secondaryProcesses": {
+              "type": "object"
+            },
+            "digitalFactoryName": {
+              "type": "string"
+            }
+          }
         }
       },
       "required": [
@@ -42,7 +762,9 @@
         "worksheetId",
         "componentIdentity",
         "scenarioIdentity",
-        "iterationIds"
+        "iterationIds",
+        "scenarioIteration",
+        "analysisInput"
       ]
     }
   },
