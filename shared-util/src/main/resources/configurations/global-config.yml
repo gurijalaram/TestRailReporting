@@ -15,6 +15,7 @@ production:
   url_part: ${env}
 
 sandbox:
+  name: Sandbox
   url_part: sandbox.${env}
 #==========================================================
 

@@ -27,7 +27,7 @@ public class EmailsTests {
     @Tag(API_SANITY)
     @TestRail(id = {3828, 10472, 3881})
     @Description("Send an email using the NTS API")
-    public void sendEmail() {
+    public void sendEmailTest() {
         EmailService emailService = new EmailService();
         String subject = "\"" + Constants.EMAIL_SUBJECT + System.currentTimeMillis() + "\"";
 
@@ -56,7 +56,7 @@ public class EmailsTests {
     @Test
     @TestRail(id = {10469, 10470, 10471})
     @Description("Send an email using the NTS API w/Attachment")
-    public void sendEmailWithAttachment() {
+    public void sendEmailWithAttachmentTest() {
         EmailService emailService = new EmailService();
 
         SoftAssertions soft = new SoftAssertions();
@@ -86,7 +86,7 @@ public class EmailsTests {
     @Test
     @TestRail(id = {3880})
     @Description("Get a list of emails using the NTS API")
-    public void getEmails() {
+    public void getEmailsTest() {
         EmailService emailService = new EmailService();
 
         assertThat(emailService.getEmails().getResponseEntity().getItems(), hasSize(greaterThanOrEqualTo(0)));
