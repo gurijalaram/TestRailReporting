@@ -38,7 +38,7 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
 
     sh """
             docker build -f ./qa-stacks/Dockerfile \
-            --label qa-stacks \
+            --label qa-stacks-${module} \
             --build-arg FOLDER=${folder} \
             --build-arg MODULE=${module} \
             --tag ${buildInfo}-${module}-${runType}:${buildVersion} \
@@ -46,7 +46,7 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
         """
 }
 
-def tag_n_push_image(module = '', profile = '', region = '', ecrDockerRegistry = '', buildInfo = '', runType = '', buildVersion = '') {
+def tag_n_push_image(module = '', ecrDockerRegistry = '', buildInfo = '', runType = '', buildVersion = '') {
     echo "Tagging and Pushing..."
     script {
 
@@ -57,9 +57,9 @@ def tag_n_push_image(module = '', profile = '', region = '', ecrDockerRegistry =
     }
 }
 
-def remove_image(module = '', buildInfo = '', runType = '', buildVersion = '') {
+def remove_image(module = '') {
     echo "Cleaning..."
-    sh "docker system prune --filter \"label=qa-stacks\" -f -a"
+    sh "docker system prune --filter \"label=qa-stacks-${module}\" -f -a"
     sh "docker container prune"
 }
 
@@ -102,9 +102,9 @@ pipeline {
                         steps {
                             buildImage("web", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}")
 
-                            tag_n_push_image("${MODULE}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            tag_n_push_image("${MODULE}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
 
-                            remove_image("${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            remove_image("${MODULE}")
                         }
                     }
                     stage("Deploy_Microservices") {
@@ -114,9 +114,9 @@ pipeline {
                         steps {
                             buildImage("microservices", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}")
 
-                            tag_n_push_image("${MODULE}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            tag_n_push_image("${MODULE}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
 
-                            remove_image("${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            remove_image("${MODULE}")
                         }
                     }
                 }
