@@ -60,7 +60,8 @@ def tag_n_push_image(module = '', ecrDockerRegistry = '', buildInfo = '', runTyp
 
 def remove_image(module = '') {
     echo "Cleaning..."
-    sh "docker system prune --filter \"label=qa-stacks\" --filter \"label=amazon-cli\" -f -a"
+    sh "docker system prune --filter \"label=qa-stacks\" -f -a"
+    sh "docker system prune --filter \"label=amazon-cli\" -f -a"
 }
 
 pipeline {
