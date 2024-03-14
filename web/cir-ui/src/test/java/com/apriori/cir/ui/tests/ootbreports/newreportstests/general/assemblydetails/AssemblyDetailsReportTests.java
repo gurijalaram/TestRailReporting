@@ -1,9 +1,9 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.general.assemblydetails;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.ASSEMBLY_DETAILS.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.ASSEMBLY_DETAILS;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.ASSEMBLY_DETAILS;
     private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private SoftAssertions softAssertions = new SoftAssertions();
     private JasperApiUtils jasperApiUtils;
@@ -37,7 +37,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("1922")
     @TestRail(id = 1922)
     @Description("Verifies that the currency code works properly")
@@ -50,7 +50,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("1928")
     @TestRail(id = 1928)
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
@@ -74,7 +74,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("1933")
     @TestRail(id = 1933)
     @Description("Verify component subassembly report details")
@@ -90,7 +90,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
             jSessionId,
             ExportSetEnum.SUB_SUB_ASM.getExportSetName(),
             JasperApiEnum.COMPONENT_COST.getEndpoint(),
-            CirApiEnum.COMPONENT_COST
+            JasperApiInputControlsPathEnum.COMPONENT_COST
         );
         jasperReportSummary = jasperApiUtils.genericTestCore("componentSelect", "10");
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().isEmpty()).isEqualTo(false);
@@ -113,7 +113,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("3231")
     @TmsLink("1929")
     @TestRail(id = {3231, 1929})
@@ -165,7 +165,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("3067")
     @TmsLink("1929")
     @TestRail(id = {3067, 1929})

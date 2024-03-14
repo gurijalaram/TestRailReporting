@@ -8,7 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.JasperReportSummaryIncRawData;
 import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.request.ReportRequest;
 import com.apriori.cir.api.models.response.ChartData;
@@ -51,7 +51,7 @@ public class JasperApiUtils {
     private Logger logger = LoggerFactory.getLogger(JasperApiUtils.class);
     private final Map<String, String> inputControlsEnumMap = new HashMap<>();
     private SoftAssertions softAssertions = new SoftAssertions();
-    private CirApiEnum reportValueForInputControls;
+    private JasperApiInputControlsPathEnum reportValueForInputControls;
     private ReportRequest reportRequest;
     private String reportsJsonFileName;
     private String exportSetName;
@@ -65,7 +65,7 @@ public class JasperApiUtils {
      * @param exportSetName       - String of the export set which should be set
      * @param reportsJsonFileName - String of the right json file to use to be sent to the api
      */
-    public JasperApiUtils(String jasperSessionID, String exportSetName, String reportsJsonFileName, CirApiEnum reportNameForInputControls) {
+    public JasperApiUtils(String jasperSessionID, String exportSetName, String reportsJsonFileName, JasperApiInputControlsPathEnum reportNameForInputControls) {
         this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
         this.reportValueForInputControls = reportNameForInputControls;
         this.jasperSessionID = jasperSessionID;
@@ -89,28 +89,6 @@ public class JasperApiUtils {
         this.processGroupName = processGroup.getProcessGroup();
         this.reportsJsonFileName = reportsJsonFileName;
         initialiseInputControlsEnumMap();
-    }
-
-    public JasperReportSummary genericTestCoreNoParameters() {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
-        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
-        String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
-
-        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
-
-        String processGroupId = inputControls.getProcessGroup().getOption(processGroupName).getValue();
-        setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(), processGroupId);
-
-        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
-        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
-
-        Stopwatch timer = Stopwatch.createUnstarted();
-        timer.start();
-        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
-        timer.stop();
-        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
-
-        return jasperReportSummary;
     }
 
     /**

@@ -1,8 +1,8 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.CASTING_DTC_DETAILS.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.CASTING_DTC_DETAILS;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.CASTING_DTC_DETAILS;
     private String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
     private List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
@@ -45,7 +45,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7411")
     @TestRail(id = 7411)
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
@@ -58,7 +58,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7412")
     @TestRail(id = 7412)
     @Description("Verify cost metric input control functions correctly - FBC - Casting DTC Details Report")
@@ -71,7 +71,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7411")
     @TestRail(id = 7411)
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
@@ -84,7 +84,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7411")
     @TestRail(id = 7411)
     @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Details Report")
@@ -97,7 +97,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7510")
     @TestRail(id = 7510)
     @Description("Verify DTC Score Input Control - Low Selection - Casting DTC Details Report")
@@ -115,7 +115,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7513")
     @TestRail(id = 7513)
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Details Report")
@@ -133,7 +133,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7516")
     @TestRail(id = 7516)
     @Description("Verify DTC Score Input Control - High Selection - Casting DTC Details Report")
@@ -151,7 +151,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7657")
     @TestRail(id = 7657)
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Details Report")
@@ -160,7 +160,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7629")
     @TestRail(id = 7629)
     @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Casting DTC Details Report")
@@ -183,7 +183,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7630")
     @TestRail(id = 7630)
     @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Details Report")
@@ -205,7 +205,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7631")
     @TestRail(id = 7631)
     @Description("Verify Sort Order input control functions correctly - Material Scrap - Casting DTC Details Report")
@@ -227,7 +227,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7632")
     @TestRail(id = 7632)
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Details Report")
@@ -249,7 +249,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7633")
     @TestRail(id = 7633)
     @Description("Verify Sort Order input control functions correctly - Slow Operations - Casting DTC Details Report")
@@ -271,7 +271,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7634")
     @TestRail(id = 7634)
     @Description("Verify Sort Order input control functions correctly - Special Tooling - Casting DTC Details Report")
@@ -293,7 +293,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7635")
     @TestRail(id = 7635)
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Casting DTC Details Report")
@@ -315,7 +315,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7636")
     @TestRail(id = 7636)
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Casting DTC Details Report")
@@ -338,7 +338,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29730")
     @TestRail(id = 29730)
     @Description("Verify process group input control functionality - Sand Casting - Casting DTC Details Report")
@@ -355,7 +355,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29731")
     @TestRail(id = 29731)
     @Description("Verify process group input control functionality - Die Casting - Casting DTC Details Report")
@@ -372,7 +372,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29732")
     @TestRail(id = 29732)
     @Description("Verify process group input control functionality - Sand and Die Casting - Casting DTC Details Report")
@@ -389,7 +389,7 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7644")
     @TestRail(id = 7644)
     @Description("Verify DTC issue counts are correct - Casting DTC Details Report")
