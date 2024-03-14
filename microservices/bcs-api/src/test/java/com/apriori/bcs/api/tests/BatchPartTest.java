@@ -83,6 +83,8 @@ public class BatchPartTest {
 
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(batchObject.getIdentity());
         softAssertions.assertThat(partResponse.getResponseEntity().getState()).isEqualTo(BCSState.CREATED.toString());
+
+        BatchResources.checkAndCancelBatch(batchObject);
     }
 
     @Test

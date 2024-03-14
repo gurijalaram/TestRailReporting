@@ -59,7 +59,7 @@ public class AtsAuthorization extends TestUtil {
     @Test
     @TestRail(id = {22088})
     @Description("Get a Cloud Context identified by a cloud context string")
-    public void getCloudContext() {
+    public void getCloudContextTest() {
         String customerIdentity = cdsTestUtil.getAprioriInternal().getIdentity();
         String contextString = currentUser.generateCloudContext().getCloudContext();
         ResponseWrapper<CloudContextResponse> getCloudContext = atsTestUtil.getCommonRequest(ATSAPIEnum.CLOUD_CONTEXT, CloudContextResponse.class, HttpStatus.SC_OK, contextString);

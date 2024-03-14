@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.cycletimevaluetracking;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -24,7 +23,6 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
@@ -49,10 +47,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7327")
     @TestRail(id = {7327})
     @Description("Verify report availability by library")
@@ -97,10 +92,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7627")
     @TestRail(id = {7627})
     @Description("Export date lists all available versions from selected export set rollup - Cycle Time Value Tracking Details Report")

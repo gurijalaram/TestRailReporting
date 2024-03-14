@@ -16,23 +16,16 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsCustomersTests {
-    private String url;
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-
-    @BeforeEach
-    public void setServiceUrl() {
-        url = Constants.getServiceUrl();
-    }
 
     @AfterEach
     public void cleanUp() {

@@ -1,7 +1,6 @@
 package com.apriori.cir.ui.tests.login;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.CUSTOMER;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,8 +31,8 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM),
+    @Tags({
+        @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
     @TestRail(id = {2695})
@@ -46,8 +45,7 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tag(REPORTS)
     @TestRail(id = {2696})
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
@@ -72,8 +70,7 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tag(REPORTS)
     @TestRail(id = {2698})
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
@@ -99,8 +96,7 @@ public class LoginTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({@Tag(REPORTS),
-        @Tag(ON_PREM)})
+    @Tag(REPORTS)
     @TestRail(id = {2699})
     @Description("Invalid email address, wrong format")
     public void testInvalidEmail() {

@@ -417,6 +417,7 @@ public class CostingInputsPart extends CICBasePage {
         pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
         pageUtils.waitForElementAndClick(webElement);
         this.selectValueFromDDL(mappingRule.getMappingRule());
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
     }
 
     /**

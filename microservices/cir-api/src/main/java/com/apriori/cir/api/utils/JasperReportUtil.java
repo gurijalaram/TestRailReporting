@@ -2,6 +2,7 @@ package com.apriori.cir.api.utils;
 
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.JasperReportSummaryIncRawData;
+import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
 import com.apriori.cir.api.enums.CirApiEnum;
 import com.apriori.cir.api.enums.ReportChartType;
 import com.apriori.cir.api.models.request.ReportExportRequest;
@@ -107,6 +108,28 @@ public class JasperReportUtil {
             .build();
     }
 
+    public JasperReportSummaryIncRawDataAsString generateJasperReportSummaryIncRawDataAsString(ReportRequest reportRequest) {
+        ReportStatusResponse response = this.generateReport(reportRequest);
+        ReportStatusResponse exportedReport = this.doReportExport(response);
+
+        this.waitUntilReportReady(response.getRequestId(),
+            exportedReport.getId());
+
+        String requestId = response.getRequestId();
+        String reportId = exportedReport.getId();
+
+        return JasperReportSummaryIncRawDataAsString.builder()
+            .reportHtmlPart(this.getReportHtmlData(requestId,
+                reportId)
+            )
+            .chartData(this.getReportChartData(requestId,
+                reportId)
+            )
+            .chartDataRawAsString(this.getReportChartDataRawAsString(requestId,
+                reportId))
+            .build();
+    }
+
     @SneakyThrows
     private void waitUntilReportReady(String requestId, String exportId) {
         RequestEntity requestEntity = new RequestEntity()
@@ -190,6 +213,18 @@ public class JasperReportUtil {
             .expectedResponseCode(HttpStatus.SC_OK);
 
         return (ReportComponentsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    @SneakyThrows
+    private String getReportChartDataRawAsString(final String requestId, final String exportId) {
+        RequestEntity requestEntity = new RequestEntity()
+            .endpoint(CirApiEnum.REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs)
+            .returnType(ReportComponentsResponse.class)
+            .inlineVariables(requestId, exportId)
+            .headers(initHeadersWithJSession())
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).get().getBody();
     }
 
     @SneakyThrows

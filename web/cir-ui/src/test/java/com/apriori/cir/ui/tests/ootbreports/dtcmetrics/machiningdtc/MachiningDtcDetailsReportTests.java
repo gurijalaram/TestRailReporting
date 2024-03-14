@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.dtcmetrics.machiningdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -28,12 +27,10 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 public class MachiningDtcDetailsReportTests extends TestBaseUI {
 
-    private MachiningDtcReportPage machiningDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
     private GenericReportPage genericReportPage;
@@ -43,10 +40,7 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7254")
     @TestRail(id = {7254})
     @Description("Validate report is available by navigation - Machining DTC Details Report")
@@ -78,10 +72,7 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3020")
     @TestRail(id = {3020})
     @Description("Verify Export Set list controls function correctly")
@@ -115,10 +106,7 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7338")
     @TestRail(id = {7338})
     @Description("Verify reset button functionality - Machining DTC Details Report")
@@ -131,7 +119,8 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7341")
     @TestRail(id = {7341})
     @Description("Verify save button functionality - Machining DTC Details Report")
@@ -164,10 +153,7 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7434")
     @TestRail(id = {7434})
     @Description("Verify export date filters correctly filters export sets - Input - Machining DTC Details Report")
@@ -193,10 +179,7 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7417")
     @TestRail(id = {7417})
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Details Report")
@@ -210,10 +193,7 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7396")
     @TestRail(id = {7396})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Details Report")
@@ -254,10 +234,7 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7497")
     @TestRail(id = {7497})
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Details Report")
@@ -299,15 +276,12 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("2039")
     @TestRail(id = {2039})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
-        machiningDtcReportPage = new ReportsLoginPage(driver)
+        MachiningDtcReportPage machiningDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(), MachiningDtcReportPage.class)
@@ -342,10 +316,7 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("29700")
     @TestRail(id = {29700})
     @Description("Verify Minimum Annual Spend input control functions correctly - Machining DTC Details Report")
@@ -381,10 +352,7 @@ public class MachiningDtcDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3025")
     @TestRail(id = {3025})
     @Description("Verify Sort Order input control functions correctly")
