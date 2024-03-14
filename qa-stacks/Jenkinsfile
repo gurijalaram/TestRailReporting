@@ -60,6 +60,7 @@ def tag_n_push_image(module = '', profile = '', region = '', ecrDockerRegistry =
 def remove_image(module = '', buildInfo = '', runType = '', buildVersion = '') {
     echo "Cleaning..."
     sh "docker system prune --filter \"label=qa-stacks\" -f -a"
+    sh "docker container prune"
 }
 
 pipeline {
