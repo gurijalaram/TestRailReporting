@@ -6,15 +6,16 @@
 ############################################# Global properties ########################################################
 # Define main configurations
 env: qa-test
-deployment: Production
+deployment: production
 customer: ap-int
 
 # Deployment
-Production:
+production:
   name: Production
   url_part: ${env}
 
-Sandbox:
+sandbox:
+  name: Sandbox
   url_part: sandbox.${env}
 #==========================================================
 
