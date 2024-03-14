@@ -13,6 +13,7 @@ def registry_password(profile = '', region = '') {
                 returnStdout: true,
                 script: """
                 docker run \
+                    -l amazon-cli \
                     -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
                     -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
                     amazon/aws-cli ecr get-login-password \
@@ -38,7 +39,7 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
 
     sh """
             docker build -f ./qa-stacks/Dockerfile \
-            --label qa-stacks-${module} \
+            --label qa-stacks \
             --build-arg FOLDER=${folder} \
             --build-arg MODULE=${module} \
             --tag ${buildInfo}-${module}-${runType}:${buildVersion} \
@@ -59,8 +60,7 @@ def tag_n_push_image(module = '', ecrDockerRegistry = '', buildInfo = '', runTyp
 
 def remove_image(module = '') {
     echo "Cleaning..."
-    sh "docker system prune --filter \"label=qa-stacks-${module}\" -f -a"
-    sh "docker container prune"
+    sh "docker system prune --filter \"label=qa-stacks\" --filter \"label=amazon-cli\" -f -a"
 }
 
 pipeline {
