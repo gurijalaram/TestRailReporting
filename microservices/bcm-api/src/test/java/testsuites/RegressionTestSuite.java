@@ -1,6 +1,7 @@
 package testsuites;
 
 import com.apriori.bcm.api.tests.AnalysisInputsTests;
+import com.apriori.bcm.api.tests.CostWorksheetTests;
 import com.apriori.bcm.api.tests.UpdateWorksheetTests;
 import com.apriori.bcm.api.tests.WorksheetTests;
 
@@ -11,7 +12,8 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasses({
     WorksheetTests.class,
     UpdateWorksheetTests.class,
-    AnalysisInputsTests.class
+    AnalysisInputsTests.class,
+    CostWorksheetTests.class
 })
 public class RegressionTestSuite {
 }

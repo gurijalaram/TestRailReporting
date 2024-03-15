@@ -2,8 +2,8 @@ package com.apriori.bcm.api.tests;
 
 import com.apriori.bcm.api.models.response.ErrorResponse;
 import com.apriori.bcm.api.models.response.FailureAddingAnalysisInputs;
+import com.apriori.bcm.api.models.response.InputRowPostResponse;
 import com.apriori.bcm.api.models.response.SuccessAddingAnalysisInputs;
-import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.css.api.utils.CssComponent;
@@ -44,7 +44,7 @@ public class AnalysisInputsTests extends BcmUtil {
         ScenarioItem scenarioItem = cssComponent.postSearchRequest(testingUser, componentType).getResponseEntity().getItems().stream()
             .findFirst().orElse(null);
 
-        WorkSheetInputRowResponse responseWorksheetInputRow =
+        InputRowPostResponse responseWorksheetInputRow =
             createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity).getResponseEntity();

@@ -46,7 +46,6 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Details Report ")
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
@@ -59,7 +58,6 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Details Report ")
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
@@ -72,7 +70,6 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Details Report")
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
@@ -85,7 +82,6 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Details Report ")
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
@@ -98,7 +94,6 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Details Report")
     public void testDtcScoreLow() {
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
         );
@@ -114,7 +109,6 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "", ""
         );
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames1,
             "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
@@ -130,7 +124,6 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             "", ""
         );
         jasperApiUtils.genericDtcDetailsTest(
-            false,
             partNames,
             "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
         );
