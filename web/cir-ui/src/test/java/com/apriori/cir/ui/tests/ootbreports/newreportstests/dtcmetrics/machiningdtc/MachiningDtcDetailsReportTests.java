@@ -2,11 +2,11 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.machinin
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
-import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
+import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
 import com.apriori.cir.ui.enums.SortOrderEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
