@@ -1,8 +1,8 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.general.assemblycost;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 public class AssemblyCostA4ReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.ASSEMBLY_COST_A4.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.ASSEMBLY_COST_A4;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.ASSEMBLY_COST_A4;
     private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private JasperApiUtils jasperApiUtils;
 
@@ -27,7 +27,7 @@ public class AssemblyCostA4ReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("26907")
     @TestRail(id = 26907)
     @Description("Input controls - Currency code - A4 Report")

@@ -1,8 +1,8 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.machiningdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
@@ -28,7 +28,7 @@ import java.util.List;
 public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.MACHINING_DTC_DETAILS.getEndpoint();
     private String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC_DETAILS;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.MACHINING_DTC_DETAILS;
     private JasperApiUtils jasperApiUtils;
     private List<String> partNames = Arrays.asList(
         JasperCirApiPartsEnum.DTCMACHINING_001.getPartName(),
@@ -42,7 +42,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7416")
     @TestRail(id = 7416)
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Details Report")
@@ -54,7 +54,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7417")
     @TestRail(id = 7417)
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Details Report")
@@ -66,7 +66,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7396")
     @TestRail(id = 7396)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Details Report")
@@ -78,7 +78,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7397")
     @TestRail(id = 7397)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Details Report")
@@ -90,7 +90,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("10011")
     @TestRail(id = {10011})
     @Description("Verify currency code input control function correctly - Machining DTC Details Report")
@@ -103,7 +103,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29700")
     @TestRail(id = 29700)
     @Description("Verify Minimum Annual Spend input control functions correctly - Machining DTC Details Report")
@@ -112,7 +112,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7497")
     @TestRail(id = 7497)
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Details Report")
@@ -128,7 +128,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7500")
     @TestRail(id = 7500)
     @Description("Verify DTC Score Input Control - Medium Selection - Machining DTC Details Report")
@@ -144,7 +144,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7503")
     @TestRail(id = 7503)
     @Description("Verify DTC Score Input Control - High Selection - Machining DTC Details Report")
@@ -160,7 +160,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29725")
     @TestRail(id = 29725)
     @Description("Verify process group input control functionality - Stock Machining - Machining DTC Details Report")
@@ -173,7 +173,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29724")
     @TestRail(id = 29724)
     @Description("Verify process group input control functionality - 2 Model Machining - Machining DTC Details Report")
@@ -186,7 +186,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29726")
     @TestRail(id = 29726)
     @Description("Verify process group input control functionality - 2 Model and Stock Machining - Machining DTC Details Report")
@@ -199,7 +199,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29788")
     @TestRail(id = 29788)
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Machining DTC Details Report")
@@ -221,7 +221,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29789")
     @TestRail(id = 29789)
     @Description("Verify Sort Order input control functions correctly - Design Standards - Machining DTC Details Report")
@@ -243,7 +243,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29790")
     @TestRail(id = 29790)
     @Description("Verify Sort Order input control functions correctly - Tolerances - Machining DTC Details Report")
@@ -265,7 +265,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29791")
     @TestRail(id = 29791)
     @Description("Verify Sort Order input control functions correctly - Slow Operations - Machining DTC Details Report")
@@ -287,7 +287,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29792")
     @TestRail(id = 29792)
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Machining DTC Details Report")
@@ -309,7 +309,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29793")
     @TestRail(id = 29793)
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Machining DTC Details Report")

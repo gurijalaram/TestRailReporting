@@ -8,7 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.JasperReportSummaryIncRawData;
 import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.request.ReportRequest;
 import com.apriori.cir.api.models.response.ChartData;
@@ -45,7 +45,7 @@ import java.util.stream.Stream;
 @Slf4j
 public class JasperApiUtils {
     private SoftAssertions softAssertions = new SoftAssertions();
-    private CirApiEnum reportValueForInputControls;
+    private JasperApiInputControlsPathEnum reportValueForInputControls;
     private ReportRequest reportRequest;
     private String reportsJsonFileName;
     private String exportSetName;
@@ -60,7 +60,7 @@ public class JasperApiUtils {
      * @param reportsJsonFileName        - String of the right json file to use to be sent to the api
      * @param reportNameForInputControls - String of the report name to use to retrieve input controls
      */
-    public JasperApiUtils(String jasperSessionID, String exportSetName, String reportsJsonFileName, CirApiEnum reportNameForInputControls) {
+    public JasperApiUtils(String jasperSessionID, String exportSetName, String reportsJsonFileName, JasperApiInputControlsPathEnum reportNameForInputControls) {
         this.reportRequest = ReportRequest.initFromJsonFile(reportsJsonFileName);
         this.reportValueForInputControls = reportNameForInputControls;
         this.jasperSessionID = jasperSessionID;
