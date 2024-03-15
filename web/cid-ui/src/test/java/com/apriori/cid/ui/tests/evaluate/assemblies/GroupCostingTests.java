@@ -131,7 +131,7 @@ public class GroupCostingTests extends TestBaseUI {
         });
 
         componentAssembly.getSubComponents().forEach(subComponent -> componentsTreePage.checkSubcomponentState(componentAssembly, subComponent.getComponentName()));
-        evaluatePage.refresh();
+        evaluatePage.clickRefresh(EvaluatePage.class);
         componentsTreePage = evaluatePage.openComponents();
 
         componentAssembly.getSubComponents().forEach(componentName -> {
