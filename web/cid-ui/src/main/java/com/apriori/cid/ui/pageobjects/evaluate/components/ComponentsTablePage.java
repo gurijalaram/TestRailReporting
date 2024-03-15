@@ -14,6 +14,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.cid.ui.pageobjects.help.HelpDocPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.DeletePage;
+import com.apriori.cid.ui.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.cid.ui.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.utils.ButtonTypeEnum;
@@ -419,7 +420,7 @@ public class ComponentsTablePage extends LoadableComponent<ComponentsTablePage> 
             while (!getScenarioManifestState(componentInfo, componentName).contains("COMPLETE")) {
                 getScenarioManifestState(componentInfo, componentName);
             }
-            new ExploreToolbar(driver).refresh();
+            new EvaluatePage(driver).clickRefresh(EvaluatePage.class);
             // Navigating to tree page because after refresh the component table reverts to tree view as default
             new ComponentsTreePage(driver).selectTableView();
 

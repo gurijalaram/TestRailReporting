@@ -801,7 +801,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
         componentAssembly = assemblyRequestUtil.getAssembly("assy03A");
         componentAssembly2 = assemblyRequestUtil.getAssembly("assy03");
-        componentAssembly.setUser(componentAssembly.getUser());
+        componentAssembly2.setUser(componentAssembly.getUser());
         componentAssembly2.getSubComponents().forEach(component -> component.setUser(componentAssembly.getUser()));
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
