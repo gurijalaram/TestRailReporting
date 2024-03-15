@@ -739,7 +739,7 @@ public class BidPackageProjectItemTest extends TestUtil {
 
         softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage()).contains(
             String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'",
-                deleteBidPackageResponse.getIdentity(), PropertiesContext.get("${env}.customer_identity")));
+                deleteBidPackageResponse.getIdentity(), PropertiesContext.get("${customer}.${env}.customer_identity")));
 
         //Deleted Project
         prjItemIdentiesList = new ArrayList<>();

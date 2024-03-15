@@ -77,14 +77,14 @@ public class QmsProjectsFilteredTest extends TestUtil {
         firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUser.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(firstUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(PropertiesContext.get("${customer}.${env}.customer_identity"))
             .build());
 
         UserCredentials secondUser = UserUtil.getUser();
         secondUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(secondUser.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(secondUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(PropertiesContext.get("${customer}.${env}.customer_identity"))
             .build());
 
         projectName = "a-" + new GenerateStringUtil().getRandomString() + "-00";

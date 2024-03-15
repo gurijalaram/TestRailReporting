@@ -70,7 +70,7 @@ public class AuthorizationUtil {
             .init(DeploymentsAPIEnum.DEPLOYMENTS, Deployments.class)
             .token(userCredentials.getToken())
             .inlineVariables(
-                PropertiesContext.get("customer_identity")
+                PropertiesContext.get("${customer}.${env}.customer_identity")
             )
             .queryParams(queryParams)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -101,7 +101,7 @@ public class AuthorizationUtil {
      * @return String - cloud context
      */
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
-        String cloudContext = PropertiesContext.get("customer_identity");
+        String cloudContext = PropertiesContext.get("${customer}.${env}.customer_identity");
 
         String applicationNameFromConfig = getApplicationName();
 

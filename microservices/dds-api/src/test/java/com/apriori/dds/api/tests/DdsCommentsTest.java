@@ -96,7 +96,7 @@ public class DdsCommentsTest extends TestUtil {
     @Description("get a valid comments and verify pagination")
     public void getComments() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, CommentsResponse.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"), discussionResponse.getResponseEntity().getIdentity())
+            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"), discussionResponse.getResponseEntity().getIdentity())
             .headers(DdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -112,7 +112,7 @@ public class DdsCommentsTest extends TestUtil {
     @Description("get a valid comment")
     public void getComment() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, CommentResponse.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"),
+            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"),
                 discussionResponse.getResponseEntity().getIdentity(),
                 commentResponse.getResponseEntity().getIdentity())
             .headers(DdsApiTestUtils.setUpHeader())
@@ -151,7 +151,7 @@ public class DdsCommentsTest extends TestUtil {
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, CommentResponse.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"), discussionResponse.getResponseEntity().getIdentity(), commentCreateResponse.getResponseEntity().getIdentity())
+            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"), discussionResponse.getResponseEntity().getIdentity(), commentCreateResponse.getResponseEntity().getIdentity())
             .body(commentsRequest)
             .headers(DdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
@@ -227,7 +227,7 @@ public class DdsCommentsTest extends TestUtil {
     @Description("get a invalid comment")
     public void getInvalidComment() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ErrorMessage.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"),
+            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"),
                 discussionResponse.getResponseEntity().getIdentity(),
                 "INVALID")
             .headers(DdsApiTestUtils.setUpHeader())
@@ -243,7 +243,7 @@ public class DdsCommentsTest extends TestUtil {
     @Description("get a comment With Invalid discussion")
     public void getCommentWithInvalidDiscussion() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, ErrorMessage.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"),
+            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"),
                 "INVALID",
                 commentResponse.getResponseEntity().getIdentity())
             .headers(DdsApiTestUtils.setUpHeader())

@@ -27,7 +27,7 @@ public class Constants {
      * @return string
      */
     public static String getAPrioriInternalCustomerIdentity() {
-        return PropertiesContext.get("customer_identity");
+        return PropertiesContext.get("${customer}.${env}.customer_identity");
     }
 
     /**

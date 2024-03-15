@@ -68,7 +68,7 @@ public class CisComponentTest extends CISTestUtil {
 
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(PropertiesContext.get("${customer}.${env}.customer_identity"))
             .build());
 
         BidPackageProjectResponse bppResponse = CisProjectResources.createProject(new HashMap<>(),

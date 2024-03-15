@@ -86,21 +86,21 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
         firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUser.getEmail());
         bidPackageProjectUsersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(firstUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(PropertiesContext.get("${customer}.${env}.customer_identity"))
             .build());
 
         UserCredentials secondUser = UserUtil.getUser();
         secondUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(secondUser.getEmail());
         bidPackageProjectUsersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(secondUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(PropertiesContext.get("${customer}.${env}.customer_identity"))
             .build());
 
         thirdUser = UserUtil.getUser();
         thirdUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(secondUser.getEmail());
         bidPackageProjectUsersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(thirdUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(PropertiesContext.get("${customer}.${env}.customer_identity"))
             .build());
 
         projectResponse = QmsProjectResources.createProject(new HashMap<>(),

@@ -16,12 +16,23 @@ ap-int:
   qa-test:
     customer_identity: 6C1F8C1D4D75
 
+  int-core:
+    customer_identity: H337GKD0LA0M
+
   staging:
     customer_identity: 7G0JGBE2N4GM
     token_subject: 2b68
 
+  migration:
+    customer_identity: 3KED5H5BKN85
+
+  local:
+    customer_identity: 212B5ABD2F6C
+
+  development:
+    customer_identity: 212B5ABD2F6C
+
   ci-connect:
-    customer_identity: 6C1F8C1D4D75
     customer_name: aPrioriInternal_Customer
     agent_type: windchill
     windchill:

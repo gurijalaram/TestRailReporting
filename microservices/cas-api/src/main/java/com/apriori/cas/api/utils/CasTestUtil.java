@@ -571,7 +571,7 @@ public class CasTestUtil extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("accessControl",
                 AccessControl.builder()
-                    .customerIdentity(PropertiesContext.get("customer_identity"))
+                    .customerIdentity(PropertiesContext.get("${customer}.${env}.customer_identity"))
                     .applicationIdentity(PropertiesContext.get("cds.ap_workspace_application_identity"))
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
