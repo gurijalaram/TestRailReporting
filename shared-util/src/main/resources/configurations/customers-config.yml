@@ -48,6 +48,8 @@ gadgets:
 widgets:
   cloud_reference_name: widgets
 
+  qa-test:
+    customer_identity: 52IC4D3J98GN
   ci-connect:
     customer_identity: 52IC4D3J98GN
     customer_name: 130cf4de-82aa-460c-9991-014a63b7dc20_Customer

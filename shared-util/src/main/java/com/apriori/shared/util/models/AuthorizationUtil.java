@@ -103,7 +103,7 @@ public class AuthorizationUtil {
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
         String cloudContext = PropertiesContext.get("customer_identity");
 
-        String applicationNameFromConfig = PropertiesContext.get("application_name");
+        String applicationNameFromConfig =getApplicationName();
 
         Deployment deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
 
@@ -120,6 +120,14 @@ public class AuthorizationUtil {
             .collect(Collectors.toList()).get(0);
 
         return cloudContext.concat(deploymentItem.getIdentity()).concat(installationItem.getIdentity()).concat(applicationItem.getIdentity());
+    }
+
+    private String getApplicationName() {
+        try {
+            return  PropertiesContext.get("application_name");
+        } catch (IllegalArgumentException e) {
+            return "cid";
+        }
     }
 
     private static synchronized String getTokenSubjectForCustomer() {
