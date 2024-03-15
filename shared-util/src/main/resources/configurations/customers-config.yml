@@ -14,8 +14,10 @@ ap-int:
 
   # name should be the same with environment name
   qa-test:
-    token_subject: 212
+    customer_identity: 6C1F8C1D4D75
+
   staging:
+    customer_identity: 7G0JGBE2N4GM
     token_subject: 2b68
 
   ci-connect:
@@ -48,8 +50,13 @@ gadgets:
 widgets:
   cloud_reference_name: widgets
 
+  # name should be the same with environment name
   qa-test:
     customer_identity: 52IC4D3J98GN
+
+  staging:
+    customer_identity: 2F265BC1MKAB
+
   ci-connect:
     customer_identity: 52IC4D3J98GN
     customer_name: 130cf4de-82aa-460c-9991-014a63b7dc20_Customer

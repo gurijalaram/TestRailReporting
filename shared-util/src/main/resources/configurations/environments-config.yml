@@ -10,7 +10,7 @@ qa-test:
   installation_name: core-na-1 - ${${deployment}.name}
   customer_identity: 6C1F8C1D4D75
   widgets_customer_identity: 52IC4D3J98GN
-  secret_key: PG9E795ML3P4
+#  secret_key: PG9E795ML3P4
   user_identity: AK8JJH37GM54
 
   admin:

@@ -103,7 +103,7 @@ public class AuthorizationUtil {
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
         String cloudContext = PropertiesContext.get("customer_identity");
 
-        String applicationNameFromConfig =getApplicationName();
+        String applicationNameFromConfig = getApplicationName();
 
         Deployment deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
 
