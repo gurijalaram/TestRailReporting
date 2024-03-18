@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "identity": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "worksheetId": {
+          "type": "string"
+        },
+        "componentIdentity": {
+          "type": "string"
+        },
+        "scenarioIdentity": {
+          "type": "string"
+        },
+        "iterationIds": {
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "identity",
+        "customerIdentity",
+        "createdAt",
+        "createdBy",
+        "worksheetId",
+        "componentIdentity",
+        "scenarioIdentity",
+        "iterationIds"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

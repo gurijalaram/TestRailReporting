@@ -1,10 +1,10 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.costoutlieridentification;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class CostOutlierIdentificationDetailsReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS;
     private String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
     private List<String> partNames = Arrays.asList(
         JasperCirApiPartsEnum.SM_CLEVIS_2207240161.getPartName(),
@@ -40,7 +40,7 @@ public class CostOutlierIdentificationDetailsReportTests extends JasperApiAuthen
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("1954")
     @TestRail(id = 1954)
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
@@ -52,7 +52,7 @@ public class CostOutlierIdentificationDetailsReportTests extends JasperApiAuthen
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("1954")
     @TestRail(id = 1954)
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
@@ -64,11 +64,12 @@ public class CostOutlierIdentificationDetailsReportTests extends JasperApiAuthen
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("1965")
     @TestRail(id = 1965)
     @Description("Validate details report generates")
     public void testDetailsReportGenerates() {
-        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, JasperApiEnum.COST_OUTLIER_IDENTIFICATION.getEndpoint(), CirApiEnum.COST_OUTLIER_IDENTIFICATION);
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, JasperApiEnum.COST_OUTLIER_IDENTIFICATION.getEndpoint(), JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION);
         JasperReportSummaryIncRawDataAsString jasperReportSummary = jasperApiUtils.genericTestCoreRawAsString("", "");
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().isEmpty()).isEqualTo(false);
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("Cost Outlier Identification")).isEqualTo(true);

@@ -13,23 +13,13 @@ def registry_password(profile = '', region = '') {
                 returnStdout: true,
                 script: """
                 docker run \
+                    -l amazon-cli \
                     -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
                     -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
                     amazon/aws-cli ecr get-login-password \
                     --profile ${profile} --region ${region}
             """
         ).trim()
-    }
-}
-
-def docker_registry_password() {
-    withCredentials([usernamePassword(
-            credentialsId: 'NEXUS_APRIORI_COM',
-            passwordVariable: 'NEXUS_PASS',
-            usernameVariable: 'NEXUS_USER')]) {
-        sh """
-            docker login -u ${NEXUS_USER} -p ${NEXUS_PASS} docker.apriori.com
-        """
     }
 }
 
@@ -40,10 +30,12 @@ def tag_n_push_version(currentVersion = '', targetVersion = '') {
 
 }
 
-def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVersion = '') {
+def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVersion = '', profile = '', region = '', ecrDockerRegistry = '') {
     echo "Building..."
 
-    docker_registry_password()
+    def registryPwd = registry_password("${profile}", "${region}")
+
+    sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
     sh """
             docker build -f ./qa-stacks/Dockerfile \
@@ -55,13 +47,9 @@ def buildImage(folder = '', module = '', buildInfo = '', runType = '', buildVers
         """
 }
 
-def tag_n_push_image(module = '', profile = '', region='', ecrDockerRegistry = '', buildInfo = '', runType = '', buildVersion = '') {
+def tag_n_push_image(module = '', ecrDockerRegistry = '', buildInfo = '', runType = '', buildVersion = '') {
     echo "Tagging and Pushing..."
     script {
-        // Prepare aws login command.
-        def registryPwd = registry_password("${profile}", "${region}")
-
-        sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
 
         def awsArtifactTarget = "${ecrDockerRegistry}-${module}:${buildVersion}"
 
@@ -70,9 +58,10 @@ def tag_n_push_image(module = '', profile = '', region='', ecrDockerRegistry = '
     }
 }
 
-def remove_image(module = '', buildInfo = '', runType = '', buildVersion = '') {
+def remove_image(module = '') {
     echo "Cleaning..."
     sh "docker system prune --filter \"label=qa-stacks\" -f -a"
+    sh "docker system prune --filter \"label=amazon-cli\" -f -a"
 }
 
 pipeline {
@@ -100,10 +89,9 @@ pipeline {
                 axes {
                     axis {
                         name 'MODULE'
-                        values 'cid-ui', 'cas-ui', 'ach-ui', 'cis-ui',
-                                'cid-api', 'cas-api', 'cds-api', 'ats-api', 'cus-api', 'css-api', 'vds-api', 'nts-api',
-                                'fms-api', 'sds-api', 'ach-api', 'cmp-api', 'bcs-api', 'cis-api', 'dds-api',
-                                'dms-api', 'qds-api', 'qms-api', 'edc-api', 'bcm-api', 'gcd-api'
+                        values 'cid-ui', 'cas-ui', 'ach-ui', 'cis-ui', 'cid-api', 'cas-api', 'cds-api', 'ats-api',
+                                'cus-api', 'css-api', 'vds-api', 'nts-api', 'fms-api', 'sds-api', 'ach-api', 'cmp-api',
+                                'bcs-api', 'cis-api', 'dds-api', 'dms-api', 'qds-api', 'qms-api', 'edc-api', 'bcm-api', 'gcd-api'
                     }
                 }
 
@@ -113,11 +101,11 @@ pipeline {
                             expression { MODULE.contains('-ui') }
                         }
                         steps {
-                            buildImage("web", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            buildImage("web", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}")
 
-                            tag_n_push_image("${MODULE}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            tag_n_push_image("${MODULE}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
 
-                            remove_image("${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            remove_image("${MODULE}")
                         }
                     }
                     stage("Deploy_Microservices") {
@@ -125,11 +113,11 @@ pipeline {
                             expression { MODULE.contains('-api') }
                         }
                         steps {
-                            buildImage("microservices", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            buildImage("microservices", "${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}")
 
-                            tag_n_push_image("${MODULE}", "${environment.profile}", "${environment.region}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            tag_n_push_image("${MODULE}", "${ecrDockerRegistry}", "${buildInfo.name}", "${runType}", "${buildVersion}")
 
-                            remove_image("${MODULE}", "${buildInfo.name}", "${runType}", "${buildVersion}")
+                            remove_image("${MODULE}")
                         }
                     }
                 }
