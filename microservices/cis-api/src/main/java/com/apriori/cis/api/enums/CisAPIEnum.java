@@ -25,6 +25,7 @@ public enum CisAPIEnum implements ExternalEndpointEnum {
     // PROJECTS
     PROJECTS("/projects"),
     PROJECT("/projects/%s"),
+    PROJECT_NOTIFICATIONS("/projects/notifications-count"),
 
     //PARTICIPANTS
     PARTICIPANTS("/participants"),
