@@ -8,4 +8,6 @@ import lombok.Data;
 public class FailureAnalysisInputs {
     private String error;
     private String inputRowIdentity;
+    private String componentIdentity;
+    private String scenarioIdentity;
 }
