@@ -5,9 +5,12 @@ import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_GT;
 import com.apriori.cis.api.controller.CisBidPackageProjectResources;
 import com.apriori.cis.api.controller.CisComponentResources;
 import com.apriori.cis.api.controller.CisProjectResources;
+import com.apriori.cis.api.enums.ProjectStatusEnum;
+import com.apriori.cis.api.enums.ProjectTypeEnum;
 import com.apriori.cis.api.models.request.bidpackage.AssignedComponentRequest;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageItemParameters;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageItemRequest;
+import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectUserParameters;
 import com.apriori.cis.api.models.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.cis.api.models.response.component.AssignedComponentsResponse;
@@ -20,6 +23,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.DateUtil;
+import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -35,7 +39,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
@@ -43,21 +46,20 @@ public class CisComponentTest extends CISTestUtil {
 
     private static SoftAssertions softAssertions;
     private static ScenarioItem scenarioItem;
+    private static BidPackageProjectRequest projectRequestBuilder;
     private static UserCredentials currentUser;
+    private static String projectName;
+    private static List<BidPackageItemRequest> itemsList = new ArrayList<>();
+    private static List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
 
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser, SCENARIO_CREATED_AT_GT.getKey() + DateUtil.getDateDaysBefore(90, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ), CssSearch.COMPONENT_TYPE_EQ.getKey() + "PART").get(0);
-    }
-
-    @Test
-    @TestRail(id = {22906})
-    @Description("Get Already Assigned Components for specific user")
-    public void testGetAlreadyAssignedComponents() {
-        List<BidPackageItemRequest> itemsList = new ArrayList<>();
-        List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
+        softAssertions = new SoftAssertions();
+        currentUser = UserUtil.getUser();
+        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
         itemsList.add(BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .componentIdentity(scenarioItem.getComponentIdentity())
@@ -70,10 +72,14 @@ public class CisComponentTest extends CISTestUtil {
             .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
             .customerIdentity(PropertiesContext.get("${customer}.${env}.customer_identity"))
             .build());
+    }
 
-        BidPackageProjectResponse bppResponse = CisProjectResources.createProject(new HashMap<>(),
-            itemsList,
-            usersList,
+    @Test
+    @TestRail(id = {22906})
+    @Description("Get Already Assigned Components for specific user")
+    public void testGetAlreadyAssignedComponents() {
+        projectRequestBuilder = CisProjectResources.getProjectRequestBuilder(projectName, ProjectStatusEnum.OPEN, ProjectTypeEnum.INTERNAL, itemsList, usersList);
+        BidPackageProjectResponse bppResponse = CisProjectResources.createProject(projectRequestBuilder,
             BidPackageProjectResponse.class,
             HttpStatus.SC_CREATED,
             currentUser);
