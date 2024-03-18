@@ -101,25 +101,37 @@ public class AuthorizationUtil {
      * @return String - cloud context
      */
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
-        String cloudContext = PropertiesContext.get("${customer}.${env}.customer_identity");
-
-        String applicationNameFromConfig = getApplicationName();
+        final String customerIdentity = PropertiesContext.get("${customer}.${env}.customer_identity");
+        final String installationName = PropertiesContext.get("${customer}.${env}.installation_name");
+        final String applicationNameFromConfig = getApplicationName();
 
         Deployment deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
 
         Installation installationItem = deploymentItem.getInstallations()
             .stream()
-            .filter(element -> element.getName().equals(PropertiesContext.get("installation_name")))
-            .limit(1)
-            .collect(Collectors.toList()).get(0);
+            .filter(element -> element.getName().equals(installationName))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(
+                String.format("Failed to find installation with name %s\nfor deployment %s",
+                    installationName, deploymentItem.getName())
+                )
+            );
 
         Application applicationItem = installationItem.getApplications()
             .stream()
             .filter(element -> element.getServiceName().equalsIgnoreCase(applicationNameFromConfig))
-            .limit(1)
-            .collect(Collectors.toList()).get(0);
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(
+                    String.format("Failed to find application with name %s\nfor installation %s\nand deployment %s",
+                        applicationNameFromConfig, installationName, deploymentItem.getName())
+                )
+            );
 
-        return cloudContext.concat(deploymentItem.getIdentity()).concat(installationItem.getIdentity()).concat(applicationItem.getIdentity());
+        return new StringBuilder(customerIdentity)
+            .append(deploymentItem.getIdentity())
+            .append(installationItem.getIdentity())
+            .append(applicationItem.getIdentity())
+            .toString();
     }
 
     private String getApplicationName() {

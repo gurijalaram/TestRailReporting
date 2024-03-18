@@ -15,12 +15,16 @@ ap-int:
   # name should be the same with environment name
   qa-test:
     customer_identity: 6C1F8C1D4D75
+    installation_name: core-na-1 - ${${deployment}.name}
+
 
   int-core:
     customer_identity: H337GKD0LA0M
+    installation_name: Core Services
 
   staging:
     customer_identity: 7G0JGBE2N4GM
+    installation_name: ${${deployment}.name} na-1
     token_subject: 2b68
 
   migration:
@@ -64,9 +68,13 @@ widgets:
   # name should be the same with environment name
   qa-test:
     customer_identity: 52IC4D3J98GN
+    installation_name: N. Virginia v23
 
   staging:
     customer_identity: 2F265BC1MKAB
+    installation_name: ${${deployment}.name} na-1
+
+
 
   ci-connect:
     customer_identity: 52IC4D3J98GN
