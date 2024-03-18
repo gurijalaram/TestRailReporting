@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "InputRowDeletedSchema.json")
+@Schema(location = "InputRowGroupsResponseSchema.json")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonRootName("response")
-public class InputRowDeleted {
+public class InputRowsGroupsResponse {
     private List<Successes> successes;
     private List<FailureAnalysisInputs> failures;
 }

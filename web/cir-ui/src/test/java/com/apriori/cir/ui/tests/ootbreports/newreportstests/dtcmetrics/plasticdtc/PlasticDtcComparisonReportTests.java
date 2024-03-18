@@ -1,8 +1,8 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -28,7 +28,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
 
     private List<String> partNames = Collections.singletonList(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName());
     private String reportsJsonFileName = JasperApiEnum.PLASTIC_DTC_COMPARISON.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.PLASTIC_DTC_COMPARISON;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.PLASTIC_DTC_COMPARISON;
     private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
     private JasperApiUtils jasperApiUtils;
 
@@ -38,7 +38,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7404")
     @TestRail(id = 7404)
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Comparison Report")
@@ -50,7 +50,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7405")
     @TestRail(id = 7405)
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Comparison Report")
@@ -62,7 +62,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7583")
     @TestRail(id = 7383)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Comparison Report")
@@ -74,7 +74,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7384")
     @TestRail(id = 7384)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Comparison Report")
@@ -86,7 +86,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("1370")
     @TestRail(id = {1370})
     @Description("Verify currency code functionality works correctly - Plastic DTC Comparison Report")
@@ -99,7 +99,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7521")
     @TestRail(id = 7521)
     @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Comparison Report")
@@ -112,7 +112,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7524")
     @TestRail(id = 7524)
     @Description("Verify DTC Score Input Control - Medium Selection - Plastic DTC Comparison Report")
@@ -128,7 +128,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7527")
     @TestRail(id = 7527)
     @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Comparison Report")
@@ -144,7 +144,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7542")
     @TestRail(id = 7542)
     @Description("Verify DTC Score Input Control - All Selection - Plastic DTC Comparison Report")
@@ -157,7 +157,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29684")
     @TestRail(id = {29684})
     @Description("Test process group input control works correctly - Plastic DTC Comparison Report")
@@ -169,7 +169,7 @@ public class PlasticDtcComparisonReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29703")
     @TestRail(id = 29703)
     @Description("Verify Minimum Annual Spend input control functions correctly - Plastic DTC Comparison Report")

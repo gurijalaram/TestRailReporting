@@ -1,8 +1,8 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.sheetmetaldtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.SHEET_METAL_DTC_COMPARISON.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.SHEET_METAL_DTC_COMPARISON;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.SHEET_METAL_DTC_COMPARISON;
     private String exportSetName = ExportSetEnum.SHEET_METAL_DTC.getExportSetName();
     private List<String> partNames = Arrays.asList(
         JasperCirApiPartsEnum.P_1271576.getPartName(),
@@ -41,7 +41,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7419")
     @TestRail(id = 7419)
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Comparison Report")
@@ -53,7 +53,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7420")
     @TestRail(id = 7420)
     @Description("Verify cost metric input control functions correctly - FBC - Sheet Metal DTC Comparison Report")
@@ -65,7 +65,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7399")
     @TestRail(id = 7399)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Sheet Metal DTC Comparison Report")
@@ -77,7 +77,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7400")
     @TestRail(id = 7400)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Comparison Report")
@@ -89,7 +89,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7378")
     @TestRail(id = 7378)
     @Description("Verify Currency Code Input Control - Sheet Metal DTC Details Report")
@@ -102,7 +102,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29702")
     @TestRail(id = 29702)
     @Description("Verify Minimum Annual Spend input control functions correctly - Sheet Metal DTC Comparison Report")
@@ -113,7 +113,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7533")
     @TestRail(id = 7533)
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Comparison Report")
@@ -130,7 +130,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7536")
     @TestRail(id = 7536)
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Comparison Report")
@@ -147,7 +147,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7539")
     @TestRail(id = 7539)
     @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Comparison Report")
@@ -164,7 +164,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7541")
     @TestRail(id = 7541)
     @Description("Verify DTC Score Input Control - All Selection - Sheet Metal DTC Comparison Report")
@@ -182,7 +182,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7449")
     @TestRail(id = {7449})
     @Description("Verify process group input control functionality - Single Selection - Sheet Metal DTC Comparison Report")
@@ -198,7 +198,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7672")
     @TestRail(id = {7672})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Sheet Metal DTC Comparison Report")
@@ -214,7 +214,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7673")
     @TestRail(id = {7673})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Issues - Sheet Metal DTC Comparison Report")
@@ -230,7 +230,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7674")
     @TestRail(id = {7674})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Sheet Metal DTC Comparison Report")
@@ -246,7 +246,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7675")
     @TestRail(id = {7675})
     @Description("Verify Sort Order input control functions correctly - Machining Times - Sheet Metal DTC Comparison Report")
@@ -262,7 +262,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7676")
     @TestRail(id = {7676})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Sheet Metal DTC Comparison Report")
