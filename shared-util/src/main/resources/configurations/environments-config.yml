@@ -83,7 +83,6 @@ staging:
   name: staging
   aws_parameter_store_name: stage
   installation_name: ${${deployment}.name} na-1
-  ap_user_context:
   base_url: https://na-1-v22-1-demo.${${customer}.cloud_reference_name}.staging.apriori.net/
 
   #  TODO: uncomment for staging local run
