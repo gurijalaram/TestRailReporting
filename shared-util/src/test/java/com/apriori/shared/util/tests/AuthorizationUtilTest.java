@@ -30,13 +30,13 @@ public class AuthorizationUtilTest {
     @Test
     @SneakyThrows
     public void getTokenInThreads() {
-        final UserCredentials currentUser = UserUtil.getUser();
         final Integer threadsCount = 10;
         CountDownLatch latch = new CountDownLatch(threadsCount);
 
         for (int i = 0; i < threadsCount; i++) {
             new Thread(() -> {
-                ResponseWrapper<Token> response = new AuthorizationUtil().getToken(currentUser);
+                ResponseWrapper<Token> response = new AuthorizationUtil().getToken(UserUtil.getUser());
+
 
                 assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));
                 latch.countDown();
