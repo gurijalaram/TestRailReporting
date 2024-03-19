@@ -10,6 +10,7 @@ import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
+import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -17,11 +18,12 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@ExtendWith(TestRulesAPI.class)
 public class InputRowTests extends BcmUtil {
     private static SoftAssertions softAssertions = new SoftAssertions();
     private final String componentType = "PART";
