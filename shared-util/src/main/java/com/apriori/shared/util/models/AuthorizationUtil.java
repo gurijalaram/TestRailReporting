@@ -27,7 +27,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.hc.core5.http.HttpStatus;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class AuthorizationUtil {
@@ -70,7 +69,7 @@ public class AuthorizationUtil {
             .init(DeploymentsAPIEnum.DEPLOYMENTS, Deployments.class)
             .token(userCredentials.getToken())
             .inlineVariables(
-                PropertiesContext.get("${customer}.${env}.customer_identity")
+                PropertiesContext.get("ap-int.${env}.customer_identity")
             )
             .queryParams(queryParams)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -102,7 +101,7 @@ public class AuthorizationUtil {
      */
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
         final String customerIdentity = PropertiesContext.get("${customer}.${env}.customer_identity");
-        final String installationName = PropertiesContext.get("${customer}.${env}.installation_name");
+        final String installationName = PropertiesContext.get("${env}.installation_name");
         final String applicationNameFromConfig = getApplicationName();
 
         Deployment deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
