@@ -7,7 +7,7 @@ qa-test:
   name: qa-test
   aws_parameter_store_name: qa-test
   base_url: https://na-1-install.${${customer}.cloud_reference_name}.qa-test.apriori.net/
-  installation_name: core-na-1 - ${${deployment}.name}
+  multi_tenant_installation_name: core-na-1 - ${${deployment}.name}
   user_identity: AK8JJH37GM54
 
   admin:
@@ -45,7 +45,7 @@ int-core:
   name: int-core
   aws_parameter_store_name: int-blue
   base_url: https://cost.${${customer}.cloud_reference_name}.int.apriori.net/
-  installation_name: Core Services
+  multi_tenant_installation_name: Core Services
   secret_key: 65J1ID2B6LDG
   user_identity: 8GFDIG229629
 
@@ -83,7 +83,7 @@ staging:
   name: staging
   aws_parameter_store_name: stage
   base_url: https://na-1-v22-1-demo.${${customer}.cloud_reference_name}.staging.apriori.net/
-  installation_name: ${${deployment}.name} na-1
+  multi_tenant_installation_name: ${${deployment}.name} na-1
   #  TODO: uncomment for staging local run
   secret_key: K6JWVF8KV884
   user_identity: 6AHL1HHGB15E
@@ -155,7 +155,7 @@ local:
   base_url: http://localhost
   name: local
   secret_key: O85XMATZEMBO
-  installation_name: US 1
+  multi_tenant_installation_name: US 1
   user_identity: 4N630F61FGNG
 
   admin:

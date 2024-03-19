@@ -100,8 +100,8 @@ public class AuthorizationUtil {
      * @return String - cloud context
      */
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
-        final String customerIdentity = PropertiesContext.get("${customer}.${env}.customer_identity");
-        final String installationName = PropertiesContext.get("${env}.installation_name");
+        final String customerIdentity = PropertiesContext.get("ap-int.${env}.customer_identity");
+        final String installationName = PropertiesContext.get("${env}.multi_tenant_installation_name");
         final String applicationNameFromConfig = getApplicationName();
 
         Deployment deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
