@@ -12,26 +12,6 @@
 ap-int:
   cloud_reference_name: apriori-internal
 
-  # name should be the same with environment name
-  qa-test:
-    customer_identity: 6C1F8C1D4D75
-
-  int-core:
-    customer_identity: H337GKD0LA0M
-
-  staging:
-    customer_identity: 7G0JGBE2N4GM
-    token_subject: 2b68
-
-  migration:
-    customer_identity: 3KED5H5BKN85
-
-  local:
-    customer_identity: 212B5ABD2F6C
-
-  development:
-    customer_identity: 212B5ABD2F6C
-
   ci-connect:
     customer_name: aPrioriInternal_Customer
     agent_type: windchill
@@ -50,6 +30,36 @@ ap-int:
       port: 8808
       connector: EN-consvwc02
 
+  ### Customer configurations for specific for environment ###
+  # name should be the same with environment name
+  qa-test:
+    customer_identity: 6C1F8C1D4D75
+    user_staff_identity: AK8JJH37GM54
+
+
+  int-core:
+    customer_identity: H337GKD0LA0M
+    user_staff_identity: 8GFDIG229629
+
+
+  staging:
+    customer_identity: 7G0JGBE2N4GM
+    user_staff_identity: 6AHL1HHGB15E
+    token_subject: 2b68
+
+  migration:
+    customer_identity: 3KED5H5BKN85
+
+  local:
+    customer_identity: 212B5ABD2F6C
+    user_staff_identity: 4N630F61FGNG
+
+
+  development:
+    customer_identity: 212B5ABD2F6C
+  ###########################################################
+
+
 ######################################################## GADGETS #######################################################
 gadgets:
   cloud_reference_name: gadgets
@@ -61,14 +71,6 @@ gadgets:
 widgets:
   cloud_reference_name: widgets
 
-  # name should be the same with environment name
-  qa-test:
-    customer_identity: 52IC4D3J98GN
-
-  staging:
-    customer_identity: 2F265BC1MKAB
-
-
   ci-connect:
     customer_identity: 52IC4D3J98GN
     customer_name: 130cf4de-82aa-460c-9991-014a63b7dc20_Customer
@@ -77,6 +79,15 @@ widgets:
       port: 8807
       connector: WC-consvwc02
       agent_name: 59cf01bd-b45c-4252-a94c-e433fbc342fa_Agent
+
+  ### Customer configurations for specific for environment ###
+  # name should be the same with environment name
+  qa-test:
+    customer_identity: 52IC4D3J98GN
+
+  staging:
+    customer_identity: 2F265BC1MKAB
+  ###########################################################
 
 ########################################################################################################################
 
