@@ -245,8 +245,7 @@ public class WriteFieldsTab extends PublishResultsPart {
         WebElement writingRuleElement = getWriteFieldRows().get(getWriteFieldRows().size() - 1).findElements(getColumnSelector()).get(1);
         pageUtils.waitUntilDropdownOptionsLoaded(writingRuleElement.findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(writingRuleElement);
-        pageUtils.waitForElementToBeClickable(this.driver.findElement(By.cssSelector(OPTIONS_CONTENT_OPEN_DROPDOWN_CSS)));
-        this.selectValueFromDDL(writingRule.getGuiWritingRule());
+        pageUtils.waitForElementAndClick(By.xpath("//div[contains(text(),'" + writingRule.getGuiWritingRule() + "')]"));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
@@ -261,7 +260,7 @@ public class WriteFieldsTab extends PublishResultsPart {
         WebElement connectFieldElement = getWriteFieldRows().get(getWriteFieldRows().size() - 1).findElements(getColumnSelector()).get(0);
         pageUtils.waitUntilDropdownOptionsLoaded(connectFieldElement.findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(connectFieldElement);
-        this.selectValueFromDDL(plmTypeAttributes.getCicGuiField());
+        pageUtils.waitForElementAndClick(By.xpath("//div[contains(text(),'" + plmTypeAttributes.getCicGuiField() + "')]"));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
@@ -275,10 +274,9 @@ public class WriteFieldsTab extends PublishResultsPart {
     public WriteFieldsTab selectMultiSelectField(String... customValues) {
         for (String multiValue : customValues) {
             WebElement connectFieldElement = getWriteFieldRows().get(getWriteFieldRows().size() - 1).findElements(getColumnSelector()).get(3);
-
             pageUtils.waitUntilDropdownOptionsLoaded(connectFieldElement.findElement(By.tagName("select")));
             pageUtils.waitForElementAndClick(connectFieldElement);
-            this.selectValueFromDDL(multiValue);
+            pageUtils.waitForElementAndClick(By.xpath("//div[contains(text(),'" + multiValue + "')]"));
             pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         }
         return this;
@@ -309,7 +307,7 @@ public class WriteFieldsTab extends PublishResultsPart {
         if (cicFieldType.getFieldType().equals(CICFieldType.DROP_DOWN.getFieldType()) ||
             cicFieldType.getFieldType().equals(CICFieldType.DATE_TIME_PICKER.getFieldType())) {
             pageUtils.waitForElementAndClick(getFieldValueElement(cicFieldType));
-            this.selectValueFromDDL(fieldValue);
+            pageUtils.waitForElementAndClick(By.xpath("//div[contains(text(),'" + fieldValue + "')]"));
         } else {
             pageUtils.waitForElementToBeClickable(getFieldValueElement(cicFieldType).findElement(By.tagName("input")));
             pageUtils.setValueOfElement(getFieldValueElement(cicFieldType).findElement(By.tagName("input")), fieldValue);

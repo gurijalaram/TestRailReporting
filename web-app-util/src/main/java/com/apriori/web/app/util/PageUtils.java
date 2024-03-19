@@ -1096,6 +1096,16 @@ public class PageUtils {
     }
 
     /**
+     * waits for the element to become enabled
+     * @param locator - locator - the locator of the element
+     */
+    public void waitForElementEnabled(WebElement locator) {
+        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(((ExpectedCondition<Boolean>) element -> (locator).isEnabled()));
+    }
+
+    /**
      * Waits for the element to become invisible
      *
      * @param locator - the locator of the element
