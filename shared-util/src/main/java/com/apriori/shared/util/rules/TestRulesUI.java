@@ -15,12 +15,15 @@ import com.apriori.shared.util.testrail.TestRailReport;
 import com.apriori.shared.util.testrail.TestRailStatus;
 
 import com.codepine.api.testrail.model.Result;
+import com.epam.reportportal.junit5.ReportPortalExtension;
+import com.epam.reportportal.service.ReportPortal;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.OutputType;
@@ -44,6 +47,7 @@ import java.util.Optional;
  * @author cfrith
  */
 @Slf4j
+@ExtendWith(ReportPortalExtension.class)
 public class TestRulesUI implements TestWatcher, BeforeAllCallback {
 
     public static final String DRIVER = "driver";
