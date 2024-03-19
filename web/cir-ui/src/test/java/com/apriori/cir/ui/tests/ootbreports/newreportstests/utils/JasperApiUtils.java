@@ -1095,4 +1095,8 @@ public class JasperApiUtils {
     private String getCurrencySettingValueFromChartComponentCost(JasperReportSummary jasperReportSummary) {
         return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(5).text();
     }
+
+    public ReportRequest getReportRequest() {
+        return reportRequest;
+    }
 }

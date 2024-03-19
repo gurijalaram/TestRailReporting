@@ -25,6 +25,14 @@ public class InputControl {
         return getPropertyValueIfExist("exportSetName");
     }
 
+    public InputControlState getScenarioName() {
+        return getPropertyValueIfExist("scenarioName");
+    }
+
+    public InputControlState getComponentSelect() {
+        return getPropertyValueIfExist("componentSelect");
+    }
+
     public InputControlState getRollup() {
         return getPropertyValueIfExist("rollup");
     }
