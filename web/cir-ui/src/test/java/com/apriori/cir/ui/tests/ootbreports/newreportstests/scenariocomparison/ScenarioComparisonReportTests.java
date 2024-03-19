@@ -1,9 +1,10 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.scenariocomparison;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -23,7 +24,7 @@ import java.util.List;
 
 public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.SCENARIO_COMPARISON.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_COMPARISON;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.SCENARIO_COMPARISON;
     private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private JasperApiUtils jasperApiUtils;
 
@@ -33,7 +34,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("3305")
     @TestRail(id = 3305)
     @Description("Verify Currency Code input control is working correctly")
@@ -57,7 +58,10 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     }
 
     private List<String> currencyTestCore(String currencyToUse) {
-        JasperReportSummary jasperReportSummaryGbp = jasperApiUtils.genericTestCore("Currency", currencyToUse);
+        JasperReportSummary jasperReportSummaryGbp = jasperApiUtils.genericTestCore(
+            InputControlsEnum.CURRENCY.getInputControlId(),
+            currencyToUse
+        );
 
         String currencySettingValueGBP = jasperReportSummaryGbp.getReportHtmlPart()
             .getElementsContainingText("Currency").get(5).children().get(3).text();

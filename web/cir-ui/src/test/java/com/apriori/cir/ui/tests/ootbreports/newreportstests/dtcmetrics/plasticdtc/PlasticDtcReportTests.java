@@ -1,8 +1,8 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.plasticdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -28,7 +28,7 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     private List<String> partNames = Collections.singletonList(JasperCirApiPartsEnum.PLASTIC_MOULDED_CAP_THICKPART.getPartName());
     private String reportsJsonFileName = JasperApiEnum.PLASTIC_DTC.getEndpoint();
     private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.PLASTIC_DTC;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.PLASTIC_DTC;
     private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
@@ -37,7 +37,7 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("1366")
     @TestRail(id = 1366)
     @Description("Verify cost metric input control functions correctly - PPC - Plastic DTC Report")
@@ -49,7 +49,7 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7403")
     @TestRail(id = 7403)
     @Description("Verify cost metric input control functions correctly - FBC - Plastic DTC Report")
@@ -61,7 +61,7 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7380")
     @TestRail(id = 7380)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Plastic DTC Report")
@@ -73,7 +73,7 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("1368")
     @TestRail(id = 1368)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Plastic DTC Report")
@@ -85,7 +85,7 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7520")
     @TestRail(id = 7520)
     @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Report")
@@ -98,7 +98,7 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7523")
     @TestRail(id = 7523)
     @Description("Verify DTC Score Input Control - Medium Selection - Plastic DTC Report")
@@ -114,7 +114,7 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7526")
     @TestRail(id = 7526)
     @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Report")
@@ -130,7 +130,7 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("1370")
     @TestRail(id = {1370})
     @Description("Verify currency code functionality works correctly - Plastic DTC Report")
@@ -143,7 +143,7 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29682")
     @TestRail(id = {29682})
     @Description("Test process group input control works correctly - Plastic DTC Report")
@@ -155,7 +155,7 @@ public class PlasticDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("1371")
     @TestRail(id = {1371})
     @Description("Verify Minimum Annual Spend input control functions correctly - Plastic DTC Report")

@@ -1,8 +1,8 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.spendanalysisvaluetracking;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -18,7 +18,7 @@ import java.util.Arrays;
 
 public class SpendAnalysisValueTrackingReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.SPEND_ANALYSIS_VALUE_TRACKING.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.SPEND_ANALYSIS_VALUE_TRACKING;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.SPEND_ANALYSIS_VALUE_TRACKING;
     // Export set is irrelevant for this report
     private String exportSetName = "";
     private JasperApiUtils jasperApiUtils;
@@ -29,7 +29,7 @@ public class SpendAnalysisValueTrackingReportTests extends JasperApiAuthenticati
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("13955")
     @TestRail(id = 13955)
     @Description("Input controls - Currency code - Main Report")

@@ -19,6 +19,7 @@ def registry_password(profile = '', region = '') {
                 returnStdout: true,
                 script: """
                 docker run \
+                    -l amazon-cli \
                     -v "$AWS_CREDENTIALS_SECRET_TXT":/root/.aws/credentials \
                     -v "$AWS_CONFIG_SECRET_TXT":/root/.aws/config \
                     amazon/aws-cli ecr get-login-password \
@@ -58,6 +59,7 @@ pipeline {
                                 sh "docker login -u AWS -p ${registryPwd} ${ecrDockerRegistry}"
                                 tag_n_push("${ecrDockerRegistry}", "${baseJDKImageName}", "${VERSION}")
                                 sh "docker image rm ${baseJDKImageName} "
+                                sh "docker system prune --filter \"label=amazon-cli\" -f -a"
                             }
                         }
                     }

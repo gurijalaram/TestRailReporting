@@ -1,12 +1,12 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.upgradecomparison;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.UPGRADE_PART_COMPARISON.getEndpoint();
     private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.UPGRADE_PART_COMPARISON;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.UPGRADE_PART_COMPARISON;
     private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
@@ -34,7 +34,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("13952")
     @TestRail(id = 13952)
     @Description("Input controls - Currency code")

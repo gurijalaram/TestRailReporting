@@ -3,7 +3,7 @@ package com.apriori.cir.api.enums;
 import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
 import com.apriori.shared.util.properties.PropertiesContext;
 
-public enum CirApiEnum implements ExternalEndpointEnum {
+public enum JasperApiInputControlsPathEnum implements ExternalEndpointEnum {
     DTC_METRICS_REPORT_START("/reports/aPriori/reports/DTC%sMetrics"),
     APRIORI_REPORTS_START("/reports/aPriori/reports"),
     APRIORI_DEPLOYMENT_LEADER_REPORTS(APRIORI_REPORTS_START.getEndpointString().concat("/deploymentLeader")),
@@ -99,7 +99,7 @@ public enum CirApiEnum implements ExternalEndpointEnum {
 
     private final String endpoint;
 
-    CirApiEnum(String endpoint) {
+    JasperApiInputControlsPathEnum(String endpoint) {
         this.endpoint = endpoint;
     }
 
