@@ -111,7 +111,7 @@ public class AuthorizationUtil {
             .filter(element -> element.getName().equals(installationName))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(
-                String.format("Failed to find installation with name %s\nfor deployment %s",
+                String.format("Could not find installation with name %s\nfor deployment %s",
                     installationName, deploymentItem.getName())
                 )
             );
@@ -121,7 +121,7 @@ public class AuthorizationUtil {
             .filter(element -> element.getServiceName().equalsIgnoreCase(applicationNameFromConfig))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(
-                    String.format("Failed to find application with name %s\nfor installation %s\nand deployment %s",
+                    String.format("Could not find application with name %s\nfor installation %s\nand deployment %s",
                         applicationNameFromConfig, installationName, deploymentItem.getName())
                 )
             );
