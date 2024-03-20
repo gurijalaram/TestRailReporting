@@ -121,13 +121,13 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {6281, 5442})
     @Description("User can change the default Process group")
     public void defaultPG() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .goToProductionTab()
-            .selectProcessGroup(component.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING)
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(component)
             .navigateToScenario(component)
