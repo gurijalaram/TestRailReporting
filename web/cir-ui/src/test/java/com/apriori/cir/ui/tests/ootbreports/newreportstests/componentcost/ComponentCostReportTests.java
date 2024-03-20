@@ -10,6 +10,7 @@ import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.utils.JasperReportUtil;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
+import com.apriori.cir.ui.utils.Constants;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
 import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.testrail.TestRail;
@@ -21,6 +22,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
@@ -238,6 +241,46 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
             jasperReportSummary.getReportHtmlPart().getElementsContainingText("Scenario:").get(6)
                 .siblingElements().get(1).text()
         ).isEqualTo("Bulkload");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("3328")
+    @TestRail(id = 3328)
+    @Description("Verify Latest Export Date input control functions correctly")
+    public void verifyLatestExportDateInputControlFunctionsCorrectly() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        // get input controls, check at least 12 export sets are there (my data)
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        List<String> exportSetOptions = inputControls.getExportSetName().getAllOptions();
+        softAssertions.assertThat(exportSetOptions.size() >= 12).isEqualTo(true);
+        //softAssertions.assertThat(inputControls.getComponentSelect().getAllOptions().size() > 200).isEqualTo(true);
+        //softAssertions.assertThat(inputControls.getScenarioName().getAllOptions().size() > 18).isEqualTo(true);
+
+        // set latest export date input control - 2024-03-20 16:20:13
+        // Export set list, created by, last modified by and scenario name lists filtered according to latest export date
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
+            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now())
+        );
+
+        ReportRequest reportRequest = jasperApiUtils.getReportRequest();
+        /*softAssertions.assertThat(reportRequest.getParameters().getReportParameterByName("scenarioName").getValue().size()).isEqualTo(1);
+        softAssertions.assertThat(inputControls.getScenarioName().getAllOptions().size() > 1).isEqualTo(true);
+        softAssertions.assertThat(inputControls.getCreatedBy().getAllOptions().size() == 12).isEqualTo(true);
+        softAssertions.assertThat(inputControls.getLastModifiedBy().getAllOptions().size() == 12).isEqualTo(true);
+
+        softAssertions.assertThat(
+            jasperReportSummary.getReportHtmlPart().getElementsContainingText("Part Number:").get(6)
+                .siblingElements().get(1).text()
+        ).isEqualTo("0903237");
+        softAssertions.assertThat(
+            jasperReportSummary.getReportHtmlPart().getElementsContainingText("Scenario:").get(6)
+                .siblingElements().get(1).text()
+        ).isEqualTo("Bulkload");*/
 
         softAssertions.assertAll();
     }
