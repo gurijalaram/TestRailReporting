@@ -2,17 +2,13 @@ package com.apriori.shared.util.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyOrNullString;
-import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
 
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.AuthorizationUtil;
 import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.Customer;
-import com.apriori.shared.util.models.response.Token;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
@@ -53,7 +49,7 @@ public class CustomerUtilTest {
     public void getApIntCustomerDataTest() {
         final Customer apIntCustomerData = CustomerUtil.getApIntCustomerData();
 
-        assertThat(apIntCustomerData, is(not(null)));
+        assertThat(apIntCustomerData, is(not(nullValue())));
     }
 
 
@@ -69,7 +65,7 @@ public class CustomerUtilTest {
     public void getCustomerDataTest() {
         final Customer customerData = CustomerUtil.getCurrentCustomerData();
 
-        assertThat(customerData, is(not(null)));
+        assertThat(customerData, is(not(nullValue())));
     }
 
 
