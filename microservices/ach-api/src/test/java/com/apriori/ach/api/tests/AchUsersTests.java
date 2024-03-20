@@ -13,6 +13,7 @@ import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.request.TokenRequest;
 import com.apriori.shared.util.models.response.Claims;
 import com.apriori.shared.util.models.response.Customer;
@@ -58,7 +59,7 @@ public class AchUsersTests extends AchTestUtil {
             .useCustomUser(new UserCredentials(NOT_ADMIN_USER, null))
             .useCustomTokenInRequests(getWidgetsUserToken(NOT_ADMIN_USER));
 
-        customerIdentity = PropertiesContext.get("${customer}.${env}.customer_identity");
+        customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
         Customer widgets = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity();
         String pattern = widgets.getEmailRegexPatterns().stream().findFirst().orElseThrow();
         domain = pattern.replace("\\S+@", "").replace(".com", "");

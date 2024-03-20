@@ -8,6 +8,7 @@ import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.vds.api.enums.VDSAPIEnum;
 import com.apriori.vds.api.models.response.access.control.AccessControlGroup;
@@ -22,7 +23,7 @@ import org.junit.jupiter.api.BeforeAll;
 import java.util.List;
 
 public abstract class VDSTestUtil extends TestUtil {
-    protected static final String customerId = PropertiesContext.get("${customer}.${env}.customer_identity");
+    protected static final String customerId = CustomerUtil.getCurrentCustomerIdentity();
     protected static final String userId = PropertiesContext.get("ap-int.${env}.user_staff_identity");
     protected static UserCredentials testingUser = UserUtil.getUser();
 
