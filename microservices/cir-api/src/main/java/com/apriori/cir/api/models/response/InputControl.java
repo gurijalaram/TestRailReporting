@@ -29,6 +29,18 @@ public class InputControl {
         return getPropertyValueIfExist("scenarioName");
     }
 
+    public InputControlState getComponentType() {
+        return getPropertyValueIfExist("componentType");
+    }
+
+    public InputControlState getCreatedBy() {
+        return getPropertyValueIfExist("createdBy");
+    }
+
+    public InputControlState getLastModifiedBy() {
+        return getPropertyValueIfExist("lastModifiedBy");
+    }
+
     public InputControlState getComponentSelect() {
         return getPropertyValueIfExist("componentSelect");
     }

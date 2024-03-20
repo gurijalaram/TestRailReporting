@@ -99,7 +99,6 @@ public class JasperApiUtils {
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
-            //setReportParameterByName(InputControlsEnum.valueOf(inputControlsEnumMap.get(keyToSet)).getInputControlId(), valueToSet);
             setReportParameterByName(keyToSet, valueToSet);
         }
 

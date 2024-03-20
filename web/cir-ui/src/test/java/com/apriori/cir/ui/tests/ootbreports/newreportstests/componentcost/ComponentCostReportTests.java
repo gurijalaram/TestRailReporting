@@ -63,7 +63,10 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
         InputControl inputControlsUpdated = jasperReportUtil.getInputControls(reportsNameForInputControls);
         softAssertions.assertThat(inputControlsUpdated).isNotEqualTo(null);
 
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+            currentExportSet
+        );
         ReportRequest reportRequest = jasperApiUtils.getReportRequest();
         softAssertions.assertThat(jasperReportSummary).isNotEqualTo(null);
 
@@ -99,7 +102,8 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
         // then select one using this code: inputControls.getComponentSelect().getOption("TOP-LEVEL (Initial)  [assembly]").getValue()
         jasperApiUtils.setReportParameterByName(
             InputControlsEnum.COMPONENT_SELECT.getInputControlId(),
-            inputControls.getComponentSelect().getOption("TOP-LEVEL (Initial)  [assembly]").getValue());
+            inputControls.getComponentSelect().getOption("TOP-LEVEL (Initial)  [assembly]").getValue()
+        );
 
         // generate jasper report: genericTestCore
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
@@ -114,7 +118,126 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
 
         // click ok and ensure report generates correctly
         // go and find part number: jasperReportSummary.getReportHtmlPart().getElementsContainingText("Part Number:").get(7).parent().siblingElements().get(1).children().get(0).text()
-        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Part Number:").get(7).parent().siblingElements().get(1).children().get(0).text()).isEqualTo("TOP-LEVEL");
+        softAssertions.assertThat(
+            jasperReportSummary.getReportHtmlPart().getElementsContainingText("Part Number:").get(7).parent()
+                .siblingElements().get(1).children().get(0).text()
+        ).isEqualTo("TOP-LEVEL");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("3326")
+    @TestRail(id = 3326)
+    @Description("Verify Component Type drop-down functions correctly")
+    public void verifyComponentTypeDropdownFunctionsCorrect() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        // get input controls, check at least 12 export sets are there (my data)
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        List<String> exportSetOptions = inputControls.getExportSetName().getAllOptions();
+        softAssertions.assertThat(exportSetOptions.size() >= 12).isEqualTo(true);
+        softAssertions.assertThat(inputControls.getComponentSelect().getAllOptions().size() > 200).isEqualTo(true);
+
+        // set component type to part
+        // assert created by available to be 10, same for last modified by
+        // assert scenario name is 17, component select should be 100 (ensure correct for cloud also) (post getting jasper report summary)
+        jasperApiUtils.setReportParameterByName(
+            InputControlsEnum.COMPONENT_TYPE.getInputControlId(),
+            inputControls.getComponentType().getOption("part").getValue()
+        );
+
+        // generate jasper report: genericTestCore
+        JasperReportSummary jasperReportSummaryPartOption = jasperApiUtils.genericTestCore(
+            InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+            inputControls.getExportSetName().getOption(exportSetName).getValue()
+        );
+
+        ReportRequest reportRequest = jasperApiUtils.getReportRequest();
+        softAssertions.assertThat(reportRequest.getParameters().getReportParameterByName("scenarioName").getValue().size()).isEqualTo(1);
+        softAssertions.assertThat(inputControls.getScenarioName().getAllOptions().size() > 1).isEqualTo(true);
+        softAssertions.assertThat(inputControls.getCreatedBy().getAllOptions().size() == 12).isEqualTo(true);
+        softAssertions.assertThat(inputControls.getLastModifiedBy().getAllOptions().size() == 12).isEqualTo(true);
+
+        softAssertions.assertThat(
+            jasperReportSummaryPartOption.getReportHtmlPart().getElementsContainingText("Component Type:").get(6)
+                .siblingElements().get(1).text()
+        ).isEqualTo("part");
+        softAssertions.assertThat(jasperReportSummaryPartOption.getReportHtmlPart().getElementsContainingText("Process Group:").get(6)
+            .siblingElements().get(1).text()
+        ).isEqualTo("Sheet Metal");
+
+        // set component type to assembly
+        // assert created by available to be 3, same for last modified by (ensure correct for cloud also)
+        // assert scenario name is 2, component select should be 8 (ensure correct for cloud also)
+        jasperApiUtils.setReportParameterByName(
+            InputControlsEnum.COMPONENT_TYPE.getInputControlId(),
+            inputControls.getComponentType().getOption("assembly").getValue()
+        );
+
+        // generate jasper report: genericTestCore
+        JasperReportSummary jasperReportSummaryAssemblyOption = jasperApiUtils.genericTestCore(
+            InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+            inputControls.getExportSetName().getOption(exportSetName).getValue()
+        );
+
+        ReportRequest reportRequest2 = jasperApiUtils.getReportRequest();
+        softAssertions.assertThat(reportRequest2.getParameters().getReportParameterByName("scenarioName").getValue().size()).isEqualTo(1);
+        softAssertions.assertThat(inputControls.getScenarioName().getAllOptions().size() > 1).isEqualTo(true);
+        softAssertions.assertThat(inputControls.getCreatedBy().getAllOptions().size() == 12).isEqualTo(true);
+        softAssertions.assertThat(inputControls.getLastModifiedBy().getAllOptions().size() == 12).isEqualTo(true);
+
+        softAssertions.assertThat(
+            jasperReportSummaryAssemblyOption.getReportHtmlPart().getElementsContainingText("Component Type:").get(6)
+                .siblingElements().get(1).text()
+        ).isEqualTo("assembly");
+        softAssertions.assertThat(
+            jasperReportSummaryAssemblyOption.getReportHtmlPart().getElementsContainingText("Process Group:").get(6)
+                .siblingElements().get(1).text()
+        ).isEqualTo("Assembly");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("3327")
+    @TestRail(id = 3327)
+    @Description("Verify Scenario Name input control functions correctly")
+    public void verifyScenarioNameInputControlsFunctionsCorrectly() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        // get input controls, check at least 12 export sets are there (my data)
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        List<String> exportSetOptions = inputControls.getExportSetName().getAllOptions();
+        softAssertions.assertThat(exportSetOptions.size() >= 12).isEqualTo(true);
+        softAssertions.assertThat(inputControls.getComponentSelect().getAllOptions().size() > 200).isEqualTo(true);
+        softAssertions.assertThat(inputControls.getScenarioName().getAllOptions().size() > 18).isEqualTo(true);
+
+        // set scenario name to bulkload
+        // assert created by available to be 10, same for last modified by
+        // assert scenario name is 17, component select should be 100 (ensure correct for cloud also) (post getting jasper report summary)
+        // generate jasper report: genericTestCore
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.SCENARIO_NAME.getInputControlId(),
+            inputControls.getScenarioName().getOption("Bulkload").getValue()
+        );
+
+        ReportRequest reportRequest = jasperApiUtils.getReportRequest();
+        softAssertions.assertThat(reportRequest.getParameters().getReportParameterByName("scenarioName").getValue().size()).isEqualTo(1);
+        softAssertions.assertThat(inputControls.getScenarioName().getAllOptions().size() > 1).isEqualTo(true);
+        softAssertions.assertThat(inputControls.getCreatedBy().getAllOptions().size() == 12).isEqualTo(true);
+        softAssertions.assertThat(inputControls.getLastModifiedBy().getAllOptions().size() == 12).isEqualTo(true);
+
+        softAssertions.assertThat(
+            jasperReportSummary.getReportHtmlPart().getElementsContainingText("Part Number:").get(6)
+                .siblingElements().get(1).text()
+        ).isEqualTo("0903237");
+        softAssertions.assertThat(
+            jasperReportSummary.getReportHtmlPart().getElementsContainingText("Scenario:").get(6)
+                .siblingElements().get(1).text()
+        ).isEqualTo("Bulkload");
 
         softAssertions.assertAll();
     }
