@@ -37,7 +37,15 @@ public class CustomerUtil {
      * Get current customer identity
      */
     public static synchronized String getCurrentCustomerIdentity() {
-        return Objects.requireNonNullElseGet(currentCustomerIdentity, () -> currentCustomerIdentity = getCurrentCustomerData().getIdentity());
+        return Objects.requireNonNullElseGet(currentCustomerIdentity, () -> {
+            try {
+                // TODO : should be removed when AWS data will be available for staging too
+                currentCustomerIdentity = PropertiesContext.get("${customer}.${env}.token_subject");
+            } catch (IllegalArgumentException e) {
+                currentCustomerIdentity =  getCurrentCustomerData().getIdentity();            }
+
+            return currentCustomerIdentity;
+        });
     }
 
     /**

@@ -33,12 +33,9 @@ ap-int:
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name
   qa-test:
-    customer_identity: 6C1F8C1D4D75
     user_staff_identity: AK8JJH37GM54
 
-
   int-core:
-    customer_identity: H337GKD0LA0M
     user_staff_identity: 8GFDIG229629
 
 
@@ -47,11 +44,7 @@ ap-int:
     user_staff_identity: 6AHL1HHGB15E
     token_subject: 2b68
 
-  migration:
-    customer_identity: 3KED5H5BKN85
-
   local:
-    customer_identity: 212B5ABD2F6C
     user_staff_identity: 4N630F61FGNG
 
 
@@ -82,9 +75,6 @@ widgets:
 
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name
-  qa-test:
-    customer_identity: 52IC4D3J98GN
-
   staging:
     customer_identity: 2F265BC1MKAB
   ###########################################################
