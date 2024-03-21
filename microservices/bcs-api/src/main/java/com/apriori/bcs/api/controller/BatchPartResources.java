@@ -42,7 +42,7 @@ public class BatchPartResources {
 
     private static RequestEntity requestEntity = null;
     private static final long WAIT_TIME = 600;
-    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();;
+    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
     private static String batchID;
     static ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(10);
 

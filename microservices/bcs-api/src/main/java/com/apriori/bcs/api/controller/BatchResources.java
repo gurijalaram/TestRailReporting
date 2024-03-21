@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class BatchResources extends BcsBase {
 
-    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();;
+    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
 
     /**
      * Creates Batch

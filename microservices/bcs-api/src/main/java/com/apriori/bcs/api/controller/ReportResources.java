@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 public class ReportResources {
     private static final Logger logger = LoggerFactory.getLogger(ReportResources.class);
     private static final long WAIT_TIME = 300;
-    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();;
+    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
 
     /**
      * Create report with default parameters
