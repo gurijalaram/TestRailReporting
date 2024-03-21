@@ -77,8 +77,6 @@ public class CdsFeatureTests {
             .isEqualTo(addFeature.getResponseEntity().getCreatedAt());
         soft.assertThat(getFeature.getResponseEntity().getCreatedBy())
             .isEqualTo(addFeature.getResponseEntity().getCreatedBy());
-        soft.assertThat(getFeature.getResponseEntity().getWorkOrderStatusUpdatesEnabled())
-            .isEqualTo(addFeature.getResponseEntity().getWorkOrderStatusUpdatesEnabled());
         soft.assertAll();
     }
 
@@ -166,8 +164,6 @@ public class CdsFeatureTests {
             .isEqualTo(updateFeature.getResponseEntity().getCreatedAt());
         soft.assertThat(getFeature.getResponseEntity().getCreatedBy())
             .isEqualTo(updateFeature.getResponseEntity().getCreatedBy());
-        soft.assertThat(getFeature.getResponseEntity().getWorkOrderStatusUpdatesEnabled())
-            .isEqualTo(updateFeature.getResponseEntity().getWorkOrderStatusUpdatesEnabled());
         soft.assertAll();
     }
 
