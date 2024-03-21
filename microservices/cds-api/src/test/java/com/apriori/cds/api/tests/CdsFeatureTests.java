@@ -136,8 +136,6 @@ public class CdsFeatureTests {
             .isEqualTo(installation.getResponseEntity().getFeatures().getCreatedAt());
         soft.assertThat(getFeature.getResponseEntity().getCreatedBy())
             .isEqualTo(installation.getResponseEntity().getFeatures().getCreatedBy());
-//        soft.assertThat(getFeature.getResponseEntity().getWorkOrderStatusUpdatesEnabled())
-//            .isEqualTo(installation.getResponseEntity().getFeatures().getWorkOrderStatusUpdatesEnabled());
         soft.assertAll();
     }
 
