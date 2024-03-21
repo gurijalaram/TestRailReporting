@@ -495,7 +495,6 @@ public class CdsTestUtil extends TestUtil {
      * @param siteIdentity                  - the site Identity
      * @param realmKey                      - the realm key
      * @param cloudReference                - the cloud reference
-     * @param workOrderStatusUpdatesEnabled - boolean for feature
      * @return new object
      */
     public ResponseWrapper<InstallationItems> addInstallationWithFeature(
@@ -504,7 +503,6 @@ public class CdsTestUtil extends TestUtil {
         String realmKey,
         String cloudReference,
         String siteIdentity,
-        Boolean workOrderStatusUpdatesEnabled,
         Boolean bulkCostingEnabled) {
 
         InstallationItems installationItems = JsonManager.deserializeJsonFromInputStream(
@@ -515,7 +513,6 @@ public class CdsTestUtil extends TestUtil {
         installationItems.setHighMem(false);
         installationItems.setFeatures(Features
             .builder()
-            .workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled)
             .bulkCostingEnabled(bulkCostingEnabled)
             .build());
 
@@ -537,7 +534,6 @@ public class CdsTestUtil extends TestUtil {
         String customerIdentity,
         String deploymentIdentity,
         String installationIdentity,
-        Boolean workOrderStatusUpdatesEnabled,
         Boolean bulkCostingEnabled) {
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
@@ -545,7 +541,6 @@ public class CdsTestUtil extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(FeatureRequest.builder()
                 .features(Features.builder()
-                    .workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled)
                     .bulkCostingEnabled(bulkCostingEnabled)
                     .build())
                 .build());
@@ -562,7 +557,6 @@ public class CdsTestUtil extends TestUtil {
         String customerIdentity,
         String deploymentIdentity,
         String installationIdentity,
-        Boolean workOrderStatusUpdatesEnabled,
         Boolean bulkCostingEnabled) {
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
@@ -570,7 +564,6 @@ public class CdsTestUtil extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
             .body(FeatureRequest.builder()
                 .features(Features.builder()
-                    .workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled)
                     .bulkCostingEnabled(bulkCostingEnabled)
                     .build())
                 .build());
@@ -585,13 +578,12 @@ public class CdsTestUtil extends TestUtil {
      *
      * @return new object
      */
-    public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean workOrderStatusUpdatesEnabled, boolean bulkCosting) {
+    public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean bulkCosting) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(FeatureRequest.builder()
                 .features(Features.builder()
-                    .workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled)
                     .bulkCostingEnabled(bulkCosting)
                     .build())
                 .build());
@@ -607,15 +599,13 @@ public class CdsTestUtil extends TestUtil {
     public ErrorResponse updateFeatureWrongResponse(
         String customerIdentity,
         String deploymentIdentity,
-        String installationIdentity,
-        boolean workOrderStatusUpdatesEnabled) {
+        String installationIdentity) {
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
             .body(FeatureRequest.builder()
                 .features(Features.builder()
-                    .workOrderStatusUpdatesEnabled(workOrderStatusUpdatesEnabled)
                     .build())
                 .build());
 
