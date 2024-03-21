@@ -3,12 +3,15 @@ package com.apriori.cid.ui.tests.bulkcosting;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.bcm.api.models.response.WorkSheetResponse;
+import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.projects.ProjectsPage;
 import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
@@ -26,9 +29,9 @@ public class BulkCostingPageTests extends TestBaseUI {
     private ProjectsPage projectsPage;
 
     @Test
-    @TestRail(id = {29187, 29874})
-    @Description("bulk costing  page should be accessible and list of worksheet visible")
-    public void bulkCostingPageVisible() {
+    @TestRail(id = {29187, 29874, 29942})
+    @Description("bulk costing page visibility, adding and delete worksheet")
+    public void bulkCostingAddAndDeleteWorksheet() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -37,6 +40,11 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickProjectsButton();
 
         soft.assertThat(projectsPage.isListOfWorksheetsPresent()).isTrue();
+
+        String name = new GenerateStringUtil().saltString("name");
+        BcmUtil bcmUtil = new BcmUtil();
+        ResponseWrapper<WorkSheetResponse> response = bcmUtil.createWorksheet(name);
+
         soft.assertAll();
     }
 
