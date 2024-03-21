@@ -38,6 +38,8 @@ public class OldAuthorizationUtil {
 
         headers.put("Content-Type", "application/x-www-form-urlencoded");
         headers.put("Accept", "application/json");
+        headers.put("Accept-Encoding", "gzip, deflate, br");
+        headers.put("Connection", "keep-alive");
 
         List<Map<String, ?>> requestData = new ArrayList<>();
         Map<String, String> requestData2 = new HashMap<>();
@@ -52,7 +54,6 @@ public class OldAuthorizationUtil {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(OldTokenEnum.POST_TOKEN, OldTokenRequest.class)
             .headers(headers)
             .xwwwwFormUrlEncodeds(null)
-            .urlEncodingEnabled(true)
             .urlParams(requestData);
 
         return (OldTokenRequest) HTTPRequest.build(requestEntity).post().getResponseEntity();
