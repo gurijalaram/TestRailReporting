@@ -9,7 +9,6 @@ import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.enums.DeploymentEnum;
 import com.apriori.cds.api.models.Apps;
-import com.apriori.cds.api.models.AppsItems;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
 import com.apriori.cds.api.models.request.AccessControlRequest;
 import com.apriori.cds.api.models.request.ActivateLicense;
@@ -41,7 +40,6 @@ import com.apriori.cds.api.models.response.SubLicenseAssociationUser;
 import com.apriori.cds.api.models.response.UserPreference;
 import com.apriori.cds.api.models.response.UserRole;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -495,7 +493,6 @@ public class CdsTestUtil extends TestUtil {
      * @param siteIdentity                  - the site Identity
      * @param realmKey                      - the realm key
      * @param cloudReference                - the cloud reference
-     * @param workOrderStatusUpdatesEnabled - boolean for feature
      * @return new object
      */
     public ResponseWrapper<InstallationItems> addInstallationWithFeature(
