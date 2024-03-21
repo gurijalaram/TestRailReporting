@@ -52,6 +52,7 @@ public class OldAuthorizationUtil {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(OldTokenEnum.POST_TOKEN, OldTokenRequest.class)
             .headers(headers)
             .xwwwwFormUrlEncodeds(null)
+            .urlEncodingEnabled(true)
             .urlParams(requestData);
 
         return (OldTokenRequest) HTTPRequest.build(requestEntity).post().getResponseEntity();
