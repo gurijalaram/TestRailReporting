@@ -40,9 +40,10 @@ public class CustomerUtil {
         return Objects.requireNonNullElseGet(currentCustomerIdentity, () -> {
             try {
                 // TODO : should be removed when AWS data will be available for staging too
-                currentCustomerIdentity = PropertiesContext.get("${customer}.${env}.token_subject");
+                currentCustomerIdentity = PropertiesContext.get("${customer}.${env}.customer_identity");
             } catch (IllegalArgumentException e) {
-                currentCustomerIdentity =  getCurrentCustomerData().getIdentity();            }
+                currentCustomerIdentity =  getCurrentCustomerData().getIdentity();
+            }
 
             return currentCustomerIdentity;
         });
