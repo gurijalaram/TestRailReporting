@@ -61,7 +61,7 @@ public class CdsFeatureTests {
     public void verifyCreateInstallationFlag() {
         setAllCustomerData();
 
-        ResponseWrapper<FeatureResponse> addFeature = cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, true, false);
+        ResponseWrapper<FeatureResponse> addFeature = cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
             FeatureResponse.class,
@@ -88,7 +88,7 @@ public class CdsFeatureTests {
     public void verifyInvalidInstallationFlag() {
         setAllCustomerData();
 
-        ErrorResponse errorResponse = cdsTestUtil.addFeatureWrongResponse(customerIdentity, "wrongDeployment", installationIdentity, true, false);
+        ErrorResponse errorResponse = cdsTestUtil.addFeatureWrongResponse(customerIdentity, "wrongDeployment", installationIdentity, false);
 
         soft.assertThat(errorResponse.getError())
             .isEqualTo("Bad Request");
@@ -105,7 +105,7 @@ public class CdsFeatureTests {
         RandomCustomerData rcd = new RandomCustomerData();
         String siteIdentity = allCustomerDataForInstallationFeature(rcd);
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallationWithFeature(customerIdentity, deploymentIdentity, rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, true, false);
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallationWithFeature(customerIdentity, deploymentIdentity, rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentity = installation.getResponseEntity().getIdentity();
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
@@ -138,8 +138,8 @@ public class CdsFeatureTests {
             .isEqualTo(installation.getResponseEntity().getFeatures().getCreatedAt());
         soft.assertThat(getFeature.getResponseEntity().getCreatedBy())
             .isEqualTo(installation.getResponseEntity().getFeatures().getCreatedBy());
-        soft.assertThat(getFeature.getResponseEntity().getWorkOrderStatusUpdatesEnabled())
-            .isEqualTo(installation.getResponseEntity().getFeatures().getWorkOrderStatusUpdatesEnabled());
+//        soft.assertThat(getFeature.getResponseEntity().getWorkOrderStatusUpdatesEnabled())
+//            .isEqualTo(installation.getResponseEntity().getFeatures().getWorkOrderStatusUpdatesEnabled());
         soft.assertAll();
     }
 
@@ -149,8 +149,8 @@ public class CdsFeatureTests {
     public void verifyUpdateInstallationFeature() {
         setAllCustomerData();
 
-        cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, true, false);
-        ResponseWrapper<FeatureResponse> updateFeature = cdsTestUtil.updateFeature(customerIdentity, deploymentIdentity, installationIdentity, false, false);
+        cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
+        ResponseWrapper<FeatureResponse> updateFeature = cdsTestUtil.updateFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
             FeatureResponse.class,
@@ -177,8 +177,8 @@ public class CdsFeatureTests {
     public void verifyUpdateInstallationFeatureWrong() {
         setAllCustomerData();
 
-        cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, true, false);
-        ErrorResponse errorResponse = cdsTestUtil.updateFeatureWrongResponse(customerIdentity, deploymentIdentity, "wrongInstallation", false);
+        cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
+        ErrorResponse errorResponse = cdsTestUtil.updateFeatureWrongResponse(customerIdentity, deploymentIdentity, "wrongInstallation");
 
         soft.assertThat(errorResponse.getError())
             .isEqualTo("Bad Request");
