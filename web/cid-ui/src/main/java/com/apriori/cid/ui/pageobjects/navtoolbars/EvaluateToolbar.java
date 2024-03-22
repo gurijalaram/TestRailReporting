@@ -38,6 +38,15 @@ public class EvaluateToolbar extends ExploreToolbar {
     @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
     private WebElement refreshButton;
 
+    @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='SIMULATE']")
+    private WebElement aPrioriCostModeButton;
+
+    @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='MANUAL']")
+    private WebElement manualCostModeButton;
+
+    @FindBy(id = "qa-sub-header-save-as-button")
+    private WebElement saveAsButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -156,4 +165,75 @@ public class EvaluateToolbar extends ExploreToolbar {
         pageUtils.waitForElementAndClick(byButton);
         return new EvaluatePage(driver);
     }
+
+    /**
+     * Select 'aPriori' Cost Mode
+     *
+     * @return - New EvaluatePage PO
+     */
+    public SwitchCostModePage clickAPrioriModeButton() {
+        pageUtils.waitForElementAndClick(aPrioriCostModeButton);
+        return new SwitchCostModePage(driver);
+    }
+
+    /**
+     * Determine if 'aPriori' Cost Mode selected
+     *
+     * @return - Boolean of mode state
+     */
+    public Boolean isAPrioriCostModeSelected() {
+        pageUtils.waitForElementToAppear(aPrioriCostModeButton);
+        return Boolean.parseBoolean(aPrioriCostModeButton.getAttribute("aria-pressed"));
+    }
+
+    /**
+     * Select 'Manual' Cost Mode
+     *
+     * @return - New EvaluatePage PO
+     */
+    public SwitchCostModePage clickManualModeButton() {
+        pageUtils.waitForElementAndClick(manualCostModeButton);
+        return new SwitchCostModePage(driver);
+    }
+
+    /**
+     * Select 'Manual' Cost Mode while scenario in Uncosted state
+     *
+     * @return - New EvaluatePage PO
+     */
+    public EvaluatePage clickManualModeButtonWhileUncosted() {
+        pageUtils.waitForElementAndClick(manualCostModeButton);
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Determine if 'Manual' Cost Mode selected
+     *
+     * @return - Boolean of mode state
+     */
+    public Boolean isManualCostModeSelected() {
+        pageUtils.waitForElementToAppear(manualCostModeButton);
+        return Boolean.parseBoolean(manualCostModeButton.getAttribute("aria-pressed"));
+    }
+
+    /**
+     * Check state of Manual Costing Save As button
+     *
+     * @return - Boolean of Manual Costing Save As button enabled state
+     */
+    public Boolean isSaveAsButtonEnabled() {
+        pageUtils.waitForElementToAppear(saveAsButton);
+        return saveAsButton.isEnabled();
+    }
+
+    /**
+     * Click Manual Costing Save As button
+     *
+     * @return - New Evaluate Page
+     */
+    public EvaluatePage clickSaveAsButton() {
+        pageUtils.waitForElementAndClick(saveAsButton);
+        return new EvaluatePage(driver);
+    }
+
 }
