@@ -401,7 +401,7 @@ public class CostingInputsPart extends CICBasePage {
     private void selectCiConnectField(WebElement webElement, PlmTypeAttributes plmTypeAttributes) {
         pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(webElement);
-        this.selectValueFromDDL(plmTypeAttributes.getCicGuiField());
+        pageUtils.waitForElementAndClick(By.xpath("//div[contains(text(),'" + plmTypeAttributes.getCicGuiField() + "')]"));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
     }
 
@@ -413,10 +413,11 @@ public class CostingInputsPart extends CICBasePage {
      */
     private void selectMappingRule(WebElement webElement, MappingRule mappingRule) {
         pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
+        pageUtils.waitForElementEnabled(webElement.findElement(By.tagName("select")));
         WebElement mappingRuleElement = webElement.findElement(By.tagName("div")).findElement(By.tagName("div")).findElement(By.tagName("div"));
         pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
         pageUtils.waitForElementAndClick(webElement);
-        this.selectValueFromDDL(mappingRule.getMappingRule());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, mappingRule.getMappingRule())));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
     }
 
@@ -429,10 +430,11 @@ public class CostingInputsPart extends CICBasePage {
     private void selectFieldValue(WebElement webElement, String fieldValue) {
         if (!fieldValue.isEmpty()) {
             pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
+            pageUtils.waitForElementEnabled(webElement.findElement(By.tagName("select")));
             WebElement mappingRuleElement = webElement.findElement(By.tagName("div")).findElement(By.tagName("div")).findElement(By.tagName("div"));
             pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
             pageUtils.waitForElementAndClick(webElement);
-            this.selectValueFromDDL(fieldValue);
+            pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, fieldValue)));
         }
     }
 

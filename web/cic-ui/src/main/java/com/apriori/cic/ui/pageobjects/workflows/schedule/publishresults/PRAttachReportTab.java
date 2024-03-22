@@ -2,8 +2,6 @@ package com.apriori.cic.ui.pageobjects.workflows.schedule.publishresults;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
-import com.apriori.cic.ui.utils.Constants;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,7 +17,7 @@ public class PRAttachReportTab extends PublishResultsPart {
     @FindBy(css = "#CIC_EmptyReport_MU-2_label-3 > span")
     private WebElement emptyPRReportLbl;
 
-    @FindBy(xpath = " //div[@tab-number='5']//div/span[.='Report Configuration']")
+    @FindBy(xpath = "//div[@tab-number='5']//div[@tab-number='2']//span[.='Report Configuration']")
     private WebElement reportConfigurationLbl;
 
     public PRAttachReportTab(WebDriver driver) {
@@ -32,11 +30,9 @@ public class PRAttachReportTab extends PublishResultsPart {
      * @return AttachReportTab
      */
     public PRAttachReportTab selectReportName() {
-        pageUtils.waitForElementToAppear(getReportNameDropdownElement());
         pageUtils.waitForElementAndClick(getReportNameDropdownElement());
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
-        this.selectValueFromDDL(workFlowData.getPublishResultsData().getReportName());
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getPublishResultsData().getReportName())));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
 
@@ -52,7 +48,8 @@ public class PRAttachReportTab extends PublishResultsPart {
         if (!getCurrencyCodeDdl().getText().equals("USD")) {
             pageUtils.waitForElementToBeClickable(getCurrencyCodeDdl());
             pageUtils.waitForElementAndClick(getCurrencyCodeDdl());
-            this.selectValueFromDDL(workFlowData.getPublishResultsData().getReportCurrencyCode());
+            pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getPublishResultsData().getReportCurrencyCode())));
+            pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         }
         return this;
     }
@@ -63,9 +60,9 @@ public class PRAttachReportTab extends PublishResultsPart {
      * @return AttachReportTab
      */
     public PRAttachReportTab selectCostRounding() {
-        pageUtils.waitForElementToAppear(getCostRoundingDdl());
         pageUtils.waitForElementAndClick(getCostRoundingDdl());
-        this.selectValueFromDDL(workFlowData.getPublishResultsData().getReportCostRounding());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getPublishResultsData().getReportCostRounding())));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
 
@@ -122,8 +119,10 @@ public class PRAttachReportTab extends PublishResultsPart {
      *
      * @return - list of webelements
      */
-    public List<WebElement> getAttachReportTextFields() {
-        return driver.findElements(By.xpath("//div[@tab-number='5']//div[@tab-number='2']//div[contains(@class, 'tw-flex-row')]//div[@class='widget-content widget-textbox']//input[@disabled='disabled']"));
+    private List<WebElement> getAttachReportTextFields() {
+        String xpathLocator = "//div[@tab-number='5']//div[@tab-number='2']//div[contains(@class, 'tw-flex-row')]//div[@class='widget-content widget-textbox']//input[@disabled='disabled']";
+        pageUtils.waitForElementsToAppear(By.xpath(xpathLocator));
+        return driver.findElements(By.xpath(xpathLocator));
     }
 
     /**
@@ -132,6 +131,7 @@ public class PRAttachReportTab extends PublishResultsPart {
      * @return WebElement
      */
     private WebElement getReportNameDropdownElement() {
+        pageUtils.waitForElementAppear(driver.findElement(By.xpath("//div[@tab-number='5']//div[@tab-number='2']//span[.='Report Name']")));
         return driver.findElement(with(By.xpath("//div[@tab-number='5']//div[@tab-number='2']//div[@class='widget-content widget-dropdown']"))
             .below(By.xpath("//div[@tab-number='5']//div[@tab-number='2']//div//span[.='Report Name']")));
     }
