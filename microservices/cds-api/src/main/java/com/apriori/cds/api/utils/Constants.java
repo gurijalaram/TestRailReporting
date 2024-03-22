@@ -1,6 +1,7 @@
 package com.apriori.cds.api.utils;
 
 import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class Constants {
      * @return string
      */
     public static String getAPrioriInternalCustomerIdentity() {
-        return PropertiesContext.get("${customer}.${env}.customer_identity");
+        return CustomerUtil.getApIntCustomerData().getIdentity();
     }
 
     /**

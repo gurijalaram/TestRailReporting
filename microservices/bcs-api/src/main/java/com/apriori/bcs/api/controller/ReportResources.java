@@ -16,6 +16,7 @@ import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
@@ -28,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 public class ReportResources {
     private static final Logger logger = LoggerFactory.getLogger(ReportResources.class);
     private static final long WAIT_TIME = 300;
+    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
 
     /**
      * Create report with default parameters
@@ -42,7 +44,7 @@ public class ReportResources {
         reportRequestTestData.setReportTemplateIdentity(getPartReportTemplateId());
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORTS, Report.class)
-            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"))
+            .inlineVariables(customerIdentity)
             .body(reportRequestTestData);
         return HTTPRequest.build(requestEntity).post();
     }
@@ -55,7 +57,7 @@ public class ReportResources {
      */
     public static ResponseWrapper<Report> createReport(ReportRequest reportRequestData) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORTS, Report.class)
-            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"))
+            .inlineVariables(customerIdentity)
             .body(reportRequestData);
         return HTTPRequest.build(requestEntity).post();
     }
@@ -68,7 +70,7 @@ public class ReportResources {
      */
     public static ResponseWrapper<ReportError> createReportWithInvalidData(ReportRequest reportRequestData) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORTS, ReportError.class)
-            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"))
+            .inlineVariables(customerIdentity)
             .body(reportRequestData);
         return HTTPRequest.build(requestEntity).post();
     }
@@ -80,7 +82,7 @@ public class ReportResources {
      */
     public static ResponseWrapper<Reports> getReports() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORTS, Reports.class)
-            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"));
+            .inlineVariables(customerIdentity);
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -92,7 +94,7 @@ public class ReportResources {
      */
     public static ResponseWrapper<Report> getReportRepresentation(String reportIdentity) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORT_BY_ID, Report.class)
-            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"), reportIdentity)
+            .inlineVariables(customerIdentity, reportIdentity)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
@@ -106,7 +108,7 @@ public class ReportResources {
      */
     public static ResponseWrapper<ReportExport> exportReport(String reportIdentity) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORT_EXPORT_BY_ID, ReportExport.class)
-            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"), reportIdentity)
+            .inlineVariables(customerIdentity, reportIdentity)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).get();
@@ -119,7 +121,7 @@ public class ReportResources {
      */
     public static ResponseWrapper<ReportTemplates> getReportTemplates() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORT_TEMPLATES, ReportTemplates.class)
-            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"));
+            .inlineVariables(customerIdentity);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -173,7 +175,7 @@ public class ReportResources {
         RequestEntity requestEntity;
         do {
             requestEntity = RequestEntityUtil_Old.init(BCSAPIEnum.REPORT_BY_ID, Report.class)
-                .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"), reportIdentity);
+                .inlineVariables(customerIdentity, reportIdentity);
             report = (Report) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {
                 TimeUnit.SECONDS.sleep(10);

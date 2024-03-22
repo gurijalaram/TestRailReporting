@@ -11,6 +11,7 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
@@ -48,7 +49,7 @@ public class DdsApiTestUtils {
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, DiscussionResponse.class)
-            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"))
+            .inlineVariables(CustomerUtil.getCurrentCustomerIdentity())
             .headers(setUpHeader())
             .body(discussionsRequest)
             .apUserContext(userContext)
@@ -66,7 +67,7 @@ public class DdsApiTestUtils {
      */
     public static ResponseWrapper<String> deleteDiscussion(String discussionIdentity, String userContext) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION, null)
-            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"), discussionIdentity)
+            .inlineVariables(CustomerUtil.getCurrentCustomerIdentity(), discussionIdentity)
             .headers(setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
@@ -87,7 +88,7 @@ public class DdsApiTestUtils {
     public static <T> ResponseWrapper<T> createComment(CommentsRequest commentsRequestBuilder, String discussionIdentity, UserCredentials currentUser, Class<T> responseClass, Integer httpStatus) {
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENTS, responseClass)
-            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"), discussionIdentity)
+            .inlineVariables(CustomerUtil.getCurrentCustomerIdentity(), discussionIdentity)
             .body(commentsRequestBuilder)
             .headers(DdsApiTestUtils.setUpHeader())
             .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
@@ -105,7 +106,7 @@ public class DdsApiTestUtils {
      */
     public static ResponseWrapper<String> deleteComment(String discussionIdentity, String commentIdentity, String userContext) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION_COMMENT, null)
-            .inlineVariables(PropertiesContext.get("${customer}.${env}.customer_identity"), discussionIdentity, commentIdentity)
+            .inlineVariables(CustomerUtil.getCurrentCustomerIdentity(), discussionIdentity, commentIdentity)
             .headers(setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
