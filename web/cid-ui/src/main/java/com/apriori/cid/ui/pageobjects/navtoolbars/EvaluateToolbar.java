@@ -44,7 +44,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='MANUAL']")
     private WebElement manualCostModeButton;
 
-    @FindBy(id = "qa-sub-header-save-as-button")
+    @FindBy(css = "#qa-sub-header-save-as-button button")
     private WebElement saveAsButton;
 
     private PageUtils pageUtils;
@@ -214,6 +214,16 @@ public class EvaluateToolbar extends ExploreToolbar {
     public Boolean isManualCostModeSelected() {
         pageUtils.waitForElementToAppear(manualCostModeButton);
         return Boolean.parseBoolean(manualCostModeButton.getAttribute("aria-pressed"));
+    }
+
+    /**
+     * Check if Cost Mode Toggle buttons are disabled
+     *
+     * @return - Boolean of enabled state for cost mode toggle buttons
+     */
+    public Boolean isCostModeToggleEnabled() {
+        pageUtils.waitForElementToAppear(aPrioriCostModeButton);
+        return aPrioriCostModeButton.isEnabled() && manualCostModeButton.isEnabled();
     }
 
     /**
