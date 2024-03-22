@@ -255,32 +255,40 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
 
         // get input controls, check at least 12 export sets are there (my data)
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        /**
+         * Dies here on cloud only. Response from API of above line is likely too large.
+         * Initialise it once per class or use input stream or something.
+         */
         List<String> exportSetOptions = inputControls.getExportSetName().getAllOptions();
         softAssertions.assertThat(exportSetOptions.size() >= 12).isEqualTo(true);
-        //softAssertions.assertThat(inputControls.getComponentSelect().getAllOptions().size() > 200).isEqualTo(true);
-        //softAssertions.assertThat(inputControls.getScenarioName().getAllOptions().size() > 18).isEqualTo(true);
-
-        // set latest export date input control - 2024-03-20 16:20:13
         // Export set list, created by, last modified by and scenario name lists filtered according to latest export date
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
             InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
             DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now())
         );
 
-        ReportRequest reportRequest = jasperApiUtils.getReportRequest();
-        /*softAssertions.assertThat(reportRequest.getParameters().getReportParameterByName("scenarioName").getValue().size()).isEqualTo(1);
-        softAssertions.assertThat(inputControls.getScenarioName().getAllOptions().size() > 1).isEqualTo(true);
-        softAssertions.assertThat(inputControls.getCreatedBy().getAllOptions().size() == 12).isEqualTo(true);
-        softAssertions.assertThat(inputControls.getLastModifiedBy().getAllOptions().size() == 12).isEqualTo(true);
+        // check jasper report summary for a few values (part number, scenario, date costed and batch size)
+        // Doing this ensures that the other values have been filtered properly, does it, think about this?
 
         softAssertions.assertThat(
             jasperReportSummary.getReportHtmlPart().getElementsContainingText("Part Number:").get(6)
                 .siblingElements().get(1).text()
-        ).isEqualTo("0903237");
+        ).isEqualTo("3538968");
+
         softAssertions.assertThat(
             jasperReportSummary.getReportHtmlPart().getElementsContainingText("Scenario:").get(6)
                 .siblingElements().get(1).text()
-        ).isEqualTo("Bulkload");*/
+        ).isEqualTo("Bulkload");
+
+        softAssertions.assertThat(
+            jasperReportSummary.getReportHtmlPart().getElementsContainingText("Date Costed:").get(6)
+                .siblingElements().get(1).text()
+        ).isEqualTo("2020-02-26 08:14:38 PST");
+
+        softAssertions.assertThat(
+            jasperReportSummary.getReportHtmlPart().getElementsContainingText("Batch Size:").get(6)
+                .siblingElements().get(1).text()
+        ).isEqualTo("458");
 
         softAssertions.assertAll();
     }
