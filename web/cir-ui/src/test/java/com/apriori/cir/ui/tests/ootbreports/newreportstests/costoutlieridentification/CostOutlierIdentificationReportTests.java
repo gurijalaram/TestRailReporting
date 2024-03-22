@@ -1,10 +1,10 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.costoutlieridentification;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -27,7 +27,7 @@ import java.util.Arrays;
 public class CostOutlierIdentificationReportTests extends JasperApiAuthenticationUtil {
     private String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
     private String reportsJsonFileName = JasperApiEnum.COST_OUTLIER_IDENTIFICATION.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.COST_OUTLIER_IDENTIFICATION;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION;
     private SoftAssertions softAssertions = new SoftAssertions();
     private JasperApiUtils jasperApiUtils;
 
@@ -37,7 +37,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("13925")
     @TestRail(id = 13925)
     @Description("Input controls - Cost Metric - FBC")
@@ -48,7 +48,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("29651")
     @TestRail(id = 29651)
     @Description("Input controls - Cost Metric - PPC")
@@ -59,6 +59,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("1958")
     @TestRail(id = 1958)
     @Description("Percent difference threshold filter works - main report")
@@ -85,6 +86,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("1956")
     @TestRail(id = 1956)
     @Description("Min & Max costs filter works")

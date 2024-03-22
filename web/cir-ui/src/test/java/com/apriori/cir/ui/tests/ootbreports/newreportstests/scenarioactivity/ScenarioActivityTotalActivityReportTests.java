@@ -1,11 +1,11 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.scenarioactivity;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class ScenarioActivityTotalActivityReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.SCENARIO_ACTIVITY_TOTAL_ACTIVITY.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_ACTIVITY_TOTAL_ACTIVITY;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.SCENARIO_ACTIVITY_TOTAL_ACTIVITY;
     private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
     private JasperApiUtils jasperApiUtils;
 
@@ -35,7 +35,7 @@ public class ScenarioActivityTotalActivityReportTests extends JasperApiAuthentic
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("28006")
     @TestRail(id = 28006)
     @Description("Input Controls - Trending period - Total Activity Report")

@@ -280,4 +280,16 @@ public class BcmUtil extends TestUtil {
             .expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).post();
     }
+
+    public <T> ResponseWrapper<T> addMultipleInputRows(Class<T> klass, String worksheetIdentity, String componentIdentity, String scenarioIdentity, String componentIdentity2, String scenarioIdentity2, Integer expectedResponseCode) {
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.MULTIPLE_ROWS, klass)
+            .inlineVariables(worksheetIdentity)
+            .body(AddInputsRequest.builder()
+                .groupItems(Arrays.asList(Inputrow.builder().componentIdentity(componentIdentity).scenarioIdentity(scenarioIdentity).build(),
+                    Inputrow.builder().componentIdentity(componentIdentity2).scenarioIdentity(scenarioIdentity2)
+                        .build()))
+                .build())
+            .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).post();
+    }
 }

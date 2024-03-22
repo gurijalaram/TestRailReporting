@@ -1,9 +1,10 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.machiningdtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     private String exportSetName = ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName();
     private String reportsJsonFileName = JasperApiEnum.MACHINING_DTC.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.MACHINING_DTC;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.MACHINING_DTC;
     private JasperApiUtils jasperApiUtils;
     private List<String> partNames = Arrays.asList(
         JasperCirApiPartsEnum.P_0362752_CAD_INITIAL.getPartName(),
@@ -44,7 +45,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("3023")
     @TestRail(id = 3023)
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Report")
@@ -56,7 +57,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7413")
     @TestRail(id = 7413)
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Report")
@@ -68,7 +69,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("3024")
     @TestRail(id = 3024)
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Report")
@@ -80,7 +81,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7393")
     @TestRail(id = 7393)
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Report")
@@ -92,7 +93,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("3026")
     @TestRail(id = 3026)
     @Description("Verify currency code input control functions correctly")
@@ -105,7 +106,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7452")
     @TestRail(id = {7452})
     @Description("Verify process group input control functionality - Stock Machining - Machining DTC Report")
@@ -121,19 +122,22 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7451")
     @TestRail(id = {7451})
     @Description("Verify process group input control functionality - 2 Model Machining - Machining DTC Report")
     public void testProcessGroupTwoModelMachiningOnly() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Process Group", ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup());
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(),
+            ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
+        );
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(jasperReportSummary.getChartData().isEmpty()).isEqualTo(true);
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().concat("No data available")).isEqualTo(true);
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7456")
     @TestRail(id = {7456})
     @Description("Verify process group input control functionality - 2 Model and Stock Machining - Machining DTC Report")
@@ -158,7 +162,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7460")
     @TestRail(id = {7460})
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Report")
@@ -176,7 +180,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7498")
     @TestRail(id = {7498})
     @Description("Verify DTC Score Input Control - Medium Selection - Machining DTC Report")
@@ -194,7 +198,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7501")
     @TestRail(id = {7501})
     @Description("Verify DTC Score Input Control - High Selection - Machining DTC Report")
@@ -212,7 +216,7 @@ public class MachiningDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("3027")
     @TestRail(id = {3027})
     @Description("Verify Minimum Annual Spend input control functions correctly")

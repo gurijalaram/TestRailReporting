@@ -35,6 +35,10 @@ public class DigitalFactoriesTests {
     private static final String BAD_REQUEST_ERROR = "Bad Request";
     private static final String NOT_FOUND_ERROR = "Not Found";
     private static final String DF_NAME = "aPriori USA";
+    private static final String FORBIDDEN_ERROR = "Forbidden";
+    private static final String ACCESS_DENIED_MSG =
+        "Access denied: Unable to apply access control due to missing groups." +
+            " Please get in touch with customer support if this is not expected.";
     private static final String IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG = "'identity' is not a valid identity.";
     private static final String IDENTITY_DOES_NOT_EXIST_MSG = "Resource 'DigitalFactory' with identity 'ABCDEFGHIJK5' was not found";
     private static final String INVALID_CONTENT_TYPE = "application/text";
@@ -254,19 +258,19 @@ public class DigitalFactoriesTests {
 
     @Test
     @TestRail(id = {29855})
-    @Description("Return no Digital Factories for anauthorized user")
+    @Description("Return Forbidden error when user not configured properly")
     public void findDigitalFactoriesByFakeUser() {
 
         UserCredentials fakeUser = new UserCredentials("testUser5@gadgets.aprioritest.com", "Test1");
 
-        ResponseWrapper<DigitalFactories> responseWrapper = digitalFactoryUtil.findDigitalFactories(
-            HttpStatusCode.OK,
-            DigitalFactories.class,
+        ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.findDigitalFactories(
+            HttpStatusCode.FORBIDDEN,
+            ErrorMessage.class,
             fakeUser
         );
 
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
-        softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().size()).isEqualTo(0);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(FORBIDDEN_ERROR);
+        softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(ACCESS_DENIED_MSG);
         softAssertions.assertAll();
     }
 

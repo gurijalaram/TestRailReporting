@@ -1,9 +1,9 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.recommendedtestparts;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.request.ReportRequest;
 import com.apriori.cir.api.models.response.InputControl;
@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.RECOMMENDED_TEST_PARTS.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.RECOMMENDED_TEST_PARTS;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.RECOMMENDED_TEST_PARTS;
     private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private JasperApiUtils jasperApiUtils;
 
@@ -43,7 +43,7 @@ public class RecommendedTestPartsReportTests extends JasperApiAuthenticationUtil
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("14000")
     @TestRail(id = 14000)
     @Description("Input controls - Test Process Groups")

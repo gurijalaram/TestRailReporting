@@ -1,9 +1,9 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.designoutlieridentification;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS;
     private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
     private List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName().substring(0, 19),
@@ -42,7 +42,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7387")
     @TestRail(id = 7387)
     @Description("Verify mass metric - finish mass - Design Outlier Identification Details Report")
@@ -51,7 +51,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("7386")
     @TestRail(id = 7386)
     @Description("Verify mass metric - rough mass - Design Outlier Identification Details Report")
@@ -60,6 +60,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("6249")
     @TestRail(id = 6249)
     @Description("Min and max cost filter works - details report")
@@ -108,6 +109,7 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("6250")
     @TestRail(id = 6250)
     @Description("Min and max mass filter works")
@@ -156,7 +158,10 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
     }
 
     private void genericMassMetricTest(String massMetricToUse) {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("Mass Metric", massMetricToUse);
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.MASS_METRIC.getInputControlId(),
+            massMetricToUse
+        );
 
         String aboveChartMassMetricValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "5").get(2)
             .siblingElements().get(9).child(0).text();

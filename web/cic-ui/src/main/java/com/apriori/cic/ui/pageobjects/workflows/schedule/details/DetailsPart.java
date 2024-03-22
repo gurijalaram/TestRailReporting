@@ -5,7 +5,6 @@ import static org.openqa.selenium.support.locators.RelativeLocator.with;
 import com.apriori.cic.ui.pageobjects.CICBasePage;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.querydefinitions.QueryDefinitions;
-import com.apriori.cic.ui.utils.Constants;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -200,8 +199,8 @@ public class DetailsPart extends CICBasePage {
         pageUtils.waitForElementAndClick(getConnectorDropDownElement());
         pageUtils.waitForElementToAppear(searchConnectorTxtElement);
         searchConnectorTxtElement.sendKeys(connectorName);
-        this.selectValueFromDDL(0, connectorName);
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, connectorName)));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
 
