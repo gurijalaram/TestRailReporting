@@ -16,7 +16,6 @@ import com.apriori.shared.util.testrail.TestRailStatus;
 
 import com.codepine.api.testrail.model.Result;
 import com.epam.reportportal.junit5.ReportPortalExtension;
-import com.epam.reportportal.service.ReportPortal;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import lombok.SneakyThrows;
@@ -25,6 +24,8 @@ import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.InvocationInterceptor;
+import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -48,25 +49,11 @@ import java.util.Optional;
  */
 @Slf4j
 @ExtendWith(ReportPortalExtension.class)
-public class TestRulesUI implements TestWatcher, BeforeAllCallback {
+public class TestRulesUI implements TestWatcher, BeforeAllCallback, InvocationInterceptor {
 
     public static final String DRIVER = "driver";
     private static final String TESTRAIL_REPORT = "TEST_RAIL";
     private static boolean started = false;
-
-    @Attachment(value = "{1}", type = "image/png")
-    private static byte[] saveImageAttach(String screenshotUrl, String fileName) {
-        try {
-            return toByteArray(screenshotUrl);
-        } catch (Exception e) {
-            log.debug(e.getMessage());
-        }
-        return new byte[0];
-    }
-
-    private static byte[] toByteArray(String uri) throws IOException {
-        return Files.readAllBytes(Paths.get(uri));
-    }
 
     @Override
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
@@ -100,9 +87,6 @@ public class TestRulesUI implements TestWatcher, BeforeAllCallback {
         log.info("TEST FAILED:- {}: CAUSE:- {}", context.getTestClass().map(Class::getName).orElseThrow(null) + "." + context.getTestMethod().map(Method::getName).orElseThrow(null),
             cause.getMessage());
 
-        String retryingScreenshot = captureScreenshot(context.getTestClass().map(Class::getName).orElse("Class"), context.getDisplayName(), context);
-        saveImageAttach(new File(retryingScreenshot).getPath(), context.getTestClass().map(Class::getName) + "." + context.getTestMethod().map(Method::getName));
-
         addResult(FAILED, context);
 
         getDeclaredDriver(context).quit();
@@ -115,27 +99,45 @@ public class TestRulesUI implements TestWatcher, BeforeAllCallback {
         return (WebDriver) field.get(context.getRequiredTestInstance());
     }
 
-    // TODO: 06/06/2023 revise this method and make sure naming is correct
-    private String captureScreenshot(String className, String testName, ExtensionContext context) {
-        String filename;
-        String filePath = null;
+    /**
+     * Takes a screenshot with Selenium and attach it to the current test item in case of test failure.
+     *
+     * @param invocation        JUnit 5th invocation object
+     * @param invocationContext JUnit 5th invocation context
+     * @param extensionContext  JUnit 5th extension context
+     */
+    @Override
+    public void interceptTestMethod(InvocationInterceptor.Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext,
+                                    ExtensionContext extensionContext) throws Throwable {
         try {
+            invocation.proceed();
+        } catch (Throwable cause) {
             File screenshot;
-            log.debug("FAILURE TIME: " + LocalDateTime.now(ZoneId.of("UTC")));
-            if (getDeclaredDriver(context) instanceof RemoteWebDriver) {
-                WebDriver webdriver = new Augmenter().augment(getDeclaredDriver(context));
+            if (getDeclaredDriver(extensionContext) instanceof RemoteWebDriver) {
+                WebDriver webdriver = new Augmenter().augment(getDeclaredDriver(extensionContext));
                 screenshot = ((TakesScreenshot) webdriver).getScreenshotAs(OutputType.FILE);
             } else {
-                screenshot = ((TakesScreenshot) getDeclaredDriver(context)).getScreenshotAs(OutputType.FILE);
+                screenshot = ((TakesScreenshot) getDeclaredDriver(extensionContext)).getScreenshotAs(OutputType.FILE);
             }
-            filename = File.separator + "target" + File.separator + "screenshots" + File.separator + "screenshot-" + className + "-" + testName + "-" + "chrome" + 1 + ".png";
-            filePath = new File(filename).getCanonicalPath();
-            FileUtils.copyFile(screenshot, new File(filename));
-            Allure.addAttachment(filename, FileUtils.openInputStream(screenshot));
-        } catch (Exception e) {
-            log.debug(e.getMessage());
+
+            sendScreenshotToAllure(extensionContext, screenshot);
+            sendScreenshotToReportPortal(extensionContext, screenshot);
+
+            throw cause;
         }
-        return filePath;
+    }
+
+    private void sendScreenshotToAllure(ExtensionContext extensionContext, File screenshot) {
+
+        try {
+            Allure.addAttachment(extensionContext.getDisplayName(), FileUtils.openInputStream(screenshot));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void sendScreenshotToReportPortal(ExtensionContext extensionContext, File screenshot) {
+        log.info("RP_MESSAGE#FILE#{}#{}", screenshot, extensionContext.getDisplayName());
     }
 
     @Override
