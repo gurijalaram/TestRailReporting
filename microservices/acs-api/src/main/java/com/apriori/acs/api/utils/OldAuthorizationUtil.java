@@ -38,8 +38,6 @@ public class OldAuthorizationUtil {
 
         headers.put("Content-Type", "application/x-www-form-urlencoded");
         headers.put("Accept", "application/json");
-        headers.put("Accept-Encoding", "gzip, deflate, br");
-        headers.put("Connection", "keep-alive");
 
         List<Map<String, ?>> requestData = new ArrayList<>();
         Map<String, String> requestData2 = new HashMap<>();
