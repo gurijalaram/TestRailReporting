@@ -9,6 +9,7 @@ import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
@@ -33,7 +34,7 @@ public class CustomerResources {
         request.setMinCadToleranceThreshold(new Random().nextDouble());
         RequestEntity requestEntity = RequestEntityUtil_Old
             .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, UserPreferences.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"))
+            .inlineVariables(CustomerUtil.getCurrentCustomerIdentity())
             .body(request)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).patch();
@@ -48,7 +49,7 @@ public class CustomerResources {
     public static ResponseWrapper<UserPreferences> patchCostingPreferences(PatchCostingPreferenceRequest patchCostingPreferenceRequest) {
         RequestEntity requestEntity = RequestEntityUtil_Old
             .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, UserPreferences.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"))
+            .inlineVariables(CustomerUtil.getCurrentCustomerIdentity())
             .body(patchCostingPreferenceRequest);
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -62,7 +63,7 @@ public class CustomerResources {
      */
     public static <T> RequestEntity getCustomerRequestEntity(BCSAPIEnum endPoint, Class<T> klass) {
         return RequestEntityUtil_Old.init(endPoint, klass)
-            .inlineVariables(PropertiesContext.get("customer_identity"))
+            .inlineVariables(CustomerUtil.getCurrentCustomerIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
     }
 }

@@ -28,6 +28,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -436,6 +437,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     @Description("Verify system is able to delete Project Users.\n" +
         "Verify Admin User is able delete PUs that are Assigned to discussions")
     public void deleteOneProjectUser() {
+        final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
         ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
         itemsList.add(BidPackageItemRequest.builder()
@@ -451,14 +453,14 @@ public class BidPackageProjectUserTest extends TestUtil {
         String firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUser.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(firstUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         UserCredentials secondUser = UserUtil.getUser();
         String secondUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(secondUser.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(secondUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),

@@ -27,6 +27,7 @@ import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
 import com.apriori.shared.util.models.response.Users;
@@ -571,7 +572,7 @@ public class CasTestUtil extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("accessControl",
                 AccessControl.builder()
-                    .customerIdentity(PropertiesContext.get("customer_identity"))
+                    .customerIdentity(CustomerUtil.getCurrentCustomerIdentity())
                     .applicationIdentity(PropertiesContext.get("cds.ap_workspace_application_identity"))
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))

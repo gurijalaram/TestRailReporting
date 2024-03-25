@@ -86,7 +86,7 @@ public class PropertiesContextTest {
         final String environmentName = "qa-test";
         System.setProperty("env", environmentName);
 
-        final String referenceToValidateValue = PropertiesContext.get("${customer}.${customer_aws_account_type}.token_subject");
+        final String referenceToValidateValue = PropertiesContext.get("${customer}.${env}.token_subject");
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(referenceToValidateValue).isNotEmpty();
