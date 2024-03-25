@@ -177,11 +177,17 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "div[id = 'qa-piece-part-cost-input-field'] input")
     private WebElement piecePartCostInput;
 
+    @FindBy(css = "div[id = 'qa-piece-part-cost-input-field'] span")
+    private WebElement piecePartCostError;
+
     @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] label")
     private WebElement totalCapitalInvestmentLabel;
 
     @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] input")
     private WebElement totalCapitalInvestmentInput;
+
+    @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] span")
+    private WebElement totalCapitalInvestmentError;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -1012,6 +1018,46 @@ public class EvaluatePage extends EvaluateToolbar {
     public String getTotalCapitalInvestmentLabelText() {
         pageUtils.waitForElementToAppear(totalCapitalInvestmentLabel);
         return totalCapitalInvestmentLabel.getText();
+    }
+
+    /**
+     * Get Piece Part Cost error text
+     *
+     * @return - String of text in Piece Part Cost error message
+     */
+    public String getPiecePartCostErrorText() {
+        pageUtils.waitForElementToAppear(piecePartCostError);
+        return piecePartCostError.getText();
+    }
+
+    /**
+     * Get Total Capital Investment error text
+     *
+     * @return - String of text in Total Capital Investment error message
+     */
+    public String getTotalCapitalInvestmentErrorText() {
+        pageUtils.waitForElementToAppear(totalCapitalInvestmentError);
+        return totalCapitalInvestmentError.getText();
+    }
+
+    /**
+     * Gets the Piece Part Cost
+     *
+     * @return annual volume as string
+     */
+    public String getPiecePartCost() {
+        pageUtils.waitForElementToAppear(piecePartCostInput);
+        return piecePartCostInput.getAttribute("value");
+    }
+
+    /**
+     * Gets the Total Capital Investment
+     *
+     * @return annual volume as string
+     */
+    public String getTotalCapitalInvestment() {
+        pageUtils.waitForElementToAppear(totalCapitalInvestmentInput);
+        return totalCapitalInvestmentInput.getAttribute("value");
     }
 
 

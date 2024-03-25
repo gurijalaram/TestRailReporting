@@ -5,6 +5,7 @@ import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.SwitchCostModePage;
+import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -86,6 +87,7 @@ public class ManualCostingTests  extends TestBaseUI {
     @TestRail(id = {30100, 30102, 30106})
     @Description("Test Validation of Cost Mode toggle and Manual Cost Inputs")
     public void testValidations() {
+        String negativeNumberError = "Must be greater than or equal to 0.";
         component = new ComponentRequestUtil().getComponent();
 
         evaluatePage = new CidAppLoginPage(driver).login(component.getUser())
@@ -94,10 +96,34 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.isCostModeToggleEnabled()).as("Verify Cost Mode toggle is enabled").isTrue();
 
         evaluatePage.clickActions().lock(EvaluatePage.class);
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK)).as("Verify scenario has been locked").isTrue();
         softAssertions.assertThat(evaluatePage.isCostModeToggleEnabled()).as("Verify Cost Mode toggle is disabled when scenario locked").isFalse();
 
         evaluatePage.clickActions().unlock(EvaluatePage.class);
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).as("Verify scenario has been unlocked").isTrue();
         softAssertions.assertThat(evaluatePage.isCostModeToggleEnabled()).as("Verify Cost Mode toggle is enabled when scenario unlocked").isTrue();
+
+        evaluatePage.clickManualModeButtonWhileUncosted()
+            .enterPiecePartCost("-1");
+        softAssertions.assertThat(evaluatePage.getPiecePartCostErrorText()).as("Verify that non negative values allowed").isEqualTo(negativeNumberError);
+        evaluatePage.enterPiecePartCost("");
+
+        evaluatePage.enterTotalCapitalInvestment("-1");
+        softAssertions.assertThat(evaluatePage.getTotalCapitalInvestmentErrorText()).as("Verify that non negative values allowed").isEqualTo(negativeNumberError);
+        evaluatePage.enterTotalCapitalInvestment("");
+
+        evaluatePage.enterPiecePartCost("-0.9");
+        softAssertions.assertThat(evaluatePage.getPiecePartCostErrorText()).as("Verify that non negative values allowed").isEqualTo(negativeNumberError);
+        evaluatePage.enterPiecePartCost("");
+
+        evaluatePage.enterTotalCapitalInvestment("-0.04");
+        softAssertions.assertThat(evaluatePage.getTotalCapitalInvestmentErrorText()).as("Verify that non negative values allowed").isEqualTo(negativeNumberError);
+        evaluatePage.enterTotalCapitalInvestment("");
+
+        evaluatePage.enterPiecePartCost("'Forty Five(){}<>");
+        evaluatePage.enterTotalCapitalInvestment("'Forty Five(){}<>");
+        softAssertions.assertThat(evaluatePage.getPiecePartCost()).as("Verify non numerical values not accepted").isEqualTo("");
+        softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment()).as("Verify non numerical values not accepted").isEqualTo("");
 
         softAssertions.assertAll();
     }
