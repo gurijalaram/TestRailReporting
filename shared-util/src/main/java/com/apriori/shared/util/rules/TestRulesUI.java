@@ -51,47 +51,48 @@ public class TestRulesUI implements TestWatcher, BeforeAllCallback, InvocationIn
     private static boolean started = false;
 
     @Override
-    public void testDisabled(ExtensionContext context, Optional<String> reason) {
-        log.info("TEST DISABLED:- {}: REASON:- {}", context.getDisplayName(), reason.orElse("Reason not supplied"));
+    public void testDisabled(ExtensionContext extensionContext, Optional<String> reason) {
+        log.info("TEST DISABLED:- {}: REASON:- {}", extensionContext.getDisplayName(), reason.orElse("Reason not supplied"));
 
-        addResult(DISABLED, context);
+        addResult(DISABLED, extensionContext);
 
-        getDeclaredDriver(context).quit();
+        getDeclaredDriver(extensionContext).quit();
     }
 
     @Override
-    public void testSuccessful(ExtensionContext context) {
-        log.info("TEST SUCCESSFUL:- {}: ", context.getTestClass().map(Class::getName).orElseThrow(null) + "." + context.getTestMethod().map(Method::getName).orElseThrow(null));
+    public void testSuccessful(ExtensionContext extensionContext) {
+        log.info("TEST SUCCESSFUL:- {}: ", extensionContext.getTestClass().map(Class::getName).orElseThrow(null) + "." +
+            extensionContext.getTestMethod().map(Method::getName).orElseThrow(null));
 
-        addResult(PASSED, context);
+        addResult(PASSED, extensionContext);
 
-        getDeclaredDriver(context).quit();
+        getDeclaredDriver(extensionContext).quit();
     }
 
     @Override
-    public void testAborted(ExtensionContext context, Throwable cause) {
-        log.info("TEST ABORTED:- {}: CAUSE:- {}", context.getDisplayName(), cause.getMessage());
+    public void testAborted(ExtensionContext extensionContext, Throwable cause) {
+        log.info("TEST ABORTED:- {}: CAUSE:- {}", extensionContext.getDisplayName(), cause.getMessage());
 
-        addResult(RETEST, context);
+        addResult(RETEST, extensionContext);
 
-        getDeclaredDriver(context).quit();
+        getDeclaredDriver(extensionContext).quit();
     }
 
     @Override
-    public void testFailed(ExtensionContext context, Throwable cause) {
-        log.info("TEST FAILED:- {}: CAUSE:- {}", context.getTestClass().map(Class::getName).orElseThrow(null) + "." + context.getTestMethod().map(Method::getName).orElseThrow(null),
-            cause.getMessage());
+    public void testFailed(ExtensionContext extensionContext, Throwable cause) {
+        log.info("TEST FAILED:- {}: CAUSE:- {}", extensionContext.getTestClass().map(Class::getName).orElseThrow(null) + "." +
+            extensionContext.getTestMethod().map(Method::getName).orElseThrow(null), cause.getMessage());
 
-        addResult(FAILED, context);
+        addResult(FAILED, extensionContext);
 
-        getDeclaredDriver(context).quit();
+        getDeclaredDriver(extensionContext).quit();
     }
 
     @SneakyThrows
-    private WebDriver getDeclaredDriver(ExtensionContext context) {
+    private WebDriver getDeclaredDriver(ExtensionContext extensionContext) {
         Field field = TestBaseUI.class.getDeclaredField(DRIVER);
         field.setAccessible(true);
-        return (WebDriver) field.get(context.getRequiredTestInstance());
+        return (WebDriver) field.get(extensionContext.getRequiredTestInstance());
     }
 
     /**
@@ -136,17 +137,17 @@ public class TestRulesUI implements TestWatcher, BeforeAllCallback, InvocationIn
     }
 
     @Override
-    public void beforeAll(ExtensionContext context) {
+    public void beforeAll(ExtensionContext extensionContext) {
         if (!started) {
-            getStore(context).put(TESTRAIL_REPORT, new CloseableOnlyOnceResource());
+            getStore(extensionContext).put(TESTRAIL_REPORT, new CloseableOnlyOnceResource());
             started = true;
         }
     }
 
-    private void addResult(TestRailStatus status, ExtensionContext context) {
-        if (context.getElement().isPresent() && context.getElement().get().isAnnotationPresent(
+    private void addResult(TestRailStatus status, ExtensionContext extensionContext) {
+        if (extensionContext.getElement().isPresent() && extensionContext.getElement().get().isAnnotationPresent(
             TestRail.class)) {
-            TestRail element = context.getElement().get().getAnnotation(TestRail.class);
+            TestRail element = extensionContext.getElement().get().getAnnotation(TestRail.class);
 
             Arrays.stream(element.id()).forEach(id -> {
                 Result result = new Result()
@@ -158,8 +159,8 @@ public class TestRulesUI implements TestWatcher, BeforeAllCallback, InvocationIn
         }
     }
 
-    private ExtensionContext.Store getStore(ExtensionContext context) {
-        return context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL);
+    private ExtensionContext.Store getStore(ExtensionContext extensionContext) {
+        return extensionContext.getRoot().getStore(ExtensionContext.Namespace.GLOBAL);
     }
 
     private static class CloseableOnlyOnceResource implements
