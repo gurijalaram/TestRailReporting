@@ -1,7 +1,10 @@
 package com.apriori.report.api.models;
 
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvDate;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 public class ReportBean {
@@ -16,7 +19,8 @@ public class ReportBean {
     @CsvBindByName(column = "costing_message")
     private String costingMessage;
     @CsvBindByName(column = "costed_timestamp")
-    private String costedTimestamp;
+    @CsvDate(value = "yyyy-MM-dd'T'HH:mm:ss'Z'")
+    private LocalDateTime costedTimestamp;
     @CsvBindByName
     private Double fbc;
     @CsvBindByName(column = "annual_volume")

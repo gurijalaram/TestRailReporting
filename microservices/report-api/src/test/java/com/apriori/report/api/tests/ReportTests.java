@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -38,6 +39,7 @@ public class ReportTests {
             reportCsv = reportCsv.subList(0, 5);
         }
         reportCsv.forEach(row -> {
+            softAssertions.assertThat(row.getCostedTimestamp()).isAfter(LocalDateTime.now().minusDays(7));
             softAssertions.assertThat(row).isNotNull();
             softAssertions.assertThat(row.getId()).isNotNull();
             softAssertions.assertThat(row.getCostingMessage()).isNotEmpty();
