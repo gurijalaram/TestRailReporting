@@ -17,7 +17,6 @@ import com.apriori.shared.util.testrail.TestRailStatus;
 import com.codepine.api.testrail.model.Result;
 import com.epam.reportportal.junit5.ReportPortalExtension;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -37,10 +36,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Optional;
 
