@@ -14,6 +14,7 @@ import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.AuthorizationUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 
 import org.apache.http.HttpStatus;
 
@@ -108,7 +109,7 @@ public class FileManagementController {
      */
     private static Map<String, String> initHeaders(UserCredentials userCredentials, boolean addMultiPartFile) {
         Map<String, String> headers = new HashMap<String, String>() {{
-                put("ap-cloud-context", new AuthorizationUtil().getAuthTargetCloudContext(userCredentials));
+                put("ap-cloud-context", CustomerUtil.getAuthTargetCloudContext(userCredentials));
                 put("ap-user-context", new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
             }};
 

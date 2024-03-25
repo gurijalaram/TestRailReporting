@@ -13,6 +13,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.AuthorizationUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -39,7 +40,7 @@ public class ReportAnIssueTests extends TestBaseUI {
     @Description("Verify contents of Report an issue modal from various views")
     public void testReportAnIssueFieldValues() {
         currentUser = UserUtil.getUser();
-        customerDetails = AuthorizationUtil.getCurrentCustomerData();
+        customerDetails = CustomerUtil.getCurrentCustomerData();
 
         final String asmName = "titan charger ass";
         final String asmExtension = ".SLDASM";

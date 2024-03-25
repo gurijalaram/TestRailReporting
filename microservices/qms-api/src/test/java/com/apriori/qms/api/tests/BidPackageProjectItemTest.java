@@ -16,6 +16,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.ApwErrorMessage;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
@@ -739,7 +740,7 @@ public class BidPackageProjectItemTest extends TestUtil {
 
         softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage()).contains(
             String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'",
-                deleteBidPackageResponse.getIdentity(), PropertiesContext.get("${env}.customer_identity")));
+                deleteBidPackageResponse.getIdentity(), CustomerUtil.getCurrentCustomerIdentity()));
 
         //Deleted Project
         prjItemIdentiesList = new ArrayList<>();
