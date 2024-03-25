@@ -174,7 +174,6 @@ public class TestRulesUI implements TestWatcher, BeforeAllCallback, InvocationIn
             if (testMode.value().equalsIgnoreCase(QA_LOCAL.value()) || testMode.value().equalsIgnoreCase(DOCKER_GRID.value())) {
                 return;
             }
-            //After all tests run hook.
             //Any additional desired action goes here
             TestRailReport.reportResults();
         }
