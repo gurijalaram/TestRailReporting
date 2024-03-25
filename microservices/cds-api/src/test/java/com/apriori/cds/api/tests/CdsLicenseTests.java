@@ -105,7 +105,7 @@ public class CdsLicenseTests {
     @Description("Activate a license.")
     public void activateLicenseTest() {
         setCustomerData();
-        String userIdentity = PropertiesContext.get("user_identity");
+        String userIdentity = PropertiesContext.get("ap-int.${env}.user_staff_identity");
         cdsTestUtil.activateLicense(customerIdentity, siteIdentity, licenseIdentity, userIdentity);
         ResponseWrapper<LicenseResponse> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
             LicenseResponse.class,
@@ -154,7 +154,7 @@ public class CdsLicenseTests {
     @Description("Get a list of active licensed sub-modules")
     public void getActiveModules() {
         setCustomerData();
-        String userIdentity = PropertiesContext.get("user_identity");
+        String userIdentity = PropertiesContext.get("ap-int.${env}.user_staff_identity");
         cdsTestUtil.activateLicense(customerIdentity, siteIdentity, licenseIdentity, userIdentity);
         ResponseWrapper<ActiveLicenseModules> activeModules = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACTIVE_MODULES, ActiveLicenseModules.class, HttpStatus.SC_OK, customerIdentity, siteIdentity);
         soft.assertThat(activeModules.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
