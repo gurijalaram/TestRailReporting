@@ -810,7 +810,7 @@ public class FileUploadResources {
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
         return FileManagementController.uploadFile(
-            UserUtil.getUserWithCloudContext(),
+            UserUtil.getUser("admin"),
             ProcessGroupEnum.fromString(processGroup),
             fileName
         );
