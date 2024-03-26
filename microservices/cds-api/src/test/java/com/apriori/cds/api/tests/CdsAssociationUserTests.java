@@ -78,7 +78,7 @@ public class CdsAssociationUserTests {
     @TestRail(id = {5959})
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
-        String apStaffIdentity = PropertiesContext.get("user_identity");
+        String apStaffIdentity = PropertiesContext.get("ap-int.${env}.user_staff_identity");
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();

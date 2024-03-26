@@ -2,8 +2,6 @@ package com.apriori.cic.ui.pageobjects.workflows.schedule.notifications;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
-import com.apriori.cic.ui.utils.Constants;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,6 +26,9 @@ public class AttachReportTab extends NotificationsPart {
     @FindBy(xpath = "//div[contains(@class, 'ss-open')]//div[.='Single Part Reports']")
     private WebElement reportNameDdlGroup;
 
+    @FindBy(xpath = "//div[@tab-number='4']//div[@tab-number='2']//span[.='Report Configuration']")
+    private WebElement reportConfigurationLbl;
+
     public AttachReportTab(WebDriver driver) {
         super(driver);
     }
@@ -38,10 +39,10 @@ public class AttachReportTab extends NotificationsPart {
      * @return current class object
      */
     public AttachReportTab selectReportName() {
-        pageUtils.waitForElementAndClick(reportNameDropDownElement);
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
-        this.selectValueFromDDL(workFlowData.getNotificationsData().getReportName());
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
+        pageUtils.waitUntilDropdownOptionsLoaded(getReportNameDropdownElement().findElement(By.tagName("select")));
+        pageUtils.waitForElementAndClick(getReportNameDropdownElement());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getReportName())));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
 
@@ -54,7 +55,8 @@ public class AttachReportTab extends NotificationsPart {
         if (!getCurrencyCodeDdl().getText().equals("USD")) {
             pageUtils.waitForElementToAppear(getCurrencyCodeDdl());
             pageUtils.waitForElementAndClick(getCurrencyCodeDdl());
-            this.selectValueFromDDL(workFlowData.getNotificationsData().getReportCurrencyCode());
+            pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getReportCurrencyCode())));
+            pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         }
         return this;
     }
@@ -65,9 +67,10 @@ public class AttachReportTab extends NotificationsPart {
      * @return AttachReport object
      */
     public AttachReportTab selectCostRounding() {
-        pageUtils.waitForElementToAppear(getCostRoundingDdl());
+        pageUtils.waitForElementAppear(reportConfigurationLbl);
         pageUtils.waitForElementAndClick(getCostRoundingDdl());
-        this.selectValueFromDDL(workFlowData.getNotificationsData().getReportCostRounding());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getReportCostRounding())));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
 
@@ -89,6 +92,7 @@ public class AttachReportTab extends NotificationsPart {
     public WebElement getCostMetricDdl() {
         WebElement costMetricElement = null;
         if (workFlowData.getNotificationsData().getReportName().equals("DFM Multiple Components Summary [CIR]")) {
+            pageUtils.waitForElementAppear(reportConfigurationLbl);
             WebElement currencyTextBoxElement = getAttachReportTextFields().stream()
                 .filter(webElement -> webElement.getAttribute("value").equals("Cost Metric"))
                 .findFirst()
@@ -143,7 +147,9 @@ public class AttachReportTab extends NotificationsPart {
      * @return - list of webelements
      */
     public List<WebElement> getAttachReportTextFields() {
-        return driver.findElements(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div[contains(@class, 'tw-flex-row')]//div[@class='widget-content widget-textbox']//input[@disabled='disabled']"));
+        String xpathLocator = "//div[@tab-number='4']//div[@tab-number='2']//div[contains(@class, 'tw-flex-row')]//div[@class='widget-content widget-textbox']//input[@disabled='disabled']";
+        pageUtils.waitForElementsToAppear(By.xpath(xpathLocator));
+        return driver.findElements(By.xpath(xpathLocator));
     }
 
     /**
@@ -152,8 +158,8 @@ public class AttachReportTab extends NotificationsPart {
      * @return WebElement
      */
     private WebElement getReportNameDropdownElement() {
+        pageUtils.waitForElementAppear(driver.findElement(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div//span[.='Report Name']")));
         return driver.findElement(with(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div[@class='widget-content widget-dropdown']"))
             .below(By.xpath("//div[@tab-number='4']//div[@tab-number='2']//div//span[.='Report Name']")));
     }
-
 }

@@ -1,8 +1,8 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.targetquotedcosttrend;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS_API;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 
 public class TargetAndQuotedCostTrendReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.TARGET_QUOTED_COST_TREND.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.TARGET_AND_QUOTED_COST_TREND;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.TARGET_AND_QUOTED_COST_TREND;
     // Export set is not relevant for this report
     private String exportSetName = "";
     private JasperApiUtils jasperApiUtils;
@@ -27,7 +27,7 @@ public class TargetAndQuotedCostTrendReportTests extends JasperApiAuthentication
     }
 
     @Test
-    @Tag(REPORTS_API)
+    @Tag(JASPER_API)
     @TmsLink("25838")
     @TestRail(id = 25838)
     @Description("Input controls - Currency code")

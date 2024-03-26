@@ -209,6 +209,26 @@
           "componentName": "titan charger upper",
           "extension": ".SLDPRT",
           "processGroup": "PLASTIC_MOLDING"
+        },
+        {
+          "componentName": "titan battery ass",
+          "extension": ".SLDASM",
+          "processGroup": "ASSEMBLY",
+          "metadata": {
+            "category": "small"
+          },
+          "subComponents": [
+            {
+              "componentName": "titan battery release",
+              "extension": ".SLDPRT",
+              "processGroup": "PLASTIC_MOLDING"
+            },
+            {
+              "componentName": "titan battery",
+              "extension": ".SLDPRT",
+              "processGroup": "STOCK_MACHINING"
+            }
+          ]
         }
       ]
     },
