@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
+import com.apriori.cid.ui.pageobjects.evaluate.ChangeSummaryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.CostHistoryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
@@ -44,7 +45,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='MANUAL']")
     private WebElement manualCostModeButton;
 
-    @FindBy(css = "#qa-sub-header-save-as-button button")
+    @FindBy(css = "div[id='qa-sub-header-save-as-button'] button")
     private WebElement saveAsButton;
 
     private PageUtils pageUtils;
@@ -164,6 +165,28 @@ public class EvaluateToolbar extends ExploreToolbar {
         By byButton = By.xpath(String.format("//button[contains(text(),'%s')]", buttonLabel));
         pageUtils.waitForElementAndClick(byButton);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Open Change Summary pop-up from Simulate Cost Mode view
+     *
+     * @return - Change Summary PO
+     */
+    public ChangeSummaryPage changeSummarySimulate() {
+        pageUtils.waitForElementToAppear(costLabel);
+        pageUtils.mouseMove(costButton);
+        return new ChangeSummaryPage(driver);
+    }
+
+    /**
+     * Open Change Summary pop-up from Manual Cost Mode view
+     *
+     * @return - Change Summary PO
+     */
+    public ChangeSummaryPage changeSummaryManual() {
+        pageUtils.waitForElementToAppear(saveAsButton);
+        pageUtils.mouseMove(saveAsButton);
+        return new ChangeSummaryPage(driver);
     }
 
     /**

@@ -22,6 +22,15 @@ public class ChangeSummaryPage extends LoadableComponent<ChangeSummaryPage> {
     @FindBy(css = "div[data-testid='change-summary-modified-values'] h3")
     private WebElement changedToHeader;
 
+    @FindBy(css = "div[id='change-summary-list'] + button")
+    private WebElement clearAllButton;
+
+    @FindBy(css = "button[data-testid='primary-button']")
+    private WebElement confirmButton;
+
+    @FindBy(css = "button[data-testid='secondary-button']")
+    private WebElement cancelButton;
+
     private String changedValueID = "qa-change-summary-column-%1$d-%2$s";
 
     private PageUtils pageUtils;
@@ -90,12 +99,44 @@ public class ChangeSummaryPage extends LoadableComponent<ChangeSummaryPage> {
     }
 
     /**
+     * Click the Clear All button
+     * This launches a confirmation pop-up
+     *
+     * @return - This PO
+     */
+    public ChangeSummaryPage clickClearAll() {
+        pageUtils.waitForElementAndClick(clearAllButton);
+        return this;
+    }
+
+    /**
+     * Click the Confirm button in Clear All confirmation
+     *
+     * @return - Specified Class
+     */
+    public <T> T clickConfirm(Class<T> klass) {
+        pageUtils.waitForElementAndClick(confirmButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Click the Cancel button in Clear All confirmation
+     *
+     * @return - Specified Class
+     */
+    public <T> T clickCancel(Class<T> klass) {
+        pageUtils.waitForElementAndClick(cancelButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
      * Close the change summary pop up
      *
-     * @return - Cost History PO
+     * @param - The Class to be returned
+     * @return - The Specified PO
      */
-    public CostHistoryPage close() {
+    public <T> T close(Class<T> klass) {
         pageUtils.mouseMoveWithOffsets(changedFromHeader, 0, 100);
-        return new CostHistoryPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 }

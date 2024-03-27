@@ -2,6 +2,7 @@ package com.apriori.cid.ui.tests.evaluate;
 
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
+import com.apriori.cid.ui.pageobjects.evaluate.ChangeSummaryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.SwitchCostModePage;
@@ -103,8 +104,16 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).as("Verify scenario has been unlocked").isTrue();
         softAssertions.assertThat(evaluatePage.isCostModeToggleEnabled()).as("Verify Cost Mode toggle is enabled when scenario unlocked").isTrue();
 
-        evaluatePage.clickManualModeButtonWhileUncosted()
-            .enterPiecePartCost("-1");
+        evaluatePage.clickManualModeButtonWhileUncosted();
+
+        ChangeSummaryPage changeSummary = evaluatePage.changeSummaryManual();
+
+        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("SIMULATE");
+        softAssertions.assertThat(changeSummary.getChangedTo("Cost Mode")).as("Verify Cost Mode in Change Summary").isEqualTo("MANUAL");
+
+        evaluatePage = changeSummary.close(EvaluatePage.class);
+
+        evaluatePage.enterPiecePartCost("-1");
         softAssertions.assertThat(evaluatePage.getPiecePartCostErrorText()).as("Verify that non negative values allowed").isEqualTo(negativeNumberError);
         evaluatePage.enterPiecePartCost("");
 
@@ -124,6 +133,8 @@ public class ManualCostingTests  extends TestBaseUI {
         evaluatePage.enterTotalCapitalInvestment("'Forty Five(){}<>");
         softAssertions.assertThat(evaluatePage.getPiecePartCost()).as("Verify non numerical values not accepted").isEqualTo("");
         softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment()).as("Verify non numerical values not accepted").isEqualTo("");
+
+
 
         softAssertions.assertAll();
     }
