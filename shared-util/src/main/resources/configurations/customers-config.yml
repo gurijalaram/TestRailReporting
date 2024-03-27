@@ -12,12 +12,7 @@
 ap-int:
   cloud_reference_name: apriori-internal
 
-  # depends on customer_aws_account_type property from environment in environments-config.yml file, or default section in global-config.yml file
-  staging:
-    token_subject: 2b68
-
   ci-connect:
-    customer_identity: 6C1F8C1D4D75
     customer_name: aPrioriInternal_Customer
     agent_type: windchill
     windchill:
@@ -34,6 +29,29 @@ ap-int:
     enovia:
       port: 8808
       connector: EN-consvwc02
+
+  ### Customer configurations for specific for environment ###
+  # name should be the same with environment name
+  qa-test:
+    user_staff_identity: AK8JJH37GM54
+
+  int-core:
+    user_staff_identity: 8GFDIG229629
+
+
+  staging:
+    customer_identity: 7G0JGBE2N4GM
+    user_staff_identity: 6AHL1HHGB15E
+    token_subject: 2b68
+
+  local:
+    user_staff_identity: 4N630F61FGNG
+
+
+  development:
+    customer_identity: 212B5ABD2F6C
+  ###########################################################
+
 
 ######################################################## GADGETS #######################################################
 gadgets:
@@ -55,12 +73,19 @@ widgets:
       connector: WC-consvwc02
       agent_name: 59cf01bd-b45c-4252-a94c-e433fbc342fa_Agent
 
+  ### Customer configurations for specific for environment ###
+  # name should be the same with environment name
+  staging:
+    customer_identity: 2F265BC1MKAB
+  ###########################################################
+
 ########################################################################################################################
 
 
 ####################################################### SPROCKETS ######################################################
 sprockets:
-  token_subject: c8fc
+  qa-test:
+    token_subject: c8fc
 
 ########################################################################################################################
 

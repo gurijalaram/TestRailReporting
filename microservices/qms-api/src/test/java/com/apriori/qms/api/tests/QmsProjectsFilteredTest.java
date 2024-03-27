@@ -20,6 +20,7 @@ import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.DateUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -43,6 +44,8 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class QmsProjectsFilteredTest extends TestUtil {
+    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+
     private static UserCredentials currentUser;
     private static String projectName;
     private static String status;
@@ -77,14 +80,14 @@ public class QmsProjectsFilteredTest extends TestUtil {
         firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUser.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(firstUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         UserCredentials secondUser = UserUtil.getUser();
         secondUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(secondUser.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(secondUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         projectName = "a-" + new GenerateStringUtil().getRandomString() + "-00";

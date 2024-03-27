@@ -4,6 +4,8 @@ import com.apriori.dfs.api.enums.DFSApiEnum;
 import com.apriori.dfs.api.models.response.MaterialStock;
 import com.apriori.dfs.api.models.response.MaterialStocks;
 import com.apriori.dfs.api.models.utils.MaterialStockUtil;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
@@ -63,6 +65,7 @@ public class MaterialStocksTests {
         "Both pageNumber and pageSize must be greater than 0";
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final MaterialStockUtil materialStockUtil = new MaterialStockUtil();
+    private final UserCredentials userCredentials = UserUtil.getUser("common");
 
     @Test
     @TestRail(id = {29618})
@@ -70,7 +73,7 @@ public class MaterialStocksTests {
     public void getMaterialStockByIdentityTest() {
 
         ResponseWrapper<MaterialStock> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
-            HttpStatusCode.OK, MaterialStock.class, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+            HttpStatusCode.OK, MaterialStock.class, userCredentials, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isNotNull();
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMaterialIdentity()).isEqualTo(VALID_MATERIAL_ID);
@@ -84,7 +87,7 @@ public class MaterialStocksTests {
     public void getMaterialStockWithInvalidSharedSecretTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH_WITH_KEY_PARAM,
-            HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID,
+            HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, userCredentials, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID, INVALID_SHARED_SECRET);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(UNAUTHORIZED_ERROR);
@@ -110,7 +113,7 @@ public class MaterialStocksTests {
     public void getMaterialStockWithoutSharedSecretTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
-            HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID, NO_SHARED_SECRET);
+            HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, userCredentials, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID, NO_SHARED_SECRET);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(UNAUTHORIZED_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(INVALID_CREDENTIAL_MSG);
@@ -123,7 +126,7 @@ public class MaterialStocksTests {
     public void getMaterialStockWithBadMaterialStockIdentityTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
-            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, INVALID_MATERIAL_STOCK_ID);
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, userCredentials, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, INVALID_MATERIAL_STOCK_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG);
@@ -136,7 +139,7 @@ public class MaterialStocksTests {
     public void getMaterialStockWithMissingMaterialStockTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
-            HttpStatusCode.NOT_FOUND, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, MISSING_MATERIAL_STOCK_ID);
+            HttpStatusCode.NOT_FOUND, ErrorMessage.class, userCredentials, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, MISSING_MATERIAL_STOCK_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(NOT_FOUND_MSG);
@@ -149,7 +152,7 @@ public class MaterialStocksTests {
     public void getMaterialStockWithBadMaterialIdentityTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
-            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, INVALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, userCredentials, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, INVALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(MATERIAL_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG);
@@ -162,7 +165,7 @@ public class MaterialStocksTests {
     public void getMaterialStockWithMissingMaterialTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
-            HttpStatusCode.NOT_FOUND, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, MISSING_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+            HttpStatusCode.NOT_FOUND, ErrorMessage.class, userCredentials, VALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, MISSING_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(MATERIAL_NOT_FOUND_MSG);
@@ -175,7 +178,7 @@ public class MaterialStocksTests {
     public void getMaterialStockWithBadProcessGroupIdentityTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
-            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, INVALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, userCredentials, VALID_DIGITAL_FACTORY_ID, INVALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(PROCESS_GROUP_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG);
@@ -188,7 +191,7 @@ public class MaterialStocksTests {
     public void getMaterialStockWithMissingProcessGroupTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
-            HttpStatusCode.NOT_FOUND, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, MISSING_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+            HttpStatusCode.NOT_FOUND, ErrorMessage.class, userCredentials, VALID_DIGITAL_FACTORY_ID, MISSING_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(PROCESS_GROUP_NOT_FOUND_MSG);
@@ -201,7 +204,7 @@ public class MaterialStocksTests {
     public void getMaterialStockWithBadDigitalFactoryIdentityTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
-            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, INVALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+            HttpStatusCode.BAD_REQUEST, ErrorMessage.class, userCredentials, INVALID_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(DIGITAL_FACTORY_IDENTITY_IS_NOT_A_VALID_IDENTITY_MSG);
@@ -214,7 +217,7 @@ public class MaterialStocksTests {
     public void getMaterialStockWithMissingDigitalFactoryTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.getMaterialStock(DFSApiEnum.MATERIAL_STOCKS_BY_PATH,
-            HttpStatusCode.NOT_FOUND, ErrorMessage.class, MISSING_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
+            HttpStatusCode.NOT_FOUND, ErrorMessage.class, userCredentials, MISSING_DIGITAL_FACTORY_ID, VALID_PROCESS_GROUP_ID, VALID_MATERIAL_ID, VALID_MATERIAL_STOCK_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(DIGITAL_FACTORY_NOT_FOUND_MSG);
@@ -248,6 +251,7 @@ public class MaterialStocksTests {
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.findMaterialStocks(
             HttpStatusCode.BAD_REQUEST,
             ErrorMessage.class,
+            userCredentials,
             INVALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID
@@ -266,6 +270,7 @@ public class MaterialStocksTests {
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.findMaterialStocks(
             HttpStatusCode.NOT_FOUND,
             ErrorMessage.class,
+            userCredentials,
             MISSING_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID
@@ -284,6 +289,7 @@ public class MaterialStocksTests {
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.findMaterialStocks(
             HttpStatusCode.BAD_REQUEST,
             ErrorMessage.class,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             INVALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID
@@ -302,6 +308,7 @@ public class MaterialStocksTests {
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.findMaterialStocks(
             HttpStatusCode.NOT_FOUND,
             ErrorMessage.class,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             MISSING_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID
@@ -320,6 +327,7 @@ public class MaterialStocksTests {
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.findMaterialStocks(
             HttpStatusCode.BAD_REQUEST,
             ErrorMessage.class,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             INVALID_MATERIAL_ID
@@ -338,6 +346,7 @@ public class MaterialStocksTests {
         ResponseWrapper<ErrorMessage> responseWrapper = materialStockUtil.findMaterialStocks(
             HttpStatusCode.NOT_FOUND,
             ErrorMessage.class,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             MISSING_MATERIAL_ID
@@ -357,6 +366,7 @@ public class MaterialStocksTests {
             HttpStatusCode.OK,
             MaterialStocks.class,
             true,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID
@@ -375,6 +385,7 @@ public class MaterialStocksTests {
             HttpStatusCode.UNAUTHORIZED,
             ErrorMessage.class,
             true,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID,
@@ -395,6 +406,7 @@ public class MaterialStocksTests {
             HttpStatusCode.UNAUTHORIZED,
             ErrorMessage.class,
             false,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID
@@ -414,6 +426,7 @@ public class MaterialStocksTests {
             HttpStatusCode.UNAUTHORIZED,
             ErrorMessage.class,
             true,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID,
@@ -458,6 +471,7 @@ public class MaterialStocksTests {
             DFSApiEnum.MATERIAL_STOCKS_WITH_PAGE_SIZE_AND_PAGE_NUMBER,
             HttpStatusCode.OK,
             MaterialStocks.class,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID,
@@ -486,6 +500,7 @@ public class MaterialStocksTests {
             DFSApiEnum.MATERIAL_STOCKS_WITH_PAGE_SIZE_AND_PAGE_NUMBER,
             HttpStatusCode.OK,
             MaterialStocks.class,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID,
@@ -516,6 +531,7 @@ public class MaterialStocksTests {
             DFSApiEnum.MATERIAL_STOCKS_WITH_PAGE_SIZE_AND_PAGE_NUMBER,
             HttpStatusCode.BAD_REQUEST,
             ErrorMessage.class,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID,
@@ -539,6 +555,7 @@ public class MaterialStocksTests {
             DFSApiEnum.MATERIAL_STOCKS_BY_NAME,
             HttpStatusCode.OK,
             MaterialStocks.class,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID,
@@ -566,6 +583,7 @@ public class MaterialStocksTests {
             DFSApiEnum.MATERIAL_STOCKS_BY_NAME,
             HttpStatusCode.OK,
             MaterialStocks.class,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID,
@@ -591,6 +609,7 @@ public class MaterialStocksTests {
             DFSApiEnum.MATERIAL_STOCKS_SORTED_BY_NAME,
             HttpStatusCode.OK,
             MaterialStocks.class,
+            userCredentials,
             VALID_DIGITAL_FACTORY_ID,
             VALID_PROCESS_GROUP_ID,
             VALID_MATERIAL_ID,
