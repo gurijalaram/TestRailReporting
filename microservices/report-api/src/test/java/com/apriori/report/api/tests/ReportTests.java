@@ -5,13 +5,11 @@ import com.apriori.report.api.models.Report;
 import com.apriori.report.api.models.ReportBean;
 import com.apriori.shared.util.testrail.TestRail;
 
-import com.google.common.util.concurrent.AtomicDouble;
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
