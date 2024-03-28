@@ -171,6 +171,24 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = ".sustainability-summary-card .property-name")
     private List<WebElement> sustainabilityPropertyNames;
 
+    @FindBy(css = "div[id = 'qa-piece-part-cost-input-field'] label")
+    private WebElement piecePartCostLabel;
+
+    @FindBy(css = "div[id = 'qa-piece-part-cost-input-field'] input")
+    private WebElement piecePartCostInput;
+
+    @FindBy(css = "div[id = 'qa-piece-part-cost-input-field'] span")
+    private WebElement piecePartCostError;
+
+    @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] label")
+    private WebElement totalCapitalInvestmentLabel;
+
+    @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] input")
+    private WebElement totalCapitalInvestmentInput;
+
+    @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] span")
+    private WebElement totalCapitalInvestmentError;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -282,6 +300,28 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public boolean isAnnualYearsInputEnabled() {
         return pageUtils.isElementEnabled(productionLifeInput);
+    }
+
+    /**
+     * Enters the Piece Part Cost
+     *
+     * @param piecePartCost - the Piece Part Cost
+     * @return current page object
+     */
+    public EvaluatePage enterPiecePartCost(String piecePartCost) {
+        inputsController.enterPiecePartCost(piecePartCostInput, piecePartCost);
+        return this;
+    }
+
+    /**
+     * Enters the Total Capital Investment
+     *
+     * @param totalCapitalInvestment - the Total Capital Investment
+     * @return current page object
+     */
+    public EvaluatePage enterTotalCapitalInvestment(String totalCapitalInvestment) {
+        inputsController.enterPiecePartCost(totalCapitalInvestmentInput, totalCapitalInvestment);
+        return this;
     }
 
     /**
@@ -971,4 +1011,66 @@ public class EvaluatePage extends EvaluateToolbar {
     public int getTabCount() {
         return pageUtils.getCountOfOpenTabs();
     }
+
+    /**
+     * Get Piece Part Cost label text
+     *
+     * @return - String of text in Piece Part Cost label
+     */
+    public String getPiecePartCostLabelText() {
+        pageUtils.waitForElementToAppear(piecePartCostLabel);
+        return piecePartCostLabel.getText();
+    }
+
+    /**
+     * Get Total Capital Investment label text
+     *
+     * @return - String of text in Total Capital Investment label
+     */
+    public String getTotalCapitalInvestmentLabelText() {
+        pageUtils.waitForElementToAppear(totalCapitalInvestmentLabel);
+        return totalCapitalInvestmentLabel.getText();
+    }
+
+    /**
+     * Get Piece Part Cost error text
+     *
+     * @return - String of text in Piece Part Cost error message
+     */
+    public String getPiecePartCostErrorText() {
+        pageUtils.waitForElementToAppear(piecePartCostError);
+        return piecePartCostError.getText();
+    }
+
+    /**
+     * Get Total Capital Investment error text
+     *
+     * @return - String of text in Total Capital Investment error message
+     */
+    public String getTotalCapitalInvestmentErrorText() {
+        pageUtils.waitForElementToAppear(totalCapitalInvestmentError);
+        return totalCapitalInvestmentError.getText();
+    }
+
+    /**
+     * Gets the Piece Part Cost
+     *
+     * @return annual volume as string
+     */
+    public String getPiecePartCost() {
+        pageUtils.waitForElementToAppear(piecePartCostInput);
+        return piecePartCostInput.getAttribute("value");
+    }
+
+    /**
+     * Gets the Total Capital Investment
+     *
+     * @return annual volume as string
+     */
+    public String getTotalCapitalInvestment() {
+        pageUtils.waitForElementToAppear(totalCapitalInvestmentInput);
+        return totalCapitalInvestmentInput.getAttribute("value");
+    }
+
+
 }

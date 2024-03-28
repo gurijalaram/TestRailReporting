@@ -29,6 +29,7 @@ import com.apriori.shared.util.http.utils.DateUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.ApwErrorMessage;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
@@ -54,6 +55,7 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class QmsProjectUserPermissionsTest extends TestUtil {
+    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
     private static final UserCredentials nonProjectUser = UserUtil.getUser();
     private static final UserCredentials currentOwnerUser = UserUtil.getUser();
     private static final String currentOwnerUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentOwnerUser.getEmail());
@@ -86,21 +88,21 @@ public class QmsProjectUserPermissionsTest extends TestUtil {
         firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUser.getEmail());
         bidPackageProjectUsersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(firstUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         UserCredentials secondUser = UserUtil.getUser();
         secondUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(secondUser.getEmail());
         bidPackageProjectUsersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(secondUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         thirdUser = UserUtil.getUser();
         thirdUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(secondUser.getEmail());
         bidPackageProjectUsersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(thirdUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         projectResponse = QmsProjectResources.createProject(new HashMap<>(),

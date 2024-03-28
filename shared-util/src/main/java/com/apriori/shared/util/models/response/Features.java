@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class Features {
-    private Boolean workOrderStatusUpdatesEnabled;
     private String identity;
     private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)

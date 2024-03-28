@@ -157,13 +157,13 @@ public class CostHistoryTests extends TestBaseUI {
 
         softAssertions.assertThat(costHistoryPage.iterationCount()).as("count").isEqualTo(11);
 
-        changeSummary = changeSummary.close()
+        changeSummary = changeSummary.close(CostHistoryPage.class)
             .openChangeSummary(6);
 
         softAssertions.assertThat(changeSummary.getChangedFrom("Secondary Processes-Heat Treatment")).as("Verify changed from in Heat Treatment").isEqualTo("-");
         softAssertions.assertThat(changeSummary.getChangedTo("Secondary Processes-Heat Treatment")).as("Verify changed to in Heat Treatment").isEqualTo("Certification");
 
-        changeSummary = changeSummary.close()
+        changeSummary = changeSummary.close(CostHistoryPage.class)
             .openChangeSummary(7);
 
         softAssertions.assertThat(changeSummary.getChangedFrom("Digital Factory"))
@@ -171,7 +171,7 @@ public class CostHistoryTests extends TestBaseUI {
         softAssertions.assertThat(changeSummary.getChangedTo("Digital Factory"))
             .as("Verify changed to in Digital Factory").isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
 
-        changeSummary = changeSummary.close()
+        changeSummary = changeSummary.close(CostHistoryPage.class)
             .openChangeSummary(11);
 
         softAssertions.assertThat(changeSummary.getChangedFrom("Batch Size")).as("Verify changed from in Batch Size").isEqualTo("275");

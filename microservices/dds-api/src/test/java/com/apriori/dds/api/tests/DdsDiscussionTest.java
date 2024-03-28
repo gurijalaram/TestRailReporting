@@ -17,6 +17,7 @@ import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -39,6 +40,7 @@ import java.util.Collections;
 @ExtendWith(TestRulesAPI.class)
 public class DdsDiscussionTest extends TestUtil {
 
+    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
     private String userContext;
     private SoftAssertions softAssertions;
     private ResponseWrapper<DiscussionResponse> discussionResponse;
@@ -71,7 +73,7 @@ public class DdsDiscussionTest extends TestUtil {
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, ErrorMessage.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"))
+            .inlineVariables(customerIdentity)
             .headers(DdsApiTestUtils.setUpHeader())
             .body(discussionsRequest)
             .apUserContext(userContext)
@@ -87,7 +89,7 @@ public class DdsDiscussionTest extends TestUtil {
     @Description("Get all discussions")
     public void getDiscussions() {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSIONS, DiscussionsResponse.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"))
+            .inlineVariables(customerIdentity)
             .headers(DdsApiTestUtils.setUpHeader())
             .apUserContext(userContext)
             .expectedResponseCode(HttpStatus.SC_OK);
@@ -112,7 +114,7 @@ public class DdsDiscussionTest extends TestUtil {
             .build();
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_DISCUSSION, DiscussionResponse.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"), createDiscussionResponse.getResponseEntity().getIdentity())
+            .inlineVariables(customerIdentity, createDiscussionResponse.getResponseEntity().getIdentity())
             .headers(DdsApiTestUtils.setUpHeader())
             .body(discussionsRequest)
             .apUserContext(usrContext)
@@ -137,7 +139,7 @@ public class DdsDiscussionTest extends TestUtil {
 
         ResponseWrapper<ErrorMessage> discussionResponse = HTTPRequest.build(RequestEntityUtil_Old
                 .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
-                .inlineVariables(PropertiesContext.get("customer_identity"), "FDAEINVALID")
+                .inlineVariables(customerIdentity, "FDAEINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
                 .body(discussionsRequest)
                 .apUserContext(userContext)
@@ -159,7 +161,7 @@ public class DdsDiscussionTest extends TestUtil {
 
         ResponseWrapper<ErrorMessage> discussionResponse = HTTPRequest.build(RequestEntityUtil_Old
                 .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
-                .inlineVariables(PropertiesContext.get("customer_identity"), discussionCreatedResponse.getResponseEntity().getIdentity())
+                .inlineVariables(customerIdentity, discussionCreatedResponse.getResponseEntity().getIdentity())
                 .headers(DdsApiTestUtils.setUpHeader())
                 .body(DiscussionsRequest.builder()
                     .discussion(DiscussionsRequestParameters.builder()
@@ -179,7 +181,7 @@ public class DdsDiscussionTest extends TestUtil {
     public void deleteInvalidDiscussion() {
         ResponseWrapper<ErrorMessage> discussionDeletedResponse = HTTPRequest.build(RequestEntityUtil_Old
                 .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
-                .inlineVariables(PropertiesContext.get("customer_identity"), "FDWXINVALID")
+                .inlineVariables(customerIdentity, "FDWXINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
                 .apUserContext(userContext)
                 .expectedResponseCode(HttpStatus.SC_BAD_REQUEST))
@@ -217,7 +219,7 @@ public class DdsDiscussionTest extends TestUtil {
     public void getDiscussionWithInvalidIdentity() {
         ResponseWrapper<ErrorMessage> discussionErrorResponse = HTTPRequest.build(RequestEntityUtil_Old
                 .init(DDSApiEnum.CUSTOMER_DISCUSSION, ErrorMessage.class)
-                .inlineVariables(PropertiesContext.get("customer_identity"), "FDAEINVALID")
+                .inlineVariables(customerIdentity, "FDAEINVALID")
                 .headers(DdsApiTestUtils.setUpHeader())
                 .apUserContext(userContext)
                 .expectedResponseCode(HttpStatus.SC_BAD_REQUEST))
@@ -235,7 +237,7 @@ public class DdsDiscussionTest extends TestUtil {
         SearchDiscussionsRequest searchDiscussionsRequest = SearchDiscussionsRequest.builder()
             .discussionIds(Collections.singletonList(discussionResponse.getResponseEntity().getIdentity())).build();
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DDSApiEnum.CUSTOMER_SEARCH_DISCUSSIONS, DiscussionsResponse.class)
-            .inlineVariables(PropertiesContext.get("customer_identity"))
+            .inlineVariables(customerIdentity)
             .headers(DdsApiTestUtils.setUpHeader())
             .body(searchDiscussionsRequest)
             .apUserContext(userContext)

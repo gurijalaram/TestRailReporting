@@ -18,6 +18,7 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -39,6 +40,7 @@ import java.util.List;
 @ExtendWith(TestRulesAPI.class)
 public class QmsProjectsTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
+    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
     private SoftAssertions softAssertions = new SoftAssertions();
     private ScenarioItem scenarioItem;
 
@@ -113,7 +115,7 @@ public class QmsProjectsTest extends TestUtil {
             String userIdentity = new AuthUserContextUtil().getAuthUserIdentity(user.getEmail());
             usersList.add(BidPackageProjectUserParameters.builder()
                 .userIdentity(userIdentity)
-                .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+                .customerIdentity(customerIdentity)
                 .build());
             projectUsersList.add(userIdentity);
         }
@@ -152,20 +154,20 @@ public class QmsProjectsTest extends TestUtil {
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         UserCredentials duplicateUser = UserUtil.getUser();
         String duplicateUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(duplicateUser.getEmail());
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(duplicateUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
         projectUsersList.add(duplicateUserIdentity);
 
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(duplicateUserIdentity)
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
@@ -209,17 +211,17 @@ public class QmsProjectsTest extends TestUtil {
 
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         usersList.add(BidPackageProjectUserParameters.builder()
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity("123456789012")
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity("")
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
@@ -493,7 +495,7 @@ public class QmsProjectsTest extends TestUtil {
         String firstUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(firstUserEmail);
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(firstUserEmail))
-            .customerIdentity(PropertiesContext.get("${env}.customer_identity"))
+            .customerIdentity(customerIdentity)
             .build());
 
         BidPackageProjectResponse bppResponse = QmsProjectResources.createProject(new HashMap<>(),
