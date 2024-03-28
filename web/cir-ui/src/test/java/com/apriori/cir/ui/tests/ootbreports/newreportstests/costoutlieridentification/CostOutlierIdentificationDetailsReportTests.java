@@ -1,6 +1,10 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.costoutlieridentification;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
+
+import com.apriori.cir.api.JasperReportSummary;
+import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
@@ -11,7 +15,9 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -19,12 +25,13 @@ import java.util.List;
 
 public class CostOutlierIdentificationDetailsReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS;
     private String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
     private List<String> partNames = Arrays.asList(
         JasperCirApiPartsEnum.SM_CLEVIS_2207240161.getPartName(),
         JasperCirApiPartsEnum.P_18_1.getPartName()
     );
+    private SoftAssertions softAssertions = new SoftAssertions();
     private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
@@ -33,6 +40,7 @@ public class CostOutlierIdentificationDetailsReportTests extends JasperApiAuthen
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("1954")
     @TestRail(id = 1954)
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
@@ -44,6 +52,7 @@ public class CostOutlierIdentificationDetailsReportTests extends JasperApiAuthen
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("1954")
     @TestRail(id = 1954)
     @Description("Cost metric options available & selected cost metric used in report generated (incl. report header)")
@@ -52,5 +61,25 @@ public class CostOutlierIdentificationDetailsReportTests extends JasperApiAuthen
             partNames,
             "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("1965")
+    @TestRail(id = 1965)
+    @Description("Validate details report generates")
+    public void testDetailsReportGenerates() {
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, JasperApiEnum.COST_OUTLIER_IDENTIFICATION.getEndpoint(), JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION);
+        JasperReportSummaryIncRawDataAsString jasperReportSummary = jasperApiUtils.genericTestCoreRawAsString("", "");
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().isEmpty()).isEqualTo(false);
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("Cost Outlier Identification")).isEqualTo(true);
+        softAssertions.assertThat(jasperApiUtils.getChartUuidCount(jasperReportSummary.getChartDataRawAsString())).isEqualTo(2);
+
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, reportsJsonFileName, reportsNameForInputControls);
+        JasperReportSummary jasperReportSummary1 = jasperApiUtils.genericTestCore("", "");
+        softAssertions.assertThat(jasperReportSummary1.getReportHtmlPart().toString().contains("Cost Outlier Identification Details")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummary1.getReportHtmlPart().toString().contains("Initial")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 }

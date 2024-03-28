@@ -25,6 +25,5 @@ public class FeatureResponse  {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
     private LocalDateTime updatedAt;
-    private Boolean workOrderStatusUpdatesEnabled;
     private Boolean bulkCostingEnabled;
 }

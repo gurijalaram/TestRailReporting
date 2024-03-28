@@ -1,8 +1,10 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.cycletimevaluetracking;
 
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
+
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.utils.JasperReportUtil;
@@ -19,6 +21,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 
 public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.CYCLE_TIME_VALUE_TRACKING_DETAILS;
     private Logger logger = LoggerFactory.getLogger(CycleTimeValueTrackingDetailsReportTests.class);
     // Export Set is not relevant for this report
     private String exportSetName = "";
@@ -41,6 +44,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends JasperApiAuthentic
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("26911")
     @TestRail(id = 26911)
     @Description("Verify Currency Code input control is working correctly")

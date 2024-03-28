@@ -15,6 +15,7 @@ production:
   url_part: ${env}
 
 sandbox:
+  name: Sandbox
   url_part: sandbox.${env}
 #==========================================================
 
@@ -47,7 +48,6 @@ global:
 default:
   aws_region: na-1
   users_csv_file: common-users.csv
-  customer_aws_account_type: dev
 ###########################
 #  Core services
   core_service_url_template: ${default.aws_region}.${env}.apriori.net
@@ -63,7 +63,7 @@ default:
     token_username: qa-automation-01
     token_email: qa-automation-01@apriori.com
     token_issuer: 2021 R1
-    token_subject: ${${customer}.token_subject}
+    token_subject: ${customer}.${env}.token_subject
     auth_application: CID
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%

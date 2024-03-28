@@ -1,6 +1,8 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.designoutlieridentification;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
+
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
@@ -12,6 +14,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -19,7 +22,7 @@ import java.util.List;
 
 public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.DESIGN_OUTLIER_IDENTIFICATION.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.DESIGN_OUTLIER_IDENTIFICATION;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.DESIGN_OUTLIER_IDENTIFICATION;
     private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
     private List<String> mostCommonPartNames = Arrays.asList(
         JasperCirApiPartsEnum.P_257280C.getPartName(),
@@ -33,6 +36,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("1997")
     @TestRail(id = 1997)
     @Description("Verify mass metric - finish mass - Design Outlier Identification Report")
@@ -44,6 +48,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("7385")
     @TestRail(id = 7385)
     @Description("Verify mass metric - rough mass - Design Outlier Identification Report")

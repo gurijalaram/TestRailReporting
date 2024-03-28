@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.dtcmetrics.sheetmetaldtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -29,7 +28,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -45,10 +43,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("7312")
     @TestRail(id = {7312})
     @Description("Validate report is available by navigation - Sheet Metal DTC Report")
@@ -80,10 +75,7 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("3038")
     @TestRail(id = {3038})
     @Description("Verify Export Sets are available for selection")
@@ -155,7 +147,8 @@ public class SheetMetalDtcReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("not applicable due to reports configuration")
+    @Tag(REPORTS)
+    @Disabled("Not applicable due to reports configuration")
     @TmsLink("7375")
     @TestRail(id = {7375})
     @Description("Verify save button functionality - Sheet Metal DTC Report")

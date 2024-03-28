@@ -6,13 +6,8 @@
 qa-test:
   name: qa-test
   aws_parameter_store_name: qa-test
-  application_name: cid
   base_url: https://na-1-install.${${customer}.cloud_reference_name}.qa-test.apriori.net/
-  installation_name: core-na-1 - Production
-  customer_identity: 6C1F8C1D4D75
-  widgets_customer_identity: 52IC4D3J98GN
-  secret_key: PG9E795ML3P4
-  user_identity: AK8JJH37GM54
+  multi_tenant_installation_name: core-na-1 - ${${deployment}.name}
 
   admin:
     ui_url: ${base_url}apriori/login
@@ -48,12 +43,9 @@ qa-test:
 int-core:
   name: int-core
   aws_parameter_store_name: int-blue
-  application_name: cid
-  customer_identity: H337GKD0LA0M
-  base_url: https://cost.apriori-internal.int.apriori.net/
-  installation_name: Core Services
+  base_url: https://cost.${${customer}.cloud_reference_name}.int.apriori.net/
+  multi_tenant_installation_name: Core Services
   secret_key: 65J1ID2B6LDG
-  user_identity: 8GFDIG229629
 
 
   core_service_url_template: core.int.apriori.net/
@@ -88,17 +80,10 @@ int-core:
 staging:
   name: staging
   aws_parameter_store_name: stage
-  customer_aws_account_type: staging
-  deployment_name: Production
-  installation_name: Production na-1
-  application_name: CID
-  ap_user_context:
-  base_url: https://na-1-v22-1-demo.apriori-internal.staging.apriori.net/
-  customer_identity: 7G0JGBE2N4GM
-  widgets_customer_identity: 2F265BC1MKAB
+  base_url: https://na-1-v22-1-demo.${${customer}.cloud_reference_name}.staging.apriori.net/
+  multi_tenant_installation_name: ${${deployment}.name} na-1
   #  TODO: uncomment for staging local run
   secret_key: K6JWVF8KV884
-  user_identity: 6AHL1HHGB15E
 
   cds:
     apriori_core_services_installation_identity: 2GIKI57NE7M4
@@ -139,7 +124,6 @@ onprem:
 migration:
   name: migration
   aws_parameter_store_name: mig-21-1
-  customer_identity: 3KED5H5BKN85
   secret_key: X0V4XXK2SF87
 
 ########################################################################################################################
@@ -168,11 +152,7 @@ local:
   base_url: http://localhost
   name: local
   secret_key: O85XMATZEMBO
-  customer_identity: 212B5ABD2F6C
-  application_name: cid
-  deployment_name: aPriori Internal Production
-  installation_name: US 1
-  user_identity: 4N630F61FGNG
+  multi_tenant_installation_name: US 1
 
   admin:
     ui_url: ${local.base_url}/apriori/login
@@ -267,11 +247,8 @@ local:
 development:
   name: development
   aws_parameter_store_name: development
-  application_name: cid
   base_url: https://cloud.na-1.development.apriori.net/
-  customer_identity: 212B5ABD2F6C
-  deployment_name: production
-  installation_name: Production
+  installation_name: ${${deployment}.name}
   secret_key: O85XMATZEMBO
   user_identity: 4N630F61FGNG
 

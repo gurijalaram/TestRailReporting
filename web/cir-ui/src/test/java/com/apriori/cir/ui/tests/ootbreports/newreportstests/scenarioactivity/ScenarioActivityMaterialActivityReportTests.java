@@ -1,10 +1,11 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.scenarioactivity;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -15,6 +16,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 
 public class ScenarioActivityMaterialActivityReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.SCENARIO_ACTIVITY_MATERIAL_ACTIVITY.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.SCENARIO_ACTIVITY_MATERIAL_ACTIVITY;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.SCENARIO_ACTIVITY_MATERIAL_ACTIVITY;
     private String exportSetName = ExportSetEnum.ROLL_UP_A.getExportSetName();
     private JasperApiUtils jasperApiUtils;
 
@@ -33,6 +35,7 @@ public class ScenarioActivityMaterialActivityReportTests extends JasperApiAuthen
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("28003")
     @TestRail(id = 28003)
     @Description("Input Controls - Trending period - Material Activity Report")

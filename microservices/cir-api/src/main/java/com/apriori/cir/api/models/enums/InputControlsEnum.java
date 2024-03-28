@@ -1,27 +1,33 @@
 package com.apriori.cir.api.models.enums;
 
 public enum InputControlsEnum {
+    APRIORI_COST_MAX("aPrioriCostMax"),
+    APRIORI_COST_MIN("aPrioriCostMin"),
+    APRIORI_MASS_MAX("aPrioriMassMax"),
+    APRIORI_MASS_MIN("aPrioriMassMin"),
     ASSEMBLY_SELECT("assemblySelect"),
-
-    CURRENCY("currencyCode"),
     COMPONENT_COST_CURRENCY("componentCostCurrencyCode"),
+    COMPONENT_COST_MAX("componentCostMax"),
+    COMPONENT_COST_MIN("componentCostMin"),
     COMPONENT_SELECT("componentSelect"),
     COST_METRIC("costMetric"),
-    END_DATE("endDate"),
-    EXPORT_SET_NAME("exportSetName"),
-    MASS_METRIC("massMetric"),
-    PROCESS_GROUP("processGroup"),
+    CURRENCY("currencyCode"),
     DTC_SCORE("dtcScore"),
+    EARLIEST_EXPORT_DATE("earliestExportDate"),
+    END_DATE("endDate"),
+    EXPORT_DATE("exportDate"),
+    EXPORT_SET_NAME("exportSetName"),
+    LATEST_COST_DATE("latestCostDate"),
+    LATEST_EXPORT_DATE("latestExportDate"),
+    MASS_METRIC("massMetric"),
     MINIMUM_ANNUAL_SPEND("annualSpendMin"),
+    PERCENT_DIFFERENCE_THRESHOLD("percentDifferenceThreshold"),
+    PROCESS_GROUP("processGroup"),
+    PROJECT_ROLLUP("projectRollup"),
     SORT_ORDER("sortOrder"),
     START_DATE("startDate"),
-    TRENDING_PERIOD("trendingPeriod"),
-    PROJECT_ROLLUP("projectRollup"),
-    LATEST_EXPORT_DATE("latestExportDate"),
-    EARLIEST_EXPORT_DATE("earliestExportDate"),
-    EXPORT_DATE("exportDate"),
     ROLLUP("rollup"),
-    LATEST_COST_DATE("latestCostDate");
+    TRENDING_PERIOD("trendingPeriod");
 
     private final String inputControlId;
 

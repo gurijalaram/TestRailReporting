@@ -354,7 +354,7 @@ public class AgentService {
                 agentConnectionOptions.setReconnectionInterval(3);
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
                 agentConnectionOptions.setPort(agentPort.getPort());
-                agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
+                agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder(AgentConstants.REMOTE_WC_INSTALL_FOLDER));
                 agentConnectionOptions.setRootFolderPath("C:" + AgentConstants.REMOTE_ROOT_FILE_PATH_FOLDER);
                 agentConnectionOptions.setPlmUser(agentCredentials.getPlmUser());
                 agentConnectionOptions.setPlmPassword(agentCredentials.getPlmPassword());
@@ -362,7 +362,7 @@ public class AgentService {
                 agentConnectionOptions.setMaxPartsToReturn(PropertiesContext.get("ci-connect.maximum_parts"));
                 break;
             case "teamcenter":
-                agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
+                agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder(AgentConstants.REMOTE_TC_INSTALL_FOLDER));
                 agentConnectionOptions.setPort(agentPort.getPort());
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
                 agentConnectionOptions.setHostName(PropertiesContext.get("ci-connect.teamcenter.host_name"));
@@ -372,7 +372,7 @@ public class AgentService {
                 agentConnectionOptions.setMaxPartsToReturn(PropertiesContext.get("ci-connect.maximum_parts"));
                 break;
             case "filesystem":
-                agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder());
+                agentConnectionOptions.setInstallDirectory("C:" + this.getInstallFolder(AgentConstants.REMOTE_FS_INSTALL_FOLDER));
                 agentConnectionOptions.setPort(agentPort.getPort());
                 agentConnectionOptions.setAuthToken(PropertiesContext.get("ci-connect.authorization_key"));
                 agentConnectionOptions.setRootFolderPath(("C:" + String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"))));
@@ -625,16 +625,27 @@ public class AgentService {
         String installFolder = StringUtils.EMPTY;
         switch (PropertiesContext.get("ci-connect.agent_type")) {
             case "windchill":
-                installFolder = String.format(AgentConstants.REMOTE_WC_INSTALL_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), PropertiesContext.get("env"));
+                installFolder = getInstallFolder(AgentConstants.REMOTE_WC_INSTALL_FOLDER);
                 break;
             case "teamcenter":
-                installFolder = String.format(AgentConstants.REMOTE_TC_INSTALL_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), PropertiesContext.get("env"));
+                installFolder = getInstallFolder(AgentConstants.REMOTE_TC_INSTALL_FOLDER);
                 break;
             case "filesystem":
-                installFolder = String.format(AgentConstants.REMOTE_FS_INSTALL_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), PropertiesContext.get("env"));
+                installFolder = getInstallFolder(AgentConstants.REMOTE_FS_INSTALL_FOLDER);
                 break;
         }
         return installFolder;
+    }
+
+    /**
+     * Get installation folder for each agent type
+     *
+     * @param agentInstallFolder - Agent type folder
+     * @return path of folder from server
+     */
+    private String getInstallFolder(String agentInstallFolder) {
+        return String.format(agentInstallFolder, PropertiesContext.get("env"), PropertiesContext.get("customer"),
+            PropertiesContext.get("env") + "-" + PropertiesContext.get("customer"));
     }
 
     /**

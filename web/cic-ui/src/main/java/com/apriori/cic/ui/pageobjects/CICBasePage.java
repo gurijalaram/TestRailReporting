@@ -17,6 +17,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 public class CICBasePage extends LoadableComponent<CICBasePage> {
 
     protected static final String OPTIONS_CONTENT_OPEN_DROPDOWN_CSS = "div[class^='ss-content ss-'][class$='ss-open'] div[class='ss-list']";
+    protected static final String OPTIONS_CONTAINS_TEXT = "//div[contains(@class, 'ss-open')]//div[@class='ss-list']//div[contains(text(),'%s')]";
     protected static final String PARENT_ELEMENT_CSS = "div[id^='root_pagemashupcontainer-1_navigation-']";
     protected static final long WAIT_TIME = 30;
     protected static final long DEFAULT_WAIT_TIME = 3;

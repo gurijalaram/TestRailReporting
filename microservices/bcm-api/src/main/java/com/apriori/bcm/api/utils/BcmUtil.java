@@ -10,8 +10,8 @@ import com.apriori.bcm.api.models.request.WorksheetInputRowsRequest;
 import com.apriori.bcm.api.models.request.WorksheetRequest;
 import com.apriori.bcm.api.models.response.AnalysisInput;
 import com.apriori.bcm.api.models.response.ErrorResponse;
+import com.apriori.bcm.api.models.response.InputRowPostResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
-import com.apriori.bcm.api.models.response.WorkSheetInputRowResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -80,7 +80,7 @@ public class BcmUtil extends TestUtil {
      * @return response object
      */
 
-    public ResponseWrapper<WorkSheetInputRowResponse> createWorkSheetInputRow(String componentIdentity, String scenarioIdentity, String worksheetIdentity) {
+    public ResponseWrapper<InputRowPostResponse> createWorkSheetInputRow(String componentIdentity, String scenarioIdentity, String worksheetIdentity) {
         WorksheetInputRowsRequest body = WorksheetInputRowsRequest
             .builder()
             .inputRow(Inputrow
@@ -90,7 +90,7 @@ public class BcmUtil extends TestUtil {
                 .build())
             .build();
         final RequestEntity requestEntity =
-            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_INPUT_NAME, WorkSheetInputRowResponse.class)
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_INPUT_NAME, InputRowPostResponse.class)
                 .body(body)
                 .inlineVariables(worksheetIdentity)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
@@ -261,6 +261,33 @@ public class BcmUtil extends TestUtil {
                 .groupItems(Collections.singletonList(GroupItems.builder()
                     .inputRowIdentity(inputRowIdentity)
                     .build()))
+                .build())
+            .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Costs worksheet
+     *
+     * @param klass - class
+     * @param worksheetIdentity - worksheet identity
+     * @param expectedResponseCode - expected response code
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> costWorksheet(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode) {
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.COST_WORKSHEET, klass)
+            .inlineVariables(worksheetIdentity)
+            .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    public <T> ResponseWrapper<T> addMultipleInputRows(Class<T> klass, String worksheetIdentity, String componentIdentity, String scenarioIdentity, String componentIdentity2, String scenarioIdentity2, Integer expectedResponseCode) {
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.MULTIPLE_ROWS, klass)
+            .inlineVariables(worksheetIdentity)
+            .body(AddInputsRequest.builder()
+                .groupItems(Arrays.asList(Inputrow.builder().componentIdentity(componentIdentity).scenarioIdentity(scenarioIdentity).build(),
+                    Inputrow.builder().componentIdentity(componentIdentity2).scenarioIdentity(scenarioIdentity2)
+                        .build()))
                 .build())
             .expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).post();

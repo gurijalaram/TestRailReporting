@@ -1,6 +1,5 @@
 package com.apriori.cir.ui.tests.ootbreports.designoutlieridentification;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ON_PREM;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REPORTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -20,12 +19,10 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 
 public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
 
-    private DesignOutlierIdentificationReportPage designOutlierIdentificationReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
 
@@ -122,15 +119,12 @@ public class DesignOutlierIdentificationDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tags({
-        @Tag(REPORTS),
-        @Tag(ON_PREM)
-    })
+    @Tag(REPORTS)
     @TmsLink("1995")
     @TestRail(id = {1995})
     @Description("Export date lists all available versions from selected export set(s)")
     public void testExportDateAvailability() {
-        designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
+        DesignOutlierIdentificationReportPage designOutlierIdentificationReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName(),

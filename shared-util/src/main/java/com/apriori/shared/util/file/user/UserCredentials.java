@@ -1,6 +1,7 @@
 package com.apriori.shared.util.file.user;
 
 import com.apriori.shared.util.models.AuthorizationUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 
 import com.auth0.jwt.JWT;
 
@@ -104,7 +105,7 @@ public class UserCredentials implements Serializable {
     }
 
     public UserCredentials generateCloudContext() {
-        this.cloudContext = cloudContext != null ? cloudContext : new AuthorizationUtil().getAuthTargetCloudContext(this);
+        this.cloudContext = cloudContext != null ? cloudContext : CustomerUtil.getAuthTargetCloudContext(this);
         return this;
     }
 }

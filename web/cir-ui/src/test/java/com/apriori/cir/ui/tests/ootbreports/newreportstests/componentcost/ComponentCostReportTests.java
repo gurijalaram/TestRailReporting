@@ -1,6 +1,8 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.componentcost;
 
-import com.apriori.cir.api.enums.CirApiEnum;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
+
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -10,11 +12,12 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.COMPONENT_COST.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.COMPONENT_COST;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.COMPONENT_COST;
     private String exportSetName = ExportSetEnum.TOP_LEVEL.getExportSetName();
     private JasperApiUtils jasperApiUtils;
 
@@ -24,6 +27,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("3329")
     @TestRail(id = 3329)
     @Description("Verify Currency Code input control is working correctly")

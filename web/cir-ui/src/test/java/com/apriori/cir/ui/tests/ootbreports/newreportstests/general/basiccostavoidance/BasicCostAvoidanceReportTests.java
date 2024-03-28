@@ -1,12 +1,13 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.general.basiccostavoidance;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.enums.CirApiEnum;
+import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
@@ -16,13 +17,14 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 public class BasicCostAvoidanceReportTests extends JasperApiAuthenticationUtil {
     private String reportsJsonFileName = JasperApiEnum.BASIC_COST_AVOIDANCE.getEndpoint();
-    private CirApiEnum reportsNameForInputControls = CirApiEnum.BASIC_COST_AVOIDANCE;
+    private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.BASIC_COST_AVOIDANCE;
     // Export set is not relevant for this report
     private String exportSetName = "";
     private JasperApiUtils jasperApiUtils;
@@ -33,6 +35,7 @@ public class BasicCostAvoidanceReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Tag(JASPER_API)
     @TmsLink("8948")
     @TestRail(id = 8948)
     @Description("Input Controls - Currency Code")
