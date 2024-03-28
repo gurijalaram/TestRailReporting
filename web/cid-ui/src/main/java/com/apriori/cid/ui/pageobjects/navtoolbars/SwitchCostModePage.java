@@ -1,13 +1,12 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
-import lombok.extern.slf4j.Slf4j;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.cid.ui.pageobjects.common.ModalDialogController;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.web.app.util.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,9 +14,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class SwitchCostModePage extends LoadableComponent<SwitchCostModePage> {
@@ -39,6 +35,7 @@ public class SwitchCostModePage extends LoadableComponent<SwitchCostModePage> {
         this.driver = driver;
         this.modalDialogController = new ModalDialogController(driver);
         this.pageUtils = new PageUtils(driver);
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
