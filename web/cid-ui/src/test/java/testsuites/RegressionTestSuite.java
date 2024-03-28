@@ -13,6 +13,7 @@ import com.apriori.cid.ui.tests.evaluate.CostHistoryTests;
 import com.apriori.cid.ui.tests.evaluate.CostScenarioTests;
 import com.apriori.cid.ui.tests.evaluate.DeleteTests;
 import com.apriori.cid.ui.tests.evaluate.MachiningStrategyTests;
+import com.apriori.cid.ui.tests.evaluate.ManualCostingTests;
 import com.apriori.cid.ui.tests.evaluate.NewScenarioNameTests;
 import com.apriori.cid.ui.tests.evaluate.OpenUnknownComponentsTests;
 import com.apriori.cid.ui.tests.evaluate.ProcessGroupsTests;
@@ -126,7 +127,8 @@ import org.junit.platform.suite.api.Suite;
     SustainabilityFieldsTests.class,
     CostHistoryTests.class,
     PublishAssembliesTests.class,
-    BulkCostingPageTests.class
+    BulkCostingPageTests.class,
+    ManualCostingTests.class
 })
 public class RegressionTestSuite {
 }
