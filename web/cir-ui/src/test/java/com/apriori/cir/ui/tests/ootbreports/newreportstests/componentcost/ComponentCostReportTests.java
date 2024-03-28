@@ -7,6 +7,7 @@ import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.request.ReportRequest;
 import com.apriori.cir.api.models.response.InputControl;
+import com.apriori.cir.api.utils.ComponentCostComponentTypeRootItem;
 import com.apriori.cir.api.utils.JasperReportUtil;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
@@ -138,6 +139,8 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
         // get input controls, check at least 12 export sets are there (my data)
+        ComponentCostComponentTypeRootItem inputControlsPartSelected = jasperReportUtil.getInputControlsCC(JasperApiInputControlsPathEnum.COMPONENT_COST_COMPONENT_SELECTION);
+
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
         List<String> exportSetOptions = inputControls.getExportSetName().getAllOptions();
         softAssertions.assertThat(exportSetOptions.size() >= 12).isEqualTo(true);

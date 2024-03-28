@@ -21,12 +21,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,6 +67,100 @@ public class JasperReportUtil {
         ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
 
         return responseResponseWrapper.getResponseEntity();
+    }
+
+    public ComponentCostComponentTypeRootItem getInputControlsCC(JasperApiInputControlsPathEnum value) {
+        ComponentCostPayloadInputsItem exportSetNameItem = ComponentCostPayloadInputsItem.builder()
+            .limit(100)
+            .name("exportSetName")
+            .offset(0)
+            .value("~NOTHING~")
+            .build();
+
+        ComponentCostPayloadInputsItem componentTypeItem = ComponentCostPayloadInputsItem.builder()
+            .limit(100)
+            .name("componentType")
+            .offset(0)
+            //.value("["+""+"assembly"+""+"]")
+            .value("[assembly]")
+            .build();
+
+        ComponentCostPayloadInputsItem latestExportDateItem = ComponentCostPayloadInputsItem.builder()
+            .limit(100)
+            .name("latestExportDate")
+            .offset(0)
+            .value("")
+            .build();
+
+        ComponentCostPayloadInputsItem createdByItem = ComponentCostPayloadInputsItem.builder()
+            .limit(100)
+            .name("createdBy")
+            .offset(0)
+            .value("~NOTHING~")
+            .build();
+
+        ComponentCostPayloadInputsItem lastModifiedByItem = ComponentCostPayloadInputsItem.builder()
+            .limit(100)
+            .name("lastModifiedBy")
+            .offset(0)
+            .value("~NOTHING~")
+            .build();
+
+        ComponentCostPayloadInputsItem componentNumberItem = ComponentCostPayloadInputsItem.builder()
+            .limit(100)
+            .name("componentNumber")
+            .offset(0)
+            .value("%")
+            .build();
+
+        ComponentCostPayloadInputsItem scenarioNameItem = ComponentCostPayloadInputsItem.builder()
+            .limit(100)
+            .name("scenarioName")
+            .offset(0)
+            .value("~NOTHING~")
+            .build();
+
+        ComponentCostPayloadInputsItem componentSelectItem = ComponentCostPayloadInputsItem.builder()
+            .limit(100)
+            .name("componentSelect")
+            .offset(0)
+            .value("1")
+            .build();
+
+        ComponentCostPayloadInputsItem componentCostCurrencyCodeItem = ComponentCostPayloadInputsItem.builder()
+            .limit(100)
+            .name("componentCostCurrencyCode")
+            .offset(0)
+            .value("GBP")
+            .build();
+
+        RequestEntity requestEntity = new RequestEntity()
+            .body(ComponentCostPayloadInputs.builder()
+                .exportSetName(exportSetNameItem)
+                .componentType(componentTypeItem)
+                .latestExportDate(latestExportDateItem)
+                .createdBy(createdByItem)
+                .lastModifiedBy(lastModifiedByItem)
+                .componentNumber(componentNumberItem)
+                .scenarioName(scenarioNameItem)
+                .componentSelect(componentSelectItem)
+                .componentCostCurrencyCode(componentCostCurrencyCodeItem)
+                .build()
+            )
+            .endpoint(value)
+            .returnType(ComponentCostComponentTypeRootItem.class)
+            .headers(initHeadersWithJSession())
+            //.inlineVariables("%20")
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .urlEncodingEnabled(false);
+
+        if (value.toString().startsWith("SHEET")) {
+            requestEntity.inlineVariables("%20", "%20");
+        }
+
+        //ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
+
+        return (ComponentCostComponentTypeRootItem) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     public JasperReportSummary generateJasperReportSummary(ReportRequest reportRequest) {
