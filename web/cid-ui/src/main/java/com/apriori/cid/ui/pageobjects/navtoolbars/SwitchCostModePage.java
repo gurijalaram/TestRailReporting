@@ -1,5 +1,7 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
+import lombok.extern.slf4j.Slf4j;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.apriori.cid.ui.pageobjects.common.ModalDialogController;
@@ -17,8 +19,8 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class SwitchCostModePage extends LoadableComponent<SwitchCostModePage> {
-    private static final Logger logger = LoggerFactory.getLogger(SwitchCostModePage.class);
 
     @FindBy(xpath = "//h2[.='Are you sure?']")
     private WebElement switchCostModeHeader;
@@ -37,7 +39,6 @@ public class SwitchCostModePage extends LoadableComponent<SwitchCostModePage> {
         this.driver = driver;
         this.modalDialogController = new ModalDialogController(driver);
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
