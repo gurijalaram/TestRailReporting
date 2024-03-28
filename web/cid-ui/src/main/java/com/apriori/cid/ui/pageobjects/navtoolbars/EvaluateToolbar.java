@@ -48,6 +48,9 @@ public class EvaluateToolbar extends ExploreToolbar {
     @FindBy(css = "div[id='qa-sub-header-save-as-button'] button")
     private WebElement saveAsButton;
 
+    @FindBy(css = "div[data-testid='apriori-alert']")
+    private WebElement saveLabel;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -184,8 +187,8 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return - Change Summary PO
      */
     public ChangeSummaryPage changeSummaryManual() {
-        pageUtils.waitForElementToAppear(saveAsButton);
-        pageUtils.mouseMove(saveAsButton);
+        pageUtils.waitForElementToAppear(saveLabel);
+        pageUtils.mouseMove(saveLabel);
         return new ChangeSummaryPage(driver);
     }
 
