@@ -48,10 +48,9 @@ public class BcmUtil extends TestUtil {
     }
 
     /**
-     *
      * request to create worksheet
-     * @param name - name of worksheet
      *
+     * @param name - name of worksheet
      * @return response object
      */
 
@@ -72,7 +71,7 @@ public class BcmUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-    public ResponseWrapper<WorkSheetResponse> createWorksheetWithEmail(String name,String userEmail) {
+    public ResponseWrapper<WorkSheetResponse> createWorksheetWithEmail(String name, String userEmail) {
 
         WorksheetRequest body = WorksheetRequest
             .builder()
@@ -82,9 +81,9 @@ public class BcmUtil extends TestUtil {
                 .build())
             .build();
 
-            requestEntityUtil = RequestEntityUtilBuilder
-                .useCustomUser(new UserCredentials(userEmail, null))
-                .useApUserContextInRequests();
+        requestEntityUtil = RequestEntityUtilBuilder
+            .useCustomUser(new UserCredentials(userEmail, null))
+            .useApUserContextInRequests();
 
         final RequestEntity requestEntity =
             requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)
@@ -95,8 +94,9 @@ public class BcmUtil extends TestUtil {
 
     /**
      * adding part (component) int existing worksheet
+     *
      * @param componentIdentity - componentIdentity of added part
-     * @param scenarioIdentity - scenarioIdentity of added part
+     * @param scenarioIdentity  - scenarioIdentity of added part
      * @param worksheetIdentity - param to  the request call
      * @return response object
      */
@@ -121,6 +121,7 @@ public class BcmUtil extends TestUtil {
 
     /**
      * GET worksheet rows
+     *
      * @param worksheetIdentity - identity of the worksheet
      * @return
      */
@@ -170,10 +171,10 @@ public class BcmUtil extends TestUtil {
     /**
      * Updating worksheet request
      *
-     * @param name - worksheet name
-     * @param description - worksheet description
-     * @param klass - class
-     * @param worksheetIdentity - worksheet identity
+     * @param name                 - worksheet name
+     * @param description          - worksheet description
+     * @param klass                - class
+     * @param worksheetIdentity    - worksheet identity
      * @param expectedResponseCode = expected response code
      * @return response object
      */
@@ -198,11 +199,11 @@ public class BcmUtil extends TestUtil {
     /**
      * Adding analysis inputs for an input row
      *
-     * @param klass - class
-     * @param processGroupName - process group name
-     * @param worksheetIdentity - identity of worksheet
+     * @param klass                - class
+     * @param processGroupName     - process group name
+     * @param worksheetIdentity    - identity of worksheet
      * @param expectedResponseCode - expected response code
-     * @param inputRowIdentity - identity of input row
+     * @param inputRowIdentity     - identity of input row
      * @return response object
      */
     public <T> ResponseWrapper<T> addAnalysisInputs(Class<T> klass, String processGroupName, String worksheetIdentity, Integer expectedResponseCode, String inputRowIdentity) {
@@ -222,8 +223,8 @@ public class BcmUtil extends TestUtil {
     /**
      * GET worksheet by its identity
      *
-     * @param klass - class
-     * @param worksheetIdentity - worksheet identity
+     * @param klass                - class
+     * @param worksheetIdentity    - worksheet identity
      * @param expectedResponseCode = expected response code
      * @return response object
      */
@@ -254,8 +255,8 @@ public class BcmUtil extends TestUtil {
     /**
      * Deletes worksheet
      *
-     * @param klass - class
-     * @param worksheetIdentity - worksheet identity
+     * @param klass                - class
+     * @param worksheetIdentity    - worksheet identity
      * @param expectedResponseCode - expected response code
      * @return response object
      */
@@ -269,9 +270,9 @@ public class BcmUtil extends TestUtil {
     /**
      * Edits public input row
      *
-     * @param klass - class
-     * @param worksheetIdentity - worksheet identity
-     * @param inputRowIdentity - identity of input row
+     * @param klass                - class
+     * @param worksheetIdentity    - worksheet identity
+     * @param inputRowIdentity     - identity of input row
      * @param expectedResponseCode - expected response code
      * @return response object
      */
@@ -290,8 +291,8 @@ public class BcmUtil extends TestUtil {
     /**
      * Costs worksheet
      *
-     * @param klass - class
-     * @param worksheetIdentity - worksheet identity
+     * @param klass                - class
+     * @param worksheetIdentity    - worksheet identity
      * @param expectedResponseCode - expected response code
      * @return response object
      */
