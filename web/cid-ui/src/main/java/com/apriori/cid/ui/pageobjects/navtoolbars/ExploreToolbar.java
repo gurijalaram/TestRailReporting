@@ -89,7 +89,6 @@ public class ExploreToolbar extends MainNavBar {
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(copyButton);
         pageUtils.waitForElementToAppear(deleteButton);
-        pageUtils.waitForElementToAppear(costButton);
     }
 
     /**
