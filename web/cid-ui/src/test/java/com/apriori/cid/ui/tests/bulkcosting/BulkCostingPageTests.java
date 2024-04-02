@@ -7,9 +7,9 @@ import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
-import com.apriori.cid.ui.pageobjects.projects.ProjectsPage;
+import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
+import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -26,25 +26,28 @@ import org.junit.jupiter.api.Test;
 
 public class BulkCostingPageTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
-    private ProjectsPage projectsPage;
+    private BulkCostingPage bulkCostingPage;
 
     @Test
     @TestRail(id = {29187, 29874, 29942})
     @Description("bulk costing page visibility, adding and delete worksheet")
     public void bulkCostingAddAndDeleteWorksheet() {
+        UserCredentials userCredentials = UserUtil.getUser();
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
-        projectsPage = loginPage
-            .login(UserUtil.getUser())
-            .clickProjectsButton();
+        bulkCostingPage = loginPage
+            .login(userCredentials)
+            .clickBulkCostingButton();
 
-        soft.assertThat(projectsPage.isListOfWorksheetsPresent()).isTrue();
+        soft.assertThat(bulkCostingPage.isListOfWorksheetsPresent()).isTrue();
 
         String name = new GenerateStringUtil().saltString("name");
         BcmUtil bcmUtil = new BcmUtil();
-        ResponseWrapper<WorkSheetResponse> response = bcmUtil.createWorksheet(name);
+        bcmUtil.createWorksheet(name,userCredentials.getEmail());
 
+        bulkCostingPage.selectAndDeleteSpecificBulkAnalysis(name);
+        soft.assertThat(bulkCostingPage.isWorksheetIsPresent(name)).isFalse();
         soft.assertAll();
     }
 

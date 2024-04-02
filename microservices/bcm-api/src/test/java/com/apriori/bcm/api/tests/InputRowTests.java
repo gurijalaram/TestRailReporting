@@ -47,7 +47,7 @@ public class InputRowTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"),null)
             .getResponseEntity()
             .getIdentity();
 
@@ -73,7 +73,7 @@ public class InputRowTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"),null)
             .getResponseEntity()
             .getIdentity();
 
@@ -94,7 +94,7 @@ public class InputRowTests extends BcmUtil {
     @TestRail(id = 29740)
     @Description("Verify getting worksheet rows for empty worksheet with no rows")
     public void verifyGetWorksheetRowsWithoutRows() {
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"),null)
             .getResponseEntity()
             .getIdentity();
 
@@ -116,7 +116,7 @@ public class InputRowTests extends BcmUtil {
                 .getResponseEntity().getItems().stream().filter(item -> item.getScenarioPublished().equals(true))
                 .findFirst().orElse(null);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"),null)
             .getResponseEntity()
             .getIdentity();
 
@@ -150,7 +150,7 @@ public class InputRowTests extends BcmUtil {
         ScenarioItem scenario1 = scenarioItem.get(0);
         ScenarioItem scenario2 = scenarioItem.get(1);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"),null)
             .getResponseEntity()
             .getIdentity();
 
