@@ -44,7 +44,7 @@ public class BulkCostingPageTests extends TestBaseUI {
 
         String name = new GenerateStringUtil().saltString("name");
         BcmUtil bcmUtil = new BcmUtil();
-        bcmUtil.createWorksheet(name,userCredentials.getEmail());
+        bcmUtil.createWorksheetWithEmail(name,userCredentials.getEmail());
 
         bulkCostingPage.selectAndDeleteSpecificBulkAnalysis(name);
         soft.assertThat(bulkCostingPage.isWorksheetIsPresent(name)).isFalse();

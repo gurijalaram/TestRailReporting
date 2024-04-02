@@ -55,7 +55,7 @@ public class BcmUtil extends TestUtil {
      * @return response object
      */
 
-    public ResponseWrapper<WorkSheetResponse> createWorksheet(String name,String userEmail) {
+    public ResponseWrapper<WorkSheetResponse> createWorksheet(String name) {
 
         WorksheetRequest body = WorksheetRequest
             .builder()
@@ -65,11 +65,26 @@ public class BcmUtil extends TestUtil {
                 .build())
             .build();
 
-        if (requestEntityUtil == null) {
+        final RequestEntity requestEntity =
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)
+                .body(body)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    public ResponseWrapper<WorkSheetResponse> createWorksheetWithEmail(String name,String userEmail) {
+
+        WorksheetRequest body = WorksheetRequest
+            .builder()
+            .worksheet(Worksheet
+                .builder()
+                .name(name)
+                .build())
+            .build();
+
             requestEntityUtil = RequestEntityUtilBuilder
                 .useCustomUser(new UserCredentials(userEmail, null))
                 .useApUserContextInRequests();
-        }
 
         final RequestEntity requestEntity =
             requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)

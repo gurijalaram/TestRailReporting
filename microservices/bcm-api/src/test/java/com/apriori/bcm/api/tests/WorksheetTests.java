@@ -36,7 +36,7 @@ public class WorksheetTests extends BcmUtil {
     public void verifyWorksheetCreation() {
         String name = new GenerateStringUtil().saltString("name");
 
-        ResponseWrapper<WorkSheetResponse> response = createWorksheet(name,null);
+        ResponseWrapper<WorkSheetResponse> response = createWorksheet(name);
         worksheetIdentity = response.getResponseEntity().getIdentity();
         softAssertions.assertThat(response.getResponseEntity().getName()).isEqualTo(name);
         softAssertions.assertAll();
@@ -48,7 +48,7 @@ public class WorksheetTests extends BcmUtil {
     public void verifyWorksheetCreationAlreadyExistError() {
         String name = new GenerateStringUtil().saltString("name");
 
-        ResponseWrapper<WorkSheetResponse> response = createWorksheet(name,null);
+        ResponseWrapper<WorkSheetResponse> response = createWorksheet(name);
         worksheetIdentity = response.getResponseEntity().getIdentity();
         softAssertions.assertThat(response.getResponseEntity().getName()).isEqualTo(name);
 
@@ -63,7 +63,7 @@ public class WorksheetTests extends BcmUtil {
     public void verifyWorksheetList() {
         String name = new GenerateStringUtil().saltString("name");
 
-        worksheetIdentity = createWorksheet(name,null).getResponseEntity().getIdentity();
+        worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
 
         WorkSheets worksheetsList = getWorksheets().getResponseEntity();
         softAssertions.assertThat(worksheetsList.getTotalItemCount()).isGreaterThanOrEqualTo(1);
@@ -76,7 +76,7 @@ public class WorksheetTests extends BcmUtil {
     @Description("Verify getting specific worksheet")
     public void verifyGetSpecificWorkSheet() {
         ResponseWrapper<WorkSheetResponse> worksheetCreated =
-            createWorksheet(GenerateStringUtil.saltString("name"),null);
+            createWorksheet(GenerateStringUtil.saltString("name"));
         worksheetIdentity = worksheetCreated.getResponseEntity().getIdentity();
 
         ResponseWrapper<WorkSheetResponse> worksheetGet =

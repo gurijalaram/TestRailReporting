@@ -17,6 +17,8 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     private WebElement deleteButton;
     @FindBy(xpath = "//button[contains(@type,'submit')][contains(.,'Confirm')]")
     private WebElement confirmDeleteButton;
+    @FindBy(xpath = "//div[contains(@data-testid,'bulk-analysis-explorer')]]")
+    private WebElement bulkAnalysisPage;
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -28,6 +30,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     @Override
     protected void isLoaded() throws Error {
         driver.getCurrentUrl().contains("/bulk-analysis");
+        pageUtils.isElementDisplayed(bulkAnalysisPage);
     }
 
     public BulkCostingPage(WebDriver driver) {
