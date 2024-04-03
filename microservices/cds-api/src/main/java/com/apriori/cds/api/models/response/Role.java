@@ -27,6 +27,8 @@ import java.util.List;
 public class Role {
     private String identity;
     private String createdBy;
+    private String updatedBy;
+    private String updatedAt;
     private String name;
     private String description;
     private List<Application> applications;
