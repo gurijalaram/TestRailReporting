@@ -110,7 +110,7 @@ public class NotificationTests extends WorkflowTestUtil {
         attachReportTab = notificationsPart.selectAttachReport().selectReportName();
         softAssertions.assertThat(attachReportTab.getEmptyReportLbl().getText()).isEqualTo("No report configuration defined.");
 
-        workFlowData.getNotificationsData().setReportName(ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY.getReportName());
+        workFlowData.getNotificationsData().setReportName(ReportsEnum.DFM_MULTIPLE_COMPONENT_SUMMARY.getReportName());
         attachReportTab = notificationsPart.selectAttachReport().selectReportName();
         softAssertions.assertThat(attachReportTab.getCostMetricDdl().isDisplayed()).isTrue();
     }
