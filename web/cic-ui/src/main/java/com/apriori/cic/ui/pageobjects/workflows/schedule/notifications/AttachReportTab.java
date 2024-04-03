@@ -2,6 +2,9 @@ package com.apriori.cic.ui.pageobjects.workflows.schedule.notifications;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.cic.api.enums.ReportsEnum;
+import com.apriori.cic.ui.enums.FieldState;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -47,6 +50,20 @@ public class AttachReportTab extends NotificationsPart {
     }
 
     /**
+     * select Report name
+     *
+     * @param reportsEnum - ReportsEnum
+     * @return - current class object
+     */
+    public AttachReportTab selectReportName(ReportsEnum reportsEnum) {
+        pageUtils.waitUntilDropdownOptionsLoaded(getReportNameDropdownElement().findElement(By.tagName("select")));
+        pageUtils.waitForElementAndClick(getReportNameDropdownElement());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, reportsEnum.getReportName())));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
+    }
+
+    /**
      * Select currency code
      *
      * @return AttachReport object
@@ -66,10 +83,10 @@ public class AttachReportTab extends NotificationsPart {
      *
      * @return AttachReport object
      */
-    public AttachReportTab selectCostRounding() {
+    public AttachReportTab selectCostRounding(FieldState fieldState) {
         pageUtils.waitForElementAppear(reportConfigurationLbl);
         pageUtils.waitForElementAndClick(getCostRoundingDdl());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getReportCostRounding())));
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, fieldState)));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }

@@ -10,8 +10,7 @@
         "identity",
         "createdBy",
         "createdAt",
-        "bulkCostingEnabled",
-        "workOrderStatusUpdatesEnabled"
+        "bulkCostingEnabled"
       ],
       "optional": [
         "updatedAt"
@@ -27,9 +26,6 @@
           "type": "string"
         },
         "bulkCostingEnabled": {
-          "type": "boolean"
-        },
-        "workOrderStatusUpdatesEnabled": {
           "type": "boolean"
         },
         "updatedAt": {

@@ -14,6 +14,7 @@ import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.AuthorizationUtil;
+import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.EmailMessage;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ import java.util.Map;
 @Slf4j
 public class EmailService {
 
-    private final String cloudContext = new AuthorizationUtil().getAuthTargetCloudContext(UserUtil.getUser("admin"));
+    private final String cloudContext = CustomerUtil.getAuthTargetCloudContext(UserUtil.getUser("admin"));
     private Map<String, String> headers = new HashMap<String, String>() {{
             put("ap-cloud-context", cloudContext);
         }};

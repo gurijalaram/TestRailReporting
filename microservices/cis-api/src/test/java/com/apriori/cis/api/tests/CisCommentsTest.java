@@ -6,6 +6,7 @@ import com.apriori.cis.api.controller.CisDiscussionResources;
 import com.apriori.cis.api.models.request.discussion.InternalCommentRequest;
 import com.apriori.cis.api.models.response.bidpackage.CisErrorMessage;
 import com.apriori.cis.api.models.response.scenariodiscussion.DiscussionCommentResponse;
+import com.apriori.cis.api.models.response.scenariodiscussion.DiscussionCommentsBulkResponse;
 import com.apriori.cis.api.models.response.scenariodiscussion.DiscussionCommentsResponse;
 import com.apriori.cis.api.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.cis.api.util.CISTestUtil;
@@ -57,7 +58,7 @@ public class CisCommentsTest extends CISTestUtil {
     }
 
     @Test
-    @TestRail(id = {13291, 13292, 13295})
+    @TestRail(id = {13291, 13292, 13295, 14154})
     @Description("Create Internal comment, Get Internal comment and Delete internal comment")
     public void createGetAndDeleteInternalComment() {
         DiscussionCommentResponse discussionCommentResponse = CisCommentResources.createInternalComment(CisCommentResources.getCommentRequestBuilder(commentContent, emailAddressList),
@@ -167,7 +168,7 @@ public class CisCommentsTest extends CISTestUtil {
     }
 
     @Test
-    @TestRail(id = {14365})
+    @TestRail(id = {14365, 14325})
     @Description("get internal comment with invalid component identity, scenario identity, discussion identity and comment identity")
     public void getInternalCommentWithInvalid() {
         DiscussionCommentResponse discussionCommentResponse = CisCommentResources.createInternalComment(CisCommentResources.getCommentRequestBuilder(commentContent, emailAddressList),
@@ -343,6 +344,54 @@ public class CisCommentsTest extends CISTestUtil {
         softAssertions.assertThat(cisInvalidSidErrorResponse.getMessage()).isEqualTo("'scenarioIdentity' is not a valid identity.");
     }
 
+
+    @Test
+    @TestRail(id = {13291, 13292, 13295, 14154, 16348})
+    @Description("Create Internal comment, Get Internal comment " +
+        "Mark Read Comments (Bulk)" +
+        "and Delete internal comment")
+    public void postBulkCommentsAsRead() {
+        DiscussionCommentResponse discussionCommentResponse = CisCommentResources.createInternalComment(CisCommentResources.getCommentRequestBuilder(commentContent, emailAddressList),
+            scenarioDiscussionResponse.getComponentIdentity(),
+            scenarioDiscussionResponse.getScenarioIdentity(),
+            scenarioDiscussionResponse.getIdentity(),
+            DiscussionCommentResponse.class,
+            HttpStatus.SC_CREATED,
+            componentInfoBuilder.getUser());
+
+        softAssertions.assertThat(discussionCommentResponse.getContent()).isEqualTo(commentContent);
+        softAssertions.assertThat(discussionCommentResponse.getIdentity()).isNotEmpty();
+
+        DiscussionCommentResponse getDiscussionCommentResponse = CisCommentResources.getInternalComment(scenarioDiscussionResponse.getComponentIdentity(),
+            scenarioDiscussionResponse.getScenarioIdentity(),
+            scenarioDiscussionResponse.getIdentity(),
+            discussionCommentResponse.getIdentity(),
+            DiscussionCommentResponse.class,
+            HttpStatus.SC_OK,
+            componentInfoBuilder.getUser());
+
+        softAssertions.assertThat(getDiscussionCommentResponse.getDiscussionIdentity()).isEqualTo(scenarioDiscussionResponse.getIdentity());
+        softAssertions.assertThat(getDiscussionCommentResponse.getContent()).isEqualTo(commentContent);
+
+        List<String> commentIdentities = new ArrayList<>();
+        commentIdentities.add(getDiscussionCommentResponse.getIdentity());
+        DiscussionCommentsBulkResponse discussionCommentsBulkResponse = CisCommentResources.postCommentsBulkMarkAsRead(scenarioDiscussionResponse.getComponentIdentity(),
+            scenarioDiscussionResponse.getScenarioIdentity(),
+            scenarioDiscussionResponse.getIdentity(),
+            commentIdentities,
+            DiscussionCommentsBulkResponse.class,
+            HttpStatus.SC_OK,
+            componentInfoBuilder.getUser());
+        softAssertions.assertThat(discussionCommentsBulkResponse.get(0).getContent()).isEqualTo(commentContent);
+
+        CisCommentResources.deleteInternalComment(scenarioDiscussionResponse.getComponentIdentity(),
+            scenarioDiscussionResponse.getScenarioIdentity(),
+            scenarioDiscussionResponse.getIdentity(),
+            getDiscussionCommentResponse.getIdentity(),
+            null,
+            HttpStatus.SC_NO_CONTENT,
+            componentInfoBuilder.getUser());
+    }
 
     @AfterEach
     public void testClean() {

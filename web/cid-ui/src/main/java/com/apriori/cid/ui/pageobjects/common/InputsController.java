@@ -79,6 +79,34 @@ public class InputsController {
     }
 
     /**
+     * Enters the Piece Part Cost
+     *
+     * @param piecePartCostInput - the production life input
+     * @param piecePartCost      - the years
+     * @return current page object
+     */
+    public InputsController enterPiecePartCost(WebElement piecePartCostInput, String piecePartCost) {
+        pageUtils.clearValueOfElement(piecePartCostInput);
+        piecePartCostInput.sendKeys(piecePartCost);
+        piecePartCostInput.sendKeys(Keys.TAB);
+        return this;
+    }
+
+    /**
+     * Enters the Total Capital Investment
+     *
+     * @param totalCapitalInvestmentInput - the production life input
+     * @param totalCapitalInvestment      - the years
+     * @return current page object
+     */
+    public InputsController enterTotalCapitalInvestment(WebElement totalCapitalInvestmentInput, String totalCapitalInvestment) {
+        pageUtils.clearValueOfElement(totalCapitalInvestmentInput);
+        totalCapitalInvestmentInput.sendKeys(totalCapitalInvestment);
+        totalCapitalInvestmentInput.sendKeys(Keys.TAB);
+        return this;
+    }
+
+    /**
      * Opens the secondary processes page
      *
      * @param secondaryProcessesPencil - secondary process pencil icon

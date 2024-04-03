@@ -20,6 +20,9 @@
             "customerIdentity": {
               "type": "string"
             },
+            "costMode": {
+              "type": "string"
+            },
             "locked": {
               "type": "boolean"
             },
