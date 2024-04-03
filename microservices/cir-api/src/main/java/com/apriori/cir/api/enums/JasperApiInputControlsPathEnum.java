@@ -29,7 +29,7 @@ public enum JasperApiInputControlsPathEnum implements ExternalEndpointEnum {
         "annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;outlierDistance;partsSelect/values?freshData=false")),
     COMPONENT_COST(APRIORI_GENERAL_REPORTS.getEndpointString().concat("/componentCost/inputControls/exportSetName;componentType;latestExportDate;createdBy;lastModifiedBy;componentNumber;scenarioName;").concat(
         "componentSelect;componentCostCurrencyCode/values?freshData=false")),
-    COMPONENT_COST_COMPONENT_SELECTION(APRIORI_GENERAL_REPORTS.getEndpointString().concat("/componentCost/inputControls/exportSetName;componentType;latestExportDate;createdBy;lastModifiedBy;componentNumber;scenarioName;".concat(
+    COMPONENT_COST_MODIFIED_IC(APRIORI_GENERAL_REPORTS.getEndpointString().concat("/componentCost/inputControls/exportSetName;componentType;latestExportDate;createdBy;lastModifiedBy;componentNumber;scenarioName;".concat(
         "componentSelect;componentCostCurrencyCode/values/pagination?freshData=false&includeTotalCount=true"))),
     COST_OUTLIER_IDENTIFICATION(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/costOutlierIdentification/inputControls/useLatestExport;earliestExportDate;latestExportDate;").concat(
         "exportSetName;rollup;currencyCode;costMetric;sortOrder;componentCostMin;componentCostMax;annualizedPotentialThreshold;percentDifferenceThreshold/values?freshData=false")),

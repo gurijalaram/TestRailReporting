@@ -1,15 +1,15 @@
 package com.apriori.cir.api.utils;
 
-import java.util.ArrayList;
-
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
-public class ComponentCostPayloadInputsItem {
+public class UpdatedInputControlsPayloadInputsItem {
     private int limit;
     private String name;
     private int offset;
-    private String value;
+    private List<String> value;
 }

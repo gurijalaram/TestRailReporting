@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -35,6 +34,7 @@ import java.util.List;
 
 @Slf4j
 public class JasperReportUtil {
+    private static HashMap<String, Integer> inputControlsIndexMap;
 
     private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private long WAIT_TIME = 30;
@@ -43,6 +43,7 @@ public class JasperReportUtil {
 
 
     public static JasperReportUtil init(final String jasperSessionId) {
+        initialiseInputControlsHashMap();
         return new JasperReportUtil(jasperSessionId);
     }
 
@@ -69,98 +70,25 @@ public class JasperReportUtil {
         return responseResponseWrapper.getResponseEntity();
     }
 
-    public ComponentCostComponentTypeRootItem getInputControlsCC(JasperApiInputControlsPathEnum value) {
-        ComponentCostPayloadInputsItem exportSetNameItem = ComponentCostPayloadInputsItem.builder()
-            .limit(100)
-            .name("exportSetName")
-            .offset(0)
-            .value("~NOTHING~")
-            .build();
+    public UpdatedInputControlsRootItem getInputControlsModified(JasperApiInputControlsPathEnum value, String valueNameToSet, String valueToSet, String exportSet) {
+        List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputList();
+        genericInputList.get(inputControlsIndexMap.get(valueNameToSet)).setValue(Collections.singletonList(valueToSet));
+        if (!exportSet.isEmpty()) {
+            genericInputList.get(inputControlsIndexMap.get("exportSetName")).setValue(Collections.singletonList(exportSet));
+        }
 
-        ComponentCostPayloadInputsItem componentTypeItem = ComponentCostPayloadInputsItem.builder()
-            .limit(100)
-            .name("componentType")
-            .offset(0)
-            //.value("["+""+"assembly"+""+"]")
-            .value("[assembly]")
-            .build();
-
-        ComponentCostPayloadInputsItem latestExportDateItem = ComponentCostPayloadInputsItem.builder()
-            .limit(100)
-            .name("latestExportDate")
-            .offset(0)
-            .value("")
-            .build();
-
-        ComponentCostPayloadInputsItem createdByItem = ComponentCostPayloadInputsItem.builder()
-            .limit(100)
-            .name("createdBy")
-            .offset(0)
-            .value("~NOTHING~")
-            .build();
-
-        ComponentCostPayloadInputsItem lastModifiedByItem = ComponentCostPayloadInputsItem.builder()
-            .limit(100)
-            .name("lastModifiedBy")
-            .offset(0)
-            .value("~NOTHING~")
-            .build();
-
-        ComponentCostPayloadInputsItem componentNumberItem = ComponentCostPayloadInputsItem.builder()
-            .limit(100)
-            .name("componentNumber")
-            .offset(0)
-            .value("%")
-            .build();
-
-        ComponentCostPayloadInputsItem scenarioNameItem = ComponentCostPayloadInputsItem.builder()
-            .limit(100)
-            .name("scenarioName")
-            .offset(0)
-            .value("~NOTHING~")
-            .build();
-
-        ComponentCostPayloadInputsItem componentSelectItem = ComponentCostPayloadInputsItem.builder()
-            .limit(100)
-            .name("componentSelect")
-            .offset(0)
-            .value("1")
-            .build();
-
-        ComponentCostPayloadInputsItem componentCostCurrencyCodeItem = ComponentCostPayloadInputsItem.builder()
-            .limit(100)
-            .name("componentCostCurrencyCode")
-            .offset(0)
-            .value("GBP")
-            .build();
+        ReportParameter reportParameter = new ReportParameter();
+        reportParameter.reportParameter.addAll(genericInputList);
 
         RequestEntity requestEntity = new RequestEntity()
-            .body(ComponentCostPayloadInputs.builder()
-                .exportSetName(exportSetNameItem)
-                .componentType(componentTypeItem)
-                .latestExportDate(latestExportDateItem)
-                .createdBy(createdByItem)
-                .lastModifiedBy(lastModifiedByItem)
-                .componentNumber(componentNumberItem)
-                .scenarioName(scenarioNameItem)
-                .componentSelect(componentSelectItem)
-                .componentCostCurrencyCode(componentCostCurrencyCodeItem)
-                .build()
-            )
+            .body(reportParameter)
             .endpoint(value)
-            .returnType(ComponentCostComponentTypeRootItem.class)
+            .returnType(UpdatedInputControlsRootItem.class)
             .headers(initHeadersWithJSession())
-            //.inlineVariables("%20")
             .expectedResponseCode(HttpStatus.SC_OK)
             .urlEncodingEnabled(false);
 
-        if (value.toString().startsWith("SHEET")) {
-            requestEntity.inlineVariables("%20", "%20");
-        }
-
-        //ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
-
-        return (ComponentCostComponentTypeRootItem) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (UpdatedInputControlsRootItem) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     public JasperReportSummary generateJasperReportSummary(ReportRequest reportRequest) {
@@ -411,10 +339,43 @@ public class JasperReportUtil {
     }
 
     private HashMap<String, String> initHeadersWithJSession() {
-        return new HashMap<String, String>() {
+        return new HashMap<>() {
             {
                 put("Cookie", "userLocale=en_US; userTimezone=America/New_York; ".concat(jasperSessionValue));
             }
         };
+    }
+
+    private List<UpdatedInputControlsPayloadInputsItem> createGenericInputList() {
+        List<UpdatedInputControlsPayloadInputsItem> listOfInputObjects = new ArrayList<>();
+
+        List<String> nameList = Arrays.asList("exportSetName", "componentType", "latestExportDate",
+            "createdBy", "lastModifiedBy", "componentNumber", "scenarioName", "componentSelect", "componentCostCurrencyCode");
+
+        List<String> valueList = Arrays.asList("~NOTHING~", "~NOTHING~", "", "~NOTHING~", "~NOTHING~", "%", "~NOTHING~", "1", "USD");
+
+        for (int i = 0; i < 9; i++) {
+            listOfInputObjects.add(UpdatedInputControlsPayloadInputsItem.builder()
+                .name(nameList.get(i))
+                .value(Collections.singletonList(valueList.get(i)))
+                .limit(100)
+                .offset(0)
+                .build());
+        }
+
+        return listOfInputObjects;
+    }
+
+    private static void initialiseInputControlsHashMap() {
+        inputControlsIndexMap = new HashMap<>();
+        inputControlsIndexMap.put("exportSetName", 0);
+        inputControlsIndexMap.put("componentType", 1);
+        inputControlsIndexMap.put("latestExportDate", 2);
+        inputControlsIndexMap.put("createdBy", 3);
+        inputControlsIndexMap.put("lastModifiedBy", 4);
+        inputControlsIndexMap.put("componentNumber", 5);
+        inputControlsIndexMap.put("scenarioName", 6);
+        inputControlsIndexMap.put("componentSelect", 7);
+        inputControlsIndexMap.put("componentCostCurrencyCode", 8);
     }
 }
