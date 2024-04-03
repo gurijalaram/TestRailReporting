@@ -436,7 +436,7 @@ public class CicAgentRunPartsWithFileTest extends WorkflowTestUtil {
         AgentWorkflowReportTemplates reportTemplateNames = CicApiTestUtil.getAgentReportTemplates(CICReportType.EMAIL, this.cicLoginUtil.getWebSession());
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
             .addCostingInputRow(CostingInputFields.PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "NULL")
-            .isNotificationsIncluded(true, true,  CicApiTestUtil.getAgentReportTemplate(reportTemplateNames, ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY).getValue())
+            .isNotificationsIncluded(true, true,  CicApiTestUtil.getAgentReportTemplate(reportTemplateNames, ReportsEnum.DFM_MULTIPLE_COMPONENT_SUMMARY).getValue())
             .addNotificationAttachReportRow(PlmTypeAttributes.PLM_COST_METRIC)
             .addNotificationAttachReportRow(PlmTypeAttributes.PLM_CURRENCY_CODE)
             .addNotificationAttachReportRow(PlmTypeAttributes.PLM_MASS_METRIC)

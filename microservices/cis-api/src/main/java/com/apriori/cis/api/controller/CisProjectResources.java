@@ -7,6 +7,7 @@ import com.apriori.cis.api.models.request.bidpackage.BidPackageItemRequest;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectParameters;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectUserParameters;
+import com.apriori.cis.api.models.request.bidpackage.ProjectItemNotificationRequest;
 import com.apriori.cis.api.models.request.bidpackage.ProjectNotificationRequest;
 import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -74,6 +75,28 @@ public class CisProjectResources extends CISTestUtil {
     public static <T> T getProjectNotifications(ProjectNotificationRequest projectNotificationRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
         RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.PROJECT_NOTIFICATIONS, responseClass)
             .body(projectNotificationRequest)
+            .token(currentUser.getToken())
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
+     * Get Project Item Notifications count
+     *
+     * @param projectIdentity                - ProjectIdentity
+     * @param projectItemNotificationRequest - ProjectItemNotification Request
+     * @param responseClass                  - expected response class
+     * @param httpStatus                     - expected http status code
+     * @param currentUser                    - UserCredentials
+     * @param <T>                            - expected response class type
+     * @return - expected class object
+     */
+    public static <T> T getProjectItemNotifications(String projectIdentity, ProjectItemNotificationRequest projectItemNotificationRequest, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.PROJECT_ITEM_NOTIFICATIONS, responseClass)
+            .inlineVariables(projectIdentity)
+            .body(projectItemNotificationRequest)
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
 

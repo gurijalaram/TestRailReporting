@@ -10,7 +10,7 @@ import com.apriori.cid.ui.pageobjects.common.FilterPage;
 import com.apriori.cid.ui.pageobjects.common.ScenarioTableController;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.ExploreToolbar;
-import com.apriori.cid.ui.pageobjects.projects.ProjectsPage;
+import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.css.api.utils.CssComponent;
@@ -68,7 +68,7 @@ public class ExplorePage extends ExploreToolbar {
     private WebElement noScenariosMessage;
 
     @FindBy(xpath = "//button[contains(.,'Bulk Analysis')]")
-    private WebElement projectsButton;
+    private WebElement bulkCostingButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -523,9 +523,9 @@ public class ExplorePage extends ExploreToolbar {
      * click on projects button and go to the projects page
      * @return projectsPage object
      */
-    public ProjectsPage clickProjectsButton() {
-        pageUtils.waitForElementAndClick(projectsButton);
-        return new ProjectsPage(driver);
+    public BulkCostingPage clickBulkCostingButton() {
+        pageUtils.waitForElementAndClick(bulkCostingButton);
+        return new BulkCostingPage(driver);
     }
 
     /**
@@ -533,7 +533,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return boolean
      */
     public boolean isProjectsButtonVisible() {
-        return pageUtils.isElementDisplayed(projectsButton);
+        return pageUtils.isElementDisplayed(bulkCostingButton);
     }
 
 }
