@@ -34,7 +34,7 @@ public class OldAuthorizationUtil {
     private OldTokenRequest getToken() {
         log.info("Getting Token from old CID API...");
 
-        UserCredentials user = UserUtil.getUser();
+        UserCredentials user = UserUtil.getUser("admin");
 
         headers.put("Content-Type", "application/x-www-form-urlencoded");
         headers.put("Accept", "application/json");
