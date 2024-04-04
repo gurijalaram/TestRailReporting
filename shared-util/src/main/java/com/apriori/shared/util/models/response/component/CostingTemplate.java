@@ -46,6 +46,7 @@ public class CostingTemplate implements Serializable {
     private String deletedBy;
     private String description;
     private String customerIdentity;
+    private String costMode;
     private Boolean locked;
     private Boolean published;
     @Builder.Default

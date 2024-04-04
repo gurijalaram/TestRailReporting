@@ -27,11 +27,14 @@ import org.jsoup.nodes.Document;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
 public class JasperReportUtil {
+    private static HashMap<String, Integer> inputControlsIndexMap;
 
     private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private long WAIT_TIME = 30;
@@ -40,6 +43,7 @@ public class JasperReportUtil {
 
 
     public static JasperReportUtil init(final String jasperSessionId) {
+        initialiseInputControlsHashMap();
         return new JasperReportUtil(jasperSessionId);
     }
 
@@ -64,6 +68,27 @@ public class JasperReportUtil {
         ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
 
         return responseResponseWrapper.getResponseEntity();
+    }
+
+    public UpdatedInputControlsRootItem getInputControlsModified(JasperApiInputControlsPathEnum value, String valueNameToSet, String valueToSet, String exportSet) {
+        List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputList();
+        genericInputList.get(inputControlsIndexMap.get(valueNameToSet)).setValue(Collections.singletonList(valueToSet));
+        if (!exportSet.isEmpty()) {
+            genericInputList.get(inputControlsIndexMap.get("exportSetName")).setValue(Collections.singletonList(exportSet));
+        }
+
+        ReportParameter reportParameter = new ReportParameter();
+        reportParameter.reportParameter.addAll(genericInputList);
+
+        RequestEntity requestEntity = new RequestEntity()
+            .body(reportParameter)
+            .endpoint(value)
+            .returnType(UpdatedInputControlsRootItem.class)
+            .headers(initHeadersWithJSession())
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .urlEncodingEnabled(false);
+
+        return (UpdatedInputControlsRootItem) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     public JasperReportSummary generateJasperReportSummary(ReportRequest reportRequest) {
@@ -314,10 +339,43 @@ public class JasperReportUtil {
     }
 
     private HashMap<String, String> initHeadersWithJSession() {
-        return new HashMap<String, String>() {
+        return new HashMap<>() {
             {
                 put("Cookie", "userLocale=en_US; userTimezone=America/New_York; ".concat(jasperSessionValue));
             }
         };
+    }
+
+    private List<UpdatedInputControlsPayloadInputsItem> createGenericInputList() {
+        List<UpdatedInputControlsPayloadInputsItem> listOfInputObjects = new ArrayList<>();
+
+        List<String> nameList = Arrays.asList("exportSetName", "componentType", "latestExportDate",
+            "createdBy", "lastModifiedBy", "componentNumber", "scenarioName", "componentSelect", "componentCostCurrencyCode");
+
+        List<String> valueList = Arrays.asList("~NOTHING~", "~NOTHING~", "", "~NOTHING~", "~NOTHING~", "%", "~NOTHING~", "1", "USD");
+
+        for (int i = 0; i < 9; i++) {
+            listOfInputObjects.add(UpdatedInputControlsPayloadInputsItem.builder()
+                .name(nameList.get(i))
+                .value(Collections.singletonList(valueList.get(i)))
+                .limit(100)
+                .offset(0)
+                .build());
+        }
+
+        return listOfInputObjects;
+    }
+
+    private static void initialiseInputControlsHashMap() {
+        inputControlsIndexMap = new HashMap<>();
+        inputControlsIndexMap.put("exportSetName", 0);
+        inputControlsIndexMap.put("componentType", 1);
+        inputControlsIndexMap.put("latestExportDate", 2);
+        inputControlsIndexMap.put("createdBy", 3);
+        inputControlsIndexMap.put("lastModifiedBy", 4);
+        inputControlsIndexMap.put("componentNumber", 5);
+        inputControlsIndexMap.put("scenarioName", 6);
+        inputControlsIndexMap.put("componentSelect", 7);
+        inputControlsIndexMap.put("componentCostCurrencyCode", 8);
     }
 }

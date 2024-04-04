@@ -1,0 +1,12 @@
+{
+  "params": [
+    {
+      "name": "last_up",
+      "value": "2023-10-08T00:00:00Z",
+      "type": "timestamp"
+    }
+  ],
+  "settings": {
+    "decimalPrecision": 6
+  }
+}
