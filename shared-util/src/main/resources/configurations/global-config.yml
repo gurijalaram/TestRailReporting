@@ -47,7 +47,7 @@ global:
 ######################################################## DEFAULT VALUES ########################################################
 default:
   aws_region: na-1
-  users_csv_file: acs-users.csv
+  users_csv_file: common-users.csv
 ###########################
 #  Core services
   core_service_url_template: ${default.aws_region}.${env}.apriori.net
