@@ -69,7 +69,6 @@ public class PsoEditTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("BA-2651")
     @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7269, 7297, 7289, 7296})
     @Description("Die Casting edit PSO")
@@ -139,7 +138,6 @@ public class PsoEditTests extends TestBaseUI {
 
     @Test
     @Tag(EXTENDED_REGRESSION)
-    @Issue("BA-2651")
     @TestRail(id = {7293})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
