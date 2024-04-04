@@ -41,7 +41,11 @@ public class AdminHomePage extends AdminPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(welcomeHomeElementToUse);
+        if (PropertiesContext.get("env").equals("onprem")) {
+            pageUtils.waitForElementToAppear(onPremWelcomeText);
+        } else {
+            pageUtils.waitForElementToAppear(cloudReportsHomeText);
+        }
     }
 
     /**
