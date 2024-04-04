@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ComponentCostPaginationResponseOptionItem {
-    public boolean selected;
+    public Boolean selected;
     public String label;
     public String value;
 }

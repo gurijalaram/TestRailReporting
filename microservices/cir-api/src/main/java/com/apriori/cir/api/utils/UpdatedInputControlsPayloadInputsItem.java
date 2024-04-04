@@ -8,8 +8,8 @@ import java.util.List;
 @Data
 @Builder
 public class UpdatedInputControlsPayloadInputsItem {
-    private int limit;
+    private Integer limit;
     private String name;
-    private int offset;
+    private Integer offset;
     private List<String> value;
 }
