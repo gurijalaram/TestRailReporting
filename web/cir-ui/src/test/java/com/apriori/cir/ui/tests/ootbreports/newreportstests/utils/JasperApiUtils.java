@@ -99,7 +99,6 @@ public class JasperApiUtils {
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
-            //setReportParameterByName(InputControlsEnum.valueOf(inputControlsEnumMap.get(keyToSet)).getInputControlId(), valueToSet);
             setReportParameterByName(keyToSet, valueToSet);
         }
 
@@ -1094,5 +1093,9 @@ public class JasperApiUtils {
 
     private String getCurrencySettingValueFromChartComponentCost(JasperReportSummary jasperReportSummary) {
         return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(5).text();
+    }
+
+    public ReportRequest getReportRequest() {
+        return reportRequest;
     }
 }
