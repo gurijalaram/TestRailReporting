@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
+import com.apriori.cid.ui.pageobjects.evaluate.ChangeSummaryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.CostHistoryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
@@ -37,6 +38,18 @@ public class EvaluateToolbar extends ExploreToolbar {
 
     @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
     private WebElement refreshButton;
+
+    @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='SIMULATE']")
+    private WebElement aPrioriCostModeButton;
+
+    @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='MANUAL']")
+    private WebElement manualCostModeButton;
+
+    @FindBy(css = "div[id='qa-sub-header-save-as-button'] button")
+    private WebElement saveAsButton;
+
+    @FindBy(css = "div[data-testid='apriori-alert']")
+    private WebElement saveLabel;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -156,4 +169,107 @@ public class EvaluateToolbar extends ExploreToolbar {
         pageUtils.waitForElementAndClick(byButton);
         return new EvaluatePage(driver);
     }
+
+    /**
+     * Open Change Summary pop-up from Simulate Cost Mode view
+     *
+     * @return - Change Summary PO
+     */
+    public ChangeSummaryPage changeSummarySimulate() {
+        pageUtils.waitForElementToAppear(costLabel);
+        pageUtils.mouseMove(costButton);
+        return new ChangeSummaryPage(driver);
+    }
+
+    /**
+     * Open Change Summary pop-up from Manual Cost Mode view
+     *
+     * @return - Change Summary PO
+     */
+    public ChangeSummaryPage changeSummaryManual() {
+        pageUtils.waitForElementToAppear(saveLabel);
+        pageUtils.mouseMove(saveLabel);
+        return new ChangeSummaryPage(driver);
+    }
+
+    /**
+     * Select 'aPriori' Cost Mode
+     *
+     * @return - New EvaluatePage PO
+     */
+    public SwitchCostModePage clickAPrioriModeButton() {
+        pageUtils.waitForElementAndClick(aPrioriCostModeButton);
+        return new SwitchCostModePage(driver);
+    }
+
+    /**
+     * Determine if 'aPriori' Cost Mode selected
+     *
+     * @return - Boolean of mode state
+     */
+    public Boolean isAPrioriCostModeSelected() {
+        pageUtils.waitForElementToAppear(aPrioriCostModeButton);
+        return Boolean.parseBoolean(aPrioriCostModeButton.getAttribute("aria-pressed"));
+    }
+
+    /**
+     * Select 'Manual' Cost Mode
+     *
+     * @return - New EvaluatePage PO
+     */
+    public SwitchCostModePage clickManualModeButton() {
+        pageUtils.waitForElementAndClick(manualCostModeButton);
+        return new SwitchCostModePage(driver);
+    }
+
+    /**
+     * Select 'Manual' Cost Mode while scenario in Uncosted state
+     *
+     * @return - New EvaluatePage PO
+     */
+    public EvaluatePage clickManualModeButtonWhileUncosted() {
+        pageUtils.waitForElementAndClick(manualCostModeButton);
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Determine if 'Manual' Cost Mode selected
+     *
+     * @return - Boolean of mode state
+     */
+    public Boolean isManualCostModeSelected() {
+        pageUtils.waitForElementToAppear(manualCostModeButton);
+        return Boolean.parseBoolean(manualCostModeButton.getAttribute("aria-pressed"));
+    }
+
+    /**
+     * Check if Cost Mode Toggle buttons are disabled
+     *
+     * @return - Boolean of enabled state for cost mode toggle buttons
+     */
+    public Boolean isCostModeToggleEnabled() {
+        pageUtils.waitForElementToAppear(aPrioriCostModeButton);
+        return aPrioriCostModeButton.isEnabled() && manualCostModeButton.isEnabled();
+    }
+
+    /**
+     * Check state of Manual Costing Save As button
+     *
+     * @return - Boolean of Manual Costing Save As button enabled state
+     */
+    public Boolean isSaveAsButtonEnabled() {
+        pageUtils.waitForElementToAppear(saveAsButton);
+        return saveAsButton.isEnabled();
+    }
+
+    /**
+     * Click Manual Costing Save As button
+     *
+     * @return - New Evaluate Page
+     */
+    public EvaluatePage clickSaveAsButton() {
+        pageUtils.waitForElementAndClick(saveAsButton);
+        return new EvaluatePage(driver);
+    }
+
 }

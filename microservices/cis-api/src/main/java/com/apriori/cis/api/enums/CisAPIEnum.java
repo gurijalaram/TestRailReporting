@@ -26,6 +26,7 @@ public enum CisAPIEnum implements ExternalEndpointEnum {
     PROJECTS("/projects"),
     PROJECT("/projects/%s"),
     PROJECT_NOTIFICATIONS("/projects/notifications-count"),
+    PROJECT_ITEM_NOTIFICATIONS("/projects/%s/project-items/notifications"),
 
     //PARTICIPANTS
     PARTICIPANTS("/participants"),
@@ -53,7 +54,8 @@ public enum CisAPIEnum implements ExternalEndpointEnum {
 
     //Comments
     SCENARIO_DISCUSSION_COMMENTS("/components/%s/scenarios/%s/scenario-discussions/%s/comments"),
-    SCENARIO_DISCUSSION_COMMENT("/components/%s/scenarios/%s/scenario-discussions/%s/comments/%s");
+    SCENARIO_DISCUSSION_COMMENT("/components/%s/scenarios/%s/scenario-discussions/%s/comments/%s"),
+    SCENARIO_DISCUSSION_COMMENT_BULK_MARK_AS_READ("/components/%s/scenarios/%s/scenario-discussions/%s/comments/bulk-mark-as-read");
 
     private final String endpoint;
 
