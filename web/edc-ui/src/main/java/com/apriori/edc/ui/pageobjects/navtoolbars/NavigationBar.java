@@ -59,7 +59,7 @@ public class NavigationBar extends EagerPageComponent<NavigationBar> {
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(
             By.cssSelector(".help-dropdown"),
-            Duration.ofMinutes(3)
+            Duration.ofMinutes(4)
         );
     }
 
