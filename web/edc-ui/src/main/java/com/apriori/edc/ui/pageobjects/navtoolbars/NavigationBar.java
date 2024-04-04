@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 
 import java.time.Duration;
@@ -47,6 +48,14 @@ public class NavigationBar extends EagerPageComponent<NavigationBar> {
     @FindBy(css = ".dropdown-item [data-icon='tasks']")
     private WebElement manageAccounts;
 
+    public NavigationBar(WebDriver driver) {
+        super(driver, log);
+
+        log.debug(getPageUtils().currentlyOnPage(this.getClass().getSimpleName()));
+        PageFactory.initElements(driver, this);
+        this.get();
+    }
+
     public NavigationBar(WebDriver driver, Logger logger) {
         super(driver, logger);
     }
@@ -57,10 +66,7 @@ public class NavigationBar extends EagerPageComponent<NavigationBar> {
 
     @Override
     protected void isLoaded() throws Error {
-        getPageUtils().waitForElementToAppear(
-            By.cssSelector(".help-dropdown"),
-            Duration.ofMinutes(4)
-        );
+        getPageUtils().waitForElementToAppear(helpDropdown);
     }
 
     /**
