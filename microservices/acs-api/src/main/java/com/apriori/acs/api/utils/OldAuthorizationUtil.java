@@ -34,7 +34,7 @@ public class OldAuthorizationUtil {
     private OldTokenRequest getToken() {
         log.info("Getting Token from old CID API...");
 
-        UserCredentials user = UserUtil.getUser();
+        UserCredentials user = UserUtil.getUser("common");
 
         headers.put("Content-Type", "application/x-www-form-urlencoded");
         headers.put("Accept", "application/json");
@@ -43,7 +43,7 @@ public class OldAuthorizationUtil {
         Map<String, String> requestData2 = new HashMap<>();
         requestData2.put("grant_type", "password");
         requestData2.put("username", user.getEmail());
-        requestData2.put("password", user.getUsername());
+        requestData2.put("password", user.getEmail().split("@")[0]);
         requestData2.put("client_id", "apriori-web-cost");
         requestData2.put("client_secret", "donotusethiskey");
         requestData2.put("scope", "tenantGroup=default tenant=default");
