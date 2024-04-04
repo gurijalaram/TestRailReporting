@@ -25,7 +25,7 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
 
 
     // ROLES
-    ROLES("/rolesAccessControlsMapping"),
+    ROLES("/roles"),
     ROLE_BY_ID("/rolesAccessControlsMapping/%s"),
     USER_ROLES("/customers/%s/users/%s/roles"),
     USER_ROLES_BY_ID("/customers/%s/users/%s/roles/%s"),

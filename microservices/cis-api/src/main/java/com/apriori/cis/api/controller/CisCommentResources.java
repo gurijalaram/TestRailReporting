@@ -139,4 +139,28 @@ public class CisCommentResources extends CISTestUtil {
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).patch();
         return responseWrapper.getResponseEntity();
     }
+
+    /**
+     * post comments mark as read
+     *
+     * @param componentIdentity  - ComponentIdentity
+     * @param scenarioIdentity   - ScenarioIdentity
+     * @param discussionIdentity - DiscussionIdentity
+     * @param commentIdentity    - CommentIdentity
+     * @param responseClass      - expected response class
+     * @param httpStatus         - expected http status code
+     * @param currentUser        - UserCredentials
+     * @param <T>                - expected response class type
+     * @return expected response class
+     */
+    public static <T> T postCommentsBulkMarkAsRead(String componentIdentity, String scenarioIdentity, String discussionIdentity, List<String> commentIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.SCENARIO_DISCUSSION_COMMENT_BULK_MARK_AS_READ, responseClass)
+            .inlineVariables(componentIdentity, scenarioIdentity, discussionIdentity)
+            .body(commentIdentity)
+            .token(currentUser.getToken())
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
 }

@@ -12,6 +12,7 @@ import com.apriori.cic.api.models.request.JobDefinition;
 import com.apriori.cic.api.models.response.AgentWorkflowJobRun;
 import com.apriori.cic.api.utils.CicApiTestUtil;
 import com.apriori.cic.api.utils.PlmPartsUtil;
+import com.apriori.cic.ui.enums.FieldState;
 import com.apriori.cic.ui.enums.RuleOperatorEnum;
 import com.apriori.cic.ui.pagedata.WorkFlowData;
 import com.apriori.cic.ui.pageobjects.login.CicLoginPage;
@@ -98,11 +99,11 @@ public class CIRIntegrationTests extends CicGuiTestUtil {
             .selectRecipient()
             .selectAttachReport()
             .selectReportName()
-            .selectCostRounding()
+            .selectCostRounding(FieldState.Yes)
             .clickCINotificationNextBtn()
             .selectAttachReportTab()
             .selectReportName()
-            .selectCostRounding()
+            .selectCostRounding(FieldState.Yes)
             .clickSaveButton();
 
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition created");

@@ -2,6 +2,9 @@ package com.apriori.cic.ui.pageobjects.workflows.schedule.publishresults;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.cic.api.enums.ReportsEnum;
+import com.apriori.cic.ui.enums.FieldState;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -37,6 +40,19 @@ public class PRAttachReportTab extends PublishResultsPart {
     }
 
     /**
+     * Select report name in AttachReport tab in publish results part
+     *
+     * @param - reportsEnum
+     * @return AttachReportTab
+     */
+    public PRAttachReportTab selectReportName(ReportsEnum reportsEnum) {
+        pageUtils.waitForElementAndClick(getReportNameDropdownElement());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, reportsEnum.getReportName())));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
+    }
+
+    /**
      * Select currency code in AttachReport tab in publish results part
      *
      * @return AttachReportTab
@@ -59,9 +75,9 @@ public class PRAttachReportTab extends PublishResultsPart {
      *
      * @return AttachReportTab
      */
-    public PRAttachReportTab selectCostRounding() {
+    public PRAttachReportTab selectCostRounding(FieldState fieldState) {
         pageUtils.waitForElementAndClick(getCostRoundingDdl());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getPublishResultsData().getReportCostRounding())));
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, fieldState)));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }

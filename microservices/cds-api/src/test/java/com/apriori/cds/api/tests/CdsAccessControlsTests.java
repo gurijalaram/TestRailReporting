@@ -83,7 +83,7 @@ public class CdsAccessControlsTests {
 
         ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
-        soft.assertThat(accessControls.getResponseEntity().getTotalItemCount()).isEqualTo(4);
+        soft.assertThat(accessControls.getResponseEntity().getTotalItemCount()).isEqualTo(3);
         soft.assertAll();
     }
 

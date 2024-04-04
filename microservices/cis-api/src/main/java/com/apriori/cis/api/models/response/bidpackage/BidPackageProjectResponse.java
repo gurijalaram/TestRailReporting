@@ -27,7 +27,7 @@ public class BidPackageProjectResponse {
     private String status;
     private String bidPackageIdentity;
     private BidPackageProjectProfileResponse projectProfile;
-    public List<Object> items;
+    public List<BidPackageProjectItemResponse> items;
     public List<BidPackageProjectUserResponse> users;
     private String organizationName;
     private String owner;
