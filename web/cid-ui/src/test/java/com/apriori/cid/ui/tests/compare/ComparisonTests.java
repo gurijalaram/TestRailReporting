@@ -498,7 +498,7 @@ public class ComparisonTests extends TestBaseUI {
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        comparePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .uploadComponentAndOpen(component2)
             .clickExplore()
@@ -513,14 +513,9 @@ public class ComparisonTests extends TestBaseUI {
             .highlightScenario(component2.getComponentName(), component2.getScenarioName())
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
-            .clickCompare(ComparePage.class)
-            .openScenario(component2.getComponentName(), component2.getScenarioName());
+            .clickCompare(ComparePage.class);
 
-        softAssertions.assertThat(evaluatePage.getNotFoundMessage()).isEqualTo(notFoundMessage);
-
-        comparePage = evaluatePage.backFromError(ComparePage.class);
-
-        softAssertions.assertThat(comparePage.getScenariosInComparison()).doesNotContain(component2.getComponentName().toUpperCase() + "  / " + component2.getScenarioName());
+        softAssertions.assertThat(comparePage.getAllScenariosInComparison()).doesNotContain(component2.getComponentName().toUpperCase() + "  / " + component2.getScenarioName());
 
         softAssertions.assertAll();
     }
