@@ -17,6 +17,7 @@ public class CostingInput {
     private String identity;
     private Integer annualVolume;
     private Integer batchSize;
+    private String costMode;
     private CustomAttributes customAttributes;
     private String materialName;
     private String machiningMode;

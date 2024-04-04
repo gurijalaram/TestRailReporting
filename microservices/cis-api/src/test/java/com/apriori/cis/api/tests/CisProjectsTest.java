@@ -12,9 +12,11 @@ import com.apriori.cis.api.models.request.bidpackage.BidPackageItemParameters;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageItemRequest;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectRequest;
 import com.apriori.cis.api.models.request.bidpackage.BidPackageProjectUserParameters;
+import com.apriori.cis.api.models.request.bidpackage.ProjectItemNotificationRequest;
 import com.apriori.cis.api.models.request.bidpackage.ProjectNotificationRequest;
 import com.apriori.cis.api.models.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.cis.api.models.response.bidpackage.CisErrorMessage;
+import com.apriori.cis.api.models.response.bidpackage.ProjectItemNotificationResponse;
 import com.apriori.cis.api.models.response.bidpackage.ProjectNotificationResponse;
 import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.css.api.utils.CssComponent;
@@ -183,9 +185,10 @@ public class CisProjectsTest extends CISTestUtil {
     }
 
     @Test
-    @TestRail(id = {22907})
-    @Description("Retrieve Project Based Unread Notifications")
-    public void testGetProjectNotifications() {
+    @TestRail(id = {22907, 28510})
+    @Description("Retrieve Project Based Unread Notifications" +
+        "Verify Project/project-items endpoint returns unread notification count for each component")
+    public void testGetProjectAndProjectItemNotifications() {
         projectRequestBuilder = CisProjectResources.getProjectRequestBuilder(projectName, ProjectStatusEnum.OPEN, ProjectTypeEnum.INTERNAL, itemsList, usersList);
 
         BidPackageProjectResponse bppResponse = CisProjectResources.createProject(projectRequestBuilder,
@@ -205,12 +208,26 @@ public class CisProjectsTest extends CISTestUtil {
         softAssertions.assertThat(projectNotificationResponse.size()).isEqualTo(1);
         softAssertions.assertThat(projectNotificationResponse.get(0).getUnreadNotificationsCount()).isEqualTo(0);
 
+        ProjectItemNotificationRequest projectItemNotificationRequest = ProjectItemNotificationRequest.builder()
+            .projectItems(Collections.singletonList(bppResponse.items.get(0).getIdentity()))
+            .build();
+
+        ProjectItemNotificationResponse projectItemNotificationResponse = CisProjectResources.getProjectItemNotifications(bppResponse.getIdentity(),
+            projectItemNotificationRequest,
+            ProjectItemNotificationResponse.class,
+            HttpStatus.SC_OK,
+            currentUser);
+
+        softAssertions.assertThat(projectItemNotificationResponse.size()).isEqualTo(1);
+        softAssertions.assertThat(projectItemNotificationResponse.get(0).getUnreadNotificationsCount()).isEqualTo(0);
+        softAssertions.assertThat(projectItemNotificationResponse.get(0).getProjectItemIdentity()).isEqualTo(bppResponse.items.get(0).getIdentity());
+
         CisBidPackageProjectResources.deleteBidPackageProject(bppResponse.getBidPackageIdentity(), bppResponse.getIdentity(),
             HttpStatus.SC_NO_CONTENT, currentUser);
     }
 
     @Test
-    @TestRail(id = {22899})
+    @TestRail(id = {22899, 28510})
     @Description("Create Internal Project using Already used Compoenent and Scenario ID")
     public void testGetProjectAlreadyUsedComponent() {
         projectRequestBuilder = CisProjectResources.getProjectRequestBuilder(projectName, ProjectStatusEnum.OPEN, ProjectTypeEnum.INTERNAL, itemsList, usersList);

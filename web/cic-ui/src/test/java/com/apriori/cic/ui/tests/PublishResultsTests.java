@@ -97,7 +97,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
         attachReportTab = notificationsPart.selectAttachReport().selectReportName();
         softAssertions.assertThat(attachReportTab.getEmptyReportLbl().getText()).isEqualTo("No report configuration defined.");
 
-        workFlowData.getNotificationsData().setReportName(ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY.getReportName());
+        workFlowData.getNotificationsData().setReportName(ReportsEnum.DFM_MULTIPLE_COMPONENT_SUMMARY.getReportName());
         notificationsPart.selectAttachReport().selectReportName();
         softAssertions.assertThat(notificationsPart.selectAttachReport().getCostMetricDdl().isDisplayed()).isEqualTo(true);
         PublishResultsPart publishResultsPart = notificationsPart.clickCINotificationNextBtn();

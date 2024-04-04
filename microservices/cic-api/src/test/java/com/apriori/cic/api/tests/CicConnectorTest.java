@@ -78,7 +78,7 @@ public class CicConnectorTest extends CicUtil {
     @Description("Get connector Job Parts")
     public void testGetJobParts() {
         AgentWorkflowReportTemplates reportTemplates = CicApiTestUtil.getAgentReportTemplates(CICReportType.EMAIL, loginSession);
-        softAssertions.assertThat(CicApiTestUtil.getAgentReportTemplate(reportTemplates, ReportsEnum.DTC_MULTIPLE_COMPONENT_SUMMARY)).isNotNull();
+        softAssertions.assertThat(CicApiTestUtil.getAgentReportTemplate(reportTemplates, ReportsEnum.DFM_MULTIPLE_COMPONENT_SUMMARY)).isNotNull();
     }
 
 }

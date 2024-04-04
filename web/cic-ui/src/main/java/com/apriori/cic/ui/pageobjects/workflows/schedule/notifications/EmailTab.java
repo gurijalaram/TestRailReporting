@@ -2,6 +2,9 @@ package com.apriori.cic.ui.pageobjects.workflows.schedule.notifications;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.cic.api.enums.EmailRecipientType;
+import com.apriori.cic.ui.enums.EmailTemplateEnum;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,11 +24,44 @@ public class EmailTab extends NotificationsPart {
         super(driver);
     }
 
+    /**
+     * Select Report email Template
+     *
+     * @param reportsEnum ReportsEnum
+     * @return current class object
+     */
+    public EmailTab selectEmailTemplate(EmailTemplateEnum emailTemplateEnum) {
+        pageUtils.waitUntilDropdownOptionsLoaded(getEmailTemplateElement().findElement(By.tagName("select")));
+        pageUtils.waitForElementAndClick(getEmailTemplateElement());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, emailTemplateEnum.getEmailTemplate())));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
+    }
+
     public EmailTab selectEmailTemplate() {
         pageUtils.waitUntilDropdownOptionsLoaded(getEmailTemplateElement().findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(getEmailTemplateElement());
         pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getEmailTemplate())));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
+    }
+
+    /**
+     * Select Email Recipient Field Type
+     *
+     * @param recipientFieldType - EmailRecipientType enum
+     * @param emailAddress       - email address
+     * @return current class object
+     */
+    public EmailTab selectRecipient(EmailRecipientType recipientFieldType, String emailAddress) {
+        pageUtils.waitForElementAndClick(getEmailRecipientElement());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, recipientFieldType.getEmailRecipientType())));
+        pageUtils.waitForElementAppear(recipientEmailAddressTxtElement);
+        pageUtils.setValueOfElement(recipientEmailAddressTxtElement, emailAddress);
+        if (pageUtils.isElementDisplayed(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'ss-open')]"))) {
+            pageUtils.waitForElementAndClick(getEmailRecipientElement());
+        }
+        pageUtils.waitForJavascriptLoadComplete();
         return this;
     }
 

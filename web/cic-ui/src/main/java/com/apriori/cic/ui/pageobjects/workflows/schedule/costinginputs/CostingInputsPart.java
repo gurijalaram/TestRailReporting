@@ -64,6 +64,8 @@ public class CostingInputsPart extends CICBasePage {
     private WebElement customDateCalenderDoneButton;
 
     private static WebElement customDateFieldValueElement = null;
+
+    private String costingInputFlexRows = "//div[@tab-number='3']//div[contains(@class, 'BMCollectionViewCellEditing')]//div[contains(@class, 'tw-flex-row')]";
     private String ciConnectFieldCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-3";
     private String operatorDDCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-4";
     private String valueDDCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-20";
@@ -337,25 +339,33 @@ public class CostingInputsPart extends CICBasePage {
      */
     public CostingInputsPart addCostingInputRow(PlmTypeAttributes plmTypeAttributes, MappingRule mappingRule, String fieldValue) {
         this.clickAddRowBtn();
-        List<WebElement> ciStandardFieldFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.cssSelector(cssColumnSelector));
-        selectCiConnectField(ciStandardFieldFieldCols.get(0), plmTypeAttributes);
+        List<WebElement> ciStandardFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(By.xpath("./div"));
+        selectCiConnectField(ciStandardFieldCols.get(0), plmTypeAttributes);
+        selectMappingRule(ciStandardFieldCols.get(1), mappingRule);
         if (plmTypeAttributes.getCicGuiField().equals("Process Group") ||
             plmTypeAttributes.getCicGuiField().equals("Digital Factory") ||
             plmTypeAttributes.getCicGuiField().equals("Machining Mode")) {
-            selectMappingRule(ciStandardFieldFieldCols.get(1), mappingRule);
-            selectFieldValue(ciStandardFieldFieldCols.get(3), fieldValue);
+            selectFieldValue(ciStandardFieldCols.get(6), fieldValue);
+        } else if (plmTypeAttributes.getCicGuiField().contains("Date")) {
+            selectDateForRuleValue(ciStandardFieldCols.get(5));
         } else {
-            selectMappingRule(ciStandardFieldFieldCols.get(1), mappingRule);
+            enterRuleValue(ciStandardFieldCols.get(2).findElement(By.cssSelector(cssTextboxSelector)), fieldValue);
         }
+        return this;
+    }
 
-        if (fieldValue.isEmpty()) {
-            pageUtils.checkElementAttribute(getFieldValueElement(CICFieldType.TEXT_BOX), "class", "cic-input-disabled");
-        } else {
-            enterRuleValue(ciStandardFieldFieldCols.get(2).findElement(By.cssSelector(cssTextboxSelector)), fieldValue);
-        }
+    public CostingInputsPart addCustomMultiString(MappingRule mappingRule, String... fieldValue) {
+        this.clickAddRowBtn();
+        for (String multiValue : fieldValue) {
+            List<WebElement> ciStandardFieldCols = getCostingInputRows().get(getCostingInputRows().size() - 1).findElements(getColumnSelector());
+            selectCiConnectField(ciStandardFieldCols.get(0), PlmTypeAttributes.PLM_CUSTOM_MULTI);
+            selectMappingRule(ciStandardFieldCols.get(1), mappingRule);
+            pageUtils.waitForElementNotEnabled(ciNextButton, 1);
 
-        if (plmTypeAttributes.getCicGuiField().contains("Date")) {
-            selectDateForRuleValue(ciStandardFieldFieldCols.get(2));
+            pageUtils.waitForSteadinessOfElement(By.xpath("//div[@class='ss-add']"));
+            pageUtils.waitForElementAndClick(By.xpath("//div[@class='ss-add']"));
+            pageUtils.waitForElementAndClick(By.xpath(String.format("//div[@class='ss-option']/..//div[.='%s']", multiValue)));
+            pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-nodata"));
         }
         return this;
     }
@@ -366,7 +376,8 @@ public class CostingInputsPart extends CICBasePage {
      * @return list of standard mappings rows
      */
     public List<WebElement> getCostingInputRows() {
-        return driver.findElements(By.xpath("//div[@tab-number='3']//div[contains(@class, 'BMCollectionViewCellEditing')]//div[contains(@class, 'tw-flex-row')]"));
+        pageUtils.waitForElementsToAppear(By.xpath(costingInputFlexRows));
+        return driver.findElements(By.xpath(costingInputFlexRows));
     }
 
 
@@ -401,7 +412,7 @@ public class CostingInputsPart extends CICBasePage {
     private void selectCiConnectField(WebElement webElement, PlmTypeAttributes plmTypeAttributes) {
         pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(webElement);
-        pageUtils.waitForElementAndClick(By.xpath("//div[contains(text(),'" + plmTypeAttributes.getCicGuiField() + "')]"));
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, plmTypeAttributes.getCicGuiField())));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
     }
 
@@ -418,6 +429,9 @@ public class CostingInputsPart extends CICBasePage {
         pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
         pageUtils.waitForElementAndClick(webElement);
         pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, mappingRule.getMappingRule())));
+        if (mappingRule.getMappingRule().equals(MappingRule.MAPPED_FROM_PLM.getMappingRule())) {
+            pageUtils.checkElementAttribute(getFieldValueElement(CICFieldType.TEXT_BOX), "class", "cic-input-disabled");
+        }
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
     }
 
@@ -431,10 +445,9 @@ public class CostingInputsPart extends CICBasePage {
         if (!fieldValue.isEmpty()) {
             pageUtils.waitUntilDropdownOptionsLoaded(webElement.findElement(By.tagName("select")));
             pageUtils.waitForElementEnabled(webElement.findElement(By.tagName("select")));
-            WebElement mappingRuleElement = webElement.findElement(By.tagName("div")).findElement(By.tagName("div")).findElement(By.tagName("div"));
-            pageUtils.waitForElementAttributeToAppear(mappingRuleElement, "class", "ss-single-selected");
             pageUtils.waitForElementAndClick(webElement);
             pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, fieldValue)));
+            pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         }
     }
 
@@ -472,7 +485,6 @@ public class CostingInputsPart extends CICBasePage {
         int retries = 0;
         int maxRetries = 12;
         Exception ex = null;
-
         do {
             TimeUnit.SECONDS.sleep(DEFAULT_WAIT_TIME);
             if (getCostingInputRows().size() >= 1) {
