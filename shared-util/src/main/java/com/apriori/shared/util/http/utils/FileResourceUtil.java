@@ -270,6 +270,8 @@ public class FileResourceUtil extends AwsUtil {
 
     public static File copyIntoTempFile(final String contentBytes, final String additionalPath, final String fileName) {
         File tempFile = new File(createTempDir(additionalPath), fileName);
+        tempFile.deleteOnExit();
+
         try (FileOutputStream out = new FileOutputStream(tempFile)) {
             byte[] data = Base64.getMimeDecoder().decode(contentBytes.getBytes(StandardCharsets.UTF_8));
             out.write(data);
