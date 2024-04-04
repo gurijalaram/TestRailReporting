@@ -125,8 +125,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        getPageUtils().waitForElementAppear(allMessages);
-        getPageUtils().waitForElementEnabled(allMessages);
+        getPageUtils().waitForElementToAppear(allMessages);
     }
 
     /**

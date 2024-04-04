@@ -142,8 +142,8 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(homePageAprioriLogo);
-        pageUtils.waitForElementAppear(homeMenuOption);
+        pageUtils.waitForElementToAppear(homePageAprioriLogo);
+        pageUtils.waitForElementToAppear(homeMenuOption);
     }
 
     /**
