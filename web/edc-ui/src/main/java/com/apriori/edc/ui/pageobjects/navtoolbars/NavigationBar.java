@@ -6,10 +6,13 @@ import com.apriori.edc.ui.pageobjects.login.FileUploadPage;
 import com.apriori.web.app.util.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
+
+import java.time.Duration;
 
 @Slf4j
 public class NavigationBar extends EagerPageComponent<NavigationBar> {
@@ -54,7 +57,10 @@ public class NavigationBar extends EagerPageComponent<NavigationBar> {
 
     @Override
     protected void isLoaded() throws Error {
-        getPageUtils().waitForElementToAppear(helpDropdown);
+        getPageUtils().waitForElementToAppear(
+            By.cssSelector(".help-dropdown"),
+            Duration.ofMinutes(2)
+        );
     }
 
     /**
