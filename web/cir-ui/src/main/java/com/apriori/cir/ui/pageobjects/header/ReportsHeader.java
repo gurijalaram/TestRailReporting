@@ -132,6 +132,7 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        this.get();
     }
 
     @Override
@@ -141,8 +142,8 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.isElementDisplayed(homePageAprioriLogo);
-        pageUtils.isElementEnabled(homePageAprioriLogo);
+        pageUtils.waitForElementAppear(homePageAprioriLogo);
+        pageUtils.waitForElementAppear(homeMenuOption);
     }
 
     /**

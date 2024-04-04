@@ -40,8 +40,8 @@ public class AdminHomePage extends AdminPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.isElementDisplayed(welcomeHomeElementToUse);
-        pageUtils.isElementEnabled(welcomeHomeElementToUse);
+        pageUtils.waitForElementAppear(welcomeHomeElementToUse);
+        pageUtils.waitForElementEnabled(welcomeHomeElementToUse);
     }
 
     /**

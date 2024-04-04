@@ -68,8 +68,8 @@ public class WorkflowHome extends CICBasePage {
 
     @Override
     protected void isLoaded() {
-        pageUtils.isElementDisplayed(workflowLabel);
-        pageUtils.isElementDisplayed(scheduleTab);
+        pageUtils.waitForElementAppear(workflowLabel);
+        pageUtils.waitForElementAppear(scheduleTab);
 
     }
 
