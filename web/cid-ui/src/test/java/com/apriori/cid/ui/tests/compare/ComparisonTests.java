@@ -476,7 +476,7 @@ public class ComparisonTests extends TestBaseUI {
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .uploadComponentAndOpen(component2)
-            .selectProcessGroup(component.getProcessGroup())
+            .selectProcessGroup(component2.getProcessGroup())
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.LOW.getIcon());
@@ -584,7 +584,7 @@ public class ComparisonTests extends TestBaseUI {
             .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .navigateToScenario(component2)
-            .selectProcessGroup(component2.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
