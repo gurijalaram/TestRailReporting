@@ -16,12 +16,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class ReportsLoginPage extends ReportsPageHeader {
+public class ReportsLoginPage extends LoadableComponent<ReportsLoginPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportsLoginPage.class);
     private static final Boolean isEnvOnPrem = PropertiesContext.get("${env}").equals("onprem");
@@ -62,7 +63,6 @@ public class ReportsLoginPage extends ReportsPageHeader {
     private WebElement emailInput;
 
     public ReportsLoginPage(WebDriver driver) {
-        super(driver);
         this.driver = driver;
         pageUtils = new PageUtils(driver);
         this.loginService = new LoginService(this.driver, "reports");
