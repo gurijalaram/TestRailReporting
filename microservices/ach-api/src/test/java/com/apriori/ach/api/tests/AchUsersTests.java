@@ -46,7 +46,9 @@ public class AchUsersTests extends AchTestUtil {
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
+    private String customerIdentityWidget = "52IC4D3J98GN";
     private String domain;
+    private String widgetDomain = "widgets.aprioritest";
     private String userIdentity;
 
     @BeforeEach
@@ -67,8 +69,8 @@ public class AchUsersTests extends AchTestUtil {
 
     @AfterEach
     public void cleanUp() {
-        if (customerIdentity != null && userIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
+        if (customerIdentityWidget != null && userIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentityWidget, userIdentity);
         }
     }
 
@@ -78,15 +80,15 @@ public class AchUsersTests extends AchTestUtil {
     public void createUserByAdmin() {
         String userName = new GenerateStringUtil().generateUserName();
 
-        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
+        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentityWidget, userName, widgetDomain, HttpStatus.SC_CREATED);
         userIdentity = newUser.getResponseEntity().getIdentity();
 
         soft.assertThat(newUser.getResponseEntity().getUsername()).isEqualTo(userName);
 
-        ResponseWrapper<AchErrorResponse> newUserSameEmail = createNewUser(AchErrorResponse.class, customerIdentity, userName, domain, HttpStatus.SC_CONFLICT);
+        ResponseWrapper<AchErrorResponse> newUserSameEmail = createNewUser(AchErrorResponse.class, customerIdentityWidget, userName, widgetDomain, HttpStatus.SC_CONFLICT);
 
         soft.assertThat(newUserSameEmail.getResponseEntity().getMessage())
-            .isEqualTo(String.format("Can't create a user with email '%s' as the email already exists.", userName + "@" + domain + ".com"));
+            .isEqualTo(String.format("Can't create a user with email '%s' as the email already exists.", userName + "@" + widgetDomain + ".com"));
         soft.assertAll();
     }
 
@@ -94,7 +96,7 @@ public class AchUsersTests extends AchTestUtil {
     @TestRail(id = {29179})
     @Description("Bad request is returned when create user without required fields")
     public void createUserNoRequiredFields() {
-        ResponseWrapper<AchErrorResponse> newUserSameEmail = createNewUser(AchErrorResponse.class, customerIdentity, null, null, HttpStatus.SC_BAD_REQUEST);
+        ResponseWrapper<AchErrorResponse> newUserSameEmail = createNewUser(AchErrorResponse.class, customerIdentityWidget, null, null, HttpStatus.SC_BAD_REQUEST);
 
         soft.assertThat(newUserSameEmail.getResponseEntity().getMessage())
             .contains("username' should not be null.");
@@ -108,7 +110,7 @@ public class AchUsersTests extends AchTestUtil {
         String userName = new GenerateStringUtil().generateUserName();
         String updatedJobTitle = "QA";
 
-        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
+        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentityWidget, userName, widgetDomain, HttpStatus.SC_CREATED);
         User userResponse = newUser.getResponseEntity();
         userIdentity = userResponse.getIdentity();
 
@@ -125,13 +127,13 @@ public class AchUsersTests extends AchTestUtil {
     public void deleteUserByAdmin() {
         String userName = new GenerateStringUtil().generateUserName();
 
-        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
+        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentityWidget, userName, widgetDomain, HttpStatus.SC_CREATED);
         String userIdentity = newUser.getResponseEntity().getIdentity();
 
         RequestEntity deleteRequest = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
             .token(getWidgetsUserToken(USER_ADMIN))
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT)
-            .inlineVariables(customerIdentity, userIdentity);
+            .inlineVariables(customerIdentityWidget, userIdentity);
         HTTPRequest.build(deleteRequest).delete();
 
         ResponseWrapper<User> getDeletedUser = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_ID, User.class, HttpStatus.SC_OK, userIdentity);
@@ -145,13 +147,13 @@ public class AchUsersTests extends AchTestUtil {
     @TestRail(id = {29186})
     @Description("aPrioriCIGenerateUser cannot be deleted by API")
     public void tryDeleteAprioriCIGenerateUser() {
-        String apGenerateIdentity = getUser("aPrioriCIGenerateUser", customerIdentity).getIdentity();
+        String apGenerateIdentity = getUser("aPrioriCIGenerateUser", customerIdentityWidget).getIdentity();
 
         RequestEntity deleteRequest = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
             .returnType(AchErrorResponse.class)
             .token(getWidgetsUserToken(USER_ADMIN))
             .expectedResponseCode(HttpStatus.SC_CONFLICT)
-            .inlineVariables(customerIdentity, apGenerateIdentity);
+            .inlineVariables(customerIdentityWidget, apGenerateIdentity);
 
         ResponseWrapper<AchErrorResponse> errorResponse = HTTPRequest.build(deleteRequest).delete();
 
@@ -164,13 +166,13 @@ public class AchUsersTests extends AchTestUtil {
     @TestRail(id = {29185})
     @Description("Service account cannot be deleted by API")
     public void tryDeleteServiceAccount() {
-        String serviceAccountIdentity = getUser("widgets.service-account.1", customerIdentity).getIdentity();
+        String serviceAccountIdentity = getUser("widgets.service-account.1", customerIdentityWidget).getIdentity();
 
         RequestEntity deleteRequest = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
             .returnType(AchErrorResponse.class)
             .token(getWidgetsUserToken(USER_ADMIN))
             .expectedResponseCode(HttpStatus.SC_CONFLICT)
-            .inlineVariables(customerIdentity, serviceAccountIdentity);
+            .inlineVariables(customerIdentityWidget, serviceAccountIdentity);
 
         ResponseWrapper<AchErrorResponse> errorResponse = HTTPRequest.build(deleteRequest).delete();
 
@@ -199,7 +201,7 @@ public class AchUsersTests extends AchTestUtil {
         String userName = new GenerateStringUtil().generateUserName();
         String updatedJobTitle = "QA";
 
-        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
+        ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentityWidget, userName, widgetDomain, HttpStatus.SC_CREATED);
         User userResponse = newUser.getResponseEntity();
         userIdentity = userResponse.getIdentity();
 
@@ -211,7 +213,7 @@ public class AchUsersTests extends AchTestUtil {
             .returnType(AchErrorResponse.class)
             .token(getWidgetsUserToken(NOT_ADMIN_USER))
             .expectedResponseCode(HttpStatus.SC_FORBIDDEN)
-            .inlineVariables(customerIdentity, userIdentity);
+            .inlineVariables(customerIdentityWidget, userIdentity);
 
         ResponseWrapper<AchErrorResponse> errorResponse = HTTPRequest.build(deleteRequest).delete();
 
@@ -224,16 +226,16 @@ public class AchUsersTests extends AchTestUtil {
     @TestRail(id = {29343})
     @Description("User admin cannot update own enablements")
     public void updateOwnEnablements() {
-        User current = getUser(USER_ADMIN, customerIdentity);
+        User current = getUser(USER_ADMIN, customerIdentityWidget);
         RequestEntity updateEnablements = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
             .returnType(AchErrorResponse.class)
             .token(getWidgetsUserToken(USER_ADMIN))
             .expectedResponseCode(HttpStatus.SC_FORBIDDEN)
-            .inlineVariables(customerIdentity, current.getIdentity())
+            .inlineVariables(customerIdentityWidget, current.getIdentity())
             .body("user",
                 User.builder()
                     .enablements(Enablements.builder()
-                        .customerAssignedRole("APRIORI_EXPERT")
+                        .customerAssignedRole("APRIORI_DEVELOPER")
                         .userAdminEnabled(false).build())
                     .build());
 
@@ -247,12 +249,12 @@ public class AchUsersTests extends AchTestUtil {
     @TestRail(id = {29344})
     @Description("User admin cannot delete themself")
     public void tryDeleteThemself() {
-        User current = getUser(USER_ADMIN, customerIdentity);
+        User current = getUser(USER_ADMIN, customerIdentityWidget);
         RequestEntity deleteRequest = new RequestEntity().endpoint(ACHAPIEnum.USER_BY_ID)
             .returnType(AchErrorResponse.class)
             .token(getWidgetsUserToken(USER_ADMIN))
             .expectedResponseCode(HttpStatus.SC_FORBIDDEN)
-            .inlineVariables(customerIdentity, current.getIdentity());
+            .inlineVariables(customerIdentityWidget, current.getIdentity());
 
         ResponseWrapper<AchErrorResponse> errorResponse = HTTPRequest.build(deleteRequest).delete();
         soft.assertThat(errorResponse.getResponseEntity().getMessage())

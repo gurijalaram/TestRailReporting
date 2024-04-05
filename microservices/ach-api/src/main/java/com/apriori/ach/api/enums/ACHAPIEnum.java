@@ -12,15 +12,6 @@ public enum ACHAPIEnum implements ExternalEndpointEnum {
     CUSTOMER_USERS("/customers/%s/users"),
     USER_BY_ID("/customers/%s/users/%s"),
 
-    //USER PREFERENCES
-    USER_PREFERENCES("/users/current/preferences"),
-
-    //USERS
-    USER("/users/current"),
-
-    //PEOPLE
-    PEOPLE("/people"),
-
     //NOTIFICATIONS
     NOTIFICATIONS(CUSTOMERS.getEndpointString().concat("/%s/deployments/%s/notifications")),
 
