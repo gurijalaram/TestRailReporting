@@ -108,7 +108,7 @@ public class FileManagementController {
      * @return Map of String, String, to set as headers in api request
      */
     private static Map<String, String> initHeaders(UserCredentials userCredentials, boolean addMultiPartFile) {
-        Map<String, String> headers = new HashMap<String, String>() {{
+        Map<String, String> headers = new HashMap<>() {{
                 put("ap-cloud-context", CustomerUtil.getAuthTargetCloudContext(userCredentials));
                 put("ap-user-context", new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
             }};
