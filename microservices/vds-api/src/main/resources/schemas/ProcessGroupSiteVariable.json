@@ -40,6 +40,12 @@
     },
     "updatedBy": {
       "type": "string"
+    },
+    "variableType": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer"
     }
   }
 }

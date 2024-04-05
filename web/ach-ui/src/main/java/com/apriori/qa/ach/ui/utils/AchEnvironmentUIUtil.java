@@ -4,12 +4,13 @@ package com.apriori.qa.ach.ui.utils;
 import com.apriori.cas.ui.pageobjects.customeradmin.CustomerAdminPage;
 import com.apriori.cia.ui.pageobjects.homepage.AdminHomePage;
 import com.apriori.cic.ui.pageobjects.workflows.WorkflowHome;
+import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cir.ui.pageobjects.header.ReportsHeader;
 import com.apriori.cis.ui.pageobjects.messages.MessagesPage;
+import com.apriori.edc.ui.pageobjects.navtoolbars.NavigationBar;
 import com.apriori.qa.ach.ui.pageobjects.applications.AppStreamPage;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.testconfig.TestBaseUI;
-import com.apriori.web.app.util.login.CommonLoginPageImplementation;
 
 import org.openqa.selenium.support.ui.LoadableComponent;
 
@@ -29,11 +30,11 @@ public class AchEnvironmentUIUtil extends TestBaseUI {
             put("aP Admin", AdminHomePage.class);
             put("aP Analytics", ReportsHeader.class);
             put("aP Connect", WorkflowHome.class);
-            put("aP Design", CommonLoginPageImplementation.class);
+            put("aP Design", ExplorePage.class);
             put("aP Pro", AppStreamPage.class);
             put("aP Workspace", MessagesPage.class);
             put("Customer Admin", CustomerAdminPage.class);
-            put("Electronics Data Collection", CommonLoginPageImplementation.class);
+            put("Electronics Data Collection", NavigationBar.class);
         }};
 
     /**
