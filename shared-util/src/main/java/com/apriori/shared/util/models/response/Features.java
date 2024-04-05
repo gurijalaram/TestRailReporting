@@ -28,4 +28,5 @@ public class Features {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
     private LocalDateTime updatedAt;
     private Boolean bulkCostingEnabled;
+    private Boolean workOrderStatusUpdatesEnabled;
 }

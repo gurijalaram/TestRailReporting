@@ -16,7 +16,7 @@ public class AdminHomePage extends AdminPageHeader {
     @FindBy(xpath = "//div[@class='devices']")
     private WebElement onPremWelcomeText;
 
-    @FindBy(xpath = "//div[@data-name='recentItemsBlock']/div/div")
+    @FindBy(xpath = "//div[@class='index-welcome-text'][1]")
     private WebElement cloudReportsHomeText;
 
     private WebDriver driver;
@@ -27,10 +27,11 @@ public class AdminHomePage extends AdminPageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        welcomeHomeElementToUse =  PropertiesContext.get("env").equals("onprem") ? onPremWelcomeText : cloudReportsHomeText;
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
-        welcomeHomeElementToUse = PropertiesContext.get("${env}").equals("onprem") ? onPremWelcomeText : cloudReportsHomeText;
+
     }
 
     @Override
@@ -40,8 +41,11 @@ public class AdminHomePage extends AdminPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.isElementDisplayed(welcomeHomeElementToUse);
-        pageUtils.isElementEnabled(welcomeHomeElementToUse);
+        if (PropertiesContext.get("env").equals("onprem")) {
+            pageUtils.waitForElementToAppear(onPremWelcomeText);
+        } else {
+            pageUtils.waitForElementToAppear(cloudReportsHomeText);
+        }
     }
 
     /**
