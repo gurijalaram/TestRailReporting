@@ -6,6 +6,7 @@ import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.response.InputControl;
+import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
 import com.apriori.cir.api.utils.UpdatedInputControlsRootItem;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
@@ -17,12 +18,14 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
+import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
@@ -64,27 +67,27 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
                 ""
         );
 
-        softAssertions.assertThat(inputControlsTopLevelSelected.getInputControlState().get(3).getTotalCount()).isEqualTo("12");
-        softAssertions.assertThat(inputControlsTopLevelSelected.getInputControlState().get(3)
-            .getOption("- - - 0 0 0-top-level-0").getSelected()).isEqualTo(true);
-        softAssertions.assertThat(inputControlsTopLevelSelected.getInputControlState().get(7).getTotalCount()).isEqualTo("1");
-        softAssertions.assertThat(inputControlsTopLevelSelected.getInputControlState().get(7).getAllOptions().toString().contains("Initial"))
-            .isEqualTo(true);
-        softAssertions.assertThat(inputControlsTopLevelSelected.getInputControlState().get(8).getTotalCount()).isEqualTo("14");
+        ArrayList<InputControlState> inputControlStateList = inputControlsTopLevelSelected.getInputControlState();
+
+        softAssertions.assertThat(inputControlStateList.get(3).getTotalCount()).isEqualTo("12");
+        softAssertions.assertThat(inputControlStateList.get(3).getOption("- - - 0 0 0-top-level-0").getSelected()).isEqualTo(true);
+        softAssertions.assertThat(inputControlStateList.get(7).getTotalCount()).isEqualTo("1");
+        softAssertions.assertThat(inputControlStateList.get(7).getAllOptions().toString().contains("Initial")).isEqualTo(true);
+        softAssertions.assertThat(inputControlStateList.get(8).getTotalCount()).isEqualTo("14");
 
         JasperReportSummary jasperReportSummaryTopLevelSelected = jasperApiUtils.genericTestCore(
             InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
             inputControls.getExportSetName().getOption(exportSetName).getValue()
         );
 
-        softAssertions.assertThat(
-            jasperReportSummaryTopLevelSelected.getReportHtmlPart().getElementsContainingText("Part Number:").get(6)
-                .siblingElements().get(1).text()
+        Document topLevelReportHtmlPart = jasperReportSummaryTopLevelSelected.getReportHtmlPart();
+
+        softAssertions.assertThat(topLevelReportHtmlPart.getElementsContainingText("Part Number:").get(6)
+            .siblingElements().get(1).text()
         ).isEqualTo("3538968");
 
-        softAssertions.assertThat(
-            jasperReportSummaryTopLevelSelected.getReportHtmlPart().getElementsContainingText("Scenario:").get(6)
-                .siblingElements().get(1).text()
+        softAssertions.assertThat(topLevelReportHtmlPart.getElementsContainingText("Scenario:").get(6)
+            .siblingElements().get(1).text()
         ).isEqualTo("Initial");
 
         softAssertions.assertAll();
@@ -129,8 +132,6 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
             jasperReportSummary.getReportHtmlPart().getElementsContainingText("Part Number:").get(7).parent()
                 .siblingElements().get(1).children().get(0).text()
         ).isEqualTo("TOP-LEVEL");
-
-        softAssertions.assertThat(inputControlsComponentSelected).isNotEqualTo(null);
 
         softAssertions.assertAll();
     }
@@ -194,13 +195,13 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
             inputControls.getExportSetName().getOption(exportSetName).getValue()
         );
 
-        softAssertions.assertThat(
-            jasperReportSummaryAssemblyOption.getReportHtmlPart().getElementsContainingText("Component Type:").get(6)
-                .siblingElements().get(1).text()
+        Document assemblyReportHtmlPart = jasperReportSummaryAssemblyOption.getReportHtmlPart();
+
+        softAssertions.assertThat(assemblyReportHtmlPart.getElementsContainingText("Component Type:").get(6)
+            .siblingElements().get(1).text()
         ).isEqualTo("assembly");
 
-        softAssertions.assertThat(jasperReportSummaryAssemblyOption.getReportHtmlPart()
-            .getElementsContainingText("Process Group:").get(6)
+        softAssertions.assertThat(assemblyReportHtmlPart.getElementsContainingText("Process Group:").get(6)
             .siblingElements().get(1).text()
         ).isEqualTo("Assembly");
 
@@ -215,13 +216,13 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
             inputControls.getExportSetName().getOption(exportSetName).getValue()
         );
 
-        softAssertions.assertThat(
-            jasperReportSummaryPartOption.getReportHtmlPart().getElementsContainingText("Component Type:").get(6)
-                .siblingElements().get(1).text()
+        Document partReportHtmlPart = jasperReportSummaryPartOption.getReportHtmlPart();
+
+        softAssertions.assertThat(partReportHtmlPart.getElementsContainingText("Component Type:").get(6)
+            .siblingElements().get(1).text()
         ).isEqualTo("part");
 
-        softAssertions.assertThat(jasperReportSummaryPartOption.getReportHtmlPart()
-            .getElementsContainingText("Process Group:").get(6)
+        softAssertions.assertThat(partReportHtmlPart.getElementsContainingText("Process Group:").get(6)
             .siblingElements().get(1).text()
         ).isEqualTo("Sheet Metal");
 
@@ -244,14 +245,14 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
                 ""
             );
 
-        softAssertions.assertThat(inputControlsScenarioName.getInputControlState().get(3).getTotalCount()).isEqualTo("12");
+        ArrayList<InputControlState> inputControlStateList = inputControlsScenarioName.getInputControlState();
 
-        List<String> inputControlsComponentList = inputControlsScenarioName.getInputControlState().get(8).getAllOptions();
+        softAssertions.assertThat(inputControlStateList.get(3).getTotalCount()).isEqualTo("12");
+
+        List<String> inputControlsComponentList = inputControlStateList.get(8).getAllOptions();
         for (String componentValue : inputControlsComponentList) {
             softAssertions.assertThat(componentValue.contains("Initial")).isEqualTo(true);
         }
-
-        softAssertions.assertThat(inputControlsScenarioName).isNotEqualTo(null);
 
         softAssertions.assertAll();
     }
@@ -274,22 +275,14 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
                 ""
             );
 
-        softAssertions.assertThat(inputControlsLatestExportDate.getInputControlState().get(3).getTotalCount()).isEqualTo("12");
+        ArrayList<InputControlState> inputControlStateList = inputControlsLatestExportDate.getInputControlState();
 
-        softAssertions.assertThat(inputControlsLatestExportDate.getInputControlState().get(5).getTotalCount()).isEqualTo("0");
-
-        softAssertions.assertThat(inputControlsLatestExportDate.getInputControlState().get(6).getTotalCount()).isEqualTo("0");
-
-        softAssertions.assertThat(inputControlsLatestExportDate.getInputControlState().get(7).getTotalCount()).isEqualTo("0");
-
-        softAssertions.assertThat(inputControlsLatestExportDate.getInputControlState().get(8).getError()).isEqualTo("This field is mandatory so you must enter data.");
-
-        softAssertions.assertThat(inputControlsLatestExportDate.getInputControlState().get(8).getTotalCount()).isEqualTo("0");
-
-        /**
-         * Dies here on cloud only. Response from API of above line is likely too large.
-         * Initialise it once per class or use input stream or something.
-         */
+        softAssertions.assertThat(inputControlStateList.get(3).getTotalCount()).isEqualTo("12");
+        softAssertions.assertThat(inputControlStateList.get(5).getTotalCount()).isEqualTo("0");
+        softAssertions.assertThat(inputControlStateList.get(6).getTotalCount()).isEqualTo("0");
+        softAssertions.assertThat(inputControlStateList.get(7).getTotalCount()).isEqualTo("0");
+        softAssertions.assertThat(inputControlStateList.get(8).getError()).isEqualTo("This field is mandatory so you must enter data.");
+        softAssertions.assertThat(inputControlStateList.get(8).getTotalCount()).isEqualTo("0");
 
         softAssertions.assertAll();
     }
@@ -312,23 +305,17 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
                 ""
             );
 
-        softAssertions.assertThat(inputControlsCreatedBy).isNotEqualTo(null);
+        ArrayList<InputControlState> inputControlStateList = inputControlsCreatedBy.getInputControlState();
 
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(5).getOptions().get(3).getLabel())
-            .isEqualTo(
-                "Ben Hegan <bhegan>"
-            );
+        softAssertions.assertThat(inputControlStateList.get(5).getOptions().get(3).getLabel()).isEqualTo("Ben Hegan <bhegan>");
 
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(5).getOptions().get(3).getSelected())
-            .isEqualTo(
-                true
-            );
+        softAssertions.assertThat(inputControlStateList.get(5).getOptions().get(3).getSelected()).isEqualTo(true);
 
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(6).getTotalCount()).isEqualTo("2");
+        softAssertions.assertThat(inputControlStateList.get(6).getTotalCount()).isEqualTo("2");
 
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(7).getTotalCount()).isEqualTo("1");
+        softAssertions.assertThat(inputControlStateList.get(7).getTotalCount()).isEqualTo("1");
 
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(8).getTotalCount()).isEqualTo("18");
+        softAssertions.assertThat(inputControlStateList.get(8).getTotalCount()).isEqualTo("18");
 
         softAssertions.assertAll();
     }
@@ -349,13 +336,10 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
                 ""
             );
 
-        softAssertions.assertThat(inputControlsComponentNumberSearchCriteria.getInputControlState().get(1).getValue())
-            .isEqualTo("3538968");
-        softAssertions.assertThat(inputControlsComponentNumberSearchCriteria.getInputControlState().get(8).getOptions().get(0).getLabel())
-            .isEqualTo("3538968 (Initial)  [part]");
-        softAssertions.assertThat(inputControlsComponentNumberSearchCriteria.getInputControlState().get(8).getOptions().get(0).getSelected())
-            .isEqualTo(true);
-        softAssertions.assertThat(inputControlsComponentNumberSearchCriteria).isNotEqualTo(null);
+        ArrayList<InputControlState> inputControlStateList = inputControlsComponentNumberSearchCriteria.getInputControlState();
+        softAssertions.assertThat(inputControlStateList.get(1).getValue()).isEqualTo("3538968");
+        softAssertions.assertThat(inputControlStateList.get(8).getOptions().get(0).getLabel()).isEqualTo("3538968 (Initial)  [part]");
+        softAssertions.assertThat(inputControlStateList.get(8).getOptions().get(0).getSelected()).isEqualTo(true);
 
         softAssertions.assertAll();
     }

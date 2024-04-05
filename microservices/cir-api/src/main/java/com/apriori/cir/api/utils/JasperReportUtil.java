@@ -71,7 +71,8 @@ public class JasperReportUtil {
     }
 
     public UpdatedInputControlsRootItem getInputControlsModified(JasperApiInputControlsPathEnum value, String valueNameToSet, String valueToSet, String exportSet) {
-        List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputList();
+        //List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputList();
+        List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputListScenarioComparison();
         genericInputList.get(inputControlsIndexMap.get(valueNameToSet)).setValue(Collections.singletonList(valueToSet));
         if (!exportSet.isEmpty()) {
             genericInputList.get(inputControlsIndexMap.get("exportSetName")).setValue(Collections.singletonList(exportSet));
@@ -366,9 +367,31 @@ public class JasperReportUtil {
         return listOfInputObjects;
     }
 
+    private List<UpdatedInputControlsPayloadInputsItem> createGenericInputListScenarioComparison() {
+        List<UpdatedInputControlsPayloadInputsItem> listOfInputObjects = new ArrayList<>();
+
+        List<String> nameList = Arrays.asList("useLatestExport", "earliestExportDate", "latestExportDate",
+            "exportSetName", "allExportIDs", "componentType", "createdBy", "lastModifiedBy", "partNumber",
+            "scenarioName", "scenarioToCompareIDs", "scenarioIDs", "currencyCode");
+
+        List<String> valueList = Arrays.asList("Scenario", "2015-12-06 06:24:08", "2024-04-04 07:24:08", "~NOTHING~",
+            "~NOTHING~", "~NOTHING~", "~NOTHING~", "~NOTHING~", "%", "~NOTHING~", "187", "187", "USD");
+
+        for (int i = 0; i < 13; i++) {
+            listOfInputObjects.add(UpdatedInputControlsPayloadInputsItem.builder()
+                .name(nameList.get(i))
+                .value(Collections.singletonList(valueList.get(i)))
+                .limit(100)
+                .offset(0)
+                .build());
+        }
+
+        return listOfInputObjects;
+    }
+
     private static void initialiseInputControlsHashMap() {
         inputControlsIndexMap = new HashMap<>();
-        inputControlsIndexMap.put("exportSetName", 0);
+        /*inputControlsIndexMap.put("exportSetName", 0);
         inputControlsIndexMap.put("componentType", 1);
         inputControlsIndexMap.put("latestExportDate", 2);
         inputControlsIndexMap.put("createdBy", 3);
@@ -376,6 +399,19 @@ public class JasperReportUtil {
         inputControlsIndexMap.put("componentNumber", 5);
         inputControlsIndexMap.put("scenarioName", 6);
         inputControlsIndexMap.put("componentSelect", 7);
-        inputControlsIndexMap.put("componentCostCurrencyCode", 8);
+        inputControlsIndexMap.put("componentCostCurrencyCode", 8);*/
+        inputControlsIndexMap.put("useLatestExport", 0);
+        inputControlsIndexMap.put("earliestExportDate", 1);
+        inputControlsIndexMap.put("latestExportDate", 2);
+        inputControlsIndexMap.put("exportSetName", 3);
+        inputControlsIndexMap.put("allExportIDs", 4);
+        inputControlsIndexMap.put("componentType", 5);
+        inputControlsIndexMap.put("createdBy", 6);
+        inputControlsIndexMap.put("lastModifiedBy", 7);
+        inputControlsIndexMap.put("partNumber", 8);
+        inputControlsIndexMap.put("scenarioName", 9);
+        inputControlsIndexMap.put("scenarioToCompareIDs", 10);
+        inputControlsIndexMap.put("scenarioIDs", 11);
+        inputControlsIndexMap.put("currencyCode", 12);
     }
 }
