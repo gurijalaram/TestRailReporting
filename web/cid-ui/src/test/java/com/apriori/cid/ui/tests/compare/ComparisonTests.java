@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ComponentsUtil;
+import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.compare.CompareExplorePage;
 import com.apriori.cid.ui.pageobjects.compare.ComparePage;
@@ -42,6 +43,9 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.component.componentiteration.AnalysisOfScenario;
+import com.apriori.shared.util.models.response.component.componentiteration.ComponentIteration;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -66,6 +70,7 @@ public class ComparisonTests extends TestBaseUI {
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private IterationsUtil iterationsUtil = new IterationsUtil();
     private ComponentInfoBuilder component;
     private ComponentInfoBuilder component2;
 
@@ -686,14 +691,17 @@ public class ComparisonTests extends TestBaseUI {
             .createComparison()
             .selectManualComparison();
 
+        AnalysisOfScenario analysisOfScenario1 = iterationsUtil.getComponentIterationLatest(component).getResponseEntity().getAnalysisOfScenario();
+        AnalysisOfScenario analysisOfScenario2 = iterationsUtil.getComponentIterationLatest(component2).getResponseEntity().getAnalysisOfScenario();
+
         softAssertions.assertThat(comparePage.getDeltaPercentage(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.MATERIAL_FINISH_MASS))
-            .as("Material Finish Mass").isEqualTo("31.97%");
+            .as("Material Finish Mass").isEqualTo(calculatePercentageDifference(analysisOfScenario1.getFinishMass(), analysisOfScenario2.getFinishMass()));
         softAssertions.assertThat(comparePage.getDeltaPercentage(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.DESIGN_DESIGN_WARNINGS))
             .as("Design Warnings").isEqualTo("");
         softAssertions.assertThat(comparePage.getDeltaPercentage(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME))
-            .as("Total Cycle Time").isEqualTo("138.55%");
+            .as("Total Cycle Time").isEqualTo(calculatePercentageDifference(analysisOfScenario1.getCycleTime(), analysisOfScenario2.getCycleTime()));
         softAssertions.assertThat(comparePage.getDeltaPercentage(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT))
-            .as("Total Capital Investment").isEqualTo("3.48%");
+            .as("Total Capital Investment").isEqualTo(calculatePercentageDifference(analysisOfScenario1.getCapitalInvestment(), analysisOfScenario2.getCapitalInvestment()));
 
         softAssertions.assertAll();
     }
@@ -1362,6 +1370,17 @@ public class ComparisonTests extends TestBaseUI {
             .isNotIn(compareExplorePage.getListOfComparisons());
 
         softAssertions.assertAll();
+    }
+
+    /**
+     * Use provided values from basis and compared scenario to calculate percentage difference
+     *
+     * @param basis - Given value from Basis scenario
+     * @param comparedScenario - Given value from specified scenario
+     * @return - String of percentage difference to 2 decimal places with trailing '%'
+     */
+    private String calculatePercentageDifference(Double basis, Double comparedScenario) {
+        return String.format("%.2f", Math.abs(((basis - comparedScenario) / basis) * 100)) + "%";
     }
 
 }
