@@ -27,7 +27,8 @@ public class CostWorksheetTests extends BcmUtil {
 
     @AfterEach
     public void cleanUp() {
-        if (worksheetIdentity != null) {
+        if (worksheetIdentity != null
+            & getWorksheet(WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity().getStatus().equals("COMPLETE")) {
             deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
         }
     }

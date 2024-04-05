@@ -1,5 +1,7 @@
 package com.apriori.bcm.api.tests;
 
+import static com.apriori.css.api.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
+
 import com.apriori.bcm.api.models.response.ErrorResponse;
 import com.apriori.bcm.api.models.response.InputRowPostResponse;
 import com.apriori.bcm.api.models.response.InputRowsGroupsResponse;
@@ -137,6 +139,28 @@ public class InputRowTests extends BcmUtil {
             editPublicInputRow(InputRowsGroupsResponse.class, worksheetIdentity, inputRowIdentity, HttpStatus.SC_OK).getResponseEntity();
         softAssertions.assertThat(editedRows.getSuccesses().get(0).getInputRowIdentity())
             .isEqualTo(inputRowIdentity);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = 30016)
+    @Description("Private input row cannot be edited")
+    public void notEditPrivateRow() {
+        ScenarioItem cssComponentResponses = cssComponent.getBaseCssComponents(testingUser, SCENARIO_PUBLISHED_EQ.getKey() + false).get(0);
+
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
+            .getResponseEntity()
+            .getIdentity();
+
+        String inputRowIdentity = createWorkSheetInputRow(cssComponentResponses.getComponentIdentity(),
+            cssComponentResponses.getScenarioIdentity(),
+            worksheetIdentity).getResponseEntity().getIdentity();
+
+        InputRowsGroupsResponse editedRows =
+            editPublicInputRow(InputRowsGroupsResponse.class, worksheetIdentity, inputRowIdentity, HttpStatus.SC_OK).getResponseEntity();
+
+        softAssertions.assertThat(editedRows.getFailures().get(0).getError())
+            .isEqualTo(String.format("Input Row with Identity: '%s' refers to private scenario in Worksheet with Identity: '%s'", inputRowIdentity, worksheetIdentity));
         softAssertions.assertAll();
     }
 

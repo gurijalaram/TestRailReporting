@@ -3,8 +3,8 @@ package com.apriori.bcm.api.utils;
 import com.apriori.bcm.api.enums.BcmAppAPIEnum;
 import com.apriori.bcm.api.models.request.AddInputsRequest;
 import com.apriori.bcm.api.models.request.GroupItems;
-import com.apriori.bcm.api.models.request.InputRowDelete;
 import com.apriori.bcm.api.models.request.Inputrow;
+import com.apriori.bcm.api.models.request.MultipleDelete;
 import com.apriori.bcm.api.models.request.Worksheet;
 import com.apriori.bcm.api.models.request.WorksheetInputRowsRequest;
 import com.apriori.bcm.api.models.request.WorksheetRequest;
@@ -242,7 +242,7 @@ public class BcmUtil extends TestUtil {
         RequestEntity requestEntity =
             requestEntityUtil.init(BcmAppAPIEnum.DELETE_INPUTS, klass)
                 .inlineVariables(worksheetIdentity)
-                .body(InputRowDelete.builder()
+                .body(MultipleDelete.builder()
                     .groupItems(Arrays.asList(GroupItems
                         .builder()
                         .inputRowIdentity(inputRowIdentity)
@@ -279,7 +279,7 @@ public class BcmUtil extends TestUtil {
     public <T> ResponseWrapper<T> editPublicInputRow(Class<T> klass, String worksheetIdentity, String inputRowIdentity, Integer expectedResponseCode) {
         RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.EDIT_INPUTS, klass)
             .inlineVariables(worksheetIdentity)
-            .body(InputRowDelete.builder()
+            .body(MultipleDelete.builder()
                 .groupItems(Collections.singletonList(GroupItems.builder()
                     .inputRowIdentity(inputRowIdentity)
                     .build()))
@@ -303,6 +303,16 @@ public class BcmUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * @param klass - class
+     * @param worksheetIdentity - worksheet identity
+     * @param componentIdentity - component identity
+     * @param scenarioIdentity - scenario identity
+     * @param componentIdentity2 - component identity 2
+     * @param scenarioIdentity2 - scenario identity 2
+     * @param expectedResponseCode - expected response code
+     * @return response object
+     */
     public <T> ResponseWrapper<T> addMultipleInputRows(Class<T> klass, String worksheetIdentity, String componentIdentity, String scenarioIdentity, String componentIdentity2, String scenarioIdentity2, Integer expectedResponseCode) {
         RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.MULTIPLE_ROWS, klass)
             .inlineVariables(worksheetIdentity)
@@ -310,6 +320,23 @@ public class BcmUtil extends TestUtil {
                 .groupItems(Arrays.asList(Inputrow.builder().componentIdentity(componentIdentity).scenarioIdentity(scenarioIdentity).build(),
                     Inputrow.builder().componentIdentity(componentIdentity2).scenarioIdentity(scenarioIdentity2)
                         .build()))
+                .build())
+            .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * @param klass - class
+     * @param worksheetIdentity1 - worksheet identity 1
+     * @param worksheetIdentity2 - worksheet identity 2
+     * @param expectedResponseCode - expected response code
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> deleteMultipleWorksheets(Class<T> klass, String worksheetIdentity1, String worksheetIdentity2, Integer expectedResponseCode) {
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.DELETE_MULTIPLE_WORKSHEETS, klass)
+            .body(MultipleDelete.builder()
+                .groupItems(Arrays.asList(GroupItems.builder().identity(worksheetIdentity1).build(),
+                    GroupItems.builder().identity(worksheetIdentity2).build()))
                 .build())
             .expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).post();

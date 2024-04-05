@@ -5,6 +5,7 @@ import com.apriori.bcm.api.models.response.InputRowPostResponse;
 import com.apriori.bcm.api.models.response.InputRowsGroupsResponse;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
+import com.apriori.bcm.api.models.response.WorksheetGroupsResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -226,6 +227,33 @@ public class UpdateWorksheetTests extends BcmUtil {
 
         softAssertions.assertThat(invalidIdentity.getMessage())
             .isEqualTo("'identity' is not a valid identity.");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {30653, 30654, 30655})
+    @Description("Verify multiple delete worksheet endpoint")
+    public void deleteMultipleWorksheets() {
+        String name1 = GenerateStringUtil.saltString("name1");
+        String name2 = GenerateStringUtil.saltString("name2");
+        String worksheetIdentity1 = createWorksheet(name1).getResponseEntity().getIdentity();
+        String worksheetIdentity2 = createWorksheet(name2).getResponseEntity().getIdentity();
+
+        WorksheetGroupsResponse multipleDelete = deleteMultipleWorksheets(
+            WorksheetGroupsResponse.class, worksheetIdentity1, worksheetIdentity2, HttpStatus.SC_OK).getResponseEntity();
+
+        softAssertions.assertThat(multipleDelete.getSuccesses().get(0).getIdentity()).isEqualTo(worksheetIdentity1);
+        softAssertions.assertThat(multipleDelete.getSuccesses().get(1).getIdentity()).isEqualTo(worksheetIdentity2);
+
+        WorksheetGroupsResponse deleteAlreadyDeletedWorksheets = deleteMultipleWorksheets(
+            WorksheetGroupsResponse.class, worksheetIdentity1, worksheetIdentity2, HttpStatus.SC_OK).getResponseEntity();
+
+        softAssertions.assertThat(deleteAlreadyDeletedWorksheets.getFailures().get(0).getError()).contains("Resource 'Worksheet'", "was not found");
+        ErrorResponse deleteInvalidWorksheets = deleteMultipleWorksheets(
+            ErrorResponse.class, "0000000", null, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
+
+        softAssertions.assertThat(deleteInvalidWorksheets.getMessage())
+            .isEqualTo("2 validation failures were found:\n* 'groupItem[0].identity' is not a valid identity.\n* 'groupItem[1].identity' should not be null.");
         softAssertions.assertAll();
     }
 }
