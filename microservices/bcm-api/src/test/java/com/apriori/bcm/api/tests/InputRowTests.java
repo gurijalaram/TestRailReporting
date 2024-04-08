@@ -191,7 +191,11 @@ public class InputRowTests extends BcmUtil {
 
         softAssertions.assertThat(addExistingRows.getFailures().get(0).getError()).contains("already exists");
 
-        List<String> emptyList = Arrays.asList(" " + "," + " ", " " + "," + " ");
+        List<String> emptyList = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            emptyList.add(" " + "," + " ");
+        }
+
         ErrorResponse addEmptyList =
             addMultipleInputRows(ErrorResponse.class, worksheetIdentity, emptyList, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
         softAssertions.assertThat(addEmptyList.getMessage()).contains("should not be null");
