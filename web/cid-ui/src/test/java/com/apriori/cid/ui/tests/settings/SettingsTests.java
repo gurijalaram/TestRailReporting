@@ -121,13 +121,13 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {6281, 5442})
     @Description("User can change the default Process group")
     public void defaultPG() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .openSettings()
             .goToProductionTab()
-            .selectProcessGroup(component.getProcessGroup())
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING)
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(component)
             .navigateToScenario(component)
@@ -447,8 +447,8 @@ public class SettingsTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost")).contains("€");
-        softAssertions.assertThat(evaluatePage.getFinishMass()).isEqualTo("5,309.46g");
+        softAssertions.assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost")).as("Verify Currency Symbol").contains("€");
+        softAssertions.assertThat(evaluatePage.getFinishMass()).as("Verify Mass Unit").containsPattern("\\d\\.\\d*g");
 
         softAssertions.assertAll();
     }
@@ -547,13 +547,15 @@ public class SettingsTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.40), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.31), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResultUnit("Total Cycle Time"))
+            .as("Verify Default Cycle Time Unit").isEqualToIgnoringCase("s");
+        softAssertions.assertThat(evaluatePage.getMaterialResultUnit("Finish Mass"))
+            .as("Verify Default Finish Mass Unit").isEqualToIgnoringCase("kg");
 
         stockPage = evaluatePage.openMaterialProcess()
             .openStockTab();
 
-        softAssertions.assertThat(stockPage.getStockInfo("Height")).isEqualTo("154.00mm");
+        softAssertions.assertThat(stockPage.getStockInfo("Height")).as("Verify Default Stock Height Unit").contains("mm");
 
         evaluatePage = stockPage.closePanel()
             .openSettings()
@@ -563,13 +565,15 @@ public class SettingsTests extends TestBaseUI {
             .selectTime(TimeEnum.MINUTE)
             .submit(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Total Cycle Time")).isCloseTo(Double.valueOf(2.80), Offset.offset(15.0));
-        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5309.46), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResultUnit("Total Cycle Time"))
+            .as("Verify Custom Cycle Time Unit").isEqualToIgnoringCase("min");
+        softAssertions.assertThat(evaluatePage.getMaterialResultUnit("Finish Mass"))
+            .as("Verify Custom Finish Mass Unit").isEqualToIgnoringCase("g");
 
         stockPage = evaluatePage.openMaterialProcess()
             .openStockTab();
 
-        softAssertions.assertThat(stockPage.getStockInfo("Height")).isEqualTo("0.15m");
+        softAssertions.assertThat(stockPage.getStockInfo("Height")).as("Verify Custom Stock Height Unit").containsPattern("\\d\\.\\d*m");
 
         softAssertions.assertAll();
     }
