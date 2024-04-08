@@ -31,6 +31,8 @@ import org.junit.jupiter.api.BeforeAll;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class BcmUtil extends TestUtil {
@@ -304,39 +306,45 @@ public class BcmUtil extends TestUtil {
     }
 
     /**
+     * Adds multiple input rows to a worksheet
+     *
      * @param klass - class
      * @param worksheetIdentity - worksheet identity
-     * @param componentIdentity - component identity
-     * @param scenarioIdentity - scenario identity
-     * @param componentIdentity2 - component identity 2
-     * @param scenarioIdentity2 - scenario identity 2
+     * @param componentIdentityScenarioIdentity - list of component and scenario identities
      * @param expectedResponseCode - expected response code
      * @return response object
      */
-    public <T> ResponseWrapper<T> addMultipleInputRows(Class<T> klass, String worksheetIdentity, String componentIdentity, String scenarioIdentity, String componentIdentity2, String scenarioIdentity2, Integer expectedResponseCode) {
+    public <T> ResponseWrapper<T> addMultipleInputRows(Class<T> klass, String worksheetIdentity, List<String> componentIdentityScenarioIdentity, Integer expectedResponseCode) {
+        List<String[]> componentIdScenarioId = componentIdentityScenarioIdentity.stream().map(o -> o.split(",")).collect(Collectors.toList());
+
         RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.MULTIPLE_ROWS, klass)
             .inlineVariables(worksheetIdentity)
             .body(AddInputsRequest.builder()
-                .groupItems(Arrays.asList(Inputrow.builder().componentIdentity(componentIdentity).scenarioIdentity(scenarioIdentity).build(),
-                    Inputrow.builder().componentIdentity(componentIdentity2).scenarioIdentity(scenarioIdentity2)
-                        .build()))
+                .groupItems(componentIdScenarioId.stream().map(o -> Inputrow.builder()
+                    .componentIdentity(o[0])
+                    .scenarioIdentity(o[1])
+                    .build())
+                    .collect(Collectors.toList()))
                 .build())
             .expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).post();
     }
 
     /**
+     * Deletes multiple worksheets at once
+     *
      * @param klass - class
-     * @param worksheetIdentity1 - worksheet identity 1
-     * @param worksheetIdentity2 - worksheet identity 2
      * @param expectedResponseCode - expected response code
+     * @param worksheetIdentity - worksheet identity
      * @return response object
      */
-    public <T> ResponseWrapper<T> deleteMultipleWorksheets(Class<T> klass, String worksheetIdentity1, String worksheetIdentity2, Integer expectedResponseCode) {
+    public <T> ResponseWrapper<T> deleteMultipleWorksheets(Class<T> klass, Integer expectedResponseCode, String... worksheetIdentity) {
         RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.DELETE_MULTIPLE_WORKSHEETS, klass)
             .body(MultipleDelete.builder()
-                .groupItems(Arrays.asList(GroupItems.builder().identity(worksheetIdentity1).build(),
-                    GroupItems.builder().identity(worksheetIdentity2).build()))
+                .groupItems(Arrays.stream(worksheetIdentity)
+                    .map(worksheetId -> GroupItems.builder().identity(worksheetId)
+                        .build())
+                    .collect(Collectors.toList()))
                 .build())
             .expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).post();

@@ -240,17 +240,17 @@ public class UpdateWorksheetTests extends BcmUtil {
         String worksheetIdentity2 = createWorksheet(name2).getResponseEntity().getIdentity();
 
         WorksheetGroupsResponse multipleDelete = deleteMultipleWorksheets(
-            WorksheetGroupsResponse.class, worksheetIdentity1, worksheetIdentity2, HttpStatus.SC_OK).getResponseEntity();
+            WorksheetGroupsResponse.class, HttpStatus.SC_OK, worksheetIdentity1, worksheetIdentity2).getResponseEntity();
 
         softAssertions.assertThat(multipleDelete.getSuccesses().get(0).getIdentity()).isEqualTo(worksheetIdentity1);
         softAssertions.assertThat(multipleDelete.getSuccesses().get(1).getIdentity()).isEqualTo(worksheetIdentity2);
 
         WorksheetGroupsResponse deleteAlreadyDeletedWorksheets = deleteMultipleWorksheets(
-            WorksheetGroupsResponse.class, worksheetIdentity1, worksheetIdentity2, HttpStatus.SC_OK).getResponseEntity();
+            WorksheetGroupsResponse.class, HttpStatus.SC_OK, worksheetIdentity1, worksheetIdentity2).getResponseEntity();
 
         softAssertions.assertThat(deleteAlreadyDeletedWorksheets.getFailures().get(0).getError()).contains("Resource 'Worksheet'", "was not found");
         ErrorResponse deleteInvalidWorksheets = deleteMultipleWorksheets(
-            ErrorResponse.class, "0000000", null, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
+            ErrorResponse.class, HttpStatus.SC_BAD_REQUEST, "0000000", null).getResponseEntity();
 
         softAssertions.assertThat(deleteInvalidWorksheets.getMessage())
             .isEqualTo("2 validation failures were found:\n* 'groupItem[0].identity' is not a valid identity.\n* 'groupItem[1].identity' should not be null.");

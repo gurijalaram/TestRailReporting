@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
@@ -178,21 +179,21 @@ public class InputRowTests extends BcmUtil {
             .getResponseEntity()
             .getIdentity();
 
+        List<String> componentIdentityScenarioIdentity = Arrays.asList(scenario1.getComponentIdentity() + "," + scenario1.getScenarioIdentity(),
+            scenario2.getComponentIdentity() + "," + scenario2.getScenarioIdentity());
         MultipleInputRowsResponse addRows =
-            addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, scenario1.getComponentIdentity(), scenario1.getScenarioIdentity(),
-                scenario2.getComponentIdentity(), scenario2.getScenarioIdentity(), HttpStatus.SC_OK).getResponseEntity();
+            addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, componentIdentityScenarioIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(addRows.getSuccesses().get(0).getScenarioIdentity()).isEqualTo(scenario1.getScenarioIdentity());
 
         MultipleInputRowsResponse addExistingRows =
-            addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, scenario1.getComponentIdentity(), scenario1.getScenarioIdentity(),
-                scenario2.getComponentIdentity(), scenario2.getScenarioIdentity(), HttpStatus.SC_OK).getResponseEntity();
+            addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, componentIdentityScenarioIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(addExistingRows.getFailures().get(0).getError()).contains("already exists");
 
+        List<String> emptyList = Arrays.asList(" " + "," + " ", " " + "," + " ");
         ErrorResponse addEmptyList =
-            addMultipleInputRows(ErrorResponse.class, worksheetIdentity, null,
-                null, null, null, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
+            addMultipleInputRows(ErrorResponse.class, worksheetIdentity, emptyList, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
         softAssertions.assertThat(addEmptyList.getMessage()).contains("should not be null");
         softAssertions.assertAll();
     }
