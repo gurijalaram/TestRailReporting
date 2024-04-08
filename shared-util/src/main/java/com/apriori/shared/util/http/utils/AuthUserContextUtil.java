@@ -7,6 +7,7 @@ import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.Users;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 
@@ -34,8 +35,12 @@ public class AuthUserContextUtil {
 
         ResponseWrapper<User> userIdResponse = HTTPRequest.build(idEntity).get();
 
+        Gson gson = new GsonBuilder().setPrettyPrinting()
+            .excludeFieldsWithoutExposeAnnotation()
+            .create();
+
         //Get the actual [User] object and store it as bytes. At this point we don't want the root name [response] to be included
-        byte[] userIdBytes = new Gson().toJson(userIdResponse.getResponseEntity()).getBytes(StandardCharsets.UTF_8);
+        byte[] userIdBytes = gson.toJson(userIdResponse.getResponseEntity()).getBytes(StandardCharsets.UTF_8);
 
         //Encode the previously stored object in Base64
         byte[] encodedUserIdBytes = Base64.encodeBase64(userIdBytes);
