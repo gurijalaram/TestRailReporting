@@ -190,10 +190,10 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
             );
 
         ArrayList<InputControlState> inputControlStateList = inputControlsScenarioToCompareSelected.getInputControlState();
-        // Selected scenarios counts updated correctly - not sure if this or above test are valid - do the IC work as expected?
+
+        // TODO - check if this IC works properly (check TR for what it should do, etc)
         softAssertions.assertThat(inputControlStateList.get(11).getOptions().get(0).getSelected()).isEqualTo(true);
 
-        // Created By, Last Modified By and Scenario Name filtered to show only information for the selected scenarios
         softAssertions.assertThat(inputControlStateList.get(8).getTotalCount()).isEqualTo("12");
         softAssertions.assertThat(inputControlStateList.get(9).getTotalCount()).isEqualTo("12");
         softAssertions.assertThat(inputControlStateList.get(10).getTotalCount()).isEqualTo("19");
@@ -207,7 +207,6 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = 3249)
     @Description("Verify scenario name input control functions correctly")
     public void verifyScenarioNameInputControlFunctionsCorrectly() {
-        // Select export set and scenario name
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
         String currentExportSetValue = inputControls.getExportSetName().getOption(exportSetName).getValue();
@@ -290,14 +289,14 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
 
         InputControlState scenariosToCompareState = inputControlsPartNumberSearchCriteria.getInputControlState().get(11);
         softAssertions.assertThat(scenariosToCompareState.getTotalCount()).isEqualTo("2");
-        softAssertions.assertThat(scenariosToCompareState.getOptions().get(0).getSelected()).isEqualTo(Boolean.TRUE);
+        softAssertions.assertThat(scenariosToCompareState.getOptions().get(0).getSelected()).isEqualTo(true);
         softAssertions.assertThat(scenariosToCompareState.getOptions().get(0).getLabel()).isEqualTo("-12 (Bulkload) [part] ");
 
         InputControlState scenarioNameState = inputControlsPartNumberSearchCriteria.getInputControlState().get(10);
         softAssertions.assertThat(scenarioNameState.getTotalCount()).isEqualTo("2");
-        softAssertions.assertThat(scenarioNameState.getOptions().get(0).getSelected()).isEqualTo(Boolean.FALSE);
+        softAssertions.assertThat(scenarioNameState.getOptions().get(0).getSelected()).isEqualTo(false);
         softAssertions.assertThat(scenarioNameState.getOptions().get(0).getLabel()).isEqualTo("Bulkload");
-        softAssertions.assertThat(scenarioNameState.getOptions().get(1).getSelected()).isEqualTo(Boolean.FALSE);
+        softAssertions.assertThat(scenarioNameState.getOptions().get(1).getSelected()).isEqualTo(false);
         softAssertions.assertThat(scenarioNameState.getOptions().get(1).getLabel()).isEqualTo("Final");
 
         softAssertions.assertAll();
@@ -323,7 +322,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
 
         InputControlState createdByState = inputControlsCreatedBy.getInputControlState().get(8);
         softAssertions.assertThat(createdByState.getTotalCount()).isEqualTo("12");
-        softAssertions.assertThat(createdByState.getOptions().get(3).getSelected()).isEqualTo(Boolean.TRUE);
+        softAssertions.assertThat(createdByState.getOptions().get(3).getSelected()).isEqualTo(true);
         softAssertions.assertThat(createdByState.getOptions().get(3).getLabel()).isEqualTo("bhegan");
 
         InputControlState lastModifiedByState = inputControlsCreatedBy.getInputControlState().get(9);
@@ -362,10 +361,56 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
 
         InputControlState scenarioNameState = inputControlsLastModifiedBy.getInputControlState().get(10);
         softAssertions.assertThat(scenarioNameState.getTotalCount()).isEqualTo("1");
-        softAssertions.assertThat(scenarioNameState.getOptions().get(0).getSelected()).isEqualTo(Boolean.FALSE);
+        softAssertions.assertThat(scenarioNameState.getOptions().get(0).getSelected()).isEqualTo(false);
         softAssertions.assertThat(scenarioNameState.getOptions().get(0).getLabel()).isEqualTo("Initial");
 
         softAssertions.assertThat(inputControlsLastModifiedBy.getInputControlState().get(11).getTotalCount()).isEqualTo("18");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("7665")
+    @TestRail(id = 7665)
+    @Description("Verify Created By input control search works - Scenario Comparison Report")
+    public void verifyCreatedByInputControlSearchWorksCorrectly() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        UpdatedInputControlsRootItem inputControlsCreatedBy =
+            jasperReportUtil.getInputControlsModified(
+                JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC,
+                InputControlsEnum.CREATED_BY.getInputControlId(),
+                "bhegan",
+                ""
+            );
+
+        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(8).getTotalCount()).isEqualTo("1");
+        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(8).getOptions().get(0).getSelected()).isEqualTo(false);
+        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(8).getOptions().get(0).getLabel()).isEqualTo("bhegan");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("7664")
+    @TestRail(id = 7664)
+    @Description("Verify Last Modified By input control search works - Scenario Comparison Report")
+    public void verifyLastModifiedByInputControlSearchWorksCorrectly() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        UpdatedInputControlsRootItem inputControlsCreatedBy =
+            jasperReportUtil.getInputControlsModified(
+                JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC,
+                InputControlsEnum.LAST_MODIFIED_BY.getInputControlId(),
+                "bhegan",
+                ""
+            );
+
+        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(9).getTotalCount()).isEqualTo("1");
+        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(9).getOptions().get(0).getSelected()).isEqualTo(false);
+        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(9).getOptions().get(0).getLabel()).isEqualTo("bhegan");
 
         softAssertions.assertAll();
     }

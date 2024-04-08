@@ -34,8 +34,8 @@ import java.util.List;
 
 @Slf4j
 public class JasperReportUtil {
-    private static HashMap<String, Integer> inputControlsIndexMap;
-
+    private static HashMap<String, Integer> inputControlsIndexMapComponentCost;
+    private static HashMap<String, Integer> inputControlsIndexMapScenarioComparison;
     private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private long WAIT_TIME = 30;
 
@@ -43,7 +43,8 @@ public class JasperReportUtil {
 
 
     public static JasperReportUtil init(final String jasperSessionId) {
-        initialiseInputControlsHashMap();
+        initialiseInputControlsComponentCostHashMap();
+        initialiseInputControlsScenarioComparisonHashMap();
         return new JasperReportUtil(jasperSessionId);
     }
 
@@ -71,11 +72,19 @@ public class JasperReportUtil {
     }
 
     public UpdatedInputControlsRootItem getInputControlsModified(JasperApiInputControlsPathEnum value, String valueNameToSet, String valueToSet, String exportSet) {
-        //List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputList();
-        List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputListScenarioComparison();
-        genericInputList.get(inputControlsIndexMap.get(valueNameToSet)).setValue(Collections.singletonList(valueToSet));
+        List<UpdatedInputControlsPayloadInputsItem> genericInputList;
+        if (value.toString().contains("scenarioComparison")) {
+            genericInputList = createGenericInputListScenarioComparison();
+        } else {
+            genericInputList = createGenericInputListComponentCost();
+        }
+        if (value.getEndpointString().contains("scenarioComparison") && valueToSet.equals("bhegan")) {
+            genericInputList = setCreatedByLastModifiedByCriteria(genericInputList, valueNameToSet, valueToSet);
+        }
+        HashMap<String, Integer> icMapToUse = value.toString().contains("scenarioComparison") ? inputControlsIndexMapScenarioComparison : inputControlsIndexMapComponentCost;
+        genericInputList.get(icMapToUse.get(valueNameToSet)).setValue(Collections.singletonList(valueToSet));
         if (!exportSet.isEmpty()) {
-            genericInputList.get(inputControlsIndexMap.get("exportSetName")).setValue(Collections.singletonList(exportSet));
+            genericInputList.get(icMapToUse.get("exportSetName")).setValue(Collections.singletonList(exportSet));
         }
 
         ReportParameter reportParameter = new ReportParameter();
@@ -347,7 +356,7 @@ public class JasperReportUtil {
         };
     }
 
-    private List<UpdatedInputControlsPayloadInputsItem> createGenericInputList() {
+    private List<UpdatedInputControlsPayloadInputsItem> createGenericInputListComponentCost() {
         List<UpdatedInputControlsPayloadInputsItem> listOfInputObjects = new ArrayList<>();
 
         List<String> nameList = Arrays.asList("exportSetName", "componentType", "latestExportDate",
@@ -389,29 +398,40 @@ public class JasperReportUtil {
         return listOfInputObjects;
     }
 
-    private static void initialiseInputControlsHashMap() {
-        inputControlsIndexMap = new HashMap<>();
-        /*inputControlsIndexMap.put("exportSetName", 0);
-        inputControlsIndexMap.put("componentType", 1);
-        inputControlsIndexMap.put("latestExportDate", 2);
-        inputControlsIndexMap.put("createdBy", 3);
-        inputControlsIndexMap.put("lastModifiedBy", 4);
-        inputControlsIndexMap.put("componentNumber", 5);
-        inputControlsIndexMap.put("scenarioName", 6);
-        inputControlsIndexMap.put("componentSelect", 7);
-        inputControlsIndexMap.put("componentCostCurrencyCode", 8);*/
-        inputControlsIndexMap.put("useLatestExport", 0);
-        inputControlsIndexMap.put("earliestExportDate", 1);
-        inputControlsIndexMap.put("latestExportDate", 2);
-        inputControlsIndexMap.put("exportSetName", 3);
-        inputControlsIndexMap.put("allExportIDs", 4);
-        inputControlsIndexMap.put("componentType", 5);
-        inputControlsIndexMap.put("createdBy", 6);
-        inputControlsIndexMap.put("lastModifiedBy", 7);
-        inputControlsIndexMap.put("partNumber", 8);
-        inputControlsIndexMap.put("scenarioName", 9);
-        inputControlsIndexMap.put("scenarioToCompareIDs", 10);
-        inputControlsIndexMap.put("scenarioIDs", 11);
-        inputControlsIndexMap.put("currencyCode", 12);
+    private List<UpdatedInputControlsPayloadInputsItem> setCreatedByLastModifiedByCriteria(List<UpdatedInputControlsPayloadInputsItem> inputList, String valueToSet, String criteriaToSet) {
+        int indexToGet = valueToSet.equals("createdBy") ? 3 : 4;
+        // numbers above wrong if not sc report, hash map fix?
+        inputList.get(indexToGet).setCriteria(criteriaToSet);
+        return inputList;
+    }
+
+    private static void initialiseInputControlsComponentCostHashMap() {
+        inputControlsIndexMapComponentCost = new HashMap<>();
+        inputControlsIndexMapComponentCost.put("exportSetName", 0);
+        inputControlsIndexMapComponentCost.put("componentType", 1);
+        inputControlsIndexMapComponentCost.put("latestExportDate", 2);
+        inputControlsIndexMapComponentCost.put("createdBy", 3);
+        inputControlsIndexMapComponentCost.put("lastModifiedBy", 4);
+        inputControlsIndexMapComponentCost.put("componentNumber", 5);
+        inputControlsIndexMapComponentCost.put("scenarioName", 6);
+        inputControlsIndexMapComponentCost.put("componentSelect", 7);
+        inputControlsIndexMapComponentCost.put("componentCostCurrencyCode", 8);
+    }
+
+    private static void initialiseInputControlsScenarioComparisonHashMap() {
+        inputControlsIndexMapScenarioComparison = new HashMap<>();
+        inputControlsIndexMapScenarioComparison.put("useLatestExport", 0);
+        inputControlsIndexMapScenarioComparison.put("earliestExportDate", 1);
+        inputControlsIndexMapScenarioComparison.put("latestExportDate", 2);
+        inputControlsIndexMapScenarioComparison.put("exportSetName", 3);
+        inputControlsIndexMapScenarioComparison.put("allExportIDs", 4);
+        inputControlsIndexMapScenarioComparison.put("componentType", 5);
+        inputControlsIndexMapScenarioComparison.put("createdBy", 6);
+        inputControlsIndexMapScenarioComparison.put("lastModifiedBy", 7);
+        inputControlsIndexMapScenarioComparison.put("partNumber", 8);
+        inputControlsIndexMapScenarioComparison.put("scenarioName", 9);
+        inputControlsIndexMapScenarioComparison.put("scenarioToCompareIDs", 10);
+        inputControlsIndexMapScenarioComparison.put("scenarioIDs", 11);
+        inputControlsIndexMapScenarioComparison.put("currencyCode", 12);
     }
 }
