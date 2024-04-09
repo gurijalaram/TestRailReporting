@@ -1026,7 +1026,8 @@ public class EditAssembliesTest extends TestBaseUI {
             .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
             .closePanel()
             .clickRefresh(EvaluatePage.class)
-            .costScenario()
+            .clickCostButton()
+            .confirmCost("Yes")
             .openComponents()
             .selectTableView()
             .addColumn(ColumnsEnum.SCENARIO_TYPE);
