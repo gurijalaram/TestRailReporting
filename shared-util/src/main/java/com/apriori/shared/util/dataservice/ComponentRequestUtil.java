@@ -256,4 +256,26 @@ public class ComponentRequestUtil {
 
         return componentInfoPG;
     }
+
+    /**
+     * Gets a unique component
+     * N.B The part name is unique
+     *
+     * @return component builder object
+     */
+    public ComponentInfoBuilder getUniqueComponent(String componentName) {
+
+        component = COMPONENT_REQUEST.getAllComponents()
+            .stream()
+            .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
+
+        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
+        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
+        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setUser(UserUtil.getUser());
+
+        return component;
+    }
 }
