@@ -8,20 +8,24 @@ import static com.apriori.shared.util.testrail.TestRailStatus.PASSED;
 import static com.apriori.shared.util.testrail.TestRailStatus.RETEST;
 import static com.apriori.shared.util.webdriver.DriverFactory.testMode;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Optional;
+
 import com.apriori.shared.util.properties.LoadProperties;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.shared.util.testrail.TestRailReport;
 import com.apriori.shared.util.testrail.TestRailStatus;
-
 import com.codepine.api.testrail.model.Result;
-import com.epam.reportportal.junit5.ReportPortalExtension;
 import io.qameta.allure.Allure;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.InvocationInterceptor;
 import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
@@ -32,18 +36,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Optional;
-
 /**
  * @author cfrith
  */
 @Slf4j
-@ExtendWith(ReportPortalExtension.class)
 public class TestRulesUI implements TestWatcher, BeforeAllCallback, InvocationInterceptor {
 
     public static final String DRIVER = "driver";
@@ -115,10 +111,7 @@ public class TestRulesUI implements TestWatcher, BeforeAllCallback, InvocationIn
             } else {
                 screenshot = ((TakesScreenshot) getDeclaredDriver(extensionContext)).getScreenshotAs(OutputType.FILE);
             }
-
             sendScreenshotToAllure(extensionContext, screenshot);
-            sendScreenshotToReportPortal(extensionContext, screenshot);
-
             throw cause;
         }
     }
@@ -130,10 +123,6 @@ public class TestRulesUI implements TestWatcher, BeforeAllCallback, InvocationIn
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void sendScreenshotToReportPortal(ExtensionContext extensionContext, File screenshot) {
-        log.info("RP_MESSAGE#FILE#{}#{}", screenshot, extensionContext.getDisplayName());
     }
 
     @Override

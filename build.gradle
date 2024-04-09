@@ -174,9 +174,5 @@ subprojects {
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.14.0'
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.14.0'
         implementation 'com.opencsv:opencsv:5.9'
-
-        implementation 'com.epam.reportportal:logger-java-logback:5.2.2'
-        implementation 'ch.qos.logback:logback-classic:1.2.10'
-        implementation 'com.epam.reportportal:agent-java-junit5:5.3.0'
     }
 }
