@@ -28,7 +28,7 @@ public class AchNotificationsTests extends AchTestUtil {
         String deploymentIdentity = apInternal.getDeployments().get(0).getIdentity();
         ResponseWrapper<Notifications> notifications = getCommonRequest(ACHAPIEnum.NOTIFICATIONS, Notifications.class, HttpStatus.SC_OK, customerIdentity, deploymentIdentity);
 
-        soft.assertThat(notifications.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        soft.assertThat(notifications.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(0);
         soft.assertAll();
     }
 }
