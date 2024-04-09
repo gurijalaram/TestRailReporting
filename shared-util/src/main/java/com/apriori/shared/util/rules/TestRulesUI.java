@@ -8,18 +8,12 @@ import static com.apriori.shared.util.testrail.TestRailStatus.PASSED;
 import static com.apriori.shared.util.testrail.TestRailStatus.RETEST;
 import static com.apriori.shared.util.webdriver.DriverFactory.testMode;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Optional;
-
 import com.apriori.shared.util.properties.LoadProperties;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.shared.util.testrail.TestRailReport;
 import com.apriori.shared.util.testrail.TestRailStatus;
+
 import com.codepine.api.testrail.model.Result;
 import io.qameta.allure.Allure;
 import lombok.SneakyThrows;
@@ -35,6 +29,13 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * @author cfrith
