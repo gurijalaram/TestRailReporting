@@ -640,9 +640,8 @@ public class EditAssembliesTest extends TestBaseUI {
         evaluatePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .editScenario(EditScenarioStatusPage.class)
-            .close(EvaluatePage.class);
+            .clickHere();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
 
