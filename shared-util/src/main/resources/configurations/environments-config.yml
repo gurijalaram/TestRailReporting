@@ -248,7 +248,7 @@ development:
   name: development
   aws_parameter_store_name: development
   base_url: https://cloud.na-1.development.apriori.net/
-  installation_name: ${${deployment}.name}
+  multi_tenant_installation_name: ${${deployment}.name}
   secret_key: O85XMATZEMBO
   user_identity: 4N630F61FGNG
 
