@@ -1,5 +1,7 @@
 package com.apriori.bcm.api.tests;
 
+import static com.apriori.css.api.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
+
 import com.apriori.bcm.api.models.response.ErrorResponse;
 import com.apriori.bcm.api.models.response.InputRowPostResponse;
 import com.apriori.bcm.api.models.response.InputRowsGroupsResponse;
@@ -21,6 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
@@ -141,6 +144,28 @@ public class InputRowTests extends BcmUtil {
     }
 
     @Test
+    @TestRail(id = 30016)
+    @Description("Private input row cannot be edited")
+    public void notEditPrivateRow() {
+        ScenarioItem cssComponentResponses = cssComponent.getBaseCssComponents(testingUser, SCENARIO_PUBLISHED_EQ.getKey() + false).get(0);
+
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
+            .getResponseEntity()
+            .getIdentity();
+
+        String inputRowIdentity = createWorkSheetInputRow(cssComponentResponses.getComponentIdentity(),
+            cssComponentResponses.getScenarioIdentity(),
+            worksheetIdentity).getResponseEntity().getIdentity();
+
+        InputRowsGroupsResponse editedRows =
+            editPublicInputRow(InputRowsGroupsResponse.class, worksheetIdentity, inputRowIdentity, HttpStatus.SC_OK).getResponseEntity();
+
+        softAssertions.assertThat(editedRows.getFailures().get(0).getError())
+            .isEqualTo(String.format("Input Row with Identity: '%s' refers to private scenario in Worksheet with Identity: '%s'", inputRowIdentity, worksheetIdentity));
+        softAssertions.assertAll();
+    }
+
+    @Test
     @TestRail(id = {29931, 29932, 29933})
     @Description("Verify adding multiple input rows for a worksheet")
     public void addMultipleRows() {
@@ -154,21 +179,25 @@ public class InputRowTests extends BcmUtil {
             .getResponseEntity()
             .getIdentity();
 
+        List<String> componentIdentityScenarioIdentity = Arrays.asList(scenario1.getComponentIdentity() + "," + scenario1.getScenarioIdentity(),
+            scenario2.getComponentIdentity() + "," + scenario2.getScenarioIdentity());
         MultipleInputRowsResponse addRows =
-            addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, scenario1.getComponentIdentity(), scenario1.getScenarioIdentity(),
-                scenario2.getComponentIdentity(), scenario2.getScenarioIdentity(), HttpStatus.SC_OK).getResponseEntity();
+            addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, componentIdentityScenarioIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(addRows.getSuccesses().get(0).getScenarioIdentity()).isEqualTo(scenario1.getScenarioIdentity());
 
         MultipleInputRowsResponse addExistingRows =
-            addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, scenario1.getComponentIdentity(), scenario1.getScenarioIdentity(),
-                scenario2.getComponentIdentity(), scenario2.getScenarioIdentity(), HttpStatus.SC_OK).getResponseEntity();
+            addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, componentIdentityScenarioIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(addExistingRows.getFailures().get(0).getError()).contains("already exists");
 
+        List<String> emptyList = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            emptyList.add(" " + "," + " ");
+        }
+
         ErrorResponse addEmptyList =
-            addMultipleInputRows(ErrorResponse.class, worksheetIdentity, null,
-                null, null, null, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
+            addMultipleInputRows(ErrorResponse.class, worksheetIdentity, emptyList, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
         softAssertions.assertThat(addEmptyList.getMessage()).contains("should not be null");
         softAssertions.assertAll();
     }
