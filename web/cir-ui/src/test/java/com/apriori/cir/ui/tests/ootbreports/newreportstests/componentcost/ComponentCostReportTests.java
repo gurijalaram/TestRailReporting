@@ -62,9 +62,9 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsTopLevelSelected =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC,
-                "exportSetName",
-                currentExportSet,
-                ""
+                "",
+                "",
+                currentExportSet
         );
 
         ArrayList<InputControlState> inputControlStateList = inputControlsTopLevelSelected.getInputControlState();
@@ -108,7 +108,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsComponentSelected =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC,
-                "componentSelect",
+                InputControlsEnum.COMPONENT_SELECT.getInputControlId(),
                 currentComponentSelected,
                 currentExportSet
             );
@@ -148,7 +148,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsAssemblySelected =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC,
-                "componentType",
+                InputControlsEnum.COMPONENT_TYPE.getInputControlId(),
                 "assembly",
                 ""
             );
@@ -173,7 +173,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsPartSelected =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC,
-                "componentType",
+                InputControlsEnum.COMPONENT_TYPE.getInputControlId(),
                 "part",
                 ""
             );
@@ -240,7 +240,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsScenarioName =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC,
-                "scenarioName",
+                InputControlsEnum.SCENARIO_NAME.getInputControlId(),
                 "Initial",
                 ""
             );
@@ -270,7 +270,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsLatestExportDate =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC,
-                "latestExportDate",
+                InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
                 currentDateTime,
                 ""
             );
@@ -300,7 +300,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsCreatedBy =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC,
-                "createdBy",
+                InputControlsEnum.CREATED_BY.getInputControlId(),
                 currentUser,
                 ""
             );
@@ -331,7 +331,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsComponentNumberSearchCriteria =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC,
-                "componentNumber",
+                InputControlsEnum.COMPONENT_NUMBER.getInputControlId(),
                 "3538968",
                 ""
             );

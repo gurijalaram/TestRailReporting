@@ -14,6 +14,7 @@ import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
 import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.ExportSetEnum;
+import com.apriori.shared.util.enums.ReportNamesEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -77,7 +78,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsAssemblySelected =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC,
-                "componentType",
+                InputControlsEnum.COMPONENT_TYPE.getInputControlId(),
                 "assembly",
                 ""
             );
@@ -105,7 +106,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsPartSelected =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC,
-                "componentType",
+                InputControlsEnum.COMPONENT_TYPE.getInputControlId(),
                 "part",
                 ""
             );
@@ -124,7 +125,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsRollupSelected =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC,
-                "componentType",
+                InputControlsEnum.COMPONENT_TYPE.getInputControlId(),
                 "rollup",
                 ""
             );
@@ -156,9 +157,9 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsExportSetSelected =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC,
-                "exportSetName",
-                currentExportSet,
-                ""
+                "",
+                "",
+                currentExportSet
             );
 
         ArrayList<InputControlState> inputControlStateList = inputControlsExportSetSelected.getInputControlState();
@@ -184,7 +185,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsScenarioToCompareSelected =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC,
-                "scenarioToCompareIDs",
+                InputControlsEnum.SCENARIOS_TO_COMPARE_IDS.getInputControlId(),
                 currentScenarioToCompareID,
                 ""
             );
@@ -214,7 +215,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         UpdatedInputControlsRootItem inputControlsScenarioNameSelected =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC,
-                "scenarioName",
+                InputControlsEnum.SCENARIO_NAME.getInputControlId(),
                 "Initial",
                 currentExportSetValue
             );
@@ -400,13 +401,21 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     public void verifyLastModifiedByInputControlSearchWorksCorrectly() {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
-        UpdatedInputControlsRootItem inputControlsCreatedBy =
+        /*UpdatedInputControlsRootItem inputControlsCreatedBy =
             jasperReportUtil.getInputControlsModified(
                 JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC,
                 InputControlsEnum.LAST_MODIFIED_BY.getInputControlId(),
                 "bhegan",
                 ""
-            );
+            );*/
+
+        UpdatedInputControlsRootItem inputControlsCreatedBy = jasperReportUtil.getInputControlsModified2(
+            ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+            InputControlsEnum.LAST_MODIFIED_BY.getInputControlId(),
+            "bhegan",
+            "",
+            true
+        );
 
         softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(9).getTotalCount()).isEqualTo("1");
         softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(9).getOptions().get(0).getSelected()).isEqualTo(false);

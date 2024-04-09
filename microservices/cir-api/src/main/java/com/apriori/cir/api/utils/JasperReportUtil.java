@@ -3,8 +3,10 @@ package com.apriori.cir.api.utils;
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.JasperReportSummaryIncRawData;
 import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
+import com.apriori.cir.api.enums.ComponentCostICModifiedEnum;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.enums.ReportChartType;
+import com.apriori.cir.api.enums.ScenarioComparisonICModifiedEnum;
 import com.apriori.cir.api.models.request.ReportExportRequest;
 import com.apriori.cir.api.models.request.ReportRequest;
 import com.apriori.cir.api.models.response.ChartData;
@@ -12,6 +14,7 @@ import com.apriori.cir.api.models.response.ChartDataPoint;
 import com.apriori.cir.api.models.response.ChartDataPointProperty;
 import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.models.response.ReportStatusResponse;
+import com.apriori.shared.util.enums.ReportNamesEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -29,6 +32,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +40,7 @@ import java.util.List;
 public class JasperReportUtil {
     private static HashMap<String, Integer> inputControlsIndexMapComponentCost;
     private static HashMap<String, Integer> inputControlsIndexMapScenarioComparison;
+    private static HashMap<String, JasperApiInputControlsPathEnum> inputControlsModifiedUrlMap;
     private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private long WAIT_TIME = 30;
 
@@ -45,6 +50,7 @@ public class JasperReportUtil {
     public static JasperReportUtil init(final String jasperSessionId) {
         initialiseInputControlsComponentCostHashMap();
         initialiseInputControlsScenarioComparisonHashMap();
+        initialiseInputControlsModifiedUrlHashMap();
         return new JasperReportUtil(jasperSessionId);
     }
 
@@ -71,6 +77,39 @@ public class JasperReportUtil {
         return responseResponseWrapper.getResponseEntity();
     }
 
+    public UpdatedInputControlsRootItem getInputControlsModified2(String reportName, String valueNameToSet, String valueToSet, String exportSet, boolean setCriteria) {
+        JasperApiInputControlsPathEnum urlValue = inputControlsModifiedUrlMap.get(reportName);
+
+        List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputList(reportName);
+
+        // 95 to 119  now
+        if (urlValue.getEndpointString().contains("scenarioComparison") && setCriteria) {
+            genericInputList = setCreatedByLastModifiedByCriteria(genericInputList, valueNameToSet, "bhegan");
+        }
+        HashMap<String, Integer> icMapToUse = reportName.equals("scenarioComparison") ? inputControlsIndexMapScenarioComparison : inputControlsIndexMapComponentCost;
+
+        if (!valueNameToSet.isEmpty() && !valueToSet.isEmpty() && !setCriteria) {
+            genericInputList.get(icMapToUse.get(valueNameToSet)).setValue(Collections.singletonList(valueToSet));
+        }
+
+        if (!exportSet.isEmpty()) {
+            genericInputList.get(icMapToUse.get("exportSetName")).setValue(Collections.singletonList(exportSet));
+        }
+
+        ReportParameter reportParameter = new ReportParameter();
+        reportParameter.reportParameter.addAll(genericInputList);
+
+        RequestEntity requestEntity = new RequestEntity()
+            .body(reportParameter)
+            .endpoint(urlValue)
+            .returnType(UpdatedInputControlsRootItem.class)
+            .headers(initHeadersWithJSession())
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .urlEncodingEnabled(false);
+
+        return (UpdatedInputControlsRootItem) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
     public UpdatedInputControlsRootItem getInputControlsModified(JasperApiInputControlsPathEnum value, String valueNameToSet, String valueToSet, String exportSet) {
         List<UpdatedInputControlsPayloadInputsItem> genericInputList;
         if (value.toString().contains("scenarioComparison")) {
@@ -82,7 +121,11 @@ public class JasperReportUtil {
             genericInputList = setCreatedByLastModifiedByCriteria(genericInputList, valueNameToSet, valueToSet);
         }
         HashMap<String, Integer> icMapToUse = value.toString().contains("scenarioComparison") ? inputControlsIndexMapScenarioComparison : inputControlsIndexMapComponentCost;
-        genericInputList.get(icMapToUse.get(valueNameToSet)).setValue(Collections.singletonList(valueToSet));
+
+        if (!valueNameToSet.isEmpty() && !valueToSet.isEmpty()) {
+            genericInputList.get(icMapToUse.get(valueNameToSet)).setValue(Collections.singletonList(valueToSet));
+        }
+
         if (!exportSet.isEmpty()) {
             genericInputList.get(icMapToUse.get("exportSetName")).setValue(Collections.singletonList(exportSet));
         }
@@ -356,9 +399,51 @@ public class JasperReportUtil {
         };
     }
 
+    private List<UpdatedInputControlsPayloadInputsItem> createGenericInputList(String reportName) {
+        ComponentCostICModifiedEnum[] ccValues = new ComponentCostICModifiedEnum[0];
+        ScenarioComparisonICModifiedEnum[] scValues = new ScenarioComparisonICModifiedEnum[0];
+        if (reportName.contains("Scenario")) {
+            scValues = ScenarioComparisonICModifiedEnum.values();
+        } else {
+            ccValues = ComponentCostICModifiedEnum.values();
+        }
+        List<UpdatedInputControlsPayloadInputsItem> listOfInputObjects = new ArrayList<>();
+
+        List<String> valueIdList = new ArrayList<>();
+        List<String> valueList = new ArrayList<>();
+        if (!scValues[0].getNameOrValueItem().isEmpty()) {
+            for (int i = 0; i < scValues.length / 2; i++) {
+                valueIdList.add(scValues[i].getNameOrValueItem());
+            }
+            for (int i = scValues.length / 2; i < scValues.length; i++) {
+                valueList.add(scValues[i].getNameOrValueItem());
+            }
+        } else {
+            for (int i = 0; i < ccValues.length / 2; i++) {
+                valueIdList.add(ccValues[i].getNameOrValueItem());
+            }
+            for (int i = ccValues.length / 2; i < ccValues.length; i++) {
+                valueList.add(ccValues[i].getNameOrValueItem());
+            }
+        }
+
+        for (int i = 0; i < valueIdList.size(); i++) {
+            listOfInputObjects.add(UpdatedInputControlsPayloadInputsItem.builder()
+                .name(valueIdList.get(i))
+                .value(Collections.singletonList(valueList.get(i)))
+                .limit(100)
+                .offset(0)
+                .build());
+        }
+
+        return listOfInputObjects;
+
+    }
+
     private List<UpdatedInputControlsPayloadInputsItem> createGenericInputListComponentCost() {
         List<UpdatedInputControlsPayloadInputsItem> listOfInputObjects = new ArrayList<>();
 
+        // refactor to use enums into arrays based on half size of enum
         List<String> nameList = Arrays.asList("exportSetName", "componentType", "latestExportDate",
             "createdBy", "lastModifiedBy", "componentNumber", "scenarioName", "componentSelect", "componentCostCurrencyCode");
 
@@ -399,7 +484,7 @@ public class JasperReportUtil {
     }
 
     private List<UpdatedInputControlsPayloadInputsItem> setCreatedByLastModifiedByCriteria(List<UpdatedInputControlsPayloadInputsItem> inputList, String valueToSet, String criteriaToSet) {
-        int indexToGet = valueToSet.equals("createdBy") ? 3 : 4;
+        int indexToGet = valueToSet.equals("createdBy") ? 6 : 7;
         // numbers above wrong if not sc report, hash map fix?
         inputList.get(indexToGet).setCriteria(criteriaToSet);
         return inputList;
@@ -433,5 +518,11 @@ public class JasperReportUtil {
         inputControlsIndexMapScenarioComparison.put("scenarioToCompareIDs", 10);
         inputControlsIndexMapScenarioComparison.put("scenarioIDs", 11);
         inputControlsIndexMapScenarioComparison.put("currencyCode", 12);
+    }
+
+    private static void initialiseInputControlsModifiedUrlHashMap() {
+        inputControlsModifiedUrlMap = new HashMap<>();
+        inputControlsModifiedUrlMap.put(ReportNamesEnum.COMPONENT_COST.getReportName(), JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC);
+        inputControlsModifiedUrlMap.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC);
     }
 }
