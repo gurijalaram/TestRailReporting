@@ -121,7 +121,7 @@ public class TestRulesUI implements TestWatcher, BeforeAllCallback, InvocationIn
         try {
             Allure.addAttachment(extensionContext.getDisplayName(), FileUtils.openInputStream(screenshot));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(String.format("Failed to add screenshot for test:- %s", extensionContext.getDisplayName()));
         }
     }
 
