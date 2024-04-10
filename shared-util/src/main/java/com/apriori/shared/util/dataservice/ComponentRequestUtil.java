@@ -1,17 +1,16 @@
 package com.apriori.shared.util.dataservice;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-
 import org.openqa.selenium.NoSuchElementException;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ComponentRequestUtil {
     private static final String COMPONENT_STORE = "ComponentStore.json";
@@ -40,16 +39,20 @@ public class ComponentRequestUtil {
     }
 
     /**
-     * Gets a two model component
-     * N.B The part name is unique
+     * Gets a unique component
+     * N.B The part name is unique. Currently filtering on 3 criteria as seen below.
+     * A future modification could be setting metadata on each object with a boolean 'isPartUnique', this would make filtering much easier.
      *
      * @param componentName - the part name
      * @return component builder object
      */
-    public ComponentInfoBuilder getTwoModelComponent(String componentName) {
+    public ComponentInfoBuilder getUniqueComponent(String componentName) {
 
-        component = COMPONENT_REQUEST.getTwoModelComponents()
+        component = COMPONENT_REQUEST.getAllComponents()
             .stream()
+            .filter(o -> o.getProcessGroup().equals(ProcessGroupEnum.TWO_MODEL_MACHINING) ||
+                o.getProcessGroup().equals(ProcessGroupEnum.WITHOUT_PG) ||
+                o.getExtension().equals(".skp"))
             .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
@@ -255,27 +258,5 @@ public class ComponentRequestUtil {
         componentInfoPG.setUser(currentUser);
 
         return componentInfoPG;
-    }
-
-    /**
-     * Gets a unique component
-     * N.B The part name is unique
-     *
-     * @return component builder object
-     */
-    public ComponentInfoBuilder getUniqueComponent(String componentName) {
-
-        component = COMPONENT_REQUEST.getAllComponents()
-            .stream()
-            .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
-            .findFirst()
-            .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
-
-        component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
-        component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
-        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
-        component.setUser(UserUtil.getUser());
-
-        return component;
     }
 }

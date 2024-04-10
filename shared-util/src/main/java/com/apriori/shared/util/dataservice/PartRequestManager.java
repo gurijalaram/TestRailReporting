@@ -96,7 +96,7 @@ public class PartRequestManager {
     public List<ComponentInfoBuilder> getComponents() {
         return getAllComponents().stream()
             .filter(o -> !o.getProcessGroup().equals(ProcessGroupEnum.TWO_MODEL_MACHINING))
-            .filter(o -> !o.getExtension().equals(".skp"))
+            .filter(o -> !o.getProcessGroup().equals(ProcessGroupEnum.WITHOUT_PG))
             .collect(Collectors.toList());
     }
 
