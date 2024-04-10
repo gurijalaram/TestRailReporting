@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,17 +27,29 @@ import java.util.List;
 @CreatableModel("user")
 @JsonRootName("response")
 public class User {
+    @Expose
     protected Boolean isSystemUser;
+    @Expose
     protected String identity;
+    @Expose
     protected String userType;
+    @Expose
     protected UserProfile userProfile;
+    @Expose
     protected String email;
+    @Expose
     protected String username;
+    @Expose
     protected Boolean active;
+    @Expose
     protected List<UserSite> sites;
+    @Expose
     protected CustomAttributes customAttributes;
+    @Expose
     protected List<Roles> roles;
+    @Expose
     protected String customerIdentity;
+    @Expose
     protected Boolean mfaRequired;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
@@ -45,21 +58,36 @@ public class User {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     protected LocalDateTime updatedAt;
+    @Expose
     protected String updatedBy;
+    @Expose
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     protected LocalDateTime deletedAt;
+    @Expose
     protected String deletedBy;
+    @Expose
     protected Boolean hasCompleteProfile;
+    @Expose
     protected Enablements enablements;
+    @Expose
     protected String mfaAuthenticator;
+    @Expose
     protected List<Object> resourcesAllowedToCreate = null;
+    @Expose
     protected CustomProperties customProperties;
+    @Expose
     protected String createdByName;
+    @Expose
     protected String updatedByName;
+    @Expose
     protected List<Object> licenseAssignments = null;
+    @Expose
     protected String awsRole;
+    @Expose
     protected Boolean canDelete;
+    @Expose
     protected Boolean canEditEnablements;
+    @Expose
     protected Boolean canEditProfile;
 }

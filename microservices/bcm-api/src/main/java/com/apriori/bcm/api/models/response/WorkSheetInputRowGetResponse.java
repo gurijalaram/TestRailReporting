@@ -20,13 +20,5 @@ import java.util.List;
 @NoArgsConstructor
 @JsonRootName("response")
 public class WorkSheetInputRowGetResponse extends Pagination {
-    private Integer pageNumber;
-    private Integer pageSize;
-    private Integer pageItemCount;
-    private Integer totalItemCount;
-    private Integer totalPageCount;
-    private Boolean hasNextPage;
-    private Boolean hasPreviousPage;
-    private Boolean isRestrictedByAccessControl;
     private List<WorkSheetInputRowResponse> items;
 }
