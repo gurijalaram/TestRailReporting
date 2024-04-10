@@ -198,7 +198,7 @@ public class CustomerUtil {
      * @param customerName - if null will return current customer data
      * @return
      */
-    private static Customer getCustomerData(final String customerName) {
+    public static Customer getCustomerData(final String customerName) {
         String customerCloudReferenceName = getCustomerCloudReferenceName(customerName);
 
         RequestEntity customerRequest = RequestEntityUtil_Old.init(CustomersApiEnum.CUSTOMERS, Customers.class)
