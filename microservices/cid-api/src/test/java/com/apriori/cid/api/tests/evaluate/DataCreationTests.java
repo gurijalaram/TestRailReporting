@@ -9,6 +9,7 @@ import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.rules.TestRulesAPI;
+
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
