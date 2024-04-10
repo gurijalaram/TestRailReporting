@@ -1,16 +1,17 @@
 package com.apriori.shared.util.dataservice;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+
 import org.openqa.selenium.NoSuchElementException;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ComponentRequestUtil {
     private static final String COMPONENT_STORE = "ComponentStore.json";

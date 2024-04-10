@@ -1,16 +1,17 @@
 package com.apriori.shared.util.dataservice;
 
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.http.utils.FileResourceUtil;
+import com.apriori.shared.util.json.JsonManager;
+
+import org.openqa.selenium.NoSuchElementException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.apriori.shared.util.builder.ComponentInfoBuilder;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.json.JsonManager;
-import org.openqa.selenium.NoSuchElementException;
 
 public class PartRequestManager {
     private final String jsonFile;
