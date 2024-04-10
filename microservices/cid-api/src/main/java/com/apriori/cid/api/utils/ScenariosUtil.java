@@ -662,7 +662,7 @@ public class ScenariosUtil {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public ScenariosDeleteResponse deleteScenarios(List<ScenarioItem> scenarios, UserCredentials userCredentials) {
+    public List<ScenarioItem> deleteScenarios(List<ScenarioItem> scenarios, UserCredentials userCredentials) {
 
         Lists.partition(scenarios, CHUNK_SIZE).forEach(partitionedScenario -> {
 
@@ -678,12 +678,22 @@ public class ScenariosUtil {
                 .expectedResponseCode(HttpStatus.SC_OK);
 
             deleteResponse = HTTPRequest.build(requestEntity).post();
-
-            scenarios.forEach(deletedScenario -> checkComponentDeleted(deletedScenario.getComponentIdentity(), deletedScenario.getScenarioIdentity(), userCredentials));
         });
 
+        return scenarios;
+    }
+
+    /**
+     * Deletes scenarios and check the deletion is complete
+     * @param scenarios       - the list of scenarios to delete
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public ScenariosDeleteResponse deleteScenariosCompleted(List<ScenarioItem> scenarios, UserCredentials userCredentials) {
+        deleteScenarios(scenarios, userCredentials).forEach(deletedScenario -> checkComponentDeleted(deletedScenario.getComponentIdentity(), deletedScenario.getScenarioIdentity(), userCredentials));;
         return deleteResponse.getResponseEntity();
     }
+
 
     /**
      * Call an api with the GET verb to check a scenario has been deleted

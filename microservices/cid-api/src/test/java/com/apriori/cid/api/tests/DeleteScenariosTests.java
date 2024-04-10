@@ -30,6 +30,15 @@ public class DeleteScenariosTests {
     private final SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
+    public void quickDeletePrivateScenarios() {
+        UserUtil.getUsers().forEach(user -> quickDeleteScenarios(false, user));
+    }
+
+    @Test void quickDeletePublicScenarios() {
+        quickDeleteScenarios(true, UserUtil.getUser());
+    }
+
+    @Test
     public void deletePrivateScenarios() {
         UserUtil.getUsers().forEach(user -> deleteScenarios(false, user));
     }
@@ -41,7 +50,7 @@ public class DeleteScenariosTests {
     private void deleteScenarios(Boolean scenarioPublished, UserCredentials user) {
         List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", scenarioPublished, user);
 
-        ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenarios(assembliesToDelete, user);
+        ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenariosCompleted(assembliesToDelete, user);
 
         log.info("Number of 'ASSEMBLY(S)' deleted '{}'", deletedAssemblies.getSuccesses().size());
 
@@ -49,13 +58,23 @@ public class DeleteScenariosTests {
 
         List<ScenarioItem> scenariosToDelete = searchComponentType("PART", scenarioPublished, user);
 
-        ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenarios(scenariosToDelete, user);
+        ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenariosCompleted(scenariosToDelete, user);
 
         log.info("Number of 'PART(S)' deleted '{}'", deletedScenarios.getSuccesses().size());
 
         softAssertions.assertThat(deletedScenarios.getSuccesses().size()).isEqualTo(scenariosToDelete.size());
 
         softAssertions.assertAll();
+    }
+
+    private void quickDeleteScenarios(Boolean scenarioPublished, UserCredentials user) {
+        List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", scenarioPublished, user);
+
+        scenariosUtil.deleteScenarios(assembliesToDelete, user);
+
+        List<ScenarioItem> scenariosToDelete = searchComponentType("PART", scenarioPublished, user);
+
+        scenariosUtil.deleteScenarios(scenariosToDelete, user);
     }
 
     private List<ScenarioItem> searchComponentType(String componentType, Boolean scenarioPublished, UserCredentials currentUser) {
