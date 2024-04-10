@@ -6,6 +6,7 @@ import com.apriori.bcm.api.models.response.WorkSheets;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.component.ComponentResponse;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -110,6 +111,26 @@ public class WorksheetTests extends BcmUtil {
 
         softAssertions.assertThat(error.getResponseEntity().getMessage())
             .isEqualTo("Resource 'Worksheet' with identity 'CYTTG999999L' was not found");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = 30673)
+    @Description("Get a filtered and sorted list of scenario iteration candidates")
+    public void getCandidates() {
+        String name = new GenerateStringUtil().saltString("name");
+
+        worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
+
+        ComponentResponse getCandidates = getCandidates(worksheetIdentity).getResponseEntity();
+        softAssertions.assertThat(getCandidates.getItems()).isNotEmpty();
+
+        ComponentResponse getFilteredCandidates = getCandidatesWitParams(worksheetIdentity, "componentType[IN]", "PART").getResponseEntity();
+        softAssertions.assertThat(getFilteredCandidates.getItems().get(0).getComponentType()).isEqualTo("PART");
+
+        ComponentResponse getSortedCandidates = getCandidatesWitParams(worksheetIdentity, "sortBy[DESC]", "scenarioCreatedAt").getResponseEntity();
+
+        softAssertions.assertThat(getSortedCandidates.getItems()).isNotEmpty();
         softAssertions.assertAll();
     }
 }
