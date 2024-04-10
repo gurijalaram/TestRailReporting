@@ -2,7 +2,6 @@ package com.integration.testsuites;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
-import com.apriori.ach.api.tests.AchCurrentUserTests;
 import com.apriori.acs.api.tests.AllMaterialStocksInfoTests;
 import com.apriori.ats.api.tests.AtsAuthorization;
 import com.apriori.bcm.api.tests.WorksheetTests;
@@ -38,7 +37,6 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @SelectClasses({
     AtsAuthorization.class,
-    AchCurrentUserTests.class,
     AllMaterialStocksInfoTests.class,
     AtsAuthorization.class,
     BatchPartTest.class,

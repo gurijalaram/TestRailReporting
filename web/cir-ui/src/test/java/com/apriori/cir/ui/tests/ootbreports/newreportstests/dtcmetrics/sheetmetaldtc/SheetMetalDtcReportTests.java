@@ -17,6 +17,7 @@ import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -43,6 +44,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
+    @Issue(value = "APA-1339")
     @Tags({
         @Tag(JASPER_API),
         @Tag(API_SANITY)
