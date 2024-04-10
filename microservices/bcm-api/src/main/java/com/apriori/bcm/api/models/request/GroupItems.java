@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GroupItems {
     private String inputRowIdentity;
+    private String identity;
 }

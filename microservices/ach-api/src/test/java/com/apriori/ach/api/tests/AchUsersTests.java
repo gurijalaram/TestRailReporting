@@ -9,6 +9,7 @@ import com.apriori.shared.util.enums.TokenEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
@@ -59,7 +60,7 @@ public class AchUsersTests extends AchTestUtil {
             .useCustomUser(new UserCredentials(NOT_ADMIN_USER, null))
             .useCustomTokenInRequests(getWidgetsUserToken(NOT_ADMIN_USER));
 
-        customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+        customerIdentity = CustomerUtil.getCustomerData("widgets").getIdentity();
         Customer widgets = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity();
         String pattern = widgets.getEmailRegexPatterns().stream().findFirst().orElseThrow();
         domain = pattern.replace("\\S+@", "").replace(".com", "");
@@ -76,6 +77,7 @@ public class AchUsersTests extends AchTestUtil {
     @TestRail(id = {29177, 29178})
     @Description("User Admin can create a user, user can be created with unique email")
     public void createUserByAdmin() {
+
         String userName = new GenerateStringUtil().generateUserName();
 
         ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
@@ -233,7 +235,7 @@ public class AchUsersTests extends AchTestUtil {
             .body("user",
                 User.builder()
                     .enablements(Enablements.builder()
-                        .customerAssignedRole("APRIORI_EXPERT")
+                        .customerAssignedRole("APRIORI_DEVELOPER")
                         .userAdminEnabled(false).build())
                     .build());
 

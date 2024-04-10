@@ -159,8 +159,9 @@ public class UploadTests extends TestBaseUI {
     public void uploadAfterFailedUpload() {
         String fileError;
 
-        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent("ANKARA_SEHPA_SKETCHUP");
+        ComponentInfoBuilder component = new ComponentRequestUtil().getUniqueComponent("ANKARA_SEHPA_SKETCHUP");
         ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponent();
+        component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
         fileError = loginPage.login(component.getUser())

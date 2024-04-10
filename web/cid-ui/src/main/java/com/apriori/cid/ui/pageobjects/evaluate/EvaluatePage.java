@@ -493,6 +493,18 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Gets material details unit as a String
+     *
+     * @param label - the label
+     * @return String of unit used
+     */
+    public String getMaterialResultUnit(String label) {
+        By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
+        pageUtils.waitForElementToAppear(result);
+        return driver.findElement(result).getAttribute("textContent").replaceAll("[^a-z]", "");
+    }
+
+    /**
      * Checks the value of specified material
      *
      * @param label - the label

@@ -75,11 +75,10 @@ public class AcsResources {
     private final String invalidUsername;
 
     public AcsResources() {
-        UserCredentials user = UserUtil.getUserOnPrem();
+        UserCredentials user = UserUtil.getUser("common");
         token = new OldAuthorizationUtil().getTokenAsString();
-        validUsername = user.getUsername();
-        // TODO: 20/02/2024 why not split on '@' then concat?
-        invalidUsername = user.getUsername().substring(0, 14).concat("41");
+        validUsername = user.getEmail();
+        invalidUsername = user.getUsername().split("@")[0].concat("41");
     }
 
     /**

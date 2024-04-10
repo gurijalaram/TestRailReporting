@@ -13,7 +13,8 @@ public enum BcmAppAPIEnum implements ExternalEndpointEnum {
     DELETE_INPUTS("/worksheets/%s/inputRows/delete"),
     EDIT_INPUTS("/worksheets/%s/inputRows/edit"),
     COST_WORKSHEET("/worksheets/%s/cost"),
-    MULTIPLE_ROWS("/worksheets/%s/inputRowGroup");
+    MULTIPLE_ROWS("/worksheets/%s/inputRowGroup"),
+    DELETE_MULTIPLE_WORKSHEETS("/worksheets/delete");
 
 
     private final String endpoint;
