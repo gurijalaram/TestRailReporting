@@ -125,10 +125,10 @@ public class WorksheetTests extends BcmUtil {
         ComponentResponse getCandidates = getCandidates(worksheetIdentity).getResponseEntity();
         softAssertions.assertThat(getCandidates.getItems()).isNotEmpty();
 
-        ComponentResponse getFilteredCandidates = getCandidatesWitParams(worksheetIdentity, "componentType[IN]", "PART").getResponseEntity();
+        ComponentResponse getFilteredCandidates = getCandidatesWithParams(worksheetIdentity, "componentType[IN]", "PART").getResponseEntity();
         softAssertions.assertThat(getFilteredCandidates.getItems().get(0).getComponentType()).isEqualTo("PART");
 
-        ComponentResponse getSortedCandidates = getCandidatesWitParams(worksheetIdentity, "sortBy[DESC]", "scenarioCreatedAt").getResponseEntity();
+        ComponentResponse getSortedCandidates = getCandidatesWithParams(worksheetIdentity, "sortBy[DESC]", "scenarioCreatedAt").getResponseEntity();
 
         softAssertions.assertThat(getSortedCandidates.getItems()).isNotEmpty();
         softAssertions.assertAll();

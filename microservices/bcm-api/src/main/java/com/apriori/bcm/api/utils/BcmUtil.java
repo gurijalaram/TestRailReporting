@@ -373,7 +373,7 @@ public class BcmUtil extends TestUtil {
      * @param value - value of parameter
      * @return response object
      */
-    public ResponseWrapper<ComponentResponse> getCandidatesWitParams(String worksheetIdentity, String param, String value) {
+    public ResponseWrapper<ComponentResponse> getCandidatesWithParams(String worksheetIdentity, String param, String value) {
         RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.CANDIDATES, ComponentResponse.class)
             .inlineVariables(worksheetIdentity)
             .expectedResponseCode(HttpStatus.SC_OK)
