@@ -51,8 +51,7 @@ public class ComponentRequestUtil {
         component = COMPONENT_REQUEST.getAllComponents()
             .stream()
             .filter(o -> o.getProcessGroup().equals(ProcessGroupEnum.TWO_MODEL_MACHINING) ||
-                o.getProcessGroup().equals(ProcessGroupEnum.WITHOUT_PG) ||
-                o.getExtension().equals(".skp"))
+                o.getProcessGroup().equals(ProcessGroupEnum.WITHOUT_PG))
             .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
