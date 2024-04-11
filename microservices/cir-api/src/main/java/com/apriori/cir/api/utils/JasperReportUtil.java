@@ -5,6 +5,7 @@ import com.apriori.cir.api.JasperReportSummaryIncRawData;
 import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.enums.ReportChartType;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.request.ReportExportRequest;
 import com.apriori.cir.api.models.request.ReportRequest;
 import com.apriori.cir.api.models.response.ChartData;
@@ -106,14 +107,16 @@ public class JasperReportUtil {
         if (urlValue.getEndpointString().contains("scenarioComparison") && setCriteria) {
             genericInputList = setCreatedByLastModifiedByCriteria(genericInputList, miscDataList.get(1), "bhegan");
         }
-        HashMap<String, Integer> icMapToUse = miscDataList.get(0).equals("Scenario Comparison") ? inputControlsIndexMapScenarioComparison : inputControlsIndexMapComponentCost;
+        HashMap<String, Integer> icMapToUse = miscDataList.get(0).equals(ReportNamesEnum.SCENARIO_COMPARISON.getReportName())
+            ? inputControlsIndexMapScenarioComparison : inputControlsIndexMapComponentCost;
 
         if (!miscDataList.get(1).isEmpty() && !miscDataList.get(2).isEmpty()) {
             genericInputList.get(icMapToUse.get(miscDataList.get(1))).setValue(Collections.singletonList(miscDataList.get(2)));
         }
 
         if (!miscDataList.get(3).isEmpty()) {
-            genericInputList.get(icMapToUse.get("exportSetName")).setValue(Collections.singletonList(miscDataList.get(3)));
+            genericInputList.get(icMapToUse.get(InputControlsEnum.EXPORT_SET_NAME.getInputControlId()))
+                .setValue(Collections.singletonList(miscDataList.get(3)));
         }
 
         ReportParameter reportParameter = new ReportParameter();

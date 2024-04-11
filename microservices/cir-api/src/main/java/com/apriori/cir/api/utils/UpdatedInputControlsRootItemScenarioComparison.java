@@ -9,6 +9,6 @@ import java.util.ArrayList;
 
 @Schema(location = "UpdatedInputControlsScenarioComparisonResponse.json")
 @Data
-public class UpdatedInputControlsRootItemScenarioComparison extends UpdatedInputControlsRootItem {
+public class UpdatedInputControlsRootItemScenarioComparison {
     public ArrayList<InputControlState> inputControlState;
 }
