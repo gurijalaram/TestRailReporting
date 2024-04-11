@@ -3,10 +3,8 @@ package com.apriori.cir.api.utils;
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.JasperReportSummaryIncRawData;
 import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
-import com.apriori.cir.api.enums.ComponentCostICModifiedEnum;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.enums.ReportChartType;
-import com.apriori.cir.api.enums.ScenarioComparisonICModifiedEnum;
 import com.apriori.cir.api.models.request.ReportExportRequest;
 import com.apriori.cir.api.models.request.ReportRequest;
 import com.apriori.cir.api.models.response.ChartData;
@@ -32,8 +30,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Slf4j
@@ -41,6 +39,10 @@ public class JasperReportUtil {
     private static HashMap<String, Integer> inputControlsIndexMapComponentCost;
     private static HashMap<String, Integer> inputControlsIndexMapScenarioComparison;
     private static HashMap<String, JasperApiInputControlsPathEnum> inputControlsModifiedUrlMap;
+    private static LinkedHashMap<String, String> componentCostICModifiedNamesValuesMap;
+    private static LinkedHashMap<String, String> scenarioComparisonICModifiedNamesValuesMap;
+    private static HashMap<String, LinkedHashMap<String, String>> inputControlsModifiedValueNameMasterList;
+    private static HashMap<String, Class<?>> reportNameResponseObjectMap;
     private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private long WAIT_TIME = 30;
 
@@ -51,6 +53,10 @@ public class JasperReportUtil {
         initialiseInputControlsComponentCostHashMap();
         initialiseInputControlsScenarioComparisonHashMap();
         initialiseInputControlsModifiedUrlHashMap();
+        initialiseComponentCostICModifiedNamesValuesMap();
+        initialiseScenarioComparisonICModifiedNamesValuesMap();
+        initialiseInputControlsModifiedValueNameMasterList();
+        initialiseReportNameResponseObjectMap();
         return new JasperReportUtil(jasperSessionId);
     }
 
@@ -77,12 +83,11 @@ public class JasperReportUtil {
         return responseResponseWrapper.getResponseEntity();
     }
 
-    public UpdatedInputControlsRootItem getInputControlsModified2(String reportName, String valueNameToSet, String valueToSet, String exportSet, boolean setCriteria) {
+    public <T, returnTypeClass> ResponseWrapper<T> getInputControlsModified2(String reportName, String valueNameToSet, String valueToSet, String exportSet, boolean setCriteria) {
         JasperApiInputControlsPathEnum urlValue = inputControlsModifiedUrlMap.get(reportName);
 
         List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputList(reportName);
 
-        // 95 to 119  now
         if (urlValue.getEndpointString().contains("scenarioComparison") && setCriteria) {
             genericInputList = setCreatedByLastModifiedByCriteria(genericInputList, valueNameToSet, "bhegan");
         }
@@ -99,18 +104,21 @@ public class JasperReportUtil {
         ReportParameter reportParameter = new ReportParameter();
         reportParameter.reportParameter.addAll(genericInputList);
 
+        Class<?> returnTypeClass = reportNameResponseObjectMap.get(reportName);
+
         RequestEntity requestEntity = new RequestEntity()
             .body(reportParameter)
             .endpoint(urlValue)
-            .returnType(UpdatedInputControlsRootItem.class)
+            .returnType(returnTypeClass)
             .headers(initHeadersWithJSession())
             .expectedResponseCode(HttpStatus.SC_OK)
             .urlEncodingEnabled(false);
 
-        return (UpdatedInputControlsRootItem) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        ResponseWrapper<?> responseWrapper =  HTTPRequest.build(requestEntity).post();
+        return (ResponseWrapper<T>) responseWrapper;
     }
 
-    public UpdatedInputControlsRootItem getInputControlsModified(JasperApiInputControlsPathEnum value, String valueNameToSet, String valueToSet, String exportSet) {
+    public UpdatedInputControlsRootItemScenarioComparison getInputControlsModified(JasperApiInputControlsPathEnum value, String valueNameToSet, String valueToSet, String exportSet) {
         List<UpdatedInputControlsPayloadInputsItem> genericInputList;
         if (value.toString().contains("scenarioComparison")) {
             genericInputList = createGenericInputListScenarioComparison();
@@ -136,12 +144,12 @@ public class JasperReportUtil {
         RequestEntity requestEntity = new RequestEntity()
             .body(reportParameter)
             .endpoint(value)
-            .returnType(UpdatedInputControlsRootItem.class)
+            .returnType(UpdatedInputControlsRootItemScenarioComparison.class)
             .headers(initHeadersWithJSession())
             .expectedResponseCode(HttpStatus.SC_OK)
             .urlEncodingEnabled(false);
 
-        return (UpdatedInputControlsRootItem) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (UpdatedInputControlsRootItemScenarioComparison) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     public JasperReportSummary generateJasperReportSummary(ReportRequest reportRequest) {
@@ -400,36 +408,20 @@ public class JasperReportUtil {
     }
 
     private List<UpdatedInputControlsPayloadInputsItem> createGenericInputList(String reportName) {
-        ComponentCostICModifiedEnum[] ccValues = new ComponentCostICModifiedEnum[0];
-        ScenarioComparisonICModifiedEnum[] scValues = new ScenarioComparisonICModifiedEnum[0];
-        if (reportName.contains("Scenario")) {
-            scValues = ScenarioComparisonICModifiedEnum.values();
-        } else {
-            ccValues = ComponentCostICModifiedEnum.values();
-        }
+        HashMap<String, String> nameValueListToUse = inputControlsModifiedValueNameMasterList.get(reportName);
+
         List<UpdatedInputControlsPayloadInputsItem> listOfInputObjects = new ArrayList<>();
 
-        List<String> valueIdList = new ArrayList<>();
+        List<String> nameList = new ArrayList<>();
         List<String> valueList = new ArrayList<>();
-        if (!scValues[0].getNameOrValueItem().isEmpty()) {
-            for (int i = 0; i < scValues.length / 2; i++) {
-                valueIdList.add(scValues[i].getNameOrValueItem());
-            }
-            for (int i = scValues.length / 2; i < scValues.length; i++) {
-                valueList.add(scValues[i].getNameOrValueItem());
-            }
-        } else {
-            for (int i = 0; i < ccValues.length / 2; i++) {
-                valueIdList.add(ccValues[i].getNameOrValueItem());
-            }
-            for (int i = ccValues.length / 2; i < ccValues.length; i++) {
-                valueList.add(ccValues[i].getNameOrValueItem());
-            }
+        for (var entry : nameValueListToUse.entrySet()) {
+            nameList.add(entry.getKey());
+            valueList.add(entry.getValue());
         }
 
-        for (int i = 0; i < valueIdList.size(); i++) {
+        for (int i = 0; i < nameList.size(); i++) {
             listOfInputObjects.add(UpdatedInputControlsPayloadInputsItem.builder()
-                .name(valueIdList.get(i))
+                .name(nameList.get(i))
                 .value(Collections.singletonList(valueList.get(i)))
                 .limit(100)
                 .offset(0)
@@ -437,7 +429,6 @@ public class JasperReportUtil {
         }
 
         return listOfInputObjects;
-
     }
 
     private List<UpdatedInputControlsPayloadInputsItem> createGenericInputListComponentCost() {
@@ -524,5 +515,47 @@ public class JasperReportUtil {
         inputControlsModifiedUrlMap = new HashMap<>();
         inputControlsModifiedUrlMap.put(ReportNamesEnum.COMPONENT_COST.getReportName(), JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC);
         inputControlsModifiedUrlMap.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC);
+    }
+
+    private static void initialiseComponentCostICModifiedNamesValuesMap() {
+        componentCostICModifiedNamesValuesMap = new LinkedHashMap<>();
+        componentCostICModifiedNamesValuesMap.put("exportSetName", "~NOTHING~");
+        componentCostICModifiedNamesValuesMap.put("componentType", "~NOTHING~");
+        componentCostICModifiedNamesValuesMap.put("latestExportDate", "");
+        componentCostICModifiedNamesValuesMap.put("createdBy", "~NOTHING~");
+        componentCostICModifiedNamesValuesMap.put("lastModifiedBy", "~NOTHING~");
+        componentCostICModifiedNamesValuesMap.put("componentNumber", "%");
+        componentCostICModifiedNamesValuesMap.put("scenarioName", "~NOTHING~");
+        componentCostICModifiedNamesValuesMap.put("componentSelect", "1");
+        componentCostICModifiedNamesValuesMap.put("componentCostCurrencyCode", "USD");
+    }
+
+    private static void initialiseScenarioComparisonICModifiedNamesValuesMap() {
+        scenarioComparisonICModifiedNamesValuesMap = new LinkedHashMap<>();
+        scenarioComparisonICModifiedNamesValuesMap.put("useLatestExport", "Scenario");
+        scenarioComparisonICModifiedNamesValuesMap.put("earliestExportDate", "2015-12-06 06:24:08");
+        scenarioComparisonICModifiedNamesValuesMap.put("latestExportDate", "2024-04-04 07:24:08");
+        scenarioComparisonICModifiedNamesValuesMap.put("exportSetName", "~NOTHING~");
+        scenarioComparisonICModifiedNamesValuesMap.put("allExportIDs", "~NOTHING~");
+        scenarioComparisonICModifiedNamesValuesMap.put("componentType", "~NOTHING~");
+        scenarioComparisonICModifiedNamesValuesMap.put("createdBy", "~NOTHING~");
+        scenarioComparisonICModifiedNamesValuesMap.put("lastModifiedBy", "~NOTHING~");
+        scenarioComparisonICModifiedNamesValuesMap.put("partNumber", "%");
+        scenarioComparisonICModifiedNamesValuesMap.put("scenarioName", "~NOTHING~");
+        scenarioComparisonICModifiedNamesValuesMap.put("scenarioToCompareIDs", "187");
+        scenarioComparisonICModifiedNamesValuesMap.put("scenarioIDs", "187");
+        scenarioComparisonICModifiedNamesValuesMap.put("currencyCode", "USD");
+    }
+
+    private static void initialiseInputControlsModifiedValueNameMasterList() {
+        inputControlsModifiedValueNameMasterList = new HashMap<>();
+        inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.COMPONENT_COST.getReportName(), componentCostICModifiedNamesValuesMap);
+        inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), scenarioComparisonICModifiedNamesValuesMap);
+    }
+
+    private static void initialiseReportNameResponseObjectMap() {
+        reportNameResponseObjectMap = new HashMap<>();
+        reportNameResponseObjectMap.put(ReportNamesEnum.COMPONENT_COST.getReportName(), UpdatedInputControlsRootItemComponentCost.class);
+        reportNameResponseObjectMap.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), UpdatedInputControlsRootItemScenarioComparison.class);
     }
 }
