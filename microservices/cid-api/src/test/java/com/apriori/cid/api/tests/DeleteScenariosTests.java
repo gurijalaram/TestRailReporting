@@ -5,6 +5,7 @@ import static com.apriori.css.api.enums.CssSearch.PAGE_SIZE;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_LT;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_CN;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.DELETE;
 
 import com.apriori.cid.api.models.response.scenarios.ScenariosDeleteResponse;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -17,6 +18,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -30,11 +32,14 @@ public class DeleteScenariosTests {
     private final SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
+    @Tag(DELETE)
     public void quickDeletePrivateScenarios() {
         UserUtil.getUsers().forEach(user -> quickDeleteScenarios(false, user));
     }
 
-    @Test void quickDeletePublicScenarios() {
+    @Test
+    @Tag(DELETE)
+    public void quickDeletePublicScenarios() {
         quickDeleteScenarios(true, UserUtil.getUser());
     }
 
@@ -43,7 +48,8 @@ public class DeleteScenariosTests {
         UserUtil.getUsers().forEach(user -> deleteScenarios(false, user));
     }
 
-    @Test void deletePublicScenarios() {
+    @Test
+    public void deletePublicScenarios() {
         deleteScenarios(true, UserCredentials.init("cfrith@apriori.com","TestEvent2025!"));
     }
 
