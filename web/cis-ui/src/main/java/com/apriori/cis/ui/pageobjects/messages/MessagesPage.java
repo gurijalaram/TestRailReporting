@@ -35,6 +35,9 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     @FindBy(xpath = "//button[@data-testid='toolbar-control-button-active']//p[@data-testid='toolbar-Unread']")
     private WebElement unreadFilterIcon;
 
+    @FindBy(xpath = "//button//p[@data-testid='toolbar-Unread']")
+    private WebElement unreadButton;
+
     @FindBy(xpath = "//div[@data-testid='loader']")
     private WebElement spinner;
 
@@ -43,6 +46,9 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
 
     @FindBy(xpath = "//button[@data-testid='toolbar-control-button-inactive']//p[@data-testid='toolbar-Filter ']")
     private WebElement filtersOption;
+
+    @FindBy(xpath = "//button//p[@data-testid='toolbar-Filter ']")
+    private WebElement filterButton;
 
     @FindBy(id = "popover-filter-control-messages")
     private WebElement filterModal;
@@ -125,7 +131,10 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        getPageUtils().waitForElementToAppear(allMessages);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
+        getPageUtils().isElementDisplayed(allMessages);
+        getPageUtils().isElementEnabled(allMessages);
+
     }
 
     /**
@@ -216,7 +225,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      */
     public MessagesPage clickOnUnread() {
         getPageUtils().waitForElementAndClick(unreadFilterIcon);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         return this;
     }
 
@@ -236,6 +245,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      */
     public PartsAndAssembliesDetailsPage clickOnSubjectOrAttribute(String value) {
         getPageUtils().waitForElementAndClick(By.xpath("//h4[contains(text(),'" + value + "')]//..//following-sibling::div"));
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         return new PartsAndAssembliesDetailsPage(getDriver());
     }
 
@@ -272,9 +282,14 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * @return true/false
      */
     public MessagesPage clickOnFilter() {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
-        getPageUtils().waitForElementAndClick(filtersOption);
-        return this;
+        if (isAddedFilterDisplayed()) {
+            resetToDefaultConfiguration();
+        }
+
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
+        getPageUtils().waitForElementAppear(filterButton);
+        return (filterButton.findElement(By.xpath("../..")).getAttribute("data-testid").contains("inactive"))
+            ? clickOnInActiveFilter() : clickOnActiveFilter();
     }
 
     /**
@@ -364,7 +379,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * @return true/false
      */
     public MessagesPage clickOnFilteredDiscussion() {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         getPageUtils().waitForElementToAppear(allMessages);
         getPageUtils().javaScriptClick(firstMessagePageDiscussion);
         return this;
@@ -463,7 +478,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * @return true/false
      */
     public boolean isAssignToUserListDisplayed() {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),2);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 2);
         return getPageUtils().isElementDisplayed(assignToUsersList);
     }
 
@@ -474,6 +489,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      */
     public MessagesPage selectAUserToAssign(String participantName) {
         getPageUtils().waitForElementAndClick(By.xpath("//div[@role='button']//span[contains(text(),'" + participantName + "')]"));
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         return this;
     }
 
@@ -484,6 +500,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      */
     public MessagesPage clickOnUnAssignToOption() {
         getPageUtils().waitForElementAndClick(unAssignToOption);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         return this;
     }
 
@@ -493,7 +510,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
      * @return a String
      */
     public String getDiscussionAssignedState() {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         return getPageUtils().waitForElementToAppear(firstMessagePageDiscussion).getAttribute("innerText");
     }
 
@@ -507,15 +524,26 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     }
 
     /**
+     * Checks if added filter options displayed
+     *
+     * @return true/false
+     */
+    public MessagesPage clickAddedFilter() {
+        getPageUtils().waitForElementAndClick(addedFiltersOption);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
+        return this;
+    }
+
+
+    /**
      * reset to default configurations
      *
      * @return current page object
      */
     public MessagesPage resetToDefaultConfiguration() {
-        getPageUtils().waitForElementAndClick(readFilterIcon);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
-        getPageUtils().waitForElementAndClick(activeFilter);
+        clickAddedFilter();
         clickOnRemoveFilter();
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         return this;
     }
 
@@ -529,14 +557,54 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
         return this;
     }
 
+    public MessagesPage clickOnUnReadButton() {
+        getPageUtils().waitForElementAppear(unreadButton);
+        WebElement element = (unreadButton.findElement(By.xpath("../..")).getAttribute("data-testid").contains("inactive"))
+            ? readFilterIcon : unreadFilterIcon;
+        getPageUtils().waitForElementAndClick(element);
+        return this;
+    }
+
     /**
      * clicks on filter option
      *
      * @return true/false
      */
     public MessagesPage clickOnActiveFilter() {
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         getPageUtils().waitForElementAndClick(activeFilter);
+        return this;
+    }
+
+    public MessagesPage clickOnInActiveFilter() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
+        getPageUtils().waitForElementAndClick(filtersOption);
+        return this;
+    }
+
+    /**
+     * click on Header title
+     *
+     * @return current class object
+     */
+    public MessagesPage clickOnHeaderTitle() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
+        getPageUtils().waitForElementAndClick(headerTitle);
+        return this;
+    }
+
+    /**
+     * select message
+     *
+     * @param message - expected message
+     * @return current class object
+     */
+    public MessagesPage selectMessage(String message) {
+        Boolean isFound = getAssignedState().contains(message);
+        if (!isFound) {
+            clickOnUnReadButton();
+            getPageUtils().waitForElementAndClick(By.xpath(String.format("//div[@id='user-discussion-msgs-container']//div[contains(@id,'formatted-mention-field-comment-content')][contains(text(), '%s')]", message)));
+        }
         return this;
     }
 }
