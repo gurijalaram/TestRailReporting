@@ -217,7 +217,6 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
 
         ArrayList<InputControlState> inputControlStateList = inputControlsScenarioToCompareSelected.getResponseEntity().getInputControlState();
 
-        // TODO - check if this IC works properly (check TR for what it should do, etc)
         softAssertions.assertThat(inputControlStateList.get(11).getOptions().get(0).getSelected()).isEqualTo(true);
 
         softAssertions.assertThat(inputControlStateList.get(8).getTotalCount()).isEqualTo("12");
