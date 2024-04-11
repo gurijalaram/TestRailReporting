@@ -19,11 +19,13 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
+import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
+import com.apriori.shared.util.models.response.component.ComponentResponse;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -348,5 +350,34 @@ public class BcmUtil extends TestUtil {
                 .build())
             .expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Returns list of scenario iteration candidates
+     *
+     * @param worksheetIdentity - worksheet identity
+     * @return response object
+     */
+    public ResponseWrapper<ComponentResponse> getCandidates(String worksheetIdentity) {
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.CANDIDATES, ComponentResponse.class)
+            .inlineVariables(worksheetIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK);
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Returns filtered/sorted list of scenario iteration candidates
+     *
+     * @param worksheetIdentity - worksheet identity
+     * @param param - name of parameter
+     * @param value - value of parameter
+     * @return response object
+     */
+    public ResponseWrapper<ComponentResponse> getCandidatesWithParams(String worksheetIdentity, String param, String value) {
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.CANDIDATES, ComponentResponse.class)
+            .inlineVariables(worksheetIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .queryParams(new QueryParams().use(param, value));
+        return HTTPRequest.build(requestEntity).get();
     }
 }

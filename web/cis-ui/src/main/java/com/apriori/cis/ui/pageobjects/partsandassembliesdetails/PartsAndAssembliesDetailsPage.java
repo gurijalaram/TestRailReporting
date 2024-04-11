@@ -332,6 +332,9 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@data-testid='modal-paper-comp-abandon-comment-modal']")
     private WebElement abandonCommentModal;
 
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-share-scenario-participant-modal']")
+    private WebElement inviteParticipantModel;
+
     @FindBy(xpath = "//p[@data-testid='modal-content-abandon-comment-modal']")
     private WebElement abandonCommentModalContent;
 
@@ -1767,6 +1770,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public PartsAndAssembliesDetailsPage clickOnInvite() {
         getPageUtils().waitForElementToAppear(btnInvite);
         getPageUtils().moveAndClick(btnInvite);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 1);
         return this;
     }
 
@@ -1927,6 +1931,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public PartsAndAssembliesDetailsPage clickComment() {
         getPageUtils().waitForElementAndClick(btnComment);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"), 5);
         return this;
     }
 
@@ -2177,6 +2182,9 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return true/false
      */
     public PartsAndAssembliesDetailsPage clickMoreOption() {
+        if (!getPageUtils().isElementEnabled(discussionMenuIcon)) {
+            getPageUtils().moveAndClick(createdDiscussion);
+        }
         getPageUtils().waitForElementAppear(discussionMenuIcon).click();
         return this;
     }
@@ -2326,8 +2334,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage clickOnCreatedDiscussion() {
-        getPageUtils().waitForElementToAppear(createdDiscussion);
-        getPageUtils().javaScriptClick(createdDiscussion);
+        getPageUtils().moveAndClick(createdDiscussion);
         return this;
     }
 
