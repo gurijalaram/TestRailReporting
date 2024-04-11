@@ -265,6 +265,7 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      */
     public MessagesPage clickMessages() {
         getPageUtils().waitForElementAndClick(btnMessage);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         return new MessagesPage(getDriver());
     }
 
@@ -314,7 +315,6 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      */
     public LeftHandNavigationBar uploadAndCostScenario(ComponentInfoBuilder componentInfoBuilder) {
         ComponentInfoBuilder componentScenarioItem = componentsUtil.postComponentQueryCSSUncosted(componentInfoBuilder);
-
         scenariosUtil.postCostScenario(componentInfoBuilder);
         scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
             SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + COST_COMPLETE).get(0);
