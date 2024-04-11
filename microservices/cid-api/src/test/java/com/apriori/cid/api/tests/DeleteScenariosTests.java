@@ -5,6 +5,7 @@ import static com.apriori.css.api.enums.CssSearch.PAGE_SIZE;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_LT;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_CN;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.DELETE;
 
 import com.apriori.cid.api.models.response.scenarios.ScenariosDeleteResponse;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -17,6 +18,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -30,18 +32,31 @@ public class DeleteScenariosTests {
     private final SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
+    @Tag(DELETE)
+    public void quickDeletePrivateScenarios() {
+        UserUtil.getUsers().forEach(user -> quickDeleteScenarios(false, user));
+    }
+
+    @Test
+    @Tag(DELETE)
+    public void quickDeletePublicScenarios() {
+        quickDeleteScenarios(true, UserUtil.getUser());
+    }
+
+    @Test
     public void deletePrivateScenarios() {
         UserUtil.getUsers().forEach(user -> deleteScenarios(false, user));
     }
 
-    @Test void deletePublicScenarios() {
+    @Test
+    public void deletePublicScenarios() {
         deleteScenarios(true, UserCredentials.init("cfrith@apriori.com","TestEvent2025!"));
     }
 
     private void deleteScenarios(Boolean scenarioPublished, UserCredentials user) {
         List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", scenarioPublished, user);
 
-        ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenarios(assembliesToDelete, user);
+        ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenariosCompleted(assembliesToDelete, user);
 
         log.info("Number of 'ASSEMBLY(S)' deleted '{}'", deletedAssemblies.getSuccesses().size());
 
@@ -49,13 +64,23 @@ public class DeleteScenariosTests {
 
         List<ScenarioItem> scenariosToDelete = searchComponentType("PART", scenarioPublished, user);
 
-        ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenarios(scenariosToDelete, user);
+        ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenariosCompleted(scenariosToDelete, user);
 
         log.info("Number of 'PART(S)' deleted '{}'", deletedScenarios.getSuccesses().size());
 
         softAssertions.assertThat(deletedScenarios.getSuccesses().size()).isEqualTo(scenariosToDelete.size());
 
         softAssertions.assertAll();
+    }
+
+    private void quickDeleteScenarios(Boolean scenarioPublished, UserCredentials user) {
+        List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", scenarioPublished, user);
+
+        scenariosUtil.deleteScenarios(assembliesToDelete, user);
+
+        List<ScenarioItem> scenariosToDelete = searchComponentType("PART", scenarioPublished, user);
+
+        scenariosUtil.deleteScenarios(scenariosToDelete, user);
     }
 
     private List<ScenarioItem> searchComponentType(String componentType, Boolean scenarioPublished, UserCredentials currentUser) {
