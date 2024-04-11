@@ -78,7 +78,11 @@ public class DeleteScenariosTests {
 
         scenariosUtil.deleteScenarios(assembliesToDelete, user);
 
+        assembliesToDelete.forEach(assembly -> log.info("Scenario Name of ASSEMBLY marked for deletion '{}'", assembly.getScenarioName()));
+
         List<ScenarioItem> scenariosToDelete = searchComponentType("PART", scenarioPublished, user);
+
+        scenariosToDelete.forEach(scenario -> log.info("Scenario Name of SCENARIO marked for deletion '{}'", scenario.getScenarioName()));
 
         scenariosUtil.deleteScenarios(scenariosToDelete, user);
     }
