@@ -15,6 +15,7 @@ import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
 import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.enums.ReportNamesEnum;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -53,7 +54,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         String gbpCurrency = CurrencyEnum.GBP.getCurrency();
         String usdCurrency = CurrencyEnum.USD.getCurrency();
 
-        /*List<String> valuesGbp = currencyTestCore(gbpCurrency);
+        List<String> valuesGbp = currencyTestCore(gbpCurrency);
 
         List<String> valuesUsd = currencyTestCore(usdCurrency);
 
@@ -63,7 +64,7 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
 
         softAssertions.assertThat(valuesGbp.get(1)).isNotEqualTo(valuesUsd.get(1));
 
-        softAssertions.assertAll();*/
+        softAssertions.assertAll();
     }
 
     @Test
@@ -75,71 +76,88 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     public void verifyComponentTypeInputControlFunctionsCorrectly() {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
-        /*UpdatedInputControlsRootItemScenarioComparison inputControlsAssemblySelected =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsAssemblySelected =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                false,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 InputControlsEnum.COMPONENT_TYPE.getInputControlId(),
                 "assembly",
-                "",
-                false
+                ""
             );
 
-        String componentTypeOptions = inputControlsAssemblySelected.getInputControlState().get(7).getAllOptions().toString();
+        String componentTypeOptions = inputControlsAssemblySelected.getResponseEntity().getInputControlState().get(7).getAllOptions().toString();
         softAssertions.assertThat(componentTypeOptions.contains("assembly")).isEqualTo(true);
         softAssertions.assertThat(componentTypeOptions.contains("part")).isEqualTo(true);
         softAssertions.assertThat(componentTypeOptions.contains("rollup")).isEqualTo(true);
-        softAssertions.assertThat(inputControlsAssemblySelected.getInputControlState().get(7).getTotalCount()).isEqualTo("3");
+        softAssertions.assertThat(inputControlsAssemblySelected.getResponseEntity().getInputControlState().get(7).getTotalCount())
+            .isEqualTo("3");
 
-        String scenarioNameOptions = inputControlsAssemblySelected.getInputControlState().get(10).getAllOptions().toString();
+        String scenarioNameOptions = inputControlsAssemblySelected.getResponseEntity().getInputControlState().get(10).getAllOptions()
+            .toString();
         softAssertions.assertThat(scenarioNameOptions.contains("Initial")).isEqualTo(true);
         softAssertions.assertThat(scenarioNameOptions.contains("Multi VPE")).isEqualTo(true);
-        softAssertions.assertThat(inputControlsAssemblySelected.getInputControlState().get(10).getTotalCount()).isEqualTo("2");
+        softAssertions.assertThat(inputControlsAssemblySelected.getResponseEntity().getInputControlState().get(10).getTotalCount())
+            .isEqualTo("2");
 
-        softAssertions.assertThat(inputControlsAssemblySelected.getInputControlState().get(8).getTotalCount()).isEqualTo("3");
-        softAssertions.assertThat(inputControlsAssemblySelected.getInputControlState().get(9).getTotalCount()).isEqualTo("3");
+        softAssertions.assertThat(inputControlsAssemblySelected.getResponseEntity().getInputControlState().get(8).getTotalCount())
+            .isEqualTo("3");
+        softAssertions.assertThat(inputControlsAssemblySelected.getResponseEntity().getInputControlState().get(9).getTotalCount())
+            .isEqualTo("3");
 
-        softAssertions.assertThat(inputControlsAssemblySelected.getInputControlState().get(11).getTotalCount()).isEqualTo("8");
-        List<String> componentAssemblyOptions = inputControlsAssemblySelected.getInputControlState().get(11).getAllOptions();
+        softAssertions.assertThat(inputControlsAssemblySelected.getResponseEntity().getInputControlState().get(11).getTotalCount())
+            .isEqualTo("8");
+        List<String> componentAssemblyOptions = inputControlsAssemblySelected.getResponseEntity().getInputControlState().get(11).getAllOptions();
         for (String component : componentAssemblyOptions) {
             softAssertions.assertThat(component.contains("[assembly]")).isEqualTo(true);
         }
 
-        UpdatedInputControlsRootItemScenarioComparison inputControlsPartSelected =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsPartSelected =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                false,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 InputControlsEnum.COMPONENT_TYPE.getInputControlId(),
                 "part",
-                "",
-                false
+                ""
             );
 
-        softAssertions.assertThat(inputControlsPartSelected.getInputControlState().get(10).getTotalCount()).isEqualTo("17");
+        softAssertions.assertThat(inputControlsPartSelected.getResponseEntity().getInputControlState().get(10).getTotalCount())
+            .isEqualTo("17");
 
-        softAssertions.assertThat(inputControlsPartSelected.getInputControlState().get(8).getTotalCount()).isEqualTo("10");
-        softAssertions.assertThat(inputControlsPartSelected.getInputControlState().get(9).getTotalCount()).isEqualTo("10");
+        softAssertions.assertThat(inputControlsPartSelected.getResponseEntity().getInputControlState().get(8).getTotalCount())
+            .isEqualTo("10");
+        softAssertions.assertThat(inputControlsPartSelected.getResponseEntity().getInputControlState().get(9).getTotalCount())
+            .isEqualTo("10");
 
-        softAssertions.assertThat(inputControlsPartSelected.getInputControlState().get(11).getTotalCount()).isEqualTo("249");
-        List<String> componentPartOptions = inputControlsPartSelected.getInputControlState().get(11).getAllOptions();
+        softAssertions.assertThat(inputControlsPartSelected.getResponseEntity().getInputControlState().get(11).getTotalCount())
+            .isEqualTo("249");
+        List<String> componentPartOptions = inputControlsPartSelected.getResponseEntity().getInputControlState().get(11).getAllOptions();
         for (String component : componentPartOptions) {
             softAssertions.assertThat(component.contains("[part]")).isEqualTo(true);
         }
 
-        UpdatedInputControlsRootItemScenarioComparison inputControlsRollupSelected =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsRollupSelected =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                false,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 InputControlsEnum.COMPONENT_TYPE.getInputControlId(),
                 "rollup",
-                "",
-                false
+                ""
             );
 
-        softAssertions.assertThat(inputControlsRollupSelected.getInputControlState().get(10).getTotalCount()).isEqualTo("6");
+        softAssertions.assertThat(inputControlsRollupSelected.getResponseEntity().getInputControlState().get(10).getTotalCount())
+            .isEqualTo("6");
 
-        softAssertions.assertThat(inputControlsRollupSelected.getInputControlState().get(8).getTotalCount()).isEqualTo("6");
-        softAssertions.assertThat(inputControlsRollupSelected.getInputControlState().get(9).getTotalCount()).isEqualTo("5");
+        softAssertions.assertThat(inputControlsRollupSelected.getResponseEntity().getInputControlState().get(8).getTotalCount())
+            .isEqualTo("6");
+        softAssertions.assertThat(inputControlsRollupSelected.getResponseEntity().getInputControlState().get(9).getTotalCount())
+            .isEqualTo("5");
 
-        softAssertions.assertThat(inputControlsRollupSelected.getInputControlState().get(11).getTotalCount()).isEqualTo("16");
-        List<String> componentRollupOptions = inputControlsRollupSelected.getInputControlState().get(11).getAllOptions();
+        softAssertions.assertThat(inputControlsRollupSelected.getResponseEntity().getInputControlState().get(11).getTotalCount())
+            .isEqualTo("16");
+        List<String> componentRollupOptions = inputControlsRollupSelected.getResponseEntity().getInputControlState().get(11).getAllOptions();
         for (String component : componentRollupOptions) {
             softAssertions.assertThat(component.contains("[rollup]")).isEqualTo(true);
         }
@@ -157,16 +175,17 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
 
-        UpdatedInputControlsRootItemScenarioComparison inputControlsExportSetSelected =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsExportSetSelected =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                false,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 "",
                 "",
-                currentExportSet,
-                false
+                currentExportSet
             );
 
-        ArrayList<InputControlState> inputControlStateList = inputControlsExportSetSelected.getInputControlState();
+        ArrayList<InputControlState> inputControlStateList = inputControlsExportSetSelected.getResponseEntity().getInputControlState();
         softAssertions.assertThat(inputControlStateList.get(7).getTotalCount()).isEqualTo("3");
         softAssertions.assertThat(inputControlStateList.get(8).getTotalCount()).isEqualTo("12");
         softAssertions.assertThat(inputControlStateList.get(9).getTotalCount()).isEqualTo("12");
@@ -186,16 +205,17 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
         String currentScenarioToCompareID = inputControls.getScenarioToCompareID().getOption("-12 (Bulkload) [part] ").getValue();
 
-        UpdatedInputControlsRootItemScenarioComparison inputControlsScenarioToCompareSelected =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsScenarioToCompareSelected =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                false,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 InputControlsEnum.SCENARIOS_TO_COMPARE_IDS.getInputControlId(),
                 currentScenarioToCompareID,
-                "",
-                false
+                ""
             );
 
-        ArrayList<InputControlState> inputControlStateList = inputControlsScenarioToCompareSelected.getInputControlState();
+        ArrayList<InputControlState> inputControlStateList = inputControlsScenarioToCompareSelected.getResponseEntity().getInputControlState();
 
         // TODO - check if this IC works properly (check TR for what it should do, etc)
         softAssertions.assertThat(inputControlStateList.get(11).getOptions().get(0).getSelected()).isEqualTo(true);
@@ -217,18 +237,21 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
         String currentExportSetValue = inputControls.getExportSetName().getOption(exportSetName).getValue();
 
-        UpdatedInputControlsRootItemScenarioComparison inputControlsScenarioNameSelected =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsScenarioNameSelected =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                false,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 InputControlsEnum.SCENARIO_NAME.getInputControlId(),
                 "Initial",
-                currentExportSetValue,
-                false
+                currentExportSetValue
             );
 
-        softAssertions.assertThat(inputControlsScenarioNameSelected.getInputControlState().get(11).getTotalCount()).isEqualTo("133");
+        softAssertions.assertThat(inputControlsScenarioNameSelected.getResponseEntity().getInputControlState().get(11).getTotalCount())
+            .isEqualTo("133");
 
-        List<String> scenarioNameOptionsList = inputControlsScenarioNameSelected.getInputControlState().get(11).getAllOptions();
+        List<String> scenarioNameOptionsList = inputControlsScenarioNameSelected.getResponseEntity().getInputControlState().get(11)
+            .getAllOptions();
         for (String scenarioName : scenarioNameOptionsList) {
             softAssertions.assertThat(scenarioName.contains("Initial")).isEqualTo(true);
         }
@@ -246,32 +269,36 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         String dateFormat = "yyyy-MM-dd HH:mm:ss";
         String currentDateTimePlusOneMonth = DateTimeFormatter.ofPattern(dateFormat).format(LocalDateTime.now().plusMonths(1));
 
-        UpdatedInputControlsRootItemScenarioComparison inputControlsEarliestExportDateSelected =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsEarliestExportDateSelected =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                false,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 InputControlsEnum.EARLIEST_EXPORT_DATE.getInputControlId(),
                 currentDateTimePlusOneMonth,
-                "",
-                false
+                ""
             );
 
-        ArrayList<InputControlState> earliestInputControlStateList = inputControlsEarliestExportDateSelected.getInputControlState();
+        ArrayList<InputControlState> earliestInputControlStateList = inputControlsEarliestExportDateSelected
+            .getResponseEntity().getInputControlState();
         softAssertions.assertThat(earliestInputControlStateList.get(5).getTotalCount()).isEqualTo("0");
         softAssertions.assertThat(earliestInputControlStateList.get(8).getTotalCount()).isEqualTo("12");
         softAssertions.assertThat(earliestInputControlStateList.get(9).getTotalCount()).isEqualTo("12");
         softAssertions.assertThat(earliestInputControlStateList.get(10).getTotalCount()).isEqualTo("19");
 
         String currentDateTimePlusOneYear = DateTimeFormatter.ofPattern(dateFormat).format(LocalDateTime.now().minusYears(1));
-        UpdatedInputControlsRootItemScenarioComparison inputControlsLatestExportDateSelected =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsLatestExportDateSelected =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                false,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
                 currentDateTimePlusOneYear,
-                "",
-                false
+                ""
             );
 
-        ArrayList<InputControlState> latestInputControlStateList = inputControlsLatestExportDateSelected.getInputControlState();
+        ArrayList<InputControlState> latestInputControlStateList = inputControlsLatestExportDateSelected
+            .getResponseEntity().getInputControlState();
         softAssertions.assertThat(latestInputControlStateList.get(5).getTotalCount()).isEqualTo("0");
         softAssertions.assertThat(latestInputControlStateList.get(8).getTotalCount()).isEqualTo("12");
         softAssertions.assertThat(latestInputControlStateList.get(9).getTotalCount()).isEqualTo("12");
@@ -288,21 +315,22 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     public void verifyPartNumberSearchCriteriaInputControlWorksCorrectly() {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
-        UpdatedInputControlsRootItemScenarioComparison inputControlsPartNumberSearchCriteria =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsPartNumberSearchCriteria =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                false,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 InputControlsEnum.PART_NUMBER_SEARCH_CRITERIA.getInputControlId(),
                 "-12",
-                "",
-                false
+                ""
             );
 
-        InputControlState scenariosToCompareState = inputControlsPartNumberSearchCriteria.getInputControlState().get(11);
+        InputControlState scenariosToCompareState = inputControlsPartNumberSearchCriteria.getResponseEntity().getInputControlState().get(11);
         softAssertions.assertThat(scenariosToCompareState.getTotalCount()).isEqualTo("2");
         softAssertions.assertThat(scenariosToCompareState.getOptions().get(0).getSelected()).isEqualTo(true);
         softAssertions.assertThat(scenariosToCompareState.getOptions().get(0).getLabel()).isEqualTo("-12 (Bulkload) [part] ");
 
-        InputControlState scenarioNameState = inputControlsPartNumberSearchCriteria.getInputControlState().get(10);
+        InputControlState scenarioNameState = inputControlsPartNumberSearchCriteria.getResponseEntity().getInputControlState().get(10);
         softAssertions.assertThat(scenarioNameState.getTotalCount()).isEqualTo("2");
         softAssertions.assertThat(scenarioNameState.getOptions().get(0).getSelected()).isEqualTo(false);
         softAssertions.assertThat(scenarioNameState.getOptions().get(0).getLabel()).isEqualTo("Bulkload");
@@ -322,30 +350,32 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
         String bheganUserValue = inputControls.getCreatedBy().getOption("bhegan").getValue();
 
-        UpdatedInputControlsRootItemScenarioComparison inputControlsCreatedBy =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsCreatedBy =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                false,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 InputControlsEnum.CREATED_BY.getInputControlId(),
                 bheganUserValue,
-                "",
-                false
+                ""
             );
 
-        InputControlState createdByState = inputControlsCreatedBy.getInputControlState().get(8);
+        InputControlState createdByState = inputControlsCreatedBy.getResponseEntity().getInputControlState().get(8);
         softAssertions.assertThat(createdByState.getTotalCount()).isEqualTo("12");
         softAssertions.assertThat(createdByState.getOptions().get(3).getSelected()).isEqualTo(true);
         softAssertions.assertThat(createdByState.getOptions().get(3).getLabel()).isEqualTo("bhegan");
 
-        InputControlState lastModifiedByState = inputControlsCreatedBy.getInputControlState().get(9);
+        InputControlState lastModifiedByState = inputControlsCreatedBy.getResponseEntity().getInputControlState().get(9);
         softAssertions.assertThat(lastModifiedByState.getTotalCount()).isEqualTo("2");
         softAssertions.assertThat(lastModifiedByState.getOptions().get(0).getLabel()).isEqualTo("bhegan");
         softAssertions.assertThat(lastModifiedByState.getOptions().get(1).getLabel()).isEqualTo("scrowe");
 
-        InputControlState scenarioNameState = inputControlsCreatedBy.getInputControlState().get(10);
+        InputControlState scenarioNameState = inputControlsCreatedBy.getResponseEntity().getInputControlState().get(10);
         softAssertions.assertThat(scenarioNameState.getTotalCount()).isEqualTo("1");
         softAssertions.assertThat(scenarioNameState.getOptions().get(0).getLabel()).isEqualTo("Initial");
 
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(11).getTotalCount()).isEqualTo("18");
+        softAssertions.assertThat(inputControlsCreatedBy.getResponseEntity().getInputControlState().get(11).getTotalCount())
+            .isEqualTo("18");
 
         softAssertions.assertAll();
     }
@@ -360,23 +390,26 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
         String bheganUserValue = inputControls.getLastModifiedBy().getOption("bhegan").getValue();
 
-        UpdatedInputControlsRootItemScenarioComparison inputControlsLastModifiedBy =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsLastModifiedBy =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                false,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 InputControlsEnum.LAST_MODIFIED_BY.getInputControlId(),
                 bheganUserValue,
-                "",
-                false
+                ""
             );
 
-        softAssertions.assertThat(inputControlsLastModifiedBy.getInputControlState().get(9).getTotalCount()).isEqualTo("12");
+        softAssertions.assertThat(inputControlsLastModifiedBy.getResponseEntity().getInputControlState().get(9).getTotalCount())
+            .isEqualTo("12");
 
-        InputControlState scenarioNameState = inputControlsLastModifiedBy.getInputControlState().get(10);
+        InputControlState scenarioNameState = inputControlsLastModifiedBy.getResponseEntity().getInputControlState().get(10);
         softAssertions.assertThat(scenarioNameState.getTotalCount()).isEqualTo("1");
         softAssertions.assertThat(scenarioNameState.getOptions().get(0).getSelected()).isEqualTo(false);
         softAssertions.assertThat(scenarioNameState.getOptions().get(0).getLabel()).isEqualTo("Initial");
 
-        softAssertions.assertThat(inputControlsLastModifiedBy.getInputControlState().get(11).getTotalCount()).isEqualTo("18");
+        softAssertions.assertThat(inputControlsLastModifiedBy.getResponseEntity().getInputControlState().get(11).getTotalCount())
+            .isEqualTo("18");
 
         softAssertions.assertAll();
     }
@@ -389,18 +422,22 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     public void verifyCreatedByInputControlSearchWorksCorrectly() {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
-        UpdatedInputControlsRootItemScenarioComparison inputControlsCreatedBy =
-            jasperReportUtil.getInputControlsModified2(
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsCreatedBy =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                true,
                 ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
                 InputControlsEnum.CREATED_BY.getInputControlId(),
                 "bhegan",
-                "",
-                true
+                ""
             );
 
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(8).getTotalCount()).isEqualTo("1");
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(8).getOptions().get(0).getSelected()).isEqualTo(false);
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(8).getOptions().get(0).getLabel()).isEqualTo("bhegan");
+        softAssertions.assertThat(inputControlsCreatedBy.getResponseEntity().getInputControlState().get(8).getTotalCount())
+            .isEqualTo("1");
+        softAssertions.assertThat(inputControlsCreatedBy.getResponseEntity().getInputControlState().get(8).getOptions().get(0).getSelected())
+            .isEqualTo(false);
+        softAssertions.assertThat(inputControlsCreatedBy.getResponseEntity().getInputControlState().get(8).getOptions().get(0).getLabel())
+            .isEqualTo("bhegan");
 
         softAssertions.assertAll();
     }
@@ -413,17 +450,22 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
     public void verifyLastModifiedByInputControlSearchWorksCorrectly() {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
 
-        UpdatedInputControlsRootItemScenarioComparison inputControlsCreatedBy = jasperReportUtil.getInputControlsModified2(
-            ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
-            InputControlsEnum.LAST_MODIFIED_BY.getInputControlId(),
-            "bhegan",
-            "",
-            true
+        ResponseWrapper<UpdatedInputControlsRootItemScenarioComparison> inputControlsCreatedBy =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemScenarioComparison.class,
+                true,
+                ReportNamesEnum.SCENARIO_COMPARISON.getReportName(),
+                InputControlsEnum.LAST_MODIFIED_BY.getInputControlId(),
+                "bhegan",
+                ""
         );
 
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(9).getTotalCount()).isEqualTo("1");
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(9).getOptions().get(0).getSelected()).isEqualTo(false);
-        softAssertions.assertThat(inputControlsCreatedBy.getInputControlState().get(9).getOptions().get(0).getLabel()).isEqualTo("bhegan");
+        softAssertions.assertThat(inputControlsCreatedBy.getResponseEntity().getInputControlState().get(9).getTotalCount())
+            .isEqualTo("1");
+        softAssertions.assertThat(inputControlsCreatedBy.getResponseEntity().getInputControlState().get(9).getOptions().get(0).getSelected())
+            .isEqualTo(false);
+        softAssertions.assertThat(inputControlsCreatedBy.getResponseEntity().getInputControlState().get(9).getOptions().get(0).getLabel())
+            .isEqualTo("bhegan");
 
         softAssertions.assertAll();
     }
@@ -443,6 +485,6 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
         return Arrays.asList(
             currencySettingValueGBP,
             currencyValueGBP
-        );*/
+        );
     }
 }

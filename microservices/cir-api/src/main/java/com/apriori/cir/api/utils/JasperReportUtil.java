@@ -42,7 +42,6 @@ public class JasperReportUtil {
     private static LinkedHashMap<String, String> componentCostICModifiedNamesValuesMap;
     private static LinkedHashMap<String, String> scenarioComparisonICModifiedNamesValuesMap;
     private static HashMap<String, LinkedHashMap<String, String>> inputControlsModifiedValueNameMasterList;
-    private static HashMap<String, Class<?>> reportNameResponseObjectMap;
     private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private long WAIT_TIME = 30;
 
@@ -56,7 +55,6 @@ public class JasperReportUtil {
         initialiseComponentCostICModifiedNamesValuesMap();
         initialiseScenarioComparisonICModifiedNamesValuesMap();
         initialiseInputControlsModifiedValueNameMasterList();
-        initialiseReportNameResponseObjectMap();
         return new JasperReportUtil(jasperSessionId);
     }
 
@@ -65,6 +63,13 @@ public class JasperReportUtil {
     }
 
     // TODO z: fix it threads
+
+    /**
+     * Gets input controls as they initially are
+     *
+     * @param value - enum of report input controls path to use
+     * @return InputControl - object of the various input controls
+     */
     public InputControl getInputControls(JasperApiInputControlsPathEnum value) {
         RequestEntity requestEntity = new RequestEntity()
             .endpoint(value)
@@ -83,75 +88,54 @@ public class JasperReportUtil {
         return responseResponseWrapper.getResponseEntity();
     }
 
-    public <T, returnTypeClass> ResponseWrapper<T> getInputControlsModified2(String reportName, String valueNameToSet, String valueToSet, String exportSet, boolean setCriteria) {
-        JasperApiInputControlsPathEnum urlValue = inputControlsModifiedUrlMap.get(reportName);
+    /**
+     * Gets modified Input Controls (for tests that require IC filtering assertions)
+     *
+     * @param klass - Class of type to return
+     * @param setCriteria - boolean to determine if criteria should be set
+     * @param miscData - rest of data (report name, IC to set, IC value to set and export set name)
+     * @return Response Wrapper instance with type specified in klass parameter
+     * @param <T> - generic so it will work for multiple reports
+     */
+    public <T> ResponseWrapper<T> getInputControlsModified(Class<T> klass, boolean setCriteria, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        JasperApiInputControlsPathEnum urlValue = inputControlsModifiedUrlMap.get(miscDataList.get(0));
 
-        List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputList(reportName);
+        List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputList(miscDataList.get(0));
 
         if (urlValue.getEndpointString().contains("scenarioComparison") && setCriteria) {
-            genericInputList = setCreatedByLastModifiedByCriteria(genericInputList, valueNameToSet, "bhegan");
+            genericInputList = setCreatedByLastModifiedByCriteria(genericInputList, miscDataList.get(1), "bhegan");
         }
-        HashMap<String, Integer> icMapToUse = reportName.equals("scenarioComparison") ? inputControlsIndexMapScenarioComparison : inputControlsIndexMapComponentCost;
+        HashMap<String, Integer> icMapToUse = miscDataList.get(0).equals("Scenario Comparison") ? inputControlsIndexMapScenarioComparison : inputControlsIndexMapComponentCost;
 
-        if (!valueNameToSet.isEmpty() && !valueToSet.isEmpty() && !setCriteria) {
-            genericInputList.get(icMapToUse.get(valueNameToSet)).setValue(Collections.singletonList(valueToSet));
+        if (!miscDataList.get(1).isEmpty() && !miscDataList.get(2).isEmpty()) {
+            genericInputList.get(icMapToUse.get(miscDataList.get(1))).setValue(Collections.singletonList(miscDataList.get(2)));
         }
 
-        if (!exportSet.isEmpty()) {
-            genericInputList.get(icMapToUse.get("exportSetName")).setValue(Collections.singletonList(exportSet));
+        if (!miscDataList.get(3).isEmpty()) {
+            genericInputList.get(icMapToUse.get("exportSetName")).setValue(Collections.singletonList(miscDataList.get(3)));
         }
 
         ReportParameter reportParameter = new ReportParameter();
         reportParameter.reportParameter.addAll(genericInputList);
-
-        Class<?> returnTypeClass = reportNameResponseObjectMap.get(reportName);
 
         RequestEntity requestEntity = new RequestEntity()
             .body(reportParameter)
             .endpoint(urlValue)
-            .returnType(returnTypeClass)
+            .returnType(klass)
             .headers(initHeadersWithJSession())
             .expectedResponseCode(HttpStatus.SC_OK)
             .urlEncodingEnabled(false);
 
-        ResponseWrapper<?> responseWrapper =  HTTPRequest.build(requestEntity).post();
-        return (ResponseWrapper<T>) responseWrapper;
+        return HTTPRequest.build(requestEntity).post();
     }
 
-    public UpdatedInputControlsRootItemScenarioComparison getInputControlsModified(JasperApiInputControlsPathEnum value, String valueNameToSet, String valueToSet, String exportSet) {
-        List<UpdatedInputControlsPayloadInputsItem> genericInputList;
-        if (value.toString().contains("scenarioComparison")) {
-            genericInputList = createGenericInputListScenarioComparison();
-        } else {
-            genericInputList = createGenericInputListComponentCost();
-        }
-        if (value.getEndpointString().contains("scenarioComparison") && valueToSet.equals("bhegan")) {
-            genericInputList = setCreatedByLastModifiedByCriteria(genericInputList, valueNameToSet, valueToSet);
-        }
-        HashMap<String, Integer> icMapToUse = value.toString().contains("scenarioComparison") ? inputControlsIndexMapScenarioComparison : inputControlsIndexMapComponentCost;
-
-        if (!valueNameToSet.isEmpty() && !valueToSet.isEmpty()) {
-            genericInputList.get(icMapToUse.get(valueNameToSet)).setValue(Collections.singletonList(valueToSet));
-        }
-
-        if (!exportSet.isEmpty()) {
-            genericInputList.get(icMapToUse.get("exportSetName")).setValue(Collections.singletonList(exportSet));
-        }
-
-        ReportParameter reportParameter = new ReportParameter();
-        reportParameter.reportParameter.addAll(genericInputList);
-
-        RequestEntity requestEntity = new RequestEntity()
-            .body(reportParameter)
-            .endpoint(value)
-            .returnType(UpdatedInputControlsRootItemScenarioComparison.class)
-            .headers(initHeadersWithJSession())
-            .expectedResponseCode(HttpStatus.SC_OK)
-            .urlEncodingEnabled(false);
-
-        return (UpdatedInputControlsRootItemScenarioComparison) HTTPRequest.build(requestEntity).post().getResponseEntity();
-    }
-
+    /**
+     * Generates jasper report summary
+     *
+     * @param reportRequest - ReportRequest instance to use in api request
+     * @return JasperReportSummary instance that contains returned data
+     */
     public JasperReportSummary generateJasperReportSummary(ReportRequest reportRequest) {
         ReportStatusResponse response = this.generateReport(reportRequest);
         ReportStatusResponse exportedReport = this.doReportExport(response);
@@ -172,6 +156,12 @@ public class JasperReportUtil {
             .build();
     }
 
+    /**
+     * Generates jasper report summary including all data
+     *
+     * @param reportRequest - ReportRequest instance to use in api request
+     * @return JasperReprotSummaryIncRawData instance containing all returned data
+     */
     public JasperReportSummaryIncRawData generateJasperReportSummaryIncRawData(ReportRequest reportRequest) {
         ReportStatusResponse response = this.generateReport(reportRequest);
         ReportStatusResponse exportedReport = this.doReportExport(response);
@@ -194,6 +184,12 @@ public class JasperReportUtil {
             .build();
     }
 
+    /**
+     * Generates jasper report summary including raw data as a string
+     *
+     * @param reportRequest - ReportRequest instance containing data to use in api request
+     * @return JasperReportSummaryIncRawDataAsString - instance of data returned from api
+     */
     public JasperReportSummaryIncRawDataAsString generateJasperReportSummaryIncRawDataAsString(ReportRequest reportRequest) {
         ReportStatusResponse response = this.generateReport(reportRequest);
         ReportStatusResponse exportedReport = this.doReportExport(response);
@@ -216,6 +212,12 @@ public class JasperReportUtil {
             .build();
     }
 
+    /**
+     * Polling method that waits until a specific report request is completed before returning
+     *
+     * @param requestId - String of id of the particular request
+     * @param exportId - String of id of the export
+     */
     @SneakyThrows
     private void waitUntilReportReady(String requestId, String exportId) {
         RequestEntity requestEntity = new RequestEntity()
@@ -431,52 +433,8 @@ public class JasperReportUtil {
         return listOfInputObjects;
     }
 
-    private List<UpdatedInputControlsPayloadInputsItem> createGenericInputListComponentCost() {
-        List<UpdatedInputControlsPayloadInputsItem> listOfInputObjects = new ArrayList<>();
-
-        // refactor to use enums into arrays based on half size of enum
-        List<String> nameList = Arrays.asList("exportSetName", "componentType", "latestExportDate",
-            "createdBy", "lastModifiedBy", "componentNumber", "scenarioName", "componentSelect", "componentCostCurrencyCode");
-
-        List<String> valueList = Arrays.asList("~NOTHING~", "~NOTHING~", "", "~NOTHING~", "~NOTHING~", "%", "~NOTHING~", "1", "USD");
-
-        for (int i = 0; i < 9; i++) {
-            listOfInputObjects.add(UpdatedInputControlsPayloadInputsItem.builder()
-                .name(nameList.get(i))
-                .value(Collections.singletonList(valueList.get(i)))
-                .limit(100)
-                .offset(0)
-                .build());
-        }
-
-        return listOfInputObjects;
-    }
-
-    private List<UpdatedInputControlsPayloadInputsItem> createGenericInputListScenarioComparison() {
-        List<UpdatedInputControlsPayloadInputsItem> listOfInputObjects = new ArrayList<>();
-
-        List<String> nameList = Arrays.asList("useLatestExport", "earliestExportDate", "latestExportDate",
-            "exportSetName", "allExportIDs", "componentType", "createdBy", "lastModifiedBy", "partNumber",
-            "scenarioName", "scenarioToCompareIDs", "scenarioIDs", "currencyCode");
-
-        List<String> valueList = Arrays.asList("Scenario", "2015-12-06 06:24:08", "2024-04-04 07:24:08", "~NOTHING~",
-            "~NOTHING~", "~NOTHING~", "~NOTHING~", "~NOTHING~", "%", "~NOTHING~", "187", "187", "USD");
-
-        for (int i = 0; i < 13; i++) {
-            listOfInputObjects.add(UpdatedInputControlsPayloadInputsItem.builder()
-                .name(nameList.get(i))
-                .value(Collections.singletonList(valueList.get(i)))
-                .limit(100)
-                .offset(0)
-                .build());
-        }
-
-        return listOfInputObjects;
-    }
-
     private List<UpdatedInputControlsPayloadInputsItem> setCreatedByLastModifiedByCriteria(List<UpdatedInputControlsPayloadInputsItem> inputList, String valueToSet, String criteriaToSet) {
         int indexToGet = valueToSet.equals("createdBy") ? 6 : 7;
-        // numbers above wrong if not sc report, hash map fix?
         inputList.get(indexToGet).setCriteria(criteriaToSet);
         return inputList;
     }
@@ -551,11 +509,5 @@ public class JasperReportUtil {
         inputControlsModifiedValueNameMasterList = new HashMap<>();
         inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.COMPONENT_COST.getReportName(), componentCostICModifiedNamesValuesMap);
         inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), scenarioComparisonICModifiedNamesValuesMap);
-    }
-
-    private static void initialiseReportNameResponseObjectMap() {
-        reportNameResponseObjectMap = new HashMap<>();
-        reportNameResponseObjectMap.put(ReportNamesEnum.COMPONENT_COST.getReportName(), UpdatedInputControlsRootItemComponentCost.class);
-        reportNameResponseObjectMap.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), UpdatedInputControlsRootItemScenarioComparison.class);
     }
 }
