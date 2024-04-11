@@ -78,14 +78,18 @@ public class DeleteScenariosTests {
 
         scenariosUtil.deleteScenarios(assembliesToDelete, user);
 
+        assembliesToDelete.forEach(assembly -> log.info("Scenario Name of ASSEMBLY marked for deletion '{}'", assembly.getScenarioName()));
+
         List<ScenarioItem> scenariosToDelete = searchComponentType("PART", scenarioPublished, user);
+
+        scenariosToDelete.forEach(scenario -> log.info("Scenario Name of SCENARIO marked for deletion '{}'", scenario.getScenarioName()));
 
         scenariosUtil.deleteScenarios(scenariosToDelete, user);
     }
 
     private List<ScenarioItem> searchComponentType(String componentType, Boolean scenarioPublished, UserCredentials currentUser) {
         final int maxDays = Integer.parseInt(PropertiesContext.get("global.max_days"));
-        final int pageSize = Integer.parseInt(PropertiesContext.get("global.page_size"));
+        final int pageSize = 1;
         final String scenarioPartName = PropertiesContext.get("global.scenario_name_prefix");
 
         List<ScenarioItem> scenarioItems = cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + scenarioPublished,
