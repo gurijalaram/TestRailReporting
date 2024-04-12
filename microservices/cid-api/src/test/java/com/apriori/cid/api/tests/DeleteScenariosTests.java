@@ -78,11 +78,11 @@ public class DeleteScenariosTests {
 
         scenariosUtil.deleteScenarios(assembliesToDelete, user);
 
-        assembliesToDelete.forEach(assembly -> log.info("Scenario Name of ASSEMBLY marked for deletion '{}'", assembly.getScenarioName()));
+        assembliesToDelete.forEach(assembly -> log.info("ASSEMBLY marked for deletion '{}' with SCENARIO KEY '{}'", assembly.getScenarioName(), assembly.getScenarioKey()));
 
         List<ScenarioItem> scenariosToDelete = searchComponentType("PART", scenarioPublished, user);
 
-        scenariosToDelete.forEach(scenario -> log.info("Scenario Name of SCENARIO marked for deletion '{}'", scenario.getScenarioName()));
+        scenariosToDelete.forEach(scenario -> log.info("SCENARIO marked for deletion '{}' with SCENARIO KEY '{}'", scenario.getScenarioName(), scenario.getScenarioKey()));
 
         scenariosUtil.deleteScenarios(scenariosToDelete, user);
     }
