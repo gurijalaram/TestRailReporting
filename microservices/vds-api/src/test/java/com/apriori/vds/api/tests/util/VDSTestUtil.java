@@ -9,7 +9,6 @@ import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.CustomerUtil;
-import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.vds.api.enums.VDSAPIEnum;
 import com.apriori.vds.api.models.response.access.control.AccessControlGroup;
 import com.apriori.vds.api.models.response.access.control.AccessControlGroupItems;
