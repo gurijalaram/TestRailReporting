@@ -33,13 +33,13 @@ public class DeleteScenariosTests {
 
     @Test
     @Tag(DELETE)
-    public void quickDeletePrivateScenarios() {
+    public void markPrivateScenariosForDelete() {
         UserUtil.getUsers().forEach(user -> quickDeleteScenarios(false, user));
     }
 
     @Test
     @Tag(DELETE)
-    public void quickDeletePublicScenarios() {
+    public void markPublicScenariosForDelete() {
         quickDeleteScenarios(true, UserUtil.getUser());
     }
 
