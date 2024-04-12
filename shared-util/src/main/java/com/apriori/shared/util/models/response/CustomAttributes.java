@@ -40,6 +40,7 @@ public class CustomAttributes {
     private String ccmRequired;
     private String accessGroup;
     private String assemblyOperationType;
+    private String requiredList;
     private List<Object> roles;
     private String manager;
 }

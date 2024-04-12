@@ -258,7 +258,7 @@ public abstract class SDSTestUtil extends TestUtil {
         return new HashMap<String, String>() {
             {
                 put("ap-application-context", getApApplicationContext());
-                put("ap-cloud-context", testingUser.getCloudContext());
+                put("ap-cloud-context", testingUser.generateCloudContext().getCloudContext());
             }
         };
     }
