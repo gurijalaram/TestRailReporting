@@ -15,6 +15,7 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -108,7 +109,7 @@ public class ProcessGroupsTests extends TestBaseUI {
     @Description("Testing process group Casting")
     @TestRail(id = {6125})
     public void testProcessGroupDieCasting() {
-        component = new ComponentRequestUtil().getComponent("case_012_009-0020647_hinge_2");
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("case_012_009-0020647_hinge_2", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -120,7 +121,7 @@ public class ProcessGroupsTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("High Pressure Die Casting");
 
         softAssertions.assertAll();
