@@ -181,8 +181,8 @@ public class ActionsTests extends TestBaseUI {
             .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickActions()
             .lock(ExplorePage.class)
-            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .refresh()
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
             .openPreviewPanel();
 
         softAssertions.assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
