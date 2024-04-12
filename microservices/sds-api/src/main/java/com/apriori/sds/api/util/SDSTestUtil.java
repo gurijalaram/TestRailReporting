@@ -46,7 +46,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -255,7 +254,7 @@ public abstract class SDSTestUtil extends TestUtil {
     }
 
     public static Map<String, String> getContextHeaders() {
-        return new HashMap<String, String>() {
+        return new HashMap<>() {
             {
                 put("ap-application-context", getApApplicationContext());
                 put("ap-cloud-context", testingUser.getCloudContext());
@@ -307,7 +306,7 @@ public abstract class SDSTestUtil extends TestUtil {
                 .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .token(userCredentials.getToken());
 
-        long START_TIME = System.currentTimeMillis() / 1000;
+        long startTime = System.currentTimeMillis() / 1000;
         final long POLLING_INTERVAL = 10L;
         final long MAX_WAIT_TIME = 180L;
         String scenarioState;
@@ -318,7 +317,7 @@ public abstract class SDSTestUtil extends TestUtil {
             scenarioRepresentation = HTTPRequest.build(requestEntity).get();
             scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
             waitSeconds(POLLING_INTERVAL);
-        } while (scenarioState.equals(scenarioItem.getScenarioState().toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+        } while (scenarioState.equals(scenarioItem.getScenarioState().toUpperCase()) && ((System.currentTimeMillis() / 1000) - startTime) < MAX_WAIT_TIME);
 
         return scenarioRepresentation;
     }
