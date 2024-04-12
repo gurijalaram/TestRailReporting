@@ -23,7 +23,8 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class ProcessGroupsTest extends ProcessGroupUtil {
-    private static final List<String> cidSupportedPgNames = Arrays.asList("2-Model Machining", "Additive Manufacturing", "Casting - Investment", "Bar & Tube Fab", "Casting", "Casting - Die", "Casting - Sand");
+    private static final List<String> cidSupportedPgNames = Arrays.asList("2-Model Machining", "Additive Manufacturing", "Casting - Investment", "Bar & Tube Fab",
+        "Casting", "Casting - Die", "Casting - Sand");
     private static final List<String> cidNotSupportedPgNames = Arrays.asList("Assembly Molding", "Assembly Plastic Molding", "Assembly", "Composites");
 
     @Test

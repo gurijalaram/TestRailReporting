@@ -3,6 +3,7 @@ package com.apriori.vds.api.tests;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.vds.api.enums.VDSAPIEnum;
@@ -25,6 +26,7 @@ import java.util.Set;
 @ExtendWith(TestRulesAPI.class)
 public class UserGroupAssociationsTest extends ProcessGroupUtil {
     private static final Set<String> userGroupAssociationsToDelete = new HashSet<>();
+    protected static final String userId = PropertiesContext.get("ap-int.${env}.user_staff_identity");
 
     @AfterAll
     public static void deleteTestingData() {
@@ -81,8 +83,8 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
                 .inlineVariables(ProcessGroupUtil.getGroupIdentity(), userGroupAssociationBeforeUpdate.getIdentity())
                 .body(UserGroupAssociationRequest.builder()
                     .customerIdentity(VDSTestUtil.customerId)
-                    .userIdentity(VDSTestUtil.userId)
-                    .updatedBy(VDSTestUtil.userId)
+                    .userIdentity(userId)
+                    .updatedBy(userId)
                     .build()
                 )
                 .expectedResponseCode(HttpStatus.SC_OK);
@@ -121,8 +123,8 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
         } else {
             requestBody = UserGroupAssociationRequest.builder()
                 .customerIdentity(VDSTestUtil.customerId)
-                .userIdentity(VDSTestUtil.userId)
-                .createdBy(VDSTestUtil.userId)
+                .userIdentity(userId)
+                .createdBy(userId)
                 .build();
         }
 
