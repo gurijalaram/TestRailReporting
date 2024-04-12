@@ -98,7 +98,6 @@ public class IncludeAndExcludeTests extends TestBaseUI {
             .multiSelectSubcomponents(componentAssembly.getSubComponents().stream()
                 .map(component -> component.getComponentName() + "," + component.getScenarioName()).toList()
                 .toArray(new String[componentAssembly.getSubComponents().size()]))
-            //.selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
         componentAssembly.getSubComponents().forEach(component ->
