@@ -159,7 +159,7 @@ public class AssemblyUtils {
      * @return current object
      */
     public AssemblyUtils costSubComponents(ComponentInfoBuilder assemblySubComponent) {
-        scenariosUtil.postGroupCostScenarios(assemblySubComponent.getSubComponents());
+        assemblySubComponent.getSubComponents().forEach(subComponent -> scenariosUtil.postCostScenario(subComponent));
         return this;
     }
 
@@ -172,7 +172,7 @@ public class AssemblyUtils {
     public AssemblyUtils costAssembly(ComponentInfoBuilder assembly) {
 
         List<ComponentInfoBuilder> subAssemblies = assembly.getSubComponents().stream()
-            .filter(subComponent -> subComponent.getSubComponents() != null).collect(Collectors.toList());
+            .filter(subComponent -> subComponent.getSubComponents() != null).toList();
 
         subAssemblies.forEach(subAsm -> scenariosUtil.postGroupCostScenarios(subAsm));
 
