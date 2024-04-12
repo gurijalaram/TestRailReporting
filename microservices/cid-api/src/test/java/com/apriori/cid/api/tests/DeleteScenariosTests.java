@@ -34,13 +34,13 @@ public class DeleteScenariosTests {
     @Test
     @Tag(DELETE)
     public void markPrivateScenariosForDelete() {
-        UserUtil.getUsers().forEach(user -> quickDeleteScenarios(false, user));
+        UserUtil.getUsers().forEach(user -> markForDeleteScenarios(false, user));
     }
 
     @Test
     @Tag(DELETE)
     public void markPublicScenariosForDelete() {
-        quickDeleteScenarios(true, UserUtil.getUser());
+        markForDeleteScenarios(true, UserUtil.getUser());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class DeleteScenariosTests {
         softAssertions.assertAll();
     }
 
-    private void quickDeleteScenarios(Boolean scenarioPublished, UserCredentials user) {
+    private void markForDeleteScenarios(Boolean scenarioPublished, UserCredentials user) {
         List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", scenarioPublished, user);
 
         scenariosUtil.deleteScenarios(assembliesToDelete, user);
