@@ -50,7 +50,7 @@ public class DeleteScenariosTests {
 
     @Test
     public void deletePublicScenarios() {
-        deleteScenarios(true, UserCredentials.init("cfrith@apriori.com", "TestEvent2025!"));
+        deleteScenarios(true, UserUtil.getUser());
     }
 
     private void deleteScenarios(Boolean scenarioPublished, UserCredentials user) {
