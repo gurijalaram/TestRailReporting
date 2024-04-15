@@ -82,7 +82,7 @@ public class BcmUtil extends TestUtil {
      * @return response object
      */
 
-    public ResponseWrapper<WorkSheetResponse> createWorksheetWithEmail(String name, String userEmail) {
+    public ResponseWrapper<WorkSheetResponse> createWorksheetWithEmail(String name, UserCredentials userCred) {
 
         WorksheetRequest body = WorksheetRequest
             .builder()
@@ -93,7 +93,7 @@ public class BcmUtil extends TestUtil {
             .build();
 
         requestEntityUtil = RequestEntityUtilBuilder
-            .useCustomUser(new UserCredentials(userEmail, null))
+            .useCustomUser(userCred)
             .useApUserContextInRequests();
 
         final RequestEntity requestEntity =
@@ -112,7 +112,7 @@ public class BcmUtil extends TestUtil {
      * @return response object
      */
 
-    public ResponseWrapper<InputRowPostResponse> createWorkSheetInputRowWithEmail(String componentIdentity, String scenarioIdentity, String worksheetIdentity,String userEmail) {
+    public ResponseWrapper<InputRowPostResponse> createWorkSheetInputRowWithEmail(String componentIdentity, String scenarioIdentity, String worksheetIdentity,UserCredentials userCred) {
         WorksheetInputRowsRequest body = WorksheetInputRowsRequest
             .builder()
             .inputRow(Inputrow
@@ -123,7 +123,7 @@ public class BcmUtil extends TestUtil {
             .build();
 
         requestEntityUtil = RequestEntityUtilBuilder
-            .useCustomUser(new UserCredentials(userEmail, null))
+            .useCustomUser(userCred)
             .useApUserContextInRequests();
 
         final RequestEntity requestEntity =
@@ -317,9 +317,9 @@ public class BcmUtil extends TestUtil {
      * @param expectedResponseCode - expected response code
      * @return response object
      */
-    public <T> ResponseWrapper<T> deleteWorksheetWithEmail(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode,String userEmail) {
+    public <T> ResponseWrapper<T> deleteWorksheetWithEmail(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode,UserCredentials userCred) {
         requestEntityUtil = RequestEntityUtilBuilder
-            .useCustomUser(new UserCredentials(userEmail, null))
+            .useCustomUser(userCred)
             .useApUserContextInRequests();
 
         RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_BY_ID, klass)

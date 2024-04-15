@@ -41,7 +41,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     public void cleanUp() {
         if (worksheetIdentity != null) {
             BcmUtil bcmUtil = new BcmUtil();
-            bcmUtil.deleteWorksheetWithEmail(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT,userCredentials.getEmail());
+            bcmUtil.deleteWorksheetWithEmail(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT,UserCredentials.init(userCredentials.getEmail(), null));
         }
     }
 
@@ -60,7 +60,7 @@ public class BulkCostingPageTests extends TestBaseUI {
 
         String name = new GenerateStringUtil().saltString("name");
         BcmUtil bcmUtil = new BcmUtil();
-        bcmUtil.createWorksheetWithEmail(name,userCredentials.getEmail());
+        bcmUtil.createWorksheetWithEmail(name,UserCredentials.init(userCredentials.getEmail(), null));
 
         bulkCostingPage.selectAndDeleteSpecificBulkAnalysis(name);
         soft.assertThat(bulkCostingPage.isWorksheetIsPresent(name)).isFalse();
@@ -99,13 +99,13 @@ public class BulkCostingPageTests extends TestBaseUI {
         BcmUtil bcmUtil = new BcmUtil();
 
         worksheetIdentity =
-            bcmUtil.createWorksheetWithEmail(name,userCredentials.getEmail()).getResponseEntity().getIdentity();
+            bcmUtil.createWorksheetWithEmail(name,UserCredentials.init(userCredentials.getEmail(), null)).getResponseEntity().getIdentity();
 
         ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow =
             bcmUtil.createWorkSheetInputRowWithEmail(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity,
-                userCredentials.getEmail());
+                UserCredentials.init(userCredentials.getEmail(), null));
         return name;
     }
 
