@@ -33,7 +33,7 @@ public class PlmQueryDefRealRuleTests extends WorkflowTestUtil {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {4863, 4340})
+    @TestRail(id = {4863, 4340, 5727})
     @Description("Test each operator for the Int data type in isolation - Real Equal and verify data type")
     public void testWorkflowQueryDefRealEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
