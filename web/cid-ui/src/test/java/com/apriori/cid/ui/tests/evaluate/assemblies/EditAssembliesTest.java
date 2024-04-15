@@ -75,7 +75,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @TestRail(id = 10768)
     @Description("Shallow Publish assembly and scenarios costed in CI Design")
     public void testShallowPublishCostedCID() {
-        componentAssembly = assemblyRequestUtil.getAssembly("titan charger ass");
+        componentAssembly = assemblyRequestUtil.getAssembly();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
@@ -100,7 +100,6 @@ public class EditAssembliesTest extends TestBaseUI {
         evaluatePage = componentsTablePage
             .closePanel()
             .clickRefresh(EvaluatePage.class)
-            .costScenario()
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class);
 

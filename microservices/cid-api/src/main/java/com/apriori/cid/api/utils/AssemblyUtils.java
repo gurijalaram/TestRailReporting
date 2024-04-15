@@ -159,6 +159,10 @@ public class AssemblyUtils {
      * @return current object
      */
     public AssemblyUtils costSubComponents(ComponentInfoBuilder assemblySubComponent) {
+
+        assemblySubComponent.getSubComponents().stream()
+            .filter(component -> component.getSubComponents() != null).toList().forEach(this::costSubComponents);
+
         assemblySubComponent.getSubComponents().forEach(subComponent -> scenariosUtil.postCostScenario(subComponent));
         return this;
     }
