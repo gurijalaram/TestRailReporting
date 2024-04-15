@@ -33,7 +33,7 @@ public class DetailsPart extends CICBasePage {
     @FindBy(css = "div.ss-content.ss-open> div.ss-search > input")
     private WebElement searchConnectorTxtElement;
 
-    @FindBy(xpath = "//div[@sub-widget-container-id='tabsv2-79' and @tab-number='2']//button[@data-add='group']")
+    @FindBy(xpath = "//div[@tab-number='2']//button[@data-add='group']")
     private WebElement addRuleGroupElement;
 
     @FindBy(xpath = "//div[@tab-number='1']//span[@class='ss-arrow']//span[@class='arrow-up']")
