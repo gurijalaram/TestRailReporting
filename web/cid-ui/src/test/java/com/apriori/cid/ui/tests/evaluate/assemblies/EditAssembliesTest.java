@@ -1081,8 +1081,7 @@ public class EditAssembliesTest extends TestBaseUI {
             .openComponents()
             .multiSelectSubcomponents(BIG_RING + "," + componentAssembly.getScenarioName())
             .editSubcomponent(EditScenarioStatusPage.class)
-            .clickHere()
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_EDIT_ACTION, 2);
+            .clickHere();
 
         evaluatePage.enterAnnualVolume("7777")
             .goToAdvancedTab()
