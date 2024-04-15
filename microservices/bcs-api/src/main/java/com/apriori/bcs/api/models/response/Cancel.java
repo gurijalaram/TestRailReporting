@@ -34,4 +34,5 @@ public class Cancel {
     private String exportSetName;
     private String rollupName;
     private String rollupScenarioName;
+    private Boolean exportCompleted;
 }

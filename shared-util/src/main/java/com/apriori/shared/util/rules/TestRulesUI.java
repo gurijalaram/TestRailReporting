@@ -16,12 +16,13 @@ import com.apriori.shared.util.testrail.TestRailStatus;
 
 import com.codepine.api.testrail.model.Result;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Attachment;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.InvocationInterceptor;
+import org.junit.jupiter.api.extension.ReflectiveInvocationContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -33,10 +34,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -44,108 +41,103 @@ import java.util.Optional;
  * @author cfrith
  */
 @Slf4j
-public class TestRulesUI implements TestWatcher, BeforeAllCallback {
+public class TestRulesUI implements TestWatcher, BeforeAllCallback, InvocationInterceptor {
 
     public static final String DRIVER = "driver";
     private static final String TESTRAIL_REPORT = "TEST_RAIL";
     private static boolean started = false;
 
-    @Attachment(value = "{1}", type = "image/png")
-    private static byte[] saveImageAttach(String screenshotUrl, String fileName) {
-        try {
-            return toByteArray(screenshotUrl);
-        } catch (Exception e) {
-            log.debug(e.getMessage());
-        }
-        return new byte[0];
-    }
+    @Override
+    public void testDisabled(ExtensionContext extensionContext, Optional<String> reason) {
+        log.info("TEST DISABLED:- {}: REASON:- {}", extensionContext.getDisplayName(), reason.orElse("Reason not supplied"));
 
-    private static byte[] toByteArray(String uri) throws IOException {
-        return Files.readAllBytes(Paths.get(uri));
+        addResult(DISABLED, extensionContext);
+
+        getDeclaredDriver(extensionContext).quit();
     }
 
     @Override
-    public void testDisabled(ExtensionContext context, Optional<String> reason) {
-        log.info("TEST DISABLED:- {}: REASON:- {}", context.getDisplayName(), reason.orElse("Reason not supplied"));
+    public void testSuccessful(ExtensionContext extensionContext) {
+        log.info("TEST SUCCESSFUL:- {}: ", extensionContext.getTestClass().map(Class::getName).orElseThrow(null) + "." +
+            extensionContext.getTestMethod().map(Method::getName).orElseThrow(null));
 
-        addResult(DISABLED, context);
+        addResult(PASSED, extensionContext);
 
-        getDeclaredDriver(context).quit();
+        getDeclaredDriver(extensionContext).quit();
     }
 
     @Override
-    public void testSuccessful(ExtensionContext context) {
-        log.info("TEST SUCCESSFUL:- {}: ", context.getTestClass().map(Class::getName).orElseThrow(null) + "." + context.getTestMethod().map(Method::getName).orElseThrow(null));
+    public void testAborted(ExtensionContext extensionContext, Throwable cause) {
+        log.info("TEST ABORTED:- {}: CAUSE:- {}", extensionContext.getDisplayName(), cause.getMessage());
 
-        addResult(PASSED, context);
+        addResult(RETEST, extensionContext);
 
-        getDeclaredDriver(context).quit();
+        getDeclaredDriver(extensionContext).quit();
     }
 
     @Override
-    public void testAborted(ExtensionContext context, Throwable cause) {
-        log.info("TEST ABORTED:- {}: CAUSE:- {}", context.getDisplayName(), cause.getMessage());
+    public void testFailed(ExtensionContext extensionContext, Throwable cause) {
+        log.info("TEST FAILED:- {}: CAUSE:- {}", extensionContext.getTestClass().map(Class::getName).orElseThrow(null) + "." +
+            extensionContext.getTestMethod().map(Method::getName).orElseThrow(null), cause.getMessage());
 
-        addResult(RETEST, context);
+        addResult(FAILED, extensionContext);
 
-        getDeclaredDriver(context).quit();
-    }
-
-    @Override
-    public void testFailed(ExtensionContext context, Throwable cause) {
-        log.info("TEST FAILED:- {}: CAUSE:- {}", context.getTestClass().map(Class::getName).orElseThrow(null) + "." + context.getTestMethod().map(Method::getName).orElseThrow(null),
-            cause.getMessage());
-
-        String retryingScreenshot = captureScreenshot(context.getTestClass().map(Class::getName).orElse("Class"), context.getDisplayName(), context);
-        saveImageAttach(new File(retryingScreenshot).getPath(), context.getTestClass().map(Class::getName) + "." + context.getTestMethod().map(Method::getName));
-
-        addResult(FAILED, context);
-
-        getDeclaredDriver(context).quit();
+        getDeclaredDriver(extensionContext).quit();
     }
 
     @SneakyThrows
-    private WebDriver getDeclaredDriver(ExtensionContext context) {
+    private WebDriver getDeclaredDriver(ExtensionContext extensionContext) {
         Field field = TestBaseUI.class.getDeclaredField(DRIVER);
         field.setAccessible(true);
-        return (WebDriver) field.get(context.getRequiredTestInstance());
+        return (WebDriver) field.get(extensionContext.getRequiredTestInstance());
     }
 
-    // TODO: 06/06/2023 revise this method and make sure naming is correct
-    private String captureScreenshot(String className, String testName, ExtensionContext context) {
-        String filename;
-        String filePath = null;
+    /**
+     * Takes a screenshot with Selenium and attach it to the current test item in case of test failure.
+     *
+     * @param invocation        JUnit 5th invocation object
+     * @param invocationContext JUnit 5th invocation context
+     * @param extensionContext  JUnit 5th extension context
+     */
+    @Override
+    public void interceptTestMethod(InvocationInterceptor.Invocation<Void> invocation, ReflectiveInvocationContext<Method> invocationContext,
+                                    ExtensionContext extensionContext) throws Throwable {
         try {
+            invocation.proceed();
+        } catch (Throwable cause) {
             File screenshot;
-            log.debug("FAILURE TIME: " + LocalDateTime.now(ZoneId.of("UTC")));
-            if (getDeclaredDriver(context) instanceof RemoteWebDriver) {
-                WebDriver webdriver = new Augmenter().augment(getDeclaredDriver(context));
+            if (getDeclaredDriver(extensionContext) instanceof RemoteWebDriver) {
+                WebDriver webdriver = new Augmenter().augment(getDeclaredDriver(extensionContext));
                 screenshot = ((TakesScreenshot) webdriver).getScreenshotAs(OutputType.FILE);
             } else {
-                screenshot = ((TakesScreenshot) getDeclaredDriver(context)).getScreenshotAs(OutputType.FILE);
+                screenshot = ((TakesScreenshot) getDeclaredDriver(extensionContext)).getScreenshotAs(OutputType.FILE);
             }
-            filename = File.separator + "target" + File.separator + "screenshots" + File.separator + "screenshot-" + className + "-" + testName + "-" + "chrome" + 1 + ".png";
-            filePath = new File(filename).getCanonicalPath();
-            FileUtils.copyFile(screenshot, new File(filename));
-            Allure.addAttachment(filename, FileUtils.openInputStream(screenshot));
-        } catch (Exception e) {
-            log.debug(e.getMessage());
+            sendScreenshotToAllure(extensionContext, screenshot);
+            throw cause;
         }
-        return filePath;
+    }
+
+    private void sendScreenshotToAllure(ExtensionContext extensionContext, File screenshot) {
+
+        try {
+            Allure.addAttachment(extensionContext.getDisplayName(), FileUtils.openInputStream(screenshot));
+        } catch (IOException e) {
+            throw new RuntimeException(String.format("Failed to add screenshot for test:- %s", extensionContext.getDisplayName()));
+        }
     }
 
     @Override
-    public void beforeAll(ExtensionContext context) {
+    public void beforeAll(ExtensionContext extensionContext) {
         if (!started) {
-            getStore(context).put(TESTRAIL_REPORT, new CloseableOnlyOnceResource());
+            getStore(extensionContext).put(TESTRAIL_REPORT, new CloseableOnlyOnceResource());
             started = true;
         }
     }
 
-    private void addResult(TestRailStatus status, ExtensionContext context) {
-        if (context.getElement().isPresent() && context.getElement().get().isAnnotationPresent(
+    private void addResult(TestRailStatus status, ExtensionContext extensionContext) {
+        if (extensionContext.getElement().isPresent() && extensionContext.getElement().get().isAnnotationPresent(
             TestRail.class)) {
-            TestRail element = context.getElement().get().getAnnotation(TestRail.class);
+            TestRail element = extensionContext.getElement().get().getAnnotation(TestRail.class);
 
             Arrays.stream(element.id()).forEach(id -> {
                 Result result = new Result()
@@ -157,8 +149,8 @@ public class TestRulesUI implements TestWatcher, BeforeAllCallback {
         }
     }
 
-    private ExtensionContext.Store getStore(ExtensionContext context) {
-        return context.getRoot().getStore(ExtensionContext.Namespace.GLOBAL);
+    private ExtensionContext.Store getStore(ExtensionContext extensionContext) {
+        return extensionContext.getRoot().getStore(ExtensionContext.Namespace.GLOBAL);
     }
 
     private static class CloseableOnlyOnceResource implements
@@ -168,7 +160,6 @@ public class TestRulesUI implements TestWatcher, BeforeAllCallback {
             if (testMode.value().equalsIgnoreCase(QA_LOCAL.value()) || testMode.value().equalsIgnoreCase(DOCKER_GRID.value())) {
                 return;
             }
-            //After all tests run hook.
             //Any additional desired action goes here
             TestRailReport.reportResults();
         }

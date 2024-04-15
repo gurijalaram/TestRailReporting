@@ -13,7 +13,8 @@ public enum TestSuiteType {
     REPORTS("REPORTS"),
     JASPER_API("JASPER"),
     ADMIN("ADMIN"),
-    FULL_ON_PREM("FULL_ON_PREM");
+    FULL_ON_PREM("FULL_ON_PREM"),
+    DELETE("DELETE");
 
     private final String value;
 
@@ -40,5 +41,6 @@ public enum TestSuiteType {
         public static final String JASPER_API = "JASPER_API";
         public static final String ADMIN = "ADMIN";
         public static final String FULL_ON_PREM = "FULL_ON_PREM";
+        public static final String DELETE = "DELETE";
     }
 }

@@ -41,6 +41,9 @@ public class QueryDefinitions extends CICBasePage {
     @FindBy(xpath = "//div[@tab-number='2']//button[.='Next']")
     private WebElement qdNextButton;
 
+    @FindBy(xpath = "//div[@tab-number='2']//button[@data-add='group']")
+    private WebElement addRuleGroupElement;
+
     public QueryDefinitions(WebDriver driver) {
         super(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -54,7 +57,6 @@ public class QueryDefinitions extends CICBasePage {
 
     @Override
     protected void isLoaded() {
-        pageUtils.waitForElementToAppear(revisionLatestCheckBoxLblElement);
     }
 
 
@@ -132,6 +134,7 @@ public class QueryDefinitions extends CICBasePage {
      * @return current Class object
      */
     public QueryDefinitions addRule(PlmTypeAttributes ruleFilterName, RuleOperatorEnum ruleOperator, String ruleValue) {
+        pageUtils.waitForElementAppear(addRuleGroupElement);
         this.selectRuleFilter(ruleFilterName);
         this.selectRuleOperator(ruleOperator);
         this.enterRuleValue(ruleValue + Keys.TAB);

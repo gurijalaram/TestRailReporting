@@ -82,6 +82,7 @@ public class TestMain {
         final LauncherDiscoveryRequest request =
             LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectClass(testClass))
+                .configurationParameter("junit.jupiter.extensions.autodetection.enabled", "true")
                 .build();
 
         final Launcher launcher = LauncherFactory.create();

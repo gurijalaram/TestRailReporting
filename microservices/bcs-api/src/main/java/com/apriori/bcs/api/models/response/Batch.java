@@ -35,6 +35,7 @@ public class Batch {
     private String rollupScenarioName;
     private String exportSetName;
     private Long costingDuration;
+    public Boolean exportCompleted;
 
     public Batch setCostingDuration(LocalDateTime updatedTime) {
         this.costingDuration = ChronoUnit.SECONDS.between(createdAt, updatedTime);
