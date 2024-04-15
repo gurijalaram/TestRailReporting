@@ -47,8 +47,7 @@ public class InputRowTests extends BcmUtil {
 
         ScenarioItem scenarioItem =
             cssComponent.postSearchRequest(testingUser, componentType)
-                .getResponseEntity().getItems().stream()
-                .findFirst().orElse(null);
+                .getResponseEntity().getItems().get(5);
 
         worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
             .getResponseEntity()

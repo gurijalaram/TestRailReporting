@@ -26,6 +26,7 @@ import org.apache.http.HttpStatus;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -174,6 +175,23 @@ public class CssComponent extends TestUtil {
                     put("latest[EQ]", "true");
                     put("componentType[IN]", componentType);
                     put("sortBy[DESC]", "scenarioCreatedAt");
+                }
+            })).expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    public ResponseWrapper<ComponentResponse> postSearchRequestCustomParam(UserCredentials userCredentials, String componentType, String customParamName, String customParamValue) {
+        RequestEntity requestEntity = getRequestEntityUtil(userCredentials).init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
+            .headers(new ContentParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
+            .xwwwwFormUrlEncodeds(Collections.singletonList(new HashMap<String, String>() {
+                {
+                    put("pageNumber", "1");
+                    put("pageSize", "10");
+                    put("latest[EQ]", "true");
+                    put("componentType[IN]", componentType);
+                    put("sortBy[DESC]", "scenarioCreatedAt");
+                    put(customParamName, customParamValue);
                 }
             })).expectedResponseCode(HttpStatus.SC_OK);
 
