@@ -19,11 +19,13 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
+import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
+import com.apriori.shared.util.models.response.component.ComponentResponse;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -73,7 +75,14 @@ public class BcmUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-    public ResponseWrapper<WorkSheetResponse> createWorksheetWithEmail(String name, String userEmail) {
+    /**
+     * request to create worksheet with email (used for UI tests)
+     *
+     * @param name - name of worksheet
+     * @return response object
+     */
+
+    public ResponseWrapper<WorkSheetResponse> createWorksheetWithEmail(String name, UserCredentials userCred) {
 
         WorksheetRequest body = WorksheetRequest
             .builder()
@@ -84,7 +93,7 @@ public class BcmUtil extends TestUtil {
             .build();
 
         requestEntityUtil = RequestEntityUtilBuilder
-            .useCustomUser(new UserCredentials(userEmail, null))
+            .useCustomUser(userCred)
             .useApUserContextInRequests();
 
         final RequestEntity requestEntity =
@@ -95,7 +104,38 @@ public class BcmUtil extends TestUtil {
     }
 
     /**
-     * adding part (component) int existing worksheet
+     * adding part (component) into existing worksheet with email - hch is used in UI tests
+     *
+     * @param componentIdentity - componentIdentity of added part
+     * @param scenarioIdentity  - scenarioIdentity of added part
+     * @param worksheetIdentity - param to  the request call
+     * @return response object
+     */
+
+    public ResponseWrapper<InputRowPostResponse> createWorkSheetInputRowWithEmail(String componentIdentity, String scenarioIdentity, String worksheetIdentity,UserCredentials userCred) {
+        WorksheetInputRowsRequest body = WorksheetInputRowsRequest
+            .builder()
+            .inputRow(Inputrow
+                .builder()
+                .componentIdentity(componentIdentity)
+                .scenarioIdentity(scenarioIdentity)
+                .build())
+            .build();
+
+        requestEntityUtil = RequestEntityUtilBuilder
+            .useCustomUser(userCred)
+            .useApUserContextInRequests();
+
+        final RequestEntity requestEntity =
+            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_INPUT_NAME, InputRowPostResponse.class)
+                .body(body)
+                .inlineVariables(worksheetIdentity)
+                .expectedResponseCode(HttpStatus.SC_CREATED);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * adding part (component) into existing worksheet
      *
      * @param componentIdentity - componentIdentity of added part
      * @param scenarioIdentity  - scenarioIdentity of added part
@@ -270,6 +310,25 @@ public class BcmUtil extends TestUtil {
     }
 
     /**
+     * Deletes worksheet - from UI for specific user
+     *
+     * @param klass                - class
+     * @param worksheetIdentity    - worksheet identity
+     * @param expectedResponseCode - expected response code
+     * @return response object
+     */
+    public <T> ResponseWrapper<T> deleteWorksheetWithEmail(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode,UserCredentials userCred) {
+        requestEntityUtil = RequestEntityUtilBuilder
+            .useCustomUser(userCred)
+            .useApUserContextInRequests();
+
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_BY_ID, klass)
+            .inlineVariables(worksheetIdentity)
+            .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).delete();
+    }
+
+    /**
      * Edits public input row
      *
      * @param klass                - class
@@ -348,5 +407,34 @@ public class BcmUtil extends TestUtil {
                 .build())
             .expectedResponseCode(expectedResponseCode);
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Returns list of scenario iteration candidates
+     *
+     * @param worksheetIdentity - worksheet identity
+     * @return response object
+     */
+    public ResponseWrapper<ComponentResponse> getCandidates(String worksheetIdentity) {
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.CANDIDATES, ComponentResponse.class)
+            .inlineVariables(worksheetIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK);
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Returns filtered/sorted list of scenario iteration candidates
+     *
+     * @param worksheetIdentity - worksheet identity
+     * @param param - name of parameter
+     * @param value - value of parameter
+     * @return response object
+     */
+    public ResponseWrapper<ComponentResponse> getCandidatesWithParams(String worksheetIdentity, String param, String value) {
+        RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.CANDIDATES, ComponentResponse.class)
+            .inlineVariables(worksheetIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .queryParams(new QueryParams().use(param, value));
+        return HTTPRequest.build(requestEntity).get();
     }
 }

@@ -15,6 +15,7 @@
         "rollupName",
         "rollupScenarioName"
       ],
+      "optional": ["exportCompleted"],
       "properties": {
         "identity": {
           "type": "string"
@@ -48,6 +49,9 @@
         },
         "exportSetName": {
           "type": "string"
+        },
+        "exportCompleted": {
+          "type": "boolean"
         },
         "errors": {
           "type": "string"

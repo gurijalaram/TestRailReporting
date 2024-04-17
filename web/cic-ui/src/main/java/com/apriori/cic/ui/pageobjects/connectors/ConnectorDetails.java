@@ -150,9 +150,13 @@ public class ConnectorDetails extends CICBasePage {
      * @return current class object
      */
     public ConnectorDetails selectType(ConnectorType connectorType) {
+        pageUtils.waitUntilDropdownOptionsLoaded(getConnectorTypeDropDownElement().findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(getConnectorTypeDropDownElement());
-        this.selectValueFromDDL(0, connectorType.getConnectorType());
-        pageUtils.waitForElementsToNotAppear(By.cssSelector("div[class$='ss-open']"));
+        WebElement element = driver.findElement(By.xpath(String.format("//div[@class='ss-option']/..//div[.='%s']", connectorType.getConnectorType())));
+        pageUtils.waitForElementAppear(element);
+        pageUtils.moveAndClick(element);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-nodata"));
+        pageUtils.waitForElementEnabled(connectorDetailsNextBtn);
         return this;
     }
 

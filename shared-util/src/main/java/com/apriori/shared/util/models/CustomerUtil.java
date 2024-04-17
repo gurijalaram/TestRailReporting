@@ -198,7 +198,7 @@ public class CustomerUtil {
      * @param customerName - if null will return current customer data
      * @return
      */
-    private static Customer getCustomerData(final String customerName) {
+    public static Customer getCustomerData(final String customerName) {
         String customerCloudReferenceName = getCustomerCloudReferenceName(customerName);
 
         RequestEntity customerRequest = RequestEntityUtil_Old.init(CustomersApiEnum.CUSTOMERS, Customers.class)
@@ -221,7 +221,7 @@ public class CustomerUtil {
         }
     }
 
-    private static String getCustomerSiteIdByCustomer(Customer customerToProcess) {
+    public static String getCustomerSiteIdByCustomer(Customer customerToProcess) {
         RequestEntity sitesRequest = RequestEntityUtil_Old.init(CustomersApiEnum.SITES_BY_CUSTOMER_ID, Sites.class)
             .inlineVariables(customerToProcess.getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);

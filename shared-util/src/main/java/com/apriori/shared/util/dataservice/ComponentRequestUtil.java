@@ -40,16 +40,19 @@ public class ComponentRequestUtil {
     }
 
     /**
-     * Gets a two model component
-     * N.B The part name is unique
+     * Gets a unique component
+     * N.B The part name is unique. Currently filtering on 3 criteria as seen below.
+     * A future modification could be setting metadata on each object with a boolean 'isPartUnique', this would make filtering much easier.
      *
      * @param componentName - the part name
      * @return component builder object
      */
-    public ComponentInfoBuilder getTwoModelComponent(String componentName) {
+    public ComponentInfoBuilder getUniqueComponent(String componentName) {
 
-        component = COMPONENT_REQUEST.getTwoModelComponents()
+        component = COMPONENT_REQUEST.getAllComponents()
             .stream()
+            .filter(o -> o.getProcessGroup().equals(ProcessGroupEnum.TWO_MODEL_MACHINING) ||
+                o.getProcessGroup().equals(ProcessGroupEnum.WITHOUT_PG))
             .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));

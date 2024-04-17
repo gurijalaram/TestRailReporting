@@ -27,6 +27,8 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
@@ -38,14 +40,18 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @ExtendWith(TestRulesAPI.class)
 public class AchUsersTests extends AchTestUtil {
     private static final String USER_ADMIN = "testUser1";
     private static final String NOT_ADMIN_USER = "testUser11";
+    private static final Customer customer = PropertiesContext.get("customer").equals("ap-int")
+        ? CustomerUtil.getCustomerData("widgets")
+        : CustomerUtil.getCurrentCustomerData();
+    private static final String customerIdentity = customer.getIdentity();
     private RequestEntityUtil requestEntityUtilNoAdmin;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private SoftAssertions soft = new SoftAssertions();
-    private String customerIdentity;
     private String domain;
     private String userIdentity;
 
@@ -59,9 +65,8 @@ public class AchUsersTests extends AchTestUtil {
             .useCustomUser(new UserCredentials(NOT_ADMIN_USER, null))
             .useCustomTokenInRequests(getWidgetsUserToken(NOT_ADMIN_USER));
 
-        customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
-        Customer widgets = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity();
-        String pattern = widgets.getEmailRegexPatterns().stream().findFirst().orElseThrow();
+        Customer customer = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, HttpStatus.SC_OK, customerIdentity).getResponseEntity();
+        String pattern = customer.getEmailRegexPatterns().stream().findFirst().orElseThrow();
         domain = pattern.replace("\\S+@", "").replace(".com", "");
     }
 
@@ -76,6 +81,7 @@ public class AchUsersTests extends AchTestUtil {
     @TestRail(id = {29177, 29178})
     @Description("User Admin can create a user, user can be created with unique email")
     public void createUserByAdmin() {
+
         String userName = new GenerateStringUtil().generateUserName();
 
         ResponseWrapper<User> newUser = createNewUser(User.class, customerIdentity, userName, domain, HttpStatus.SC_CREATED);
@@ -233,7 +239,7 @@ public class AchUsersTests extends AchTestUtil {
             .body("user",
                 User.builder()
                     .enablements(Enablements.builder()
-                        .customerAssignedRole("APRIORI_EXPERT")
+                        .customerAssignedRole("APRIORI_DEVELOPER")
                         .userAdminEnabled(false).build())
                     .build());
 
@@ -265,10 +271,10 @@ public class AchUsersTests extends AchTestUtil {
             .body(TokenRequest.builder()
                 .token(TokenInformation.builder()
                     .issuer(PropertiesContext.get("ats.token_issuer"))
-                    .subject("739e")
+                    .subject(generateTokenSubject())
                     .claims(Claims.builder()
                         .name(name)
-                        .email(name + "@widgets.aprioritest.com")
+                        .email(String.format("%s@%s.aprioritest.com", name, customer.getName()))
                         .build())
                     .build())
                 .build())
@@ -276,6 +282,16 @@ public class AchUsersTests extends AchTestUtil {
         ResponseWrapper<Token> tokenResponse = HTTPRequest.build(requestEntity).post();
 
         return tokenResponse.getResponseEntity().getToken();
+    }
+
+    private static String generateTokenSubject() {
+        final String customerSiteId = CustomerUtil.getCustomerSiteIdByCustomer(customer);
+
+        if (StringUtils.isBlank(customerSiteId)) {
+            log.error("Customer site id is empty. Customer: {}", customer.getCloudReference());
+        }
+
+        return customerSiteId.substring(customerSiteId.length() - 4);
     }
 
     private User getUser(String name, String customerIdentity) {

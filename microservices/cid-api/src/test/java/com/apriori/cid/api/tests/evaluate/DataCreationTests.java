@@ -66,7 +66,7 @@ public class DataCreationTests {
     @Test
     @Tag(API_SANITY)
     public void dataCreateCostPublishTest() {
-        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent("bracket_basic");
 
         component.setCostingTemplate(CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build());
 

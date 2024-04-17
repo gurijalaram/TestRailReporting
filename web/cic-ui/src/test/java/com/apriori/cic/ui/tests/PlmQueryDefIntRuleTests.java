@@ -39,7 +39,7 @@ public class PlmQueryDefIntRuleTests extends WorkflowTestUtil {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {4137, 4150, 4340})
+    @TestRail(id = {4137, 4150, 4340, 5726})
     @Description("Test each operator for the Int data type in isolation - Integer Equal, verify AND operator and data type")
     public void testWorkflowQueryDefIntegerEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)

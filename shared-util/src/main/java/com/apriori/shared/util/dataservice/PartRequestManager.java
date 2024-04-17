@@ -80,22 +80,23 @@ public class PartRequestManager {
     }
 
     /**
-     * Gets a list of components
+     * Gets a list of all components from component store
+     *
+     * @return list of component builder object
+     */
+    public List<ComponentInfoBuilder> getAllComponents() {
+        return new ArrayList<>(new HashSet<>(new ArrayList<>(readFile().getComponents())));
+    }
+
+    /**
+     * Gets a list of components filtering out Two Model Machining and .skp
      *
      * @return list of component builder object
      */
     public List<ComponentInfoBuilder> getComponents() {
-        return new ArrayList<>(new HashSet<>(readFile().getComponents().stream()
-            .filter(o -> !o.getProcessGroup().equals(ProcessGroupEnum.TWO_MODEL_MACHINING)).collect(Collectors.toList())));
-    }
-
-    /**
-     * Gets a list of two model machining components
-     *
-     * @return list of component builder object
-     */
-    public List<ComponentInfoBuilder> getTwoModelComponents() {
-        return new ArrayList<>(new HashSet<>(readFile().getComponents().stream()
-            .filter(o -> o.getProcessGroup().equals(ProcessGroupEnum.TWO_MODEL_MACHINING)).collect(Collectors.toList())));
+        return getAllComponents().stream()
+            .filter(o -> !o.getProcessGroup().equals(ProcessGroupEnum.TWO_MODEL_MACHINING) &&
+                !o.getProcessGroup().equals(ProcessGroupEnum.WITHOUT_PG))
+            .collect(Collectors.toList());
     }
 }
