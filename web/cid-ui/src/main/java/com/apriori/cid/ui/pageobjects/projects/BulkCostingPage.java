@@ -19,6 +19,12 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     private WebElement confirmDeleteButton;
     @FindBy(xpath = "//div[contains(@data-testid,'bulk-analysis-explorer')]]")
     private WebElement bulkAnalysisPage;
+    @FindBy(xpath = "//span[contains(.,'Edit')]")
+    private WebElement editButton;
+    @FindBy(xpath = "//h2[contains(.,'Edit')]")
+    private WebElement editPage;
+    @FindBy(xpath = "//button[contains(@aria-selected,'true')][contains(.,'Successes')]")
+    private WebElement isEditedSuccessfully;
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -64,8 +70,66 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
         return this;
     }
 
-    public boolean isWorksheetIsPresent(String worksheetName) {
-        pageUtils.waitFor(1000);
-        return driver.getPageSource().contains("Expected text");
+    /**
+     * enter bulk analysis
+     * @param nameBulkAnalysis - name of the worksheet
+     * @return page object
+     */
+    public BulkCostingPage enterSpecificBulkAnalysis(String nameBulkAnalysis) {
+        String xpath = "//div[contains(.,'" + nameBulkAnalysis + "')][@data-testid = 'text-overflow']";
+        WebElement link = pageUtils.waitForElementToBeClickable(By.xpath(xpath));
+        pageUtils.waitForElementAndClick(link);
+        return this;
     }
+
+    /**
+     * select First Part InWork Sheet
+     * @return page object
+     */
+    public BulkCostingPage selectFirstPartInWorkSheet() {
+        List<WebElement> checkboxes = pageUtils
+            .waitForSpecificElementsNumberToAppear(By.xpath("//div[contains(@class,'table-cell checkbox-cell')]/descendant::span"),2);
+        WebElement checkbox = checkboxes.get(1);
+        pageUtils.waitForElementAndClick(checkbox);
+        return this;
+    }
+
+    /**
+     * click edit button
+     * @return page object
+     */
+    public BulkCostingPage clickEditButton() {
+        pageUtils.waitForElementAndClick(editButton);
+        return this;
+    }
+
+    /**
+     *  check if worksheet is present on UI
+     * @param worksheetName - name of the worksheet
+     * @return
+     */
+    public boolean isWorksheetIsPresent(String worksheetName) {
+        pageUtils.waitFor(2000);
+        return driver.getPageSource().contains(worksheetName);
+    }
+
+    /**
+     *  is on the Edit page
+     * @return
+     */
+    public boolean isOnEditPage() {
+        pageUtils.waitForElementAppear(editPage);
+        return pageUtils.isElementDisplayed(editPage);
+    }
+
+    /**
+     *  is the edit was successful
+     * @return
+     */
+    public boolean isEditSuccessful() {
+        pageUtils.waitForElementAppear(isEditedSuccessfully);
+        return pageUtils.isElementDisplayed(isEditedSuccessfully);
+    }
+
+
 }
