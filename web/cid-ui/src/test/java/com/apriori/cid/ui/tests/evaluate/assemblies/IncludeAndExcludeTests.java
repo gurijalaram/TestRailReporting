@@ -95,9 +95,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
         componentsTreePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .multiSelectSubcomponents(componentAssembly.getSubComponents().stream()
-                .map(component -> component.getComponentName() + "," + component.getScenarioName()).toList()
-                .toArray(new String[componentAssembly.getSubComponents().size()]))
+            .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
         componentAssembly.getSubComponents().forEach(component ->
