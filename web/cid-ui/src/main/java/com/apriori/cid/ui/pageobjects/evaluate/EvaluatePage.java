@@ -432,10 +432,10 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public ComponentsTreePage openComponents() {
         if (!pageUtils.isElementDisplayed(componentsDetailsButton)) {
-            return new ComponentsTreePage(driver);
+            return new ComponentsTreePage(driver).get();
         }
         pageUtils.waitForElementAndClick(componentsDetailsButton);
-        return new ComponentsTreePage(driver);
+        return new ComponentsTreePage(driver).get();
     }
 
     /**

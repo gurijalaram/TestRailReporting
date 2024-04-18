@@ -37,7 +37,7 @@ import java.util.List;
 @Slf4j
 public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
 
-    @FindBy(css = "div[data-testid='loader']")
+    @FindBy(css = "div[class='sub-components-detail-card'] div[data-testid='loader']")
     private WebElement loadingSpinner;
 
     @FindBy(css = "[id='qa-scenario-list-card-view-button'] button")
