@@ -83,6 +83,7 @@ public class ComponentsTreePage extends LoadableComponent<ComponentsTreePage> {
         this.componentTableActions = new ComponentTableActions(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        this.get();
     }
 
     @Override
