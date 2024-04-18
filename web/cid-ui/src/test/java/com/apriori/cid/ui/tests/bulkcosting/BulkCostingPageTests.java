@@ -1,19 +1,14 @@
 package com.apriori.cid.ui.tests.bulkcosting;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import com.apriori.bcm.api.models.response.InputRowPostResponse;
-import com.apriori.bcm.api.models.response.WorkSheetResponse;
-import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.css.api.utils.CssComponent;
+import com.apriori.cus.api.models.response.InputRowPostResponse;
+import com.apriori.cus.api.utils.BcmUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
@@ -28,8 +23,6 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
 
 public class BulkCostingPageTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
