@@ -7,6 +7,7 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.RestAssuredFilter;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -16,7 +17,6 @@ import io.restassured.config.EncoderConfig;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
-import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.http.Headers;
 import io.restassured.internal.mapping.Jackson2Mapper;
@@ -57,7 +57,6 @@ class ConnectionManager<T> {
         this.returnType = returnType;
         RestAssured.defaultParser = Parser.JSON;
         RestAssured.urlEncodingEnabled = requestEntity.urlEncodingEnabled();
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails(LogDetail.BODY);
     }
 
     private RequestSpecification createRequestSpecification() {
@@ -134,21 +133,21 @@ class ConnectionManager<T> {
                 )
                 .setBaseUri(URLEncoder.encode(requestEntity.buildEndpoint(), StandardCharsets.UTF_8.toString()));
         } catch (UnsupportedEncodingException e) {
-            log.error("Error with URI" + e.getMessage());
+            log.error("Error with URI:- {}", e.getMessage());
         }
 
         RequestSpecification requestSpecification = RestAssured.given()
+            .filter(new RestAssuredFilter())
             .spec(builder.build())
-            .redirects().follow(requestEntity.followRedirection());
+            .redirects()
+            .follow(requestEntity.followRedirection());
 
         if (requestEntity.expectedResponseCode() != null) {
             requestSpecification = requestSpecification.expect().statusCode(requestEntity.expectedResponseCode())
                 .request();
         }
 
-        return requestSpecification
-            .log()
-            .all();
+        return requestSpecification;
     }
 
     private boolean ignoreSslCheck() {
@@ -188,11 +187,9 @@ class ConnectionManager<T> {
 
 
             Response extractedResponse = response.assertThat()
-                    .body(matchesJsonSchema(resource))
-                    .log()
-                    .ifValidationFails()
-                    .extract()
-                    .response();
+                .body(matchesJsonSchema(resource))
+                .extract()
+                .response();
 
             T responseEntity;
 
@@ -203,8 +200,8 @@ class ConnectionManager<T> {
                 if (IS_JENKINS_BUILD) {
                     log.error("Response contains MappingException. \n ***Exception message: {} \n ***Response: {}", e.getMessage(), extractedResponse.asPrettyString());
                     responseEntity = extractedResponse.as((Type) returnType, new Jackson2Mapper(((type, charset) ->
-                            new com.apriori.shared.util.http.models.request.ObjectMapper()
-                                    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                        new com.apriori.shared.util.http.models.request.ObjectMapper()
+                            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                     )));
                 } else {
                     throw new IllegalArgumentException(e.getMessage());
@@ -225,13 +222,11 @@ class ConnectionManager<T> {
     public <T> ResponseWrapper<T> get() {
 
         return resultOf(
-                validateAndLog(
-                        createRequestSpecification()
-                                .when()
-                                .relaxedHTTPSValidation()
-                                .get(requestEntity.buildEndpoint())
-                                .then()
-                )
+            createRequestSpecification()
+                .when()
+                .relaxedHTTPSValidation()
+                .get(requestEntity.buildEndpoint())
+                .then()
 
         );
     }
@@ -243,13 +238,11 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> post() {
         return resultOf(
-                validateAndLog(
-                        createRequestSpecification()
-                                .when()
-                                .relaxedHTTPSValidation()
-                                .post(requestEntity.buildEndpoint())
-                                .then()
-                )
+            createRequestSpecification()
+                .when()
+                .relaxedHTTPSValidation()
+                .post(requestEntity.buildEndpoint())
+                .then()
         );
     }
 
@@ -261,18 +254,16 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> postMultiPart() {
         return resultOf(
-                validateAndLog(
-                    createRequestSpecification()
-                            .given()
-                            .config(
-                                    RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
-                                            ContentType.TEXT)))
-                            .relaxedHTTPSValidation()
-                            .expect()
-                            .when()
-                            .post(requestEntity.buildEndpoint())
-                            .then()
-                )
+            createRequestSpecification()
+                .given()
+                .config(
+                    RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
+                        ContentType.TEXT)))
+                .relaxedHTTPSValidation()
+                .expect()
+                .when()
+                .post(requestEntity.buildEndpoint())
+                .then()
         );
     }
 
@@ -283,13 +274,11 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> put() {
         return resultOf(
-                validateAndLog(
-                    createRequestSpecification()
-                        .when()
-                        .relaxedHTTPSValidation()
-                        .put(requestEntity.buildEndpoint())
-                        .then()
-                )
+            createRequestSpecification()
+                .when()
+                .relaxedHTTPSValidation()
+                .put(requestEntity.buildEndpoint())
+                .then()
         );
     }
 
@@ -300,13 +289,11 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> patch() {
         return resultOf(
-                validateAndLog(
-                    createRequestSpecification()
-                        .when()
-                        .relaxedHTTPSValidation()
-                        .patch(requestEntity.buildEndpoint())
-                        .then()
-                )
+            createRequestSpecification()
+                .when()
+                .relaxedHTTPSValidation()
+                .patch(requestEntity.buildEndpoint())
+                .then()
         );
     }
 
@@ -317,33 +304,11 @@ class ConnectionManager<T> {
      */
     public <T> ResponseWrapper<T> delete() {
         return resultOf(
-                validateAndLog(
-                    createRequestSpecification()
-                        .when()
-                        .relaxedHTTPSValidation()
-                        .delete(requestEntity.buildEndpoint())
-                        .then()
-                )
+            createRequestSpecification()
+                .when()
+                .relaxedHTTPSValidation()
+                .delete(requestEntity.buildEndpoint())
+                .then()
         );
     }
-
-    /**
-     * If the system contains a property mode (automatically inserted by the Jenkins task), we will only log the request data.<br>
-     * A response will only be logged if another response code with the expected status code or the scheme check failed.<br>
-     * If the system does not contain a properties mode, all data (request/response/errors) will be logged.
-     * @param validatableResponse
-     * @return
-     */
-    private ValidatableResponse validateAndLog(ValidatableResponse validatableResponse) {
-        if (IS_JENKINS_BUILD) {
-            return validatableResponse
-                    .log()
-                    .ifValidationFails();
-        }
-
-        return validatableResponse
-                .log()
-                .all();
-    }
-
 }
