@@ -77,7 +77,7 @@ public class AcsResources {
     public AcsResources() {
         UserCredentials user = UserUtil.getUser("common");
         token = new OldAuthorizationUtil().getTokenAsString();
-        validUsername = user.getEmail();
+        validUsername = user.getEmail().split("@")[0];
         invalidUsername = user.getUsername().split("@")[0].concat("41");
     }
 

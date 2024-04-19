@@ -94,7 +94,7 @@ public class GroupDeleteTests extends TestBaseUI {
     @Description("Verify user can delete 2 or more assemblies. Verify correct behavior of Delete button when multi-selecting.")
     @Tag(SMOKE)
     public void testGroupDeleteAssemblies() {
-        final String assemblyName = "titan cordless drill";
+        final String assemblyName = "titan cordless drill 2";
         final String assemblyName2 = "titan charger ass";
         final String componentName = "2062987";
 
