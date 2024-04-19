@@ -37,6 +37,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class IncludeAndExcludeTests extends TestBaseUI {
 
@@ -87,6 +88,8 @@ public class IncludeAndExcludeTests extends TestBaseUI {
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())

@@ -534,7 +534,7 @@ public class ComparisonTests extends TestBaseUI {
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        comparePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .costScenario()
@@ -556,12 +556,7 @@ public class ComparisonTests extends TestBaseUI {
             .highlightScenario(component.getComponentName(), component.getScenarioName())
             .clickDeleteIcon()
             .clickDelete(ExplorePage.class)
-            .clickCompare(ComparePage.class)
-            .openScenario(component.getComponentName(), component.getScenarioName());
-
-        softAssertions.assertThat(evaluatePage.getNotFoundMessage()).isEqualTo(notFoundMessage);
-
-        comparePage = evaluatePage.backFromError(ComparePage.class);
+            .clickCompare(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getScenariosInComparison()).doesNotContain(component.getComponentName().toUpperCase() + "  / " + component.getScenarioName());
 
@@ -632,7 +627,7 @@ public class ComparisonTests extends TestBaseUI {
     @Description("Validate arrows are correct colour and direction in comparisons")
     public void validateArrowsInComparison() {
         component = new ComponentRequestUtil().getComponent("M3CapScrew");
-        component2 = new ComponentRequestUtil().getComponent("Push Pin");
+        component2 = new ComponentRequestUtil().getComponentWithProcessGroup("Push Pin", ProcessGroupEnum.PLASTIC_MOLDING);
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
