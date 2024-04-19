@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @Builder
 public class Value {
-    private List<Double> origin = null;
-    private List<Double> direction = null;
+    private List<Double> origin;
+    private List<Double> direction;
     private Double length;
 }
