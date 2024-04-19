@@ -2,10 +2,10 @@ package com.apriori.cus.api.tests;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
+import com.apriori.cus.api.PeopleUtil;
 import com.apriori.cus.api.models.request.UpdateUserRequest;
 import com.apriori.cus.api.models.request.UserProfile;
 import com.apriori.cus.api.models.response.ErrorResponse;
-import com.apriori.cus.api.utils.PeopleUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -14,10 +14,8 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

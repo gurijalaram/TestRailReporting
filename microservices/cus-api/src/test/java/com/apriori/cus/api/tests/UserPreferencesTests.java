@@ -1,9 +1,9 @@
 package com.apriori.cus.api.tests;
 
+import com.apriori.cus.api.PeopleUtil;
 import com.apriori.cus.api.models.request.UpdateUserPrefRequest;
 import com.apriori.cus.api.models.response.PreferenceItemsResponse;
 import com.apriori.cus.api.models.response.PreferenceResponse;
-import com.apriori.cus.api.utils.PeopleUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;

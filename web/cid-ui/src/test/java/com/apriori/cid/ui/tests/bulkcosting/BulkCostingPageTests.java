@@ -1,12 +1,12 @@
 package com.apriori.cid.ui.tests.bulkcosting;
 
+import com.apriori.bcm.api.models.response.InputRowPostResponse;
+import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.css.api.utils.CssComponent;
-import com.apriori.cus.api.models.response.InputRowPostResponse;
-import com.apriori.cus.api.utils.BcmUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
