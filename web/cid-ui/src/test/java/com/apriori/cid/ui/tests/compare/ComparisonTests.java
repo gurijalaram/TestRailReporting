@@ -626,18 +626,17 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {7020})
     @Description("Validate arrows are correct colour and direction in comparisons")
     public void validateArrowsInComparison() {
-        ProcessGroupEnum plasticMoldingPG = ProcessGroupEnum.PLASTIC_MOLDING;
         component = new ComponentRequestUtil().getComponent("M3CapScrew");
-        component2 = new ComponentRequestUtil().getComponent("Push Pin");
+        component2 = new ComponentRequestUtil().getComponentWithProcessGroup("Push Pin", ProcessGroupEnum.PLASTIC_MOLDING);
         component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
-            .selectProcessGroup(plasticMoldingPG)
+            .selectProcessGroup(component.getProcessGroup())
             .costScenario()
             .uploadComponentAndOpen(component2)
-            .selectProcessGroup(plasticMoldingPG)
+            .selectProcessGroup(component2.getProcessGroup())
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
