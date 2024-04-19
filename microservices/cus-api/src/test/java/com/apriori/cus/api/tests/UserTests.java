@@ -1,11 +1,11 @@
-package com.apriori.bcm.api.tests;
+package com.apriori.cus.api.tests;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
-import com.apriori.bcm.api.models.request.UpdateUserRequest;
-import com.apriori.bcm.api.models.request.UserProfile;
-import com.apriori.bcm.api.models.response.ErrorResponse;
-import com.apriori.bcm.api.utils.PeopleUtil;
+import com.apriori.cus.api.PeopleUtil;
+import com.apriori.cus.api.models.request.UpdateUserRequest;
+import com.apriori.cus.api.models.request.UserProfile;
+import com.apriori.cus.api.models.response.ErrorResponse;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -14,10 +14,8 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,18 +59,8 @@ public class UserTests {
         String newOfficePhoneNumber = generator.getRandomNumbers();
         String newTimezone = generator.getRandomStringSpecLength(3);
 
-        User user = peopleUtil.getCurrentUser(currentUser);
-
         UpdateUserRequest updateUserRequest = UpdateUserRequest.builder()
-            .identity(user.getIdentity())
-            .username(user.getUsername())
-            .email(user.getEmail())
-            .active(user.getActive())
-            .createdBy(user.getCreatedBy())
             .userProfile(UserProfile.builder()
-                .givenName(user.getUserProfile().getGivenName())
-                .familyName(user.getUserProfile().getFamilyName())
-                .createdBy(user.getUserProfile().getCreatedBy())
                 .prefix(newPrefix)
                 .suffix(newSuffix)
                 .jobTitle(newJobTitle)
@@ -101,8 +89,6 @@ public class UserTests {
 
     @Test
     @TestRail(id = 17065)
-    @Disabled("It is better to not run this test till issue will be fixed, because it will update Auto user with new name and email")
-    @Issue("CFIRST-414")
     @Description("Try to update SAML fields via CUS /users/current endpoint should be not possible")
     public void updateSamlFieldsShouldBeNotPossibleTest() {
         String newUsername = generator.getRandomStringSpecLength(8);
@@ -123,10 +109,10 @@ public class UserTests {
                 .build())
             .build();
 
-        User response = peopleUtil.updateCurrentUser(currentUser, updateUserRequest);
+        ErrorResponse response = peopleUtil.updateCurrentUserBadRequest(currentUser, updateUserRequest);
 
-        softAssertions.assertThat(response.getEmail()).isEqualTo(currentUser.getEmail());
-        softAssertions.assertThat(response.getUsername()).isEqualTo(currentUser.getUsername());
+        softAssertions.assertThat(response.getError()).isEqualTo("Bad Request");
+        softAssertions.assertThat(response.getMessage()).isEqualTo("'username' is not allowed to be updated by the current user.");
         softAssertions.assertAll();
     }
 
@@ -137,11 +123,6 @@ public class UserTests {
         User user = peopleUtil.getCurrentUser(currentUser);
 
         UpdateUserRequest updateUserRequest = UpdateUserRequest.builder()
-            .identity(user.getIdentity())
-            .username(user.getUsername())
-            .email(user.getEmail())
-            .active(user.getActive())
-            .createdBy(user.getCreatedBy())
             .userProfile(UserProfile.builder()
                 .givenName(user.getUserProfile().getGivenName())
                 .familyName("")
@@ -157,11 +138,6 @@ public class UserTests {
         softAssertions.assertAll();
 
         UpdateUserRequest updateUserRequest2 = UpdateUserRequest.builder()
-            .identity(user.getIdentity())
-            .username(user.getUsername())
-            .email(user.getEmail())
-            .active(user.getActive())
-            .createdBy(user.getCreatedBy())
             .userProfile(UserProfile.builder()
                 .givenName("")
                 .familyName(user.getUserProfile().getFamilyName())
