@@ -7,8 +7,8 @@ public enum UserRole {
 
     private final String userRole;
 
-    UserRole(String dStatus) {
-        this.userRole = dStatus;
+    UserRole(String discussionStatus) {
+        this.userRole = discussionStatus;
     }
 
     public String getUserRole() {

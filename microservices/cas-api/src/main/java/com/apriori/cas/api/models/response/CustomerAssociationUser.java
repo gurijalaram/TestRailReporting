@@ -26,12 +26,12 @@ public class CustomerAssociationUser {
     private Date createdAt;
     private String createdBy;
     private String createdByName;
-    private Date updatedAt = null;
-    private String updatedBy = null;
-    private String updatedByName = null;
-    private Date deletedAt = null;
-    private String deletedBy = null;
-    private String deletedByName = null;
+    private Date updatedAt;
+    private String updatedBy;
+    private String updatedByName;
+    private Date deletedAt;
+    private String deletedBy;
+    private String deletedByName;
     private String userIdentity;
-    private User user = null;
+    private User user;
 }

@@ -67,7 +67,7 @@ public class ModalDialogController {
     private WebElement closeButton;
 
     @FindBy(css = "[role='dialog'] [data-icon='circle-xmark']")
-    private WebElement xButton;
+    private WebElement exButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -305,7 +305,7 @@ public class ModalDialogController {
      * @return generic page object
      */
     public <T> T closeDialog(Class<T> className) {
-        pageUtils.waitForElementAndClick(xButton);
+        pageUtils.waitForElementAndClick(exButton);
         return PageFactory.initElements(driver, className);
     }
 }

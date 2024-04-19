@@ -7,8 +7,8 @@ public enum MappingRule {
 
     private final String mappingRule;
 
-    MappingRule(String mRule) {
-        mappingRule = mRule;
+    MappingRule(String mappingRule) {
+        this.mappingRule = mappingRule;
     }
 
     public String getMappingRule() {

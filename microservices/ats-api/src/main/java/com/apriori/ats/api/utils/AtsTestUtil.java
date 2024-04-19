@@ -23,7 +23,7 @@ public class AtsTestUtil extends TestUtil {
      *
      * @param email - user email
      * @param password - user password
-     * @return ResponseWrapper <UserByEmail>
+     * @return response object
      */
     public ResponseWrapper<User> authenticateUser(String email, String password) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(ATSAPIEnum.AUTHENTICATE, User.class)
@@ -40,7 +40,7 @@ public class AtsTestUtil extends TestUtil {
      * Creates user with SAML
      *
      * @param email - user email
-     * @return ResponseWrapper <UserByEmail>
+     * @return response object
      */
     public ResponseWrapper<User> putSAMLProviders(String email) {
         GenerateStringUtil generator = new GenerateStringUtil();
@@ -49,8 +49,8 @@ public class AtsTestUtil extends TestUtil {
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(CreateSamlUserRequest.builder()
                 .email(userName + "@" + email + ".com")
-                .given_name(generator.getRandomStringSpecLength(5))
-                .family_name(generator.getRandomStringSpecLength(5))
+                .givenName(generator.getRandomStringSpecLength(5))
+                .familyName(generator.getRandomStringSpecLength(5))
                 .name(userName)
                 .roles("APRIORI_USER")
                 .build());
@@ -64,7 +64,7 @@ public class AtsTestUtil extends TestUtil {
      * @param endpoint - customer users or particular user endpoint
      * @param identity - customer or user identity
      * @param status - response status code
-     * @return <T>ResponseWrapper <T>
+     * @return generic response object
      */
     public <T> ResponseWrapper<T> resetUserMFA(EndpointEnum endpoint, String identity, Integer status) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(endpoint, null)
@@ -81,7 +81,7 @@ public class AtsTestUtil extends TestUtil {
      * Changes a password of user
      *
      * @param email - user email
-     * @return <T>ResponseWrapper <T>
+     * @return generic response object
      */
     public <T> ResponseWrapper<T> changePassword(String email) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(ATSAPIEnum.USER_PASSWORD_BY_EMAIL, null)
