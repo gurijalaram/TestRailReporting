@@ -663,10 +663,22 @@ public class ScenariosUtil {
      * @return response object
      */
     public List<ScenarioItem> deleteScenarios(List<ScenarioItem> scenarios, UserCredentials userCredentials) {
+        return deleteScenarios(scenarios, userCredentials, ScenariosDeleteResponse.class);
+    }
+
+    /**
+     * Calls an api with the POST verb.
+     *
+     * @param scenarios       - the list of scenarios to delete
+     * @param userCredentials - the user credentials
+     * @param <T>             - the generic object
+     * @return response object
+     */
+    public <T> List<ScenarioItem> deleteScenarios(List<ScenarioItem> scenarios, UserCredentials userCredentials, Class<T> klass) {
 
         Lists.partition(scenarios, CHUNK_SIZE).forEach(partitionedScenario -> {
 
-            final RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.DELETE_SCENARIOS, ScenariosDeleteResponse.class)
+            final RequestEntity requestEntity = RequestEntityUtil_Old.init(CidAppAPIEnum.DELETE_SCENARIOS, klass)
                 .body("groupItems", partitionedScenario.stream()
                     .map(scenarioItem ->
                         ComponentRequest.builder()
@@ -685,12 +697,13 @@ public class ScenariosUtil {
 
     /**
      * Deletes scenarios and check the deletion is complete
+     *
      * @param scenarios       - the list of scenarios to delete
      * @param userCredentials - the user credentials
      * @return response object
      */
     public ScenariosDeleteResponse deleteScenariosCompleted(List<ScenarioItem> scenarios, UserCredentials userCredentials) {
-        deleteScenarios(scenarios, userCredentials).forEach(deletedScenario -> checkComponentDeleted(deletedScenario.getComponentIdentity(), deletedScenario.getScenarioIdentity(), userCredentials));;
+        deleteScenarios(scenarios, userCredentials).forEach(deletedScenario -> checkComponentDeleted(deletedScenario.getComponentIdentity(), deletedScenario.getScenarioIdentity(), userCredentials));
         return deleteResponse.getResponseEntity();
     }
 

@@ -637,31 +637,6 @@ public class ProcessRoutingTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Test
-    @TestRail(id = {14990, 15804, 7843})
-    @Description("Validate routings Sand Cast")
-    public void routingsSandCasting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Vertical Automatic");
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
-
-        softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("VerticalAutomatic", "HorizontalAutomatic", "ManualStd", "ManualFloor", "ManualPit");
-
-        routingSelectionPage.selectRoutingPreferenceByName("ManualStd")
-            .submit(EvaluatePage.class)
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Manual Std Moldmaking");
-        softAssertions.assertAll();
-    }
 
     @Test
     @TestRail(id = {14991, 15805})

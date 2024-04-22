@@ -33,14 +33,14 @@ public class DeleteScenariosTests {
 
     @Test
     @Tag(DELETE)
-    public void quickDeletePrivateScenarios() {
-        UserUtil.getUsers().forEach(user -> quickDeleteScenarios(false, user));
+    public void markPrivateScenariosForDelete() {
+        UserUtil.getUsers().forEach(user -> markForDeleteScenarios(false, user));
     }
 
     @Test
     @Tag(DELETE)
-    public void quickDeletePublicScenarios() {
-        quickDeleteScenarios(true, UserUtil.getUser());
+    public void markPublicScenariosForDelete() {
+        markForDeleteScenarios(true, UserUtil.getUser());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class DeleteScenariosTests {
 
     @Test
     public void deletePublicScenarios() {
-        deleteScenarios(true, UserCredentials.init("cfrith@apriori.com","TestEvent2025!"));
+        deleteScenarios(true, UserUtil.getUser());
     }
 
     private void deleteScenarios(Boolean scenarioPublished, UserCredentials user) {
@@ -58,7 +58,7 @@ public class DeleteScenariosTests {
 
         ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenariosCompleted(assembliesToDelete, user);
 
-        log.info("Number of 'ASSEMBLY(S)' deleted '{}'", deletedAssemblies.getSuccesses().size());
+        log.warn("Number of 'ASSEMBLY(S)' deleted '{}'", deletedAssemblies.getSuccesses().size());
 
         softAssertions.assertThat(deletedAssemblies.getSuccesses().size()).isEqualTo(assembliesToDelete.size());
 
@@ -66,25 +66,25 @@ public class DeleteScenariosTests {
 
         ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenariosCompleted(scenariosToDelete, user);
 
-        log.info("Number of 'PART(S)' deleted '{}'", deletedScenarios.getSuccesses().size());
+        log.warn("Number of 'PART(S)' deleted '{}'", deletedScenarios.getSuccesses().size());
 
         softAssertions.assertThat(deletedScenarios.getSuccesses().size()).isEqualTo(scenariosToDelete.size());
 
         softAssertions.assertAll();
     }
 
-    private void quickDeleteScenarios(Boolean scenarioPublished, UserCredentials user) {
+    private void markForDeleteScenarios(Boolean scenarioPublished, UserCredentials user) {
         List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", scenarioPublished, user);
 
-        scenariosUtil.deleteScenarios(assembliesToDelete, user);
+        assembliesToDelete.forEach(assembly -> log.warn("ASSEMBLY marked for deletion '{}' with SCENARIO KEY '{}'", assembly.getScenarioName(), assembly.getScenarioKey()));
 
-        assembliesToDelete.forEach(assembly -> log.info("Scenario Name of ASSEMBLY marked for deletion '{}'", assembly.getScenarioName()));
+        scenariosUtil.deleteScenarios(assembliesToDelete, user, null);
 
         List<ScenarioItem> scenariosToDelete = searchComponentType("PART", scenarioPublished, user);
 
-        scenariosToDelete.forEach(scenario -> log.info("Scenario Name of SCENARIO marked for deletion '{}'", scenario.getScenarioName()));
+        scenariosToDelete.forEach(scenario -> log.warn("SCENARIO marked for deletion '{}' with SCENARIO KEY '{}'", scenario.getScenarioName(), scenario.getScenarioKey()));
 
-        scenariosUtil.deleteScenarios(scenariosToDelete, user);
+        scenariosUtil.deleteScenarios(scenariosToDelete, user, null);
     }
 
     private List<ScenarioItem> searchComponentType(String componentType, Boolean scenarioPublished, UserCredentials currentUser) {
@@ -92,11 +92,14 @@ public class DeleteScenariosTests {
         final int pageSize = Integer.parseInt(PropertiesContext.get("global.page_size"));
         final String scenarioPartName = PropertiesContext.get("global.scenario_name_prefix");
 
-        List<ScenarioItem> scenarioItems = cssComponent.getBaseCssComponents(currentUser, SCENARIO_PUBLISHED_EQ.getKey() + scenarioPublished,
-            COMPONENT_TYPE_EQ.getKey() + componentType, SCENARIO_NAME_CN.getKey() + scenarioPartName, PAGE_SIZE.getKey() + pageSize,
+        List<ScenarioItem> scenarioItems = cssComponent.getBaseCssComponents(currentUser,
+            SCENARIO_PUBLISHED_EQ.getKey() + scenarioPublished,
+            COMPONENT_TYPE_EQ.getKey() + componentType,
+            SCENARIO_NAME_CN.getKey() + scenarioPartName,
+            PAGE_SIZE.getKey() + pageSize,
             SCENARIO_CREATED_AT_LT.getKey() + LocalDateTime.now().minusDays(maxDays).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
 
-        log.info("Number of '{}(S)' found for deletion '{}'", componentType, scenarioItems.size());
+        log.warn("Number of '{}(S)' found for deletion '{}'", componentType, scenarioItems.size());
 
         if (scenarioItems.isEmpty()) {
             throw new RuntimeException("No scenarios found for deletion");

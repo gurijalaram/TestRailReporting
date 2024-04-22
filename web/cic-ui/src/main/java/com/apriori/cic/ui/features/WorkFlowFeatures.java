@@ -30,7 +30,7 @@ public class WorkFlowFeatures extends CICBasePage {
      * @return WorkflowHome page object
      */
     public WorkflowHome createScheduledWorkflow(WorkflowSchedule workflowSchedule) {
-        workFlowData.setWorkflowName(GenerateStringUtil.saltString(workFlowData.getWorkflowName()));
+        workFlowData.setWorkflowName("- - Auto_WF" + new GenerateStringUtil().getRandomNumbers());
         try {
             if (workFlowData.getComponentName().equals(ConnectorComponentEnum.QUERY_DEFINITION.getConnectorComponentName())) {
                 this.queryDefinitions = (QueryDefinitions) new DetailsPart(driver).enterWorkflowNameField(workFlowData.getWorkflowName())
