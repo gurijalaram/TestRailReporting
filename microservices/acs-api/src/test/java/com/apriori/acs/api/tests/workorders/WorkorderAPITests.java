@@ -29,10 +29,13 @@ import com.apriori.acs.api.models.response.workorders.simpleimagedata.SimpleImag
 import com.apriori.acs.api.models.response.workorders.upload.Assembly;
 import com.apriori.acs.api.models.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
+import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
@@ -55,9 +58,9 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class WorkorderAPITests extends TestUtil {
-
-    private final FileUploadResources fileUploadResources = new FileUploadResources();
-    private final AcsResources acsResources = new AcsResources();
+    private final UserCredentials userCredentials = UserUtil.getUser("common");
+    private final FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
+    private final AcsResources acsResources = new AcsResources(userCredentials);
     private final String assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
     private final String sheetMetalProcessGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
     private final String castingProcessGroup = ProcessGroupEnum.CASTING.getProcessGroup();

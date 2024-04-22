@@ -2,7 +2,10 @@ package com.apriori.acs.api.tests;
 
 import com.apriori.acs.api.models.response.acs.unitvariantsettings.UnitVariantSetting;
 import com.apriori.acs.api.models.response.acs.unitvariantsettings.UnitVariantSettingsResponse;
+import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -18,12 +21,13 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class UnitVariantSettingsTests extends TestUtil {
+    private final UserCredentials userCredentials = UserUtil.getUser("common");
 
     @Test
     @TestRail(id = 8772)
     @Description("Test Get Unit Variant Settings")
     public void testGetUnitVariantSettings() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         UnitVariantSettingsResponse getUnitVariantSettingsResponse = acsResources.getUnitVariantSettings();
 
         ArrayList<UnitVariantSetting> allItems = getUnitVariantSettingsResponse.getAllUnitVariantSetting();
@@ -42,7 +46,7 @@ public class UnitVariantSettingsTests extends TestUtil {
     @TestRail(id = 8773)
     @Description("Test Get Custom Unit Variant Settings")
     public void testGetCustomUnitVariantSettings() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         UnitVariantSetting getCustomUnitVariantSettingsResponse = acsResources.getCustomUnitVariantSettings();
 
         SoftAssertions softAssertions = new SoftAssertions();

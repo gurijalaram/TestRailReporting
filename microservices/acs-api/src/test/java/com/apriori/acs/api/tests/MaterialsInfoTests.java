@@ -17,8 +17,11 @@ import com.apriori.acs.api.models.response.acs.materialsinfo.MaterialsInfoSheetM
 import com.apriori.acs.api.models.response.acs.materialsinfo.MaterialsInfoSheetMetalStretchFormingResponse;
 import com.apriori.acs.api.models.response.acs.materialsinfo.MaterialsInfoSheetMetalTransferDieResponse;
 import com.apriori.acs.api.models.response.acs.materialsinfo.MaterialsInfoStockMachiningResponse;
+import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -29,12 +32,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class MaterialsInfoTests {
+    private final UserCredentials userCredentials = UserUtil.getUser("common");
 
     @Test
     @TestRail(id = 22695)
     @Description("Test Get Materials Info endpoint for Additive Manufacturing")
     public void testGetMaterialsInfoAdditiveManufacturing() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoAdditiveManufacturingResponse materialsInfoAdditiveManufacturingResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -56,7 +60,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22691)
     @Description("Test Get Materials Info endpoint for Bar & Tube Fab")
     public void testGetMaterialsInfoBarAndTubeFab() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoBarAndTubeResponse materialsInfoBarAndTubeResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -79,7 +83,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22692)
     @Description("Test Get Materials Info endpoint for Casting - Die")
     public void testGetMaterialsInfoCastingDie() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoCastingDieResponse materialsInfoCastingDieResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -102,7 +106,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22693)
     @Description("Test Get Materials Info endpoint for Casting - Sand")
     public void testGetMaterialsInfoCastingSand() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoCastingSandResponse materialsInfoCastingSandResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -125,7 +129,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22694)
     @Description("Test Get Materials Info endpoint for Casting - Investment")
     public void testGetMaterialsInfoCastingInvestment() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoCastingInvestmentResponse materialsInfoCastingInvestmentResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -148,7 +152,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22696)
     @Description("Test Get Materials Info endpoint for Forging")
     public void testGetMaterialsInfoForging() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoForgingResponse materialsInfoForgingResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -171,7 +175,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22697)
     @Description("Test Get Materials Info endpoint for Plastic Molding")
     public void testGetMaterialsInfoPlasticMolding() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoPlasticMoldingResponse materialsInfoPlasticMoldingResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -194,7 +198,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22698)
     @Description("Test Get Materials Info endpoint for Powder Metal")
     public void testGetMaterialsInfoPowderMetal() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoPowderMetalResponse materialsInfoPowderMetalResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -217,7 +221,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22699)
     @Description("Test Get Materials Info endpoint for Rapid Prototyping")
     public void testGetMaterialsInfoRapidPrototyping() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoRapidPrototypingResponse materialsInfoRapidPrototypingResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -240,7 +244,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22700)
     @Description("Test Get Materials Info endpoint for Roto & Blow Molding")
     public void testGetMaterialsInfoRotoBlowMolding() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoRotoBlowMoldingResponse materialsInfoRotoBlowMoldingResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -263,7 +267,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22701)
     @Description("Test Get Materials Info endpoint for Sheet Metal")
     public void testGetMaterialsInfoSheetMetal() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoSheetMetalResponse materialsInfoSheetMetalResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -286,7 +290,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22702)
     @Description("Test Get Materials Info endpoint for Sheet Metal - Transfer Die")
     public void testGetMaterialsInfoSheetMetalTransferDie() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoSheetMetalTransferDieResponse materialsInfoSheetMetalTransferDieResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -309,7 +313,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22703)
     @Description("Test Get Materials Info endpoint for Sheet Metal - Hydroforming")
     public void testGetMaterialsInfoSheetMetalHydroforming() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoSheetMetalHydroformingResponse materialsInfoSheetMetalHydroformingResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -332,7 +336,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22704)
     @Description("Test Get Materials Info endpoint for Sheet Metal - Roll Forming")
     public void testGetMaterialsInfoSheetMetalRollForming() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoSheetMetalRollFormingResponse materialsInfoSheetMetalRollFormingResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -355,7 +359,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22705)
     @Description("Test Get Materials Info endpoint for Sheet Metal - Stretch Forming")
     public void testGetMaterialsInfoSheetMetalStretchForming() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoSheetMetalStretchFormingResponse materialsInfoSheetMetalStretchFormingResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",
@@ -378,7 +382,7 @@ public class MaterialsInfoTests {
     @TestRail(id = 22706)
     @Description("Test Get Materials Info endpoint for Stock Machining")
     public void testGetMaterialsInfoStockMachining() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MaterialsInfoStockMachiningResponse materialsInfoStockMachiningResponse = acsResources
             .getMaterialsInfo(
                 "aPriori USA",

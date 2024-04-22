@@ -8,8 +8,11 @@ import com.apriori.acs.api.models.response.acs.costresults.PropertyValueMap;
 import com.apriori.acs.api.models.response.acs.costresults.ResultMapBean;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.api.tests.workorders.WorkorderAPITests;
+import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -20,8 +23,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CostResultsTests {
-    private AcsResources acsResources = new AcsResources();
-    private WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+
+    private final UserCredentials user;
+    private AcsResources acsResources;
+    private WorkorderAPITests workorderAPITests;
+
+    public CostResultsTests() {
+        user = UserUtil.getUser("common");
+        acsResources = new AcsResources(user);
+        workorderAPITests = new WorkorderAPITests();
+    }
 
     private void costResultsAssertion(CostResultsRootResponse costResultsRootItems, String processGroupName) {
 

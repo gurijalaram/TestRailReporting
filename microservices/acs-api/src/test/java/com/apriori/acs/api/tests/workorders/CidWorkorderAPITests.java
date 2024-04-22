@@ -3,8 +3,11 @@ package com.apriori.acs.api.tests.workorders;
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
+import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
@@ -25,7 +28,8 @@ public class CidWorkorderAPITests extends TestUtil {
         NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
-        FileUploadResources fileUploadResources = new FileUploadResources();
+        UserCredentials user = UserUtil.getUser("common");
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
         FileResponse fileResponse = fileUploadResources.initializePartUpload(
             fileName,
             processGroup);

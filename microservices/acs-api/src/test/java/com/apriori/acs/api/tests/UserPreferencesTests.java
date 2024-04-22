@@ -11,7 +11,10 @@ import com.apriori.acs.api.enums.acs.AcsApiEnum;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.api.models.response.acs.userpreferences.UserPreferencesResponse;
+import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -24,12 +27,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class UserPreferencesTests extends TestUtil {
+    private final UserCredentials userCredentials = UserUtil.getUser("common");
 
     @Test
     @TestRail(id = 10759)
     @Description("Verify Get User Preferences Endpoint")
     public void testGetUserPreferencesEndpoint() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         UserPreferencesResponse getUserPreferencesResponse = acsResources.getUserPreferences();
 
         assertThat(getUserPreferencesResponse.getCostTableDecimalPlaces(), either(is("3")).or(is("2")));
@@ -44,7 +48,7 @@ public class UserPreferencesTests extends TestUtil {
     @TestRail(id = 10796)
     @Description("Get User Preferences Negative Test - Invalid Username")
     public void testGetUserPreferencesInvalidUser() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.USER_PREFERENCES);
 
         assertOnInvalidResponse(genericErrorResponse);
@@ -54,7 +58,7 @@ public class UserPreferencesTests extends TestUtil {
     @TestRail(id = 10842)
     @Description("Validate Set User Preferences Endpoint")
     public void testSetUserPreferencesEndpoint() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         UserPreferencesResponse getUserPreferencesResponse = acsResources.getUserPreferences();
         String costTableDecimalPlaces = getUserPreferencesResponse.getCostTableDecimalPlaces();
         String useVpeForAllProcesses = getUserPreferencesResponse.getProdInfoDefaultUseVpeForAllProcesses();
@@ -83,7 +87,7 @@ public class UserPreferencesTests extends TestUtil {
     @TestRail(id = 10844)
     @Description("Validate Set User Preferences Endpoint - Negative - Invalid User")
     public void testSetUserPreferencesEndpointInvalidUser() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.setUserPreferencesInvalidUser();
 
         assertOnInvalidResponse(genericErrorResponse);
@@ -98,7 +102,7 @@ public class UserPreferencesTests extends TestUtil {
     @TestRail(id = 21727)
     @Description("Verify that header -apriori-version is returned")
     public void testCorrectHeaderIsReturned() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         Header header = acsResources.getUserPreferencesHeaders()
             .get("X-aPriori-Version");
 

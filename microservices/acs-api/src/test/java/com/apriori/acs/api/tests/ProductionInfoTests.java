@@ -8,10 +8,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedIdResponse;
 import com.apriori.acs.api.models.response.acs.productioninfo.ProductionInfoResponse;
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
+import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -28,8 +31,9 @@ public class ProductionInfoTests extends TestUtil {
     @TestRail(id = 15430)
     @Description("Get Set Production Info Test")
     public void testGetSetProductionInfo() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
+        UserCredentials userCredentials = UserUtil.getUser("common");
+        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
+        AcsResources acsResources = new AcsResources(userCredentials);
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 

@@ -3,7 +3,6 @@ package com.apriori.acs.api.utils;
 import com.apriori.acs.api.OldTokenRequest;
 import com.apriori.acs.api.enums.OldTokenEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
@@ -31,10 +30,8 @@ public class OldAuthorizationUtil {
      *
      * @return string
      */
-    private OldTokenRequest getToken() {
+    private OldTokenRequest getToken(UserCredentials user) {
         log.info("Getting Token from old CID API...");
-
-        UserCredentials user = UserUtil.getUser("common");
 
         headers.put("Content-Type", "application/x-www-form-urlencoded");
         headers.put("Accept", "application/json");
@@ -57,7 +54,7 @@ public class OldAuthorizationUtil {
         return (OldTokenRequest) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
-    public String getTokenAsString() {
-        return getToken().getAccessToken();
+    public String getTokenAsString(UserCredentials user) {
+        return getToken(user).getAccessToken();
     }
 }

@@ -4,8 +4,11 @@ import com.apriori.acs.api.models.response.acs.GcdProperties.GcdPropertiesRespon
 import com.apriori.acs.api.models.response.acs.GcdProperties.PropertiesToSet;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.api.tests.workorders.WorkorderAPITests;
+import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -19,6 +22,7 @@ import java.util.Collections;
 
 @ExtendWith(TestRulesAPI.class)
 public class GcdPropertiesTests {
+    private final UserCredentials userCredentials = UserUtil.getUser("common");
 
     private void saveGcdPropertiesAssertion(GcdPropertiesResponse gcdPropertiesResponse) {
 
@@ -34,7 +38,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17203)
     @Description("Get save GCD Properties for Sheet Metal")
     public void testSaveGcdPropertiesSheetMetal() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
@@ -59,7 +63,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17204)
     @Description("Get save GCD Properties for Sheet Metal - Transfer Die")
     public void testSaveGcdPropertiesSheetMetalTransferDie() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup();
@@ -85,7 +89,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17207)
     @Description("Get save GCD Properties for Sheet Metal - Stretch Forming")
     public void testSaveGcdPropertiesSheetMetalStretchForming() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup();
@@ -111,7 +115,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17206)
     @Description("Get save GCD Properties for Sheet Metal - Roll Forming")
     public void testSaveGcdPropertiesSheetMetalRollForming() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup();
@@ -136,7 +140,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17205)
     @Description("Get save GCD Properties for Sheet Metal - Hydroforming")
     public void testSaveGcdPropertiesSheetMetalHydroforming() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup();
@@ -161,7 +165,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17193)
     @Description("Get save GCD Properties for Sheet Metal - Additive Manufacturing")
     public void testSaveGcdPropertiesAdditiveManufacturing() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup();
@@ -186,7 +190,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17194)
     @Description("Get save GCD Properties for Sheet Metal - Bar & Tube Fab")
     public void testSaveGcdPropertiesBarAndTubeFab() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup();
@@ -211,7 +215,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17195)
     @Description("Get save GCD Properties for Casting - Die")
     public void testSaveGcdPropertiesCastingDie() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
@@ -237,7 +241,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17196)
     @Description("Get save GCD Properties for Casting - Sand")
     public void testSaveGcdPropertiesCastingSand() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.CASTING_SAND.getProcessGroup();
@@ -263,7 +267,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17197)
     @Description("Get save GCD Properties for Casting - Investment")
     public void testSaveGcdPropertiesCastingInvestment() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();
@@ -289,7 +293,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17198)
     @Description("Get save GCD Properties for Forging")
     public void testSaveGcdPropertiesForging() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.FORGING.getProcessGroup();
@@ -315,7 +319,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17199)
     @Description("Get save GCD Properties for Plastic Molding")
     public void testSaveGcdPropertiesPlasticMolding() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup();
@@ -341,7 +345,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17200)
     @Description("Get save GCD Properties for Powder Metal")
     public void testSaveGcdPropertiesPowderMetal() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.POWDER_METAL.getProcessGroup();
@@ -367,7 +371,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17202)
     @Description("Get save GCD Properties for Roto & Blow Molding")
     public void testSaveGcdPropertiesRotoBlowMolding() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup();
@@ -393,7 +397,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17208)
     @Description("Get save GCD Properties for Sheet Plastic")
     public void testSaveGcdPropertiesSheetPlastic() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup();
@@ -419,7 +423,7 @@ public class GcdPropertiesTests {
     @TestRail(id = 17209)
     @Description("Get save GCD Properties for Stock Machining")
     public void testSaveGcdPropertiesStockMachining() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
 
         String processGroup = ProcessGroupEnum.STOCK_MACHINING.getProcessGroup();

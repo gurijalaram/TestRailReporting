@@ -3,8 +3,11 @@ package com.apriori.acs.api.tests;
 import com.apriori.acs.api.models.response.acs.designGuidance.DesignGuidanceResponse;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.api.tests.workorders.WorkorderAPITests;
+import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -15,8 +18,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class DesignGuidanceTests {
-    private AcsResources acsResources = new AcsResources();
-    private WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+    private final AcsResources acsResources;
+    private final WorkorderAPITests workorderAPITests;
+
+    public DesignGuidanceTests() {
+        UserCredentials userCredentials = UserUtil.getUser("common");
+        acsResources = new AcsResources(userCredentials);
+        workorderAPITests = new WorkorderAPITests();
+    }
 
     private void designGuidanceAssertion(DesignGuidanceResponse designGuidanceResponse, String guidanceTopics) {
 
