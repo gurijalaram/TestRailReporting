@@ -1,4 +1,4 @@
-package com.apriori.bcm.api.models.response;
+package com.apriori.cus.api.models.response;
 
 import com.apriori.shared.util.annotations.Schema;
 
