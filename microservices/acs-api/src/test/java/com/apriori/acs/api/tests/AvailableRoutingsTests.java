@@ -5,6 +5,7 @@ import com.apriori.acs.api.models.response.acs.availableroutings.AvailableRoutin
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.api.tests.workorders.WorkorderAPITests;
+import com.apriori.acs.api.tests.workorders.WorkorderApiUtils;
 import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
@@ -35,8 +36,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsCosted() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -119,8 +120,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsAdditiveManufacturing() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -165,8 +166,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsBarandTube() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -211,8 +212,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsCastingDie() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -257,8 +258,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsCastingInvestment() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -303,8 +304,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsCastingSand() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -349,8 +350,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsForging() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -395,8 +396,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsPlasticMolding() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -441,8 +442,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsPowderMetal() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -486,8 +487,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsRapidPrototyping() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -532,8 +533,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsRotoandBlowMolding() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -578,8 +579,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsSheetMetal() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -624,8 +625,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsSheetMetalHydroforming() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -670,8 +671,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsSheetMetalRollForming() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -715,8 +716,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsSheetMetalStretchForming() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -761,8 +762,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsSheetMetalTransferDie() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -806,8 +807,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsSheetPlastic() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -852,8 +853,8 @@ public class AvailableRoutingsTests {
     public void testGetAvailableRoutingsStockMachining() {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 

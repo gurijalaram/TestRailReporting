@@ -9,14 +9,11 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.hamcrest.core.StringStartsWith.startsWith;
 
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
-import com.apriori.acs.api.models.request.workorders.assemblyobjects.AssemblyInfo;
-import com.apriori.acs.api.models.request.workorders.assemblyobjects.AssemblyInfoComponent;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.workorders.allimages.AllImagesOutputs;
 import com.apriori.acs.api.models.response.workorders.assemblyimages.AssemblyImagesOutputs;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.api.models.response.workorders.deletescenario.DeleteScenarioOutputs;
-import com.apriori.acs.api.models.response.workorders.editscenario.EditScenarioOutputs;
 import com.apriori.acs.api.models.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.api.models.response.workorders.genericclasses.ScenarioKey;
 import com.apriori.acs.api.models.response.workorders.getadmininfo.AdminInfoResponse;
@@ -26,20 +23,16 @@ import com.apriori.acs.api.models.response.workorders.loadcadmetadata.LoadCadMet
 import com.apriori.acs.api.models.response.workorders.partimages.PartImagesOutputs;
 import com.apriori.acs.api.models.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
 import com.apriori.acs.api.models.response.workorders.simpleimagedata.SimpleImageDataOutputs;
-import com.apriori.acs.api.models.response.workorders.upload.Assembly;
 import com.apriori.acs.api.models.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
-import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
-import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -64,7 +57,6 @@ public class WorkorderAPITests extends TestUtil {
     private final String assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
     private final String sheetMetalProcessGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
     private final String castingProcessGroup = ProcessGroupEnum.CASTING.getProcessGroup();
-    private final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
     @Test
     @Issue("AP-69600")
@@ -100,17 +92,18 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {7697})
     @Description("Get image after each iteration - Upload, Cost, Publish")
     public void testUploadCostPublishGetImage() {
-        NewPartRequest productionInfoInputs = setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(castingProcessGroup);
 
-        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
+        FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
             "Casting.prt",
             castingProcessGroup,
             false
         );
 
-        getAndValidateImageInfo(fileUploadOutputs.getScenarioIterationKey());
+        workorderApiUtils.getAndValidateImageInfo(fileUploadOutputs.getScenarioIterationKey());
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
                 productionInfoInputs,
@@ -119,23 +112,24 @@ public class WorkorderAPITests extends TestUtil {
                 false
         );
 
-        getAndValidateImageInfo(costOutputs.getScenarioIterationKey());
+        workorderApiUtils.getAndValidateImageInfo(costOutputs.getScenarioIterationKey());
 
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
 
-        getAndValidateImageInfo(publishResultOutputs.getScenarioIterationKey());
+        workorderApiUtils.getAndValidateImageInfo(publishResultOutputs.getScenarioIterationKey());
     }
 
     @Test
     @TestRail(id = 11974)
     @Description("Upload, Cost, and Publish an Assembly")
     public void testUploadCostAndPublishAssembly() {
-        NewPartRequest productionInfoInputs = setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(assemblyProcessGroup);
 
-        initializeAndUploadAssemblyFile(
-            createAndReturnAssemblyInfo(),
+        workorderApiUtils.initializeAndUploadAssemblyFile(
+            workorderApiUtils.createAndReturnAssemblyInfo(),
             false
         );
 
@@ -167,7 +161,7 @@ public class WorkorderAPITests extends TestUtil {
 
         int i = 0;
         for (AssemblyComponent component : publishedComponentsList) {
-            performUploadCostPublishAssemblyComponentAssertions(
+            workorderApiUtils.performUploadCostPublishAssemblyComponentAssertions(
                 component.getScenarioIterationKey(),
                 fileUploadResources.getCurrentAssembly().getSubComponents().get(i).getScenarioIterationKey().getIteration()
             );
@@ -180,14 +174,15 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {7710})
     @Description("Upload a part, load CAD Metadata, and generate assembly images")
     public void testLoadCadMetadataAndGenerateAssemblyImages() {
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         fileUploadResources.checkValidProcessGroup(assemblyProcessGroup);
 
-        FileResponse assemblyFileResponse = initializeAndUploadAssemblyFile(
-            createAndReturnAssemblyInfo(),
+        FileResponse assemblyFileResponse = workorderApiUtils.initializeAndUploadAssemblyFile(
+            workorderApiUtils.createAndReturnAssemblyInfo(),
             true
         );
 
-        AssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
+        AssemblyImagesOutputs generateAssemblyImagesOutputs = workorderApiUtils.loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
 
         ArrayList<String> images = generateAssemblyImagesOutputs.getGeneratedWebImages();
         images.add(generateAssemblyImagesOutputs.getDesktopImageIdentity());
@@ -203,11 +198,12 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8681})
     @Description("Upload a part, cost it and publish it with comment and description fields")
     public void testPublishCommentAndDescriptionFields() {
-        Object productionInfoInputs = setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
+        Object productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
 
-        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
+        FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
             "bracket_basic.prt",
             sheetMetalProcessGroup,
             false
@@ -265,14 +261,15 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8689})
     @Description("Upload a part, load cad metadata, then get cad metadata to verify that all components are returned")
     public void testLoadCadMetadataReturnsAllComponents() {
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         fileUploadResources.checkValidProcessGroup(assemblyProcessGroup);
 
-        FileResponse assemblyFileResponse = initializeAndUploadAssemblyFile(
-            createAndReturnAssemblyInfo(),
+        FileResponse assemblyFileResponse = workorderApiUtils.initializeAndUploadAssemblyFile(
+            workorderApiUtils.createAndReturnAssemblyInfo(),
             true
         );
 
-        AssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
+        AssemblyImagesOutputs generateAssemblyImagesOutputs = workorderApiUtils.loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
 
         CadMetadataResponse getCadMetadataResponse = fileUploadResources.getCadMetadata(
                 generateAssemblyImagesOutputs.getCadMetadataIdentity());
@@ -291,11 +288,12 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8693})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoSuppress500Version() {
-        NewPartRequest productionInfoInputs = setupProductionInfoInputs();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
 
-        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
+        FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
             "bracket_basic.prt",
             sheetMetalProcessGroup,
             false
@@ -326,7 +324,9 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8693})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoExpose500ErrorVersion() {
-        NewPartRequest productionInfoInputs = setupProductionInfoInputs();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
 
@@ -364,9 +364,10 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 11981)
     @Description("Delete Scenario")
     public void testDeleteScenario() {
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         fileUploadResources.checkValidProcessGroup(sheetMetalProcessGroup);
 
-        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
+        FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
             "bracket_basic.prt",
             sheetMetalProcessGroup,
             false
@@ -381,7 +382,7 @@ public class WorkorderAPITests extends TestUtil {
         assertThat(deleteScenarioOutputs.getScenarioKey().getWorkspaceId(), is(equalTo(scenarioKeyToAssertOn.getWorkspaceId())));
 
         String iteration = ((LinkedHashMap<?, ?>) fileUploadResources.getDeleteScenarioWorkorderDetails()).get("iteration").toString();
-        ScenarioIterationKey scenarioIterationKey = setupScenarioIterationKey(deleteScenarioOutputs, iteration);
+        ScenarioIterationKey scenarioIterationKey = workorderApiUtils.setupScenarioIterationKey(deleteScenarioOutputs, iteration);
 
         GenericErrorResponse genericErrorResponse = acsResources.getScenarioInfoByScenarioIterationKeyNegative(scenarioIterationKey);
 
@@ -393,7 +394,8 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 11990)
     @Description("Edit Scenario - Part - Shallow - Change Scenario Name")
     public void testShallowEditPartScenario() {
-        testShallowEditOfScenario(
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
+        workorderApiUtils.testShallowEditOfScenario(
             "Casting.prt",
             false
         );
@@ -403,7 +405,8 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 11991)
     @Description("Edit Scenario - Assembly - Shallow - Change Scenario Name")
     public void testShallowEditAssemblyScenario() {
-        testShallowEditOfScenario(
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
+        workorderApiUtils.testShallowEditOfScenario(
             "PatternThreadHoles.asm",
             true
         );
@@ -413,7 +416,8 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 12044)
     @Description("Generate All Images - Part File")
     public void testGenerateAllPartImages() {
-        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
+        FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
             "3574727.prt",
             ProcessGroupEnum.ASSEMBLY.getProcessGroup(),
             false
@@ -435,7 +439,8 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = 12047)
     @Description("Generate Simple Image - Part File")
     public void testGenerateSimpleImageData() {
-        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
+        FileUploadOutputs fileUploadOutputs = workorderApiUtils.initializeAndUploadPartFile(
             "3574727.prt",
             ProcessGroupEnum.ASSEMBLY.getProcessGroup(),
             false
@@ -447,261 +452,6 @@ public class WorkorderAPITests extends TestUtil {
         assertThat(Base64.isBase64(
             acsResources.getImageByScenarioIterationKey(generateSimpleImageDataOutputs.getScenarioIterationKey(), false)),
             is(equalTo(true))
-        );
-    }
-
-    /**
-     * Core code for testing shallow edit of a scenario
-     *
-     * @param fileName - String
-     * @param includeSubComponents - boolean flag (inc sub components or not)
-     *                             to enable this method to work for both parts and assemblies
-     */
-    private void testShallowEditOfScenario(String fileName, boolean includeSubComponents) {
-        NewPartRequest productionInfoInputs = setupProductionInfoInputs();
-
-        String processGroup = fileName.contains("asm") ? assemblyProcessGroup : castingProcessGroup;
-        fileUploadResources.checkValidProcessGroup(processGroup);
-
-        FileUploadOutputs fileUploadOutputs;
-        if (includeSubComponents) {
-            initializeAndUploadAssemblyFile(
-                createAndReturnAssemblyInfo(),
-                false
-            );
-            fileUploadOutputs = fileUploadResources.getCurrentFileUploadOutputs();
-        } else {
-            fileUploadOutputs = initializeAndUploadPartFile(fileName, processGroup, false);
-        }
-
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
-            productionInfoInputs,
-            fileUploadOutputs,
-            processGroup,
-            includeSubComponents
-        );
-
-        PublishResultOutputs publishResultOutputs;
-        if (includeSubComponents) {
-            List<AssemblyComponent> assemblyComponents = fileUploadResources.getCurrentAssembly().getSubComponents();
-            publishResultOutputs = fileUploadResources.publishAssembly(
-                costOutputs,
-                Arrays.asList(
-                    assemblyComponents.get(0).getScenarioIterationKey(),
-                    assemblyComponents.get(1).getScenarioIterationKey()
-                )
-            );
-        } else {
-            publishResultOutputs = fileUploadResources.publishPart(costOutputs);
-        }
-
-        EditScenarioOutputs editScenarioOutputs = fileUploadResources.createEditScenarioWorkorderSuppressError(publishResultOutputs);
-
-        ScenarioKey scenarioKeyToAssertOn = costOutputs.getScenarioIterationKey().getScenarioKey();
-        ScenarioKey postEditScenarioKey = editScenarioOutputs.getScenarioIterationKey().getScenarioKey();
-
-        assertThat(postEditScenarioKey.getStateName(), is(not(equalTo(scenarioKeyToAssertOn.getStateName()))));
-        assertThat(postEditScenarioKey.getMasterName(), is(equalTo(scenarioKeyToAssertOn.getMasterName())));
-        assertThat(postEditScenarioKey.getTypeName(), is(equalTo(scenarioKeyToAssertOn.getTypeName())));
-        assertThat(postEditScenarioKey.getWorkspaceId(), is(not(equalTo(0))));
-
-        assertThat(acsResources
-                .getScenarioInfoByScenarioIterationKey(
-                    editScenarioOutputs
-                        .getScenarioIterationKey()
-                ).getScenarioName(),
-            is(equalTo("Test"))
-        );
-    }
-
-    /**
-     * Initialize and upload part file
-     *
-     * @param fileName - String
-     * @param processGroup - String
-     * @param loadCadMetadata - boolean
-     * @return FileUploadOutputs instance
-     */
-    private FileUploadOutputs initializeAndUploadPartFile(String fileName, String processGroup, boolean loadCadMetadata) {
-        FileResponse fileResponse = fileUploadResources.initializePartUpload(
-            fileName,
-            processGroup
-        );
-
-        if (loadCadMetadata) {
-            fileUploadResources.loadAssemblyComponentCadMetadataAddToArrayList(fileResponse);
-        }
-
-        return fileUploadResources.createFileUploadWorkorderSuppressError(
-            fileResponse,
-            scenarioName
-        );
-    }
-
-    /**
-     * Initialize and upload an assembly file
-     *
-     * @param assemblyToUse - AssemblyInfo instance
-     * @param doLoadCadMetadata - boolean flag to determine if load cad metadata call is required or not
-     * @return FileResponse instance
-     */
-    private FileResponse initializeAndUploadAssemblyFile(AssemblyInfo assemblyToUse, boolean doLoadCadMetadata) {
-        List<FileUploadOutputs> componentFileUploadOutputs = new ArrayList<>();
-
-        for (AssemblyInfoComponent component : assemblyToUse.getComponents()) {
-            componentFileUploadOutputs.add(
-                initializeAndUploadPartFile(component.getComponentName(), component.getProcessGroup(), doLoadCadMetadata)
-            );
-        }
-
-        FileResponse assemblyFileResponse = fileUploadResources.initializePartUpload(
-            assemblyToUse.getAssemblyName(),
-            assemblyToUse.getProcessGroup()
-        );
-
-        Assembly assemblyProper = createAssembly(componentFileUploadOutputs, assemblyFileResponse);
-        fileUploadResources.setCurrentAssembly(assemblyProper);
-
-        fileUploadResources.setCurrentFileUploadOutputs(
-            fileUploadResources.createFileUploadWorkorderAssemblySuppressError(
-                assemblyProper
-            )
-        );
-
-        return assemblyFileResponse;
-    }
-
-    /**
-     * Creates assembly based on passed in parameters
-     *
-     * @param componentFileUploadOutputs - List of FileUploadOutputs instances
-     * @param assemblyFileResponse - FileResponse instance
-     * @return Assembly object instance
-     */
-    private Assembly createAssembly(List<FileUploadOutputs> componentFileUploadOutputs, FileResponse assemblyFileResponse) {
-        List<AssemblyComponent> assemblyComponents = new ArrayList<>();
-        for (FileUploadOutputs componentFileUploadOutput : componentFileUploadOutputs) {
-            assemblyComponents.add(AssemblyComponent.builder()
-                .ignored(false)
-                .scenarioIterationKey(componentFileUploadOutput.getScenarioIterationKey())
-                .build()
-            );
-        }
-
-        return Assembly.builder()
-            .scenarioName(scenarioName)
-            .fileKey(assemblyFileResponse.getIdentity())
-            .fileName(assemblyFileResponse.getFilename())
-            .keepFreeBodies(false)
-            .freeBodiesPreserveCad(false)
-            .freeBodiesIgnoreMissingComponent(true)
-            .subComponents(assemblyComponents)
-            .build();
-    }
-
-    /**
-     * Creates and returns assembly info instance
-     * Assembly info is info for initial file upload, whilst Assembly object is used for file upload workorder creation
-     *
-     * @return AssemblyInfo instance
-     */
-    private AssemblyInfo createAndReturnAssemblyInfo() {
-        ArrayList<AssemblyInfoComponent> assemblyComponents = new ArrayList<>();
-
-        assemblyComponents.add(
-            AssemblyInfoComponent.builder()
-                .componentName("3574727.prt")
-                .scenarioName(scenarioName)
-                .processGroup(assemblyProcessGroup)
-                .build()
-        );
-
-        assemblyComponents.add(
-            AssemblyInfoComponent.builder()
-                .componentName("3574875.prt")
-                .scenarioName(scenarioName)
-                .processGroup(assemblyProcessGroup)
-                .build()
-        );
-
-        return AssemblyInfo.builder()
-            .assemblyName("PatternThreadHoles.asm")
-            .scenarioName(scenarioName)
-            .processGroup(assemblyProcessGroup)
-            .components(assemblyComponents)
-            .build();
-    }
-
-    /**
-     * Loads cad metadata and generate assembly images
-     *
-     * @param assemblyFileResponse - FileResponse instance
-     * @return GenerateAssemblyImagesOutputs instance
-     */
-    private AssemblyImagesOutputs loadCadMetadataAndGenerateAssemblyImages(FileResponse assemblyFileResponse) {
-        LoadCadMetadataOutputs assemblyMetadataOutput = fileUploadResources.loadCadMetadataSuppressError(assemblyFileResponse);
-        return fileUploadResources.generateAssemblyImages(
-            assemblyFileResponse,
-            fileUploadResources.getComponentMetadataOutputs(),
-            assemblyMetadataOutput
-        );
-    }
-
-    private void getAndValidateImageInfo(ScenarioIterationKey scenarioIterationKey) {
-        ImageInfoResponse imageInfoResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
-
-        assertThat(imageInfoResponse.getDesktopImageAvailable(), is(equalTo("true")));
-        assertThat(imageInfoResponse.getThumbnailAvailable(), is(equalTo("true")));
-        assertThat(imageInfoResponse.getPartNestingDiagramAvailable(), is(equalTo("false")));
-        assertThat(imageInfoResponse.getWebImageAvailable(), is(equalTo("true")));
-        assertThat(imageInfoResponse.getWebImageRequiresRegen(), is(equalTo("false")));
-    }
-
-    /**
-     * Sets up scenario iteration key
-     *
-     * @param deleteScenarioOutputs - DeleteScenarioOutputs instance
-     * @param iteration - String
-     * @return ScenarioIterationKey instance
-     */
-    private ScenarioIterationKey setupScenarioIterationKey(DeleteScenarioOutputs deleteScenarioOutputs, String iteration) {
-        ScenarioIterationKey scenarioIterationKey = new ScenarioIterationKey();
-        ScenarioKey scenarioKey = new ScenarioKey();
-
-        scenarioKey.setWorkspaceId(deleteScenarioOutputs.getScenarioKey().getWorkspaceId());
-        scenarioKey.setTypeName(deleteScenarioOutputs.getScenarioKey().getTypeName());
-        scenarioKey.setMasterName(deleteScenarioOutputs.getScenarioKey().getMasterName());
-        scenarioKey.setStateName(deleteScenarioOutputs.getScenarioKey().getStateName());
-
-        scenarioIterationKey.setScenarioKey(scenarioKey);
-        scenarioIterationKey.setIteration(Integer.parseInt(iteration));
-
-        return scenarioIterationKey;
-    }
-
-    /**
-     * Performs upload cost and publish assembly component assertions
-     *
-     * @param scenarioIterationKey - ScenarioIterationKey instance
-     * @param notExpectedIteration - Integer
-     */
-    private void performUploadCostPublishAssemblyComponentAssertions(ScenarioIterationKey scenarioIterationKey, Integer notExpectedIteration) {
-        assertThat(scenarioIterationKey.getScenarioKey().getMasterName(), is(startsWith("3574")));
-        assertThat(scenarioIterationKey.getScenarioKey().getTypeName(), is(equalTo("partState")));
-        assertThat(scenarioIterationKey.getScenarioKey().getWorkspaceId(), is(equalTo(0)));
-        assertThat(scenarioIterationKey.getIteration(), is(not(notExpectedIteration)));
-    }
-
-    /**
-     * Sets up production info inputs to allow for costing of a part or assembly
-     *
-     * @return NewPartRequest instance
-     */
-    public NewPartRequest setupProductionInfoInputs() {
-        return JsonManager.deserializeJsonFromFile(
-            FileResourceUtil.getResourceAsFile(
-                "CreatePartData.json"
-            ).getPath(), NewPartRequest.class
         );
     }
 }

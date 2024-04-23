@@ -8,6 +8,7 @@ import com.apriori.acs.api.models.response.acs.costresults.PropertyValueMap;
 import com.apriori.acs.api.models.response.acs.costresults.ResultMapBean;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.api.tests.workorders.WorkorderAPITests;
+import com.apriori.acs.api.tests.workorders.WorkorderApiUtils;
 import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -26,12 +27,12 @@ public class CostResultsTests {
 
     private final UserCredentials user;
     private AcsResources acsResources;
-    private WorkorderAPITests workorderAPITests;
+    private WorkorderApiUtils workorderApiUtils;
 
     public CostResultsTests() {
         user = UserUtil.getUser("common");
         acsResources = new AcsResources(user);
-        workorderAPITests = new WorkorderAPITests();
+        workorderApiUtils = new WorkorderApiUtils(user);
     }
 
     private void costResultsAssertion(CostResultsRootResponse costResultsRootItems, String processGroupName) {
@@ -61,7 +62,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsAdditiveManufacturing() {
         String processGroup = ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "ADD-LOW-001.SLDPRT", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "ADD-LOW-001.SLDPRT", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Additive Manufacturing");
@@ -73,7 +74,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsBarAndTubeFab() {
         String processGroup = ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "B&T-LOW-001.SLDPRT", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "B&T-LOW-001.SLDPRT", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Bar & Tube Fab");
@@ -85,7 +86,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsForging() {
         String processGroup = ProcessGroupEnum.FORGING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "Pin.SLDPRT", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "Pin.SLDPRT", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Forging");
@@ -97,7 +98,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsPowderMetal() {
         String processGroup = ProcessGroupEnum.POWDER_METAL.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "116-5809.prt.1", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "116-5809.prt.1", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Powder Metal");
@@ -109,7 +110,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsRapidPrototyping() {
         String processGroup = ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "blow_mold_duct_1.prt.1", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "blow_mold_duct_1.prt.1", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Rapid Prototyping");
@@ -121,7 +122,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsRotoBlowMolding() {
         String processGroup = ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "blow_mold_duct_1.prt.1", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "blow_mold_duct_1.prt.1", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Roto & Blow Molding");
@@ -133,7 +134,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsSheetMetal() {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Sheet Metal");
@@ -145,7 +146,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsSheetMetalHydroforming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "FlangedRound.SLDPRT", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "FlangedRound.SLDPRT", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Sheet Metal - Hydroforming");
@@ -157,7 +158,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsSheetMetalTransferDie() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "bracket_basic.prt", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Sheet Metal - Transfer Die");
@@ -169,7 +170,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsSheetMetalStretchForming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "Hydroforming.stp", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "Hydroforming.stp", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Sheet Metal - Stretch Forming");
@@ -181,7 +182,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsSheetMetalRollForming() {
         String processGroup = ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "z_purlin.prt.1", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "z_purlin.prt.1", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Sheet Metal - Roll Forming");
@@ -193,7 +194,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsStockMachining() {
         String processGroup = ProcessGroupEnum.STOCK_MACHINING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "Machining-DTC_Issue_SideMillingLengthDia.SLDPRT", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "Machining-DTC_Issue_SideMillingLengthDia.SLDPRT", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Stock Machining");
@@ -205,7 +206,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsPlasticMolding() {
         String processGroup = ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "M3CapScrew.CATPart", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "M3CapScrew.CATPart", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Plastic Molding");
@@ -217,7 +218,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsCastingDie() {
         String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "CastedPart.CATPart", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "CastedPart.CATPart", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Casting - Die");
@@ -229,7 +230,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsCastingSand() {
         String processGroup = ProcessGroupEnum.CASTING_SAND.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "SandCastIssues.SLDPRT", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "SandCastIssues.SLDPRT", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Casting - Sand");
@@ -241,7 +242,7 @@ public class CostResultsTests {
     public void testGetCostRootResultsCastingInvestment() {
         String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();
 
-        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "piston_model1.prt", workorderAPITests.setupProductionInfoInputs());
+        CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "piston_model1.prt", workorderApiUtils.setupProductionInfoInputs());
         CostResultsRootResponse costResultsRootResponse = acsResources.getCostResults(costOutputs.getScenarioIterationKey(), "ROOT", CostResultsRootResponse.class).getResponseEntity();
 
         costResultsAssertion(costResultsRootResponse, "Casting - Investment");
