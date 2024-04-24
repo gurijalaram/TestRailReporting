@@ -46,7 +46,7 @@ import java.util.stream.Stream;
 public class JasperApiUtils {
     private SoftAssertions softAssertions = new SoftAssertions();
     private JasperApiInputControlsPathEnum reportValueForInputControls;
-    private ReportRequest reportRequest; 
+    private ReportRequest reportRequest;
     private String reportsJsonFileName;
     private String exportSetName;
     private String processGroupName;
