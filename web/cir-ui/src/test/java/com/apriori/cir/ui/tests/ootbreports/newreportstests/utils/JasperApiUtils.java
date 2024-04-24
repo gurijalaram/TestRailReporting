@@ -312,35 +312,6 @@ public class JasperApiUtils {
     }
 
     /**
-     * Generic test for currency in Assembly Cost Reports (both A4 and Letter)
-     */
-    public void genericAssemblyCostCurrencyTest() {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
-        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
-
-        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), exportSetName);
-        setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), currentDateTime);
-
-        Stopwatch timer = Stopwatch.createUnstarted();
-        timer.start();
-        JasperReportSummary jasperReportSummaryGBP = jasperReportUtil.generateJasperReportSummary(reportRequest);
-        timer.stop();
-        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
-
-        String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
-        String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
-
-        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
-        JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(reportRequest);
-
-        String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
-        String capInvValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
-
-        softAssertions.assertThat(currencyValueGBP).isNotEqualTo(currencyValueUSD);
-        softAssertions.assertThat(capInvValueGBP).isNotEqualTo(capInvValueUSD);
-    }
-
-    /**
      * Generic test of currency code for use on a dtc report
      *
      * @param partName          - String of partName which is to be used

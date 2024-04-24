@@ -32,6 +32,21 @@ public class AssemblyCostA4ReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = 26907)
     @Description("Input controls - Currency code - A4 Report")
     public void testCurrency() {
-        jasperApiUtils.genericAssemblyCostCurrencyTest();
+        GenericAssemblyCostTests genericAssemblyCostTests = new GenericAssemblyCostTests();
+        genericAssemblyCostTests.genericAssemblyCostCurrencyTest(
+            jasperApiUtils
+        );
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("3008")
+    @TestRail(id = 3008)
+    @Description("Verify Export Set drop-down functions correctly - Top-Level - Assembly Cost (A4) Report")
+    public void testExportSetDropdownFunctionality() {
+        GenericAssemblyCostTests genericAssemblyCostTests = new GenericAssemblyCostTests();
+        genericAssemblyCostTests.testExportSetName(
+            jasperApiUtils
+        );
     }
 }

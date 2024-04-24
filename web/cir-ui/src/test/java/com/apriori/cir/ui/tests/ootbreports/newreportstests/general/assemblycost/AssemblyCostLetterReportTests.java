@@ -32,6 +32,9 @@ public class AssemblyCostLetterReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = {13712})
     @Description("Input controls - Currency code")
     public void testCurrency() {
-        jasperApiUtils.genericAssemblyCostCurrencyTest();
+        GenericAssemblyCostTests genericAssemblyCostTests = new GenericAssemblyCostTests();
+        genericAssemblyCostTests.genericAssemblyCostCurrencyTest(
+            jasperApiUtils
+        );
     }
 }
