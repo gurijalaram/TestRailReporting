@@ -50,20 +50,20 @@ public class TableHeadersTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6347})
+    @TestRail(id = {6347,30931})
     @Description("Test added columns are displayed in the workspace")
     public void testAddColumnHeaders() {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .configure()
-            .selectColumn(ColumnsEnum.DESCRIPTION)
+            .selectColumn(ColumnsEnum.COST_MODE)
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.DESCRIPTION.getColumns()));
+        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.COST_MODE.getColumns()));
 
         explorePage.configure()
-            .selectColumn(ColumnsEnum.DESCRIPTION)
+            .selectColumn(ColumnsEnum.COST_MODE)
             .moveColumn(DirectionEnum.LEFT)
             .submit(ExplorePage.class);
     }
