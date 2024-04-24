@@ -200,7 +200,7 @@ public class AchUsersTests extends AchTestUtil {
 
     @Test
     @TestRail(id = {30930})
-    @Description("unable to create AP_STAFF_USER for widgets customer")
+    @Description("unable to create AP_STAFF_USER for widgets customer") 
     public void unableToCreateApStaffUserForWidgets() {
         String userName = new GenerateStringUtil().generateUserName();
         ResponseWrapper<AchErrorResponse> newUser = createNewUser(AchErrorResponse.class, customerIdentity, userName, domain, HttpStatus.SC_FORBIDDEN, requestEntityUtilNoAdmin);
