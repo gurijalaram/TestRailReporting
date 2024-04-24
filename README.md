@@ -1,4 +1,4 @@
-# How to setup automation.
+# How to setup automation 
 
 ## Complete Prerequisites
 - Java 11
