@@ -1,4 +1,4 @@
-package com.apriori.bcm.api.enums;
+package com.apriori.cus.api.enums;
 
 import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
 import com.apriori.shared.util.properties.PropertiesContext;
