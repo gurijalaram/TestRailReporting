@@ -3,6 +3,7 @@ package com.apriori.shared.util.models.response.component.componentiteration;
 import com.apriori.serialization.util.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -34,7 +35,8 @@ public class Material {
     private String altName5;
     private Boolean canBlowMold;
     private Boolean canDieCast;
-    private Boolean canIM_SFM;
+    @JsonProperty("canIM_SFM")
+    private Boolean canIMSFM;
     private Boolean canPermanentMold;
     private Boolean canRotationalMold;
     private Boolean canRIM;
@@ -65,7 +67,8 @@ public class Material {
     private Double heatOfFusion;
     private Double injectionTemperature;
     private Double liquidusTemperature;
-    private Double k;
+    @JsonProperty("k")
+    private Double materialK;
     private Double lowerFormingTemperature;
     private String manufacturer;
     private String materialCutCodeName;
@@ -80,7 +83,8 @@ public class Material {
     private Double minGreenDensity;
     private Double minWallThickness;
     private String morphology;
-    private Double n;
+    @JsonProperty("n")
+    private Double materialN;
     private String name;
     private Double specificHeat;
     private Double thermalConductivity;
@@ -88,7 +92,8 @@ public class Material {
     private Double recyclePercentage;
     private Double tappedDensity;
     private Double possionRatio;
-    private Double r;
+    @JsonProperty("r")
+    private Double materialR;
     private Double setTemperature;
     private Double scrapCostPercent;
     private Double shearStrength;

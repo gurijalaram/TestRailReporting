@@ -42,8 +42,8 @@ public class EmailConnection {
         })).expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<EmailTokenResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
-        log.info(String.format("ACCESSTOKEN --- %s", responseWrapper.getResponseEntity().getAccess_token()));
-        return responseWrapper.getResponseEntity().getAccess_token();
+        log.info(String.format("ACCESSTOKEN --- %s", responseWrapper.getResponseEntity().getAccessToken()));
+        return responseWrapper.getResponseEntity().getAccessToken();
     }
 
     /**
