@@ -1081,4 +1081,29 @@ public class AcsResources {
         headers.put("apriori.tenant", defaultString);
         headers.put("Authorization", "Bearer " + token);
     }
+
+    /**
+     * Reset All User Preferences
+     *
+     * @param costTableDecimalPlaces - String - value to set
+     * @param useVpe                 - String - value to set
+     * @param toleranceMode          - String - value to set
+     * @return GenericResourceCreatedResponse instance
+     */
+    public GenericResourceCreatedResponse resetSettings(String costTableDecimalPlaces, String useVpe, String toleranceMode) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil_Old
+            .init(AcsApiEnum.USER_PREFERENCES, GenericResourceCreatedResponse.class)
+            .headers(headers)
+            .body(UserPreferencesInputs.builder()
+                .costTableDecimalPlaces(costTableDecimalPlaces)
+                .prodInfoDefaultUseVpeForAllProcesses(useVpe)
+                .tolerancePolicyDefaultsToleranceMode(toleranceMode)
+                .build())
+            .inlineVariables(validUsername);
+
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
 }
