@@ -11,17 +11,26 @@
         {
           "componentName": "big ring",
           "extension": ".SLDPRT",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "Pin",
           "extension": ".SLDPRT",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "small ring",
           "extension": ".SLDPRT",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -36,17 +45,26 @@
         {
           "componentName": "auto big ring",
           "extension": ".SLDPRT",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "auto pin",
           "extension": ".SLDPRT",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "auto small ring",
           "extension": ".SLDPRT",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -61,12 +79,18 @@
         {
           "componentName": "Miss_Conductor",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "Miss_Fuse_Connector_Housing",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -81,12 +105,18 @@
         {
           "componentName": "titan battery release",
           "extension": ".SLDPRT",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan battery",
           "extension": ".SLDPRT",
-          "processGroup": "STOCK_MACHINING"
+          "processGroup": "STOCK_MACHINING",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -101,17 +131,26 @@
         {
           "componentName": "flange",
           "extension": ".CATPart",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "nut",
           "extension": ".CATPart",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "bolt",
           "extension": ".CATPart",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -126,47 +165,74 @@
         {
           "componentName": "titan body RH",
           "extension": ".SLDPRT",
-          "processGroup": "SHEET_PLASTIC"
+          "processGroup": "SHEET_PLASTIC",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan body LH",
           "extension": ".SLDPRT",
-          "processGroup": "SHEET_PLASTIC"
+          "processGroup": "SHEET_PLASTIC",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan power switch",
           "extension": ".SLDPRT",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan speed switch",
           "extension": ".SLDPRT",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan bulk head",
           "extension": ".SLDPRT",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan bit holder",
           "extension": ".SLDPRT",
-          "processGroup": "CASTING_DIE"
+          "processGroup": "CASTING_DIE",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan forward reverse switch",
           "extension": ".SLDPRT",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan torque setting",
           "extension": ".SLDPRT",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "5mm drill bit",
           "extension": ".SLDPRT",
-          "processGroup": "CASTING"
+          "processGroup": "CASTING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan battery ass",
@@ -176,12 +242,18 @@
             {
               "componentName": "titan battery release",
               "extension": ".SLDPRT",
-              "processGroup": "PLASTIC_MOLDING"
+              "processGroup": "PLASTIC_MOLDING",
+              "metadata" : {
+                "routing" : ""
+              }
             },
             {
               "componentName": "titan battery",
               "extension": ".SLDPRT",
-              "processGroup": "STOCK_MACHINING"
+              "processGroup": "STOCK_MACHINING",
+              "metadata" : {
+                "routing" : ""
+              }
             }
           ]
         }
@@ -198,17 +270,26 @@
         {
           "componentName": "titan charger base",
           "extension": ".SLDPRT",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan charger lead",
           "extension": ".SLDPRT",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan charger upper",
           "extension": ".SLDPRT",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "titan battery ass",
@@ -221,12 +302,18 @@
             {
               "componentName": "titan battery release",
               "extension": ".SLDPRT",
-              "processGroup": "PLASTIC_MOLDING"
+              "processGroup": "PLASTIC_MOLDING",
+              "metadata" : {
+                "routing" : ""
+              }
             },
             {
               "componentName": "titan battery",
               "extension": ".SLDPRT",
-              "processGroup": "STOCK_MACHINING"
+              "processGroup": "STOCK_MACHINING",
+              "metadata" : {
+                "routing" : ""
+              }
             }
           ]
         }
@@ -243,12 +330,18 @@
         {
           "componentName": "piston",
           "extension": ".prt.5",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "piston_pin",
           "extension": ".prt.1",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -263,22 +356,34 @@
         {
           "componentName": "piston cover_model1",
           "extension": ".prt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "piston pin_model1",
           "extension": ".prt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "piston rod_model1",
           "extension": ".prt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "piston_model1",
           "extension": ".prt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -293,22 +398,34 @@
         {
           "componentName": "Part0001",
           "extension": ".ipt",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "Part0002",
           "extension": ".ipt",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "Part0003",
           "extension": ".ipt",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "Part0004",
           "extension": ".ipt",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -323,17 +440,26 @@
         {
           "componentName": "stand",
           "extension": ".prt.1",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : "Injection Mold"
+          }
         },
         {
           "componentName": "drive",
           "extension": ".prt.1",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : "Injection Mold"
+          }
         },
         {
           "componentName": "joint",
           "extension": ".prt.1",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : "Injection Mold"
+          }
         }
       ]
     },
@@ -348,12 +474,18 @@
         {
           "componentName": "Part0005a",
           "extension": ".ipt",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "Part0005b",
           "extension": ".ipt",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -368,17 +500,26 @@
         {
           "componentName": "Part0004",
           "extension": ".ipt",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "Part0003",
           "extension": ".ipt",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "Part0002",
           "extension": ".ipt",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -458,127 +599,202 @@
         {
           "componentName": "505-04426-001 1 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "550-05628-401 PRIMARY 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "550-05676-001 1 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "MS14108-3 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "505-04596-001 1 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "550-05526-001 1 1 --A",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "550-05629-401 PRIMARY 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "550-05673-401 PRIMARY 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "550-05676-002 1 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "550-05682-001 1 1 --A",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "550-05683-001 1 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "550-05683-002 1 1 --",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "550-05689-001 1 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "550-05690-001 1 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "CCR244SS-3-2 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "MS14108-15 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "MS14218AD4-4 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "MS20392-1C15 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "MS20470AD4-5 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "MS20470AD4-6 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "MS21059L3 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "MS21059L08 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "MS24665-132 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "NAS1789-3 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "NAS9309M-6-04 1 ---",
           "extension": ".CATPart",
-          "processGroup": "FORGING"
+          "processGroup": "FORGING",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -593,82 +809,130 @@
         {
           "componentName": "centre bolt",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "centre washer",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "display",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "gasket",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "Handle",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "left paddle",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "steer wheel support",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "seat lock",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "mechanism body",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "paddle bar",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "leg cover",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "leg",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "right paddle",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "washer",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "seat",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "pin",
           "extension": ".ipt",
-          "processGroup": "PLASTIC_MOLDING"
+          "processGroup": "PLASTIC_MOLDING",
+          "metadata" : {
+            "routing" : ""
+          }
         }
       ]
     },
@@ -750,17 +1014,26 @@
         {
           "componentName": "3570824",
           "extension": ".prt.1",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "0200613",
           "extension": ".prt.1",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "0362752",
           "extension": ".prt.1",
-          "processGroup": "SHEET_METAL"
+          "processGroup": "SHEET_METAL",
+          "metadata" : {
+            "routing" : ""
+          }
         },
         {
           "componentName": "sub-sub-asm",
@@ -770,12 +1043,18 @@
             {
               "componentName": "3570823",
               "extension": ".prt.1",
-              "processGroup": "SHEET_METAL"
+              "processGroup": "SHEET_METAL",
+              "metadata" : {
+                "routing" : ""
+              }
             },
             {
               "componentName": "3571050",
               "extension": ".prt.1",
-              "processGroup": "SHEET_METAL"
+              "processGroup": "SHEET_METAL",
+              "metadata" : {
+                "routing" : ""
+              }
             }
           ]
         }
