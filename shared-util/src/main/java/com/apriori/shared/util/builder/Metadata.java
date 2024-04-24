@@ -13,4 +13,5 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Metadata implements Serializable {
     private String category;
+    private String routing;
 }
