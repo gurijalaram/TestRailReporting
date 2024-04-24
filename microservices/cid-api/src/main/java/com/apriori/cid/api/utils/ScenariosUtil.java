@@ -194,7 +194,7 @@ public class ScenariosUtil {
      * @return list of scenario items
      */
     public GroupCostResponse postGroupCostScenarios(List<ComponentInfoBuilder> componentInfo) {
-        CostingTemplate costingTemplate = postCostingTemplate(componentInfo.get(0));
+        CostingTemplate costingTemplate = postCostingTemplate(componentInfo.get(0)).getCostingTemplate();
 
         Iterators.partition(componentInfo.iterator(), CHUNK_SIZE).forEachRemaining(partitioned -> {
 
@@ -250,26 +250,19 @@ public class ScenariosUtil {
      * @return list of scenario items
      */
     public ScenarioResponse postCostScenario(ComponentInfoBuilder componentInfo) {
-        CostingTemplate costingTemplate = postCostingTemplate(componentInfo);
 
         final RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-                .body("costingInputs", costingTemplate);
+                .body("costingInputs", postCostingTemplate(componentInfo).getCostingTemplate());
 
         HTTPRequest.build(requestEntity).post();
 
         return getScenarioCompleted(componentInfo);
     }
 
-    /**
-     * Calls an api with the POST verb
-     *
-     * @param componentInfo - the component info object
-     * @return response object
-     */
-    public CostingTemplate postCostingTemplate(ComponentInfoBuilder componentInfo) {
+    public ComponentInfoBuilder postCostingTemplate(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplate.class)
                 .token(componentInfo.getUser().getToken())
@@ -278,10 +271,10 @@ public class ScenariosUtil {
         ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).post();
 
         CostingTemplate template = response.getResponseEntity();
-        template.setCostingTemplateIdentity(template.getIdentity());
-        template.setDeleteTemplateAfterUse(template.getDeleteTemplateAfterUse());
+        componentInfo.setCostingTemplate(template);
+        componentInfo.getCostingTemplate().setCostingTemplateIdentity(template.getIdentity());
 
-        return template;
+        return componentInfo;
     }
 
     /**
