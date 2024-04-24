@@ -199,6 +199,18 @@ public class AchUsersTests extends AchTestUtil {
     }
 
     @Test
+    @TestRail(id = {30930})
+    @Description("unable to create AP_STAFF_USER for widgets customer")
+    public void unableToCreateApStaffUserForWidgets() {
+        String userName = new GenerateStringUtil().generateUserName();
+        ResponseWrapper<AchErrorResponse> newUser = createNewUser(AchErrorResponse.class, customerIdentity, userName, domain, HttpStatus.SC_FORBIDDEN, requestEntityUtilNoAdmin);
+
+        soft.assertThat(newUser.getResponseEntity().getMessage())
+            .isEqualTo("Operation not allowed.");
+        soft.assertAll();
+    }
+
+    @Test
     @TestRail(id = {29182, 29184})
     @Description("Error when non admin user trying to edit and delete user")
     public void editDeleteNotAdmin() {
