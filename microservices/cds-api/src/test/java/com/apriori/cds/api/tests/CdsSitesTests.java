@@ -7,6 +7,7 @@ import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Site;
+import com.apriori.shared.util.models.response.SiteExpand;
 import com.apriori.shared.util.models.response.Sites;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -111,6 +112,24 @@ public class CdsSitesTests {
 
         soft.assertThat(response.getResponseEntity().getName()).isEqualTo(siteName);
         soft.assertThat(response.getResponseEntity().getCustomerIdentity()).isEqualTo(customerIdentity);
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {30861})
+    @Description("get API Expand for Customer Sites API")
+    public void getApiExpandForCustomerSites() {
+        String paramName = "_expand";
+        String paramValue = "deployments,deployments.installations.features";
+        Customer customer = cdsTestUtil.getAprioriInternal();
+        String siteIdentity =
+            cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customer.getIdentity())
+                .getResponseEntity().getItems().get(0).getIdentity();
+
+        ResponseWrapper<SiteExpand> response =
+            cdsTestUtil.getCommonRequestWithParams(CDSAPIEnum.SITE_BY_CUSTOMER_SITE_ID, SiteExpand.class, HttpStatus.SC_OK, paramName, paramValue, customer.getIdentity(), siteIdentity);
+        soft.assertThat(response.getResponseEntity().get_expand())
+            .contains("deployments", "deployments.installations.applications", "deployments.installations.features");
         soft.assertAll();
     }
 }
