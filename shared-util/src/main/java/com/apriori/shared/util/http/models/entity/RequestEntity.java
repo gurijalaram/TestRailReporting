@@ -13,7 +13,6 @@ import lombok.Singular;
 import lombok.experimental.Accessors;
 import org.openqa.selenium.WebDriver;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,29 +33,36 @@ import java.util.Map;
 public class RequestEntity {
     private String apUserContext;
     private Object body;
+    @Builder.Default
     private int connectionTimeout = 60000;
     private String customBody;
+    @Builder.Default
     private boolean defaultAuthorizationData = false;
     private WebDriver driver;
     private EndpointEnum endpoint;
+    @Builder.Default
     private EndpointType endpointType = EndpointType.EXTERNAL;
     private Integer expectedResponseCode;
+    @Builder.Default
     private boolean followRedirection = true;
     private QueryParams queryParams;
     @Singular
-    private Map<String, String> headers = new HashMap<>();
+    private Map<String, String> headers;
     private Object[] inlineVariablesArray;
     private MultiPartFiles multiPartFiles;
     private Class<?> returnType;
+    @Builder.Default
     private int socketTimeout = 60000;
     private String token;
+    @Builder.Default
     private boolean urlEncodingEnabled = true;
     @Singular
-    private List<Map<String, ?>> urlParams = new ArrayList<>();
+    private List<Map<String, ?>> urlParams;
+    @Builder.Default
     private boolean useCookie = false;
     private UserAuthenticationEntity userAuthenticationEntity;
     @Singular
-    private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
+    private List<Map<String, ?>> xwwwwFormUrlEncodeds;
 
     public RequestEntity body(String node, Object body) {
         this.body = new HashMap<String, Object>() {

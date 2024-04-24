@@ -41,8 +41,8 @@ public class Deployment {
     private String salesforceId;
     private Boolean active;
     private String apVersion;
-    private List<Installation> installations = null;
-    private List<Object> siteIdentities = null;
+    private List<Installation> installations;
+    private List<Object> siteIdentities;
     private String deploymentType;
     private Integer maxCadFileRetentionDays;
     private Integer maxCadFileSize;
