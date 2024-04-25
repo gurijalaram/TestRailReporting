@@ -1085,21 +1085,44 @@ public class AcsResources {
     /**
      * Reset All User Preferences
      *
-     * @param costTableDecimalPlaces - String - value to set
-     * @param useVpe                 - String - value to set
-     * @param toleranceMode          - String - value to set
      * @return GenericResourceCreatedResponse instance
      */
-    public GenericResourceCreatedResponse resetSettings(String costTableDecimalPlaces, String useVpe, String toleranceMode) {
+    public GenericResourceCreatedResponse resetSettings() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil_Old
             .init(AcsApiEnum.USER_PREFERENCES, GenericResourceCreatedResponse.class)
             .headers(headers)
             .body(UserPreferencesInputs.builder()
-                .costTableDecimalPlaces(costTableDecimalPlaces)
-                .prodInfoDefaultUseVpeForAllProcesses(useVpe)
-                .tolerancePolicyDefaultsToleranceMode(toleranceMode)
+                .costTableDecimalPlaces("2")
+                .tolerancePolicyDefaultsToleranceMode("SYSTEMDEFAULT")
+                .prodInfoVpe("aPriori USA")
+                .defaultScenarioName("Initial")
+                .prodInfoDefaultAnnualVolume("5500")
+                .prodInfoDefaultBatchSize(null)
+                .prodInfoDefaultMaterial(null)
+                .prodInfoDefaultPg(null)
+                .prodInfoDefaultMaterialCatalogName(null)
+                .prodInfoDefaultProductionLife("5")
+                .tolerancePolicyDefaultsBendAngleToleranceOverride(null)
+                .tolerancePolicyDefaultsCadToleranceReplacement(null)
+                .tolerancePolicyDefaultsDiamToleranceOverride(null)
+                .tolerancePolicyDefaultsFlatnessOverride(null)
+                .tolerancePolicyDefaultsMinCadToleranceThreshhold(null)
+                .tolerancePolicyDefaultsFlatnessOverride(null)
+                .tolerancePolicyDefaultsPerpendicularityOverride(null)
+                .tolerancePolicyDefaultsPositionToleranceOverride(null)
+                .tolerancePolicyDefaultsPerpendicularityOverride(null)
+                .tolerancePolicyDefaultsParallelismOverride(null)
+                .tolerancePolicyDefaultsProfileOfSurfaceOverride(null)
+                .tolerancePolicyDefaultsRoughnessOverride(null)
+                .tolerancePolicyDefaultsRoughnessRzOverride(null)
+                .tolerancePolicyDefaultsRunoutOverride(null)
+                .tolerancePolicyDefaultsStraightnessOverride(null)
+                .tolerancePolicyDefaultsSymmetryOverride(null)
+                .tolerancePolicyDefaultsToleranceOverride(null)
+                .tolerancePolicyDefaultsTotalRunoutOverride(null)
+                .tolerancePolicyDefaultsBendAngleToleranceOverride(null)
                 .build())
             .inlineVariables(validUsername);
 
