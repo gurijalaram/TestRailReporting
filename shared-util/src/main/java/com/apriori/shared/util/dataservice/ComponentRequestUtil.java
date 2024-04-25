@@ -40,19 +40,16 @@ public class ComponentRequestUtil {
     }
 
     /**
-     * Gets a unique component
-     * N.B The part name is unique. Currently filtering on 3 criteria as seen below.
-     * A future modification could be setting metadata on each object with a boolean 'isPartUnique', this would make filtering much easier.
+     * Gets a component specified by name
+     * N.B The part name is unique
      *
      * @param componentName - the part name
      * @return component builder object
      */
-    public ComponentInfoBuilder getUniqueComponent(String componentName) {
+    public ComponentInfoBuilder getComponent(String componentName) {
 
-        component = COMPONENT_REQUEST.getAllComponents()
+        component = COMPONENT_REQUEST.getComponents()
             .stream()
-            .filter(o -> o.getProcessGroup().equals(ProcessGroupEnum.TWO_MODEL_MACHINING) ||
-                o.getProcessGroup().equals(ProcessGroupEnum.WITHOUT_PG))
             .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
@@ -66,16 +63,19 @@ public class ComponentRequestUtil {
     }
 
     /**
-     * Gets a component specified by name
-     * N.B The part name is unique
+     * Gets a unique component
+     * N.B The part name is unique. Currently filtering on 3 criteria as seen below.
+     * A future modification could be setting metadata on each object with a boolean 'isPartUnique', this would make filtering much easier.
      *
      * @param componentName - the part name
      * @return component builder object
      */
-    public ComponentInfoBuilder getComponent(String componentName) {
+    public ComponentInfoBuilder getUniqueComponent(String componentName) {
 
-        component = COMPONENT_REQUEST.getComponents()
+        component = COMPONENT_REQUEST.getAllComponents()
             .stream()
+            .filter(o -> o.getProcessGroup().equals(ProcessGroupEnum.TWO_MODEL_MACHINING) ||
+                o.getProcessGroup().equals(ProcessGroupEnum.WITHOUT_PG))
             .filter(component -> component.getComponentName().equalsIgnoreCase(componentName))
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));

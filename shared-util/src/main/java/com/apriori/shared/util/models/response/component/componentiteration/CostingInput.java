@@ -36,9 +36,6 @@ public class CostingInput {
     private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
     private Gcds gcdProperties;
 
-    static class ProcessSetupOptions {
-    }
-
     static class SecondaryProcesses {
     }
 

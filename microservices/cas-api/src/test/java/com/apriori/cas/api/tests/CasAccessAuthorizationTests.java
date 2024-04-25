@@ -38,11 +38,11 @@ public class CasAccessAuthorizationTests {
     private Customer customer;
     private String url;
     private String customerIdentity;
-    private String aPCustomerIdentity;
+    private String apCustomerIdentity;
     private CustomerAssociation customerAssociationToAprioriInternal;
     private ResponseWrapper<AssociationUserItems> associationUser;
     private String associationIdentity;
-    private String aPStaffIdentity;
+    private String apStaffIdentity;
     private SoftAssertions soft = new SoftAssertions();
     private UserCredentials currentUser = UserUtil.getUser("admin");
 
@@ -51,15 +51,15 @@ public class CasAccessAuthorizationTests {
     public void setup() {
         url = Constants.getServiceUrl();
         RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
-        aPCustomerIdentity = casTestUtil.getAprioriInternal().getIdentity();
-        aPStaffIdentity = casTestUtil.getCommonRequest(CASAPIEnum.CURRENT_USER, User.class, HttpStatus.SC_OK).getResponseEntity().getIdentity();
+        apCustomerIdentity = casTestUtil.getAprioriInternal().getIdentity();
+        apStaffIdentity = casTestUtil.getCommonRequest(CASAPIEnum.CURRENT_USER, User.class, HttpStatus.SC_OK).getResponseEntity().getIdentity();
         customer = casTestUtil.createCustomer().getResponseEntity();
         customerIdentity = customer.getIdentity();
         customerAssociationToAprioriInternal = casTestUtil.findCustomerAssociation(casTestUtil.getAprioriInternal(), customer);
         associationIdentity = customerAssociationToAprioriInternal.getIdentity();
-        associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
+        associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
-        customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
+        customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", apCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
 
     }
 
@@ -72,7 +72,7 @@ public class CasAccessAuthorizationTests {
         }
         if (customerAssociationUserIdentityEndpoint != null) {
             casTestUtil.delete(CASAPIEnum.CUSTOMER_ASSOCIATIONS_USER,
-                aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity);
+                apCustomerIdentity, associationIdentity, customerAssociationUserIdentity);
         }
         if (customerIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
@@ -83,8 +83,8 @@ public class CasAccessAuthorizationTests {
     @Description("Creating a new access authorization for customer and getting it")
     @TestRail(id = {5586, 12177})
     public void addAccessAuthorization() {
-        ResponseWrapper<AccessAuthorization> requestAccess = casTestUtil.addAccessAuthorization(AccessAuthorization.class, customerIdentity, aPStaffIdentity, "service-account.1", HttpStatus.SC_CREATED);
-        soft.assertThat(requestAccess.getResponseEntity().getUserIdentity()).isEqualTo(aPStaffIdentity);
+        ResponseWrapper<AccessAuthorization> requestAccess = casTestUtil.addAccessAuthorization(AccessAuthorization.class, customerIdentity, apStaffIdentity, "service-account.1", HttpStatus.SC_CREATED);
+        soft.assertThat(requestAccess.getResponseEntity().getUserIdentity()).isEqualTo(apStaffIdentity);
         String accessAuthorizationId = requestAccess.getResponseEntity().getIdentity();
 
         ResponseWrapper<AccessAuthorizations> accessAuthorizations = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_AUTHORIZATIONS, AccessAuthorizations.class, HttpStatus.SC_OK, customerIdentity);
@@ -101,11 +101,11 @@ public class CasAccessAuthorizationTests {
     @Description("Return a single access authorization by its identity.")
     @TestRail(id = {16547, 12183})
     public void getAccessAuthorizationById() {
-        ResponseWrapper<AccessAuthorization> requestAccess = casTestUtil.addAccessAuthorization(AccessAuthorization.class, customerIdentity, aPStaffIdentity, "service-account.1", HttpStatus.SC_CREATED);
+        ResponseWrapper<AccessAuthorization> requestAccess = casTestUtil.addAccessAuthorization(AccessAuthorization.class, customerIdentity, apStaffIdentity, "service-account.1", HttpStatus.SC_CREATED);
         String accessAuthorizationId = requestAccess.getResponseEntity().getIdentity();
 
         ResponseWrapper<AccessAuthorization> authorizationResponse = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_AUTHORIZATION_BY_ID, AccessAuthorization.class, HttpStatus.SC_OK, customerIdentity, accessAuthorizationId);
-        soft.assertThat(authorizationResponse.getResponseEntity().getUserIdentity()).isEqualTo(aPStaffIdentity);
+        soft.assertThat(authorizationResponse.getResponseEntity().getUserIdentity()).isEqualTo(apStaffIdentity);
         soft.assertAll();
 
         casTestUtil.delete(CASAPIEnum.ACCESS_AUTHORIZATION_BY_ID, customerIdentity, accessAuthorizationId);

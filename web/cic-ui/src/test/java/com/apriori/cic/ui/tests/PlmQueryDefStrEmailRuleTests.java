@@ -34,7 +34,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {4148, 4195})
+    @TestRail(id = {4148, 4195, 5729})
     @Description("Test each operator for the Int data type in isolation - String Equal and String1 attribute")
     public void testWorkflowQueryDefStringEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -142,7 +142,7 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
     }
 
     @Test
-    @TestRail(id = {24383})
+    @TestRail(id = {24383, 5730, 5731})
     @Description("Test each operator for the Int data type in isolation - Email Not Equal")
     public void testWorkflowQueryDefEmailNotEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
@@ -206,6 +206,23 @@ public class PlmQueryDefStrEmailRuleTests extends WorkflowTestUtil {
             .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
             .setQueryFilter(QueryDefinitionFields.EMAIL, QueryDefinitionFieldType.CONTAINS, "%1")
             .setQueryFilters("AND")
+            .build();
+
+        AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();
+
+        softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
+        softAssertions.assertThat(agentWorkflowJobResults.stream().anyMatch(r -> r.getPartNumber()
+            .equals(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_WITH_DATE).getPlmPartNumber()))).isTrue();
+    }
+
+    @Test
+    @TestRail(id = {5732})
+    @Description("Create query that uses two query statements of data type Email and the OR operator")
+    public void testWorkflowQueryDefEmailOrStringEqual() {
+        workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)
+            .setQueryFilter(QueryDefinitionFields.STRING1, QueryDefinitionFieldType.CONTAINS, QUERY_STRING_FIELD_VALUE)
+            .setQueryFilter(QueryDefinitionFields.EMAIL, QueryDefinitionFieldType.EQUAL, "email 1")
+            .setQueryFilters("OR")
             .build();
 
         AgentWorkflowJobResults agentWorkflowJobResults = this.createQueryWorkflowAndGetJobResult();

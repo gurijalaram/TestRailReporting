@@ -1,4 +1,4 @@
-package com.apriori.bcm.api.models.request;
+package com.apriori.cus.api.models.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

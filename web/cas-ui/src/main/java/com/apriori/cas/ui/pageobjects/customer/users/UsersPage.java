@@ -15,16 +15,16 @@ import org.openqa.selenium.support.FindBy;
 public class UsersPage extends CustomerWorkspacePage {
     private final RoutingComponent customerStaffTab;
     private final RoutingComponent importTab;
-    private final RoutingComponent aPrioriStaffTab;
-    private final RoutingComponent aPrioriAccessHistoryTab;
+    private final RoutingComponent aprioriStaffTab;
+    private final RoutingComponent aprioriAccessHistoryTab;
     @FindBy(xpath = "//a[.='Customer Staff']")
     private WebElement customerStaffTabRoot;
     @FindBy(xpath = "//a[.='Import']")
     private WebElement importTabRoot;
     @FindBy(xpath = "//a[.='aPriori Staff']")
-    private WebElement aPrioriStaffTabRoot;
+    private WebElement aprioriStaffTabRoot;
     @FindBy(xpath = "//a[.='aPriori Staff Access History']")
-    private WebElement aPrioriAccessHistoryTabRoot;
+    private WebElement aprioriAccessHistoryTabRoot;
 
     /**
      * Initializes a new instance of this object.
@@ -39,8 +39,8 @@ public class UsersPage extends CustomerWorkspacePage {
         importTab = new RoutingComponent(driver, importTabRoot);
 
         // Optional Tabs
-        aPrioriStaffTab = getPageUtils().isElementDisplayed(aPrioriStaffTabRoot) ? new RoutingComponent(driver, aPrioriStaffTabRoot) : null;
-        aPrioriAccessHistoryTab = getPageUtils().isElementDisplayed(aPrioriAccessHistoryTabRoot) ? new RoutingComponent(driver, aPrioriAccessHistoryTabRoot) : null;
+        aprioriStaffTab = getPageUtils().isElementDisplayed(aprioriStaffTabRoot) ? new RoutingComponent(driver, aprioriStaffTabRoot) : null;
+        aprioriAccessHistoryTab = getPageUtils().isElementDisplayed(aprioriAccessHistoryTabRoot) ? new RoutingComponent(driver, aprioriAccessHistoryTabRoot) : null;
     }
 
     /**
@@ -78,7 +78,7 @@ public class UsersPage extends CustomerWorkspacePage {
      * @return The aPriori Staff tab.
      */
     public StaffPage goToStaffPage() {
-        aPrioriStaffTab.navigate();
+        aprioriStaffTab.navigate();
         return new StaffPage(getDriver());
     }
 
@@ -88,7 +88,7 @@ public class UsersPage extends CustomerWorkspacePage {
      * @return The aPriori Staff History tab
      */
     public StaffAccessHistoryPage goToAccessHistory() {
-        aPrioriAccessHistoryTab.navigate();
+        aprioriAccessHistoryTab.navigate();
         return new StaffAccessHistoryPage(getDriver());
     }
 }

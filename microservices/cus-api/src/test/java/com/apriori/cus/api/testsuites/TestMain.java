@@ -1,4 +1,4 @@
-package testsuites;
+package com.apriori.cus.api.testsuites;
 
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
@@ -23,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 public class TestMain {
-    public static Class defaultTest = ReportingReplicaTestSuite.class;
+    public static Class defaultTest = CusApiRegressionSuite.class;
 
     public static void main(String[] args) {
 

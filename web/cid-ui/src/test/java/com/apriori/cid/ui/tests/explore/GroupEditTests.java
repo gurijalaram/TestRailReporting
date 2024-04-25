@@ -15,7 +15,6 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -25,11 +24,9 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GroupEditTests extends TestBaseUI {
 
-    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private EditComponentsPage editComponentsPage;
     private ExplorePage explorePage;
@@ -163,8 +160,8 @@ public class GroupEditTests extends TestBaseUI {
     @Description("Attempt to edit more than 10 scenarios")
     public void testEditMoreThanTenScenarios() {
         List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(11);
-        List<ComponentInfoBuilder> ten_components = components.subList(0, 10);
-        ComponentInfoBuilder excluded_component = components.stream().filter(element -> !ten_components.contains(element)).collect(Collectors.toList()).get(0);
+        List<ComponentInfoBuilder> tenComponents = components.subList(0, 10);
+        ComponentInfoBuilder excludedComponent = components.stream().filter(element -> !tenComponents.contains(element)).toList().get(0);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(components.get(0).getUser());
@@ -175,7 +172,7 @@ public class GroupEditTests extends TestBaseUI {
 
         explorePage.refresh()
             .setPagination();
-        ten_components.forEach(component -> explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName()));
+        tenComponents.forEach(component -> explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName()));
         explorePage.publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
@@ -185,20 +182,20 @@ public class GroupEditTests extends TestBaseUI {
         explorePage.refresh()
             .setPagination()
             .selectFilter("Public");
-        ten_components.forEach(component -> explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName()));
+        tenComponents.forEach(component -> explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName()));
 
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(true);
 
         explorePage.selectFilter("Private")
-            .openScenario(excluded_component.getComponentName(), excluded_component.getScenarioName())
+            .openScenario(excludedComponent.getComponentName(), excludedComponent.getScenarioName())
             .publishScenario(PublishPage.class)
             .publish(EvaluatePage.class)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2)
             .clickExplore()
             .selectFilter("Public");
 
-        ten_components.forEach(component -> explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName()));
-        explorePage.multiSelectScenarios(excluded_component.getComponentName() + "," + excluded_component.getScenarioName());
+        tenComponents.forEach(component -> explorePage.multiSelectScenarios(component.getComponentName() + "," + component.getScenarioName()));
+        explorePage.multiSelectScenarios(excludedComponent.getComponentName() + "," + excludedComponent.getScenarioName());
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(false);
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(false);
 

@@ -93,7 +93,6 @@ public class SecondaryProcessTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("BA-2651")
     @TestRail(id = {5142, 5149})
     @Description("Test secondary process Carburize")
     public void secondaryProcessCarburize() {
@@ -167,7 +166,6 @@ public class SecondaryProcessTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("BA-2651")
     @TestRail(id = {5157})
     @Description("Test secondary process Standard Anneal")
     public void secondaryProcessStandardAnneal() {
@@ -498,7 +496,6 @@ public class SecondaryProcessTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("BA-2651")
     @TestRail(id = {5150})
     @Description("Test secondary process Carbonitride")
     public void secondaryProcessCarbonitride() {

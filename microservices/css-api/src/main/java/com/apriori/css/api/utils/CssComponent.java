@@ -35,9 +35,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CssComponent extends TestUtil {
 
-    private final int SOCKET_TIMEOUT = 630000;
-    private final int POLL_TIME = 2;
-    private final int WAIT_TIME = 570;
+    private final int pollTime = 2;
+    private final int waitTime = 570;
 
     /**
      * Calls an api with GET verb. This method will ONLY get translated parts ie. componentType = Parts/Assemblies
@@ -52,11 +51,11 @@ public class CssComponent extends TestUtil {
 
         try {
             do {
-                TimeUnit.SECONDS.sleep(POLL_TIME);
+                TimeUnit.SECONDS.sleep(pollTime);
 
                 List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues);
 
-                if (scenarioItemList.size() > 0 &&
+                if (!scenarioItemList.isEmpty() &&
 
                     scenarioItemList.stream()
                         .noneMatch(o -> o.getComponentType().equalsIgnoreCase("unknown")) &&
@@ -68,13 +67,13 @@ public class CssComponent extends TestUtil {
                     return scenarioItemList;
                 }
 
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < waitTime);
 
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
+        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", waitTime));
     }
 
     /**
@@ -110,6 +109,23 @@ public class CssComponent extends TestUtil {
     /**
      * Calls an api with GET verb
      *
+     * @return the response wrapper that contains the response data
+     */
+    private ResponseWrapper<ComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
+        int socketTimeout = 630000;
+
+        RequestEntity requestEntity = getRequestEntityUtil(userCredentials).init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
+            .headers(new ContentParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
+            .queryParams(queryParams)
+            .socketTimeout(socketTimeout)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
      * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
@@ -120,11 +136,11 @@ public class CssComponent extends TestUtil {
 
         try {
             do {
-                TimeUnit.SECONDS.sleep(POLL_TIME);
+                TimeUnit.SECONDS.sleep(pollTime);
 
                 List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues);
 
-                if (scenarioItemList.size() > 0 &&
+                if (!scenarioItemList.isEmpty() &&
 
                     scenarioItemList.stream()
                         .allMatch(o -> ScenarioStateEnum.terminalState.stream()
@@ -133,28 +149,13 @@ public class CssComponent extends TestUtil {
                     return scenarioItemList;
                 }
 
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < waitTime);
 
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
-    }
-
-    /**
-     * Calls an api with GET verb
-     *
-     * @return the response wrapper that contains the response data
-     */
-    private ResponseWrapper<ComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
-        RequestEntity requestEntity = getRequestEntityUtil(userCredentials).init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
-            .headers(new ContentParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
-            .queryParams(queryParams)
-            .socketTimeout(SOCKET_TIMEOUT)
-            .expectedResponseCode(HttpStatus.SC_OK);
-
-        return HTTPRequest.build(requestEntity).post();
+        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", waitTime));
     }
 
     /**
@@ -174,6 +175,23 @@ public class CssComponent extends TestUtil {
                     put("latest[EQ]", "true");
                     put("componentType[IN]", componentType);
                     put("sortBy[DESC]", "scenarioCreatedAt");
+                }
+            })).expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    public ResponseWrapper<ComponentResponse> postSearchRequestCustomParam(UserCredentials userCredentials, String componentType, String customParamName, String customParamValue) {
+        RequestEntity requestEntity = getRequestEntityUtil(userCredentials).init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
+            .headers(new ContentParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
+            .xwwwwFormUrlEncodeds(Collections.singletonList(new HashMap<String, String>() {
+                {
+                    put("pageNumber", "1");
+                    put("pageSize", "10");
+                    put("latest[EQ]", "true");
+                    put("componentType[IN]", componentType);
+                    put("sortBy[DESC]", "scenarioCreatedAt");
+                    put(customParamName, customParamValue);
                 }
             })).expectedResponseCode(HttpStatus.SC_OK);
 
@@ -200,8 +218,7 @@ public class CssComponent extends TestUtil {
      * @return RequestEntityUtil
      */
     private RequestEntityUtil getRequestEntityUtil(UserCredentials userCredentials) {
-        RequestEntityUtil requestEntityUtil = RequestEntityUtilBuilder.useCustomUser(userCredentials)
+        return RequestEntityUtilBuilder.useCustomUser(userCredentials)
             .useApUserContextInRequests();
-        return requestEntityUtil;
     }
 }

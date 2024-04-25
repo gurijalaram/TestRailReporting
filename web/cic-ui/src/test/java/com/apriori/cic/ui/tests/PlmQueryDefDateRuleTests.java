@@ -36,7 +36,7 @@ public class PlmQueryDefDateRuleTests extends WorkflowTestUtil {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {24381})
+    @TestRail(id = {24381, 5728})
     @Description("Test each operator for the Int data type in isolation - Date Not Equal")
     public void testWorkflowQueryDefDateNotEqual() {
         workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.QUERY)

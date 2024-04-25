@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class DeleteFailures {
+    private String error;
     private String componentIdentity;
     private String scenarioIdentity;
 }
