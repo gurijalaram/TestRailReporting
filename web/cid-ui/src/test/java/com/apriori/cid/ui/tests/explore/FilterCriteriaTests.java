@@ -8,6 +8,8 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
+import com.apriori.cid.api.utils.ComponentsUtil;
+import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.common.FilterPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
@@ -28,6 +30,8 @@ import com.apriori.shared.util.enums.PropertyEnum;
 import com.apriori.shared.util.enums.UnitsEnum;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.models.response.component.CostRollupOverrides;
+import com.apriori.shared.util.models.response.component.ManualCostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -336,5 +340,27 @@ public class FilterCriteriaTests extends TestBaseUI {
         softAssertion.assertThat(filterPage.getFilterValue(PropertyEnum.CYCLE_TIME)).isEqualTo("1");
 
         softAssertion.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {})
+    @Description("Validate user can filter by Cost Mode used")
+    public void testCodeModeFiltering() {
+        ComponentInfoBuilder simulateComponent = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder manualComponent = new ComponentRequestUtil().getComponent();
+        manualComponent.setUser(simulateComponent.getUser());
+        manualComponent.setManualCostingTemplate(ManualCostingTemplate.builder()
+            .costMode("MANUAL")
+            .costRollupOverrides(CostRollupOverrides.builder()
+                .piecePartCost(2.3)
+                .totalCapitalInvestment(1.9)
+                .build())
+            .build());
+
+        ScenariosUtil scenariosUtil = new ScenariosUtil();
+        ComponentsUtil componentsUtil = new ComponentsUtil();
+
+        componentsUtil.postComponent(manualComponent);
+        scenariosUtil.postManualCostScenario(manualComponent);
     }
 }

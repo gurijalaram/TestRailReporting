@@ -32,6 +32,7 @@ import com.apriori.shared.util.models.request.component.Options;
 import com.apriori.shared.util.models.request.component.PublishRequest;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
+import com.apriori.shared.util.models.response.component.ManualCostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 
 import com.google.common.collect.Iterators;
@@ -264,6 +265,26 @@ public class ScenariosUtil {
     }
 
     /**
+     * POST to cost a scenario
+     *
+     * @param componentInfo - the cost component object
+     * @return list of scenario items
+     */
+    public ScenarioResponse postManualCostScenario(ComponentInfoBuilder componentInfo) {
+        ManualCostingTemplate costingTemplate = postManualCostingTemplate(componentInfo);
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                .token(componentInfo.getUser().getToken())
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
+                .body("costingInputs", costingTemplate);
+
+        HTTPRequest.build(requestEntity).post();
+
+        return getScenarioCompleted(componentInfo);
+    }
+
+    /**
      * Calls an api with the POST verb
      *
      * @param componentInfo - the component info object
@@ -278,6 +299,27 @@ public class ScenariosUtil {
         ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).post();
 
         CostingTemplate template = response.getResponseEntity();
+        template.setCostingTemplateIdentity(template.getIdentity());
+        template.setDeleteTemplateAfterUse(template.getDeleteTemplateAfterUse());
+
+        return template;
+    }
+
+    /**
+     * Calls an api with the POST verb
+     *
+     * @param componentInfo - the component info object
+     * @return response object
+     */
+    public ManualCostingTemplate postManualCostingTemplate(ComponentInfoBuilder componentInfo) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COSTING_TEMPLATES, ManualCostingTemplate.class)
+                .token(componentInfo.getUser().getToken())
+                .body("costingTemplate", componentInfo.getManualCostingTemplate());
+
+        ResponseWrapper<ManualCostingTemplate> response = HTTPRequest.build(requestEntity).post();
+
+        ManualCostingTemplate template = response.getResponseEntity();
         template.setCostingTemplateIdentity(template.getIdentity());
         template.setDeleteTemplateAfterUse(template.getDeleteTemplateAfterUse());
 

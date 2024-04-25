@@ -5,6 +5,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.models.request.component.ComponentRequest;
 import com.apriori.shared.util.models.request.component.PublishRequest;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
+import com.apriori.shared.util.models.response.component.ManualCostingTemplate;
 import com.apriori.shared.util.models.response.component.PostComponentResponse;
 
 import lombok.AllArgsConstructor;
@@ -36,6 +37,7 @@ public class ComponentInfoBuilder implements Serializable {
     @Builder.Default
     private Boolean overrideScenario = false;
     private CostingTemplate costingTemplate;
+    private ManualCostingTemplate manualCostingTemplate;
     private Metadata metadata;
     private ComponentRequest componentRequest;
 
