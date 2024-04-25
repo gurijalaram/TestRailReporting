@@ -1096,7 +1096,7 @@ public class AcsResources {
             .body(UserPreferencesInputs.builder()
                 .costTableDecimalPlaces("2")
                 .tolerancePolicyDefaultsToleranceMode("SYSTEMDEFAULT")
-                .prodInfoVpe("aPriori USA")
+                .prodInfoDefaultVpe("aPriori USA")
                 .defaultScenarioName("Initial")
                 .prodInfoDefaultAnnualVolume("5500")
                 .prodInfoDefaultBatchSize(null)
@@ -1106,6 +1106,7 @@ public class AcsResources {
                 .prodInfoDefaultProductionLife("5")
                 .tolerancePolicyDefaultsBendAngleToleranceOverride(null)
                 .tolerancePolicyDefaultsCadToleranceReplacement(null)
+                .tolerancePolicyDefaultsUseCadToleranceThreshhold("false")
                 .tolerancePolicyDefaultsDiamToleranceOverride(null)
                 .tolerancePolicyDefaultsFlatnessOverride(null)
                 .tolerancePolicyDefaultsMinCadToleranceThreshhold(null)
@@ -1123,6 +1124,7 @@ public class AcsResources {
                 .tolerancePolicyDefaultsToleranceOverride(null)
                 .tolerancePolicyDefaultsTotalRunoutOverride(null)
                 .tolerancePolicyDefaultsBendAngleToleranceOverride(null)
+                .prodInfoDefaultUseVpeForAllProcesses("false")
                 .build())
             .inlineVariables(validUsername);
 
