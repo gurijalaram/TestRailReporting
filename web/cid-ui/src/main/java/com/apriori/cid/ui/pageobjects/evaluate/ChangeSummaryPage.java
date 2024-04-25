@@ -78,7 +78,6 @@ public class ChangeSummaryPage extends LoadableComponent<ChangeSummaryPage> {
      * Get value for a specified value changed from
      *
      * @param changedInput - String of name of changed input
-     *
      * @return - String of displayed change
      */
     public String getChangedFrom(String changedInput) {
@@ -90,7 +89,6 @@ public class ChangeSummaryPage extends LoadableComponent<ChangeSummaryPage> {
      * Get value for a specified value changed from
      *
      * @param changedInput - String of name of changed input
-     *
      * @return - String of displayed change
      */
     public String getChangedTo(String changedInput) {
@@ -132,7 +130,7 @@ public class ChangeSummaryPage extends LoadableComponent<ChangeSummaryPage> {
     /**
      * Close the change summary pop up
      *
-     * @param - The Class to be returned
+     * @param <T> - The Class to be returned
      * @return - The Specified PO
      */
     public <T> T close(Class<T> klass) {

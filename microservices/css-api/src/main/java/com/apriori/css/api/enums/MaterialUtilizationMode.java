@@ -7,8 +7,8 @@ public enum MaterialUtilizationMode {
 
     private final String materialUtilizationMode;
 
-    MaterialUtilizationMode(String mUtilMode) {
-        this.materialUtilizationMode = mUtilMode;
+    MaterialUtilizationMode(String materialUtilMode) {
+        this.materialUtilizationMode = materialUtilMode;
     }
 
     public String getMaterialUtilizationMode() {

@@ -8,8 +8,8 @@ public enum DfmRisk {
 
     private final String dfmRisk;
 
-    DfmRisk(String dRisk) {
-        this.dfmRisk = dRisk;
+    DfmRisk(String dfmRisk) {
+        this.dfmRisk = dfmRisk;
     }
 
     public String getDfmRisk() {

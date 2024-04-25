@@ -1,6 +1,7 @@
 package com.apriori.cic.api.models.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,14 +16,15 @@ public class ConnectorRow {
     private String dataType;
     private String displayDataType;
     private String identifier;
-    private boolean isMandatoryField;
-    private boolean isSaved;
-    private boolean isStandardField;
+    private Boolean isMandatoryField;
+    private Boolean isSaved;
+    private Boolean isStandardField;
     private String plmAttributeName;
-    private boolean readOnly;
+    private Boolean readOnly;
     private String twxAttributeName;
     private String usageType;
-    private boolean _isSelected;
+    @JsonProperty("_isSelected")
+    private Boolean isSelected;
     private String errorMessage;
-    private boolean isValid;
+    private Boolean isValid;
 }

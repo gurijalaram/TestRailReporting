@@ -2,6 +2,7 @@ package com.apriori.shared.util.models.response;
 
 import com.apriori.shared.util.annotations.Schema;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +14,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Schema(location = "EmailTokenSchema.json")
 public class EmailTokenResponse {
-    private String token_type;
+    @JsonProperty("token_type")
+    private String tokenType;
     private String scope;
-    private Integer expires_in;
-    private Integer ext_expires_in;
-    private String access_token;
+    @JsonProperty("expires_in")
+    private Integer expiresIn;
+    @JsonProperty("ext_expires_in")
+    private Integer extExpiresIn;
+    @JsonProperty("access_token")
+    private String accessToken;
 }

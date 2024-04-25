@@ -48,7 +48,7 @@ public class Installation {
     private String cidGlobalKey;
     private String cidApiId;
     private String cidApiSecret;
-    private List<Application> applications = null;
+    private List<Application> applications;
     private String region;
     private Boolean highMem;
 }

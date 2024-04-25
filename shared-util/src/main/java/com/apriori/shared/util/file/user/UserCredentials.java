@@ -13,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 
 public class UserCredentials implements Serializable {
 
-    private final int TOKEN_MIN_TIME_IN_MINUTES = 10;
+    private final int tokenMinTimeInMinutes = 10;
     private volatile String token;
 
     private String email;
@@ -87,7 +87,7 @@ public class UserCredentials implements Serializable {
         }
         if (ChronoUnit.MINUTES.between(LocalTime.now(),
             Instant.ofEpochMilli(new JWT().decodeJwt(token).getExpiresAt().getTime())
-                .atZone(ZoneId.systemDefault()).toLocalTime()) <= TOKEN_MIN_TIME_IN_MINUTES) {
+                .atZone(ZoneId.systemDefault()).toLocalTime()) <= tokenMinTimeInMinutes) {
             generateToken();
         }
         return token;
