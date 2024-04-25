@@ -204,7 +204,7 @@ public class AchUsersTests extends AchTestUtil {
     public void unableToCreateApStaffUserForWidgets() {
         String userName = new GenerateStringUtil().generateUserName();
         ResponseWrapper<AchErrorResponse> newUser = createNewUserApStaff(AchErrorResponse.class, customerIdentity, userName, domain, HttpStatus.SC_CONFLICT,requestEntityUtil);
-got
+
         soft.assertThat(newUser.getResponseEntity().getMessage())
             .isEqualTo("Can't create an AP_STAFF_USER user type for the given customer.");
         soft.assertAll();
