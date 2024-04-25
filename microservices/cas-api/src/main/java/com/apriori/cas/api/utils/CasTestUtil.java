@@ -236,7 +236,7 @@ public class CasTestUtil extends TestUtil {
      * @param customerIdentity - the customer identity
      * @param batchIdentity    - batch identity
      * @param itemIdentity     - item identity
-     * @return ResponseWrapper <BatchItem>
+     * @return response object
      */
     public static ResponseWrapper<BatchItem> updateBatchItem(String customerIdentity, String batchIdentity, String itemIdentity) {
 
@@ -351,7 +351,7 @@ public class CasTestUtil extends TestUtil {
     /**
      * @param source      - the customer source
      * @param association - The association that contains the target customer.
-     * @return ResponseWrapper <CustomerAssociationUsers>
+     * @return response object
      */
     public ResponseWrapper<CustomerAssociationUsers> findCustomerAssociationUsers(Customer source, CustomerAssociation association) {
         return find(
@@ -369,7 +369,7 @@ public class CasTestUtil extends TestUtil {
     /**
      * @param source      - the customer source
      * @param association The association that contains the target customer.
-     * @return ResponseWrapper <Users>
+     * @return response object
      */
     public ResponseWrapper<Users> findCustomerAssociationCandidates(Customer source, CustomerAssociation association) {
         return find(
@@ -432,7 +432,7 @@ public class CasTestUtil extends TestUtil {
      *
      * @param name  - customer name
      * @param email - customer email
-     * @return ResponseWrapper<Customer>
+     * @return response object
      */
     public ResponseWrapper<Customer> createOnPremCustomer(String name, String email) {
         GenerateStringUtil generator = new GenerateStringUtil();
@@ -458,7 +458,7 @@ public class CasTestUtil extends TestUtil {
 
     /**
      * @param source - the customer source
-     * @return ResponseWrapper <User>
+     * @return response object
      */
     public List<User> findUsers(Customer source) {
         return findAll(CASAPIEnum.USERS, Users.class, Collections.emptyMap(), Collections.emptyMap(), source.getIdentity());
@@ -466,7 +466,7 @@ public class CasTestUtil extends TestUtil {
 
     /**
      * @param customer - the customer
-     * @return ResponseWrapper <User>
+     * @return response object
      */
     public ResponseWrapper<User> createUser(Customer customer) {
         String domain = customer.getEmailDomains().stream().findFirst().orElseThrow(() -> new IllegalStateException("This customer has no email domains"));
@@ -476,7 +476,7 @@ public class CasTestUtil extends TestUtil {
     /**
      * @param customerIdentity - customer identity
      * @param domain           - domain
-     * @return ResponseWrapper <User>
+     * @return response object
      */
     public ResponseWrapper<User> createUser(String customerIdentity, String domain) {
         GenerateStringUtil generator = new GenerateStringUtil();
@@ -487,7 +487,7 @@ public class CasTestUtil extends TestUtil {
      * @param customerIdentity - customer identity
      * @param userName         - user name
      * @param domain           - domain
-     * @return ResponseWrapper <User>
+     * @return response object
      */
     public ResponseWrapper<User> createUser(final String customerIdentity, final String userName, final String domain) {
         String email = String.format("%s@%s", userName.toLowerCase(), domain);
@@ -518,7 +518,7 @@ public class CasTestUtil extends TestUtil {
      * @param customerName     - the customer name
      * @param siteId           - the site id
      * @param subLicenseId     - the sublicense id
-     * @return ResponseWrapper <LicenseResponse>
+     * @return response object
      */
     public ResponseWrapper<LicenseResponse> addLicense(String casLicense, String customerIdentity, String siteIdentity, String customerName, String siteId, String subLicenseId) {
 
@@ -545,7 +545,7 @@ public class CasTestUtil extends TestUtil {
      * @param licenseIdentity    - the license identity
      * @param subLicenseIdentity - the sublicense identity
      * @param userIdentity       - the user identity
-     * @return <T>ResponseWrapper <T>
+     * @return generic response object
      */
     public <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity, Integer expectedResponseCode) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CASAPIEnum.SUBLICENSE_ASSOCIATIONS, klass)
@@ -564,7 +564,7 @@ public class CasTestUtil extends TestUtil {
      *
      * @param customerIdentity - customer identity
      * @param userIdentity     - user identity
-     * @return ResponseWrapper <AccessControl>
+     * @return response object
      */
     public ResponseWrapper<AccessControl> addAccessControl(String customerIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CASAPIEnum.ACCESS_CONTROLS, AccessControl.class)
@@ -590,7 +590,7 @@ public class CasTestUtil extends TestUtil {
      * @param installationIdentity - installation identity
      * @param appIdentity          - application identity
      * @param sourceCustomerId     - source customer identity
-     * @return ResponseWrapper <String>
+     * @return response object
      */
     public ResponseWrapper<String> grantDenyAll(String aPInternalIdentity, String siteIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String grantOrDeny, String sourceCustomerId) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CASAPIEnum.GRANT_DENY_ALL, null)
@@ -610,7 +610,7 @@ public class CasTestUtil extends TestUtil {
      * @param customerIdentity - customer identity
      * @param siteIdentity     - site identity
      * @param licenseIdentity  - license identity
-     * @return <T>ResponseWrapper <T>
+     * @return generic response object
      */
     public <T> ResponseWrapper<T> activateLicense(Class<T> klas, String customerIdentity, String siteIdentity, String licenseIdentity, Integer expectedResponseCode) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CASAPIEnum.ACTIVATE_LICENSE, klas)
@@ -628,7 +628,7 @@ public class CasTestUtil extends TestUtil {
      * @param userIdentity         - user identity
      * @param serviceAccount       - service account name
      * @param expectedResponseCode - expected response code
-     * @return <T>ResponseWrapper <T>
+     * @return generic response object
      */
     public <T> ResponseWrapper<T> addAccessAuthorization(Class<T> klas, String customerIdentity, String userIdentity, String serviceAccount, Integer expectedResponseCode) {
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CASAPIEnum.ACCESS_AUTHORIZATIONS, klas)

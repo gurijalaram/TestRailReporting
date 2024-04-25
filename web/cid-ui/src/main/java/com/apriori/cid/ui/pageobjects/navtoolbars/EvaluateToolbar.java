@@ -3,7 +3,6 @@ package com.apriori.cid.ui.pageobjects.navtoolbars;
 import com.apriori.cid.ui.pageobjects.evaluate.ChangeSummaryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.CostHistoryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
-import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.web.app.util.PageUtils;
 
@@ -40,7 +39,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     private WebElement refreshButton;
 
     @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='SIMULATE']")
-    private WebElement aPrioriCostModeButton;
+    private WebElement aprioriCostModeButton;
 
     @FindBy(css = "div[data-testid='cost-mode-toggle'] div button[value='MANUAL']")
     private WebElement manualCostModeButton;
@@ -198,7 +197,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return - New EvaluatePage PO
      */
     public SwitchCostModePage clickAPrioriModeButton() {
-        pageUtils.waitForElementAndClick(aPrioriCostModeButton);
+        pageUtils.waitForElementAndClick(aprioriCostModeButton);
         return new SwitchCostModePage(driver);
     }
 
@@ -208,8 +207,8 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return - Boolean of mode state
      */
     public Boolean isAPrioriCostModeSelected() {
-        pageUtils.waitForElementToAppear(aPrioriCostModeButton);
-        return Boolean.parseBoolean(aPrioriCostModeButton.getAttribute("aria-pressed"));
+        pageUtils.waitForElementToAppear(aprioriCostModeButton);
+        return Boolean.parseBoolean(aprioriCostModeButton.getAttribute("aria-pressed"));
     }
 
     /**
@@ -248,8 +247,8 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return - Boolean of enabled state for cost mode toggle buttons
      */
     public Boolean isCostModeToggleEnabled() {
-        pageUtils.waitForElementToAppear(aPrioriCostModeButton);
-        return aPrioriCostModeButton.isEnabled() && manualCostModeButton.isEnabled();
+        pageUtils.waitForElementToAppear(aprioriCostModeButton);
+        return aprioriCostModeButton.isEnabled() && manualCostModeButton.isEnabled();
     }
 
     /**

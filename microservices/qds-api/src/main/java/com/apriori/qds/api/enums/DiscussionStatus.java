@@ -8,8 +8,8 @@ public enum DiscussionStatus {
 
     private final String discussionStatus;
 
-    DiscussionStatus(String dStatus) {
-        this.discussionStatus = dStatus;
+    DiscussionStatus(String discussionStatus) {
+        this.discussionStatus = discussionStatus;
     }
 
     public String getDiscussionStatus() {

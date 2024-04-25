@@ -65,7 +65,7 @@ public class UserUtil {
 
     /**
      * Gets all users from current csv
-     * @return List<UserCredentials>
+     * @return list
      */
     public static List<UserCredentials> getUsers() {
         return UserCommonService.initUsers();
