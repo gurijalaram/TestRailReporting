@@ -15,7 +15,6 @@ import com.apriori.cir.api.models.response.ChartData;
 import com.apriori.cir.api.models.response.ChartDataPoint;
 import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.utils.JasperReportUtil;
-import com.apriori.cir.ui.enums.AssemblySetEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.RollupEnum;

@@ -46,8 +46,8 @@ public class JasperReportUtil {
     private static LinkedHashMap<String, String> scenarioComparisonICModifiedNamesValuesMap;
     private static HashMap<String, LinkedHashMap<String, String>> inputControlsModifiedValueNameMasterList;
     private static HashMap<String, HashMap<String, Integer>> inputControlsIndexMapMaster;
-    private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private long WAIT_TIME = 30;
+    private ObjectMapper objectMapper = new ObjectMapper();
+    private long waitTime = 30;
 
     private String jasperSessionValue = "JSESSIONID=%s";
 
