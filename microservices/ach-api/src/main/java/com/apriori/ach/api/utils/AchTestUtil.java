@@ -1,12 +1,8 @@
 package com.apriori.ach.api.utils;
 
 import com.apriori.ach.api.enums.ACHAPIEnum;
-import com.apriori.ach.api.models.request.UserPreferencesRequest;
 import com.apriori.ach.api.models.response.CustomerAch;
 import com.apriori.ach.api.models.response.CustomersAch;
-import com.apriori.ach.api.models.response.SuccessUpdatePreferencesResponse;
-import com.apriori.ach.api.models.response.UserPreference;
-import com.apriori.ach.api.models.response.UserPreferences;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -139,6 +135,29 @@ public class AchTestUtil extends TestUtil {
      */
     public <T> ResponseWrapper<T> createNewUser(Class<T> klass, String customerIdentity, String userName, String domain, Integer expectedResponseCode, RequestEntityUtil requestEntityUtilUser) {
         User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserData.json").getPath(), User.class);
+        requestBody.setUsername(userName);
+        requestBody.setEmail(userName + "@" + domain + ".com");
+        requestBody.getUserProfile().setGivenName(userName);
+        RequestEntity requestEntity = requestEntityUtilUser.init(ACHAPIEnum.CUSTOMER_USERS, klass)
+            .inlineVariables(customerIdentity)
+            .expectedResponseCode(expectedResponseCode)
+            .body("user", requestBody);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Creates a new user AP_STAFF_USER
+     *
+     * @param klass                - class
+     * @param customerIdentity     - the customer identity
+     * @param userName             - user name
+     * @param domain               - domain
+     * @param expectedResponseCode - response code
+     * @return ResponseWrapper T
+     */
+    public <T> ResponseWrapper<T> createNewUserApStaff(Class<T> klass, String customerIdentity, String userName, String domain, Integer expectedResponseCode, RequestEntityUtil requestEntityUtilUser) {
+        User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserDataApStaff.json").getPath(), User.class);
         requestBody.setUsername(userName);
         requestBody.setEmail(userName + "@" + domain + ".com");
         requestBody.getUserProfile().setGivenName(userName);

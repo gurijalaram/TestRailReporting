@@ -25,8 +25,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class ReportReplicaController {
 
-    final String TOKEN = AwsParameterStoreUtil.getSystemParameter("/qa-test-reporting-api/clients/6C1F8C1D4D75/token");
-    final String API_KEY = AwsParameterStoreUtil.getSystemParameter("/qa-test-reporting-api/clients/6C1F8C1D4D75/api-key");
+    final String token = AwsParameterStoreUtil.getSystemParameter("/qa-test-reporting-api/clients/6C1F8C1D4D75/token");
+    final String apikey = AwsParameterStoreUtil.getSystemParameter("/qa-test-reporting-api/clients/6C1F8C1D4D75/api-key");
     ReportRequest reportRequest = JsonManager.deserializeJsonFromFile(
         FileResourceUtil.getResourceAsFile("ExecuteRequest.json").getPath(), ReportRequest.class);
 
@@ -39,18 +39,18 @@ public class ReportReplicaController {
     public Report getReportStatus(String customerId, String executionId) {
         final long START_TIME = System.currentTimeMillis() / 1000;
         ResponseWrapper<Report> reportResponse;
-        int WAIT_TIME = 20;
+        int waitTime = 20;
 
         do {
             try {
-                int POLL_TIME = 3;
-                TimeUnit.SECONDS.sleep(POLL_TIME);
+                int pollTime = 3;
+                TimeUnit.SECONDS.sleep(pollTime);
 
                 final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.REPORT_STATUS, Report.class)
                     .inlineVariables(customerId, executionId)
                     .expectedResponseCode(HttpStatus.SC_OK)
-                    .headers(new QueryParams().use("x-token", TOKEN)
-                        .use("x-api-key", API_KEY));
+                    .headers(new QueryParams().use("x-token", token)
+                        .use("x-api-key", apikey));
 
                 reportResponse = HTTPRequest.build(requestEntity).get();
 
@@ -62,7 +62,7 @@ public class ReportReplicaController {
                 log.error(e.getMessage());
                 Thread.currentThread().interrupt();
             }
-        } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+        } while (((System.currentTimeMillis() / 1000) - START_TIME) < waitTime);
 
         throw new RuntimeException("Report status is not correct");
     }
@@ -75,8 +75,8 @@ public class ReportReplicaController {
     public Report postExecuteReport(String customerId) {
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(ReportAPIEnum.REPORT_EXECUTE, Report.class)
             .inlineVariables(customerId)
-            .headers(new QueryParams().use("x-token", TOKEN)
-                .use("x-api-key", API_KEY))
+            .headers(new QueryParams().use("x-token", token)
+                .use("x-api-key", apikey))
             .body(reportRequest)
             .expectedResponseCode(HttpStatus.SC_ACCEPTED);
 

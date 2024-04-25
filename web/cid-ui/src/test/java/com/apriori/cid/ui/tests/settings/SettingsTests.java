@@ -48,12 +48,10 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.util.List;
 
 public class SettingsTests extends TestBaseUI {
@@ -606,17 +604,17 @@ public class SettingsTests extends TestBaseUI {
     @Description("Validate that default scenario name can be adjusted through user preferences")
     public void changeTheDefaultScenarioName() {
         currentUser = UserUtil.getUser();
-        String MYSCENARIONAME = "My Test Scenario Name";
+        String testScenarioName = "My Test Scenario Name";
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
-            .inputScenarioName(MYSCENARIONAME)
+            .inputScenarioName(testScenarioName)
             .submit(ExplorePage.class)
             .importCadFile();
 
-        assertThat(importCadFilePage.getDefaultScenarioName(), is(MYSCENARIONAME));
+        assertThat(importCadFilePage.getDefaultScenarioName(), is(testScenarioName));
     }
 
     @Test

@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 public class InfosByTopics {
     @JsonProperty("DTC_MESSAGES")
-    private List<GenericGuidanceTopics> DTC_MESSAGES;
+    private List<GenericGuidanceTopics> dtcMessages;
 }
