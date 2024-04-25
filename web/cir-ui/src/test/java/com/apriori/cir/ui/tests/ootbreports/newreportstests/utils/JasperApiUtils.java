@@ -15,6 +15,7 @@ import com.apriori.cir.api.models.response.ChartData;
 import com.apriori.cir.api.models.response.ChartDataPoint;
 import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.utils.JasperReportUtil;
+import com.apriori.cir.ui.enums.AssemblySetEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.RollupEnum;
@@ -108,7 +109,10 @@ public class JasperApiUtils {
         }
 
         setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
-        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), currentDateTime);
+        if (reportRequest.getParameters().toString().contains(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId())) {
+            setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        }
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
