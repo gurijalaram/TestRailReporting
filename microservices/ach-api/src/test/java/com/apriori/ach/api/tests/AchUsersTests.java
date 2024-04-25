@@ -192,7 +192,6 @@ public class AchUsersTests extends AchTestUtil {
         String userName = new GenerateStringUtil().generateUserName();
         ResponseWrapper<AchErrorResponse> newUser = createNewUser(AchErrorResponse.class, customerIdentity, userName, domain, HttpStatus.SC_FORBIDDEN, requestEntityUtilNoAdmin);
 
-        System.out.println("doopa");
         soft.assertThat(newUser.getResponseEntity().getMessage())
             .isEqualTo("Operation not allowed.");
         soft.assertAll();
