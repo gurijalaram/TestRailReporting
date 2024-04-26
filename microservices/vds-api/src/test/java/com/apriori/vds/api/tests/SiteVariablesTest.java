@@ -120,6 +120,8 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getItems().get(0));
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -148,6 +150,8 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getItems().get(0));
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -176,6 +180,8 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getItems().get(0));
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -204,6 +210,8 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getItems().get(0));
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -232,6 +240,8 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getItems().get(0));
+
+        softAssertions.assertAll();
     }
 
     @Test
