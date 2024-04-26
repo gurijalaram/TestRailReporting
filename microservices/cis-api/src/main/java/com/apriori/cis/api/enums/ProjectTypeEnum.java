@@ -6,8 +6,8 @@ public enum ProjectTypeEnum {
 
     private final String projectType;
 
-    ProjectTypeEnum(String dStatus) {
-        this.projectType = dStatus;
+    ProjectTypeEnum(String discussionStatus) {
+        this.projectType = discussionStatus;
     }
 
     public String getProjectType() {

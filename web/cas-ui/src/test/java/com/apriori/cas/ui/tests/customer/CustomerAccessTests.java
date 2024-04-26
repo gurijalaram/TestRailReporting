@@ -119,16 +119,16 @@ public class CustomerAccessTests extends TestBaseUI {
         String email = "qa-automation-10@apriori.com";
         String password = "TrumpetSnakeFridgeToasty18!%";
         PageUtils utils = new PageUtils(driver);
-        StaffPage aPrioriUsers = usersPage.goToStaffPage()
+        StaffPage aprioriUsers = usersPage.goToStaffPage()
             .clickAddFromList();
 
-        SourceListComponent userCandidates = aPrioriUsers.getCandidates();
+        SourceListComponent userCandidates = aprioriUsers.getCandidates();
         TableComponent candidatesTable = Obligation.mandatory(userCandidates::getTable, "The candidates table is missing");
         Obligation.mandatory(userCandidates::getSearch, "The user search functionality is missing.").search(userName);
         utils.waitForCondition(userCandidates::isStable, PageUtils.DURATION_LOADING);
         candidatesTable.getRows().forEach((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").check(true));
 
-        CustomerWorkspacePage customerAccess = aPrioriUsers
+        CustomerWorkspacePage customerAccess = aprioriUsers
             .clickCandidatesAddButton()
             .clickCandidatesConfirmOkButton()
             .logout()
@@ -190,16 +190,16 @@ public class CustomerAccessTests extends TestBaseUI {
     @TestRail(id = {16123})
     public void selfAddingToWhiteList() {
         PageUtils utils = new PageUtils(driver);
-        StaffPage aPrioriUsers = usersPage.goToStaffPage()
+        StaffPage aprioriUsers = usersPage.goToStaffPage()
             .clickAddFromList();
 
-        SourceListComponent userCandidates = aPrioriUsers.getCandidates();
+        SourceListComponent userCandidates = aprioriUsers.getCandidates();
         TableComponent candidatesTable = Obligation.mandatory(userCandidates::getTable, "The candidates table is missing");
         Obligation.mandatory(userCandidates::getSearch, "The user search functionality is missing.").search(userName);
         utils.waitForCondition(userCandidates::isStable, PageUtils.DURATION_LOADING);
         candidatesTable.getRows().forEach((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").check(true));
 
-        CustomerWorkspacePage errorMessage = aPrioriUsers.clickCandidatesAddButton()
+        CustomerWorkspacePage errorMessage = aprioriUsers.clickCandidatesAddButton()
             .clickCandidatesConfirmOkButton();
 
         soft.assertThat(errorMessage.getTextErrorMessage())

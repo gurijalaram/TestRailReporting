@@ -43,14 +43,14 @@ public class Customer {
     private Boolean active;
     private Integer maxCadFileRetentionDays;
     private Integer maxCadFileSize;
-    private String mfaAuthenticator = null;
+    private String mfaAuthenticator;
     private Boolean useExternalIdentityProvider;
     private Boolean mfaRequired;
-    private List<Object> oneTimePasswordApplications = null;
+    private List<Object> oneTimePasswordApplications;
     private String createdByName;
     private String updatedByName;
-    private List<Object> identityProviders = null;
-    private List<String> emailDomains = null;
+    private List<Object> identityProviders;
+    private List<String> emailDomains;
     private String authenticationType;
     private List<String> emailRegexPatterns;
 }

@@ -22,13 +22,16 @@ public class PropertyValuesList {
     private Double costPerKG;
     private Double ultimateTensileStrength;
     private Double density;
-    private Double k;
+    @JsonProperty("k")
+    private Double kkValue;
     private Double shearStrength;
     private Double youngModulus;
-    private Double n;
+    @JsonProperty("n")
+    private Double nnValue;
     private Double hardness;
     private Double possionRatio;
-    private Double r;
+    @JsonProperty("r")
+    private Double rrValue;
     private String materialCutCodeName;
     private String costUnits;
     private String sourceName;
@@ -76,7 +79,7 @@ public class PropertyValuesList {
     private String iiBeamCostUnits;
     private Double rectangularTubeCostPerUnit;
     @JsonProperty("iBeamCarbonEmissionsFactor")
-    private Double iIBeamCarbonEmissionsFactor;
+    private Double iiBeamCarbonEmissionsFactor;
     private Double roundTubeCostPerUnit;
     private String channelBarCostUnits;
     private String angleBarCostUnits;
@@ -129,7 +132,8 @@ public class PropertyValuesList {
     private Double specificHeat;
     private Boolean canCM;
     private Boolean canRIM;
-    private Boolean canIM_SFM;
+    @JsonProperty("canIM_SFM")
+    private Boolean canIMSFM;
     private Boolean canRegrind;
     private String materialForm;
     private Double graphitePercentContent;
@@ -152,8 +156,6 @@ public class PropertyValuesList {
     private Double roundTubeCarbonEmissionsFactor;
     private Double rectangularBarCarbonEmissionsFactor;
     private Double hexBarCarbonEmissionsFactor;
-    @JsonProperty("iBeamCarbonEmissionsFactor")
-    private Double iiBeamCarbonEmissionsFactor;
     private Double rectangularTubeCarbonEmissionsFactor;
     private Double maximumExtrusionExitSpeed;
     private Double minimumExtrusionExitSpeed;

@@ -63,7 +63,7 @@ public class PlmFieldDefinitions {
     private Integer dfmRiskScore = 0;
     @JsonProperty("ApPPC")
     @Builder.Default
-    private Double ApPpc = 0.0;
+    private Double apPpc = 0.0;
     @JsonProperty("String1")
     @Builder.Default
     private String string1 = "";
@@ -89,7 +89,7 @@ public class PlmFieldDefinitions {
     private String digitalFactory = "";
     @JsonProperty("APWScenarioLink")
     @Builder.Default
-    private String PWScenarioLink = "";
+    private String apwScenarioLink = "";
     @JsonProperty("MachiningMode")
     @Builder.Default
     private String machiningMode = "";

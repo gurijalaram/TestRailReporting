@@ -35,7 +35,7 @@ public class CostHistoryPage extends LoadableComponent<CostHistoryPage> {
     private WebElement leftColSecondaryProcessMachining;
 
     @FindBy(css = "g[class*='xAxis']")
-    private WebElement xAxis;
+    private WebElement exAxis;
 
     @FindBy(css = "g[class*='recharts-xAxis xAxis'] tspan")
     private List<WebElement> displayedChartIterations;

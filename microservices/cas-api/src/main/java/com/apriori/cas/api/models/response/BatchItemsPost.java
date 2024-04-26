@@ -14,5 +14,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BatchItemsPost {
-    private List<Object> batchItems = null;
+    private List<Object> batchItems;
 }

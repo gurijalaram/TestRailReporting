@@ -16,7 +16,6 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
@@ -107,6 +106,20 @@ public class BatchPartResources {
     }
 
     /**
+     * Creates a new batch part for specific batch ID and custom NewPartRequest POJO
+     *
+     * @param newPartRequest - Deserialized NewPartRequest Object
+     * @param batchIdentity  - batch Identity
+     * @return Response of type part object
+     * @Param return class name
+     */
+    public static <T> ResponseWrapper<T> createNewBatchPartByID(NewPartRequest newPartRequest, String batchIdentity, Class<T> klass) {
+        requestEntity = batchPartRequestEntity(newPartRequest, batchIdentity, klass)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
+        return HTTPRequest.build(requestEntity).postMultipart();
+    }
+
+    /**
      * add single part to batch
      *
      * @param queryParams - FormDataBuilder
@@ -119,7 +132,6 @@ public class BatchPartResources {
             .expectedResponseCode(HttpStatus.SC_CREATED);
         return HTTPRequest.build(requestEntity).postMultipart();
     }
-
 
     /**
      * add single part to batch
@@ -143,20 +155,6 @@ public class BatchPartResources {
                 .use(PartFieldsEnum.DATA.getPartFieldName(), partFile))
             .queryParams(queryParams);
 
-        return HTTPRequest.build(requestEntity).postMultipart();
-    }
-
-    /**
-     * Creates a new batch part for specific batch ID and custom NewPartRequest POJO
-     *
-     * @param newPartRequest - Deserialized NewPartRequest Object
-     * @param batchIdentity  - batch Identity
-     * @return Response of type part object
-     * @Param return class name
-     */
-    public static <T> ResponseWrapper<T> createNewBatchPartByID(NewPartRequest newPartRequest, String batchIdentity, Class<T> klass) {
-        requestEntity = batchPartRequestEntity(newPartRequest, batchIdentity, klass)
-            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST);
         return HTTPRequest.build(requestEntity).postMultipart();
     }
 
@@ -359,6 +357,28 @@ public class BatchPartResources {
     }
 
     /**
+     * This overloaded method is to create Batch Part request entity for Batch ID.
+     *
+     * @param queryParameter - QueryParams
+     * @param batchIdentity  - Batch ID
+     * @return RequestEntity - Batch Part complete RequestEntity
+     */
+    public static RequestEntity batchPartRequestEntity(QueryParams queryParameter, File partFile, String batchIdentity) {
+        requestEntity = RequestEntityUtil_Old.init(
+                BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class)
+            .inlineVariables(customerIdentity, batchIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED);
+        requestEntity.headers(new HashMap<String, String>() {{
+                put("Accept", "*/*");
+                put("Content-Type", "multipart/form-data");
+            }})
+            .multiPartFiles(new MultiPartFiles()
+                .use(PartFieldsEnum.DATA.getPartFieldName(), partFile))
+            .queryParams(queryParameter);
+        return requestEntity;
+    }
+
+    /**
      * Checks an wait until the batch part status is completed
      *
      * @param batchIdentity - Batch ID to send
@@ -382,28 +402,6 @@ public class BatchPartResources {
             && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
 
         return (part.getState().equals(BCSState.COMPLETED.toString())) ? true : false;
-    }
-
-    /**
-     * This overloaded method is to create Batch Part request entity for Batch ID.
-     *
-     * @param queryParameter - QueryParams
-     * @param batchIdentity  - Batch ID
-     * @return RequestEntity - Batch Part complete RequestEntity
-     */
-    public static RequestEntity batchPartRequestEntity(QueryParams queryParameter, File partFile, String batchIdentity) {
-        requestEntity = RequestEntityUtil_Old.init(
-                BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class)
-            .inlineVariables(customerIdentity, batchIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED);
-        requestEntity.headers(new HashMap<String, String>() {{
-                put("Accept", "*/*");
-                put("Content-Type", "multipart/form-data");
-            }})
-            .multiPartFiles(new MultiPartFiles()
-                .use(PartFieldsEnum.DATA.getPartFieldName(), partFile))
-            .queryParams(queryParameter);
-        return requestEntity;
     }
 
     /**

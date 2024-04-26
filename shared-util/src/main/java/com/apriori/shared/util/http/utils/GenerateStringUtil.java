@@ -55,6 +55,20 @@ public class GenerateStringUtil {
     }
 
     /**
+     * Generate a random string
+     *
+     * @param max the maximum number of characters
+     * @return random string
+     */
+    public static String generateString(int max) {
+        Random random = new Random();
+        return random.ints(97, 123)
+            .limit(max)
+            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+            .toString();
+    }
+
+    /**
      * Converts the first letter of a string to upper case, the rest of the string is lower case
      * (eg. "FOO" to "Foo")
      *
@@ -78,20 +92,6 @@ public class GenerateStringUtil {
         int scrollHeight = Integer.parseInt(element.getAttribute("scrollHeight"));
         int offsetHeight = Integer.parseInt(element.getAttribute("offsetHeight"));
         return scrollHeight > offsetHeight;
-    }
-
-    /**
-     * Generate a random string
-     *
-     * @param max the maximum number of characters
-     * @return random string
-     */
-    public static String generateString(int max) {
-        Random random = new Random();
-        return random.ints(97, 123)
-            .limit(max)
-            .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-            .toString();
     }
 
     /**
