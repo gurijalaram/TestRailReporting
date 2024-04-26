@@ -40,6 +40,7 @@ public class EmailTab extends NotificationsPart {
 
     public EmailTab selectEmailTemplate() {
         pageUtils.waitUntilDropdownOptionsLoaded(getEmailTemplateElement().findElement(By.tagName("select")));
+        pageUtils.waitForElementEnabled(notificationNextButton);
         pageUtils.waitForElementAndClick(getEmailTemplateElement());
         pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getEmailTemplate())));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
