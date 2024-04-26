@@ -30,13 +30,6 @@ public class SiteVariablesTest extends SiteVariableUtil {
     }
 
     @Test
-    @TestRail(id = {8294})
-    @Description("DELETEs a site variable.")
-    public void deleteSiteVariablesByName() {
-        deleteSiteVariablesByName(this.postSiteVariables().getName());
-    }
-
-    @Test
     @TestRail(id = {8292})
     @Description("Adds or Replaces a SiteVariable for a user.")
     public void putSiteVariableForAUser() {
@@ -53,6 +46,14 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
+
+    @Test
+    @TestRail(id = {8294})
+    @Description("DELETEs a site variable.")
+    public void deleteSiteVariablesByName() {
+        deleteSiteVariablesByName(this.postSiteVariables().getName());
+    }
+
 
     private static void deleteSiteVariablesByName(final String name) {
         RequestEntity requestEntity =

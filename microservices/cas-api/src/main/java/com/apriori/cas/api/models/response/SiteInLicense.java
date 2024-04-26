@@ -34,6 +34,6 @@ public class SiteInLicense {
     private String description;
     private String siteId;
     private Boolean active;
-    private List<String> deployments = null;
-    private List<String> licensedApplications = null;
+    private List<String> deployments;
+    private List<String> licensedApplications;
 }

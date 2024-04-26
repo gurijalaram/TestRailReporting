@@ -284,7 +284,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      * @return list of string
      */
     public List<String> getTableHeaders() {
-        return projectsPartsAndAssemblyTableController.getTableHeaders();
+        return projectsPartsAndAssemblyTableController.getInnerTableHeaders();
     }
 
     /**
@@ -713,6 +713,7 @@ public class ProjectsDetailsPage extends EagerPageComponent<ProjectsDetailsPage>
      */
     public ProjectsDetailsPage clickOnRemoveFromProjectOption() {
         getPageUtils().waitForElementAndClick(btnRemoveFromProject);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div/span[@role='progressbar']"));
         return this;
     }
 

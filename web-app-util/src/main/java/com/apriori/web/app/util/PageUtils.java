@@ -1097,6 +1097,7 @@ public class PageUtils {
 
     /**
      * waits for the element to become enabled
+     *
      * @param locator - locator - the locator of the element
      */
     public void waitForElementEnabled(WebElement locator) {
@@ -1250,13 +1251,13 @@ public class PageUtils {
     /**
      * waits for the web elements to be loaded
      *
-     * @param locator - List<WebElements>
+     * @param locator - the locator
      */
     public void waitUntilWebElementsLoaded(By locator) {
         new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
             .withMessage("Expected web elements not loaded ")
             .ignoreAll(ignoredWebDriverExceptions)
-            .until((ExpectedCondition<Boolean>) element -> (driver.findElements(locator).size() > 0));
+            .until((ExpectedCondition<Boolean>) element -> (!driver.findElements(locator).isEmpty()));
     }
 
     /**
