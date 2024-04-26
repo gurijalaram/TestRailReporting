@@ -33,6 +33,8 @@ public class GenericAssemblyCostTests {
 
     /**
      * Generic test for currency in Assembly Cost Reports (both A4 and Letter)
+     *
+     * @param jasperApiUtils - instance of utils class (contains data required)
      */
     public void genericAssemblyCostCurrencyTest(JasperApiUtils jasperApiUtils) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
@@ -61,6 +63,11 @@ public class GenericAssemblyCostTests {
         softAssertions.assertAll();
     }
 
+    /**
+     * Generic test for export set name (A4 and Letter Reports)
+     *
+     * @param jasperApiUtils - instance of utils class (contains data required)
+     */
     public void testExportSetName(JasperApiUtils jasperApiUtils) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
         InputControl inputControls = jasperReportUtil.getInputControls(jasperApiUtils.getReportValueForInputControls());
@@ -99,6 +106,11 @@ public class GenericAssemblyCostTests {
         softAssertions.assertAll();
     }
 
+    /**
+     * Generic test for assembly part number and scenario name dropdown (both A4 and Letter Report)
+     *
+     * @param jasperApiUtils - instance of utils class (contains data required)
+     */
     public void testAssemblyPartNumberOrScenarioNameDropdown(JasperApiUtils jasperApiUtils) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
         InputControl inputControls = jasperReportUtil.getInputControls(jasperApiUtils.getReportValueForInputControls());
@@ -144,6 +156,11 @@ public class GenericAssemblyCostTests {
         softAssertions.assertAll();
     }
 
+    /**
+     * Generic test for assembly selection (both A4 and Letter report)
+     *
+     * @param jasperApiUtils - instance of utils class (contains data required)
+     */
     public void testSelectAssemblyFunctionality(JasperApiUtils jasperApiUtils) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
         InputControl inputControls = jasperReportUtil.getInputControls(jasperApiUtils.getReportValueForInputControls());
@@ -169,11 +186,6 @@ public class GenericAssemblyCostTests {
         softAssertions.assertThat(inputControlStateArrayList.get(3).getOptions().get(2).getValue()).isEqualTo(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
         softAssertions.assertThat(inputControlStateArrayList.get(3).getOptions().get(0).getSelected()).isEqualTo(true);
 
-        // then generate report and ensure it all comes up properly, etc
-        /*JasperReportSummary jasperReportSummarySubAssemblySelected = jasperApiUtils.genericTestCore(
-            InputControlsEnum.PART_NUMBER_SEARCH_CRITERIA.getInputControlId(),
-            inputControls.getPartNumber().getOption(AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName()).getValue()
-        );*/
         jasperApiUtils.genericTestCore(
             InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
             inputControls.getExportSetName().getOption(currentExportSet).getValue()
@@ -196,6 +208,11 @@ public class GenericAssemblyCostTests {
         softAssertions.assertAll();
     }
 
+    /**
+     * Generic test for capital investment test
+     *
+     * @param jasperApiUtils - instance of utils class (contains data required)
+     */
     public void verifyCapitalInvestmentCostFunctionality(JasperApiUtils jasperApiUtils) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
         InputControl inputControls = jasperReportUtil.getInputControls(jasperApiUtils.getReportValueForInputControls());
