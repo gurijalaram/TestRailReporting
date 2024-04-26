@@ -360,7 +360,9 @@ public class FilterCriteriaTests extends TestBaseUI {
         ScenariosUtil scenariosUtil = new ScenariosUtil();
         ComponentsUtil componentsUtil = new ComponentsUtil();
 
+        componentsUtil.postComponent(simulateComponent);
         componentsUtil.postComponent(manualComponent);
+        scenariosUtil.postCostScenario(simulateComponent);
         scenariosUtil.postManualCostScenario(manualComponent);
     }
 }
