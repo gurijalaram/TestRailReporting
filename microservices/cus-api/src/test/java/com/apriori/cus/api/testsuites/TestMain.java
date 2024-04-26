@@ -1,4 +1,4 @@
-package com.apriori.bcm.api.testsuites;
+package com.apriori.cus.api.testsuites;
 
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 

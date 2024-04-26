@@ -1,9 +1,5 @@
 package com.apriori.cid.ui.tests.bulkcosting;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
@@ -22,17 +18,27 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 public class BulkCostingPageTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private BulkCostingPage bulkCostingPage;
+    private String worksheetIdentity;
+    private UserCredentials userCredentials = UserUtil.getUser();
+
+    @AfterEach
+    public void cleanUp() {
+        if (worksheetIdentity != null) {
+            BcmUtil bcmUtil = new BcmUtil();
+            bcmUtil.deleteWorksheetWithEmail(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT,UserCredentials.init(userCredentials.getEmail(), null));
+        }
+    }
 
     @Test
     @TestRail(id = {29187, 29874, 29942})
     @Description("bulk costing page visibility, adding and delete worksheet")
     public void bulkCostingAddAndDeleteWorksheet() {
-        UserCredentials userCredentials = UserUtil.getUser();
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -44,7 +50,7 @@ public class BulkCostingPageTests extends TestBaseUI {
 
         String name = new GenerateStringUtil().saltString("name");
         BcmUtil bcmUtil = new BcmUtil();
-        bcmUtil.createWorksheetWithEmail(name,userCredentials.getEmail());
+        bcmUtil.createWorksheetWithEmail(name,UserCredentials.init(userCredentials.getEmail(), null));
 
         bulkCostingPage.selectAndDeleteSpecificBulkAnalysis(name);
         soft.assertThat(bulkCostingPage.isWorksheetIsPresent(name)).isFalse();

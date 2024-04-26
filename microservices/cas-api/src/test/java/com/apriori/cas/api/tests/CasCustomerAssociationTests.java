@@ -23,13 +23,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class CasCustomerAssociationTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
-    private String aPIdentity;
+    private String apIdentity;
     private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void getToken() {
         RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
-        aPIdentity = casTestUtil.getAprioriInternal().getIdentity();
+        apIdentity = casTestUtil.getAprioriInternal().getIdentity();
     }
 
     @Test
@@ -39,7 +39,7 @@ public class CasCustomerAssociationTests {
         ResponseWrapper<CustomerAssociations> associations = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_ASSOCIATIONS,
             CustomerAssociations.class,
             HttpStatus.SC_OK,
-            aPIdentity);
+            apIdentity);
 
         soft.assertThat(associations.getResponseEntity().getTotalItemCount())
             .isGreaterThanOrEqualTo(1);
@@ -55,13 +55,13 @@ public class CasCustomerAssociationTests {
         ResponseWrapper<CustomerAssociations> associations = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_ASSOCIATIONS,
             CustomerAssociations.class,
             HttpStatus.SC_OK,
-            aPIdentity);
+            apIdentity);
 
         String associationIdentity = associations.getResponseEntity().getItems().get(0).getIdentity();
         ResponseWrapper<CustomerAssociation> associationResponse = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_ASSOCIATION,
             CustomerAssociation.class,
             HttpStatus.SC_OK,
-            aPIdentity,
+            apIdentity,
             associationIdentity);
 
         soft.assertThat(associationResponse.getResponseEntity().getIdentity())
@@ -79,11 +79,11 @@ public class CasCustomerAssociationTests {
         ResponseWrapper<CasErrorMessage> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_ASSOCIATION,
             CasErrorMessage.class,
             HttpStatus.SC_NOT_FOUND,
-            aPIdentity,
+            apIdentity,
             notExistingIdentity);
 
         soft.assertThat(response.getResponseEntity().getMessage())
-            .isEqualTo(String.format("Can't find association for source customer with identity '%s' and association identity '%s'.", aPIdentity, notExistingIdentity));
+            .isEqualTo(String.format("Can't find association for source customer with identity '%s' and association identity '%s'.", apIdentity, notExistingIdentity));
         soft.assertAll();
     }
 }

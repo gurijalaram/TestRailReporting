@@ -41,6 +41,10 @@ public class InputControl {
         return getPropertyValueIfExist("lastModifiedBy");
     }
 
+    public InputControlState getScenarioToCompareID() {
+        return getPropertyValueIfExist("scenarioToCompareIDs");
+    }
+
     public InputControlState getComponentSelect() {
         return getPropertyValueIfExist("componentSelect");
     }

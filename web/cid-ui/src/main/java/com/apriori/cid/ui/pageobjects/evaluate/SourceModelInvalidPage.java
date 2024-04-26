@@ -22,7 +22,7 @@ public class SourceModelInvalidPage extends LoadableComponent<SourceModelInvalid
     private WebElement fixSourceButton;
 
     @FindBy(css = ".close")
-    private WebElement xButton;
+    private WebElement exButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -79,7 +79,7 @@ public class SourceModelInvalidPage extends LoadableComponent<SourceModelInvalid
      * @return new page object
      */
     public EvaluatePage closeSMInvalidPanel() {
-        pageUtils.waitForElementAndClick(xButton);
+        pageUtils.waitForElementAndClick(exButton);
         return new EvaluatePage(driver);
     }
 }

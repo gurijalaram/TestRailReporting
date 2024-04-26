@@ -137,6 +137,7 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
      */
     public void closeMessageAlert() {
         pageUtils.waitForElementAndClick(statusMessageCloseBtn);
+        pageUtils.waitForElementNotDisplayed(statusMessageCloseBtn, 1);
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
     }
 }

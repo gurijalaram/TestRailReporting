@@ -147,7 +147,7 @@ public class WorkflowDataUtil {
             .mappingRule(mappingRule.getMappingRule())
             .twxAttributeName(costingInputField.getCostingInputField())
             .value(connectFieldValue)
-            ._isSelected(false)
+            .isSelected(false)
             .build());
 
         costingInputRows.setRows(workflowRows);
@@ -172,7 +172,7 @@ public class WorkflowDataUtil {
                 .key(plmTypeAttributes.getKey())
                 .value((writingRule.getWritingRule() == "CONSTANT") ? connectFieldValue : plmTypeAttributes.getValue())
                 .writingRule(writingRule.getWritingRule())
-                ._isSelected(false)
+                .isSelected(false)
                 .build());
 
             plmWriteConfigurationRows.setRows(workflowRows);
@@ -195,7 +195,7 @@ public class WorkflowDataUtil {
                 .isValid(true)
                 .key(plmTypeAttributes.getKey())
                 .value(plmTypeAttributes.getValue())
-                ._isSelected(false)
+                .isSelected(false)
                 .build());
             emailReportConfigurationRows.setRows(workflowRows);
             workflowRequestData.setEmailReportConfiguration(emailReportConfigurationRows);
@@ -217,7 +217,7 @@ public class WorkflowDataUtil {
             .isValid(true)
             .key(plmTypeAttributes.getKey())
             .value(customFieldValue.isEmpty() ? plmTypeAttributes.getValue() : customFieldValue)
-            ._isSelected(false)
+            .isSelected(false)
             .build());
         plmWriteReportConfigurationRows.setRows(workflowRows);
         workflowRequestData.setPlmWriteReportConfiguration(plmWriteReportConfigurationRows);

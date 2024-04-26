@@ -307,6 +307,7 @@ public class WorkflowScheduleTests extends TestBaseUI {
         workflowHome.selectScheduleTab().clickNewWorkflowBtn();
 
         workflowSchedule = WorkflowSchedule.builder()
+            .schedule(WorkflowSchedule.Schedule.YEARLY)
             .selectEveryYear(false)
             .monthlyOccurance(WorkflowSchedule.MonthlyOccurance.FIRST)
             .weekDay(WorkflowSchedule.WeekDay.FRIDAY)

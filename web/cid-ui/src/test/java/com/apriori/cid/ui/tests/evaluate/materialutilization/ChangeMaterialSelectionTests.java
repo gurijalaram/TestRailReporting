@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
+import com.apriori.cid.ui.pageobjects.evaluate.inputs.RoutingSelectionPage;
 import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
@@ -30,6 +31,7 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
     private EvaluatePage evaluatePage;
     private MaterialUtilizationPage materialUtilizationPage;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private RoutingSelectionPage routingSelectionPage;
     private ComponentInfoBuilder component;
 
     public ChangeMaterialSelectionTests() {
@@ -37,7 +39,8 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6186, 5898})
+    @TestRail(id = {6186, 5898, 14990, 15804, 7843})
+
     @Description("Test making changes to the Material for Sand Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSandCasting() {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
@@ -49,18 +52,29 @@ public class ChangeMaterialSelectionTests extends TestBaseUI {
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
+            .submit(EvaluatePage.class);
+        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+
+        softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("VerticalAutomatic", "HorizontalAutomatic", "ManualStd", "ManualFloor", "ManualPit");
+
+        routingSelectionPage.selectRoutingPreferenceByName("VerticalAutomatic")
             .submit(EvaluatePage.class)
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Vertical Automatic");
 
         evaluatePage.openMaterialSelectorTable()
             .search("270")
             .selectMaterial(MaterialNameEnum.BRASS_YELLOW_270.getMaterialName())
             .submit(EvaluatePage.class)
+            .goToAdvancedTab().openRoutingSelection()
+            .selectRoutingPreferenceByName("ManualStd")
+            .submit(EvaluatePage.class)
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed(MaterialNameEnum.BRASS_YELLOW_270.getMaterialName())).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Manual Std Moldmaking");
 
         softAssertions.assertAll();
     }

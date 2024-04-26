@@ -131,13 +131,13 @@ public class CicAgentJobPartResultTest extends WorkflowTestUtil {
             .invokeRestWorkflow()
             .track();
 
-        AgentErrorMessage aJobPartsResultError = CicApiTestUtil.getCicAgentWorkflowJobPartsResult("INVALID",
+        AgentErrorMessage agentJobPartsResultError = CicApiTestUtil.getCicAgentWorkflowJobPartsResult("INVALID",
             this.agentWorkflowJobRunResponse.getJobId(),
             this.workflowPartsRequestDataBuilder.getParts().get(0).getId(),
             AgentErrorMessage.class,
             HttpStatus.SC_NOT_FOUND);
 
-        softAssertions.assertThat(aJobPartsResultError.getMessage()).contains(String.format("Job '%s' in workflow 'INVALID' not found", this.agentWorkflowJobRunResponse.getJobId()));
+        softAssertions.assertThat(agentJobPartsResultError.getMessage()).contains(String.format("Job '%s' in workflow 'INVALID' not found", this.agentWorkflowJobRunResponse.getJobId()));
     }
 
     @Test
