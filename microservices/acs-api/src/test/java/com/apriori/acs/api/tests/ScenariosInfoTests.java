@@ -4,7 +4,6 @@ import com.apriori.acs.api.models.response.acs.scenariosinfo.ScenariosInfoItem;
 import com.apriori.acs.api.models.response.acs.scenariosinfo.ScenariosInfoResponse;
 import com.apriori.acs.api.models.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
-import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;

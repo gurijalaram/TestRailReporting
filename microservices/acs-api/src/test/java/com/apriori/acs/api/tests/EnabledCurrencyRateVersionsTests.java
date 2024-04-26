@@ -1,6 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;

@@ -82,7 +82,6 @@ public class FileUploadResources {
 
     private static final long WAIT_TIME = 180;
     private String token;
-    private UserCredentials userCredentials;
 
     private static final HashMap<String, String> headers = new HashMap<>();
 
@@ -96,7 +95,6 @@ public class FileUploadResources {
     private String currentWorkorderId;
 
     public FileUploadResources(UserCredentials user) {
-        this.userCredentials = user;
         this.token = new OldAuthorizationUtil().getTokenAsString(user);
     }
 

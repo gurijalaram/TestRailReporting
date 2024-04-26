@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.api.models.response.acs.artifacttableinfo.ArtifactTableInfoResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
-import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;

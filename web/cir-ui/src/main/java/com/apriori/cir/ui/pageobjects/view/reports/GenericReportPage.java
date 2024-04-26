@@ -538,7 +538,7 @@ public class GenericReportPage extends ReportsPageHeader {
     protected final String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
 
     private final WebDriver driver;
-    private PageUtils pageUtils;
+    private final PageUtils pageUtils;
 
     public GenericReportPage(WebDriver driver) {
         super(driver);
@@ -556,13 +556,7 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
-        this.pageUtils = new PageUtils(driver);
         pageUtils.waitForElementToAppear(okButton);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
     }

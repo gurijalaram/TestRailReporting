@@ -10,7 +10,6 @@ import com.apriori.acs.api.models.response.acs.displayunits.DisplayUnitsInputs;
 import com.apriori.acs.api.models.response.acs.displayunits.DisplayUnitsResponse;
 import com.apriori.acs.api.models.response.acs.displayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
-import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.file.user.UserCredentials;

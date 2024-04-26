@@ -9,7 +9,6 @@ import static org.hamcrest.core.StringStartsWith.startsWith;
 import com.apriori.acs.api.models.response.acs.missingscenario.MissingScenarioResponse;
 import com.apriori.acs.api.models.response.acs.scenarioinfobyscenarioiterationkey.ScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.api.utils.Constants;
-import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;

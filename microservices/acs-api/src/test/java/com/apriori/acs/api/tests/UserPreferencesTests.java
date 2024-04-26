@@ -11,7 +11,6 @@ import com.apriori.acs.api.enums.acs.AcsApiEnum;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.api.models.response.acs.userpreferences.UserPreferencesResponse;
-import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -93,11 +92,6 @@ public class UserPreferencesTests extends TestUtil {
         assertOnInvalidResponse(genericErrorResponse);
     }
 
-    private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
-        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
-        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
-    }
-
     @Test
     @TestRail(id = 21727)
     @Description("Verify that header -apriori-version is returned")
@@ -108,5 +102,10 @@ public class UserPreferencesTests extends TestUtil {
 
         assertThat(header.getName(), equalTo("X-aPriori-Version"));
         assertThat(header.getValue(), notNullValue());
+    }
+
+    private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
+        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
+        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
     }
 }

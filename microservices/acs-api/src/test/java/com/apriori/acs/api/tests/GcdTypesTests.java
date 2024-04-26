@@ -18,7 +18,6 @@ import com.apriori.acs.api.models.response.acs.GcdTypes.GcdTypesSheetPlasticResp
 import com.apriori.acs.api.models.response.acs.GcdTypes.GcdTypesStockMachiningResponse;
 import com.apriori.acs.api.models.response.acs.GcdTypes.GcdTypesTwoModelMachiningResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
-import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;

@@ -2,7 +2,6 @@ package com.apriori.acs.api.tests;
 
 import com.apriori.acs.api.models.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
-import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;

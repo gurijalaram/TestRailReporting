@@ -1,7 +1,6 @@
 package com.apriori.acs.api.tests;
 
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
-import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -139,7 +138,7 @@ public class LoadCadFileTests {
     @Test
     @TestRail(id = 16519)
     @Description("Test LOADCADFILE API with freeBodiesIgnoreMissingComponents set to False")
-    public void testLoadCadFilefreeBodiesIgnoreMissingComponentsFalse() {
+    public void testLoadCadFileFreeBodiesIgnoreMissingComponentsFalse() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();

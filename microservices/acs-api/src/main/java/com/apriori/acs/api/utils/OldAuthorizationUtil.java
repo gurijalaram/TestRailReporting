@@ -7,7 +7,6 @@ import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 
-import lombok.Singular;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -19,8 +18,6 @@ import java.util.Map;
 public class OldAuthorizationUtil {
 
     private static final HashMap<String, String> headers = new HashMap<>();
-    @Singular
-    private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
 
     public OldAuthorizationUtil() {
     }

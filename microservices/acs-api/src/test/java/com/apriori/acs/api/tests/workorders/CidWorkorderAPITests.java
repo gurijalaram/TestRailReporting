@@ -3,7 +3,6 @@ package com.apriori.acs.api.tests.workorders;
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
-import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.file.user.UserCredentials;
