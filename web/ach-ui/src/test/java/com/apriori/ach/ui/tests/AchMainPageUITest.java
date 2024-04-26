@@ -7,9 +7,8 @@ import com.apriori.ach.api.utils.AchEnvironmentAPIUtil;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomeLoginPage;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.qa.ach.ui.utils.AchEnvironmentUIUtil;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.models.AuthorizationUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.testrail.TestRail;
 

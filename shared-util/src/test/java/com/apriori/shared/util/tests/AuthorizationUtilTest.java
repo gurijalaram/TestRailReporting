@@ -5,10 +5,10 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
+import com.apriori.shared.util.AuthorizationUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.AuthorizationUtil;
 import com.apriori.shared.util.models.response.Token;
 
 import lombok.SneakyThrows;

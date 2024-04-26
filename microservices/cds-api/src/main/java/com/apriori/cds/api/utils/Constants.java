@@ -1,7 +1,7 @@
 package com.apriori.cds.api.utils;
 
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.apriori.shared.util.utils;
+package com.apriori.shared.util;
 
 import com.apriori.shared.util.exceptions.KeyValueException;
 import com.apriori.shared.util.http.utils.QueryParams;

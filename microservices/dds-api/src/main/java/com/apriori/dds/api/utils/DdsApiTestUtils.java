@@ -5,14 +5,13 @@ import com.apriori.dds.api.models.request.CommentsRequest;
 import com.apriori.dds.api.models.request.DiscussionsRequest;
 import com.apriori.dds.api.models.request.DiscussionsRequestParameters;
 import com.apriori.dds.api.models.response.DiscussionResponse;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.CustomerUtil;
-import com.apriori.shared.util.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
 

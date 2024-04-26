@@ -1,7 +1,7 @@
 package com.apriori.shared.util.file.user;
 
-import com.apriori.shared.util.models.AuthorizationUtil;
-import com.apriori.shared.util.models.CustomerUtil;
+import com.apriori.shared.util.AuthorizationUtil;
+import com.apriori.shared.util.CustomerUtil;
 
 import com.auth0.jwt.JWT;
 import lombok.Getter;
