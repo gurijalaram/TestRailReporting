@@ -82,6 +82,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     /**
      * Get list of applications from user screen and map them into ApplicationDTO objects
+     *
      * @return
      */
     public List<ApplicationDTO> getListOfApplications() {
@@ -103,10 +104,11 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     /**
      * Click on web application on CloudHomePage by application name in UI
-     * @param applicationName
-     * @param webPageType
-     * @return
-     * @param <T>
+     *
+     * @param applicationName - the application name
+     * @param webPageType     - the web page type
+     * @param <T>             - generic type
+     * @return generic object
      */
     public <T> T clickWebApplicationByName(String applicationName, Class<T> webPageType) {
         By byApplicationTitle = By.xpath(String.format("//div[@data-application='%s']//div[@class='card-header']", applicationName));
@@ -122,6 +124,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     /**
      * Do click on web application wait until application page is loaded and close application tab
+     *
      * @param applicationName
      * @param webPageType
      * @return
@@ -129,7 +132,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     public <T> void clickWebApplicationByNameAndCloseAfterLoad(String applicationName, Class<T> webPageType) {
         try {
-            T responsePage  = clickWebApplicationByName(applicationName, webPageType);
+            T responsePage = clickWebApplicationByName(applicationName, webPageType);
         } catch (Exception e) {
 
             captureApplicationScreenshot(applicationName);
@@ -165,6 +168,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     /**
      * Click userPanel
+     *
      * @return
      */
     public CloudHomePage clickUserPanel() {
@@ -174,6 +178,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     /**
      * Click switch deployment button
+     *
      * @return
      */
     public SwitchDeploymentPopUpPage clickSwitchDeploymentButton() {
@@ -183,6 +188,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     /**
      * go to the user management page
+     *
      * @return new user management page
      */
     public UserManagementPage clickUserManagementButton() {
@@ -196,6 +202,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     /**
      * Get user ID_TOKEN from browser local storage
+     *
      * @return
      */
     public String getUserTokenFromBrowser() {
@@ -208,6 +215,7 @@ public class CloudHomePage extends LoadableComponent<CloudHomePage> {
 
     /**
      * Get string of load errors, if there are present
+     *
      * @return
      */
     public String getLoadApplicationsErrors() {

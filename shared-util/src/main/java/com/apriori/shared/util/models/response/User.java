@@ -73,7 +73,7 @@ public class User {
     @Expose
     protected String mfaAuthenticator;
     @Expose
-    protected List<Object> resourcesAllowedToCreate = null;
+    protected List<Object> resourcesAllowedToCreate;
     @Expose
     protected CustomProperties customProperties;
     @Expose
@@ -81,7 +81,7 @@ public class User {
     @Expose
     protected String updatedByName;
     @Expose
-    protected List<Object> licenseAssignments = null;
+    protected List<Object> licenseAssignments;
     @Expose
     protected String awsRole;
     @Expose

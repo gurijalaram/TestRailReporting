@@ -75,7 +75,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     private WebElement overrideInput;
 
     @FindBy(css = ".yAxis g[class='recharts-layer recharts-cartesian-axis-tick'] [orientation='left']")
-    private List<WebElement> xAxisLabel;
+    private List<WebElement> exAxisLabel;
 
     @FindBy(css = ".highcharts-series-group rect")
     private List<WebElement> chart;
@@ -288,7 +288,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return list string
      */
     public List<String> getProcessPercentage(String axisLabel) {
-        int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
+        int position = IntStream.range(0, exAxisLabel.size()).filter(x -> exAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
         return chartPercentage.stream().map(x -> pageUtils.waitForElementToAppear(chartPercentage.get(position)).getAttribute("textContent")).collect(Collectors.toList());
     }
 

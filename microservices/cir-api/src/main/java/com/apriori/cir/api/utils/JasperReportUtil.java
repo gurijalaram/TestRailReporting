@@ -43,8 +43,8 @@ public class JasperReportUtil {
     private static LinkedHashMap<String, String> componentCostICModifiedNamesValuesMap;
     private static LinkedHashMap<String, String> scenarioComparisonICModifiedNamesValuesMap;
     private static HashMap<String, LinkedHashMap<String, String>> inputControlsModifiedValueNameMasterList;
-    private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-    private long WAIT_TIME = 30;
+    private ObjectMapper objectMapper = new ObjectMapper();
+    private long waitTime = 30;
 
     private String jasperSessionValue = "JSESSIONID=%s";
 
@@ -237,7 +237,7 @@ public class JasperReportUtil {
             responseBodyText = HTTPRequest.build(requestEntity).get().getBody();
         } while (!responseBodyText.contains("ready")
             && !responseBodyText.contains("failed")
-            && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
+            && ((System.currentTimeMillis() / 1000) - initialTime) < waitTime);
     }
 
     private ReportStatusResponse generateReport(ReportRequest reportRequest) {
@@ -320,7 +320,7 @@ public class JasperReportUtil {
 
     @SneakyThrows
     private List<ChartData> parseJsonResponse(final String jsonResponse) {
-        final JsonNode dataNode = OBJECT_MAPPER.readTree(jsonResponse);
+        final JsonNode dataNode = objectMapper.readTree(jsonResponse);
         List<ChartData> parsedChartData = new ArrayList<>();
 
         for (JsonNode node : dataNode) {
@@ -371,7 +371,7 @@ public class JasperReportUtil {
             dataNode = dataNode.findValue("data");
         }
 
-        return dataNode != null ? OBJECT_MAPPER.readerFor(new TypeReference<List<ChartDataPoint>>() {
+        return dataNode != null ? objectMapper.readerFor(new TypeReference<List<ChartDataPoint>>() {
         }).readValue(dataNode) : null;
     }
 

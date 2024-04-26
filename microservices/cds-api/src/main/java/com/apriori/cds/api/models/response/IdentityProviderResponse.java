@@ -39,7 +39,7 @@ public class IdentityProviderResponse {
     private String name;
     private String displayName;
     private String description;
-    private List<String> idpDomains = null;
+    private List<String> idpDomains;
     private String signInUrl;
     private String signingCertificate;
     private String signingCertificateExpiresAt;

@@ -157,7 +157,7 @@ public class CasCustomersTests {
     @Test
     @TestRail(id = {5826})
     @Description("Resetting the MFA enrollment status of every user for the customer")
-    public void ResettingMFA() {
+    public void resettingMFA() {
         String customerName = generateStringUtil.generateCustomerName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
