@@ -7,6 +7,7 @@ import com.apriori.cia.ui.pageobjects.login.AdminLoginPage;
 import com.apriori.cia.ui.pageobjects.manage.ScenarioExport;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.cir.ui.pageobjects.view.reports.ComponentCostReportPage;
 import com.apriori.shared.util.dataservice.TestDataService;
@@ -54,7 +55,7 @@ public class CIAIntegrationTests extends TestBaseUI {
         componentCostReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
+            .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
 

@@ -18,6 +18,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 import org.openqa.selenium.support.ui.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GenericReportPage extends ReportsPageHeader {
+public class GenericReportPage extends LoadableComponent<GenericReportPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(GenericReportPage.class);
     private final Map<String, WebElement> dtcComparisonDtcIssueMap = new HashMap<>();
@@ -541,7 +542,7 @@ public class GenericReportPage extends ReportsPageHeader {
     private final PageUtils pageUtils;
 
     public GenericReportPage(WebDriver driver) {
-        super(driver);
+        super();
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
