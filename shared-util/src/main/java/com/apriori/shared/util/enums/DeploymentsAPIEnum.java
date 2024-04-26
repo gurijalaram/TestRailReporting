@@ -5,6 +5,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum DeploymentsAPIEnum implements ExternalEndpointEnum {
 
+    //DEPLOYMENTS
     DEPLOYMENTS("/customers/%s/deployments");
 
     private final String endpoint;
