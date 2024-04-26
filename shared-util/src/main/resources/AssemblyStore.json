@@ -13,7 +13,7 @@
           "extension": ".SLDPRT",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -21,7 +21,7 @@
           "extension": ".SLDPRT",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -29,7 +29,7 @@
           "extension": ".SLDPRT",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         }
       ]
@@ -47,7 +47,7 @@
           "extension": ".SLDPRT",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -55,7 +55,7 @@
           "extension": ".SLDPRT",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -63,7 +63,7 @@
           "extension": ".SLDPRT",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         }
       ]
@@ -81,7 +81,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -89,7 +89,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         }
       ]
@@ -107,7 +107,7 @@
           "extension": ".SLDPRT",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -115,7 +115,7 @@
           "extension": ".SLDPRT",
           "processGroup": "STOCK_MACHINING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "4 Axis Mill Routing"
           }
         }
       ]
@@ -133,7 +133,7 @@
           "extension": ".CATPart",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -141,7 +141,7 @@
           "extension": ".CATPart",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -149,7 +149,7 @@
           "extension": ".CATPart",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         }
       ]
@@ -167,7 +167,7 @@
           "extension": ".SLDPRT",
           "processGroup": "SHEET_PLASTIC",
           "metadata" : {
-            "routing" : ""
+            "routing" : "3 Station Rotary Thermoforming"
           }
         },
         {
@@ -175,7 +175,7 @@
           "extension": ".SLDPRT",
           "processGroup": "SHEET_PLASTIC",
           "metadata" : {
-            "routing" : ""
+            "routing" : "3 Station Rotary Thermoforming"
           }
         },
         {
@@ -183,7 +183,7 @@
           "extension": ".SLDPRT",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -191,7 +191,7 @@
           "extension": ".SLDPRT",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -199,7 +199,7 @@
           "extension": ".SLDPRT",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -207,7 +207,7 @@
           "extension": ".SLDPRT",
           "processGroup": "CASTING_DIE",
           "metadata" : {
-            "routing" : ""
+            "routing" : "High Pressure Die Cast"
           }
         },
         {
@@ -215,7 +215,7 @@
           "extension": ".SLDPRT",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -223,7 +223,7 @@
           "extension": ".SLDPRT",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -231,7 +231,7 @@
           "extension": ".SLDPRT",
           "processGroup": "CASTING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "High Pressure Die Cast"
           }
         },
         {
@@ -244,7 +244,7 @@
               "extension": ".SLDPRT",
               "processGroup": "PLASTIC_MOLDING",
               "metadata" : {
-                "routing" : ""
+                "routing" : "Injection Mold"
               }
             },
             {
@@ -252,7 +252,7 @@
               "extension": ".SLDPRT",
               "processGroup": "STOCK_MACHINING",
               "metadata" : {
-                "routing" : ""
+                "routing" : "4 Axis Mill Routing"
               }
             }
           ]
@@ -272,7 +272,7 @@
           "extension": ".SLDPRT",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -280,7 +280,7 @@
           "extension": ".SLDPRT",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -288,7 +288,7 @@
           "extension": ".SLDPRT",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -304,7 +304,7 @@
               "extension": ".SLDPRT",
               "processGroup": "PLASTIC_MOLDING",
               "metadata" : {
-                "routing" : ""
+                "routing" : "Injection Mold"
               }
             },
             {
@@ -312,7 +312,7 @@
               "extension": ".SLDPRT",
               "processGroup": "STOCK_MACHINING",
               "metadata" : {
-                "routing" : ""
+                "routing" : "4 Axis Mill Routing"
               }
             }
           ]
@@ -332,7 +332,7 @@
           "extension": ".prt.5",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -340,7 +340,7 @@
           "extension": ".prt.1",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         }
       ]
@@ -358,7 +358,7 @@
           "extension": ".prt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -366,7 +366,7 @@
           "extension": ".prt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -374,7 +374,7 @@
           "extension": ".prt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -382,7 +382,7 @@
           "extension": ".prt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         }
       ]
@@ -400,7 +400,7 @@
           "extension": ".ipt",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Turret/[Bend]"
           }
         },
         {
@@ -408,7 +408,7 @@
           "extension": ".ipt",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Laser/[Bend]"
           }
         },
         {
@@ -416,7 +416,7 @@
           "extension": ".ipt",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Laser Punch/[Bend]"
           }
         },
         {
@@ -424,7 +424,7 @@
           "extension": ".ipt",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Laser/[Bend]"
           }
         }
       ]
@@ -476,7 +476,7 @@
           "extension": ".ipt",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Laser/[Bend]"
           }
         },
         {
@@ -484,7 +484,7 @@
           "extension": ".ipt",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Laser/[Bend]"
           }
         }
       ]
@@ -502,7 +502,7 @@
           "extension": ".ipt",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Laser/[Bend]"
           }
         },
         {
@@ -510,7 +510,7 @@
           "extension": ".ipt",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Laser Punch/[Bend]"
           }
         },
         {
@@ -518,7 +518,7 @@
           "extension": ".ipt",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Laser/[Bend]"
           }
         }
       ]
@@ -601,7 +601,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -609,7 +609,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -617,7 +617,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -625,7 +625,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -633,7 +633,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -641,7 +641,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -649,7 +649,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -657,7 +657,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -665,7 +665,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -673,7 +673,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -681,7 +681,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -689,7 +689,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -697,7 +697,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -705,7 +705,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -713,7 +713,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -721,7 +721,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -729,7 +729,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -737,7 +737,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -745,7 +745,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -753,7 +753,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -761,7 +761,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -769,7 +769,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -777,7 +777,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -785,7 +785,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         },
         {
@@ -793,7 +793,7 @@
           "extension": ".CATPart",
           "processGroup": "FORGING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Closed Die Forging"
           }
         }
       ]
@@ -811,7 +811,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -819,7 +819,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -827,7 +827,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -835,7 +835,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -843,7 +843,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -851,7 +851,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -859,7 +859,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -867,7 +867,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -875,7 +875,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -883,7 +883,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -891,7 +891,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -899,7 +899,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -907,7 +907,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -915,7 +915,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -923,7 +923,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         },
         {
@@ -931,7 +931,7 @@
           "extension": ".ipt",
           "processGroup": "PLASTIC_MOLDING",
           "metadata" : {
-            "routing" : ""
+            "routing" : "Injection Mold"
           }
         }
       ]
@@ -1016,7 +1016,7 @@
           "extension": ".prt.1",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Fiber Laser/[Bend]"
           }
         },
         {
@@ -1024,7 +1024,7 @@
           "extension": ".prt.1",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Laser/[Bend]"
           }
         },
         {
@@ -1032,7 +1032,7 @@
           "extension": ".prt.1",
           "processGroup": "SHEET_METAL",
           "metadata" : {
-            "routing" : ""
+            "routing" : "[CTL]/Laser/[Bend]"
           }
         },
         {
@@ -1045,7 +1045,7 @@
               "extension": ".prt.1",
               "processGroup": "SHEET_METAL",
               "metadata" : {
-                "routing" : ""
+                "routing" : "[CTL]/Fiber Laser/[Bend]"
               }
             },
             {
@@ -1053,7 +1053,7 @@
               "extension": ".prt.1",
               "processGroup": "SHEET_METAL",
               "metadata" : {
-                "routing" : ""
+                "routing" : "[CTL]/Fiber Laser/[Bend]"
               }
             }
           ]
