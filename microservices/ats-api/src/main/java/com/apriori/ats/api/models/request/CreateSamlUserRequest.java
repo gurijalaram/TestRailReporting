@@ -1,5 +1,6 @@
 package com.apriori.ats.api.models.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -7,8 +8,10 @@ import lombok.Data;
 @Builder
 public class CreateSamlUserRequest {
     private String email;
-    private String given_name;
-    private String family_name;
+    @JsonProperty("given_name")
+    private String givenName;
+    @JsonProperty("family_name")
+    private String familyName;
     private String name;
     private String roles;
 }

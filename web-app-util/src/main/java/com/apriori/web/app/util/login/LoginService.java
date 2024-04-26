@@ -20,7 +20,7 @@ public class LoginService extends LoadableComponent<LoginService> {
     /**
      * LoginService generic constructor
      *
-     * @param driver - driver instance to use
+     * @param driver      - driver instance to use
      * @param application - application to log in to
      */
     public LoginService(WebDriver driver, String application) {
@@ -55,8 +55,8 @@ public class LoginService extends LoadableComponent<LoginService> {
      * Generic login method
      *
      * @param userCredentials - user to log in with
-     * @param klass - class to return
-     * @param <T> - specified class to return
+     * @param klass           - class to return
+     * @param <T>             - specified class to return
      * @return - return instance of class specified
      */
     public <T> T login(final UserCredentials userCredentials, Class<T> klass) {
@@ -68,9 +68,9 @@ public class LoginService extends LoadableComponent<LoginService> {
      *
      * @param username - user to log in with
      * @param password - password to log in with
-     * @param klass - class to return
+     * @param klass    - class to return
+     * @param <T>      - specified class to return
      * @return - return instance of class specified
-     * @param <T> - specified class to return
      */
     public <T> T loginUsernamePassword(String username, String password, Class<T> klass) {
         return loginPage.performLogin(username, password, klass);

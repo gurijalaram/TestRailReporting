@@ -54,7 +54,7 @@ public class AgentService {
     private static String installExecutableFile;
     private static String webLoginSession;
 
-    private Session jSchSession = null;
+    private Session jschSession = null;
     private Channel channel = null;
     private ChannelSftp channelSftp = null;
     private AgentCredentials agentCredentials;
@@ -83,21 +83,21 @@ public class AgentService {
      */
     @SneakyThrows
     public AgentService createRemoteSession() {
-        JSch jSch = new JSch();
+        JSch jsch = new JSch();
         try {
             agentData.setPrivateKeyFile(agentData.getBaseFolder() + File.separator + "key" + File.separator +
                 StringUtils.substringAfterLast(AgentConstants.AWS_SYSTEM_PARAMETER_PRIVATE_KEY, "/"));
             String privateKey = AwsParameterStoreUtil.getSystemParameter(AgentConstants.AWS_SYSTEM_PARAMETER_PRIVATE_KEY);
             log.info("########## PRIVATE KEY RETRIEVED FROM AWS SUCCESSFULLY. ########  " + agentData.getPrivateKeyFile());
             FileUtils.writeStringToFile(new File(agentData.getPrivateKeyFile()), privateKey, StandardCharsets.UTF_8);
-            jSch.addIdentity(agentData.getPrivateKeyFile(), agentCredentials.getPassword());
+            jsch.addIdentity(agentData.getPrivateKeyFile(), agentCredentials.getPassword());
             log.debug("########## PRIVATE KEY ADDED SUCCESSFULLY. ########");
-            jSchSession = jSch.getSession(agentCredentials.getUsername(), agentCredentials.getHost(), Integer.parseInt(agentCredentials.getPort()));
+            jschSession = jsch.getSession(agentCredentials.getUsername(), agentCredentials.getHost(), Integer.parseInt(agentCredentials.getPort()));
             log.debug("########## SESSION CREATED SUCCESSFULLY. ########");
             Properties config = new Properties();
             config.put("StrictHostKeyChecking", "no");
-            jSchSession.setConfig(config);
-            jSchSession.connect(SESSION_TIMEOUT);
+            jschSession.setConfig(config);
+            jschSession.connect(SESSION_TIMEOUT);
         } catch (Exception connectionException) {
             log.error("SESSION CONNECTION FAILED!!" + connectionException.getMessage());
             throw new Exception("Session connection failed");
@@ -112,7 +112,7 @@ public class AgentService {
      */
     public AgentService getSftpConnection() {
         try {
-            channel = jSchSession.openChannel("sftp");
+            channel = jschSession.openChannel("sftp");
             channel.connect(CHANNEL_TIMEOUT);
             log.info("########## CONNECTED TO VM SUCCESSFULLY. ########");
             channelSftp = (ChannelSftp) channel;
@@ -128,7 +128,7 @@ public class AgentService {
     public void close() {
         channelSftp.disconnect();
         channel.disconnect();
-        jSchSession.disconnect();
+        jschSession.disconnect();
     }
 
     /**
@@ -473,7 +473,7 @@ public class AgentService {
         String status = StringUtils.EMPTY;
         byte[] buffer = new byte[1024];
         try {
-            channel = (Channel) jSchSession.openChannel("exec");
+            channel = (Channel) jschSession.openChannel("exec");
             ((ChannelExec) channel).setCommand(command);
             channel.setInputStream(null);
             ((ChannelExec) channel).setErrStream(System.err);

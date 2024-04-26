@@ -1,6 +1,7 @@
 package com.apriori.cic.api.models.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,8 @@ public class WorkflowRow {
     private String identifier;
     private String mappingRule;
     private String twxAttributeName;
-    private Boolean _isSelected;
+    @JsonProperty("_isSelected")
+    private Boolean isSelected;
     private String dataType;
     private String displayDataType;
     private Boolean isMandatoryField;

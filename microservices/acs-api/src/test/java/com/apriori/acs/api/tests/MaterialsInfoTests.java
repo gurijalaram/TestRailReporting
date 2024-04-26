@@ -71,11 +71,11 @@ public class MaterialsInfoTests {
 
         softAssertions.assertThat(materialsInfoBarAndTubeResponse.getPropertyValuesList().size()).isGreaterThan(0);
 
-        GenericExtendedPropertyInfoItem tBeamCostPerKG = materialsInfoBarAndTubeResponse.getPropertyInfoMap().getTeeBeamCostPerKG();
+        GenericExtendedPropertyInfoItem teeBeamCostPerKG = materialsInfoBarAndTubeResponse.getPropertyInfoMap().getTeeBeamCostPerKG();
 
-        softAssertions.assertThat(tBeamCostPerKG.getName()).isEqualTo("tBeamCostPerKG");
-        softAssertions.assertThat(tBeamCostPerKG.getUnitTypeName()).isEqualTo("USD / kg");
-        softAssertions.assertThat(tBeamCostPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
+        softAssertions.assertThat(teeBeamCostPerKG.getName()).isEqualTo("tBeamCostPerKG");
+        softAssertions.assertThat(teeBeamCostPerKG.getUnitTypeName()).isEqualTo("USD / kg");
+        softAssertions.assertThat(teeBeamCostPerKG.getSupportedSerializedType()).isEqualTo("DOUBLE");
         softAssertions.assertAll();
     }
 
