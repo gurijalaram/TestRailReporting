@@ -44,7 +44,9 @@ public class AttachReportTab extends NotificationsPart {
     public AttachReportTab selectReportName() {
         pageUtils.waitUntilDropdownOptionsLoaded(getReportNameDropdownElement().findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(getReportNameDropdownElement());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getReportName())));
+        //pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getReportName())));
+        WebElement webElement = driver.findElement(By.xpath(String.format("//div[@class='ss-option']/..//div[.='%s']", workFlowData.getNotificationsData().getReportName())));
+        pageUtils.moveAndClick(webElement);
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
