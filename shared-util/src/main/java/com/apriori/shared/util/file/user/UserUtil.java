@@ -1,6 +1,6 @@
 package com.apriori.shared.util.file.user;
 
-import com.apriori.shared.util.enums.UsersApiEnum;
+import com.apriori.shared.util.enums.apis.UsersApiEnum;
 import com.apriori.shared.util.file.user.service.UserCommonService;
 import com.apriori.shared.util.file.user.service.UserSecurityService;
 import com.apriori.shared.util.http.models.entity.RequestEntity;

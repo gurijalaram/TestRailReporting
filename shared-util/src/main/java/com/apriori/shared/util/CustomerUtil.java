@@ -1,7 +1,7 @@
 package com.apriori.shared.util;
 
-import com.apriori.shared.util.enums.CustomersApiEnum;
-import com.apriori.shared.util.enums.DeploymentsAPIEnum;
+import com.apriori.shared.util.enums.apis.CustomersApiEnum;
+import com.apriori.shared.util.enums.apis.DeploymentsAPIEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;

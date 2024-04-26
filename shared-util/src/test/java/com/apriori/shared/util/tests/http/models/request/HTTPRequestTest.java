@@ -1,6 +1,6 @@
 package com.apriori.shared.util.tests.http.models.request;
 
-import com.apriori.shared.util.enums.AuthUserContextEnum;
+import com.apriori.shared.util.enums.apis.AuthUserContextEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;

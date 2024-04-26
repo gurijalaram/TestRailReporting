@@ -1,16 +1,16 @@
-package com.apriori.shared.util.enums;
+package com.apriori.shared.util.enums.apis;
 
 import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
 import com.apriori.shared.util.properties.PropertiesContext;
 
-public enum DeploymentsAPIEnum implements ExternalEndpointEnum {
-
-    //DEPLOYMENTS
-    DEPLOYMENTS("/customers/%s/deployments");
+public enum AuthUserContextEnum implements ExternalEndpointEnum {
+    //USER
+    GET_AUTH_USER_CONTEXT_BY_USERID("/users/%s"),
+    GET_AUTH_USER_CONTEXT("/users/");
 
     private final String endpoint;
 
-    DeploymentsAPIEnum(String endpoint) {
+    AuthUserContextEnum(String endpoint) {
         this.endpoint = endpoint;
     }
 
