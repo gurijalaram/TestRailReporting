@@ -792,10 +792,10 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     @SneakyThrows
     public PartsAndAssembliesDetailsPage clickOnComponent(String componentName, String scenarioName) {
-        String selector = String.format("//div[@data-field='scenarioName']//p[text()='%s']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='%s']", scenarioName.trim(), componentName.trim());
+        String selector = String.format("//div[@role='row']//div[@data-field='componentName']//p[text()='%s']", componentName);
         WebElement element = getPageUtils().waitForSteadinessOfElement(By.xpath(selector));
         getPageUtils().waitForElementAppear(element);
-        getPageUtils().moveAndClick(element);
+        getPageUtils().waitForElementAndClick(element);
         return new PartsAndAssembliesDetailsPage(getDriver());
     }
 
