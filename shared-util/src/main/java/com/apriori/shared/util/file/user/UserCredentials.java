@@ -4,6 +4,9 @@ import com.apriori.shared.util.models.AuthorizationUtil;
 import com.apriori.shared.util.models.CustomerUtil;
 
 import com.auth0.jwt.JWT;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -12,8 +15,7 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
 public class UserCredentials implements Serializable {
-
-    private final int tokenMinTimeInMinutes = 10;
+    private final int TOKEN_MIN_TIME_IN_MINUTES = 10;
     private volatile String token;
 
     private String email;
@@ -22,16 +24,19 @@ public class UserCredentials implements Serializable {
     private String cloudContext;
     //TODO : change it on Security ENUM when will be information about security levels
     private String accessLevel;
+    private String userIdentity;
 
     public UserCredentials(String email, String password, String accessLevel) {
         this.email = email;
         this.password = password;
         this.accessLevel = accessLevel;
+        this.userIdentity = getUserIdentity();
     }
 
     public UserCredentials(String email, String password) {
         this.email = email;
         this.password = password;
+        this.userIdentity = getUserIdentity();
     }
 
     public UserCredentials() {
@@ -87,7 +92,7 @@ public class UserCredentials implements Serializable {
         }
         if (ChronoUnit.MINUTES.between(LocalTime.now(),
             Instant.ofEpochMilli(new JWT().decodeJwt(token).getExpiresAt().getTime())
-                .atZone(ZoneId.systemDefault()).toLocalTime()) <= tokenMinTimeInMinutes) {
+                .atZone(ZoneId.systemDefault()).toLocalTime()) <= TOKEN_MIN_TIME_IN_MINUTES) {
             generateToken();
         }
         return token;
@@ -107,5 +112,9 @@ public class UserCredentials implements Serializable {
     public UserCredentials generateCloudContext() {
         this.cloudContext = cloudContext != null ? cloudContext : CustomerUtil.getAuthTargetCloudContext(this);
         return this;
+    }
+
+    public synchronized String getUserIdentity() {
+        return userIdentity != null ? userIdentity : UserUtil.getUserByEmail(this).getIdentity();
     }
 }

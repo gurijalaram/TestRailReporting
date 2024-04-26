@@ -1,10 +1,19 @@
 package com.apriori.shared.util.file.user;
 
+import com.apriori.shared.util.enums.UsersApiEnum;
 import com.apriori.shared.util.file.user.service.UserCommonService;
 import com.apriori.shared.util.file.user.service.UserSecurityService;
+import com.apriori.shared.util.http.models.entity.RequestEntity;
+import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.QueryParams;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.User;
+import com.apriori.shared.util.models.response.Users;
 
 import io.qameta.allure.Attachment;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.core5.http.HttpStatus;
 
 import java.util.List;
 
@@ -104,4 +113,20 @@ public class UserUtil {
         return String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getAccessLevel());
     }
 
+
+    /**
+     * GET user by email
+     *
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public static User getUserByEmail(UserCredentials userCredentials) {
+
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(UsersApiEnum.USERS, Users.class)
+            .queryParams(new QueryParams().use("email[EQ]", userCredentials.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<Users> response = HTTPRequest.build(requestEntity).get();
+        return response.getResponseEntity().getItems().get(0);
+    }
 }
