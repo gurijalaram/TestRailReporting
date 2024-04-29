@@ -7,6 +7,7 @@ import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.TolerancesPage;
+import com.apriori.cid.ui.pageobjects.evaluate.inputs.AdvancedPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.EvaluateDfmIconEnum;
@@ -99,6 +100,11 @@ public class DTCCastingTests extends TestBaseUI {
         guidanceIssuesPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("High Pressure Die Cast")
+            .submit(AdvancedPage.class)
+            .goToBasicTab()
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:6");
