@@ -217,6 +217,22 @@ public class LeftHandNavigationBar extends CisHeaderBar {
         return this;
     }
 
+
+    /**
+     * upload and cost scenario
+     *
+     * @param componentInfoBuilder - ComponentInfoBuilder
+     * @return current class object
+     */
+    public LeftHandNavigationBar uploadAndCostScenario(ComponentInfoBuilder componentInfoBuilder) {
+        ComponentInfoBuilder componentScenarioItem = componentsUtil.postComponentQueryCSSUncosted(componentInfoBuilder);
+        scenariosUtil.postCostScenario(componentInfoBuilder);
+        scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
+            SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + COST_COMPLETE).get(0);
+        scenariosUtil.postPublishScenario(componentScenarioItem);
+        return this;
+    }
+
     /**
      * Upload and cost and publish assembly
      *
@@ -305,20 +321,5 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     public ProjectsPage clickProjects() {
         getPageUtils().waitForElementAndClick(btnProjects);
         return new ProjectsPage(getDriver());
-    }
-
-    /**
-     * upload and cost scenario
-     *
-     * @param componentInfoBuilder - ComponentInfoBuilder
-     * @return current class object
-     */
-    public LeftHandNavigationBar uploadAndCostScenario(ComponentInfoBuilder componentInfoBuilder) {
-        ComponentInfoBuilder componentScenarioItem = componentsUtil.postComponentQueryCSSUncosted(componentInfoBuilder);
-        scenariosUtil.postCostScenario(componentInfoBuilder);
-        scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),
-            SCENARIO_NAME_EQ.getKey() + componentInfoBuilder.getScenarioName(), SCENARIO_STATE_EQ.getKey() + COST_COMPLETE).get(0);
-        scenariosUtil.postPublishScenario(componentScenarioItem);
-        return this;
     }
 }

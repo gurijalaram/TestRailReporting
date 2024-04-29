@@ -55,10 +55,10 @@ import java.util.stream.Collectors;
 public class ScenariosUtil {
 
     private static final int CHUNK_SIZE = 10;
-    private final int POLL_TIME = 2;
-    private final int WAIT_TIME = 570;
-    private final int SOCKET_TIMEOUT = 240000;
-    private final int METHOD_TIMEOUT = 30;
+    private final int pollTime = 2;
+    private final int waitTime = 570;
+    private final int socketTimeout = 240000;
+    private final int methodTimeout = 30;
     private ResponseWrapper<ScenariosDeleteResponse> deleteResponse;
     private ResponseWrapper<GroupCostResponse> groupCostResponse;
     private GroupCostResponse groupCostResponseEntity;
@@ -77,7 +77,7 @@ public class ScenariosUtil {
 
         do {
             try {
-                TimeUnit.SECONDS.sleep(POLL_TIME);
+                TimeUnit.SECONDS.sleep(pollTime);
 
                 ScenarioResponse scenarioRepresentation = getScenario(componentInfo);
 
@@ -95,11 +95,11 @@ public class ScenariosUtil {
             } catch (AssertionError a) {
                 log.error(a.getMessage());
             }
-        } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+        } while (((System.currentTimeMillis() / 1000) - START_TIME) < waitTime);
 
         throw new RuntimeException(
             String.format("Component still in a processing state. Component name: '%s', component id: '%s', scenario name: '%s', after '%d' seconds.",
-                componentInfo.getComponentName(), componentInfo.getComponentIdentity(), componentInfo.getScenarioName(), WAIT_TIME));
+                componentInfo.getComponentName(), componentInfo.getComponentIdentity(), componentInfo.getScenarioName(), waitTime));
     }
 
     /**
@@ -148,7 +148,7 @@ public class ScenariosUtil {
             RequestEntityUtil_Old.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .token(componentInfo.getUser().getToken())
-                .socketTimeout(SOCKET_TIMEOUT);
+                .socketTimeout(socketTimeout);
 
         ResponseWrapper<ScenarioResponse> response = HTTPRequest.build(requestEntity).get();
         return response.getResponseEntity();
@@ -171,10 +171,10 @@ public class ScenariosUtil {
                 .inlineVariables(componentId, scenarioId)
                 .token(componentInfo.getUser().getToken())
                 .followRedirection(false)
-                .socketTimeout(SOCKET_TIMEOUT);
+                .socketTimeout(socketTimeout);
         do {
             response = HTTPRequest.build(requestEntity).get();
-        } while (response.getStatusCode() != httpStatus && Duration.between(methodStartTime, LocalDateTime.now()).getSeconds() <= METHOD_TIMEOUT);
+        } while (response.getStatusCode() != httpStatus && Duration.between(methodStartTime, LocalDateTime.now()).getSeconds() <= methodTimeout);
         return response;
     }
 
@@ -195,7 +195,7 @@ public class ScenariosUtil {
      * @return list of scenario items
      */
     public GroupCostResponse postGroupCostScenarios(List<ComponentInfoBuilder> componentInfo) {
-        CostingTemplate costingTemplate = postCostingTemplate(componentInfo.get(0));
+        CostingTemplate costingTemplate = postCostingTemplate(componentInfo.get(0)).getCostingTemplate();
 
         Iterators.partition(componentInfo.iterator(), CHUNK_SIZE).forEachRemaining(partitioned -> {
 
@@ -251,46 +251,19 @@ public class ScenariosUtil {
      * @return list of scenario items
      */
     public ScenarioResponse postCostScenario(ComponentInfoBuilder componentInfo) {
-        CostingTemplate costingTemplate = postCostingTemplate(componentInfo);
 
         final RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfo.getUser().getToken())
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-                .body("costingInputs", costingTemplate);
+                .body("costingInputs", postCostingTemplate(componentInfo).getCostingTemplate());
 
         HTTPRequest.build(requestEntity).post();
 
         return getScenarioCompleted(componentInfo);
     }
 
-    /**
-     * POST to cost a scenario
-     *
-     * @param componentInfo - the cost component object
-     * @return list of scenario items
-     */
-    public ScenarioResponse postManualCostScenario(ComponentInfoBuilder componentInfo) {
-        ManualCostingTemplate costingTemplate = postManualCostingTemplate(componentInfo);
-
-        final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .token(componentInfo.getUser().getToken())
-                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-                .body("costingInputs", costingTemplate);
-
-        HTTPRequest.build(requestEntity).post();
-
-        return getScenarioCompleted(componentInfo);
-    }
-
-    /**
-     * Calls an api with the POST verb
-     *
-     * @param componentInfo - the component info object
-     * @return response object
-     */
-    public CostingTemplate postCostingTemplate(ComponentInfoBuilder componentInfo) {
+    public ComponentInfoBuilder postCostingTemplate(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CidAppAPIEnum.COSTING_TEMPLATES, CostingTemplate.class)
                 .token(componentInfo.getUser().getToken())
@@ -299,31 +272,10 @@ public class ScenariosUtil {
         ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).post();
 
         CostingTemplate template = response.getResponseEntity();
-        template.setCostingTemplateIdentity(template.getIdentity());
-        template.setDeleteTemplateAfterUse(template.getDeleteTemplateAfterUse());
+        componentInfo.setCostingTemplate(template);
+        componentInfo.getCostingTemplate().setCostingTemplateIdentity(template.getIdentity());
 
-        return template;
-    }
-
-    /**
-     * Calls an api with the POST verb
-     *
-     * @param componentInfo - the component info object
-     * @return response object
-     */
-    public ManualCostingTemplate postManualCostingTemplate(ComponentInfoBuilder componentInfo) {
-        final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(CidAppAPIEnum.COSTING_TEMPLATES, ManualCostingTemplate.class)
-                .token(componentInfo.getUser().getToken())
-                .body("costingTemplate", componentInfo.getManualCostingTemplate());
-
-        ResponseWrapper<ManualCostingTemplate> response = HTTPRequest.build(requestEntity).post();
-
-        ManualCostingTemplate template = response.getResponseEntity();
-        template.setCostingTemplateIdentity(template.getIdentity());
-        template.setDeleteTemplateAfterUse(template.getDeleteTemplateAfterUse());
-
-        return template;
+        return componentInfo;
     }
 
     /**
@@ -766,7 +718,7 @@ public class ScenariosUtil {
 
         try {
             do {
-                TimeUnit.SECONDS.sleep(POLL_TIME);
+                TimeUnit.SECONDS.sleep(pollTime);
 
                 ResponseWrapper<ScenarioResponse> scenarioResponse = HTTPRequest.build(scenarioRequest).get();
 
@@ -777,7 +729,7 @@ public class ScenariosUtil {
 
                     return HTTPRequest.build(requestEntity).get();
                 }
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < waitTime);
 
         } catch (InterruptedException ie) {
             log.error(ie.getMessage());
@@ -785,7 +737,7 @@ public class ScenariosUtil {
         }
         throw new RuntimeException(
             String.format("Failed to get uploaded component identity: %s, with scenario identity: %s, after %d seconds.",
-                componentIdentity, scenarioIdentity, WAIT_TIME)
+                componentIdentity, scenarioIdentity, waitTime)
         );
     }
 
@@ -793,7 +745,7 @@ public class ScenariosUtil {
         return RequestEntityUtil_Old.init(endPoint, klass)
             .token(userCredentials.getToken())
             .inlineVariables(componentId, scenarioId)
-            .socketTimeout(SOCKET_TIMEOUT);
+            .socketTimeout(socketTimeout);
     }
 
     /**

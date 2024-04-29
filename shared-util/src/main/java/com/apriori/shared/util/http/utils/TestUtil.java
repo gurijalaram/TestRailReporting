@@ -156,6 +156,25 @@ public class TestUtil {
     }
 
     /**
+     * Calls an api with the GET verb.
+     *
+     * @param apiEnum         The api enum that specifies the endpoint.
+     * @param klass           The returning class object.
+     * @param inlineVariables Options variables used to help build the endpoint string.
+     * @param <E>             The api enum type
+     * @param <T>             The data type expected to be returned.
+     * @return The response wrapper that contains the response data.
+     */
+    public <E extends EndpointEnum, T> ResponseWrapper<T> getCommonRequestWithParams(E apiEnum, Class<T> klass, Integer expectedResponseCode,
+                                                                                     String paramName, String paramValue, String... inlineVariables) {
+        RequestEntity request = RequestEntityUtil_Old.init(apiEnum, klass)
+            .queryParams(new QueryParams().use(paramName,paramValue))
+            .inlineVariables(inlineVariables).expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(request)
+            .get();
+    }
+
+    /**
      * Calls an api with the DELETE verb.
      *
      * @return The response of what was deleted

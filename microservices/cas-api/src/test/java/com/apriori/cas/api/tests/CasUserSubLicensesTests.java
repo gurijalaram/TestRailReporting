@@ -116,7 +116,7 @@ public class CasUserSubLicensesTests {
     @Test
     @TestRail(id = {10879})
     @Description("Make sure users cannot be assigned to a masterLicense")
-    public void aPrioriInternalLicense() {
+    public void aprioriInternalLicense() {
         setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 

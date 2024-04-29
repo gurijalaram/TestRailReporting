@@ -42,6 +42,30 @@ public class InitFileData {
         return parseDataToLineList(usersListStream);
     }
 
+    /**
+     * Map data into Object from CSV file
+     *
+     * @param mapperType - Object type to map
+     * @param fileToRead - CSV file with data to map
+     * @param <T>
+     * @return thread safe queue
+     */
+    @SneakyThrows
+    //TODO : should be updated for users util too, as a separate PR
+    public <T> ConcurrentLinkedQueue<T> initRows(Class<T> mapperType, File fileToRead) {
+        CsvSchema orderLineSchema = CsvSchema.emptySchema().withHeader();
+        CsvMapper csvMapper = new CsvMapper();
+        MappingIterator<T> orderLines = csvMapper.readerFor(mapperType)
+            .with(orderLineSchema)
+            .readValues(fileToRead);
+
+        ConcurrentLinkedQueue<T> elementsQueue = new ConcurrentLinkedQueue<>();
+        orderLines.forEachRemaining(elementsQueue::add);
+
+        return elementsQueue;
+
+    }
+
     private static boolean fileNotExist(InputStream usersListStream) {
         return usersListStream == null;
     }
@@ -65,30 +89,6 @@ public class InitFileData {
 
     private static void logError(String errorText) {
         log.error(errorText);
-    }
-
-    /**
-     * Map data into Object from CSV file
-     *
-     * @param mapperType - Object type to map
-     * @param fileToRead - CSV file with data to map
-     * @param <T>
-     * @return thread safe queue
-     */
-    @SneakyThrows
-    //TODO : should be updated for users util too, as a separate PR
-    public <T> ConcurrentLinkedQueue<T> initRows(Class<T> mapperType, File fileToRead) {
-        CsvSchema orderLineSchema = CsvSchema.emptySchema().withHeader();
-        CsvMapper csvMapper = new CsvMapper();
-        MappingIterator<T> orderLines = csvMapper.readerFor(mapperType)
-            .with(orderLineSchema)
-            .readValues(fileToRead);
-
-        ConcurrentLinkedQueue<T> elementsQueue = new ConcurrentLinkedQueue<>();
-        orderLines.forEachRemaining(elementsQueue::add);
-
-        return elementsQueue;
-
     }
 
     /**

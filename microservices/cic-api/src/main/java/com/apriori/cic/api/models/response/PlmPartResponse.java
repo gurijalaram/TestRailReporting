@@ -33,7 +33,7 @@ public class PlmPartResponse {
     @JsonProperty("LastModified")
     public LocalDateTime lastModified;
     @JsonProperty("APWScenarioLink")
-    public String aPWScenarioLink;
+    public String apwScenarioLink;
     @JsonProperty("AlternateNumber")
     public Integer alternateNumber;
     @JsonProperty("AnnualManufacturingCarbon")
