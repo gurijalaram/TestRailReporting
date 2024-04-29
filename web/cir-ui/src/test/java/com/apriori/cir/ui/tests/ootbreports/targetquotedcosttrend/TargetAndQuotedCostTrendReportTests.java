@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.RollupEnum;
+import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.cir.ui.pageobjects.view.reports.GenericReportPage;
 import com.apriori.cir.ui.pageobjects.view.reports.TargetQuotedCostTrendReportPage;
@@ -183,7 +184,8 @@ public class TargetAndQuotedCostTrendReportTests extends TestBaseUI {
 
         String usdFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
 
-        targetQuotedCostTrendReportPage.clickInputControlsButton()
+        ReportsPageHeader reportsPageHeader = new ReportsPageHeader(driver);
+        reportsPageHeader.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
             .clickOk(TargetQuotedCostTrendReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);

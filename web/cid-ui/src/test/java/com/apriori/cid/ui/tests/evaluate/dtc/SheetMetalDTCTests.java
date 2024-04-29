@@ -7,6 +7,7 @@ import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.InvestigationPage;
+import com.apriori.cid.ui.pageobjects.evaluate.inputs.AdvancedPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
@@ -105,6 +106,11 @@ public class SheetMetalDTCTests extends TestBaseUI {
             .search("AISI 1020")
             .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
             .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("[CTL]/Fiber Laser/[Bend]")
+            .submit(AdvancedPage.class)
+            .goToBasicTab()
             .costScenario(3)
             .openDesignGuidance()
             .selectIssueTypeGcd("Proximity Warning, Hole - Hole Proximity", "Complex Hole", "ComplexHole:14");
