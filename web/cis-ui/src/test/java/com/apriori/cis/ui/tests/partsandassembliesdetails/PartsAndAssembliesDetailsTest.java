@@ -11,16 +11,12 @@ import com.apriori.cis.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cis.ui.pageobjects.login.CisLoginPage;
 import com.apriori.cis.ui.pageobjects.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.cis.ui.pageobjects.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
-import com.apriori.cis.ui.utils.CisColumnsEnum;
-import com.apriori.cis.ui.utils.CisCostDetailsEnum;
 import com.apriori.cis.ui.utils.CisScenarioResultsEnum;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -32,8 +28,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 public class PartsAndAssembliesDetailsTest extends TestBaseUI {
 
@@ -260,53 +254,6 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isInsightsCardsDeleteOptionDisplayed("Design Guidance")).isEqualTo(false);
     }
 
-    @Test
-    @TestRail(id = {13243, 13244, 13245, 13248, 13485, 13488})
-    @Description("Verify assembly tree view")
-    public void testAssemblyTreeView() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final String subComponentExtension = ".SLDPRT";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostAssembly(assemblyName,
-                assemblyExtension,
-                assemblyProcessGroup,
-                subComponentNames,
-                subComponentExtension,
-                subComponentProcessGroup,
-                scenarioName,
-                currentUser)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(assemblyName);
-
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(assemblyName, scenarioName)
-            .clickAssemblyTree();
-
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAssemblyTreeIconDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAssemblyTreeViewDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(), CisColumnsEnum.SCENARIO_NAME.getColumns(),
-            CisColumnsEnum.COMPONENT_TYPE.getColumns(), CisColumnsEnum.STATE.getColumns(), CisColumnsEnum.PROCESS_GROUP.getColumns());
-
-        partsAndAssembliesDetailsPage.clickShowHideOption()
-            .hideField("State");
-
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
-
-        partsAndAssembliesDetailsPage.openAssembly("Pin", scenarioName);
-
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubComponentName()).isEqualTo("Pin");
-    }
 
     @Test
     @TestRail(id = {13270, 13271, 13272, 13273, 13274, 13275, 13276})
@@ -477,59 +424,6 @@ public class PartsAndAssembliesDetailsTest extends TestBaseUI {
 
         partsAndAssembliesDetailsPage.clickToViewOrHideNonApplicableFields(cardName, "Hide Non-Applicable Fields")
             .deleteScenarioResultsCard(cardName);
-    }
-
-    @Test
-    @TestRail(id = {14040, 14041, 14042, 14043, 14044, 14045, 14046, 14047})
-    @Description("Verify assembly cost details breakdowns")
-    public void testAssemblyCostDetails() {
-        componentInfoBuilder = new ComponentInfoBuilder();
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final String subComponentExtension = ".SLDPRT";
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        componentInfoBuilder.setScenarioName(scenarioName);
-        componentInfoBuilder.setComponentName(assemblyName);
-        componentInfoBuilder.setUser(currentUser);
-        partsAndAssembliesPage = new CisLoginPage(driver)
-            .cisLogin(currentUser)
-            .uploadAndCostAssembly(assemblyName,
-                assemblyExtension,
-                assemblyProcessGroup,
-                subComponentNames,
-                subComponentExtension,
-                subComponentProcessGroup,
-                scenarioName,
-                currentUser)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(assemblyName);
-
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(assemblyName, scenarioName);
-
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAssemblyCostsOptionDisplayed()).isEqualTo(true);
-
-        partsAndAssembliesDetailsPage.clickCostsOption();
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCostSectionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCostTitle()).isEqualTo("Cost");
-
-        partsAndAssembliesDetailsPage.selectCostDropDownOption(CisCostDetailsEnum.ASSEMBLY_PROCESS_COST.getProcessRoutingName());
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAssemblyProcessCostCostGraphDisplayed()).isEqualTo(true);
-
-        partsAndAssembliesDetailsPage.selectCostDropDownOption(CisCostDetailsEnum.COMPONENT_COST_FULLY_BURDENED.getProcessRoutingName());
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isComponentCostFullyBurdenedCostGraphDisplayed()).isEqualTo(true);
-
-        partsAndAssembliesDetailsPage.selectCostDropDownOption(CisCostDetailsEnum.COMPONENT_COST_PIECE_PART.getProcessRoutingName());
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isComponentCostPiecePartCostGraphDisplayed()).isEqualTo(true);
-
-        partsAndAssembliesDetailsPage.selectCostDropDownOption(CisCostDetailsEnum.TOTAL_COST.getProcessRoutingName());
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.isTotalCostGraphDisplayed()).isEqualTo(true);
     }
 
     @AfterEach

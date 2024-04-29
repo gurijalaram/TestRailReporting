@@ -634,9 +634,9 @@ public class UploadAssembliesTests extends TestBaseUI {
         final String newScenarioNamePublicExplore = new GenerateStringUtil().generateScenarioName();
 
         componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
-        ComponentInfoBuilder big_ring = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("big_ring")).findFirst().get();
+        ComponentInfoBuilder bigRing = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("big_ring")).findFirst().get();
         ComponentInfoBuilder pin = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("pin")).findFirst().get();
-        ComponentInfoBuilder small_ring = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("small_ring")).findFirst().get();
+        ComponentInfoBuilder smallRing = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("small_ring")).findFirst().get();
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
@@ -654,8 +654,8 @@ public class UploadAssembliesTests extends TestBaseUI {
             .navigateToScenario(componentAssembly)
             .openComponents();
 
-        List<String> bigRingDetails = componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName());
-        List<String> smallRingDetails = componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName());
+        List<String> bigRingDetails = componentsTreePage.getRowDetails(bigRing.getComponentName(), bigRing.getScenarioName());
+        List<String> smallRingDetails = componentsTreePage.getRowDetails(smallRing.getComponentName(), smallRing.getScenarioName());
         List<String> pinDetails = componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName());
 
         evaluatePage = componentsTreePage.closePanel()
@@ -668,8 +668,8 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         componentsTreePage = evaluatePage.openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(bigRing.getComponentName(), bigRing.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing.getComponentName(), smallRing.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName())).as("Verify sub-component details").isEqualTo(pinDetails);
 
         evaluatePage = componentsTreePage.closePanel()
@@ -684,8 +684,8 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         componentsTreePage = evaluatePage.openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(bigRing.getComponentName(), bigRing.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing.getComponentName(), smallRing.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName())).as("Verify sub-component details").isEqualTo(pinDetails);
 
         evaluatePage = componentsTreePage.closePanel()
@@ -703,8 +703,8 @@ public class UploadAssembliesTests extends TestBaseUI {
         evaluatePage.clickRefresh(EvaluatePage.class);
 
         componentsTreePage = evaluatePage.openComponents();
-        bigRingDetails = componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName());
-        smallRingDetails = componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName());
+        bigRingDetails = componentsTreePage.getRowDetails(bigRing.getComponentName(), bigRing.getScenarioName());
+        smallRingDetails = componentsTreePage.getRowDetails(smallRing.getComponentName(), smallRing.getScenarioName());
         pinDetails = componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName());
 
         evaluatePage = componentsTreePage.closePanel()
@@ -717,8 +717,8 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         componentsTreePage = evaluatePage.openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(bigRing.getComponentName(), bigRing.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing.getComponentName(), smallRing.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName())).as("Verify sub-component details").isEqualTo(pinDetails);
 
         evaluatePage = componentsTreePage.closePanel()
@@ -733,8 +733,8 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         componentsTreePage = evaluatePage.openComponents();
 
-        softAssertions.assertThat(componentsTreePage.getRowDetails(big_ring.getComponentName(), big_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
-        softAssertions.assertThat(componentsTreePage.getRowDetails(small_ring.getComponentName(), small_ring.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(bigRing.getComponentName(), bigRing.getScenarioName())).as("Verify sub-component details").isEqualTo(bigRingDetails);
+        softAssertions.assertThat(componentsTreePage.getRowDetails(smallRing.getComponentName(), smallRing.getScenarioName())).as("Verify sub-component details").isEqualTo(smallRingDetails);
         softAssertions.assertThat(componentsTreePage.getRowDetails(pin.getComponentName(), pin.getScenarioName())).as("Verify sub-component details").isEqualTo(pinDetails);
 
         softAssertions.assertAll();
