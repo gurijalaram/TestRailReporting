@@ -25,10 +25,11 @@ public class SiteVariableRequest {
     private String identity;
     private String name;
     private String notes;
+    private String processGroupName;
     private String type;
     private String updatedBy;
     private String value;
-    private String valueType;
+    private String variableType;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
