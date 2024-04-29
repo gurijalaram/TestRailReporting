@@ -59,7 +59,7 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = "div[data-testid='comparison-nav-bar'] h3")
     private WebElement comparisonName;
 
-    @FindBy(css = ".back-link")
+    @FindBy(css = ".secondary-nav-bar button")
     private WebElement backButton;
 
     private PageUtils pageUtils;
