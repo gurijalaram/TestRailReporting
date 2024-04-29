@@ -115,7 +115,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
 
     /**
      *  is on the Edit page
-     * @return
+     * @return boolean
      */
     public boolean isOnEditPage() {
         pageUtils.waitForElementAppear(editPage);
@@ -124,11 +124,22 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
 
     /**
      *  is the edit was successful
-     * @return
+     * @return boolean
      */
     public boolean isEditSuccessful() {
         pageUtils.waitForElementAppear(isEditedSuccessfully);
         return pageUtils.isElementDisplayed(isEditedSuccessfully);
+    }
+
+    /**
+     *  is tinputRow
+     * @return boolean
+     */
+    public boolean isInputRowDisplayed(String inputRowName) {
+        String xpath = "//span[contains(.,'" + inputRowName + "')]";
+        WebElement inputRow = pageUtils.waitForElementToAppear(By.xpath(xpath));
+        pageUtils.waitForElementAppear(inputRow);
+        return pageUtils.isElementDisplayed(inputRow);
     }
 
 
