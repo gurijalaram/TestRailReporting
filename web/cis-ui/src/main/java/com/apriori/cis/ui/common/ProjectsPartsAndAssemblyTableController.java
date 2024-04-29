@@ -15,11 +15,11 @@ import java.util.stream.Stream;
 @Slf4j
 public class ProjectsPartsAndAssemblyTableController extends EagerPageComponent<ProjectsPartsAndAssemblyTableController> {
 
-    @FindBy(css = "div.MuiDataGrid-columnHeaders.css-qw65j7")
-    private WebElement tableHeaders;
-
-    @FindBy(css = "div.MuiDataGrid-pinnedColumnHeaders")
+    @FindBy(xpath = "//div[@id='add-part-and-assembly-modal']//div[contains(@class, 'MuiDataGrid-pinnedColumnHeaders MuiDataGrid-pinnedColumnHeaders--left')]")
     private WebElement pinnedTableHeaders;
+
+    @FindBy(xpath = "//div[@id='add-part-and-assembly-modal']//div[contains(@class, 'MuiDataGrid-columnHeadersInner MuiDataGrid-columnHeadersInner--scrollable')]")
+    private WebElement tableInnerColumnHeader;
 
     public ProjectsPartsAndAssemblyTableController(WebDriver driver) {
         super(driver, log);
@@ -35,8 +35,8 @@ public class ProjectsPartsAndAssemblyTableController extends EagerPageComponent<
      *
      * @return list of string
      */
-    public List<String> getTableHeaders() {
-        return Stream.of(tableHeaders.getAttribute("innerText").split("")).collect(Collectors.toList());
+    public List<String> getInnerTableHeaders() {
+        return Stream.of(tableInnerColumnHeader.getAttribute("innerText").split("\\n")).collect(Collectors.toList());
     }
 
     /**
@@ -45,7 +45,7 @@ public class ProjectsPartsAndAssemblyTableController extends EagerPageComponent<
      * @return list of string
      */
     public List<String> getPinnedTableHeaders() {
-        return Stream.of(pinnedTableHeaders.getAttribute("innerText").split("")).collect(Collectors.toList());
+        return Stream.of(pinnedTableHeaders.getAttribute("innerText").split("\\n")).collect(Collectors.toList());
     }
 
     /**

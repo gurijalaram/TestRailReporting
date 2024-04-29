@@ -87,6 +87,9 @@ default:
 
   bcm:
     api_url: https://bcm.${core_service_url_template}
+
+  ags:
+    api_url: https://api.${core_service_url_template}
 ###########################
 
 ###########################

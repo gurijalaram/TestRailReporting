@@ -16,8 +16,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.io.File;
-
 @ExtendWith(TestRulesAPI.class)
 public class CostingTemplateTests {
 
@@ -39,15 +37,15 @@ public class CostingTemplateTests {
             .user(component.getUser())
             .build();
 
-        CostingTemplate costingTemplateId = new ScenariosUtil().postCostingTemplate(costingInfo);
+        ComponentInfoBuilder costingTemplateId = new ScenariosUtil().postCostingTemplate(costingInfo);
 
-        component.setCostingTemplate(costingTemplateId);
+        component.setCostingTemplate(costingTemplateId.getCostingTemplate());
 
         componentsUtil.postComponent(component);
 
         scenariosUtil.postGroupCostScenarios(component);
 
-        CostingTemplate costingTemplate = scenariosUtil.getCostingTemplateIdentity(component.getUser(), costingTemplateId.getIdentity());
+        CostingTemplate costingTemplate = scenariosUtil.getCostingTemplateIdentity(component.getUser(), costingTemplateId.getCostingTemplate().getIdentity());
 
         softAssertions.assertThat(costingTemplate.getAnnualVolume()).isEqualTo(4400);
         softAssertions.assertThat(costingTemplate.getBatchSize()).isEqualTo(7);
@@ -72,10 +70,10 @@ public class CostingTemplateTests {
             .user(currentUser)
             .build();
 
-        CostingTemplate costingTemplateId = new ScenariosUtil().postCostingTemplate(costingInfo);
+        ComponentInfoBuilder costingTemplateId = new ScenariosUtil().postCostingTemplate(costingInfo);
 
-        softAssertions.assertThat(costingTemplateId.getIdentity()).isNotEmpty();
-        softAssertions.assertThat(costingTemplateId.getBatchSize()).isEqualTo(3);
+        softAssertions.assertThat(costingTemplateId.getCostingTemplate().getIdentity()).isNotEmpty();
+        softAssertions.assertThat(costingTemplateId.getCostingTemplate().getBatchSize()).isEqualTo(3);
 
         softAssertions.assertAll();
     }
@@ -101,15 +99,15 @@ public class CostingTemplateTests {
             .user(currentUser)
             .build();
 
-        CostingTemplate costingTemplate = new ScenariosUtil().postCostingTemplate(costingInfo);
+        ComponentInfoBuilder costingTemplate = new ScenariosUtil().postCostingTemplate(costingInfo);
 
         CostingTemplate costingDefaultValues = CostingTemplate.builder().build();
 
-        softAssertions.assertThat(costingTemplate.getAnnualVolume()).isEqualTo(costingDefaultValues.getAnnualVolume());
-        softAssertions.assertThat(costingTemplate.getBatchSize()).isEqualTo(costingDefaultValues.getBatchSize());
-        softAssertions.assertThat(costingTemplate.getProductionLife()).isEqualTo(costingDefaultValues.getProductionLife());
-        softAssertions.assertThat(costingTemplate.getProcessGroupName()).isEqualTo(costingDefaultValues.getProcessGroupName());
-        softAssertions.assertThat(costingTemplate.getMaterialName()).isEqualTo(costingDefaultValues.getMaterialName());
+        softAssertions.assertThat(costingTemplate.getCostingTemplate().getAnnualVolume()).isEqualTo(costingDefaultValues.getAnnualVolume());
+        softAssertions.assertThat(costingTemplate.getCostingTemplate().getBatchSize()).isEqualTo(costingDefaultValues.getBatchSize());
+        softAssertions.assertThat(costingTemplate.getCostingTemplate().getProductionLife()).isEqualTo(costingDefaultValues.getProductionLife());
+        softAssertions.assertThat(costingTemplate.getCostingTemplate().getProcessGroupName()).isEqualTo(costingDefaultValues.getProcessGroupName());
+        softAssertions.assertThat(costingTemplate.getCostingTemplate().getMaterialName()).isEqualTo(costingDefaultValues.getMaterialName());
 
         softAssertions.assertAll();
     }
