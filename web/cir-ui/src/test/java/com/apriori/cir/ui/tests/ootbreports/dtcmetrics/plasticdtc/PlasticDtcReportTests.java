@@ -12,6 +12,8 @@ import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
 import com.apriori.cir.ui.enums.RollupEnum;
+import com.apriori.cir.ui.pageobjects.header.ReportsHeader;
+import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.cir.ui.pageobjects.view.reports.GenericReportPage;
 import com.apriori.cir.ui.pageobjects.view.reports.PlasticDtcReportPage;
@@ -117,7 +119,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), PlasticDtcReportPage.class)
+            .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class);
 
@@ -134,7 +136,8 @@ public class PlasticDtcReportTests extends TestBaseUI {
         genericReportPage.hoverPartNameBubbleDtcReports();
         usdAnnualSpend = genericReportPage.getAnnualSpendFromBubbleTooltip();
 
-        genericReportPage.clickInputControlsButton()
+        ReportsPageHeader reportsPageHeader = new ReportsPageHeader(driver);
+        reportsPageHeader.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
             .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), PlasticDtcReportPage.class);
@@ -187,7 +190,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), GenericReportPage.class)
+            .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
