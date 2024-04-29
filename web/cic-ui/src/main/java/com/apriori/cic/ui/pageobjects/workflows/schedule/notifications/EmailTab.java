@@ -44,7 +44,6 @@ public class EmailTab extends NotificationsPart {
         pageUtils.waitForElementAndClick(getEmailTemplateElement());
         WebElement webElement = driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getEmailTemplate())));
         pageUtils.moveAndClick(webElement);
-        //pageUtils.waitForElementAndClick(By.xpath(String.format("//div[@class='ss-option']/..//div[.='%s']", workFlowData.getNotificationsData().getEmailTemplate())));
         pageUtils.waitForElementNotEnabled(notificationNextButton, 1);
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;

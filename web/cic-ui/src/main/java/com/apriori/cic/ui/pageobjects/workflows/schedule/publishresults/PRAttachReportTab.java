@@ -36,7 +36,6 @@ public class PRAttachReportTab extends PublishResultsPart {
         pageUtils.waitForElementAndClick(getReportNameDropdownElement());
         WebElement webElement = driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getPublishResultsData().getReportName())));
         pageUtils.moveAndClick(webElement);
-        // pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getPublishResultsData().getReportName())));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
