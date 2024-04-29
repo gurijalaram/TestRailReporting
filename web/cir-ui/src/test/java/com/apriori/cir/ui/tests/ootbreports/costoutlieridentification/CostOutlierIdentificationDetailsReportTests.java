@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
+import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.cir.ui.pageobjects.view.reports.CostOutlierIdentificationReportPage;
 import com.apriori.cir.ui.pageobjects.view.reports.GenericReportPage;
@@ -155,7 +156,8 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBaseUI {
         costOutlierIdentificationReportPage.waitForReportToLoad();
         if (driver.findElement(By.xpath("//span[contains(text(), 'Rollup')]/../following-sibling::td[2]/span"))
             .getText().contains("SHEET METAL DTC")) {
-            costOutlierIdentificationReportPage.clickInputControlsButton()
+            ReportsPageHeader reportsPageHeader = new ReportsPageHeader(driver);
+            reportsPageHeader.clickInputControlsButton()
                 .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
                 .clickOk(GenericReportPage.class)
                 .waitForReportToLoad();

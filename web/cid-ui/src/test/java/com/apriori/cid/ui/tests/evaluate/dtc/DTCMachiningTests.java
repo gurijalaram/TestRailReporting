@@ -14,6 +14,7 @@ import com.apriori.cid.ui.utils.ToleranceEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -268,7 +269,7 @@ public class DTCMachiningTests extends TestBaseUI {
     @TestRail(id = {6452})
     @Description("Verify tolerances which induce an additional operation are correctly respected in CI Design geometry tab")
     public void toleranceInducingTest() {
-        component = new ComponentRequestUtil().getComponent("DTCCastingIssues");
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
