@@ -279,6 +279,47 @@ public class ScenariosUtil {
     }
 
     /**
+     * POST to cost a scenario
+     *
+     * @param componentInfo - the cost component object
+     * @return list of scenario items
+     */
+    public ScenarioResponse postManualCostScenario(ComponentInfoBuilder componentInfo) {
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                .token(componentInfo.getUser().getToken())
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
+                .body("costingInputs", postManualCostingTemplate(componentInfo));
+
+        HTTPRequest.build(requestEntity).post();
+
+        return getScenarioCompleted(componentInfo);
+    }
+
+
+    /**
+     * Calls an api with the POST verb
+     *
+     * @param componentInfo - the component info object
+     * @return response object
+     */
+    public ComponentInfoBuilder postManualCostingTemplate(ComponentInfoBuilder componentInfo) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil_Old.init(CidAppAPIEnum.COSTING_TEMPLATES, ManualCostingTemplate.class)
+                .token(componentInfo.getUser().getToken())
+                .body("costingTemplate", componentInfo.getManualCostingTemplate());
+
+        ResponseWrapper<ManualCostingTemplate> response = HTTPRequest.build(requestEntity).post();
+
+        ManualCostingTemplate template = response.getResponseEntity();
+        componentInfo.setManualCostingTemplate(template);
+        componentInfo.getManualCostingTemplate().setCostingTemplateIdentity(template.getIdentity());
+
+        return componentInfo;
+    }
+
+    /**
      * Post to Copy a Scenario
      *
      * @param componentInfo - the copy component object
