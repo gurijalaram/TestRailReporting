@@ -7,8 +7,8 @@ public enum MaterialMode {
 
     private final String materialMode;
 
-    MaterialMode(String mMode) {
-        this.materialMode = mMode;
+    MaterialMode(String materialMode) {
+        this.materialMode = materialMode;
     }
 
     public String getMaterialMode() {

@@ -26,7 +26,6 @@ import org.apache.http.HttpStatus;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -36,9 +35,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CssComponent extends TestUtil {
 
-    private final int SOCKET_TIMEOUT = 630000;
-    private final int POLL_TIME = 2;
-    private final int WAIT_TIME = 570;
+    private final int pollTime = 2;
+    private final int waitTime = 570;
 
     /**
      * Calls an api with GET verb. This method will ONLY get translated parts ie. componentType = Parts/Assemblies
@@ -53,7 +51,7 @@ public class CssComponent extends TestUtil {
 
         try {
             do {
-                TimeUnit.SECONDS.sleep(POLL_TIME);
+                TimeUnit.SECONDS.sleep(pollTime);
 
                 List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues);
 
@@ -69,13 +67,13 @@ public class CssComponent extends TestUtil {
                     return scenarioItemList;
                 }
 
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < waitTime);
 
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
+        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", waitTime));
     }
 
     /**
@@ -114,10 +112,12 @@ public class CssComponent extends TestUtil {
      * @return the response wrapper that contains the response data
      */
     private ResponseWrapper<ComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
+        int socketTimeout = 630000;
+
         RequestEntity requestEntity = getRequestEntityUtil(userCredentials).init(CssAPIEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
             .headers(new ContentParams().use(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED))
             .queryParams(queryParams)
-            .socketTimeout(SOCKET_TIMEOUT)
+            .socketTimeout(socketTimeout)
             .expectedResponseCode(HttpStatus.SC_OK);
 
         return HTTPRequest.build(requestEntity).post();
@@ -136,7 +136,7 @@ public class CssComponent extends TestUtil {
 
         try {
             do {
-                TimeUnit.SECONDS.sleep(POLL_TIME);
+                TimeUnit.SECONDS.sleep(pollTime);
 
                 List<ScenarioItem> scenarioItemList = getBaseCssComponents(userCredentials, paramKeysValues);
 
@@ -149,13 +149,13 @@ public class CssComponent extends TestUtil {
                     return scenarioItemList;
                 }
 
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < waitTime);
 
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME));
+        throw new RuntimeException(String.format("Failed to get uploaded component after %d seconds", waitTime));
     }
 
     /**

@@ -28,5 +28,5 @@ public class AddDeployment {
     private String isDefault;
     private String createdBy;
     private String apVersion;
-    private List<String> applications = null;
+    private List<String> applications;
 }

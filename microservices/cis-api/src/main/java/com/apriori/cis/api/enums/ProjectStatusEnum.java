@@ -8,8 +8,8 @@ public enum ProjectStatusEnum {
 
     private final String projectStatus;
 
-    ProjectStatusEnum(String dStatus) {
-        this.projectStatus = dStatus;
+    ProjectStatusEnum(String discussionStatus) {
+        this.projectStatus = discussionStatus;
     }
 
     public String getProjectStatus() {

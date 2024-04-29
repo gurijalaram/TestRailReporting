@@ -27,9 +27,8 @@ public class CustomerAssociation {
     private String description;
     private String targetCustomerIdentity;
     private String type;
-
-    private Date updatedAt = null;
-    private String updatedBy = null;
-    private Date deletedAt = null;
-    private String deletedBy = null;
+    private Date updatedAt;
+    private String updatedBy;
+    private Date deletedAt;
+    private String deletedBy;
 }

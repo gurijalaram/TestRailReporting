@@ -14,7 +14,7 @@ public class ProductionInfo {
     private ProductionInfoScenario scenarioKey;
     private String compType;
     private Boolean initialized;
-    private List<String> availablePgNames = null;
+    private List<String> availablePgNames;
     private String processGroupName;
     private Boolean pgEnabled;
     private Boolean cadModelLoaded;
@@ -29,9 +29,9 @@ public class ProductionInfo {
     private Boolean batchSizeOverridden;
     private Integer componentsPerProduct;
     private Boolean manuallyCosted;
-    private List<String> availableCurrencyCodes = null;
+    private List<String> availableCurrencyCodes;
     private String manualCurrencyCode;
-    private List<String> availableCurrencyVersions = null;
+    private List<String> availableCurrencyVersions;
     private String manualCurrencyVersion;
     private Boolean hasTargetCost;
     private Boolean hasTargetFinishMass;

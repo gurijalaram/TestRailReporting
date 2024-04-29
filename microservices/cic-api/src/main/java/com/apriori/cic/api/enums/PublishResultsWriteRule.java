@@ -7,8 +7,8 @@ public enum PublishResultsWriteRule {
     private final String writingRule;
     private final String uiWritingRule;
 
-    PublishResultsWriteRule(String wRule, String uiWriteRule) {
-        writingRule = wRule;
+    PublishResultsWriteRule(String writeRule, String uiWriteRule) {
+        writingRule = writeRule;
         uiWritingRule = uiWriteRule;
     }
 
