@@ -1,14 +1,18 @@
 package com.apriori.shared.util.dataservice;
 
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.models.request.component.RoutingNodeOptions;
+import com.apriori.shared.util.models.response.component.CostingTemplate;
 
 import io.qameta.allure.Allure;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -116,6 +120,19 @@ public class AssemblyRequestUtil {
             subcomponent.setUser(assembly.getUser());
             subcomponent.setScenarioName(assembly.getScenarioName());
             subcomponent.setResourceFile(FileResourceUtil.getCloudFile(subcomponent.getProcessGroup(), subcomponent.getComponentName() + subcomponent.getExtension()));
+
+            if (subcomponent.getProcessGroup() != ProcessGroupEnum.ASSEMBLY) {
+                subcomponent.setCostingTemplate(
+                    CostingTemplate.builder()
+                        .processGroupName(subcomponent.getProcessGroup().getProcessGroup())
+                        .routingNodeOptions(Collections.singletonList(
+                            RoutingNodeOptions.builder()
+                                .digitalFactoryName(subcomponent.getCostingTemplate().getVpeName())
+                                .routing(subcomponent.getMetadata().getRouting())
+                                .processGroupName(subcomponent.getProcessGroup().getProcessGroup())
+                                .build()))
+                        .build());
+            }
 
             if (subcomponent.getSubComponents() != null) {
                 iterateSetSubcomponents(subcomponent);

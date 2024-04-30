@@ -13,6 +13,7 @@ import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cir.ui.enums.DateElementsEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.RollupEnum;
+import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.cir.ui.pageobjects.view.reports.GenericReportPage;
 import com.apriori.cir.ui.pageobjects.view.reports.SheetMetalDtcReportPage;
@@ -122,7 +123,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSet(exportSetName, GenericReportPage.class);
 
@@ -144,7 +145,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .clickCancel();
 
@@ -163,7 +164,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSet(exportSetName, GenericReportPage.class)
             .clickReset()
@@ -183,7 +184,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSet(exportSetName, GenericReportPage.class)
             .clickSave()
@@ -209,7 +210,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectRollup(rollupName)
             .clickOk(GenericReportPage.class)
@@ -228,7 +229,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .exportSetSelectAll();
 
@@ -262,7 +263,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSet(exportSetName, GenericReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
@@ -273,7 +274,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage.hoverPartNameBubbleDtcReports();
         usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
-        genericReportPage.clickInputControlsButton()
+        new ReportsPageHeader(driver).clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
             .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class);
@@ -297,7 +298,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSet(exportSet, GenericReportPage.class)
             .clickOk(GenericReportPage.class);
@@ -448,7 +449,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSet(exportSet, GenericReportPage.class)
             .setProcessGroup(processGroupName)
@@ -802,7 +803,7 @@ public class InputControlsTests extends TestBaseUI {
         testMinimumAnnualSpendCore(reportName, exportSet, false);
 
         Integer initialChartCount = genericReportPage.getCountOfChartElements();
-        genericReportPage.clickInputControlsButton()
+        new ReportsPageHeader(driver).clickInputControlsButton()
             .inputMinimumAnnualSpend()
             .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
@@ -827,7 +828,8 @@ public class InputControlsTests extends TestBaseUI {
             .navigateToLibraryPage()
             .navigateToReport(reportName, SheetMetalDtcReportPage.class);
 
-        sheetMetalDtcReportPage.waitForInputControlsLoad();
+        ReportsPageHeader reportsPageHeader = new ReportsPageHeader(driver);
+        reportsPageHeader.waitForInputControlsLoad();
         sheetMetalDtcReportPage.searchForExportSet(exportSetName);
 
         assertThat(sheetMetalDtcReportPage.getFirstExportSetName(),
@@ -1201,8 +1203,9 @@ public class InputControlsTests extends TestBaseUI {
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .waitForMinimumAnnualSpendOnChart();
 
-        genericReportPage.clickInputControlsButton()
-            .waitForInputControlsLoad()
+        ReportsPageHeader reportsPageHeader = new ReportsPageHeader(driver);
+        reportsPageHeader.clickInputControlsButton();
+        reportsPageHeader.waitForInputControlsLoad()
             .selectExportSet(exportSet, GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount("export set selection.", "Selected: ", "1");
@@ -1226,7 +1229,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSet(exportSetName, GenericReportPage.class)
             .clickOk(GenericReportPage.class);
@@ -1239,7 +1242,8 @@ public class InputControlsTests extends TestBaseUI {
 
     private void navigateToDtcPartSummaryAndAssert(String partName, String processGroupName) {
         partName = partName.equals("DTCCASTINGISSUES") ? partName + " (sand casting)" : partName;
-        genericReportPage.navigateToLibraryPage()
+        ReportsPageHeader reportsPageHeader = new ReportsPageHeader(driver);
+        reportsPageHeader.navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.DTC_PART_SUMMARY.getReportName(), GenericReportPage.class)
             .selectComponent(partName)
             .clickOk(GenericReportPage.class);
@@ -1254,7 +1258,7 @@ public class InputControlsTests extends TestBaseUI {
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSetDtcTests(exportSet)
             .setDtcScore(dtcScore)

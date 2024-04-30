@@ -402,11 +402,12 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
      * @return a new page object
      */
     public ProjectsPage createANewProject(String projectName, String projectDescription, String scenarioName, String componentName, String teamMember, String year, String date) {
+        String selector = String.format("//div[@role='row']//div[@data-field='componentName']//p[text()='%s']//..//..//parent::div//span", componentName);
         getPageUtils().waitForElementToAppear(projectNameField).sendKeys(projectName);
         getPageUtils().waitForElementToAppear(projectDescriptionField).sendKeys(projectDescription);
         getPageUtils().waitForElementAndClick(btnAddPartsAndAssemblies);
         getPageUtils().waitForElementsToAppear(tableRow);
-        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']//..//..//parent::div//span"));
+        getPageUtils().waitForElementAndClick(By.xpath(selector));
         getPageUtils().waitForElementAndClick(btnAddPartsAndAssembliesToProject);
         getPageUtils().waitForElementAndClick(inviteTeammatesField);
         getPageUtils().waitForElementToAppear(memberList);
@@ -549,7 +550,7 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
      * @return a string
      */
     public String getComponentStatus(String scenarioName, String componentName) {
-        return getPageUtils().waitForElementToAppear(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']//..//..//parent::div//span")).getAttribute("class");
+        return getPageUtils().waitForElementToAppear(By.xpath("//div[@data-field='componentName']//p[text()='" + componentName + "']//..//..//parent::div//span")).getAttribute("class");
     }
 
     /**
@@ -559,7 +560,6 @@ public class CreateNewProjectsPage extends EagerPageComponent<CreateNewProjectsP
      */
     public ProjectsDetailsPage createANewProjectAndOpen(String projectName, String projectDescription, String scenarioName, String componentName, String teamMember, String year, String date, String tabName) {
         this.createANewProject(projectName, projectDescription, scenarioName, componentName, teamMember, year, date);
-        this.clickOnUnreadButton();
         this.openTheProject(tabName);
         return new ProjectsDetailsPage(getDriver());
     }

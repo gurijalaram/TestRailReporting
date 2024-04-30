@@ -224,6 +224,7 @@ public class ProjectsPage extends EagerPageComponent<ProjectsPage> {
      */
     public ProjectsDetailsPage clickOnCreatedProject() {
         getPageUtils().javaScriptClick(projectName);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@data-testid='loader']"),5);
         return new ProjectsDetailsPage(driver);
     }
 

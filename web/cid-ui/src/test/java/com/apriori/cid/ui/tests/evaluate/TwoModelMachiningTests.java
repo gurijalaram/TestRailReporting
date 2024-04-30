@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.cid.ui.pageobjects.evaluate.inputs.AdvancedPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
@@ -106,6 +107,11 @@ public class TwoModelMachiningTests extends TestBaseUI {
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("High Pressure Die Cast")
+            .submit(AdvancedPage.class)
+            .goToBasicTab()
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
