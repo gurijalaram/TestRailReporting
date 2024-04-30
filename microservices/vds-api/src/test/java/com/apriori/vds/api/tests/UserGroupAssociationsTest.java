@@ -1,9 +1,9 @@
 package com.apriori.vds.api.tests;
 
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 import com.apriori.vds.api.enums.VDSAPIEnum;
@@ -26,7 +26,7 @@ import java.util.Set;
 @ExtendWith(TestRulesAPI.class)
 public class UserGroupAssociationsTest extends ProcessGroupUtil {
     private static final Set<String> userGroupAssociationsToDelete = new HashSet<>();
-    protected static final String userId = PropertiesContext.get("ap-int.${env}.user_staff_identity");
+    protected static final String userId = UserUtil.getUser().getApUser().getIdentity();
 
     @AfterAll
     public static void deleteTestingData() {
