@@ -22,8 +22,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.stream.Collectors;
-
 @ExtendWith(TestRulesAPI.class)
 public class CdsAssociationUserTests {
     private String customerAssociationUserIdentity;
@@ -61,8 +59,8 @@ public class CdsAssociationUserTests {
         apCustomerIdentity = user.getCustomerIdentity();
 
         customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, HttpStatus.SC_OK, apCustomerIdentity);
-        associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
-
+        associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity))
+            .toList().get(0).getIdentity();
     }
 
     @AfterEach
@@ -82,7 +80,8 @@ public class CdsAssociationUserTests {
     public void addCustomerUserAssociation() {
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, user.getIdentity());
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
-        customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", apCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
+        customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s",
+            apCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
     }
 
     @Test
