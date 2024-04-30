@@ -1,7 +1,7 @@
 package com.apriori.shared.util.file.user;
 
-import com.apriori.shared.util.models.AuthorizationUtil;
-import com.apriori.shared.util.models.CustomerUtil;
+import com.apriori.shared.util.AuthorizationUtil;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.models.response.User;
 
 import com.auth0.jwt.JWT;
@@ -26,19 +26,19 @@ public class UserCredentials implements Serializable {
     //TODO : change it on Security ENUM when will be information about security levels
     @Getter
     private String accessLevel;
-    private User user;
+    private User apUser;
 
     public UserCredentials(String email, String password, String accessLevel) {
         this.email = email;
         this.password = password;
         this.accessLevel = accessLevel;
-        this.user = getApUser();
+        this.apUser = getApUser();
     }
 
     public UserCredentials(String email, String password) {
         this.email = email;
         this.password = password;
-        this.user = getApUser();
+        this.apUser = getApUser();
     }
 
     public UserCredentials() {
@@ -101,6 +101,6 @@ public class UserCredentials implements Serializable {
     }
 
     public synchronized User getApUser() {
-        return user != null ? user : UserUtil.getUserByEmail(this);
+        return apUser != null ? apUser : UserUtil.getUserByEmail(this);
     }
 }
