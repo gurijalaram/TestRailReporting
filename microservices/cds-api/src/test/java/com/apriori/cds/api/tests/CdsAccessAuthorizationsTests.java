@@ -61,7 +61,7 @@ public class CdsAccessAuthorizationsTests {
 
         customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, emailPattern, currentUser);
         customerIdentity = customer.getResponseEntity().getIdentity();
-        apCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
+        apCustomerIdentity = currentUser.getApUser().getCustomerIdentity();
         customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, HttpStatus.SC_OK, apCustomerIdentity);
         associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
         associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
