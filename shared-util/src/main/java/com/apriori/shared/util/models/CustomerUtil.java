@@ -104,7 +104,7 @@ public class CustomerUtil {
      */
     private static String generateAuthTargetCloudContext(UserCredentials userCredentials) {
 
-        final String customerIdentity = getApIntCustomerData().getIdentity();
+        final String customerIdentity = getCurrentCustomerIdentity();
         final String installationName = PropertiesContext.get("${env}.multi_tenant_installation_name");
         final String applicationNameFromConfig = getApplicationName();
 
