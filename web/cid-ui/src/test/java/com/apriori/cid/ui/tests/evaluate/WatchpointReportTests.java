@@ -37,9 +37,7 @@ public class WatchpointReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("Ticket has been pulled from release")
     @Tag(SMOKE)
-    @Issue("BA-2962")
     @TestRail(id = {21933, 21934, 21940})
     @Description("Generate and download a Part Cost Report")
     public void partCostReport() {
@@ -67,7 +65,6 @@ public class WatchpointReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("Ticket has been pulled from release")
     @Tag(SMOKE)
     @Issue("BA-2962")
     @TestRail(id = {28525, 28526})
@@ -98,6 +95,7 @@ public class WatchpointReportTests extends TestBaseUI {
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
