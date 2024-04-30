@@ -113,7 +113,6 @@ public class UserUtil {
         return String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getAccessLevel());
     }
 
-
     /**
      * GET user by email
      *
@@ -121,12 +120,11 @@ public class UserUtil {
      * @return response object
      */
     public static User getUserByEmail(UserCredentials userCredentials) {
-
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(UsersApiEnum.USERS, Users.class)
             .queryParams(new QueryParams().use("email[EQ]", userCredentials.getEmail()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Users> response = HTTPRequest.build(requestEntity).get();
-        return response.getResponseEntity().getItems().get(0);
+        return response.getResponseEntity().getItems().stream().findFirst().get();
     }
 }
