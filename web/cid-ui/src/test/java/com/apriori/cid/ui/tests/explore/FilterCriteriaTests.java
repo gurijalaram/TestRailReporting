@@ -18,7 +18,6 @@ import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.CurrencyEnum;
-import com.apriori.cid.ui.utils.DirectionEnum;
 import com.apriori.cid.ui.utils.MassEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.cid.ui.utils.TimeEnum;
@@ -32,7 +31,7 @@ import com.apriori.shared.util.enums.UnitsEnum;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostRollupOverrides;
-import com.apriori.shared.util.models.response.component.ManualCostingTemplate;
+import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -353,7 +352,7 @@ public class FilterCriteriaTests extends TestBaseUI {
         String simulateFilter = new GenerateStringUtil().generateFilterName();
         String noCostModeFilter = new GenerateStringUtil().generateFilterName();
         manualComponent.setUser(simulateComponent.getUser());
-        manualComponent.setManualCostingTemplate(ManualCostingTemplate.builder()
+        manualComponent.setCostingTemplate(CostingTemplate.builder()
             .costMode("MANUAL")
             .costRollupOverrides(CostRollupOverrides.builder()
                 .piecePartCost(2.3)
@@ -367,7 +366,7 @@ public class FilterCriteriaTests extends TestBaseUI {
         componentsUtil.postComponent(simulateComponent);
         componentsUtil.postComponent(manualComponent);
         scenariosUtil.postCostScenario(simulateComponent);
-//        scenariosUtil.postManualCostScenario(manualComponent);
+//        scenariosUtil.postCostScenario(manualComponent);
 
         explorePage = new CidAppLoginPage(driver)
             .login(simulateComponent.getUser())

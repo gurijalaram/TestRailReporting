@@ -5,7 +5,6 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.models.request.component.ComponentRequest;
 import com.apriori.shared.util.models.request.component.PublishRequest;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
-import com.apriori.shared.util.models.response.component.ManualCostingTemplate;
 import com.apriori.shared.util.models.response.component.PostComponentResponse;
 
 import lombok.AllArgsConstructor;
