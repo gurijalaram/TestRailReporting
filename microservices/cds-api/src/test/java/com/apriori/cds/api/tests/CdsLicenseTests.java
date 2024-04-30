@@ -14,12 +14,12 @@ import com.apriori.cds.api.models.response.UsersLicensing;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Sites;
 import com.apriori.shared.util.models.response.User;
-import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -106,8 +106,8 @@ public class CdsLicenseTests {
     @Description("Activate a license.")
     public void activateLicenseTest() {
         setCustomerData();
+        String userIdentity = UserUtil.getUser().getApUser().getIdentity();
 
-        String userIdentity = PropertiesContext.get("ap-int.${env}.user_staff_identity");
         cdsTestUtil.activateLicense(customerIdentity, siteIdentity, licenseIdentity, userIdentity);
         ResponseWrapper<LicenseResponse> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
             LicenseResponse.class,
@@ -158,7 +158,7 @@ public class CdsLicenseTests {
     @Description("Get a list of active licensed sub-modules")
     public void getActiveModules() {
         setCustomerData();
-        String userIdentity = PropertiesContext.get("ap-int.${env}.user_staff_identity");
+        String userIdentity = UserUtil.getUser().getApUser().getIdentity();
 
         cdsTestUtil.activateLicense(customerIdentity, siteIdentity, licenseIdentity, userIdentity);
         ResponseWrapper<ActiveLicenseModules> activeModules = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACTIVE_MODULES, ActiveLicenseModules.class, HttpStatus.SC_OK,
