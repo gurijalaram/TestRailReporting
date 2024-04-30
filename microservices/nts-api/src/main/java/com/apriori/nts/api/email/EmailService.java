@@ -5,6 +5,7 @@ import com.apriori.nts.api.models.response.Email;
 import com.apriori.nts.api.models.response.EmailsItems;
 import com.apriori.nts.api.models.response.SendEmail;
 import com.apriori.nts.api.utils.EmailSetup;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.email.GraphEmailService;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -13,8 +14,6 @@ import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.AuthorizationUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.EmailMessage;
 
 import lombok.extern.slf4j.Slf4j;

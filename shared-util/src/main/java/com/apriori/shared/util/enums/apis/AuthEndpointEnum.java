@@ -1,4 +1,4 @@
-package com.apriori.shared.util.enums;
+package com.apriori.shared.util.enums.apis;
 
 import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
 

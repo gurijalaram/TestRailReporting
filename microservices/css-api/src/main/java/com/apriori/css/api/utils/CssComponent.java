@@ -4,6 +4,7 @@ import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 
 import com.apriori.css.api.enums.CssAPIEnum;
+import com.apriori.shared.util.KeyValueUtil;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -16,7 +17,6 @@ import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.component.ComponentResponse;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
-import com.apriori.shared.util.utils.KeyValueUtil;
 
 import com.google.common.net.HttpHeaders;
 import lombok.extern.slf4j.Slf4j;

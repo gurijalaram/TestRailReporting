@@ -1,5 +1,6 @@
 package com.apriori.cds.api.utils;
 
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
 import com.apriori.shared.util.properties.PropertiesContext;
 

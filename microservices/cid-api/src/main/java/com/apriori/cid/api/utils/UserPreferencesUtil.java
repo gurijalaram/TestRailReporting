@@ -5,6 +5,7 @@ import com.apriori.cid.api.models.response.preferences.PreferenceItemsResponse;
 import com.apriori.cid.api.models.response.preferences.PreferenceResponse;
 import com.apriori.cid.api.models.response.preferences.PreferencesResponse;
 import com.apriori.cus.api.enums.CusAppAPIEnum;
+import com.apriori.shared.util.AuthorizationUtil;
 import com.apriori.shared.util.enums.ColourEnum;
 import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.DecimalPlaceEnum;
@@ -20,7 +21,6 @@ import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.AuthorizationUtil;
 
 import java.util.HashMap;
 import java.util.List;
