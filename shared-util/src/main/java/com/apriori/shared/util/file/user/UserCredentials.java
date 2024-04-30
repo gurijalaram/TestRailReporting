@@ -2,6 +2,7 @@ package com.apriori.shared.util.file.user;
 
 import com.apriori.shared.util.models.AuthorizationUtil;
 import com.apriori.shared.util.models.CustomerUtil;
+import com.apriori.shared.util.models.response.User;
 
 import com.auth0.jwt.JWT;
 import lombok.AllArgsConstructor;
@@ -24,19 +25,19 @@ public class UserCredentials implements Serializable {
     private String cloudContext;
     //TODO : change it on Security ENUM when will be information about security levels
     private String accessLevel;
-    private String userIdentity;
+    private User user;
 
     public UserCredentials(String email, String password, String accessLevel) {
         this.email = email;
         this.password = password;
         this.accessLevel = accessLevel;
-        this.userIdentity = getUserIdentity();
+        this.user = getApUser();
     }
 
     public UserCredentials(String email, String password) {
         this.email = email;
         this.password = password;
-        this.userIdentity = getUserIdentity();
+        this.user = getApUser();
     }
 
     public UserCredentials() {
@@ -114,7 +115,7 @@ public class UserCredentials implements Serializable {
         return this;
     }
 
-    public synchronized String getUserIdentity() {
-        return userIdentity != null ? userIdentity : UserUtil.getUserByEmail(this).getIdentity();
+    public synchronized User getApUser() {
+        return user != null ? user : UserUtil.getUserByEmail(this);
     }
 }
