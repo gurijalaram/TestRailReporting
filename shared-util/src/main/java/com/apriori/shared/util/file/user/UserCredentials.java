@@ -5,8 +5,6 @@ import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.User;
 
 import com.auth0.jwt.JWT;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -16,14 +14,17 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
 public class UserCredentials implements Serializable {
-    private final int TOKEN_MIN_TIME_IN_MINUTES = 10;
+    private static final int TOKEN_MIN_TIME_IN_MINUTES = 10;
     private volatile String token;
-
+    @Getter
     private String email;
+    @Getter
     private String password;
     private String username;
+    @Getter
     private String cloudContext;
     //TODO : change it on Security ENUM when will be information about security levels
+    @Getter
     private String accessLevel;
     private User user;
 
@@ -51,17 +52,9 @@ public class UserCredentials implements Serializable {
         return new UserCredentials(username, password, accessLevel);
     }
 
-    public String getAccessLevel() {
-        return accessLevel;
-    }
-
     public UserCredentials setAccessLevel(String securityLevel) {
         this.accessLevel = securityLevel;
         return this;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public UserCredentials setEmail(String email) {
@@ -76,10 +69,6 @@ public class UserCredentials implements Serializable {
     public UserCredentials setUsername(String username) {
         this.username = username;
         return this;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public UserCredentials setPassword(String password) {
@@ -104,10 +93,6 @@ public class UserCredentials implements Serializable {
             .getResponseEntity()
             .getToken();
         return this;
-    }
-
-    public String getCloudContext() {
-        return cloudContext;
     }
 
     public UserCredentials generateCloudContext() {
