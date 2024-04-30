@@ -17,13 +17,16 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem ultimateTensileStrength;
     private GenericExtendedPropertyInfoItem costPerKG;
     private GenericExtendedPropertyInfoItem density;
-    private GenericExtendedPropertyInfoItem k;
+    @JsonProperty("k")
+    private GenericExtendedPropertyInfoItem kkValue;
     private GenericExtendedPropertyInfoItem shearStrength;
     private GenericExtendedPropertyInfoItem youngModulus;
-    private GenericExtendedPropertyInfoItem n;
+    @JsonProperty("n")
+    private GenericExtendedPropertyInfoItem nnValue;
     private GenericExtendedPropertyInfoItem possionRatio;
     private GenericExtendedPropertyInfoItem hardness;
-    private GenericExtendedPropertyInfoItem r;
+    @JsonProperty("r")
+    private GenericExtendedPropertyInfoItem rrValue;
     private GenericExtendedPropertyInfoItem materialCutCodeName;
     private GenericExtendedPropertyInfoItem name;
     private GenericExtendedPropertyInfoItem sourceName;
@@ -124,7 +127,8 @@ public class PropertyInfoMap {
     private GenericExtendedPropertyInfoItem compressionMoldingPressureMin;
     private GenericExtendedPropertyInfoItem canCM;
     private GenericExtendedPropertyInfoItem canRIM;
-    private GenericExtendedPropertyInfoItem canIM_SFM;
+    @JsonProperty("canIM_SFM")
+    private GenericExtendedPropertyInfoItem canIMSFM;
     private GenericExtendedPropertyInfoItem materialForm;
     private GenericExtendedPropertyInfoItem injectionPressureMax;
     private GenericExtendedPropertyInfoItem injectionPressureMin;
