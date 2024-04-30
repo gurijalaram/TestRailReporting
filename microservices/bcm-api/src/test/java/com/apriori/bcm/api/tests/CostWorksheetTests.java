@@ -1,5 +1,8 @@
 package com.apriori.bcm.api.tests;
 
+import static com.apriori.css.api.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
+import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_EQ;
+
 import com.apriori.bcm.api.models.response.ErrorResponse;
 import com.apriori.bcm.api.models.response.InputRowPostResponse;
 import com.apriori.bcm.api.models.response.InputRowsGroupsResponse;
@@ -21,7 +24,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 public class CostWorksheetTests extends BcmUtil {
     private static SoftAssertions softAssertions = new SoftAssertions();
-    private final String componentType = "PART";
     private CssComponent cssComponent = new CssComponent();
     private String worksheetIdentity;
 
@@ -44,12 +46,12 @@ public class CostWorksheetTests extends BcmUtil {
 
         softAssertions.assertThat(returnNewWorksheet.getStatus()).isEqualTo("NOT_STARTED");
 
-        ScenarioItem scenarioItem = cssComponent.postSearchRequest(testingUser, componentType).getResponseEntity().getItems().stream()
-            .findFirst().orElse(null);
+        ScenarioItem cssComponentResponses = cssComponent
+            .getBaseCssComponents(testingUser, SCENARIO_PUBLISHED_EQ.getKey() + false, SCENARIO_STATE_EQ.getKey() + "NOT_COSTED").get(0);
 
         InputRowPostResponse responseWorksheetInputRow =
-            createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
-                scenarioItem.getScenarioIdentity(),
+            createWorkSheetInputRow(cssComponentResponses.getComponentIdentity(),
+                cssComponentResponses.getScenarioIdentity(),
                 worksheetIdentity).getResponseEntity();
         String inputRowIdentity = responseWorksheetInputRow.getIdentity();
 

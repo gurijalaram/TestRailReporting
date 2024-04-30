@@ -113,6 +113,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
             enterMultiFilePath(multiUpload.getResourceFile())
                 .waitForUploadToBeDone(file);
+            inputFileScenarioName(file, multiUpload.getScenarioName());
         });
         return this;
     }
