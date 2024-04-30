@@ -32,13 +32,11 @@ public class UserCredentials implements Serializable {
         this.email = email;
         this.password = password;
         this.accessLevel = accessLevel;
-        this.apUser = getApUser();
     }
 
     public UserCredentials(String email, String password) {
         this.email = email;
         this.password = password;
-        this.apUser = getApUser();
     }
 
     public UserCredentials() {
