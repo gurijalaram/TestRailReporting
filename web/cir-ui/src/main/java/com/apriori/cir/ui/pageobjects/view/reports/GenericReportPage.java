@@ -2,7 +2,6 @@ package com.apriori.cir.ui.pageobjects.view.reports;
 
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
-import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.cir.ui.utils.Constants;
 import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.ExportSetEnum;
@@ -554,6 +553,11 @@ public class GenericReportPage extends LoadableComponent<GenericReportPage> {
         initialiseCurrencyMap();
         initialisePartNameMap();
         initialiseBubbleMap();
+    }
+
+    @Override
+    protected void load() {
+
     }
 
     @Override
