@@ -5,9 +5,13 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
+import com.apriori.cir.api.models.response.InputControl;
+import com.apriori.cir.api.utils.JasperReportUtil;
+import com.apriori.cir.ui.enums.AssemblySetEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
+import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -40,7 +44,8 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     @Test
     @Tag(JASPER_API)
     @TmsLink("1922")
-    @TestRail(id = 1922)
+    @TmsLink("14003")
+    @TestRail(id = {1922, 14003})
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
         jasperApiUtils.genericDtcCurrencyTest(
@@ -168,6 +173,46 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
         softAssertions.assertAll();
     }
 
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("3205")
+    @TestRail(id = 3205)
+    @Description("Verify currency code reversion")
+    public void testCurrencyCodeReversion() {
+        JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String assemblyValueToSelect = inputControls.getAssemblySelect()
+            .getOption(AssemblySetEnum.TOP_LEVEL.getAssemblySetName().concat(" [assembly] ")).getValue();
+
+        JasperReportSummary jasperReportSummaryGbp = jasperApiUtils.genericTestCore(
+            InputControlsEnum.ASSEMBLY_SELECT.getInputControlId(),
+            assemblyValueToSelect
+        );
+
+        performGbpAssertions(jasperReportSummaryGbp);
+
+        JasperReportSummary jasperReportSummaryUSD = jasperApiUtils.genericTestCore(
+            InputControlsEnum.CURRENCY.getInputControlId(),
+            CurrencyEnum.USD.getCurrency()
+        );
+
+        softAssertions.assertThat(jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency:")
+            .get(6).siblingElements().get(2).child(0).text()).isEqualTo(CurrencyEnum.USD.getCurrency());
+        softAssertions.assertThat(jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Assembly #:")
+            .get(4).child(6).child(2).text()).isEqualTo("TOP-LEVEL");
+        softAssertions.assertThat(jasperReportSummaryUSD.getReportHtmlPart().toString().contains("1,287.74")).isEqualTo(true);
+
+        jasperReportSummaryGbp = jasperApiUtils.genericTestCore(
+            InputControlsEnum.CURRENCY.getInputControlId(),
+            CurrencyEnum.GBP.getCurrency()
+        );
+
+        performGbpAssertions(jasperReportSummaryGbp);
+
+        softAssertions.assertAll();
+    }
+
     @Test
     @Tag(JASPER_API)
     @TmsLink("3067")
@@ -175,32 +220,321 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = {3067, 1929})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
-        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("", "");
+        JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String topLevelAssemblyValue = inputControls.getAssemblySelect()
+            .getOption(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName().concat(" [assembly] ")).getValue();
 
-        List<BigDecimal> levelOneValues = jasperApiUtils.getAssemblyDetailsValuesLevelOne(jasperReportSummary);
-
-        BigDecimal expectedAssemblyProcessesSubTotal = jasperApiUtils.convertStringToBigDecimalValue(
-            jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("style", "height:15px")
-                .get(2).children().get(24).children().get(0).text()
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.ASSEMBLY_SELECT.getInputControlId(),
+            topLevelAssemblyValue
         );
 
-        List<BigDecimal> totalValues = jasperApiUtils.getAssemblyDetailsValuesTotals(jasperReportSummary);
+        // cycle time sub totals checking
+        ArrayList<BigDecimal> ctComponentValuesToSum = new ArrayList<>();
+        ctComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("36.77").get(13).text()));
+        ctComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("207.96").get(13).text()));
+        ctComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("111.02").get(13).text()));
+        ctComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("27.29").get(13).text()));
+        ctComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("14.74").get(13).text()));
+        ctComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("530.45").get(13).text()));
+        BigDecimal expectedCTComponentSubTotal = new BigDecimal("0.00");
+        for (BigDecimal ctComponentValue : ctComponentValuesToSum) {
+            expectedCTComponentSubTotal = expectedCTComponentSubTotal.add(ctComponentValue);
+        }
+        BigDecimal actualCTComponentSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("928.23").get(19).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCTComponentSubTotal, actualCTComponentSubTotal)).isEqualTo(true);
 
-        BigDecimal expectedComponentSubtotal = levelOneValues.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal expectedGrandTotal = expectedComponentSubtotal.add(expectedAssemblyProcessesSubTotal);
+        BigDecimal expectedCTAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("593.74").get(13).text());
+        BigDecimal actualCTAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("593.74").get(28).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCTAssemblyProcessesSubTotal, actualCTAssemblyProcessesSubTotal)).isEqualTo(true);
 
-        softAssertions.assertThat(
-            jasperApiUtils.areValuesAlmostEqual(expectedComponentSubtotal, totalValues.get(0)))
-            .isEqualTo(true);
+        BigDecimal expectedCtGrandTotal = expectedCTComponentSubTotal.add(expectedCTAssemblyProcessesSubTotal);
+        BigDecimal actualCtGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("1,521.98").get(25).text().replace(",", ""));
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCtGrandTotal, actualCtGrandTotal)).isEqualTo(true);
 
-        softAssertions.assertThat(
-            jasperApiUtils.areValuesAlmostEqual(expectedAssemblyProcessesSubTotal, totalValues.get(1)))
-            .isEqualTo(true);
+        // piece part cost sub totals checking
+        ArrayList<BigDecimal> ppcComponentValuesToSum = new ArrayList<>();
+        ppcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("15.05").get(13).text()).multiply(new BigDecimal("2")));
+        ppcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("30.88").get(13).text()));
+        ppcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("10.80").get(13).text()).multiply(new BigDecimal("2")));
+        ppcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("2.41").get(13).text()));
+        ppcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("0.88").get(16).text()));
+        ppcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("63.39").get(13).text()));
+        BigDecimal expectedPpcComponentSubTotal = new BigDecimal("0.00");
+        for (BigDecimal ppcComponentValue : ppcComponentValuesToSum) {
+            expectedPpcComponentSubTotal = expectedPpcComponentSubTotal.add(ppcComponentValue);
+        }
+        BigDecimal actualPPCComponentSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("149.25").get(19).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedPpcComponentSubTotal, actualPPCComponentSubTotal)).isEqualTo(true);
 
-        softAssertions.assertThat(
-            jasperApiUtils.areValuesAlmostEqual(expectedGrandTotal, totalValues.get(2)))
-            .isEqualTo(true);
+        BigDecimal expectedPPCAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("3.82").get(13).text());
+        BigDecimal actualPPCAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("3.82").get(15).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedPPCAssemblyProcessesSubTotal, actualPPCAssemblyProcessesSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedPPCGrandTotal = expectedPpcComponentSubTotal.add(expectedPPCAssemblyProcessesSubTotal);
+        BigDecimal actualPPCGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("153.07").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedPPCGrandTotal, actualPPCGrandTotal)).isEqualTo(true);
+
+        // fully burdened cost sub totals checking
+        ArrayList<BigDecimal> fbcComponentValuesToSum = new ArrayList<>();
+        fbcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("15.05").get(18).text()).multiply(new BigDecimal("2")));
+        fbcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("30.89").get(13).text()));
+        fbcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("10.80").get(13).text()).multiply(new BigDecimal("2")));
+        fbcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("2.41").get(18).text()));
+        fbcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("0.88").get(18).text()));
+        fbcComponentValuesToSum.add(new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("63.40").get(13).text()));
+        BigDecimal expectedFbcComponentSubTotal = new BigDecimal("0.00");
+        for (BigDecimal fbcComponentValue : fbcComponentValuesToSum) {
+            expectedFbcComponentSubTotal = expectedFbcComponentSubTotal.add(fbcComponentValue);
+        }
+        BigDecimal actualFBCComponentSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("149.28").get(19).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedFbcComponentSubTotal, actualFBCComponentSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedFBCAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("3.82").get(30).text());
+        BigDecimal actualFBCAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("3.82").get(44).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedFBCAssemblyProcessesSubTotal, actualFBCAssemblyProcessesSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedFBCGrandTotal = expectedFbcComponentSubTotal.add(expectedFBCAssemblyProcessesSubTotal);
+        BigDecimal actualFBCGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("153.10").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedFBCGrandTotal, actualFBCGrandTotal)).isEqualTo(true);
+
+        // capital investments sub totals checking
+        BigDecimal expectedCIComponentSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("401.18").get(13).text());
+        BigDecimal actualCIComponentSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("401.18").get(22).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCIComponentSubTotal, actualCIComponentSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedCIAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("58.62").get(13).text());
+        BigDecimal actualCIAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("58.62").get(28).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCIAssemblyProcessesSubTotal, actualCIAssemblyProcessesSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedCIGrandTotal = expectedCIComponentSubTotal.add(expectedCIAssemblyProcessesSubTotal);
+        BigDecimal actualCIGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("459.80").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCIGrandTotal, actualCIGrandTotal)).isEqualTo(true);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("3068")
+    @TestRail(id = 3068)
+    @Description("Verify Totals calculations for Sub Sub ASM")
+    public void verifyTotalsCalculationsForSubSubAsm() {
+        JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String topLevelAssemblyValue = inputControls.getAssemblySelect()
+            .getOption(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName().concat(" [assembly] ")).getValue();
+
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.ASSEMBLY_SELECT.getInputControlId(),
+            topLevelAssemblyValue
+        );
+
+        // cycle time sub totals checking
+        BigDecimal ctComponentValueOne = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("36.77").get(13).text());
+        BigDecimal ctComponentValueTwo = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("207.96").get(13).text());
+        BigDecimal expectedCTComponentSubTotal = ctComponentValueOne.add(ctComponentValueTwo);
+        BigDecimal actualCTComponentSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("244.73").get(19).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCTComponentSubTotal, actualCTComponentSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedCTAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("285.72").get(12).text());
+        BigDecimal actualCTAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("285.72").get(28).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCTAssemblyProcessesSubTotal, actualCTAssemblyProcessesSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedCtGrandTotal = expectedCTComponentSubTotal.add(expectedCTAssemblyProcessesSubTotal);
+        BigDecimal actualCtGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("530.45").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCtGrandTotal, actualCtGrandTotal)).isEqualTo(true);
+
+        // piece part cost sub totals checking
+        BigDecimal ppcComponentValueOne = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("15.05").get(13).text()).multiply(new BigDecimal("2"));
+        BigDecimal ppcComponentValueTwo = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("30.88").get(13).text());
+        BigDecimal expectedPPCComponentSubTotal = ppcComponentValueOne.add(ppcComponentValueTwo);
+        BigDecimal actualPPCComponentSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("60.98").get(19).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedPPCComponentSubTotal, actualPPCComponentSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedPPCAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("2.41").get(13).text());
+        BigDecimal actualPPCAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("2.41").get(15).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedPPCAssemblyProcessesSubTotal, actualPPCAssemblyProcessesSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedPPCGrandTotal = expectedPPCComponentSubTotal.add(expectedPPCAssemblyProcessesSubTotal);
+        BigDecimal actualPPCGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("63.39").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedPPCGrandTotal, actualPPCGrandTotal)).isEqualTo(true);
+
+        // fully burdened cost sub totals checking
+        BigDecimal fbcComponentValueOne = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("15.05").get(15).text()).multiply(new BigDecimal("2"));
+        BigDecimal fbcComponentValueTwo = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("30.89").get(13).text());
+        BigDecimal expectedFBCComponentSubTotal = fbcComponentValueOne.add(fbcComponentValueTwo);
+        BigDecimal actualFBCComponentSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("61.00").get(19).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedFBCComponentSubTotal, actualFBCComponentSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedFBCAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("2.41").get(30).text());
+        BigDecimal actualFBCAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("2.41").get(44).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedFBCAssemblyProcessesSubTotal, actualFBCAssemblyProcessesSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedFBCGrandTotal = expectedFBCComponentSubTotal.add(expectedFBCAssemblyProcessesSubTotal);
+        BigDecimal actualFBCGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("63.40").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedFBCGrandTotal, actualFBCGrandTotal)).isEqualTo(true);
+
+        // capital investments sub totals checking
+        BigDecimal expectedCIComponentSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("348.95").get(13).text());
+        BigDecimal actualCIComponentSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("348.95").get(22).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCIComponentSubTotal, actualCIComponentSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedCIAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("52.23").get(13).text());
+        BigDecimal actualCIAssemblyProcessesSubTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("52.23").get(28).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCIAssemblyProcessesSubTotal, actualCIAssemblyProcessesSubTotal)).isEqualTo(true);
+
+        BigDecimal expectedCIGrandTotal = expectedCIComponentSubTotal.add(expectedCIAssemblyProcessesSubTotal);
+        BigDecimal actualCIGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("401.18").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCIGrandTotal, actualCIGrandTotal)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("1934")
+    @TestRail(id = 1934)
+    @Description("Verify Totals calculations for Top Level")
+    public void verifyTotalsCalculationsForTopLevel() {
+        // No word from Crowe, leave and come back to this?
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("3231")
+    @TestRail(id = 3231)
+    @Description("Verify Sub Total Calculations for Sub Assembly")
+    public void verifySubTotalCalculationsForSubAssembly() {
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore("", "");
+
+        BigDecimal ctComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("928.23").get(19).text());
+        BigDecimal ctAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("593.74").get(28).text());
+        BigDecimal expectedCtGrandTotal = ctComponentSubtotal.add(ctAssemblyProcessesSubtotal);
+        BigDecimal actualCtGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("1,521.98").get(25).text().replace(",", ""));
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCtGrandTotal, actualCtGrandTotal)).isEqualTo(true);
+
+        BigDecimal ppcComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("149.25").get(19).text());
+        BigDecimal ppcAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("3.82").get(13).text());
+        BigDecimal expectedPpcGrandTotal = ppcComponentSubtotal.add(ppcAssemblyProcessesSubtotal);
+        BigDecimal actualPpcGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("153.07").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedPpcGrandTotal, actualPpcGrandTotal)).isEqualTo(true);
+
+        BigDecimal fbcComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("149.28").get(19).text());
+        BigDecimal fbcAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("3.82").get(44).text());
+        BigDecimal expectedFbcGrandTotal = fbcComponentSubtotal.add(fbcAssemblyProcessesSubtotal);
+        BigDecimal actualFbcGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("153.10").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedFbcGrandTotal, actualFbcGrandTotal)).isEqualTo(true);
+
+        BigDecimal ciComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("401.18").get(22).text());
+        BigDecimal ciAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("58.62").get(28).text());
+        BigDecimal expectedCiGrandTotal = ciComponentSubtotal.add(ciAssemblyProcessesSubtotal);
+        BigDecimal actualCiGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("459.80").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCiGrandTotal, actualCiGrandTotal)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("3232")
+    @TestRail(id = 3232)
+    @Description("Verify Sub Total Calculations for Sub-Sub-ASM")
+    public void verifySubTotalCalculationsForSubSubASM() {
+        JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String topLevelAssemblyValue = inputControls.getAssemblySelect()
+            .getOption(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName().concat(" [assembly] ")).getValue();
+
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.ASSEMBLY_SELECT.getInputControlId(),
+            topLevelAssemblyValue
+        );
+
+        BigDecimal ctComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("244.73").get(19).text());
+        BigDecimal ctAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("285.72").get(28).text());
+        BigDecimal expectedCtGrandTotal = ctComponentSubtotal.add(ctAssemblyProcessesSubtotal);
+        BigDecimal actualCtGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("530.45").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCtGrandTotal, actualCtGrandTotal)).isEqualTo(true);
+
+        BigDecimal ppcComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("60.98").get(19).text());
+        BigDecimal ppcAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("2.41").get(13).text());
+        BigDecimal expectedPpcGrandTotal = ppcComponentSubtotal.add(ppcAssemblyProcessesSubtotal);
+        BigDecimal actualPpcGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("63.39").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedPpcGrandTotal, actualPpcGrandTotal)).isEqualTo(true);
+
+        BigDecimal fbcComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("61.00").get(19).text());
+        BigDecimal fbcAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("2.41").get(44).text());
+        BigDecimal expectedFbcGrandTotal = fbcComponentSubtotal.add(fbcAssemblyProcessesSubtotal);
+        BigDecimal actualFbcGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("63.40").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedFbcGrandTotal, actualFbcGrandTotal)).isEqualTo(true);
+
+        BigDecimal ciComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("348.95").get(22).text());
+        BigDecimal ciAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("52.23").get(28).text());
+        BigDecimal expectedCiGrandTotal = ciComponentSubtotal.add(ciAssemblyProcessesSubtotal);
+        BigDecimal actualCiGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("401.18").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCiGrandTotal, actualCiGrandTotal)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("3233")
+    @TestRail(id = 3233)
+    @Description("Verify Sub Total Calculations for Top Level")
+    public void verifySubTotalCalculationsForTopLevel() {
+        JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String topLevelAssemblyValue = inputControls.getAssemblySelect()
+            .getOption(AssemblySetEnum.TOP_LEVEL.getAssemblySetName().concat(" [assembly] ")).getValue();
+
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.ASSEMBLY_SELECT.getInputControlId(),
+            topLevelAssemblyValue
+        );
+
+        BigDecimal ctComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("3,587.59").get(19).text().replace(",", ""));
+        BigDecimal ctAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("2,435.13").get(28).text().replace(",", ""));
+        BigDecimal expectedCtGrandTotal = ctComponentSubtotal.add(ctAssemblyProcessesSubtotal);
+        BigDecimal actualCtGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("6,022.72").get(25).text().replace(",", ""));
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCtGrandTotal, actualCtGrandTotal)).isEqualTo(true);
+
+        BigDecimal ppcComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("496.70").get(19).text());
+        BigDecimal ppcAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("20.30").get(28).text());
+        BigDecimal expectedPpcGrandTotal = ppcComponentSubtotal.add(ppcAssemblyProcessesSubtotal);
+        BigDecimal actualPpcGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("516.99").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedPpcGrandTotal, actualPpcGrandTotal)).isEqualTo(true);
+
+        BigDecimal fbcComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("496.77").get(19).text());
+        BigDecimal fbcAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("20.32").get(28).text());
+        BigDecimal expectedFbcGrandTotal = fbcComponentSubtotal.add(fbcAssemblyProcessesSubtotal);
+        BigDecimal actualFbcGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("517.08").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedFbcGrandTotal, actualFbcGrandTotal)).isEqualTo(true);
+
+        BigDecimal ciComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("459.80").get(22).text());
+        BigDecimal ciAssemblyProcessesSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("503.00").get(28).text());
+        BigDecimal expectedCiGrandTotal = ciComponentSubtotal.add(ciAssemblyProcessesSubtotal);
+        BigDecimal actualCiGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("962.80").get(25).text());
+        softAssertions.assertThat(areValuesAlmostEqual(expectedCiGrandTotal, actualCiGrandTotal)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    private void performGbpAssertions(JasperReportSummary jasperReportSummary) {
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency:")
+            .get(6).siblingElements().get(2).child(0).text()).isEqualTo(CurrencyEnum.GBP.getCurrency());
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Assembly #:")
+            .get(4).child(6).child(2).text()).isEqualTo("TOP-LEVEL");
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("962.80")).isEqualTo(true);
+    }
+
+    private boolean areValuesAlmostEqual(BigDecimal valueOne, BigDecimal valueTwo) {
+        BigDecimal largerValue = valueOne.max(valueTwo);
+        BigDecimal smallerValue = valueOne.min(valueTwo);
+        BigDecimal difference = largerValue.subtract(smallerValue);
+        return difference.compareTo(new BigDecimal("0.00")) >= 0 &&
+            difference.compareTo(new BigDecimal("0.03")) <= 0;
     }
 }
