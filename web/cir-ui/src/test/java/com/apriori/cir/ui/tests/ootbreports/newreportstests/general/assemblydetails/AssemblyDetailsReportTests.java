@@ -6,13 +6,19 @@ import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.response.InputControl;
+import com.apriori.cir.api.models.response.InputControlOption;
+import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
+import com.apriori.cir.api.utils.UpdatedInputControlsRootItemAssemblyDetails;
+import com.apriori.cir.api.utils.UpdatedInputControlsRootItemScenarioComparison;
 import com.apriori.cir.ui.enums.AssemblySetEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
 import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.ExportSetEnum;
+import com.apriori.shared.util.enums.ReportNamesEnum;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -24,6 +30,9 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -398,7 +407,8 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     @TestRail(id = 1934)
     @Description("Verify Totals calculations for Top Level")
     public void verifyTotalsCalculationsForTopLevel() {
-        // No word from Crowe, leave and come back to this?
+        // Crowe reckons that we just need to assert on total and sub total values - should be the same as ap pro
+        // Think about it and see
     }
 
     @Test
@@ -518,6 +528,214 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
         BigDecimal expectedCiGrandTotal = ciComponentSubtotal.add(ciAssemblyProcessesSubtotal);
         BigDecimal actualCiGrandTotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("962.80").get(25).text());
         softAssertions.assertThat(areValuesAlmostEqual(expectedCiGrandTotal, actualCiGrandTotal)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("7689")
+    @TestRail(id = 7689)
+    @Description("Verify Assembly Number Search Criteria")
+    public void verifyAssemblyNumberSearchCriteria() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        ResponseWrapper<UpdatedInputControlsRootItemAssemblyDetails> inputControlsAssemblyNumberSearchCriteria =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemAssemblyDetails.class,
+                false,
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                InputControlsEnum.ASSEMBLY_NUMBER_SEARCH_CRITERIA.getInputControlId(),
+                "TOP-LEVEL",
+                ""
+            );
+
+        ArrayList<InputControlState> inputControlStateArrayList = inputControlsAssemblyNumberSearchCriteria.getResponseEntity()
+            .getInputControlState();
+        softAssertions.assertThat(inputControlStateArrayList.get(1).getValue()).isEqualTo("TOP-LEVEL");
+        softAssertions.assertThat(inputControlStateArrayList.get(10).getOptions().get(0).getLabel()).isEqualTo(
+            "TOP-LEVEL (Initial) [assembly] "
+        );
+        softAssertions.assertThat(inputControlStateArrayList.get(10).getOptions().get(0).getSelected()).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("1921")
+    @TestRail(id = 1921)
+    @Description("Export Set search function works - Assembly Details Report")
+    public void testExportSetSearchFunctionality() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        ResponseWrapper<UpdatedInputControlsRootItemAssemblyDetails> inputControlsAssemblyNumberSearchCriteria =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemAssemblyDetails.class,
+                true,
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                "",
+                "",
+                ""
+            );
+
+        ArrayList<InputControlState> inputControlStateArrayList = inputControlsAssemblyNumberSearchCriteria.getResponseEntity()
+            .getInputControlState();
+        InputControlState exportSetNameInputControlState = inputControlStateArrayList.get(5);
+        softAssertions.assertThat(exportSetNameInputControlState.getTotalCount()).isEqualTo("1");
+        softAssertions.assertThat(exportSetNameInputControlState.getOptions().get(0).getLabel()).isEqualTo(ExportSetEnum.TOP_LEVEL.getExportSetName());
+        softAssertions.assertThat(exportSetNameInputControlState.getOptions().get(0).getSelected()).isEqualTo(false);
+
+        InputControlState createdByInputControlState = inputControlStateArrayList.get(7);
+        String bheganNameValue = "Ben Hegan <bhegan>";
+        softAssertions.assertThat(createdByInputControlState.getTotalCount()).isEqualTo("1");
+        softAssertions.assertThat(createdByInputControlState.getOptions().get(0).getLabel()).isEqualTo(bheganNameValue);
+        softAssertions.assertThat(createdByInputControlState.getOptions().get(0).getSelected()).isEqualTo(false);
+
+        InputControlState lastModifiedByInputControlState = inputControlStateArrayList.get(8);
+        softAssertions.assertThat(lastModifiedByInputControlState.getTotalCount()).isEqualTo("2");
+        softAssertions.assertThat(lastModifiedByInputControlState.getOptions().get(0).getLabel()).isEqualTo(bheganNameValue);
+        softAssertions.assertThat(lastModifiedByInputControlState.getOptions().get(0).getSelected()).isEqualTo(false);
+        softAssertions.assertThat(lastModifiedByInputControlState.getOptions().get(1).getLabel()).isEqualTo("Stephen Crowe <scrowe>");
+        softAssertions.assertThat(lastModifiedByInputControlState.getOptions().get(1).getSelected()).isEqualTo(false);
+
+        softAssertions.assertThat(inputControlStateArrayList.get(10).getTotalCount()).isEqualTo("3");
+        List<InputControlOption> inputControlOptionList = inputControlStateArrayList.get(10).getOptions();
+        softAssertions.assertThat(inputControlOptionList.get(0).getLabel()).isEqualTo(AssemblySetEnum.SUB_ASSEMBLY_LONG.getAssemblySetName());
+        softAssertions.assertThat(inputControlOptionList.get(1).getLabel()).isEqualTo(AssemblySetEnum.SUB_SUB_ASM_LONG.getAssemblySetName());
+        softAssertions.assertThat(inputControlOptionList.get(2).getLabel()).isEqualTo(AssemblySetEnum.TOP_LEVEL_LONG.getAssemblySetName());
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("7683")
+    @TestRail(id = 7683)
+    @Description("Verify Created By Filter Search")
+    public void verifyCreatedByFilterSearch() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        ResponseWrapper<UpdatedInputControlsRootItemAssemblyDetails> inputControlsCreatedBySearch =
+            jasperReportUtil.getInputControlsModifiedAssDetCreatedAndLastModifiedBy(
+                UpdatedInputControlsRootItemAssemblyDetails.class,
+                true,
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                "",
+                "",
+                ""
+            );
+
+        softAssertions.assertThat(inputControlsCreatedBySearch.getResponseEntity().getInputControlState().get(7).getTotalCount())
+            .isEqualTo("0");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("7686")
+    @TestRail(id = 7686)
+    @Description("Verify Last Modified By Filter Search")
+    public void verifyLastModifiedByFilterSearch() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+
+        ResponseWrapper<UpdatedInputControlsRootItemAssemblyDetails> inputControlsCreatedBySearch =
+            jasperReportUtil.getInputControlsModifiedAssDetCreatedAndLastModifiedBy(
+                UpdatedInputControlsRootItemAssemblyDetails.class,
+                true,
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                "",
+                "",
+                ""
+            );
+
+        softAssertions.assertThat(inputControlsCreatedBySearch.getResponseEntity().getInputControlState().get(7).getTotalCount())
+            .isEqualTo("0");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("7684")
+    @TestRail(id = 7684)
+    @Description("Verify Created By Filter Operation")
+    public void verifyCreatedByFilterOperation() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String createdByBenValue = inputControls.getCreatedBy()
+            .getOption("Ben Hegan <bhegan>").getValue();
+
+        ResponseWrapper<UpdatedInputControlsRootItemAssemblyDetails> inputControlsCreatedBySearch =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemAssemblyDetails.class,
+                false,
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                InputControlsEnum.CREATED_BY.getInputControlId(),
+                createdByBenValue,
+                ""
+            );
+
+        InputControlState createdByInputControlState = inputControlsCreatedBySearch.getResponseEntity().getInputControlState().get(7);
+        softAssertions.assertThat(createdByInputControlState.getTotalCount()).isEqualTo("1");
+        softAssertions.assertThat(createdByInputControlState.getOptions().get(0).getLabel()).isEqualTo("Ben Hegan <bhegan>");
+        softAssertions.assertThat(createdByInputControlState.getOptions().get(0).getSelected()).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("7687")
+    @TestRail(id = 7687)
+    @Description("Verify Last Modified By Filter Operation")
+    public void verifyLastModifiedByFilterOperation() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String createdByBenValue = inputControls.getCreatedBy()
+            .getOption("Ben Hegan <bhegan>").getValue();
+
+        ResponseWrapper<UpdatedInputControlsRootItemAssemblyDetails> inputControlsCreatedBySearch =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemAssemblyDetails.class,
+                false,
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                InputControlsEnum.LAST_MODIFIED_BY.getInputControlId(),
+                createdByBenValue,
+                ""
+            );
+
+        InputControlState createdByInputControlState = inputControlsCreatedBySearch.getResponseEntity().getInputControlState().get(8);
+        softAssertions.assertThat(createdByInputControlState.getTotalCount()).isEqualTo("2");
+        softAssertions.assertThat(createdByInputControlState.getOptions().get(0).getLabel()).isEqualTo("Ben Hegan <bhegan>");
+        softAssertions.assertThat(createdByInputControlState.getOptions().get(0).getSelected()).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("1919")
+    @TestRail(id = 1919)
+    @Description("Latest Export Date presents correctly filtered export sets (using date input field)")
+    public void testLatestExportDateFilterFunctionsCorrectly() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentDateMinusOneYear = formatter.format(LocalDateTime.now(ZoneOffset.UTC).minusYears(1));
+
+        ResponseWrapper<UpdatedInputControlsRootItemAssemblyDetails> inputControlsLatestExportDate =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemAssemblyDetails.class,
+                false,
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
+                currentDateMinusOneYear,
+                ""
+            );
+
+        softAssertions.assertThat(inputControlsLatestExportDate.getResponseEntity().getInputControlState().get(2).getValue()).isEqualTo(currentDateMinusOneYear.replace(" ", "T"));
+        softAssertions.assertThat(inputControlsLatestExportDate.getResponseEntity().getInputControlState().get(5).getTotalCount()).isEqualTo("0");
 
         softAssertions.assertAll();
     }
