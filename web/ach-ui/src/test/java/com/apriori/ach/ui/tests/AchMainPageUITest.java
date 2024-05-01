@@ -54,7 +54,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
         final String currentUIDeployment = cloudHomePage.getDeployment();
         assertEquals(deploymentName, currentUIDeployment);
 
-        final String customerIdentity = CustomerUtil.getCurrentCustomerData().getIdentity();
+        final String customerIdentity = CustomerUtil.getCustomerData().getIdentity();
         Deployment customerDeployment = achEnvironmentAPIUtil.getCustomerDeploymentInformation(customerIdentity);
 
         List<ApplicationDTO> mappedCustomerApplications = achEnvironmentAPIUtil.mapCustomerDeploymentDataToDTO(
@@ -69,7 +69,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
     }
 
     private List<ApplicationDTO> getMappedMultiTenantApplications(Deployment customerDeployment) {
-        final String apInternalCustomerIdentity = CustomerUtil.getApIntCustomerData().getIdentity();
+        final String apInternalCustomerIdentity = CustomerUtil.getCustomerData().getIdentity();
 
         return achEnvironmentAPIUtil.mapMultiTenantDeploymentDataToDTO(
             achEnvironmentAPIUtil.getCustomerDeploymentInformation(apInternalCustomerIdentity), customerDeployment.getInstallations().get(0).getRegion()
