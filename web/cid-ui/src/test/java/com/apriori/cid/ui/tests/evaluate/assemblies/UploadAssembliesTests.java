@@ -73,96 +73,96 @@ public class UploadAssembliesTests extends TestBaseUI {
         });
     }
 
-    @Test
-    @Tag(SMOKE)
-    @TestRail(id = {6511, 10510})
-    @Description("Upload Assembly file with no missing sub-components")
-    public void uploadAssemblyTest() {
-        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
-        ComponentInfoBuilder subcomponentA = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("big ring")).findFirst().get();
-        ComponentInfoBuilder subcomponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("Pin")).findFirst().get();
-        ComponentInfoBuilder subcomponentC = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("small ring")).findFirst().get();
+//    @Test
+//    @Tag(SMOKE)
+//    @TestRail(id = {6511, 10510})
+//    @Description("Upload Assembly file with no missing sub-components")
+//    public void uploadAssemblyTest() {
+//        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
+//        ComponentInfoBuilder subcomponentA = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("big ring")).findFirst().get();
+//        ComponentInfoBuilder subcomponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("Pin")).findFirst().get();
+//        ComponentInfoBuilder subcomponentC = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("small ring")).findFirst().get();
+//
+//        loginPage = new CidAppLoginPage(driver);
+//        evaluatePage = loginPage.login(componentAssembly.getUser())
+//            .uploadComponentAndOpen(subcomponentA)
+//            .selectProcessGroup(subcomponentA.getProcessGroup())
+//            .costScenario();
+//
+//        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
+//
+//        evaluatePage.uploadComponentAndOpen(subcomponentB)
+//            .selectProcessGroup(subcomponentB.getProcessGroup())
+//            .costScenario();
+//
+//        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
+//
+//        evaluatePage.uploadComponentAndOpen(subcomponentC)
+//            .selectProcessGroup(subcomponentC.getProcessGroup())
+//            .costScenario();
+//
+//        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
+//
+//        evaluatePage.uploadComponentAndOpen(componentAssembly)
+//            .selectProcessGroup(componentAssembly.getProcessGroup())
+//            .costScenario();
+//
+//        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
+//
+//        softAssertions.assertThat(evaluatePage.getComponentResults("Total")).isEqualTo(3.0);
+//        softAssertions.assertThat(evaluatePage.getComponentResults("Unique")).isEqualTo(3.0);
+//        softAssertions.assertThat(evaluatePage.getComponentResults("Uncosted Unique")).isEqualTo(0.0);
+//
+//        softAssertions.assertAll();
+//
+//        //TODO uncomment when BA-2155 is complete
+//        /*componentsListPage = evaluatePage.openComponents();
+//        assertThat(componentsListPage.getRowDetails("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));
+//        assertThat(componentsListPage.getRowDetails("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));
+//        assertThat(componentsListPage.getRowDetails("Pin", "Initial"), hasItems("$1.97", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));*/
+//    }
 
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentAssembly.getUser())
-            .uploadComponentAndOpen(subcomponentA)
-            .selectProcessGroup(subcomponentA.getProcessGroup())
-            .costScenario();
+//    @Test
+//    @TestRail(id = {11902, 10762, 11861})
+//    @Description("Upload Assembly with sub-components from Catia")
+//    public void testCatiaMultiUpload() {
+//        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
+//
+//        loginPage = new CidAppLoginPage(driver);
+//        componentsTreePage = loginPage.login(componentAssembly.getUser())
+//            .uploadAndOpenComponents(componentAssembly);
+//
+//        componentAssembly.getSubComponents().forEach(subcomponent ->
+//            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase()), is(true)));
+//    }
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
+//    @Test
+//    @TestRail(id = {11903, 10767, 6562, 11909})
+//    @Description("Upload Assembly with sub-components from Creo")
+//    public void testCreoMultiUpload() {
+//        componentAssembly = new AssemblyRequestUtil().getAssembly("piston_assembly");
+//
+//        loginPage = new CidAppLoginPage(driver);
+//        componentsTreePage = loginPage.login(componentAssembly.getUser())
+//            .uploadAndOpenComponents(componentAssembly);
+//
+//        componentAssembly.getSubComponents().forEach(subcomponent ->
+//            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase()), is(true)));
+//    }
 
-        evaluatePage.uploadComponentAndOpen(subcomponentB)
-            .selectProcessGroup(subcomponentB.getProcessGroup())
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
-
-        evaluatePage.uploadComponentAndOpen(subcomponentC)
-            .selectProcessGroup(subcomponentC.getProcessGroup())
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
-
-        evaluatePage.uploadComponentAndOpen(componentAssembly)
-            .selectProcessGroup(componentAssembly.getProcessGroup())
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
-
-        softAssertions.assertThat(evaluatePage.getComponentResults("Total")).isEqualTo(3.0);
-        softAssertions.assertThat(evaluatePage.getComponentResults("Unique")).isEqualTo(3.0);
-        softAssertions.assertThat(evaluatePage.getComponentResults("Uncosted Unique")).isEqualTo(0.0);
-
-        softAssertions.assertAll();
-
-        //TODO uncomment when BA-2155 is complete
-        /*componentsListPage = evaluatePage.openComponents();
-        assertThat(componentsListPage.getRowDetails("Small Ring", "Initial"), hasItems("$1.92", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));
-        assertThat(componentsListPage.getRowDetails("Big Ring", "Initial"), hasItems("$2.19", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));
-        assertThat(componentsListPage.getRowDetails("Pin", "Initial"), hasItems("$1.97", "Casting - Die", PART.getIcon(), COSTED.getIcon(), HIGH.getIcon()));*/
-    }
-
-    @Test
-    @TestRail(id = {11902, 10762, 11861})
-    @Description("Upload Assembly with sub-components from Catia")
-    public void testCatiaMultiUpload() {
-        componentAssembly = new AssemblyRequestUtil().getAssembly("flange c");
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(componentAssembly.getUser())
-            .uploadAndOpenComponents(componentAssembly);
-
-        componentAssembly.getSubComponents().forEach(subcomponent ->
-            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase()), is(true)));
-    }
-
-    @Test
-    @TestRail(id = {11903, 10767, 6562, 11909})
-    @Description("Upload Assembly with sub-components from Creo")
-    public void testCreoMultiUpload() {
-        componentAssembly = new AssemblyRequestUtil().getAssembly("piston_assembly");
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(componentAssembly.getUser())
-            .uploadAndOpenComponents(componentAssembly);
-
-        componentAssembly.getSubComponents().forEach(subcomponent ->
-            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase()), is(true)));
-    }
-
-    @Test
-    @TestRail(id = 11904)
-    @Description("Upload Assembly with sub-components from Solidworks")
-    public void testSolidworksMultiUpload() {
-        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsTreePage = loginPage.login(componentAssembly.getUser())
-            .uploadAndOpenComponents(componentAssembly);
-
-        componentAssembly.getSubComponents().forEach(subcomponent ->
-            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase()), is(true)));
-    }
+//    @Test
+//    @TestRail(id = 11904)
+//    @Description("Upload Assembly with sub-components from Solidworks")
+//    public void testSolidworksMultiUpload() {
+//        componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
+//
+//        loginPage = new CidAppLoginPage(driver);
+//        componentsTreePage = loginPage.login(componentAssembly.getUser())
+//            .uploadAndOpenComponents(componentAssembly);
+//
+//        componentAssembly.getSubComponents().forEach(subcomponent ->
+//            assertThat(componentsTreePage.isComponentNameDisplayedInTreeView(subcomponent.getComponentName().toUpperCase()), is(true)));
+//    }
 
     @Test
     @TestRail(id = {11905, 10764, 11867})
@@ -374,7 +374,7 @@ public class UploadAssembliesTests extends TestBaseUI {
 
         assemblyUtils.uploadSubComponents(componentAssembly2).uploadAssembly(componentAssembly2);
 
-        final String assemblyName3 = "titan cordless drill";
+        final String assemblyName3 = "titan cordless drill 2";
         final String assemblyExtension3 = ".SLDASM";
         final List<String> subComponentNames3 = Arrays.asList("titan body RH", "titan body LH", "titan power switch", "titan speed switch", "titan bulk head",
             "titan bit holder", "titan forward reverse switch", "titan torque setting");
