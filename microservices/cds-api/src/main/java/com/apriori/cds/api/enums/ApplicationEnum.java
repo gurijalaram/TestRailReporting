@@ -5,9 +5,15 @@ import lombok.Getter;
 @Getter
 public enum ApplicationEnum {
     AP_PRO("ap-pro"),
-    CIA("cia"),
-    CIR("cir"),
-    ACS("acs");
+    CIA("ci-admin"),
+    CIR("ci-report"),
+    ACS("acs"),
+    CAS("cas"),
+    ECD("edc"),
+    CIS("cis"),
+    CID("ci-design"),
+    CIC("ci-connect"),
+    CLOUD_HOME("cloud");
 
     private final String application;
 
