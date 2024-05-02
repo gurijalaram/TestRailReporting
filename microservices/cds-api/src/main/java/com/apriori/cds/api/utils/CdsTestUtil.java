@@ -99,16 +99,30 @@ public class CdsTestUtil extends TestUtil {
     /**
      * Calls an API with GET verb
      *
-     * @param application - the application
+     * @param applicationCloudReference - the application cloud reference
      * @return string
      */
-    public String getApplicationIdentity(ApplicationEnum application) {
+    public String getApplicationIdentity(ApplicationEnum applicationCloudReference) {
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.APPLICATIONS, Applications.class)
-            .queryParams(new QueryParams().use("cloudReference[EQ]", application.getApplication()))
+            .queryParams(new QueryParams().use("cloudReference[EQ]", applicationCloudReference.getApplication()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<Applications> response = HTTPRequest.build(requestEntity).get();
         return response.getResponseEntity().getItems().stream().findFirst().get().getIdentity();
+    }
+
+    /**
+     * Calls an API with GET verb
+     *
+     * @param application - the application
+     * @return string
+     */
+    public List<Application> getApplicationIdentities() {
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.APPLICATIONS, Applications.class)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<Applications> response = HTTPRequest.build(requestEntity).get();
+        return response.getResponseEntity().getItems();
     }
 
     /**
