@@ -11,6 +11,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import io.qameta.allure.TmsLinks;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -50,8 +51,10 @@ public class AssemblyCostA4ReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("7622")
-    @TmsLink("3009")
+    @TmsLinks({
+        @TmsLink("3009"),
+        @TmsLink("7622")
+    })
     @TestRail(id = {3009, 7622})
     @Description("Verify Assembly Part Number drop-down functions correctly - Assembly Cost (A4) Report")
     public void testAssemblyPartNumberDropdownFunctionality() {

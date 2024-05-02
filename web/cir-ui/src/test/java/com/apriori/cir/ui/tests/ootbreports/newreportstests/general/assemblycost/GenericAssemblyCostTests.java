@@ -25,7 +25,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-@Data
 @Slf4j
 public class GenericAssemblyCostTests {
 
@@ -50,13 +49,13 @@ public class GenericAssemblyCostTests {
         log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
 
         String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
-        String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
+        String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(19).parent().parent().child(2).child(0).text();
 
         jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
         JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(jasperApiUtils.getReportRequest());
 
         String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
-        String capInvValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
+        String capInvValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Capital Investments").get(19).parent().parent().child(2).child(0).text();
 
         softAssertions.assertThat(currencyValueGBP).isNotEqualTo(currencyValueUSD);
         softAssertions.assertThat(capInvValueGBP).isNotEqualTo(capInvValueUSD);
