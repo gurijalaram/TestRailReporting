@@ -1,6 +1,7 @@
 package com.apriori.cas.api.tests;
 
 import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
+import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.AccessControls;
@@ -38,12 +39,12 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class CasBulkGrantDenyAccessTests {
-    private final String ciaIdentity = Constants.getCiaApplicationIdentity();
     private final String cirIdentity = Constants.getCirAppIdentity();
     private final String acsIdentity = Constants.getACSAppIdentity();
     private final UserCredentials currentUser = UserUtil.getUser("admin");
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private String ciaIdentity;
     private String appIdentity;
     private SoftAssertions soft = new SoftAssertions();
     private List<User> sourceUsers;
@@ -65,6 +66,7 @@ public class CasBulkGrantDenyAccessTests {
     public void setup() {
         RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
         appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
+        ciaIdentity = cdsTestUtil.getApplicationIdentity(CIA);
         aprioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
         apSiteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity).getResponseEntity().getItems().stream().filter(site -> site.getName().contains("Internal")).collect(Collectors.toList()).get(0).getIdentity();
         apDeploymentIdentity = PropertiesContext.get("cds.apriori_production_deployment_identity");
