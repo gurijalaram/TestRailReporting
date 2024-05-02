@@ -488,11 +488,11 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation with feature to a customer
      *
-     * @param customerIdentity              - the customer id
-     * @param deploymentIdentity            - the deployment id
-     * @param siteIdentity                  - the site Identity
-     * @param realmKey                      - the realm key
-     * @param cloudReference                - the cloud reference
+     * @param customerIdentity   - the customer id
+     * @param deploymentIdentity - the deployment id
+     * @param siteIdentity       - the site Identity
+     * @param realmKey           - the realm key
+     * @param cloudReference     - the cloud reference
      * @return new object
      */
     public ResponseWrapper<InstallationItems> addInstallationWithFeature(
@@ -862,7 +862,7 @@ public class CdsTestUtil extends TestUtil {
             .body(
                 "accessControl",
                 AccessControlRequest.builder()
-                    .customerIdentity(testingUser.getApUser().getCustomerIdentity())
+                    .customerIdentity(RequestEntityUtilBuilder.useRandomUser().getEmbeddedUser().getApUser().getCustomerIdentity())
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
                     .applicationIdentity(PropertiesContext.get("cds.ap_workspace_application_identity"))
