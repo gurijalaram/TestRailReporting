@@ -26,7 +26,7 @@ import java.util.Set;
 @ExtendWith(TestRulesAPI.class)
 public class UserGroupAssociationsTest extends ProcessGroupUtil {
     private static final Set<String> userGroupAssociationsToDelete = new HashSet<>();
-    protected static final String userId = UserUtil.getUser().getApUser().getIdentity();
+    protected static final String userId = UserUtil.getUser().getTestingUser().getIdentity();
 
     @AfterAll
     public static void deleteTestingData() {

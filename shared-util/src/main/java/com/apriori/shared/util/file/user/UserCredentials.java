@@ -26,7 +26,7 @@ public class UserCredentials implements Serializable {
     //TODO : change it on Security ENUM when will be information about security levels
     @Getter
     private String accessLevel;
-    private User apUser;
+    private User testingUser;
 
     public UserCredentials(String email, String password, String accessLevel) {
         this.email = email;
@@ -98,7 +98,7 @@ public class UserCredentials implements Serializable {
         return this;
     }
 
-    public synchronized User getApUser() {
-        return apUser != null ? apUser : UserUtil.getUserByEmail(this);
+    public synchronized User getTestingUser() {
+        return testingUser != null ? testingUser : UserUtil.getUserByEmail(this);
     }
 }
