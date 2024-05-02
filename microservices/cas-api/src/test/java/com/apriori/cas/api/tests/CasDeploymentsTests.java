@@ -4,12 +4,11 @@ import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.Deployment;
 import com.apriori.cas.api.models.response.Deployments;
 import com.apriori.cas.api.utils.CasTestUtil;
-import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -24,16 +23,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class CasDeploymentsTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
-    private Customer aprioriInternal;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private String customerIdentity;
     private UserCredentials currentUser = UserUtil.getUser("admin");
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
-        aprioriInternal = cdsTestUtil.getAprioriInternal();
-        customerIdentity = aprioriInternal.getIdentity();
+        customerIdentity = CustomerUtil.getCustomerData().getIdentity();
     }
 
     @Test

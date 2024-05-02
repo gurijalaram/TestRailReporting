@@ -7,11 +7,11 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.css.api.utils.CssComponent;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Deployments;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
@@ -95,9 +95,7 @@ public class BulkCostingPageTests extends TestBaseUI {
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {
         CdsTestUtil cdsTestUtil = new CdsTestUtil();
-        Customer customer;
-        customer = cdsTestUtil.getAprioriInternal();
-        String customerIdentity = customer.getIdentity();
+        String customerIdentity = CustomerUtil.getCustomerData().getIdentity();
 
         ResponseWrapper<Deployments> deployments = cdsTestUtil.getCommonRequest(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID,
             Deployments.class,

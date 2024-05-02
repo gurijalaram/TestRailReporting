@@ -56,7 +56,6 @@ import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Application;
 import com.apriori.shared.util.models.response.Applications;
 import com.apriori.shared.util.models.response.Customer;
-import com.apriori.shared.util.models.response.Customers;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.Features;
@@ -79,7 +78,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class CdsTestUtil extends TestUtil {
@@ -157,25 +155,6 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<Customer> createCustomer(RandomCustomerData rcd) {
         return addCustomer(rcd.getCustomerName(), rcd.getCustomerType(), rcd.getCloudRef(), rcd.getSalesForceId(), rcd.getEmailPattern());
-    }
-
-    /**
-     * Gets the special customer "aPriori Internal"
-     *
-     * @return The customer representing aPriori Internal
-     */
-    public Customer getAprioriInternal() {
-
-        Map<String, Object> filters = new HashMap<>();
-        filters.put("name[EQ]", "aPriori Internal");
-
-        Customer customer = findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, filters, Collections.emptyMap());
-
-        if (customer == null) {
-            throw new IllegalStateException("Customer, aPriori Internal, is missing.  The data set is corrupted.");
-        }
-
-        return customer;
     }
 
     /**

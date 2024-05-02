@@ -12,8 +12,8 @@ import com.apriori.ats.api.models.response.CloudContextResponse;
 import com.apriori.ats.api.utils.AtsTestUtil;
 import com.apriori.ats.api.utils.AuthorizeUserUtil;
 import com.apriori.ats.api.utils.enums.ATSAPIEnum;
-import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.AuthorizationUtil;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -33,7 +33,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class AtsAuthorization extends TestUtil {
     private AtsTestUtil atsTestUtil = new AtsTestUtil();
     private SoftAssertions soft = new SoftAssertions();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private UserCredentials currentUser = UserUtil.getUser();
 
     @Test
@@ -60,7 +59,7 @@ public class AtsAuthorization extends TestUtil {
     @TestRail(id = {22088})
     @Description("Get a Cloud Context identified by a cloud context string")
     public void getCloudContextTest() {
-        String customerIdentity = cdsTestUtil.getAprioriInternal().getIdentity();
+        String customerIdentity = CustomerUtil.getCustomerData().getIdentity();
         String contextString = currentUser.generateCloudContext().getCloudContext();
         ResponseWrapper<CloudContextResponse> getCloudContext = atsTestUtil.getCommonRequest(ATSAPIEnum.CLOUD_CONTEXT, CloudContextResponse.class, HttpStatus.SC_OK, contextString);
 
