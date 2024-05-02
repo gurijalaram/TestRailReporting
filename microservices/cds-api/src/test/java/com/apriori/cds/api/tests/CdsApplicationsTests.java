@@ -4,7 +4,6 @@ import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.Constants;
 import com.apriori.shared.util.models.response.Application;
 import com.apriori.shared.util.models.response.Applications;
 import com.apriori.shared.util.models.response.Customers;
@@ -48,7 +47,7 @@ public class CdsApplicationsTests {
     @TestRail(id = {5811})
     @Description(" API returns a paged list of customers authorized to use a particular application")
     public void getCustomersAuthorizedForApplication() {
-        Customers response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_APPLICATION_BY_ID, Customers.class, HttpStatus.SC_OK, Constants.getApProApplicationIdentity())
+        Customers response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_APPLICATION_BY_ID, Customers.class, HttpStatus.SC_OK, cdsTestUtil.getApplicationIdentity(AP_PRO))
             .getResponseEntity();
 
         soft.assertThat(response.getTotalItemCount()).isGreaterThanOrEqualTo(1);

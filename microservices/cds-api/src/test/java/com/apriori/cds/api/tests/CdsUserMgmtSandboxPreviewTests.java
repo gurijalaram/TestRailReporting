@@ -1,5 +1,7 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
@@ -25,7 +27,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsUserMgmtSandboxPreviewTests {
-    private final String appIdentity = Constants.getApProApplicationIdentity();
     private final String ciaIdentity = Constants.getCiaApplicationIdentity();
     private final String cirIdentity = Constants.getCirAppIdentity();
     private final String acsIdentity = Constants.getACSAppIdentity();
@@ -33,6 +34,7 @@ public class CdsUserMgmtSandboxPreviewTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
     private String customerIdentity;
     private String siteIdentity;
     private String previewInstallationIdentity;

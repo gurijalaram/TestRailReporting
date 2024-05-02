@@ -1,5 +1,7 @@
 package com.apriori.cds.api.utils;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -8,7 +10,6 @@ import com.apriori.shared.util.models.response.LicensedApplications;
 import com.apriori.shared.util.models.response.Site;
 
 public class CustomerInfrastructure extends CdsTestUtil {
-    private final String appIdentity = Constants.getApProApplicationIdentity();
     private final String ciaIdentity = Constants.getCiaApplicationIdentity();
     private final String cirIdentity = Constants.getCirAppIdentity();
     private final String acsIdentity = Constants.getACSAppIdentity();
@@ -21,6 +22,7 @@ public class CustomerInfrastructure extends CdsTestUtil {
     private String installationIdentity;
 
     public void createCustomerInfrastructure(RandomCustomerData rcd, String customerIdentity) {
+        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();
 

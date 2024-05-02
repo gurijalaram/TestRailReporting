@@ -4,7 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum ApplicationEnum {
-    AP_PRO("ap-pro");
+    AP_PRO("ap-pro"),
+    CIA("cia"),
+    CIR("cir"),
+    ACS("acs");
 
     private final String application;
 

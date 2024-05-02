@@ -1,5 +1,7 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.SiteItems;
@@ -74,7 +76,7 @@ public class CdsSitesApplicationsTests {
     @TestRail(id = {6058})
     @Description("Add an application to a site")
     public void addApplicationSite() {
-        String appIdentity = Constants.getApProApplicationIdentity();
+        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
 
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
 

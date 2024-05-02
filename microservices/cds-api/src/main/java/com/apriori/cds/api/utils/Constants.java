@@ -26,15 +26,6 @@ public class Constants {
      *
      * @return string
      */
-    public static String getApProApplicationIdentity() {
-        return PropertiesContext.get("cds.appro_application_identity");
-    }
-
-    /**
-     * Get identity application
-     *
-     * @return string
-     */
     public static String getCiaApplicationIdentity() {
         return PropertiesContext.get("cds.cia_application_identity");
     }
