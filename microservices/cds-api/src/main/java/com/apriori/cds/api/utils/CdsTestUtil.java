@@ -1,6 +1,7 @@
 package com.apriori.cds.api.utils;
 
 
+import static com.apriori.cds.api.enums.ApplicationEnum.CIS;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
@@ -861,7 +862,7 @@ public class CdsTestUtil extends TestUtil {
                     .customerIdentity(RequestEntityUtilBuilder.useRandomUser().getEmbeddedUser().getApUser().getCustomerIdentity())
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
-                    .applicationIdentity(PropertiesContext.get("cds.ap_workspace_application_identity"))
+                    .applicationIdentity(new CdsTestUtil().getApplicationIdentity(CIS))
                     .createdBy("#SYSTEM00000")
                     .roleName("USER")
                     .roleIdentity(PropertiesContext.get("cds.identity_role"))
