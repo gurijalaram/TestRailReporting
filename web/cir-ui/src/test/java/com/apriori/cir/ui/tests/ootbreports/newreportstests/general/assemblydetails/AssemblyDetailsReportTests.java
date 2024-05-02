@@ -787,6 +787,38 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
         softAssertions.assertAll();
     }
 
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("1928")
+    @TestRail(id = 1928)
+    @Description("Verify Export set of a part file is not available for selection")
+    public void verifyExportSetPartFileNotAvailableForSelection() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String exportSetValue = inputControls.getExportSetName()
+            .getOption(ExportSetEnum.SHEET_METAL_DTC.getExportSetName()).getValue();
+
+        ResponseWrapper<UpdatedInputControlsRootItemAssemblyDetails> inputControlsExportSetResponse =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemAssemblyDetails.class,
+                false,
+                ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(),
+                "",
+                "",
+                exportSetValue
+            );
+
+        softAssertions.assertThat(inputControlsExportSetResponse.getResponseEntity().getInputControlState().get(7).getTotalCount()).isEqualTo("0");
+        softAssertions.assertThat(inputControlsExportSetResponse.getResponseEntity().getInputControlState().get(8).getTotalCount()).isEqualTo("0");
+        softAssertions.assertThat(inputControlsExportSetResponse.getResponseEntity().getInputControlState().get(9).getTotalCount()).isEqualTo("0");
+
+        InputControlState assemblySelectIcState = inputControlsExportSetResponse.getResponseEntity().getInputControlState().get(10);
+        softAssertions.assertThat(assemblySelectIcState.getTotalCount()).isEqualTo("0");
+        softAssertions.assertThat(assemblySelectIcState.getError()).isEqualTo("This field is mandatory so you must enter data.");
+
+        softAssertions.assertAll();
+    }
+
     private void performGbpAssertions(JasperReportSummary jasperReportSummary) {
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency:")
             .get(6).siblingElements().get(2).child(0).text()).isEqualTo(CurrencyEnum.GBP.getCurrency());
