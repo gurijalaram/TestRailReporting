@@ -2,6 +2,7 @@ package com.apriori.cds.api.tests;
 
 import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
+import static com.apriori.cds.api.enums.ApplicationEnum.CIR;
 
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.AccessControlResponse;
@@ -32,7 +33,6 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsUserManagementHighMemTests {
-    private final String cirIdentity = Constants.getCirAppIdentity();
     private final String acsIdentity = Constants.getACSAppIdentity();
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -157,6 +157,7 @@ public class CdsUserManagementHighMemTests {
         ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
         String ciaIdentity = cdsTestUtil.getApplicationIdentity(CIA);
+        String cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();

@@ -2,6 +2,7 @@ package com.apriori.cds.api.tests;
 
 import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
+import static com.apriori.cds.api.enums.ApplicationEnum.CIR;
 
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
@@ -28,7 +29,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsUserMgmtSandboxPreviewTests {
-    private final String cirIdentity = Constants.getCirAppIdentity();
     private final String acsIdentity = Constants.getACSAppIdentity();
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
@@ -192,6 +192,7 @@ public class CdsUserMgmtSandboxPreviewTests {
 
     private void createSandboxDeployment() {
         String ciaIdentity = cdsTestUtil.getApplicationIdentity(CIA);
+        String cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
         String deploymentSandboxIdentity = response.getResponseEntity().getIdentity();
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentSandboxIdentity, "Sandbox Installation", generateStringUtil.generateRealmKey(), generateStringUtil.generateCloudReference(), siteIdentity, false);
@@ -205,6 +206,7 @@ public class CdsUserMgmtSandboxPreviewTests {
 
     private void createPreviewDeployment() {
         String ciaIdentity = cdsTestUtil.getApplicationIdentity(CIA);
+        String cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         String deploymentPreviewIdentity = response.getResponseEntity().getIdentity();
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentPreviewIdentity, "Preview Installation", generateStringUtil.generateRealmKey(), generateStringUtil.generateCloudReference(), siteIdentity, false);

@@ -22,15 +22,6 @@ public class Constants {
     public static final String USERS_BATCH = "loginID,email,firstName,lastName,fullName,isAdmin,isVPEAdmin,isJasperAdmin,AppStream,ReportUser,defaultPassword,resetPassword,userLicenseName,preferredCurrency,schemaPrivileges,defaultSchema,roles,defaultRole,roleName,applicationList,prefix,suffix,jobTitle,department,city/town,state/province,county,countryCode,timezone";
 
     /**
-     * Get identity CIR application
-     *
-     * @return string
-     */
-    public static String getCirAppIdentity() {
-        return PropertiesContext.get("cds.cir_application_identity");
-    }
-
-    /**
      * Get identity ACS application
      *
      * @return string
