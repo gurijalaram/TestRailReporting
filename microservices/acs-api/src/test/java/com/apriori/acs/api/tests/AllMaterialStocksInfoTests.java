@@ -4,6 +4,8 @@ import com.apriori.acs.api.models.response.acs.allmaterialstocksinfo.AllMaterial
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -15,12 +17,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class AllMaterialStocksInfoTests extends TestUtil {
+    private final UserCredentials user = UserUtil.getUser("common");
 
     @Test
     @TestRail(id = 16829)
     @Description("Test Get All Material Stocks Info endpoint")
     public void testGetAllMaterialStocksInfo() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(user);
         AllMaterialStocksInfoResponse allMaterialStocksInfoResponse = acsResources
             .getAllMaterialStocksInfo(
                 "aPriori USA",
