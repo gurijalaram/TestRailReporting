@@ -1,5 +1,6 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.ACS;
 import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIR;
@@ -9,7 +10,6 @@ import com.apriori.cds.api.models.response.AccessControlResponse;
 import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.Constants;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -33,7 +33,6 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsUserManagementHighMemTests {
-    private final String acsIdentity = Constants.getACSAppIdentity();
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
@@ -158,6 +157,7 @@ public class CdsUserManagementHighMemTests {
         customerIdentity = customer.getResponseEntity().getIdentity();
         String ciaIdentity = cdsTestUtil.getApplicationIdentity(CIA);
         String cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
+        String acsIdentity = cdsTestUtil.getApplicationIdentity(ACS);
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();
