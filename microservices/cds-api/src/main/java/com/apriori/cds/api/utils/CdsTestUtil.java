@@ -5,6 +5,7 @@ import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
 import com.apriori.cds.api.enums.AppAccessControlsEnum;
+import com.apriori.cds.api.enums.ApplicationEnum;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.enums.DeploymentEnum;
@@ -53,6 +54,7 @@ import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Application;
+import com.apriori.shared.util.models.response.Applications;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Customers;
 import com.apriori.shared.util.models.response.Deployment;
@@ -92,6 +94,21 @@ public class CdsTestUtil extends TestUtil {
             .useApUserContextInRequests();
 
         testingUser = requestEntityUtil.getEmbeddedUser();
+    }
+
+    /**
+     * Calls an API with GET verb
+     *
+     * @param application - the application
+     * @return string
+     */
+    public String getApplicationIdentity(ApplicationEnum application) {
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.APPLICATIONS, Applications.class)
+            .queryParams(new QueryParams().use("cloudReference[EQ]", application.getApplication()))
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<Applications> response = HTTPRequest.build(requestEntity).get();
+        return response.getResponseEntity().getItems().stream().findFirst().get().getIdentity();
     }
 
     /**
@@ -1243,7 +1260,6 @@ public class CdsTestUtil extends TestUtil {
                 .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).get();
     }
-
 
     /**
      * Creates or updates user enablements
