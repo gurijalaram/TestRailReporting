@@ -112,20 +112,6 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * Calls an API with GET verb
-     *
-     * @param application - the application
-     * @return string
-     */
-    public List<Application> getApplicationIdentities() {
-        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.APPLICATIONS, Applications.class)
-            .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<Applications> response = HTTPRequest.build(requestEntity).get();
-        return response.getResponseEntity().getItems();
-    }
-
-    /**
      * POST call to add a customer
      *
      * @param name           - the customer name
