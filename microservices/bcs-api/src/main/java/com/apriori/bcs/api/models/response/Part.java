@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @JsonRootName("response")
@@ -38,6 +39,7 @@ public class Part {
     private String message;
     private String description;
     private String apwScenarioLink;
+    public List<Object> errorList;
 
     /**
      * Add metrics to existing PartData object
