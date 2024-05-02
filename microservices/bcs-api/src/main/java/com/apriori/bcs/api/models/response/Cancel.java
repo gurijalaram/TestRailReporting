@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @JsonRootName("response")
@@ -18,11 +19,9 @@ public class Cancel {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-
     private String identity;
     private String createdBy;
     private String updatedBy;
@@ -35,4 +34,5 @@ public class Cancel {
     private String rollupName;
     private String rollupScenarioName;
     private Boolean exportCompleted;
+    public List<Object> errorList;
 }
