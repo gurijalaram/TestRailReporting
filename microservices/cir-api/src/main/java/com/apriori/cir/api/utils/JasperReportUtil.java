@@ -95,8 +95,8 @@ public class JasperReportUtil {
      * @param klass - Class of type to return
      * @param setCriteria - boolean to determine if criteria should be set
      * @param miscData - rest of data (report name, IC to set, IC value to set and export set name)
-     * @return Response Wrapper instance with type specified in klass parameter
      * @param <T> - generic so it will work for multiple reports
+     * @return Response Wrapper instance with type specified in klass parameter
      */
     public <T> ResponseWrapper<T> getInputControlsModified(Class<T> klass, boolean setCriteria, String... miscData) {
         List<String> miscDataList = Arrays.asList(miscData);
