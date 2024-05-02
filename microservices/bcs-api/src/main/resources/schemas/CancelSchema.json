@@ -21,7 +21,10 @@
         "rollupName",
         "rollupScenarioName"
       ],
-      "optional": ["exportCompleted"],
+      "optional": [
+        "exportCompleted",
+        "errorList"
+      ],
       "properties": {
         "identity": {
           "type": "string"
@@ -64,6 +67,10 @@
         },
         "rollupScenarioName": {
           "type": "string"
+        },
+        "errorList": {
+          "type": "array",
+          "items": {}
         }
       }
     }

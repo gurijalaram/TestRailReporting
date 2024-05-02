@@ -11,6 +11,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Data
 @JsonRootName("response")
@@ -36,6 +37,7 @@ public class Batch {
     private String exportSetName;
     private Long costingDuration;
     public Boolean exportCompleted;
+    public List<Object> errorList;
 
     public Batch setCostingDuration(LocalDateTime updatedTime) {
         this.costingDuration = ChronoUnit.SECONDS.between(createdAt, updatedTime);

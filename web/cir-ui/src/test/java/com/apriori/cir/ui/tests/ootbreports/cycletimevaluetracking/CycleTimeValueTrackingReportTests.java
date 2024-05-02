@@ -15,7 +15,6 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import io.qameta.allure.TmsLink;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -108,7 +107,6 @@ public class CycleTimeValueTrackingReportTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("AP-66960")
     @Tag(REPORTS)
     @TmsLink("2335")
     @TestRail(id = {2335})
