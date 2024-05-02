@@ -3,7 +3,9 @@ package com.apriori.cic.ui.pageobjects.workflows.schedule.notifications;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cic.api.enums.EmailRecipientType;
+import com.apriori.cic.ui.enums.AprioriCostType;
 import com.apriori.cic.ui.enums.EmailTemplateEnum;
+import com.apriori.cic.ui.enums.FieldState;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -74,6 +76,31 @@ public class EmailTab extends NotificationsPart {
             pageUtils.waitForElementAndClick(getEmailRecipientElement());
         }
         pageUtils.waitForJavascriptLoadComplete();
+        return this;
+    }
+
+    /**
+     * select cost rounding
+     *
+     * @return EmailTab object
+     */
+    public EmailTab selectCostRounding(FieldState fieldState) {
+        pageUtils.waitForElementAndClick(getEmailConfigCostRoundingElement());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, fieldState)));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
+    }
+
+    /**
+     * select apriori cost type field
+     *
+     * @param aprioriCostType - AprioriCostType enum
+     * @return current class object
+     */
+    public EmailTab selectAprioriCost(AprioriCostType aprioriCostType) {
+        pageUtils.waitForElementAndClick(getEmailConfigCostRoundingElement());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, aprioriCostType.getAprioriCostType())));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
 
