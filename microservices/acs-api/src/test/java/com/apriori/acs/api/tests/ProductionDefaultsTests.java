@@ -10,6 +10,8 @@ import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorRespon
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.api.models.response.acs.productiondefaults.ProductionDefaultsResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -21,12 +23,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class ProductionDefaultsTests extends TestUtil {
+    private final UserCredentials userCredentials = UserUtil.getUser("common");
 
     @Test
     @TestRail(id = 10586)
     @Description("Verify Get Production Defaults Endpoint")
     public void testGetProductionDefaultsEndpoint() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         ProductionDefaultsResponse getProductionDefaultsResponse = acsResources.getProductionDefaults();
 
         assertThat(getProductionDefaultsResponse.isUseVpeForAllProcesses(), anyOf(equalTo(true), equalTo(false)));
@@ -36,7 +39,7 @@ public class ProductionDefaultsTests extends TestUtil {
     @TestRail(id = 10587)
     @Description("Verify Get Production Defaults Endpoint - Negative Test")
     public void testGetProductionDefaultsEndpointInvalidUser() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.PRODUCTION_DEFAULTS);
 
         assertOnInvalidResponse(genericErrorResponse);
@@ -46,7 +49,7 @@ public class ProductionDefaultsTests extends TestUtil {
     @TestRail(id = 10588)
     @Description("Verify Set Production Defaults Endpoint")
     public void testSetProductionDetailsEndpoint() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
 
         GenericResourceCreatedResponse setProductionDefaultsResponse = acsResources.setProductionDefaults();
 
@@ -66,7 +69,7 @@ public class ProductionDefaultsTests extends TestUtil {
     @TestRail(id = 10606)
     @Description("Set Production Defaults Negative Test")
     public void testNegativeSetProductionDefaults() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.setProductionDefaultsInvalidUsername();
 
         assertOnInvalidResponse(genericErrorResponse);
