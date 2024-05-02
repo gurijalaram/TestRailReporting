@@ -15,7 +15,6 @@ import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cir.ui.enums.AssemblySetEnum;
 import com.apriori.cir.ui.enums.AssemblyTypeEnum;
 import com.apriori.cir.ui.enums.ComponentInfoColumnEnum;
-import com.apriori.cir.ui.pageobjects.header.ReportsHeader;
 import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.cir.ui.pageobjects.view.reports.AssemblyDetailsReportPage;
@@ -34,8 +33,8 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import io.qameta.allure.TmsLink;
+import io.qameta.allure.TmsLinks;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -97,8 +96,303 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @TmsLink("3232")
-    @TmsLink("1929")
+    @TmsLink("1922")
+    @TestRail(id = {1922})
+    @Description("Verifies that the currency code works properly")
+    public void testCurrencyCodeWorks() {
+        assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
+        BigDecimal gbpGrandTotal;
+        BigDecimal usdGrandTotal;
+
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), ReportsPageHeader.class)
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        usdGrandTotal = assemblyDetailsReportPage.getCapitalInvestmentsGrandTotalFromTable();
+
+        ReportsPageHeader reportsPageHeader = new ReportsPageHeader(driver);
+        reportsPageHeader.clickInputControlsButton()
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
+
+        gbpGrandTotal = assemblyDetailsReportPage.getCapitalInvestmentsGrandTotalFromTable();
+
+        assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+        assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
+    }
+
+    @Test
+    @Tag(REPORTS)
+    @TmsLink("3205")
+    @TestRail(id = {3205})
+    @Description("Verifies that currency change and then reversion works")
+    public void testCurrencyCodeReversion() {
+        assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
+        BigDecimal gbpGrandTotal;
+        BigDecimal usdGrandTotal;
+
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), ReportsPageHeader.class)
+            .waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        ReportsPageHeader reportsPageHeader = new ReportsPageHeader(driver);
+        reportsPageHeader.clickInputControlsButton()
+            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
+
+        gbpGrandTotal = assemblyDetailsReportPage.getValueFromTable(
+            assemblyType,
+            "Grand Total",
+            "Capital Investments"
+        );
+        assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
+
+        reportsPageHeader.clickInputControlsButton()
+            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(
+            assemblyType,
+            "Grand Total",
+            "Capital Investments"
+        );
+
+        assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.USD.getCurrency())));
+        assertThat(usdGrandTotal, is(not(equalTo(gbpGrandTotal))));
+    }
+
+    @Test
+    @Tag(REPORTS)
+    @TmsLinks({
+        @TmsLink("3067"),
+        @TmsLink("1929")
+    })
+    @TestRail(id = {3067, 1929})
+    @Description("Verify totals calculations for Sub Assembly")
+    public void testTotalCalculationsForSubAssembly() {
+        assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
+
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), ReportsPageHeader.class)
+            .waitForInputControlsLoad()
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .clickOk(AssemblyDetailsReportPage.class)
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY_LOWERCASE.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
+            assemblyDetailsReportPage.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
+        ), is(true));
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(
+                assemblyType, "Grand Total", "Piece Part Cost"),
+            assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
+        ), is(true));
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(
+                assemblyType, "Grand Total", "Fully Burdened Cost"),
+            assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
+        ), is(true));
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(
+                assemblyType, "Grand Total", "Capital Investments"),
+            assemblyDetailsReportPage.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
+        ), is(true));
+    }
+
+    @Test
+    @Tag(REPORTS)
+    @TmsLinks({
+        @TmsLink("3068"),
+        @TmsLink("1929")
+    })
+    @TestRail(id = {3068, 1929})
+    @Description("Verify totals calculations for Sub-Sub-ASM")
+    public void testTotalCalculationsForSubSubASM() {
+        assemblyType = AssemblyTypeEnum.SUB_SUB_ASM.getAssemblyType();
+
+        genericReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), ReportsPageHeader.class)
+            .waitForInputControlsLoad()
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+            ListNameEnum.SCENARIO_NAME.getListName(),
+            "Available: ",
+            "1"
+        );
+
+        assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
+            .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
+            .clickOk(AssemblyDetailsReportPage.class)
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM_LOWERCASE.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
+            assemblyDetailsReportPage.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
+        ), is(true));
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(
+                assemblyType, "Grand Total", "Piece Part Cost"),
+            assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
+        ), is(true));
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(
+                assemblyType, "Grand Total", "Fully Burdened Cost"),
+            assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
+        ), is(true));
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(
+                assemblyType, "Grand Total", "Capital Investments"),
+            assemblyDetailsReportPage.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
+        ), is(true));
+    }
+
+    @Test
+    @Tags({
+        @Tag(REPORTS),
+        @Tag(CUSTOMER)
+    })
+    @TmsLinks({
+        @TmsLink("1934"),
+        @TmsLink("1929")
+    })
+    @TestRail(id = {1934, 1929})
+    @Description("Verify totals calculations for Top Level")
+    public void testTotalCalculationsForTopLevel() {
+        assemblyType = AssemblyTypeEnum.TOP_LEVEL.getAssemblyType();
+
+        genericReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), ReportsPageHeader.class)
+            .waitForInputControlsLoad()
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
+
+        genericReportPage.waitForCorrectAvailableSelectedCount(
+            ListNameEnum.SCENARIO_NAME.getListName(),
+            "Available: ",
+            "1"
+        );
+
+        assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
+            .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
+            .clickOk(AssemblyDetailsReportPage.class)
+            .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(assemblyType, "Grand Total", "Cycle Time"),
+            assemblyDetailsReportPage.getExpectedCTGrandTotal(assemblyType, "Cycle Time")
+        ), is(true));
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(
+                assemblyType, "Grand Total", "Piece Part Cost"),
+            assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Piece Part Cost")
+        ), is(true));
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(
+                assemblyType, "Grand Total", "Fully Burdened Cost"),
+            assemblyDetailsReportPage.getExpectedFbcPpcGrandTotal(assemblyType, "Fully Burdened Cost")
+        ), is(true));
+
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(
+            assemblyDetailsReportPage.getValueFromTable(
+                assemblyType, "Grand Total", "Capital Investments"),
+            assemblyDetailsReportPage.getExpectedCIGrandTotal(assemblyType, "Capital Investments")
+        ), is(true));
+    }
+
+    @Test
+    @Tag(REPORTS)
+    @TmsLinks({
+        @TmsLink("3231"),
+        @TmsLink("1929")
+    })
+    @TestRail(id = {3231, 1929})
+    @Description("Verify sub total calculations for Sub Assembly")
+    public void testSubTotalCalculationsSubAssembly() {
+        assemblyType = AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType();
+
+        assemblyDetailsReportPage = new ReportsLoginPage(driver)
+            .login()
+            .navigateToLibraryPage()
+            .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), ReportsPageHeader.class)
+            .waitForInputControlsLoad()
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .clickOk(AssemblyDetailsReportPage.class)
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        ReportsPageHeader reportsPageHeader = new ReportsPageHeader(driver);
+        reportsPageHeader.clickInputControlsButton();
+        reportsPageHeader.waitForInputControlsLoad()
+            .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
+            .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        ArrayList<BigDecimal> ctValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
+            assemblyType,
+            "Cycle Time"
+        );
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ctValues.get(0), ctValues.get(1)), is(true));
+
+        ArrayList<BigDecimal> ppcValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
+            assemblyType,
+            "Piece Part Cost"
+        );
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ppcValues.get(0), ppcValues.get(1)), is(true));
+
+        ArrayList<BigDecimal> fbcValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
+            assemblyType,
+            "Fully Burdened Cost"
+        );
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(fbcValues.get(0), fbcValues.get(1)), is(true));
+
+        ArrayList<BigDecimal> ciValues = assemblyDetailsReportPage.getSubTotalAdditionValue(
+            assemblyType,
+            "Capital Investments"
+        );
+        assertThat(assemblyDetailsReportPage.areValuesAlmostEqual(ciValues.get(0), ciValues.get(1)), is(true));
+    }
+
+    @Test
+    @Tag(REPORTS)
+    @TmsLinks({
+        @TmsLink("3232"),
+        @TmsLink("1929")
+    })
     @TestRail(id = {3232, 1929})
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
@@ -150,8 +444,10 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @TmsLink("3233")
-    @TmsLink("1929")
+    @TmsLinks({
+        @TmsLink("3233"),
+        @TmsLink("1929")
+    })
     @TestRail(id = {3233, 1929})
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
@@ -552,8 +848,10 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @TmsLink("7689")
-    @TmsLink("1921")
+    @TmsLinks({
+        @TmsLink("7689"),
+        @TmsLink("1921")
+    })
     @TestRail(id = {7689, 1921})
     @Description("Verify Assembly Number Search Criteria")
     public void testAssemblyNumberSearchCriteria() {

@@ -23,6 +23,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import io.qameta.allure.TmsLinks;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
@@ -132,8 +133,10 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("3231")
-    @TmsLink("1929")
+    @TmsLinks({
+        @TmsLink("3231"),
+        @TmsLink("1929")
+    })
     @TestRail(id = {3231, 1929})
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
@@ -224,8 +227,10 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("3067")
-    @TmsLink("1929")
+    @TmsLinks({
+        @TmsLink("3067"),
+        @TmsLink("1929")
+    })
     @TestRail(id = {3067, 1929})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
