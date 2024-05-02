@@ -236,12 +236,12 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     public void testTotalCalculationsForSubAssembly() {
         JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
-        String topLevelAssemblyValue = inputControls.getAssemblySelect()
+        String subAssemblyAssemblyValue = inputControls.getAssemblySelect()
             .getOption(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName().concat(" [assembly] ")).getValue();
 
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
             InputControlsEnum.ASSEMBLY_SELECT.getInputControlId(),
-            topLevelAssemblyValue
+            subAssemblyAssemblyValue
         );
 
         // cycle time sub totals checking
@@ -337,12 +337,12 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     public void verifyTotalsCalculationsForSubSubAsm() {
         JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
-        String topLevelAssemblyValue = inputControls.getAssemblySelect()
+        String subSubAsmAssemblyValue = inputControls.getAssemblySelect()
             .getOption(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName().concat(" [assembly] ")).getValue();
 
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
             InputControlsEnum.ASSEMBLY_SELECT.getInputControlId(),
-            topLevelAssemblyValue
+            subSubAsmAssemblyValue
         );
 
         // cycle time sub totals checking
@@ -459,12 +459,12 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     public void verifySubTotalCalculationsForSubSubASM() {
         JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
         InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
-        String topLevelAssemblyValue = inputControls.getAssemblySelect()
+        String subSubAsmAssemblyValue = inputControls.getAssemblySelect()
             .getOption(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName().concat(" [assembly] ")).getValue();
 
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
             InputControlsEnum.ASSEMBLY_SELECT.getInputControlId(),
-            topLevelAssemblyValue
+            subSubAsmAssemblyValue
         );
 
         BigDecimal ctComponentSubtotal = new BigDecimal(jasperReportSummary.getReportHtmlPart().getElementsContainingText("244.73").get(19).text());
@@ -741,6 +741,48 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
 
         softAssertions.assertThat(inputControlsLatestExportDate.getResponseEntity().getInputControlState().get(2).getValue()).isEqualTo(currentDateMinusOneYear.replace(" ", "T"));
         softAssertions.assertThat(inputControlsLatestExportDate.getResponseEntity().getInputControlState().get(5).getTotalCount()).isEqualTo("0");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("1924")
+    @TestRail(id = 1924)
+    @Description("Verify report figures from CI Design")
+    public void testReportFiguresFromCiDesign() {
+        JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+
+        jasperApiUtils.genericTestCore(
+            InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+            inputControls.getExportSetName().getOption(exportSetName).getValue()
+        );
+
+        String topLevelAssemblyValue = inputControls.getAssemblySelect()
+            .getOption(AssemblySetEnum.TOP_LEVEL.getAssemblySetName().concat(" [assembly] ")).getValue();
+
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.ASSEMBLY_SELECT.getInputControlId(),
+            topLevelAssemblyValue
+        );
+
+        List<Element> valueElementList = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("valign", "top");
+        softAssertions.assertThat(valueElementList.get(62).text()).isEqualTo("6,022.72");
+
+        softAssertions.assertThat(valueElementList.get(72).text()).isEqualTo("516.99");
+
+        softAssertions.assertThat(valueElementList.get(82).text()).isEqualTo("517.08");
+
+        softAssertions.assertThat(valueElementList.get(92).text()).isEqualTo("962.80");
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().getElementsContainingText("Assembly #:")
+            .get(4).child(6).child(2).text()).isEqualTo(AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName());
+
+        List<Element> nameElementList = jasperReportSummary.getReportHtmlPart()
+            .getElementsByAttributeValue("class", "_jrHyperLink ReportExecution");
+        softAssertions.assertThat(nameElementList.get(6).text()).isEqualTo("SUB-ASSEMBLY");
+        softAssertions.assertThat(nameElementList.get(12).text()).isEqualTo("SUB-SUB-ASM");
 
         softAssertions.assertAll();
     }
