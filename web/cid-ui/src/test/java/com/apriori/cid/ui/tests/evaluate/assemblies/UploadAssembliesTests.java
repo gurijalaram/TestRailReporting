@@ -194,15 +194,6 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = 5621)
     @Description("Validate sub components such as bolts or screws can exist in multiple assemblies")
     public void uploadAnAssemblyThatIsPartOfAnotherAssembly() {
-//        currentUser = UserUtil.getUser();
-//        String scenarioName = new GenerateStringUtil().generateScenarioName();
-//
-//        final String assemblyName1 = "titan battery ass";
-//        List<MultiUpload> firstAssemblyBatch = new ArrayList<>();
-//        firstAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan battery release.SLDPRT"), scenarioName));
-//        firstAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, "titan battery.SLDPRT"), scenarioName));
-//        firstAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "titan battery ass.SLDASM"), scenarioName));
-
         ComponentInfoBuilder assembly1 = new AssemblyRequestUtil().getAssembly("titan battery ass");
         List<MultiUpload> firstAssemblyBatch = new ArrayList<>();
         assembly1.getSubComponents().forEach(component -> firstAssemblyBatch.add(new MultiUpload(component.getResourceFile(), component.getScenarioName())));
@@ -224,42 +215,10 @@ public class UploadAssembliesTests extends TestBaseUI {
             .submit()
             .clickClose();
 
-//        final String assemblyName2 = "titan charger ass";
-//        final String assemblyExtension2 = ".SLDASM";
-//        final List<String> subComponentNames2 = Arrays.asList("titan charger base", "titan charger lead", "titan charger upper");
-//        final String subComponentExtension2 = ".SLDPRT";
-//        final ProcessGroupEnum subComponentProcessGroup2 = ProcessGroupEnum.PLASTIC_MOLDING;
-//
-//        ComponentInfoBuilder componentAssembly2 = assemblyUtils.associateAssemblyAndSubComponents(
-//            assemblyName2,
-//            assemblyExtension2,
-//            ASSEMBLY,
-//            subComponentNames2,
-//            subComponentExtension2,
-//            subComponentProcessGroup2,
-//            scenarioName,
-//            currentUser);
-
-        //ToDo:- Fails because we attempt to reupload the sub-assembly using the same scenario name - Either revert or remove sub-assembly
+        assembly2.getSubComponents().removeIf(sub -> sub.getComponentName().equals(assembly1.getComponentName()));
         assemblyUtils.uploadSubComponents(assembly2).uploadAssembly(assembly2);
 
-//        final String assemblyName3 = "titan cordless drill 2";
-//        final String assemblyExtension3 = ".SLDASM";
-//        final List<String> subComponentNames3 = Arrays.asList("titan body RH", "titan body LH", "titan power switch", "titan speed switch", "titan bulk head",
-//            "titan bit holder", "titan forward reverse switch", "titan torque setting");
-//        final String subComponentExtension3 = ".SLDPRT";
-//        final ProcessGroupEnum subComponentProcessGroup3 = ProcessGroupEnum.SHEET_METAL;
-//
-//        ComponentInfoBuilder componentAssembly3 = assemblyUtils.associateAssemblyAndSubComponents(
-//            assemblyName3,
-//            assemblyExtension3,
-//            ASSEMBLY,
-//            subComponentNames3,
-//            subComponentExtension3,
-//            subComponentProcessGroup3,
-//            scenarioName,
-//            currentUser);
-
+        assembly3.getSubComponents().removeIf(sub -> sub.getComponentName().equals(assembly1.getComponentName()));
         assemblyUtils.uploadSubComponents(assembly3).uploadAssembly(assembly3);
 
         componentsTreePage = explorePage.openComponent(assembly2.getComponentName(), assembly2.getScenarioName(), assembly2.getUser())
