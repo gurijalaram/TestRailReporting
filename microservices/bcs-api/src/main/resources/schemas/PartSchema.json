@@ -17,7 +17,8 @@
         "description"
       ],
       "optional": [
-        "apwScenarioLink"
+        "apwScenarioLink",
+        "errorList"
       ],
       "properties": {
         "identity": {
@@ -52,6 +53,10 @@
         },
         "errors": {
           "type": "string"
+        },
+        "errorList": {
+          "type": "array",
+          "items": {}
         },
         "url": {
           "type": "string"

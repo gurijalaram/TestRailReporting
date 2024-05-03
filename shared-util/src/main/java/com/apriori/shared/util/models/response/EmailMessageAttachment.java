@@ -1,8 +1,8 @@
 package com.apriori.shared.util.models.response;
 
-import com.apriori.shared.util.ExcelService;
-import com.apriori.shared.util.PDFDocument;
 import com.apriori.shared.util.annotations.Schema;
+import com.apriori.shared.util.file.ExcelService;
+import com.apriori.shared.util.file.PDFDocument;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 
 import com.fasterxml.jackson.annotation.JsonProperty;

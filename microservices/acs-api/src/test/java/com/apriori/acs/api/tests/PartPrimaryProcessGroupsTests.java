@@ -8,6 +8,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.acs.api.models.response.acs.partprimaryprocessgroups.PartPrimaryProcessGroupsResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -29,7 +31,8 @@ public class PartPrimaryProcessGroupsTests extends TestUtil {
     @TestRail(id = 10881)
     @Description("Validate Get Part Primary Process Groups Endpoint")
     public void testGetPartPrimaryProcessGroupsEndpoint() {
-        AcsResources acsResources = new AcsResources();
+        UserCredentials userCredentials = UserUtil.getUser("common");
+        AcsResources acsResources = new AcsResources(userCredentials);
         PartPrimaryProcessGroupsResponse getPartPrimaryProcessGroupsResponse = acsResources.getPartPrimaryProcessGroups();
 
         List<String> processGroupValues = Arrays.stream(ProcessGroupEnum.getNames()).collect(Collectors.toList());
