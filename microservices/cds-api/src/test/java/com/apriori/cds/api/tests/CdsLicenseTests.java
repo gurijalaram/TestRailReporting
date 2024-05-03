@@ -106,7 +106,7 @@ public class CdsLicenseTests {
     @Description("Activate a license.")
     public void activateLicenseTest() {
         setCustomerData();
-        String userIdentity = UserUtil.getUser().getTestingUser().getIdentity();
+        String userIdentity = UserUtil.getUser().getUserDetails().getIdentity();
 
         cdsTestUtil.activateLicense(customerIdentity, siteIdentity, licenseIdentity, userIdentity);
         ResponseWrapper<LicenseResponse> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
@@ -158,7 +158,7 @@ public class CdsLicenseTests {
     @Description("Get a list of active licensed sub-modules")
     public void getActiveModules() {
         setCustomerData();
-        String userIdentity = UserUtil.getUser().getTestingUser().getIdentity();
+        String userIdentity = UserUtil.getUser().getUserDetails().getIdentity();
 
         cdsTestUtil.activateLicense(customerIdentity, siteIdentity, licenseIdentity, userIdentity);
         ResponseWrapper<ActiveLicenseModules> activeModules = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACTIVE_MODULES, ActiveLicenseModules.class, HttpStatus.SC_OK,

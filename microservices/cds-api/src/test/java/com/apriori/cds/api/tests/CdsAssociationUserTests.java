@@ -40,7 +40,7 @@ public class CdsAssociationUserTests {
     private String associationIdentity;
     private ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
     private SoftAssertions soft = new SoftAssertions();
-    private User user = UserUtil.getUser().getTestingUser();
+    private User user = UserUtil.getUser().getUserDetails();
 
     @BeforeEach
     public void setDetails() {
