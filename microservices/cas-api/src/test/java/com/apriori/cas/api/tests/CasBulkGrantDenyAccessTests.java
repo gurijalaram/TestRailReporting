@@ -41,10 +41,10 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class CasBulkGrantDenyAccessTests {
-    private  String acsIdentity ;
     private final UserCredentials currentUser = UserUtil.getUser("admin");
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private String acsIdentity;
     private String ciaIdentity;
     private String appIdentity;
     private String achIdentity;
