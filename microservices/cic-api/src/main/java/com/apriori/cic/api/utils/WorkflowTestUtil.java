@@ -9,7 +9,7 @@ import com.apriori.cic.api.models.response.AgentWorkflowJobResults;
 import com.apriori.cic.api.models.response.AgentWorkflowJobRun;
 import com.apriori.cic.api.models.response.ConnectorJobPart;
 import com.apriori.cic.api.models.response.ConnectorJobParts;
-import com.apriori.shared.util.PDFDocument;
+import com.apriori.shared.util.file.PDFDocument;
 import com.apriori.shared.util.file.part.PartData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
