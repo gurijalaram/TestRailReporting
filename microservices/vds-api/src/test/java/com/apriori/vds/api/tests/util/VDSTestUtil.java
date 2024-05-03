@@ -1,5 +1,6 @@
 package com.apriori.vds.api.tests.util;
 
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -8,7 +9,6 @@ import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.vds.api.enums.VDSAPIEnum;
 import com.apriori.vds.api.models.response.access.control.AccessControlGroup;
 import com.apriori.vds.api.models.response.access.control.AccessControlGroupItems;

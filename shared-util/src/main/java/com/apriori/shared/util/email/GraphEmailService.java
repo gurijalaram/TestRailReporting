@@ -1,12 +1,12 @@
 package com.apriori.shared.util.email;
 
+import com.apriori.shared.util.KeyValueUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.models.response.EmailMessage;
 import com.apriori.shared.util.models.response.EmailResponse;
-import com.apriori.shared.util.utils.KeyValueUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;

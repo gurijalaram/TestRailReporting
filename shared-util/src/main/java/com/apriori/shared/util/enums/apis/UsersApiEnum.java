@@ -1,19 +1,16 @@
-package com.apriori.shared.util.enums;
+package com.apriori.shared.util.enums.apis;
 
 import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
 import com.apriori.shared.util.properties.PropertiesContext;
 
-public enum CustomersApiEnum implements ExternalEndpointEnum {
+public enum UsersApiEnum implements ExternalEndpointEnum {
 
-    // SITES
-    SITES_BY_CUSTOMER_ID("/customers/%s/sites"),
-
-    //CUSTOMERS
-    CUSTOMERS("/customers");
+    //USERS
+    USERS("/users");
 
     private final String endpoint;
 
-    CustomersApiEnum(String endpoint) {
+    UsersApiEnum(String endpoint) {
         this.endpoint = endpoint;
     }
 

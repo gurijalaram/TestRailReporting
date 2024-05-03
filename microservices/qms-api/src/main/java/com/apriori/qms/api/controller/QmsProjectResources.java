@@ -9,6 +9,7 @@ import com.apriori.qms.api.models.request.bidpackage.BidPackageProjectUserParame
 import com.apriori.qms.api.models.response.bidpackage.BidPackageProjectsResponse;
 import com.apriori.qms.api.utils.QmsApiTestUtils;
 import com.apriori.serialization.util.DateFormattingUtils;
+import com.apriori.shared.util.KeyValueUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -19,7 +20,6 @@ import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
-import com.apriori.shared.util.utils.KeyValueUtil;
 
 import org.apache.http.HttpStatus;
 
