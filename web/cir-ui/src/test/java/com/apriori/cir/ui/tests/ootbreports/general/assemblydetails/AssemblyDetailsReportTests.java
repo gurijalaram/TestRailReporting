@@ -6,8 +6,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.StringContains.containsString;
 
-import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTablePage;
-import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cir.ui.enums.AssemblySetEnum;
 import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
@@ -18,20 +16,14 @@ import com.apriori.cir.ui.utils.Constants;
 import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.enums.ListNameEnum;
-import com.apriori.shared.util.enums.OperationEnum;
-import com.apriori.shared.util.enums.PropertyEnum;
 import com.apriori.shared.util.enums.ReportNamesEnum;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
 
 public class AssemblyDetailsReportTests extends TestBaseUI {
 
