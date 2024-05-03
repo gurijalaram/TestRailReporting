@@ -10,7 +10,6 @@ import com.apriori.cir.api.models.response.InputControlOption;
 import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
 import com.apriori.cir.api.utils.UpdatedInputControlsRootItemAssemblyDetails;
-import com.apriori.cir.api.utils.UpdatedInputControlsRootItemScenarioComparison;
 import com.apriori.cir.ui.enums.AssemblySetEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
@@ -53,8 +52,10 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("1922")
-    @TmsLink("14003")
+    @TmsLinks({
+        @TmsLink("1922"),
+        @TmsLink("14003")
+    })
     @TestRail(id = {1922, 14003})
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
@@ -97,7 +98,7 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
     public void testComponentSubAssemblyReportDetails() {
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
             InputControlsEnum.ASSEMBLY_SELECT.getInputControlId(),
-            "SUB-ASSEMBLY (Initial) [assembly] "
+            AssemblySetEnum.SUB_ASSEMBLY_LONG.getAssemblySetName()
         );
 
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().contains("459.80")).isEqualTo(true);
@@ -108,25 +109,28 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
             JasperApiEnum.COMPONENT_COST.getEndpoint(),
             JasperApiInputControlsPathEnum.COMPONENT_COST
         );
+
+        jasperApiUtils.setExportSetName(ExportSetEnum.SUB_SUB_ASM.getExportSetName());
+
+        JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
+
+        InputControl inputControls = jasperReportUtil.getInputControls(JasperApiInputControlsPathEnum.COMPONENT_COST);
+
+        String componentValueToSelect = inputControls.getComponentSelect()
+            .getOption(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName().concat("  [assembly]")).getValue();
+
         jasperReportSummary = jasperApiUtils.genericTestCore(
             InputControlsEnum.COMPONENT_SELECT.getInputControlId(),
-            "10"
+            componentValueToSelect
         );
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString().isEmpty()).isEqualTo(false);
 
-        String varianceValue = jasperReportSummary.getReportHtmlPart()
-            .getElementsContainingText("Variance:").get(5).children().get(2).text();
-        String percentOfTargetValue = jasperReportSummary.getReportHtmlPart()
-            .getElementsContainingText("% of Target:").get(5).children().get(2).text();
-        String lifetimeCostValue = jasperReportSummary.getReportHtmlPart()
-            .getElementsContainingText("Lifetime Cost:").get(5).children().get(2).text();
-        String lifetimeProjectedCostDiffValue = jasperReportSummary.getReportHtmlPart()
-            .getElementsContainingText("Lifetime Projected Cost Difference:").get(5).children().get(2).text();
+        ArrayList<Element> relevantElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("valign", "top");
 
-        softAssertions.assertThat(varianceValue).isEqualTo("-");
-        softAssertions.assertThat(percentOfTargetValue).isEqualTo("-");
-        softAssertions.assertThat(lifetimeCostValue).isEqualTo("849,532.96");
-        softAssertions.assertThat(lifetimeProjectedCostDiffValue).isEqualTo("-");
+        softAssertions.assertThat(relevantElements.get(103).text()).isEqualTo("59.67");
+        softAssertions.assertThat(relevantElements.get(108).text()).isEqualTo("1,596.06");
+        softAssertions.assertThat(relevantElements.get(113).text()).isEqualTo("1,743,611.38");
+        softAssertions.assertThat(relevantElements.get(116).text()).isEqualTo("1,640,807.58");
 
         softAssertions.assertAll();
     }
@@ -404,16 +408,6 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
         softAssertions.assertThat(areValuesAlmostEqual(expectedCIGrandTotal, actualCIGrandTotal)).isEqualTo(true);
 
         softAssertions.assertAll();
-    }
-
-    @Test
-    @Tag(JASPER_API)
-    @TmsLink("1934")
-    @TestRail(id = 1934)
-    @Description("Verify Totals calculations for Top Level")
-    public void verifyTotalsCalculationsForTopLevel() {
-        // Crowe reckons that we just need to assert on total and sub total values - should be the same as ap pro
-        // Think about it and see
     }
 
     @Test
@@ -789,8 +783,8 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("1928")
-    @TestRail(id = 1928)
+    @TmsLink("1918")
+    @TestRail(id = 1918)
     @Description("Verify Export set of a part file is not available for selection")
     public void verifyExportSetPartFileNotAvailableForSelection() {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
@@ -815,6 +809,27 @@ public class AssemblyDetailsReportTests extends JasperApiAuthenticationUtil {
         InputControlState assemblySelectIcState = inputControlsExportSetResponse.getResponseEntity().getInputControlState().get(10);
         softAssertions.assertThat(assemblySelectIcState.getTotalCount()).isEqualTo("0");
         softAssertions.assertThat(assemblySelectIcState.getError()).isEqualTo("This field is mandatory so you must enter data.");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("1930")
+    @TestRail(id = 1930)
+    @Description("How does the report handle an Export Set which includes parts which fail to cost or when costing is incomplete")
+    public void testExportSetWithCostIssuesFunctionsCorrectlyInReport() {
+        jasperApiUtils.setExportSetName(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName());
+        JasperReportSummary jasperReportSummaryPistonAssembly = jasperApiUtils.genericTestCore(
+            "",
+            ""
+        );
+
+        ArrayList<Element> grandTotalElements = jasperReportSummaryPistonAssembly.getReportHtmlPart().getElementsByAttributeValue("valign", "top");
+        softAssertions.assertThat(grandTotalElements.get(48).text()).isEqualTo("224.70");
+        softAssertions.assertThat(grandTotalElements.get(58).text()).isEqualTo("15.29");
+        softAssertions.assertThat(grandTotalElements.get(68).text()).isEqualTo("15.33");
+        softAssertions.assertThat(grandTotalElements.get(78).text()).isEqualTo("994.65");
 
         softAssertions.assertAll();
     }
