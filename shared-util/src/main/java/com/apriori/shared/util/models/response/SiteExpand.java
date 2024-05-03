@@ -22,5 +22,4 @@ public class SiteExpand {
     @JsonProperty("_expand")
     private List<String> expand;
     SiteExpandItem response;
-
 }
