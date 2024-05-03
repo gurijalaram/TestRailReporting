@@ -29,7 +29,7 @@ public class EmailTab extends NotificationsPart {
     /**
      * Select Report email Template
      *
-     * @param reportsEnum ReportsEnum
+     * @param emailTemplateEnum EmailTemplateEnum
      * @return current class object
      */
     public EmailTab selectEmailTemplate(EmailTemplateEnum emailTemplateEnum) {
@@ -42,8 +42,11 @@ public class EmailTab extends NotificationsPart {
 
     public EmailTab selectEmailTemplate() {
         pageUtils.waitUntilDropdownOptionsLoaded(getEmailTemplateElement().findElement(By.tagName("select")));
+        pageUtils.waitForElementEnabled(notificationNextButton);
         pageUtils.waitForElementAndClick(getEmailTemplateElement());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getEmailTemplate())));
+        WebElement webElement = driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getEmailTemplate())));
+        pageUtils.moveAndClick(webElement);
+        pageUtils.waitForElementNotEnabled(notificationNextButton, 1);
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
