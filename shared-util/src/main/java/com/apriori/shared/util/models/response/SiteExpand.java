@@ -3,6 +3,7 @@ package com.apriori.shared.util.models.response;
 import com.apriori.shared.util.annotations.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,8 @@ import java.util.List;
 @NoArgsConstructor
 
 public class SiteExpand {
-    private List<String> _expand;
+    @JsonProperty("_expand")
+    private List<String> expand;
     SiteExpandItem response;
 
 }
