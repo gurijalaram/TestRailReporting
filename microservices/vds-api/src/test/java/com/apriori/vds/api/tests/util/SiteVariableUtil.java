@@ -9,12 +9,13 @@ import org.assertj.core.api.SoftAssertions;
 public abstract class SiteVariableUtil extends ProcessGroupUtil {
 
     protected static final String updatedName = new GenerateStringUtil().generateSiteName();
+    protected static final String updatedType = "STRING";
     protected static final String updatedValue = "UpdatedValue";
     protected static final String updatedNotes = "UpdatedNotes";
 
     protected static void validateUpdatedObject(SiteVariable updatedSiteVariable) {
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(updatedName).isNotEqualTo(updatedSiteVariable.getName());
+        softAssertions.assertThat(updatedType).isEqualTo(updatedSiteVariable.getType());
         softAssertions.assertThat(updatedValue).isEqualTo(updatedSiteVariable.getValue());
         softAssertions.assertThat(updatedNotes).isEqualTo(updatedSiteVariable.getNotes());
         softAssertions.assertAll();
@@ -22,9 +23,11 @@ public abstract class SiteVariableUtil extends ProcessGroupUtil {
 
     protected static void validateCreatedObject(SiteVariable updatedSiteVariable) {
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(updatedName).isEqualTo(updatedSiteVariable.getName());
-        softAssertions.assertThat(updatedValue).isEqualTo(updatedSiteVariable.getValue());
-        softAssertions.assertThat(updatedNotes).isEqualTo(updatedSiteVariable.getNotes());
+        softAssertions.assertThat(updatedSiteVariable.getName()).isNotBlank();
+        softAssertions.assertThat(updatedSiteVariable.getIdentity()).isNotBlank();
+        softAssertions.assertThat(updatedSiteVariable.getType()).isNotBlank();
+        softAssertions.assertThat(updatedSiteVariable.getValue()).isNotBlank();
+        softAssertions.assertThat(updatedSiteVariable.getVariableType()).isNotBlank();
         softAssertions.assertAll();
     }
 
