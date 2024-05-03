@@ -121,7 +121,7 @@ public class CisProjectsTest extends CISTestUtil {
 
         userList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
-            .customerIdentity(currentUser.getApUser().getCustomerIdentity())
+            .customerIdentity(currentUser.getUserDetails().getCustomerIdentity())
             .build());
         projectRequestBuilder = CisProjectResources.getProjectRequestBuilder(projectName, ProjectStatusEnum.OPEN, ProjectTypeEnum.INTERNAL, itemList, userList);
 
