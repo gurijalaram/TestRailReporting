@@ -859,7 +859,7 @@ public class CdsTestUtil extends TestUtil {
             .body(
                 "accessControl",
                 AccessControlRequest.builder()
-                    .customerIdentity(RequestEntityUtilBuilder.useRandomUser().getEmbeddedUser().getApUser().getCustomerIdentity())
+                    .customerIdentity(RequestEntityUtilBuilder.useRandomUser().getEmbeddedUser().getUserDetails().getCustomerIdentity())
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
                     .applicationIdentity(new CdsTestUtil().getApplicationIdentity(CIS))
