@@ -3,9 +3,9 @@ package com.apriori.cic.ui.pageobjects.workflows.schedule.notifications;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cic.api.enums.EmailRecipientType;
-import com.apriori.cic.ui.enums.AprioriCostType;
 import com.apriori.cic.ui.enums.EmailTemplateEnum;
 import com.apriori.cic.ui.enums.FieldState;
+import com.apriori.shared.util.enums.PropertyEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -97,9 +97,9 @@ public class EmailTab extends NotificationsPart {
      * @param aprioriCostType - AprioriCostType enum
      * @return current class object
      */
-    public EmailTab selectAprioriCost(AprioriCostType aprioriCostType) {
+    public EmailTab selectAprioriCost(PropertyEnum aprioriCostType) {
         pageUtils.waitForElementAndClick(getEmailConfigCostRoundingElement());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, aprioriCostType.getAprioriCostType())));
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, aprioriCostType.getProperty())));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
