@@ -15,7 +15,6 @@ import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cir.ui.enums.AssemblySetEnum;
 import com.apriori.cir.ui.enums.AssemblyTypeEnum;
 import com.apriori.cir.ui.enums.ComponentInfoColumnEnum;
-import com.apriori.cir.ui.pageobjects.header.ReportsHeader;
 import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.cir.ui.pageobjects.view.reports.AssemblyDetailsReportPage;
@@ -34,8 +33,8 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import io.qameta.allure.TmsLink;
+import io.qameta.allure.TmsLinks;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Tags;
@@ -180,10 +179,10 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @Issue("AP-58059")
-    @Issue("AP-53537")
-    @TmsLink("3067")
-    @TmsLink("1929")
+    @TmsLinks({
+        @TmsLink("3067"),
+        @TmsLink("1929")
+    })
     @TestRail(id = {3067, 1929})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
@@ -224,11 +223,11 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("AP-58059")
-    @Issue("AP-53537")
     @Tag(REPORTS)
-    @TmsLink("3068")
-    @TmsLink("1929")
+    @TmsLinks({
+        @TmsLink("3068"),
+        @TmsLink("1929")
+    })
     @TestRail(id = {3068, 1929})
     @Description("Verify totals calculations for Sub-Sub-ASM")
     public void testTotalCalculationsForSubSubASM() {
@@ -278,14 +277,14 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("AP-58059")
-    @Issue("AP-53537")
     @Tags({
         @Tag(REPORTS),
         @Tag(CUSTOMER)
     })
-    @TmsLink("1934")
-    @TmsLink("1929")
+    @TmsLinks({
+        @TmsLink("1934"),
+        @TmsLink("1929")
+    })
     @TestRail(id = {1934, 1929})
     @Description("Verify totals calculations for Top Level")
     public void testTotalCalculationsForTopLevel() {
@@ -336,8 +335,10 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @TmsLink("3231")
-    @TmsLink("1929")
+    @TmsLinks({
+        @TmsLink("3231"),
+        @TmsLink("1929")
+    })
     @TestRail(id = {3231, 1929})
     @Description("Verify sub total calculations for Sub Assembly")
     public void testSubTotalCalculationsSubAssembly() {
@@ -388,8 +389,10 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @TmsLink("3232")
-    @TmsLink("1929")
+    @TmsLinks({
+        @TmsLink("3232"),
+        @TmsLink("1929")
+    })
     @TestRail(id = {3232, 1929})
     @Description("Verify sub total calculations for Sub Sub ASM")
     public void testSubTotalCalculationsSubSubAsm() {
@@ -441,8 +444,10 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @TmsLink("3233")
-    @TmsLink("1929")
+    @TmsLinks({
+        @TmsLink("3233"),
+        @TmsLink("1929")
+    })
     @TestRail(id = {3233, 1929})
     @Description("Verify sub total calculations for Top Level")
     public void testSubTotalCalculationsTopLevel() {
@@ -843,8 +848,10 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @TmsLink("7689")
-    @TmsLink("1921")
+    @TmsLinks({
+        @TmsLink("7689"),
+        @TmsLink("1921")
+    })
     @TestRail(id = {7689, 1921})
     @Description("Verify Assembly Number Search Criteria")
     public void testAssemblyNumberSearchCriteria() {
@@ -857,7 +864,7 @@ public class AssemblyDetailsReportTests extends TestBaseUI {
 
     @Test
     @Tag(REPORTS)
-    @Disabled("\"CID integration not working consistently well")
+    @Disabled("CID integration not working consistently well")
     @TmsLink("1924")
     @TestRail(id = {1924})
     @Description("Verify report figures from CI Design")
