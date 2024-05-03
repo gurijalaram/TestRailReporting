@@ -21,6 +21,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,83 +32,112 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     @AfterAll
     public static void deleteTestingData() {
-        siteVariableNamesToDelete.forEach(SiteVariablesTest::deleteSiteVariablesByName);
+        siteVariableNamesToDelete.forEach(SiteVariablesTest::deleteSiteVariables);
     }
 
     @Test
     @TestRail(id = {8294})
-    @Description("DELETEs a site variable by name.")
+    @Description("Deletes a site variable by name.")
     public void deleteSiteVariablesByName() {
-        deleteSiteVariablesByName(this.postSiteVariables().getName());
+        String name = new GenerateStringUtil().generateSiteName();
+
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSiteVariables(name)).put();
+
+        deleteSiteVariables(updatedSiteVariableResponse.getResponseEntity().getName());
     }
 
     @Test
     @TestRail(id = {30942})
-    @Description("DELETEs a SystemVariableMap site variable by identity.")
+    @Description("Deletes a SystemVariableMap site variable by identity.")
     public void deleteSystemVariableMapByIdentity() {
-        deleteSiteVariablesByName(this.postSystemVariableMapSiteVariable().getIdentity());
+        String name = new GenerateStringUtil().generateSiteName();
+
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemVariableMapSiteVariable(name)).put();
+
+        deleteSiteVariables(updatedSiteVariableResponse.getResponseEntity().getIdentity());
     }
 
     @Test
     @TestRail(id = {30943})
-    @Description("DELETEs a SystemConfigurationMap site variable by identity.")
+    @Description("Deletes a SystemConfigurationMap site variable by identity.")
     public void deleteSystemConfigurationMapByIdentity() {
-        deleteSiteVariablesByName(this.postSystemConfigurationMapSiteVariable().getIdentity());
+        String name = new GenerateStringUtil().generateSiteName();
+
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemConfigurationMapSiteVariable(name)).put();
+
+        deleteSiteVariables(updatedSiteVariableResponse.getResponseEntity().getIdentity());
     }
 
     @Test
     @TestRail(id = {30944})
-    @Description("DELETEs a PrimitiveValueMap site variable by identity.")
+    @Description("Deletes a PrimitiveValueMap site variable by identity.")
     public void deletePrimitiveValueMapByIdentity() {
-        deleteSiteVariablesByName(this.postPrimitiveValueMapSiteVariable().getIdentity());
+        String name = new GenerateStringUtil().generateSiteName();
+
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postPrimitiveValueMapSiteVariable(name)).put();
+
+        deleteSiteVariables(updatedSiteVariableResponse.getResponseEntity().getIdentity());
     }
 
     @Test
     @TestRail(id = {30945})
-    @Description("DELETEs a ProcessModelDefaults site variable by identity.")
+    @Description("Deletes a ProcessModelDefaults site variable by identity.")
     public void deleteProcessModelDefaultsByIdentity() {
-        deleteSiteVariablesByName(this.postProcessModelDefaultsSiteVariable().getIdentity());
+        String name = new GenerateStringUtil().generateSiteName();
+
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postProcessModelDefaultsSiteVariable(name)).put();
+
+        deleteSiteVariables(updatedSiteVariableResponse.getResponseEntity().getIdentity());
     }
 
     @Test
     @TestRail(id = {30946})
-    @Description("DELETEs a ProcessModelOverrides site variable by identity.")
+    @Description("Deletes a ProcessModelOverrides site variable by identity.")
     public void deleteProcessModelOverridesByIdentity() {
-        deleteSiteVariablesByName(this.postProcessModelOverridesSiteVariable().getIdentity());
+        String name = new GenerateStringUtil().generateSiteName();
+
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postProcessModelOverridesSiteVariable(name)).put();
+
+        deleteSiteVariables(updatedSiteVariableResponse.getResponseEntity().getIdentity());
     }
 
     @Test
     @TestRail(id = {8292})
-    @Description("Adds or Replaces a SiteVariable for a user with old ETL representation.")
+    @Description("Creates a site variable for a user with old ETL representation, then finds the created entry and updates data on it.")
     public void putSiteVariableForAUser() {
-        SiteVariable siteVariable = postSiteVariables();
+        String name = new GenerateStringUtil().generateSiteName();
 
-        siteVariableNamesToDelete.add(siteVariable.getName());
-
-        RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
-                .body(initUpdateRequestBody(siteVariable))
-                .expectedResponseCode(HttpStatus.SC_CREATED);
-
-        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).put();
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSiteVariables(name)).put();
 
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
+
+        RequestEntity requestEntityGet =
+            requestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class)
+                .queryParams(new QueryParams().use("identity[EQ]", updatedSiteVariableResponse.getResponseEntity().getIdentity()))
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        final ResponseWrapper<SiteVariablesItems> updatedSiteVariableResponseGet = HTTPRequest.build(requestEntityGet).get();
+
+        softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
+        softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getItems().get(0));
+
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse2 = HTTPRequest.build(postUpdatedSiteVariable(name, null, null)).put();
+
+        siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
+
+        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+
+        softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(id = {30933, 30686})
-    @Description("Creates a SystemVariableMap SiteVariable for a user with updated ETL representation, and then finds the created entry.")
+    @TestRail(id = {30933, 30686, 30966})
+    @Description("Creates a SystemVariableMap site variable for a user with updated ETL representation, then finds the created entry and updates data on it.")
     public void createSystemVariableMapForAUser() {
-        SiteVariable siteVariable = postSystemVariableMapSiteVariable();
+        String name = new GenerateStringUtil().generateSiteName();
+        String variableType = "SystemVariableMap";
 
-        siteVariableNamesToDelete.add(siteVariable.getIdentity());
-
-        RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
-                .body(initUpdateRequestBody(siteVariable))
-                .expectedResponseCode(HttpStatus.SC_CREATED);
-
-        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).put();
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemVariableMapSiteVariable(name)).put();
 
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
@@ -121,23 +151,23 @@ public class SiteVariablesTest extends SiteVariableUtil {
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getItems().get(0));
 
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse2 = HTTPRequest.build(postUpdatedSiteVariable(name, variableType, null)).put();
+
+        siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
+
+        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(id = {30934, 30687})
-    @Description("Creates a SystemConfigurationMap SiteVariable for a user with updated ETL representation, and then finds the created entry.")
+    @TestRail(id = {30934, 30687, 30967})
+    @Description("Creates a SystemConfigurationMap site variable for a user with updated ETL representation, then finds the created entry and updates data on it.")
     public void createSystemConfigurationMapForAUser() {
-        SiteVariable siteVariable = postSystemConfigurationMapSiteVariable();
+        String name = new GenerateStringUtil().generateSiteName();
+        String variableType = "SystemConfigurationMap";
 
-        siteVariableNamesToDelete.add(siteVariable.getIdentity());
-
-        RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
-                .body(initUpdateRequestBody(siteVariable))
-                .expectedResponseCode(HttpStatus.SC_CREATED);
-
-        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).put();
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemConfigurationMapSiteVariable(name)).put();
 
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
@@ -151,23 +181,24 @@ public class SiteVariablesTest extends SiteVariableUtil {
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getItems().get(0));
 
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse2 = HTTPRequest.build(postUpdatedSiteVariable(name, variableType, null)).put();
+
+        siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
+
+        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(id = {30935, 30688})
-    @Description("Creates a PrimitiveValueMap SiteVariable for a user with updated ETL representation, and then finds the created entry.")
+    @TestRail(id = {30935, 30688, 30968})
+    @Description("Creates a PrimitiveValueMap site variable for a user with updated ETL representation, then finds the created entry and updates data on it.")
     public void createPrimitiveValueMapForAUser() {
-        SiteVariable siteVariable = postPrimitiveValueMapSiteVariable();
+        String name = new GenerateStringUtil().generateSiteName();
+        String variableType = "PrimitiveValueMap";
+        String processGroup = "Forging";
 
-        siteVariableNamesToDelete.add(siteVariable.getIdentity());
-
-        RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
-                .body(initUpdateRequestBody(siteVariable))
-                .expectedResponseCode(HttpStatus.SC_CREATED);
-
-        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).put();
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postPrimitiveValueMapSiteVariable(name)).put();
 
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
@@ -181,23 +212,24 @@ public class SiteVariablesTest extends SiteVariableUtil {
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getItems().get(0));
 
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse2 = HTTPRequest.build(postUpdatedSiteVariable(name, variableType, processGroup)).put();
+
+        siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
+
+        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(id = {30936, 30689})
-    @Description("Creates a ProcessModelDefaults SiteVariable for a user with updated ETL representation, and then finds the created entry.")
+    @TestRail(id = {30936, 30689, 30969})
+    @Description("Creates a ProcessModelDefaults site variable for a user with updated ETL representation, then finds the created entry and updates data on it.")
     public void createProcessModelDefaultsForAUser() {
-        SiteVariable siteVariable = postProcessModelDefaultsSiteVariable();
+        String name = new GenerateStringUtil().generateSiteName();
+        String variableType = "ProcessModelDefaults";
+        String processGroup = "Sheet Plastic";
 
-        siteVariableNamesToDelete.add(siteVariable.getIdentity());
-
-        RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
-                .body(initUpdateRequestBody(siteVariable))
-                .expectedResponseCode(HttpStatus.SC_CREATED);
-
-        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).put();
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postProcessModelDefaultsSiteVariable(name)).put();
 
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
@@ -210,24 +242,25 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getItems().get(0));
+
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse2 = HTTPRequest.build(postUpdatedSiteVariable(name, variableType, processGroup)).put();
+
+        siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
+
+        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
 
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(id = {30937, 30690})
-    @Description("Creates a ProcessModelOverrides SiteVariable for a user with updated ETL representation, and then finds the created entry.")
+    @TestRail(id = {30937, 30690, 30970})
+    @Description("Creates a ProcessModelOverrides site variable for a user with updated ETL representation, then finds the created entry and updates data on it.")
     public void createProcessModelOverridesForAUser() {
-        SiteVariable siteVariable = postProcessModelOverridesSiteVariable();
+        String name = new GenerateStringUtil().generateSiteName();
+        String variableType = "ProcessModelOverrides";
+        String processGroup = "Sheet Metal";
 
-        siteVariableNamesToDelete.add(siteVariable.getIdentity());
-
-        RequestEntity requestEntity =
-            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
-                .body(initUpdateRequestBody(siteVariable))
-                .expectedResponseCode(HttpStatus.SC_CREATED);
-
-        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).put();
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postProcessModelOverridesSiteVariable(name)).put();
 
         SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
 
@@ -241,14 +274,60 @@ public class SiteVariablesTest extends SiteVariableUtil {
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
         softAssertions.assertThat(updatedSiteVariableResponseGet.getResponseEntity().getItems().get(0));
 
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse2 = HTTPRequest.build(postUpdatedSiteVariable(name, variableType, processGroup)).put();
+
+        siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
+
+        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {30971})
+    @Description("Attempt to update data on a site variable that is not changeable.")
+    public void validateSiteVariableFieldsAreNotUpdated() {
+        String name = new GenerateStringUtil().generateSiteName();
+
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemVariableMapSiteVariable(name)).put();
+
+        SiteVariableUtil.validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
+
+        RequestEntity requestEntityUpdate =
+            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+                .body(SiteVariableRequest.builder()
+                    .name(name)
+                    .type("STRING")
+                    .value("UpdatedValue")
+                    .variableType("SystemVariableMap")
+                    .notes("UpdatedNotes")
+                    .updatedBy("#SYSTEM00000")
+                    .updatedAt(LocalDateTime.parse("2007-12-03T10:15:30"))
+                    .createdBy("#NOTSYSTEM00")
+                    .createdAt(LocalDateTime.parse("2007-12-03T10:15:30"))
+                    .build()
+                )
+                .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse2 = HTTPRequest.build(requestEntityUpdate).put();
+
+        siteVariableNamesToDelete.add(updatedSiteVariableResponse2.getResponseEntity().getIdentity());
+
+        SiteVariableUtil.validateUpdatedObject(updatedSiteVariableResponse2.getResponseEntity());
+
+        softAssertions.assertThat(updatedSiteVariableResponse2.getResponseEntity().getUpdatedAt()
+            .equals(updatedSiteVariableResponse.getResponseEntity().getUpdatedAt()));
+        softAssertions.assertThat(updatedSiteVariableResponse2.getResponseEntity().getCreatedBy()
+            .equals(updatedSiteVariableResponse.getResponseEntity().getCreatedBy()));
+        softAssertions.assertThat(updatedSiteVariableResponse2.getResponseEntity().getCreatedAt()
+            .equals(updatedSiteVariableResponse.getResponseEntity().getCreatedAt()));
         softAssertions.assertAll();
     }
 
     @Test
     @TestRail(id = {30938})
-    @Description("Attempt to create a SiteVariable with empty name.")
+    @Description("Attempt to create a site variable with empty name.")
     public void emptyNameSiteVariableError() {
-
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, ErrorMessage.class)
                 .body(SiteVariableRequest.builder()
@@ -269,9 +348,8 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     @Test
     @TestRail(id = {30939})
-    @Description("Attempt to create a SiteVariable with invalid type.")
+    @Description("Attempt to create a site variable with invalid type.")
     public void invalidTypeSiteVariableError() {
-
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, ErrorMessage.class)
                 .body(SiteVariableRequest.builder()
@@ -292,9 +370,8 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     @Test
     @TestRail(id = {30939})
-    @Description("Attempt to create a SiteVariable with empty createdBy.")
+    @Description("Attempt to create a site variable with empty createdBy.")
     public void emptyCreatedBySiteVariableError() {
-
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, ErrorMessage.class)
                 .body(SiteVariableRequest.builder()
@@ -313,7 +390,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         responseWrapper.getResponseEntity();
     }
 
-    private static void deleteSiteVariablesByName(final String name) {
+    private static void deleteSiteVariables(final String name) {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.DELETE_SITE_VARIABLE_BY_ID, null)
                 .inlineVariables(name)
@@ -322,11 +399,11 @@ public class SiteVariablesTest extends SiteVariableUtil {
         HTTPRequest.build(requestEntity).delete();
     }
 
-    private SiteVariable postSiteVariables() {
+    private RequestEntity postSiteVariables(String name) {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
-                    .name(new GenerateStringUtil().generateSiteName())
+                    .name(name)
                     .type("STRING")
                     .value("bar")
                     .notes("foo bar")
@@ -335,16 +412,14 @@ public class SiteVariablesTest extends SiteVariableUtil {
                 )
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        ResponseWrapper<SiteVariable> siteVariableResponse = HTTPRequest.build(requestEntity).put();
-
-        return siteVariableResponse.getResponseEntity();
+        return requestEntity;
     }
 
-    private SiteVariable postSystemVariableMapSiteVariable() {
+    private RequestEntity postSystemVariableMapSiteVariable(String name) {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
-                    .name(new GenerateStringUtil().generateSiteName())
+                    .name(name)
                     .type("BOOLEAN")
                     .value("true")
                     .variableType("SystemVariableMap")
@@ -354,16 +429,14 @@ public class SiteVariablesTest extends SiteVariableUtil {
                 )
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        ResponseWrapper<SiteVariable> siteVariableResponse = HTTPRequest.build(requestEntity).put();
-
-        return siteVariableResponse.getResponseEntity();
+        return requestEntity;
     }
 
-    private SiteVariable postSystemConfigurationMapSiteVariable() {
+    private RequestEntity postSystemConfigurationMapSiteVariable(String name) {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
-                    .name(new GenerateStringUtil().generateSiteName())
+                    .name(name)
                     .type("DOUBLE")
                     .value("1.999")
                     .variableType("SystemConfigurationMap")
@@ -373,16 +446,14 @@ public class SiteVariablesTest extends SiteVariableUtil {
                 )
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        ResponseWrapper<SiteVariable> siteVariableResponse = HTTPRequest.build(requestEntity).put();
-
-        return siteVariableResponse.getResponseEntity();
+        return requestEntity;
     }
 
-    private SiteVariable postPrimitiveValueMapSiteVariable() {
+    private RequestEntity postPrimitiveValueMapSiteVariable(String name) {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
-                    .name(new GenerateStringUtil().generateSiteName())
+                    .name(name)
                     .type("INTEGER")
                     .value("30")
                     .variableType("PrimitiveValueMap")
@@ -393,18 +464,16 @@ public class SiteVariablesTest extends SiteVariableUtil {
                 )
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        ResponseWrapper<SiteVariable> siteVariableResponse = HTTPRequest.build(requestEntity).put();
-
-        return siteVariableResponse.getResponseEntity();
+        return requestEntity;
     }
 
-    private SiteVariable postProcessModelDefaultsSiteVariable() {
+    private RequestEntity postProcessModelDefaultsSiteVariable(String name) {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
-                    .name(new GenerateStringUtil().generateSiteName())
-                    .type("STRING")
-                    .value("yes")
+                    .name(name)
+                    .type("DOUBLE")
+                    .value("1.999")
                     .variableType("ProcessModelDefaults")
                     .processGroupName("Sheet Plastic")
                     .notes("foo bar")
@@ -413,28 +482,42 @@ public class SiteVariablesTest extends SiteVariableUtil {
                 )
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        ResponseWrapper<SiteVariable> siteVariableResponse = HTTPRequest.build(requestEntity).put();
-
-        return siteVariableResponse.getResponseEntity();
+        return requestEntity;
     }
 
-    private SiteVariable postProcessModelOverridesSiteVariable() {
+    private RequestEntity postProcessModelOverridesSiteVariable(String name) {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
-                    .name(new GenerateStringUtil().generateSiteName())
-                    .type("STRING")
-                    .value("no")
+                    .name(name)
+                    .type("FLOAT")
+                    .value("1.3")
                     .variableType("ProcessModelOverrides")
-                    .processGroupName("Sheet Plastic")
+                    .processGroupName("Sheet Metal")
                     .notes("foo bar")
                     .createdBy("#SYSTEM00000")
                     .build()
                 )
                 .expectedResponseCode(HttpStatus.SC_CREATED);
 
-        ResponseWrapper<SiteVariable> siteVariableResponse = HTTPRequest.build(requestEntity).put();
+        return requestEntity;
+    }
 
-        return siteVariableResponse.getResponseEntity();
+    private RequestEntity postUpdatedSiteVariable(String name, String variableType, String processGroup) {
+        RequestEntity requestEntity =
+            requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+                .body(SiteVariableRequest.builder()
+                    .name(name)
+                    .type("STRING")
+                    .value("UpdatedValue")
+                    .variableType(variableType)
+                    .processGroupName(processGroup)
+                    .notes("UpdatedNotes")
+                    .updatedBy("#SYSTEM00000")
+                    .build()
+                )
+                .expectedResponseCode(HttpStatus.SC_CREATED);
+
+        return requestEntity;
     }
 }

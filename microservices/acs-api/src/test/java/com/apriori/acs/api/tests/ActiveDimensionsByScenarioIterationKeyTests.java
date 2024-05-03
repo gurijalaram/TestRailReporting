@@ -9,6 +9,8 @@ import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
@@ -26,13 +28,14 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class ActiveDimensionsByScenarioIterationKeyTests extends TestUtil {
+    private final UserCredentials user = UserUtil.getUser("common");
 
     @Test
     @TestRail(id = 10941)
     @Description("Validate Get Active Dimensions by Scenario Iteration Key Endpoint")
     public void testGetActiveDimensionsByScenarioIterationKeyEndpoint() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(

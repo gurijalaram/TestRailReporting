@@ -1,5 +1,6 @@
 package com.apriori.cir.api.utils;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -8,7 +9,8 @@ import java.util.ArrayList;
 public class ItemTypeTwo {
     private String name;
     @SuppressWarnings("checkstyle:MemberName")
-    private String _jrid;
+    @JsonProperty("_jrid")
+    private String jrID;
     private ArrayList<ItemTypeOne> properties;
     private ArrayList<ItemTypeThree> data;
 }

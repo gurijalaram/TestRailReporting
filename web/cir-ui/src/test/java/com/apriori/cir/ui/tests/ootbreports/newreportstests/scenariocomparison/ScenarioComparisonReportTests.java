@@ -20,6 +20,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import io.qameta.allure.TmsLinks;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -69,8 +70,10 @@ public class ScenarioComparisonReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("3248")
-    @TmsLink("13709")
+    @TmsLinks({
+        @TmsLink("3248"),
+        @TmsLink("3248")
+    })
     @TestRail(id = {3248, 13709})
     @Description("Verify Component Type input control functions correctly")
     public void verifyComponentTypeInputControlFunctionsCorrectly() {
