@@ -27,7 +27,7 @@ public class CdsCustomerAssociationTests {
         ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS,
             CustomerAssociationResponse.class,
             HttpStatus.SC_OK,
-            UserUtil.getUser().getApUser().getCustomerIdentity()
+            UserUtil.getUser().getUserDetails().getCustomerIdentity()
         );
 
         soft.assertThat(response.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
@@ -42,13 +42,13 @@ public class CdsCustomerAssociationTests {
         ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS,
             CustomerAssociationResponse.class,
             HttpStatus.SC_OK,
-            UserUtil.getUser().getApUser().getCustomerIdentity()
+            UserUtil.getUser().getUserDetails().getCustomerIdentity()
         );
         String associationIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
         ResponseWrapper<CustomerAssociationItems> association = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_CUSTOMERS_ASSOCIATION_BY_CUSTOMER_ASSOCIATION_ID,
             CustomerAssociationItems.class,
             HttpStatus.SC_OK,
-            UserUtil.getUser().getApUser().getCustomerIdentity(),
+            UserUtil.getUser().getUserDetails().getCustomerIdentity(),
             associationIdentity
         );
 

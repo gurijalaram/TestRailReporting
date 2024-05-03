@@ -18,8 +18,6 @@ qa-test:
   cds:
     apriori_core_services_installation_identity: 7CAIEIB9J1NI
     apriori_production_deployment_identity: 7FLINC95H3A3
-    automation_user_identity02: AKC81M50KGFE
-    automation_user_identity03: AFMMDK0IJHG4
     identity_role: 67J517C9L763
 
   reports:
@@ -57,8 +55,6 @@ int-core:
   cds:
     apriori_core_services_installation_identity: 70EGN68B5CMH
     apriori_production_deployment_identity: H337GKD0LA0N
-    automation_user_identity02: 9671G0C4GNK2
-    automation_user_identity03: 775K40H47HEF
     identity_role: 67J517C9L762
 
   reports:
@@ -79,8 +75,6 @@ staging:
   cds:
     apriori_core_services_installation_identity: 2GIKI57NE7M4
     apriori_production_deployment_identity: 7G0JGBE2N4GN
-    automation_user_identity02: 6AHL3EHF264K
-    automation_user_identity03: 1K2LKIB78J6A
     identity_role: 7G0JGBE2N2GE
 
   reports:
@@ -236,8 +230,6 @@ development:
   cds:
     apriori_core_services_installation_identity: ND11N124DE4F
     apriori_production_deployment_identity: N6LFCKE8GL94
-    automation_user_identity02: 4N8BBMII4MM4
-    automation_user_identity03: 4N8BIL9AC4DH
     identity_role: 67J517C9L763
 
   reports:
