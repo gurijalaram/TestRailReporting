@@ -1004,7 +1004,7 @@
       ]
     },
     {
-      "componentName": "sub-assembly",
+      "componentName": "top-level",
       "extension": ".asm.1",
       "processGroup": "ASSEMBLY",
       "metadata": {
@@ -1012,36 +1012,63 @@
       },
       "subComponents": [
         {
-          "componentName": "3570824",
+          "componentName": "3575135",
           "extension": ".prt.1",
           "processGroup": "SHEET_METAL",
-          "metadata" : {
-            "routing" : "[CTL]/Fiber Laser/[Bend]"
+          "metadata": {
+            "routing": "[CTL]/Fiber Laser/[Bend]"
           }
         },
         {
-          "componentName": "0200613",
+          "componentName": "3575134",
           "extension": ".prt.1",
           "processGroup": "SHEET_METAL",
-          "metadata" : {
-            "routing" : "[CTL]/Laser/[Bend]"
+          "metadata": {
+            "routing": "[CTL]/Fiber Laser/[Bend]"
           }
         },
         {
-          "componentName": "0362752",
+          "componentName": "3538968",
           "extension": ".prt.1",
           "processGroup": "SHEET_METAL",
-          "metadata" : {
-            "routing" : "[CTL]/Laser/[Bend]"
+          "metadata": {
+            "routing": "[CTL]/Fiber Laser/[Bend]"
           }
         },
         {
-          "componentName": "sub-sub-asm",
+          "componentName": "3575133",
+          "extension": ".prt.1",
+          "processGroup": "SHEET_METAL",
+          "metadata": {
+            "routing": "[CTL]/Fiber Laser/[Bend]"
+          }
+        },
+        {
+          "componentName": "3574255",
+          "extension": ".prt.1",
+          "processGroup": "SHEET_METAL",
+          "metadata": {
+            "routing": "[CTL]/Fiber Laser/[Bend]"
+          }
+        },
+        {
+          "componentName": "3575132",
+          "extension": ".prt.1",
+          "processGroup": "SHEET_METAL",
+          "metadata": {
+            "routing": "[CTL]/Fiber Laser/[Bend]"
+          }
+        },
+        {
+          "componentName": "sub-assembly",
           "extension": ".asm.1",
           "processGroup": "ASSEMBLY",
+          "metadata": {
+            "category": "large"
+          },
           "subComponents": [
             {
-              "componentName": "3570823",
+              "componentName": "3570824",
               "extension": ".prt.1",
               "processGroup": "SHEET_METAL",
               "metadata" : {
@@ -1049,12 +1076,43 @@
               }
             },
             {
-              "componentName": "3571050",
+              "componentName": "0200613",
               "extension": ".prt.1",
               "processGroup": "SHEET_METAL",
               "metadata" : {
-                "routing" : "[CTL]/Fiber Laser/[Bend]"
+                "routing" : "[CTL]/Laser/[Bend]"
               }
+            },
+            {
+              "componentName": "0362752",
+              "extension": ".prt.1",
+              "processGroup": "SHEET_METAL",
+              "metadata" : {
+                "routing" : "[CTL]/Laser/[Bend]"
+              }
+            },
+            {
+              "componentName": "sub-sub-asm",
+              "extension": ".asm.1",
+              "processGroup": "ASSEMBLY",
+              "subComponents": [
+                {
+                  "componentName": "3570823",
+                  "extension": ".prt.1",
+                  "processGroup": "SHEET_METAL",
+                  "metadata" : {
+                    "routing" : "[CTL]/Fiber Laser/[Bend]"
+                  }
+                },
+                {
+                  "componentName": "3571050",
+                  "extension": ".prt.1",
+                  "processGroup": "SHEET_METAL",
+                  "metadata" : {
+                    "routing" : "[CTL]/Fiber Laser/[Bend]"
+                  }
+                }
+              ]
             }
           ]
         }
