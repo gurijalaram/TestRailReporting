@@ -7,5 +7,5 @@ import lombok.Data;
 public class ItemTypeThree {
     @SuppressWarnings("checkstyle:MemberName")
     @JsonProperty("y")
-    private String yValue;
+    private String ylLetterValue;
 }

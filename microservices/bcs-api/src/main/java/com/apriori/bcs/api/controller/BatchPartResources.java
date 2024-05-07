@@ -9,6 +9,7 @@ import com.apriori.bcs.api.models.response.Part;
 import com.apriori.bcs.api.models.response.PartReport;
 import com.apriori.bcs.api.models.response.Parts;
 import com.apriori.bcs.api.models.response.Results;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.part.PartData;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -19,7 +20,6 @@ import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.ErrorMessage;
 import com.apriori.shared.util.properties.PropertiesContext;
 

@@ -1,10 +1,11 @@
-package com.apriori.shared.util.enums;
+package com.apriori.shared.util.enums.apis;
 
 import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum DeploymentsAPIEnum implements ExternalEndpointEnum {
 
+    //DEPLOYMENTS
     DEPLOYMENTS("/customers/%s/deployments");
 
     private final String endpoint;
