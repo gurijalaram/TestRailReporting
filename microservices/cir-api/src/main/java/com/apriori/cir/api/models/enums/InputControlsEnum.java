@@ -6,6 +6,7 @@ public enum InputControlsEnum {
     APRIORI_MASS_MAX("aPrioriMassMax"),
     APRIORI_MASS_MIN("aPrioriMassMin"),
     ASSEMBLY_SELECT("assemblySelect"),
+    ASSEMBLY_NUMBER_SEARCH_CRITERIA("assemblyNumber"),
     COMPONENT_COST_CURRENCY("componentCostCurrencyCode"),
     COMPONENT_COST_MAX("componentCostMax"),
     COMPONENT_COST_MIN("componentCostMin"),
