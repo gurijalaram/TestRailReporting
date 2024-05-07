@@ -1011,7 +1011,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {16098})
+    @TestRail(id = {16098, 11903, 10767, 6562, 11909})
     @Description("Validate sub-component can be costed with an alternate routing in an assembly")
     public void testRoutingsInAssembly() {
         ComponentInfoBuilder componentAssembly = new AssemblyRequestUtil().getAssembly("piston_assembly");
