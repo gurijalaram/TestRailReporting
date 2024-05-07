@@ -310,7 +310,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {10810})
+    @TestRail(id = {10810, 11904})
     @Description("Shallow Edit assembly and scenarios that was uncosted in CI Design")
     public void testUploadUncostedAssemblySubcomponentOverride() {
 
