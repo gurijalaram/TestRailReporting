@@ -124,6 +124,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .emptyCostingInputRow()
+            .isPublishResultsWriteFieldsInclude(true)
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_MULTI, PublishResultsWriteRule.CONSTANT, multiString)
             .build();
 
@@ -149,6 +150,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .emptyCostingInputRow()
+            .isPublishResultsWriteFieldsInclude(true)
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_STRING, PublishResultsWriteRule.CONSTANT, customString)
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_NUMBER, PublishResultsWriteRule.CONSTANT, String.valueOf(customNumber))
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_DATE, PublishResultsWriteRule.CONSTANT, customDate)
@@ -181,6 +183,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
             .addCostingInputRow(CostingInputFields.ANNUAL_VOLUME, MappingRule.CONSTANT, "3100")
             .addCostingInputRow(CostingInputFields.BATCH_SIZE, MappingRule.CONSTANT, "2100")
             .addCostingInputRow(CostingInputFields.PRODUCTION_LIFE, MappingRule.CONSTANT, "1")
+            .isPublishResultsWriteFieldsInclude(true)
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_FULLY_BURDENED_COST, PublishResultsWriteRule.WORKFLOW_GENERATED_VALUE, "")
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_DFM_RISK, PublishResultsWriteRule.WORKFLOW_GENERATED_VALUE, "")
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_TOTAL_COST, PublishResultsWriteRule.WORKFLOW_GENERATED_VALUE, "")
@@ -239,6 +242,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
             .addCostingInputRow(CostingInputFields.DIGITAL_FACTORY, MappingRule.CONSTANT, DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory())
             .addCostingInputRow(CostingInputFields.MATERIAL, MappingRule.CONSTANT, MaterialNameEnum.STAINLESS_STEEL_AISI_316.getMaterialName())
             .addCostingInputRow(CostingInputFields.CUSTOM_MULTI, MappingRule.CONSTANT, multiString)
+            .isPublishResultsWriteFieldsInclude(true)
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_MULTI, PublishResultsWriteRule.WORKFLOW_GENERATED_VALUE, "")
             .build();
 
@@ -268,6 +272,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
             .addCostingInputRow(CostingInputFields.CUSTOM_STRING, MappingRule.CONSTANT, customString)
             .addCostingInputRow(CostingInputFields.CUSTOM_NUMBER, MappingRule.CONSTANT, String.valueOf(customNumber))
             .addCostingInputRow(CostingInputFields.CUSTOM_DATE, MappingRule.CONSTANT, customDate)
+            .isPublishResultsWriteFieldsInclude(true)
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_STRING, PublishResultsWriteRule.WORKFLOW_GENERATED_VALUE, customString)
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_NUMBER, PublishResultsWriteRule.WORKFLOW_GENERATED_VALUE, String.valueOf(customNumber))
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_CUSTOM_DATE, PublishResultsWriteRule.WORKFLOW_GENERATED_VALUE, customDate)
@@ -294,6 +299,7 @@ public class PublishResultsTests extends WorkflowTestUtil {
             .setQueryFilter("partNumber", "EQ", plmPartData.getPlmPartNumber())
             .setQueryFilters("AND")
             .emptyCostingInputRow()
+            .isPublishResultsWriteFieldsInclude(true)
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_FULLY_BURDENED_COST, PublishResultsWriteRule.CONSTANT, String.valueOf(customNumber))
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_DFM_RISK, PublishResultsWriteRule.CONSTANT, String.valueOf(customNumber))
             .addPublishResultsWriteFieldsRow(PlmTypeAttributes.PLM_TOTAL_COST, PublishResultsWriteRule.CONSTANT, String.valueOf(customNumber))
