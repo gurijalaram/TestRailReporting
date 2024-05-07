@@ -38,10 +38,12 @@ import java.util.List;
 @Slf4j
 public class JasperReportUtil {
     private static HashMap<String, Integer> inputControlsIndexMapAssemblyCostA4;
+    private static HashMap<String, Integer> inputControlsIndexMapAssemblyDetails;
     private static HashMap<String, Integer> inputControlsIndexMapComponentCost;
     private static HashMap<String, Integer> inputControlsIndexMapScenarioComparison;
     private static HashMap<String, JasperApiInputControlsPathEnum> inputControlsModifiedUrlMap;
     private static LinkedHashMap<String, String> assemblyCostA4ICModifiedNamesValuesMap;
+    private static LinkedHashMap<String, String> assemblyDetailsICModifiedNamesValuesMap;
     private static LinkedHashMap<String, String> componentCostICModifiedNamesValuesMap;
     private static LinkedHashMap<String, String> scenarioComparisonICModifiedNamesValuesMap;
     private static HashMap<String, LinkedHashMap<String, String>> inputControlsModifiedValueNameMasterList;
@@ -53,20 +55,7 @@ public class JasperReportUtil {
 
 
     public static JasperReportUtil init(final String jasperSessionId) {
-        initialiseInputControlsAssemblyCostA4HashMap();
-        initialiseInputControlsComponentCostHashMap();
-        initialiseInputControlsScenarioComparisonHashMap();
-
-        initialiseInputControlsIndexMapMaster();
-
-        initialiseInputControlsModifiedUrlHashMap();
-
-        initialiseAssemblyCostA4ICModifiedNamesValuesMap();
-        initialiseComponentCostICModifiedNamesValuesMap();
-        initialiseScenarioComparisonICModifiedNamesValuesMap();
-
-        initialiseInputControlsModifiedValueNameMasterList();
-
+        initialiseAllHashMaps();
         return new JasperReportUtil(jasperSessionId);
     }
 
@@ -120,6 +109,46 @@ public class JasperReportUtil {
         }
 
         HashMap<String, Integer> icMapToUse = inputControlsIndexMapMaster.get(miscDataList.get(0));
+
+        if (urlValue.getEndpointString().contains("assemblyDetails") && setCriteria) {
+            genericInputList.get(icMapToUse.get("exportSetName")).setCriteria("top-level-0");
+        }
+
+        if (!miscDataList.get(1).isEmpty() && !miscDataList.get(2).isEmpty()) {
+            genericInputList.get(icMapToUse.get(miscDataList.get(1))).setValue(Collections.singletonList(miscDataList.get(2)));
+        }
+
+        if (!miscDataList.get(3).isEmpty()) {
+            genericInputList.get(icMapToUse.get(InputControlsEnum.EXPORT_SET_NAME.getInputControlId()))
+                .setValue(Collections.singletonList(miscDataList.get(3)));
+        }
+
+        ReportParameter reportParameter = new ReportParameter();
+        reportParameter.reportParameter.addAll(genericInputList);
+
+        RequestEntity requestEntity = new RequestEntity()
+            .body(reportParameter)
+            .endpoint(urlValue)
+            .returnType(klass)
+            .headers(initHeadersWithJSession())
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .urlEncodingEnabled(false);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    public <T> ResponseWrapper<T> getInputControlsModifiedAssDetCreatedAndLastModifiedBy(Class<T> klass, boolean setCriteria, String... miscData) {
+        List<String> miscDataList = Arrays.asList(miscData);
+        JasperApiInputControlsPathEnum urlValue = inputControlsModifiedUrlMap.get(miscDataList.get(0));
+
+        List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputList(miscDataList.get(0));
+
+        HashMap<String, Integer> icMapToUse = inputControlsIndexMapMaster.get(miscDataList.get(0));
+
+        if (urlValue.getEndpointString().contains("assemblyDetails") && setCriteria) {
+            genericInputList.get(icMapToUse.get("createdBy")).setCriteria("Stephen");
+            genericInputList.get(icMapToUse.get("lastModifiedBy")).setCriteria("Bob");
+        }
 
         if (!miscDataList.get(1).isEmpty() && !miscDataList.get(2).isEmpty()) {
             genericInputList.get(icMapToUse.get(miscDataList.get(1))).setValue(Collections.singletonList(miscDataList.get(2)));
@@ -453,6 +482,24 @@ public class JasperReportUtil {
         return inputList;
     }
 
+    private static void initialiseAllHashMaps() {
+        initialiseInputControlsAssemblyCostA4HashMap();
+        initialiseInputControlsAssemblyDetailsHashMap();
+        initialiseInputControlsComponentCostHashMap();
+        initialiseInputControlsScenarioComparisonHashMap();
+
+        initialiseInputControlsIndexMapMaster();
+
+        initialiseInputControlsModifiedUrlHashMap();
+
+        initialiseAssemblyCostA4ICModifiedNamesValuesMap();
+        initialiseAssemblyDetailsICModifiedNamesValuesMap();
+        initialiseComponentCostICModifiedNamesValuesMap();
+        initialiseScenarioComparisonICModifiedNamesValuesMap();
+
+        initialiseInputControlsModifiedValueNameMasterList();
+    }
+
     private static void initialiseInputControlsAssemblyCostA4HashMap() {
         inputControlsIndexMapAssemblyCostA4 = new HashMap<>();
         inputControlsIndexMapAssemblyCostA4.put("exportSetName", 0);
@@ -460,6 +507,21 @@ public class JasperReportUtil {
         inputControlsIndexMapAssemblyCostA4.put("scenarioName", 2);
         inputControlsIndexMapAssemblyCostA4.put("exportDate", 3);
         inputControlsIndexMapAssemblyCostA4.put("currencyCode", 4);
+    }
+
+    private static void initialiseInputControlsAssemblyDetailsHashMap() {
+        inputControlsIndexMapAssemblyDetails = new HashMap<>();
+        inputControlsIndexMapAssemblyDetails.put("useLatestExport", 0);
+        inputControlsIndexMapAssemblyDetails.put("earliestExportDate", 1);
+        inputControlsIndexMapAssemblyDetails.put("latestExportDate", 2);
+        inputControlsIndexMapAssemblyDetails.put("exportSetName", 3);
+        inputControlsIndexMapAssemblyDetails.put("allExportIds", 4);
+        inputControlsIndexMapAssemblyDetails.put("createdBy", 5);
+        inputControlsIndexMapAssemblyDetails.put("lastModifiedBy", 6);
+        inputControlsIndexMapAssemblyDetails.put("assemblyNumber", 7);
+        inputControlsIndexMapAssemblyDetails.put("scenarioName", 8);
+        inputControlsIndexMapAssemblyDetails.put("assemblySelect", 9);
+        inputControlsIndexMapAssemblyDetails.put("currencyCode", 10);
     }
 
     private static void initialiseInputControlsComponentCostHashMap() {
@@ -495,6 +557,7 @@ public class JasperReportUtil {
     private static void initialiseInputControlsModifiedUrlHashMap() {
         inputControlsModifiedUrlMap = new HashMap<>();
         inputControlsModifiedUrlMap.put(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(), JasperApiInputControlsPathEnum.ASSEMBLY_COST_MODIFIED_IC);
+        inputControlsModifiedUrlMap.put(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), JasperApiInputControlsPathEnum.ASSEMBLY_DETAILS_MODIFIED_IC);
         inputControlsModifiedUrlMap.put(ReportNamesEnum.COMPONENT_COST.getReportName(), JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC);
         inputControlsModifiedUrlMap.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC);
     }
@@ -506,6 +569,20 @@ public class JasperReportUtil {
         assemblyCostA4ICModifiedNamesValuesMap.put("scenarioName", "Initial");
         assemblyCostA4ICModifiedNamesValuesMap.put("exportDate", "2024-04-23T08:27:47");
         assemblyCostA4ICModifiedNamesValuesMap.put("currencyCode", "USD");
+    }
+
+    private static void initialiseAssemblyDetailsICModifiedNamesValuesMap() {
+        assemblyDetailsICModifiedNamesValuesMap = new LinkedHashMap<>();
+        assemblyDetailsICModifiedNamesValuesMap.put("useLatestExport", "Scenario");
+        assemblyDetailsICModifiedNamesValuesMap.put("earliestExportDate", "2024-01-02T03:39:08");
+        assemblyDetailsICModifiedNamesValuesMap.put("latestExportDate", "2024-05-01T04:39:08");
+        assemblyDetailsICModifiedNamesValuesMap.put("exportSetName", "~NOTHING~");
+        assemblyDetailsICModifiedNamesValuesMap.put("allExportIds", "13,14,15,16,17,18,19,20,21,22,23,24");
+        assemblyDetailsICModifiedNamesValuesMap.put("createdBy", "~NOTHING~");
+        assemblyDetailsICModifiedNamesValuesMap.put("lastModifiedBy", "~NOTHING~");
+        assemblyDetailsICModifiedNamesValuesMap.put("assemblyNumber", "%");
+        assemblyDetailsICModifiedNamesValuesMap.put("scenarioName", "~NOTHING~");
+        assemblyDetailsICModifiedNamesValuesMap.put("assemblySelect", "275");
     }
 
     private static void initialiseComponentCostICModifiedNamesValuesMap() {
@@ -541,6 +618,7 @@ public class JasperReportUtil {
     private static void initialiseInputControlsModifiedValueNameMasterList() {
         inputControlsModifiedValueNameMasterList = new HashMap<>();
         inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(), assemblyCostA4ICModifiedNamesValuesMap);
+        inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), assemblyDetailsICModifiedNamesValuesMap);
         inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.COMPONENT_COST.getReportName(), componentCostICModifiedNamesValuesMap);
         inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), scenarioComparisonICModifiedNamesValuesMap);
     }
@@ -548,6 +626,7 @@ public class JasperReportUtil {
     private static void initialiseInputControlsIndexMapMaster() {
         inputControlsIndexMapMaster = new HashMap<>();
         inputControlsIndexMapMaster.put(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(), inputControlsIndexMapAssemblyCostA4);
+        inputControlsIndexMapMaster.put(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), inputControlsIndexMapAssemblyDetails);
         inputControlsIndexMapMaster.put(ReportNamesEnum.COMPONENT_COST.getReportName(), inputControlsIndexMapComponentCost);
         inputControlsIndexMapMaster.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), inputControlsIndexMapScenarioComparison);
     }
