@@ -32,21 +32,9 @@ ap-int:
 
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name
-  qa-test:
-    user_staff_identity: AK8JJH37GM54
-
-  int-core:
-    user_staff_identity: 8GFDIG229629
-
-
   staging:
     customer_identity: 7G0JGBE2N4GM
-    user_staff_identity: 6AHL1HHGB15E
     token_subject: 2b68
-
-  local:
-    user_staff_identity: 4N630F61FGNG
-
 
   development:
     customer_identity: 212B5ABD2F6C

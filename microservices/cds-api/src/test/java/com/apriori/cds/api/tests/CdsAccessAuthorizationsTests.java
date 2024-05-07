@@ -15,7 +15,6 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
-import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -29,7 +28,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsAccessAuthorizationsTests {
@@ -58,13 +56,13 @@ public class CdsAccessAuthorizationsTests {
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         emailPattern = "\\S+@".concat(customerName);
-        apStaffIdentity = PropertiesContext.get("ap-int.${env}.user_staff_identity");
+        apStaffIdentity = currentUser.getUserDetails().getIdentity();
 
         customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, emailPattern, currentUser);
         customerIdentity = customer.getResponseEntity().getIdentity();
-        apCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
+        apCustomerIdentity = currentUser.getUserDetails().getCustomerIdentity();
         customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, HttpStatus.SC_OK, apCustomerIdentity);
-        associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
+        associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).toList().get(0).getIdentity();
         associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
         customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", apCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
@@ -114,7 +112,7 @@ public class CdsAccessAuthorizationsTests {
         String accessAuthorizationIdentity = accessAuthorization.getResponseEntity().getIdentity();
 
         ResponseWrapper<StatusAccessAuthorizations> statusResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATION_STATUS, StatusAccessAuthorizations.class, HttpStatus.SC_OK, customerIdentity);
-        List<StatusAccessAuthorization> assigned = statusResponse.getResponseEntity().getResponse().stream().filter(status -> status.getStatus().equals("ASSIGNED")).collect(Collectors.toList());
+        List<StatusAccessAuthorization> assigned = statusResponse.getResponseEntity().getResponse().stream().filter(status -> status.getStatus().equals("ASSIGNED")).toList();
         soft.assertThat(assigned.get(0).getAssignedAt()).isEqualTo(creationDate);
         soft.assertAll();
 

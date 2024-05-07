@@ -10,14 +10,13 @@ import com.apriori.bcs.api.models.response.ReportError;
 import com.apriori.bcs.api.models.response.ReportExport;
 import com.apriori.bcs.api.models.response.ReportTemplates;
 import com.apriori.bcs.api.models.response.Reports;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
-import com.apriori.shared.util.models.CustomerUtil;
-import com.apriori.shared.util.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;

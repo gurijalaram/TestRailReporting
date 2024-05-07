@@ -10,6 +10,7 @@ import com.apriori.dds.api.models.request.SearchDiscussionsRequest;
 import com.apriori.dds.api.models.response.DiscussionResponse;
 import com.apriori.dds.api.models.response.DiscussionsResponse;
 import com.apriori.dds.api.utils.DdsApiTestUtils;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -17,9 +18,7 @@ import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.ErrorMessage;
-import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 

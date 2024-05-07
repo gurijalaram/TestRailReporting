@@ -10,6 +10,7 @@ import com.apriori.qms.api.models.response.scenariodiscussion.DiscussionCommentR
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionsResponse;
 import com.apriori.qms.api.utils.QmsApiTestUtils;
+import com.apriori.shared.util.KeyValueUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -17,7 +18,6 @@ import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.utils.KeyValueUtil;
 
 import org.apache.http.HttpStatus;
 

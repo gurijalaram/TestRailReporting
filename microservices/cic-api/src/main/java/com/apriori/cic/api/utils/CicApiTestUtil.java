@@ -26,6 +26,7 @@ import com.apriori.cic.api.models.response.ConnectorsResponse;
 import com.apriori.cic.api.models.response.PlmSearchPart;
 import com.apriori.cic.api.models.response.PlmSearchResponse;
 import com.apriori.cic.api.models.response.ReportTemplatesRow;
+import com.apriori.shared.util.KeyValueUtil;
 import com.apriori.shared.util.dataservice.TestDataService;
 import com.apriori.shared.util.file.InitFileData;
 import com.apriori.shared.util.file.part.PartData;
@@ -36,7 +37,6 @@ import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.properties.PropertiesContext;
-import com.apriori.shared.util.utils.KeyValueUtil;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

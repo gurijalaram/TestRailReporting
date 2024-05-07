@@ -3,6 +3,7 @@ package com.apriori.fms.api.controller;
 import com.apriori.fms.api.enums.FMSAPIEnum;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.fms.api.models.response.FilesResponse;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -13,8 +14,6 @@ import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.AuthorizationUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 
 import org.apache.http.HttpStatus;
 
