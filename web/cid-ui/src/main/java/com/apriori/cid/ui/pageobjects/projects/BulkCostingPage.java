@@ -118,14 +118,15 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     }
 
     /**
-     * Check if worksheet is present on UI
+     * Check if worksheet is not present on UI
      *
      * @param worksheetName - name of the worksheet
      * @return the boolean value
      */
-    public boolean isWorksheetIsPresent(String worksheetName) {
-        pageUtils.waitFor(2000);
-        return driver.getPageSource().contains(worksheetName);
+    public boolean isWorksheetNotPresent(String worksheetName) {
+        String xpath = "//div[contains(.,'" + worksheetName + "')][contains(@data-testid,'text-overflow')]";
+        pageUtils.waitForElementsToNotAppear(By.xpath(xpath));
+        return !(pageUtils.isElementDisplayed(By.xpath(xpath)));
     }
 
     /**

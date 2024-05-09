@@ -57,7 +57,8 @@ public class BulkCostingPageTests extends TestBaseUI {
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
 
         bulkCostingPage.selectAndDeleteSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
-        soft.assertThat(bulkCostingPage.isWorksheetIsPresent(worksheetResponse.getResponseEntity().getName())).isFalse();
+        worksheetIdentity = null;
+        soft.assertThat(bulkCostingPage.isWorksheetNotPresent(worksheetResponse.getResponseEntity().getName())).isTrue();
         soft.assertAll();
     }
 
