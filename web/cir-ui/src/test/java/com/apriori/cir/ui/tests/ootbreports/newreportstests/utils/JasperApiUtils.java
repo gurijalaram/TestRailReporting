@@ -108,7 +108,11 @@ public class JasperApiUtils {
         }
 
         setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
-        setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), currentDateTime);
+
+        if (reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId()) != null) {
+            setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), currentDateTime);
+        }
+
         if (reportRequest.getParameters().toString().contains(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId())) {
             setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
         }
@@ -720,7 +724,6 @@ public class JasperApiUtils {
      * @param valueTwoToSet String of the second value which to set
      */
     public void setTwoExportSetsParametersByName(String valueOneToSet, String valueTwoToSet) {
-        this.exportSetName = exportSetName;
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId())
             .setValue(Arrays.asList(valueOneToSet, valueTwoToSet));
     }
