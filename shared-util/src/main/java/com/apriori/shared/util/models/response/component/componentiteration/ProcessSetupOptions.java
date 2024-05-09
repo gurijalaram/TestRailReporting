@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProcessSetupOptions {
-    private HydroStaticLeakTesting hydroStaticLeakTesting;
+    private OtherSecondaryProcesses otherSecondaryProcesses;
 }

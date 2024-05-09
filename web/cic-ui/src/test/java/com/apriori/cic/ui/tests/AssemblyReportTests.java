@@ -78,13 +78,14 @@ public class AssemblyReportTests extends CicGuiTestUtil {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {11103, 11096, 11109, 11968, 11077, 11072, 11071, 11982})
+    @TestRail(id = {11103, 11096, 11109, 11968, 11077, 11072, 11071, 11982, 3966})
     @Description("Assemblies are returned from Windchill with default agent configuration" +
         "DTC Component Summary Reports are generated for assemblies" +
         "Assemblies are included in component counts" +
         "All assemblies costed with Process Group 'Assembly' when different process group read from PLM" +
         "Material set in Workflow with mapping rule Mapped from PLM (not applicable to assemblies) is ignored for any assemblies costed in resulting jobs" +
-        "Return Latest Revision option can be applied to assemblies")
+        "Return Latest Revision option can be applied to assemblies" +
+        "Sanity Test Email Is sent to Recipient")
     public void testVerifyDTCReportForAssemblies() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_ASSEMBLY, 6);
         String randomNumber = RandomStringUtils.randomNumeric(6);

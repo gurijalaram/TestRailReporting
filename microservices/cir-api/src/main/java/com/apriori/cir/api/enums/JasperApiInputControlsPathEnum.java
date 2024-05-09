@@ -16,10 +16,12 @@ public enum JasperApiInputControlsPathEnum implements ExternalEndpointEnum {
     APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORT_TARGET_QUOTED_COST_1("/targetAndQuotedCost"),
     APRIORI_UPGRADE_PROCESS_REPORTS(APRIORI_REPORTS_START.getEndpointString().concat("/Upgrade%sProcess")),
 
-    ASSEMBLY_COST_A4(APRIORI_GENERAL_REPORTS.getEndpointString().concat("/assemblyCost.a4/inputControls/exportSetName;partNumber;scenarioName;exportDate;currencyCode/values?freshData=false")),
-    ASSEMBLY_COST_LETTER(APRIORI_GENERAL_REPORTS.getEndpointString().concat("/assemblyCost.letter/inputControls/exportSetName;partNumber;scenarioName;exportDate;currencyCode/values?freshData=false")),
+    ASSEMBLY_COST(APRIORI_GENERAL_REPORTS.getEndpointString().concat("/assemblyCost.a4/inputControls/exportSetName;partNumber;scenarioName;exportDate;currencyCode/values?freshData=false")),
+    ASSEMBLY_COST_MODIFIED_IC(APRIORI_GENERAL_REPORTS.getEndpointString().concat("/assemblyCost.a4/inputControls/exportSetName;partNumber;scenarioName;exportDate;currencyCode/values/pagination?freshData=false&includeTotalCount=true")),
     ASSEMBLY_DETAILS(APRIORI_GENERAL_REPORTS.getEndpointString().concat("/assemblyDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;allExportIds;createdBy;lastModifiedBy;assemblyNumber;").concat(
         "scenarioName;assemblySelect;currencyCode/values?freshData=false")),
+    ASSEMBLY_DETAILS_MODIFIED_IC(APRIORI_GENERAL_REPORTS.getEndpointString().concat("/assemblyDetails/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;allExportIds;createdBy;lastModifiedBy;assemblyNumber;".concat(
+        "scenarioName;assemblySelect;currencyCode/values/pagination?freshData=false&includeTotalCount=true"))),
     BASIC_COST_AVOIDANCE(APRIORI_GENERAL_REPORTS.getEndpointString().concat("/basicAvoidanceReport/inputControls/earliestCostDate;latestCostDate;costMetric;currencyCode;sortOrder;componentsCriteria/values?freshData=false&includeTotalCount=true")),
     CASTING_DTC_COMPARISON(DTC_METRICS_REPORT_START.getEndpointString().concat("/casting/castingDTCComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;costMetric;").concat(
         "massMetric;sortOrder;currencyCode;annualSpendMin;processGroup;exportEventId;metricStatistic;dtcScore;partsSelect/values?freshData=false")),

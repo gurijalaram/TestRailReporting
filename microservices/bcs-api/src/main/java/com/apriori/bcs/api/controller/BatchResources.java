@@ -8,12 +8,11 @@ import com.apriori.bcs.api.models.response.Batch;
 import com.apriori.bcs.api.models.response.Batches;
 import com.apriori.bcs.api.models.response.Cancel;
 import com.apriori.bcs.api.utils.BcsBase;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.CustomerUtil;
-import com.apriori.shared.util.properties.PropertiesContext;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

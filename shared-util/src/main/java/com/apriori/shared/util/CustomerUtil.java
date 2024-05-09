@@ -1,7 +1,7 @@
-package com.apriori.shared.util.models;
+package com.apriori.shared.util;
 
-import com.apriori.shared.util.enums.CustomersApiEnum;
-import com.apriori.shared.util.enums.DeploymentsAPIEnum;
+import com.apriori.shared.util.enums.apis.CustomersApiEnum;
+import com.apriori.shared.util.enums.apis.DeploymentsAPIEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -42,7 +42,7 @@ public class CustomerUtil {
                 // TODO : should be removed when AWS data will be available for staging too
                 currentCustomerIdentity = PropertiesContext.get("${customer}.${env}.customer_identity");
             } catch (IllegalArgumentException e) {
-                currentCustomerIdentity =  getCurrentCustomerData().getIdentity();
+                currentCustomerIdentity = getCurrentCustomerData().getIdentity();
             }
 
             return currentCustomerIdentity;
@@ -52,6 +52,7 @@ public class CustomerUtil {
     /**
      * Get Apriori customer data
      * By a cloud reference name filter all customers to find a user used for the environment
+     *
      * @return filtered customer
      */
     public static synchronized Customer getApIntCustomerData() {
@@ -71,6 +72,7 @@ public class CustomerUtil {
     /**
      * Get current customer data
      * By a cloud reference name filter all customers to find a user used for the environment
+     *
      * @return filtered customer
      */
     public static synchronized Customer getCurrentCustomerData() {
@@ -79,6 +81,7 @@ public class CustomerUtil {
 
     /**
      * Return token subject for specific customer
+     *
      * @return
      */
     public static synchronized String getTokenSubjectForCustomer() {
@@ -104,7 +107,7 @@ public class CustomerUtil {
      */
     private static String generateAuthTargetCloudContext(UserCredentials userCredentials) {
 
-        final String customerIdentity = getApIntCustomerData().getIdentity();
+        final String customerIdentity = getCurrentCustomerIdentity();
         final String installationName = PropertiesContext.get("${env}.multi_tenant_installation_name");
         final String applicationNameFromConfig = getApplicationName();
 
@@ -186,7 +189,7 @@ public class CustomerUtil {
 
     private static String getApplicationName() {
         try {
-            return  PropertiesContext.get("application_name");
+            return PropertiesContext.get("application_name");
         } catch (IllegalArgumentException e) {
             return "cid";
         }
@@ -195,6 +198,7 @@ public class CustomerUtil {
     /**
      * Get customer data
      * By a cloud reference name filter all customers to find a user used for the environment
+     *
      * @param customerName - if null will return current customer data
      * @return
      */
@@ -205,7 +209,7 @@ public class CustomerUtil {
             .expectedResponseCode(HttpStatus.SC_OK)
             .queryParams(new QueryParams().use("cloudReference[EQ]", customerCloudReferenceName));
 
-        ResponseWrapper<Customers> customersResponseWrapper =  HTTPRequest.build(customerRequest).get();
+        ResponseWrapper<Customers> customersResponseWrapper = HTTPRequest.build(customerRequest).get();
 
         return customersResponseWrapper.getResponseEntity().getItems().get(0);
     }
@@ -225,7 +229,7 @@ public class CustomerUtil {
         RequestEntity sitesRequest = RequestEntityUtil_Old.init(CustomersApiEnum.SITES_BY_CUSTOMER_ID, Sites.class)
             .inlineVariables(customerToProcess.getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
-        ResponseWrapper<Sites> sitesResponseWrapper =  HTTPRequest.build(sitesRequest).get();
+        ResponseWrapper<Sites> sitesResponseWrapper = HTTPRequest.build(sitesRequest).get();
 
         return sitesResponseWrapper.getResponseEntity()
             .getItems()

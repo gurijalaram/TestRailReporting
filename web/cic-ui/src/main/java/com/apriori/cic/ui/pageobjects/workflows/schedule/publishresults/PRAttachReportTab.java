@@ -34,7 +34,8 @@ public class PRAttachReportTab extends PublishResultsPart {
      */
     public PRAttachReportTab selectReportName() {
         pageUtils.waitForElementAndClick(getReportNameDropdownElement());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getPublishResultsData().getReportName())));
+        WebElement webElement = driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getPublishResultsData().getReportName())));
+        pageUtils.moveAndClick(webElement);
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
@@ -42,7 +43,7 @@ public class PRAttachReportTab extends PublishResultsPart {
     /**
      * Select report name in AttachReport tab in publish results part
      *
-     * @param - reportsEnum
+     * @param reportsEnum
      * @return AttachReportTab
      */
     public PRAttachReportTab selectReportName(ReportsEnum reportsEnum) {

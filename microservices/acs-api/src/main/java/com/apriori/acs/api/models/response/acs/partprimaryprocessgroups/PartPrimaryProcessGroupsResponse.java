@@ -5,5 +5,5 @@ import com.apriori.shared.util.annotations.Schema;
 import java.util.ArrayList;
 
 @Schema(location = "acs/PartPrimaryProcessGroupsResponse.json")
-public class PartPrimaryProcessGroupsResponse extends ArrayList {
+public class PartPrimaryProcessGroupsResponse extends ArrayList<String> {
 }

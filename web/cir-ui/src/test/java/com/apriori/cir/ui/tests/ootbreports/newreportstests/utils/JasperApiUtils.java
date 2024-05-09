@@ -108,7 +108,14 @@ public class JasperApiUtils {
         }
 
         setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
-        setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+
+        if (reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId()) != null) {
+            setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), currentDateTime);
+        }
+
+        if (reportRequest.getParameters().toString().contains(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId())) {
+            setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        }
 
         Stopwatch timer = Stopwatch.createUnstarted();
         timer.start();
@@ -309,35 +316,6 @@ public class JasperApiUtils {
 
         assertThat(gbpAssertValues.get(0), is(not(equalTo(usdAssertValues.get(0)))));
         assertThat(gbpAssertValues.get(1), is(not(equalTo(usdAssertValues.get(1)))));
-    }
-
-    /**
-     * Generic test for currency in Assembly Cost Reports (both A4 and Letter)
-     */
-    public void genericAssemblyCostCurrencyTest() {
-        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
-        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
-
-        setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), exportSetName);
-        setReportParameterByName(InputControlsEnum.EXPORT_DATE.getInputControlId(), currentDateTime);
-
-        Stopwatch timer = Stopwatch.createUnstarted();
-        timer.start();
-        JasperReportSummary jasperReportSummaryGBP = jasperReportUtil.generateJasperReportSummary(reportRequest);
-        timer.stop();
-        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
-
-        String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
-        String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
-
-        setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
-        JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(reportRequest);
-
-        String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
-        String capInvValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).parent().child(3).text();
-
-        softAssertions.assertThat(currencyValueGBP).isNotEqualTo(currencyValueUSD);
-        softAssertions.assertThat(capInvValueGBP).isNotEqualTo(capInvValueUSD);
     }
 
     /**
@@ -746,7 +724,6 @@ public class JasperApiUtils {
      * @param valueTwoToSet String of the second value which to set
      */
     public void setTwoExportSetsParametersByName(String valueOneToSet, String valueTwoToSet) {
-        this.exportSetName = exportSetName;
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId())
             .setValue(Arrays.asList(valueOneToSet, valueTwoToSet));
     }

@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.Customer;
 
 import lombok.SneakyThrows;

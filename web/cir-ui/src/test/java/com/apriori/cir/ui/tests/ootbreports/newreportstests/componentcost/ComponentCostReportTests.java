@@ -19,6 +19,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import io.qameta.allure.TmsLinks;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.BeforeEach;
@@ -147,8 +148,10 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("3326")
-    @TmsLink("13708")
+    @TmsLinks({
+        @TmsLink("3326"),
+        @TmsLink("13708")
+    })
     @TestRail(id = {3326, 13708})
     @Description("Verify Component Type drop-down functions correctly")
     public void verifyComponentTypeDropdownFunctionsCorrect() {
