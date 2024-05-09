@@ -93,11 +93,11 @@ public class BulkCostingPageTests extends TestBaseUI {
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
         String inputRowName = createInputRow(userCredentials, worksheetResponse);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
-        soft.assertThat(bulkCostingPage.getRemoveButtonState())
+        soft.assertThat(bulkCostingPage.getRemoveButtonState("Cannot perform a remove action"))
             .contains(Arrays.asList("Cannot perform a remove action with no scenarios selected"));
 
         bulkCostingPage.selectFirstPartInWorkSheet();
-        soft.assertThat(bulkCostingPage.getRemoveButtonState())
+        soft.assertThat(bulkCostingPage.getRemoveButtonState("Remove"))
             .isEqualTo("Remove");
         soft.assertThat(bulkCostingPage.clickOnRemoveButtonAngGetConfirmationText())
             .contains(Arrays.asList("You are attempting to remove", "from the bulk analysis. This action cannot be undone."));

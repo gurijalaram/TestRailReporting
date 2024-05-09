@@ -121,7 +121,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
      * Check if worksheet is present on UI
      *
      * @param worksheetName - name of the worksheet
-     * @return
+     * @return the boolean value
      */
     public boolean isWorksheetIsPresent(String worksheetName) {
         pageUtils.waitFor(2000);
@@ -131,7 +131,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     /**
      * is on the Edit page
      *
-     * @return boolean
+     * @return boolean value
      */
     public boolean isOnEditPage() {
         pageUtils.waitForElementAppear(editPage);
@@ -141,7 +141,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     /**
      * is the edit was successful
      *
-     * @return boolean
+     * @return boolean value
      */
     public boolean isEditSuccessful() {
         pageUtils.waitForElementAppear(isEditedSuccessfully);
@@ -165,9 +165,9 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
      *
      * @return String if the button is disabled
      */
-    public String getRemoveButtonState() {
+    public String getRemoveButtonState(String attributeValue) {
         pageUtils.waitForElementAppear(removeButton);
-        pageUtils.waitFor(100);
+        pageUtils.waitForElementsToChangeAttributeValue(removeButton, "aria-label", attributeValue);
         return removeButton.getAttribute("aria-label");
     }
 
@@ -184,7 +184,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     /**
      * click on remove scenario button on confirmation screen
      *
-     * @return this
+     * @return this object
      */
     public BulkCostingPage clickOnRemoveScenarioButtonOnConfirmationScreen() {
         pageUtils.waitForElementAndClick(removeScenarioButton);
@@ -194,7 +194,9 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
 
     /**
      * check if the scenario name is displayed on the page
-     * return boolean
+     *
+     * @param scenario - scenario name
+     * @return boolean value
      */
 
     public boolean IfScenarioIsPresentOnPage(String scenario) {
