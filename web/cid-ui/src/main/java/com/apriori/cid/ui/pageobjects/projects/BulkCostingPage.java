@@ -167,7 +167,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
      */
     public String getRemoveButtonState(String attributeValue) {
         pageUtils.waitForElementAppear(removeButton);
-        pageUtils.waitForElementsToChangeAttributeValue(removeButton, "aria-label", attributeValue);
+        pageUtils.checkElementAttribute(removeButton, "aria-label", attributeValue);
         return removeButton.getAttribute("aria-label");
     }
 
