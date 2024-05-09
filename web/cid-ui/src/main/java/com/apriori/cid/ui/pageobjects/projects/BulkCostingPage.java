@@ -25,6 +25,15 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     private WebElement editPage;
     @FindBy(xpath = "//button[contains(@aria-selected,'true')][contains(.,'Successes')]")
     private WebElement isEditedSuccessfully;
+    @FindBy(xpath = "//div[contains(@class,'MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24')]")
+    private WebElement removeConfirmationLabel;
+
+    @FindBy(id = "qa-input-row-delete-new")
+    private WebElement removeButton;
+    @FindBy(xpath = "//button[contains(@class,'MuiButtonBase-root MuiButton-root')][@data-testid = 'primary-button']")
+    private WebElement removeScenarioButton;
+    @FindBy(xpath = "//button[contains(.,'Close')]")
+    private WebElement closeButton;
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -48,6 +57,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
 
     /**
      * verify if the list of worksheet is present in the bulk analysis page
+     *
      * @return boolean
      */
     public boolean isListOfWorksheetsPresent() {
@@ -58,6 +68,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
 
     /**
      * select and delete worksheet
+     *
      * @param nameBulkAnalysis - name of the worksheet
      * @return page object
      */
@@ -72,6 +83,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
 
     /**
      * enter bulk analysis
+     *
      * @param nameBulkAnalysis - name of the worksheet
      * @return page object
      */
@@ -84,11 +96,12 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
 
     /**
      * select First Part InWork Sheet
+     *
      * @return page object
      */
     public BulkCostingPage selectFirstPartInWorkSheet() {
         List<WebElement> checkboxes = pageUtils
-            .waitForSpecificElementsNumberToAppear(By.xpath("//div[contains(@class,'table-cell checkbox-cell')]/descendant::span"),2);
+            .waitForSpecificElementsNumberToAppear(By.xpath("//div[contains(@class,'table-cell checkbox-cell')]/descendant::span"), 2);
         WebElement checkbox = checkboxes.get(1);
         pageUtils.waitForElementAndClick(checkbox);
         return this;
@@ -96,6 +109,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
 
     /**
      * click edit button
+     *
      * @return page object
      */
     public BulkCostingPage clickEditButton() {
@@ -104,7 +118,8 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     }
 
     /**
-     *  check if worksheet is present on UI
+     * check if worksheet is present on UI
+     *
      * @param worksheetName - name of the worksheet
      * @return
      */
@@ -114,7 +129,8 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     }
 
     /**
-     *  is on the Edit page
+     * is on the Edit page
+     *
      * @return boolean
      */
     public boolean isOnEditPage() {
@@ -123,7 +139,8 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     }
 
     /**
-     *  is the edit was successful
+     * is the edit was successful
+     *
      * @return boolean
      */
     public boolean isEditSuccessful() {
@@ -132,7 +149,8 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     }
 
     /**
-     *  is tinputRow
+     * is inputRow is displayed
+     *
      * @return boolean
      */
     public boolean isInputRowDisplayed(String inputRowName) {
@@ -142,5 +160,45 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
         return pageUtils.isElementDisplayed(inputRow);
     }
 
+    /**
+     * get remove button state
+     *
+     * @return String if the button is disabled
+     */
+    public String getRemoveButtonState() {
+        pageUtils.waitForElementAppear(removeButton);
+        pageUtils.waitFor(100);
+        return removeButton.getAttribute("aria-label");
+    }
+
+    /**
+     * click on remove button
+     *
+     * @return String text on the modal
+     */
+    public String clickOnRemoveButtonAngGetConfirmationText() {
+        pageUtils.waitForElementAndClick(removeButton);
+        return pageUtils.waitForElementAppear(removeConfirmationLabel).getText();
+    }
+
+    /**
+     * click on remove scenario button on confirmation screen
+     *
+     * @return this
+     */
+    public BulkCostingPage clickOnRemoveScenarioButtonOnConfirmationScreen() {
+        pageUtils.waitForElementAndClick(removeScenarioButton);
+        pageUtils.waitForElementAndClick(closeButton);
+        return this;
+    }
+
+    /**
+     * check if the scenario name is displayed on the page
+     * return boolean
+     */
+
+    public boolean IfScenarioIsPresentOnPage(String scenario) {
+        return driver.getPageSource().contains("scenario");
+    }
 
 }
