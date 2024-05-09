@@ -16,6 +16,7 @@ import com.apriori.bcm.api.models.response.SuccessAddingAnalysisInputs;
 import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.models.response.WorkSheets;
+import com.apriori.shared.util.KeyValueUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -28,8 +29,11 @@ import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.component.ComponentResponse;
+import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 
+import com.google.common.net.HttpHeaders;
+import org.apache.hc.core5.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -339,6 +343,82 @@ public class AgsUtil extends TestUtil {
                     .collect(Collectors.toList()))
                 .build())
             .expectedResponseCode(expectedResponseCode);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Gets request of common iteration endpoint
+     *
+     * @return response object
+     */
+    public ResponseWrapper<ComponentResponse> getIterationsRequest() {
+        RequestEntity requestEntity = requestEntityUtil.init(AgsApiEnum.SCENARIO_ITERATIONS, ComponentResponse.class)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .headers(headers);
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @param queryParams - the query parameters
+     * @return response object
+     */
+    private ResponseWrapper<ComponentResponse> getBaseCssComponents(QueryParams queryParams) {
+        int socketTimeout = 630000;
+        Map<String, String> headers = new HashMap<String, String>() {
+            {
+                put(HttpHeaders.REFERER, PropertiesContext.get("cidapp.ui_url"));
+                put(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED.toString());
+            }
+        };
+
+        RequestEntity requestEntity = requestEntityUtil.init(AgsApiEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
+            .headers(headers)
+            .queryParams(queryParams)
+            .socketTimeout(socketTimeout)
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Calls an api with GET verb. No wait is performed for this call.
+     *
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
+     * @return response object
+     */
+    public List<ScenarioItem> getBaseCssComponents(String... paramKeysValues) {
+        return getBaseCssComponents(new KeyValueUtil().keyValue(paramKeysValues, ","))
+            .getResponseEntity()
+            .getItems();
+    }
+
+    /**
+     * Creates search request by component type
+     *
+     * @param componentType   - the component type
+     * @return the response wrapper that contains the response data
+     */
+    public ResponseWrapper<ComponentResponse> postSearchRequest(String componentType) {
+        Map<String, String> headers = new HashMap<String, String>() {
+            {
+                put(HttpHeaders.REFERER, PropertiesContext.get("cidapp.ui_url"));
+                put(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_FORM_URLENCODED.toString());
+            }
+        };
+        RequestEntity requestEntity = requestEntityUtil.init(AgsApiEnum.SCENARIO_ITERATIONS_SEARCH, ComponentResponse.class)
+            .headers(headers)
+            .xwwwwFormUrlEncodeds(Collections.singletonList(new HashMap<String, String>() {
+                {
+                    put("pageNumber", "1");
+                    put("pageSize", "10");
+                    put("latest[EQ]", "true");
+                    put("componentType[IN]", componentType);
+                    put("sortBy[DESC]", "scenarioCreatedAt");
+                }
+            })).expectedResponseCode(HttpStatus.SC_OK);
+
         return HTTPRequest.build(requestEntity).post();
     }
 }
