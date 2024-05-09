@@ -73,6 +73,10 @@ public class InputControl {
         return getPropertyValueIfExist("partNumber");
     }
 
+    public InputControlState getAssemblySelect() {
+        return getPropertyValueIfExist("assemblySelect");
+    }
+
     private InputControlState getPropertyValueIfExist(final String propertyName) {
         return getInputControlStateByName(propertyName);
     }
