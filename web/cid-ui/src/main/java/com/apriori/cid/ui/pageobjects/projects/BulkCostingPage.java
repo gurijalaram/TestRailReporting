@@ -172,7 +172,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     }
 
     /**
-     * click on remove button
+     * Clicks on remove button and get confirmation text
      *
      * @return String text on the modal
      */
