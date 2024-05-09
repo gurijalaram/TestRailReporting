@@ -1,5 +1,7 @@
 package com.apriori.shared.util.models.response.component;
 
+import com.apriori.shared.util.models.response.component.componentiteration.OtherSecondaryProcesses;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,4 +25,6 @@ public class ProcessSetupOptions {
     public Object surfaceTreatment;
     @JsonProperty("Powder Metal")
     public Object powderMetal;
+    @JsonProperty("Other Secondary Processes")
+    private OtherSecondaryProcesses otherSecondaryProcesses;
 }
