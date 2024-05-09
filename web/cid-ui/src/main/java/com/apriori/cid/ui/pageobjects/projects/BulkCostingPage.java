@@ -199,7 +199,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
      * @return boolean value
      */
 
-    public boolean IfScenarioIsPresentOnPage(String scenario) {
+    public boolean isScenarioPresentOnPage(String scenario) {
         return driver.getPageSource().contains("scenario");
     }
 
