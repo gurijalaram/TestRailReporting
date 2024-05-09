@@ -118,7 +118,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     }
 
     /**
-     * check if worksheet is present on UI
+     * Check if worksheet is present on UI
      *
      * @param worksheetName - name of the worksheet
      * @return
