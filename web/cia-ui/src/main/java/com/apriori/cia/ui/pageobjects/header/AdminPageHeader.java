@@ -1,11 +1,11 @@
 package com.apriori.cia.ui.pageobjects.header;
 
 import com.apriori.cia.ui.pageobjects.cirpages.CirUserGuidePage;
-import com.apriori.cia.ui.pageobjects.homepage.AdminHomePage;
 import com.apriori.cia.ui.pageobjects.logout.AdminLogoutPage;
 import com.apriori.cia.ui.pageobjects.manage.ScenarioExport;
 import com.apriori.cia.ui.pageobjects.manage.SystemDataExport;
 import com.apriori.cia.ui.pageobjects.userguides.CiaUserGuide;
+import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -110,7 +110,7 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
      *
      * @return Reports Page Object Model
      */
-    public AdminHomePage navigateToReports() {
+    public ReportsPageHeader navigateToReports() {
         return navigateToPage(reportButton);
     }
 
@@ -157,9 +157,9 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
      * @param parentPage WebElement
      * @return Instance of AdminHomePage
      */
-    private AdminHomePage navigateToPage(WebElement parentPage) {
+    private ReportsPageHeader navigateToPage(WebElement parentPage) {
         pageUtils.waitForElementAndClick(parentPage);
-        return new AdminHomePage(driver);
+        return new ReportsPageHeader(driver);
     }
 
     /**

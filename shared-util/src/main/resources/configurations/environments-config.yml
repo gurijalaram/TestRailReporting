@@ -76,10 +76,18 @@ int-core:
 staging:
   name: staging
   aws_parameter_store_name: stage
-  base_url: https://na-1-v22-1-demo.${${customer}.cloud_reference_name}.staging.apriori.net/
+
+#  base_url: https://na-1-v22-1-demo.${${customer}.cloud_reference_name}.staging.apriori.net/
+  base_url: https://na-1-install.${${customer}.cloud_reference_name}.staging.apriori.net/
   multi_tenant_installation_name: ${${deployment}.name} na-1
   #  TODO: uncomment for staging local run
   secret_key: K6JWVF8KV884
+
+  admin:
+    ui_url: ${base_url}apriori/login
+    welcome_page_text: CI-Admin
+    login_locator: //button[@id='1-submit']
+    login_title_locator: //*[@class='auth0-lock-name']
 
   cds:
     apriori_core_services_installation_identity: 2GIKI57NE7M4

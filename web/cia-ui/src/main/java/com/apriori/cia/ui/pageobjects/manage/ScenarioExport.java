@@ -4,6 +4,7 @@ import com.apriori.cia.ui.pageobjects.header.AdminHeader;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -49,6 +50,24 @@ public class ScenarioExport extends AdminHeader {
         pageUtils.waitForElementToAppear(manageScenarioExportTitle);
         return pageUtils.isElementDisplayed(manageScenarioExportTitle);
     }
+
+    public ScenarioExport filterScenarioByName(final String scenarioName) {
+        WebElement filterField = pageUtils.waitForElementAppear(driver.findElement(By.xpath("//input[ @aria-controls='exportscheduleslist']")));
+        filterField.sendKeys(scenarioName);
+        return this;
+    }
+
+    public ScenarioExport clickExportButton() {
+        pageUtils.waitForElementAndClick(By.xpath("(//a[@class='btn btn-default btn-xs'])[1]"));
+        return this;
+    }
+
+    public ScenarioExport validateExportNowPopupAndCloseIt() {
+        pageUtils.waitForElementToAppear(By.xpath("//div[contains(text(), 'Export initiated for export set')]"));
+        pageUtils.waitForElementAndClick(By.xpath("//div[@class='modal error-dialog fade out in']//button[@class='btn btn-primary btn-sm']"));
+        return this;
+    }
+
 
     /**
      * Checks if header is enabled

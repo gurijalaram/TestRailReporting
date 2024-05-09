@@ -28,10 +28,10 @@ global:
   schema_base_path: schemas/
   number_of_parts: 1
 
-  use_default_user: false
+  use_default_user: true
   default_access_level: admin
-  default_user_name: admin@apriori.com
-  default_password: admin
+  default_user_name: qa-automation-02@apriori.com
+  default_password: TrumpetSnakeFridgeToasty18!%
 
   max_days: 7
   page_size: 1000

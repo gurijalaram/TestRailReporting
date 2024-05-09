@@ -37,7 +37,6 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
      */
     @Test
     public void testValidateComponentLifeCycleFromUploadToCostReport() {
-        // Step 1,2
         ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
         component.setCostingTemplate(CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build());
 
@@ -48,28 +47,18 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
         softAssertions.assertAll();
 
 
-        // Step 3
-        AdminHomePage adminHomePage = new AdminLoginPage(driver)
+      new AdminLoginPage(driver)
             .login()
             .navigateToManageScenarioExport()
             .filterScenarioByName(scenarioResponse.getScenarioName())
             .clickExportButton()
-            //Step 4
+            .validateExportNowPopupAndCloseIt()
             .navigateToReports()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ReportsPageHeader.class)
             .waitForInputControlsLoad();
-//
-//        String currentUrl = ciaUserGuide.getCurrentUrl();
-//        softAssertions.assertThat(ciaUserGuide.getTabCount()).isEqualTo(2);
-//        softAssertions.assertThat(currentUrl).contains(Constants.SCENARIO_EXPORT_CHAPTER_URL);
-//        softAssertions.assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(true))
-//            .startsWith(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE);
-//        softAssertions.assertAll();
 
-        //Step 4
-       // validateInputControlsPresentForComponentCostReport();
-
+        // TODO z: the component should be removed after the test
     }
 
     private TestDataService initTestDataService() {
