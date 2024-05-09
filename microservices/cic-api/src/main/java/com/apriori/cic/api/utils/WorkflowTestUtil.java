@@ -14,6 +14,7 @@ import com.apriori.shared.util.file.part.PartData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
+import com.apriori.shared.util.models.response.EmailMessage;
 import com.apriori.shared.util.models.response.EmailMessageAttachments;
 
 import lombok.SneakyThrows;
@@ -409,6 +410,24 @@ public class WorkflowTestUtil extends CicUtil {
                         pdfDocument.getDocumentContents().contains(partData.getPartName().toUpperCase())
                     )
             );
+    }
+
+    /**
+     * verify Email Body Content
+     *
+     * @param emailMessage EmailMessage object
+     * @param contentList  - expected content list
+     * @return Boolean
+     */
+    public Boolean verifyEmailBody(EmailMessage emailMessage, List<String> contentList) {
+        String emailContent = emailMessage.getBody().getContent();
+        return contentList.stream()
+            .peek(item -> {
+                if (!emailContent.contains(item)) {
+                    log.debug(String.format("ACTUAL Email content : (%s) <=> EXPECTED Content  : (%s)", emailContent, item));
+                }
+            })
+            .allMatch(emailContent::contains);
     }
 
 

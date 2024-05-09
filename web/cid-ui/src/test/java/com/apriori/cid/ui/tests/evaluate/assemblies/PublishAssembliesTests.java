@@ -97,7 +97,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {11812, 6042})
+    @TestRail(id = {11812, 6042, 11902, 10762, 11861})
     @Description("Verify publish scenario modal appears when publish button is clicked")
     public void testIncludeSubcomponentsAndCost() {
         final String FLANGE = "flange";

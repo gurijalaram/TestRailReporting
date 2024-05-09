@@ -119,7 +119,6 @@ public class PsoEditTests extends TestBaseUI {
             .selectProcessGroup(component.getProcessGroup())
             .costScenario(3)
             .openMaterialProcess()
-            // TODO: 18/08/2021 cn - bar chart showing as double
             .selectBarChart("Vertical Automatic")
             .selectOptionsTab()
             .selectOptimizeMinCost()
@@ -127,7 +126,6 @@ public class PsoEditTests extends TestBaseUI {
             .closePanel()
             .costScenario()
             .openMaterialProcess()
-            .selectBarChart("Vertical Automatic")
             .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.isCavitiesOptimizeMinCostSelected()).isEqualTo(true);
