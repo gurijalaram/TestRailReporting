@@ -173,7 +173,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     }
 
     /**
-     * click on remove button
+     * Clicks on remove button and get confirmation text
      *
      * @return String text on the modal
      */
@@ -200,7 +200,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
      * @return boolean value
      */
 
-    public boolean IfScenarioIsPresentOnPage(String scenario) {
+    public boolean isScenarioPresentOnPage(String scenario) {
         return driver.getPageSource().contains("scenario");
     }
 
