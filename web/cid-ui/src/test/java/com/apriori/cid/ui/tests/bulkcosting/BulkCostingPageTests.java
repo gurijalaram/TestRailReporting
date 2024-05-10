@@ -104,7 +104,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             .contains(Arrays.asList("You are attempting to remove", "from the bulk analysis. This action cannot be undone."));
 
         bulkCostingPage.clickOnRemoveScenarioButtonOnConfirmationScreen();
-        soft.assertThat(bulkCostingPage.IfScenarioIsPresentOnPage(inputRowName));
+        soft.assertThat(bulkCostingPage.isScenarioPresentOnPage(inputRowName));
         soft.assertAll();
     }
 
