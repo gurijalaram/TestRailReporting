@@ -4,7 +4,8 @@ public enum DtcScoreEnum {
     LOW("Low"),
     MEDIUM("Medium"),
     HIGH("High"),
-    ALL("High, Low, Medium");
+    ALL("High, Low, Medium"),
+    ALL_CORRECT_ORDER("High, Medium, Low");
 
     private final String dtcScoreName;
 
