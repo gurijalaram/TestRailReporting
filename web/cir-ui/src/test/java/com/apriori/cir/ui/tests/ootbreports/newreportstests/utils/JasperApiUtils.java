@@ -126,6 +126,41 @@ public class JasperApiUtils {
         return jasperReportSummary;
     }
 
+    public JasperReportSummary genericTestCoreSetTwoExportSetsAndAllPgRollup(String firstExportSetName, String secondExportSetName) {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
+        String firstExportSetValue = inputControls.getExportSetName().getOption(firstExportSetName).getValue();
+        String secondExportSetValue = inputControls.getExportSetName().getOption(secondExportSetName).getValue();
+        String rollupValue = inputControls.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
+        String partNumber = inputControls.getPartNumber().getOption("2X1 CAVITY MOLD").getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId())
+            .setValue(Arrays.asList(firstExportSetValue, secondExportSetValue));
+
+        this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId())
+            .setValue(Collections.singletonList(rollupValue));
+
+        this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.PART_NUMBER.getInputControlId())
+            .setValue(Collections.singletonList(partNumber));
+
+        this.reportRequest.getParameters().getReportParameterByName("rollupNew").setValue(Collections.singletonList("298"));
+        this.reportRequest.getParameters().getReportParameterByName("partNumberNew").setValue(Collections.singletonList("223"));
+
+        this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EARLIEST_EXPORT_DATE.getInputControlId())
+            .setValue(Collections.singletonList("2023-04-13T06:57:36"));
+        this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId())
+            .setValue(Collections.singletonList(currentDateTime));
+
+        Stopwatch timer = Stopwatch.createUnstarted();
+        timer.start();
+        JasperReportSummary jasperReportSummary = jasperReportUtil.generateJasperReportSummary(reportRequest);
+        timer.stop();
+        log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
+
+        return jasperReportSummary;
+    }
+
     /**
      * Generic method that sets one particular value in the input controls
      *
@@ -141,7 +176,6 @@ public class JasperApiUtils {
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
         if (!valueToSet.isEmpty()) {
-            //setReportParameterByName(InputControlsEnum.valueOf(inputControlsEnumMap.get(keyToSet)).getInputControlId(), valueToSet);
             setReportParameterByName(keyToSet, valueToSet);
         }
 

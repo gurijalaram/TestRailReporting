@@ -27,6 +27,7 @@ public enum InputControlsEnum {
     MASS_METRIC("massMetric"),
     MINIMUM_ANNUAL_SPEND("annualSpendMin"),
     PART_NUMBER_SEARCH_CRITERIA("partNumber"),
+    PART_NUMBER("partNumber"),
     PERCENT_DIFFERENCE_THRESHOLD("percentDifferenceThreshold"),
     PROCESS_GROUP("processGroup"),
     PROJECT_ROLLUP("projectRollup"),
@@ -35,7 +36,8 @@ public enum InputControlsEnum {
     SORT_ORDER("sortOrder"),
     START_DATE("startDate"),
     ROLLUP("rollup"),
-    TRENDING_PERIOD("trendingPeriod");
+    TRENDING_PERIOD("trendingPeriod"),
+    USE_LATEST_EXPORT("useLatestExport");
 
     private final String inputControlId;
 
