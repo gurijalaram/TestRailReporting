@@ -68,8 +68,10 @@ public class CIRIntegrationTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(id = {12046})
-    @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow")
+    @TestRail(id = {12046, 3967, 4044})
+    @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow" +
+        "Test DTC Component Summary Report email attachment" +
+        "Check the contents of the DTC Part Summary report tally with the costing results expected")
     public void testVerifyCIRReport() {
         WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowData.json", WorkFlowData.class);
         String randomNumber = RandomStringUtils.randomNumeric(6);
