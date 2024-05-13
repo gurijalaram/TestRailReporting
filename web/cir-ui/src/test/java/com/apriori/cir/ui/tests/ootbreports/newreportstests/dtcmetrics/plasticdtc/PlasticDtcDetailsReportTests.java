@@ -3,6 +3,7 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.plasticd
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -47,7 +48,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+            InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -59,7 +60,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+            InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -71,7 +72,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
@@ -83,7 +84,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 
@@ -95,7 +96,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     public void testDtcScoreLow() {
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.LOW.getDtcScoreName()
         );
     }
 
@@ -110,7 +111,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         );
         jasperApiUtils.genericDtcDetailsTest(
             partNames1,
-            "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
     }
 
@@ -125,7 +126,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
         );
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.HIGH.getDtcScoreName()
         );
     }
 
@@ -150,7 +151,7 @@ public class PlasticDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     public void testProcessGroupFunctionality() {
         jasperApiUtils.genericProcessGroupDtcDetailsTest(
             partNames,
-            "Process Group", ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(), ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup()
         );
     }
 
