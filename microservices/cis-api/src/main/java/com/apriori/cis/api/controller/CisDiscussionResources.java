@@ -5,11 +5,13 @@ import com.apriori.cis.api.models.request.discussion.InternalDiscussionAttribute
 import com.apriori.cis.api.models.request.discussion.InternalDiscussionComments;
 import com.apriori.cis.api.models.request.discussion.InternalDiscussionParameters;
 import com.apriori.cis.api.models.request.discussion.InternalDiscussionRequest;
+import com.apriori.cis.api.models.request.discussion.InternalScenarioUserRequest;
 import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 import java.util.ArrayList;
@@ -169,6 +171,57 @@ public class CisDiscussionResources extends CISTestUtil {
             .expectedResponseCode(httpStatus);
 
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
+     * Add project user to scenario
+     *
+     * @param responseClass       - expected response class
+     * @param projectUserInfoList - Project users list
+     * @param componentIdentity   - Component Identity
+     * @param scenarioIdentity    - Scenario Identity
+     * @param httpStatus          - expected http status code
+     * @param currentUser         - User
+     * @param <T>                 - response class object
+     * @return - expected response class type
+     */
+    public static <T> T addScenarioUser(InternalScenarioUserRequest projectUserInfoList, String componentIdentity, String scenarioIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.INTERNAL_SCENARIO_USERS, responseClass)
+            .inlineVariables(componentIdentity, scenarioIdentity)
+            .body(projectUserInfoList)
+            .token(currentUser.getToken())
+            .expectedResponseCode(httpStatus);
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
+
+    public static <T> T getInternalScenarioUsers(String componentIdentity, String scenarioIdentity, Class<T> klass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.INTERNAL_SCENARIO_USERS, klass)
+            .inlineVariables(componentIdentity, scenarioIdentity)
+            .token(currentUser.getToken())
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
+        return responseWrapper.getResponseEntity();
+    }
+
+    public static <T> T deleteScenarioUsers(InternalScenarioUserRequest projectUserInfoList, String componentIdentity, String scenarioIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.INTERNAL_SCENARIO_USERS, responseClass)
+            .inlineVariables(componentIdentity, scenarioIdentity)
+            .body(projectUserInfoList)
+            .token(currentUser.getToken())
+            .expectedResponseCode(httpStatus);
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).delete();
+        return responseWrapper.getResponseEntity();
+    }
+
+    public static <T> T deleteScenarioUser(String componentIdentity, String scenarioIdentity, String userIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.INTERNAL_SCENARIO_USER, responseClass)
+            .inlineVariables(componentIdentity, scenarioIdentity, userIdentity)
+            .token(currentUser.getToken())
+            .expectedResponseCode(httpStatus);
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).delete();
         return responseWrapper.getResponseEntity();
     }
 }
