@@ -26,5 +26,7 @@ public class SecondaryProcesses {
     @Builder.Default
     @JsonProperty("Surface Treatment")
     private List<String> surfaceTreatment = new ArrayList<>();
+    @JsonProperty("Casting - Die")
+    private List<String> castingDie;
 
 }

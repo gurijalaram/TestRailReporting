@@ -49,7 +49,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+            InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -61,7 +61,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+            InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -73,7 +73,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
@@ -85,7 +85,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 
@@ -123,7 +123,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
         );
         jasperApiUtils.genericDtcDetailsTest(
             partNames1,
-            "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.LOW.getDtcScoreName()
         );
     }
 
@@ -139,7 +139,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
         );
         jasperApiUtils.genericDtcDetailsTest(
             partNames1,
-            "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
     }
 
@@ -155,7 +155,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
         );
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.HIGH.getDtcScoreName()
         );
     }
 
@@ -167,7 +167,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     public void testSingleProcessGroupStockMachining() {
         jasperApiUtils.genericProcessGroupDtcDetailsTest(
             partNames,
-            "Process Group",
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(),
             ProcessGroupEnum.STOCK_MACHINING.getProcessGroup()
         );
     }
@@ -180,7 +180,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     public void testSingleProcessGroupTwoModelMachining() {
         jasperApiUtils.genericProcessGroupDtcDetailsTest(
             partNames,
-            "Process Group",
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(),
             ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup()
         );
     }
@@ -193,7 +193,7 @@ public class MachiningDtcDetailsReportTests extends JasperApiAuthenticationUtil 
     public void testBothProcessGroups() {
         jasperApiUtils.genericProcessGroupDtcDetailsTest(
             partNames,
-            "Process Group",
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(),
             ""
         );
     }
