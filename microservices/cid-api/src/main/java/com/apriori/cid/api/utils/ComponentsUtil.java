@@ -265,8 +265,9 @@ public class ComponentsUtil {
 
                     //fail fast
                     if (new ScenariosUtil().getScenario(componentInfo).getScenarioState().equalsIgnoreCase(ScenarioStateEnum.PROCESSING_FAILED.getState())) {
-                        throw new RuntimeException(String.format("Processing has failed for component name: '%s', component id: '%s', scenario name: '%s'",
-                            componentInfo.getComponentName(), componentInfo.getComponentIdentity(), componentInfo.getScenarioName()));
+                        String failMessage = new IterationsUtil().getComponentIterationLatest(componentInfo).getResponseEntity().getCostingMessage();
+                        throw new RuntimeException(String.format("Processing has failed for component name: '%s', component id: '%s', scenario name: '%s', with message:\n '%s'",
+                            componentInfo.getComponentName(), componentInfo.getComponentIdentity(), componentInfo.getScenarioName(), failMessage));
                     }
 
                     if (!componentIdentityResponse.getComponentType().equalsIgnoreCase("unknown")) {

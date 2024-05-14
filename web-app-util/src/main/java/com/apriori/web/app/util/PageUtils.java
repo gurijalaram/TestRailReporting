@@ -570,6 +570,29 @@ public class PageUtils {
     }
 
     /**
+     * Waits for the element to be invisible
+     *
+     * @param element - the element
+     * @return true/false
+     */
+    public void waitForElementsToChangeAttributeValue(WebElement element, String attribute, String attributeValue) {
+        long webDriverWait = 120L;
+
+        new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(new ExpectedCondition<Boolean>() {
+                public Boolean apply(WebDriver driver) {
+                    String enabled = element.getAttribute(attribute);
+                    if (enabled.contains(attributeValue)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            });
+    }
+
+    /**
      * Checks element is displayed
      *
      * @param element - the element
@@ -1479,7 +1502,7 @@ public class PageUtils {
      * before throwing exception
      */
     public void waitForJavascriptLoadComplete() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS));
         wait.until((ExpectedCondition<Boolean>) wdriver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete"));
     }
 
