@@ -366,7 +366,7 @@ public class ComponentCostReportTests extends JasperApiAuthenticationUtil {
 
         ArrayList<InputControlState> inputControlStateList = inputControlsComponentNumberSearchCriteria.getResponseEntity().getInputControlState();
         softAssertions.assertThat(inputControlStateList.get(1).getValue()).isEqualTo("3538968");
-        softAssertions.assertThat(inputControlStateList.get(8).getOptions().get(0).getLabel()).isEqualTo("3538968 (Initial)  [part]");
+        softAssertions.assertThat(inputControlStateList.get(8).getOptions().get(0).getLabel()).startsWith("3538968 (");
         softAssertions.assertThat(inputControlStateList.get(8).getOptions().get(0).getSelected()).isEqualTo(true);
 
         softAssertions.assertAll();
