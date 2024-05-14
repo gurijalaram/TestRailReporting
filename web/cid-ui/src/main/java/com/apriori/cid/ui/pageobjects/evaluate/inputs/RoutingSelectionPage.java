@@ -29,7 +29,7 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
     private WebElement submit;
 
     @FindBy(css = ".MuiChip-label [data-testid='logo']")
-    private WebElement aPLogo;
+    private WebElement apLogo;
 
     @FindBy(css = "[role='dialog'] h3")
     private List<WebElement> routingNames;
