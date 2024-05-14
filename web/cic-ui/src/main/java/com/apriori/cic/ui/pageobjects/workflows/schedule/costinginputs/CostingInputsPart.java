@@ -404,6 +404,34 @@ public class CostingInputsPart extends CICBasePage {
     }
 
     /**
+     * Get the data row from connector Standard Mappings Rows.
+     *
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     * @return list<WebElement>  - Number of rows
+     */
+    public List<WebElement> getMatchedConnectFieldRow(PlmTypeAttributes plmTypeAttributes) {
+        List<WebElement> ciConnectFieldColElements = null;
+        for (WebElement webElement : getStandardFieldsRows()) {
+            ciConnectFieldColElements = webElement.findElements(By.cssSelector(cssColumnSelector));
+            WebElement ciConnectFieldColElement = ciConnectFieldColElements.get(0).findElement(By.cssSelector("div[class^='ss-single-selected'] span[class='placeholder']"));
+            if (ciConnectFieldColElement.getText().equals(plmTypeAttributes.getCicGuiField())) {
+                return ciConnectFieldColElements;
+            }
+        }
+        return ciConnectFieldColElements;
+    }
+
+    /**
+     * get the list of standard mappings rows
+     *
+     * @return list of standard mappings rows
+     */
+    public List<WebElement> getStandardFieldsRows() {
+        pageUtils.waitForElementsToAppear(By.xpath(costingInputFlexRows));
+        return driver.findElements(By.xpath(costingInputFlexRows));
+    }
+
+    /**
      * select CI Connect field in Standard mappings rows
      *
      * @param webElement        - selected row element
@@ -559,4 +587,6 @@ public class CostingInputsPart extends CICBasePage {
     private By getColumnSelector() {
         return By.cssSelector("div[class*='cic-input']");
     }
+
+
 }
