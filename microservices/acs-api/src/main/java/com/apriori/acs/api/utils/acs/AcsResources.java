@@ -1070,6 +1070,39 @@ public class AcsResources {
     }
 
     /**
+     * Upload and use BOM Loader for Manual Costs of part
+     *
+     * @param processGroup         - the process group
+     * @param fileName             - the filename
+     * @param productionInfoInputs - the production information
+     * @return CostResultsResponse object
+     */
+    public CostOrderStatusOutputs bomLoadManual(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
+        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            fileName,
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        return fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+    }
+
+    /**
      * Sets up header with content type and token
      */
     private void setupHeader() {

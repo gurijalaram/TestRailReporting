@@ -11,7 +11,8 @@ public enum WorkorderCommands {
     LOAD_CAD_FILE("LOADCADFILE"),
     LOAD_CAD_METADATA("LOAD_CAD_METADATA"),
     PUBLISH("PUBLISH"),
-    DELETE("DELETE");
+    DELETE("DELETE"),
+    BOM_LOADER("BOM_LOADER");
 
     private final String workorderCommand;
 

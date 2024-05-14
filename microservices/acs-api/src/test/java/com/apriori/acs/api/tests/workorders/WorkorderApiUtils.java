@@ -138,6 +138,8 @@ public class WorkorderApiUtils {
         );
     }
 
+
+
     /**
      * Initialize and upload an assembly file
      *
@@ -245,6 +247,15 @@ public class WorkorderApiUtils {
             fileUploadResources.getComponentMetadataOutputs(),
             assemblyMetadataOutput
         );
+    }
+
+    /**
+     * Gets image info and validates it
+     *
+     * @param scenarioIterationKey - info to use to get image
+     */
+    public void bomLoaderManualCost(ScenarioIterationKey scenarioIterationKey) {
+        BomLoaderResponse bomLoaderResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
     }
 
     /**
