@@ -1,6 +1,7 @@
 package com.apriori.cic.api.models.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class FieldDefinitions {
@@ -18,7 +19,8 @@ public class FieldDefinitions {
     public FieldDefinitionKey readOnly;
     public FieldDefinitionKey twxAttributeName;
     public FieldDefinitionKey usageType;
-    public FieldDefinitionKey _isSelected;
+    @JsonProperty("_isSelected")
+    public FieldDefinitionKey isSelected;
     public FieldDefinitionKey writingRule;
     public FieldDefinitionKey isDefault;
 }

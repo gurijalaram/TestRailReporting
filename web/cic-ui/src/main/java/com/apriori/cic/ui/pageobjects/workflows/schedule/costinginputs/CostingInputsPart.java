@@ -55,7 +55,7 @@ public class CostingInputsPart extends CICBasePage {
     private WebElement worflowNameField;
 
     @FindBy(css = "div[id^='PLMC_NoCostingInputs_MU-'][id$='_label-3']")
-    private WebElement NoCostingInputLabel;
+    private WebElement noCostingInputLabel;
 
     @FindBy(css = "#ui-datepicker-div > div.ui-datepicker-buttonpane.ui-widget-content > button.ui-datepicker-current.ui-state-default.ui-priority-secondary.ui-corner-all")
     private WebElement customDateCalenderTodayButton;
@@ -164,8 +164,8 @@ public class CostingInputsPart extends CICBasePage {
      * @return WebElement
      */
     public WebElement getNoCostingInputLabel() {
-        pageUtils.waitForElementToAppear(NoCostingInputLabel);
-        return NoCostingInputLabel;
+        pageUtils.waitForElementToAppear(noCostingInputLabel);
+        return noCostingInputLabel;
     }
 
     /**
