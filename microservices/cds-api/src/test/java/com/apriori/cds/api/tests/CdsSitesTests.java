@@ -128,7 +128,7 @@ public class CdsSitesTests {
 
         ResponseWrapper<SiteExpand> response =
             cdsTestUtil.getCommonRequestWithParams(CDSAPIEnum.SITE_BY_CUSTOMER_SITE_ID, SiteExpand.class, HttpStatus.SC_OK, paramName, paramValue, customer.getIdentity(), siteIdentity);
-        soft.assertThat(response.getResponseEntity().get_expand())
+        soft.assertThat(response.getResponseEntity().getExpand())
             .contains("deployments", "deployments.installations.applications", "deployments.installations.features");
         soft.assertAll();
     }
