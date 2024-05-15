@@ -7,6 +7,7 @@ import com.apriori.cis.api.models.request.discussion.InternalDiscussionParameter
 import com.apriori.cis.api.models.request.discussion.InternalDiscussionRequest;
 import com.apriori.cis.api.models.request.discussion.InternalScenarioUserRequest;
 import com.apriori.cis.api.util.CISTestUtil;
+import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -177,20 +178,18 @@ public class CisDiscussionResources extends CISTestUtil {
     /**
      * Add project user to scenario
      *
-     * @param responseClass       - expected response class
-     * @param projectUserInfoList - Project users list
-     * @param componentIdentity   - Component Identity
-     * @param scenarioIdentity    - Scenario Identity
-     * @param httpStatus          - expected http status code
-     * @param currentUser         - User
-     * @param <T>                 - response class object
+     * @param <T>                  - response class object
+     * @param projectUserInfoList  - Project users list
+     * @param componentInfoBuilder - ComponentInfoBuilder class object
+     * @param responseClass        - expected response class
+     * @param httpStatus           - expected http status code
      * @return - expected response class type
      */
-    public static <T> T addScenarioUser(InternalScenarioUserRequest projectUserInfoList, String componentIdentity, String scenarioIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+    public static <T> T addScenarioUser(InternalScenarioUserRequest projectUserInfoList, ComponentInfoBuilder componentInfoBuilder, Class<T> responseClass, Integer httpStatus) {
         RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.INTERNAL_SCENARIO_USERS, responseClass)
-            .inlineVariables(componentIdentity, scenarioIdentity)
+            .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
             .body(projectUserInfoList)
-            .token(currentUser.getToken())
+            .token(componentInfoBuilder.getUser().getToken())
             .expectedResponseCode(httpStatus);
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
         return responseWrapper.getResponseEntity();

@@ -55,7 +55,6 @@ public class CisBidPackageProjectUsersTest extends CISTestUtil {
     public void testCreateBidPackageDefaultProjectUser() {
         UserCredentials firstUser = UserUtil.getUser();
         UserCredentials secondUser = UserUtil.getUser();
-
         List<BidPackageProjectUserParameters> usersList = new ArrayList<>();
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(firstUser.getEmail()).role("DEFAULT").build());
         usersList.add(BidPackageProjectUserParameters.builder().userEmail(secondUser.getEmail()).role("GUEST").build());
@@ -65,16 +64,13 @@ public class CisBidPackageProjectUsersTest extends CISTestUtil {
         BidPackageProjectUsersPostResponse bulkProjectUserResponse = CisBidPackageProjectResources.createBidPackageProjectUser(bidPackageProjectUserRequestBuilder, bidPackageResponse.getIdentity(),
             bidPackageProjectResponse.getIdentity(), BidPackageProjectUsersPostResponse.class, HttpStatus.SC_OK, currentUser);
 
-        //Success
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
             .anyMatch(u -> u.getUserIdentity().equals(firstUser.getUserDetails().getIdentity()))).isTrue();
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getSuccesses().stream()
             .anyMatch(u -> u.getUserIdentity().equals(secondUser.getUserDetails().getIdentity()))).isTrue();
 
-        //Failure
         softAssertions.assertThat(bulkProjectUserResponse.getProjectUsers().getFailures().size()).isZero();
 
-        //Delete Added Users
         List<BidPackageProjectUserParameters> userIdentityList = new ArrayList<>();
         userIdentityList.add(BidPackageProjectUserParameters.builder().identity(bulkProjectUserResponse.getProjectUsers().getSuccesses().get(0).getIdentity()).build());
         userIdentityList.add(BidPackageProjectUserParameters.builder().identity(bulkProjectUserResponse.getProjectUsers().getSuccesses().get(1).getIdentity()).build());
@@ -110,8 +106,6 @@ public class CisBidPackageProjectUsersTest extends CISTestUtil {
 
         softAssertions.assertThat(cisErrorMessage.getMessage()).isEqualTo("'projectIdentity' is not a valid identity.");
     }
-
-
 
     @AfterEach
     public void testCleanup() {

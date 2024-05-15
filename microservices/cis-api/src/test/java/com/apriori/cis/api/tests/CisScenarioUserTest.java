@@ -71,10 +71,9 @@ public class CisScenarioUserTest extends CISTestUtil {
             .build();
         ScenarioUsersResponse scenarioUsersResponse = CisDiscussionResources.addScenarioUser(
             internalScenarioUserRequest,
-            componentInfoBuilder.getComponentIdentity(),
-            componentInfoBuilder.getScenarioIdentity(),
+            componentInfoBuilder,
             ScenarioUsersResponse.class,
-            HttpStatus.SC_CREATED, componentInfoBuilder.getUser());
+            HttpStatus.SC_CREATED);
         softAssertions.assertThat(scenarioUsersResponse.size()).isGreaterThan(0);
 
         ScenarioUsersResponse getScenarioUsersResponse = CisDiscussionResources.getInternalScenarioUsers(
@@ -118,10 +117,9 @@ public class CisScenarioUserTest extends CISTestUtil {
             .build();
         ScenarioUsersResponse scenarioUsersResponse = CisDiscussionResources.addScenarioUser(
             internalScenarioUserRequest,
-            componentInfoBuilder.getComponentIdentity(),
-            componentInfoBuilder.getScenarioIdentity(),
+            componentInfoBuilder,
             ScenarioUsersResponse.class,
-            HttpStatus.SC_CREATED, componentInfoBuilder.getUser());
+            HttpStatus.SC_CREATED);
         softAssertions.assertThat(scenarioUsersResponse.size()).isGreaterThan(0);
 
         CisErrorMessage cisErrorMessage = CisDiscussionResources.deleteScenarioUser(
@@ -146,17 +144,17 @@ public class CisScenarioUserTest extends CISTestUtil {
                 .email(componentInfoBuilder.getUser().getEmail())
                 .build()))
             .build();
+        componentInfoBuilder.setComponentIdentity("INVALID");
         CisErrorMessage cisErrorMessage = CisDiscussionResources.addScenarioUser(
             internalScenarioUserRequest,
-            "INVALID",
-            componentInfoBuilder.getScenarioIdentity(),
+            componentInfoBuilder,
             CisErrorMessage.class,
-            HttpStatus.SC_BAD_REQUEST, componentInfoBuilder.getUser());
+            HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(cisErrorMessage.getMessage()).isEqualTo("'componentIdentity' is not a valid identity.");
     }
 
     @AfterEach
-    public void testClean() {
+    public void afterTest() {
         softAssertions.assertAll();
     }
 
