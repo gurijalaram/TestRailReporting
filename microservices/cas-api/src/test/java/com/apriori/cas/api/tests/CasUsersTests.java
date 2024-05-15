@@ -37,6 +37,7 @@ public class CasUsersTests extends TestUtil {
     @TestRail(id = {5666})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
+        // TODO cn - this test depends on a user to have prior access to cas so won't work properly until access is based on roles
         RequestEntity request = new RequestEntity().endpoint(CASAPIEnum.CURRENT_USER)
             .returnType(User.class)
             .token(userToken)

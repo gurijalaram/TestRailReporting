@@ -60,6 +60,7 @@ public class CasCustomersTests {
     // TODO z: fix it threads
     public void getCustomersSortedByName() {
         //                ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
+        // TODO cn - this test depends on a user to have prior access to cas so won't work properly until access is based on roles
         RequestEntity request = new RequestEntity()
             .endpoint(CASAPIEnum.CUSTOMERS)
             .returnType(Customers.class)
