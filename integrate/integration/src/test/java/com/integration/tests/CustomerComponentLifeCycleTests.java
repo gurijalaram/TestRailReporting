@@ -1,9 +1,9 @@
 package com.integration.tests;
 
-import com.apriori.cia.ui.pageobjects.homepage.AdminHomePage;
 import com.apriori.cia.ui.pageobjects.login.AdminLoginPage;
 import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.cid.api.utils.DataCreationUtil;
+import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
@@ -58,7 +58,7 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ReportsPageHeader.class)
             .waitForInputControlsLoad();
 
-        // TODO z: the component should be removed after the test
+      new ScenariosUtil().deleteScenario(component.getComponentIdentity(), scenarioResponse.getIdentity(), component.getUser());
     }
 
     private TestDataService initTestDataService() {
