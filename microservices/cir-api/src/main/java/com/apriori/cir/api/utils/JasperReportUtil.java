@@ -172,7 +172,7 @@ public class JasperReportUtil {
             }
         }
 
-        if (!miscDataList.get(miscDataList.size() - 1).isEmpty()) {
+        if (!miscDataList.get(miscDataList.size() - 1).isEmpty() && miscDataList.get(miscDataList.size() - 2).equals(InputControlsEnum.EXPORT_SET_NAME.getInputControlId())) {
             genericInputList.get(icMapToUse.get(InputControlsEnum.EXPORT_SET_NAME.getInputControlId()))
                 .setValue(Collections.singletonList(miscDataList.get(miscDataList.size() - 1)));
         }
@@ -202,11 +202,6 @@ public class JasperReportUtil {
         List<UpdatedInputControlsPayloadInputsItem> genericInputList = createGenericInputList(miscDataList.get(0));
 
         HashMap<String, Integer> icMapToUse = inputControlsIndexMapMaster.get(miscDataList.get(0));
-
-        /*if (!miscDataList.get(miscDataList.size() - 1).isEmpty()) {
-            genericInputList.get(icMapToUse.get(InputControlsEnum.EXPORT_SET_NAME.getInputControlId()))
-                .setValue(Collections.singletonList(miscDataList.get(miscDataList.size() - 1)));
-        }*/
 
         genericInputList.get(icMapToUse.get(InputControlsEnum.EXPORT_SET_NAME.getInputControlId()))
             .setValue(Arrays.asList(miscDataList.get(2), miscDataList.get(3)));

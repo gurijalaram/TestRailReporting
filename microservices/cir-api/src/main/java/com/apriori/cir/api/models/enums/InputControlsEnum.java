@@ -7,6 +7,7 @@ public enum InputControlsEnum {
     APRIORI_MASS_MIN("aPrioriMassMin"),
     ASSEMBLY_SELECT("assemblySelect"),
     ASSEMBLY_NUMBER_SEARCH_CRITERIA("assemblyNumber"),
+    CHANGE_LEVEL("changeLevel"),
     COMPONENT_COST_CURRENCY("componentCostCurrencyCode"),
     COMPONENT_COST_MAX("componentCostMax"),
     COMPONENT_COST_MIN("componentCostMin"),
@@ -14,6 +15,8 @@ public enum InputControlsEnum {
     COMPONENT_TYPE("componentType"),
     COMPONENT_NUMBER("componentNumber"),
     COST_METRIC("costMetric"),
+    COST_METRIC_LOW_THRESHOLD("costMetricsLowThreshold"),
+    COST_METRIC_HIGH_THRESHOLD("costMetricsHighThreshold"),
     CURRENCY("currencyCode"),
     CREATED_BY("createdBy"),
     DTC_SCORE("dtcScore"),
@@ -37,6 +40,8 @@ public enum InputControlsEnum {
     START_DATE("startDate"),
     ROLLUP("rollup"),
     TRENDING_PERIOD("trendingPeriod"),
+    TIME_METRICS_LOW_THRESHOLD("timeMetricsLowThreshold"),
+    TIME_METRICS_HIGH_THRESHOLD("timeMetricsHighThreshold"),
     USE_LATEST_EXPORT("useLatestExport");
 
     private final String inputControlId;
