@@ -41,7 +41,7 @@ public class AgentConnectionOptions {
     private String enoviaVersion;
     private String libSource;
     //[OAuthProperties]
-    private String oAuthBaseUrl;
+    private String authBaseUrl;
     private String clientId;
     private String clientSecret;
     private String tokenScopes;
