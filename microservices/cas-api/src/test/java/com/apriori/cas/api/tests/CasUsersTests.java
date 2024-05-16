@@ -4,7 +4,6 @@ import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
-import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -39,9 +38,6 @@ public class CasUsersTests extends TestUtil {
     @TestRail(id = {5666})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
-        // TODO cn - this test depends on a user to have prior access to cas so won't work properly until access is based on roles
-        new CdsTestUtil().getUserByEmail(UserUtil.getUser().getEmail());
-
         RequestEntity request = new RequestEntity().endpoint(CASAPIEnum.CURRENT_USER)
             .returnType(User.class)
             .token(userToken)
