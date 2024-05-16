@@ -12,7 +12,6 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 import java.util.ArrayList;
@@ -195,30 +194,59 @@ public class CisDiscussionResources extends CISTestUtil {
         return responseWrapper.getResponseEntity();
     }
 
-    public static <T> T getInternalScenarioUsers(String componentIdentity, String scenarioIdentity, Class<T> klass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.INTERNAL_SCENARIO_USERS, klass)
-            .inlineVariables(componentIdentity, scenarioIdentity)
-            .token(currentUser.getToken())
+    /**
+     * get Internal scenario users
+     *
+     * @param <T>                  - Expected response class type
+     * @param componentInfoBuilder - ComponentInfoBuilder
+     * @param klass                - expected response class
+     * @param httpStatus           - expected http status code
+     * @return - expected response class
+     */
+    public static <T> T getInternalScenarioUsers(ComponentInfoBuilder componentInfoBuilder, Class<T> klass, Integer httpStatus) {
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.INTERNAL_SCENARIO_USERS, klass)
+            .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
+            .token(componentInfoBuilder.getUser().getToken())
             .expectedResponseCode(httpStatus);
 
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
         return responseWrapper.getResponseEntity();
     }
 
-    public static <T> T deleteScenarioUsers(InternalScenarioUserRequest projectUserInfoList, String componentIdentity, String scenarioIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+    /**
+     * Delete internal scenario users
+     *
+     * @param projectUserInfoList  - Internal project users list
+     * @param componentInfoBuilder - ComponentInfoBuilder
+     * @param responseClass        - expected response class
+     * @param httpStatus           - expected http status code
+     * @param <T>                  - expected response class type
+     * @return - expected response class
+     */
+    public static <T> T deleteScenarioUsers(InternalScenarioUserRequest projectUserInfoList, ComponentInfoBuilder componentInfoBuilder, Class<T> responseClass, Integer httpStatus) {
         RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.INTERNAL_SCENARIO_USERS, responseClass)
-            .inlineVariables(componentIdentity, scenarioIdentity)
+            .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
             .body(projectUserInfoList)
-            .token(currentUser.getToken())
+            .token(componentInfoBuilder.getUser().getToken())
             .expectedResponseCode(httpStatus);
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).delete();
         return responseWrapper.getResponseEntity();
     }
 
-    public static <T> T deleteScenarioUser(String componentIdentity, String scenarioIdentity, String userIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+    /**
+     * Delete single scenario user
+     *
+     * @param <T>                  - expected response class type
+     * @param componentInfoBuilder - ComponentInfoBuilder
+     * @param userIdentity         - user identity to delete
+     * @param responseClass        - expected response class
+     * @param httpStatus           - expected http status code
+     * @return - expected response class
+     */
+    public static <T> T deleteScenarioUser(ComponentInfoBuilder componentInfoBuilder, String userIdentity, Class<T> responseClass, Integer httpStatus) {
         RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.INTERNAL_SCENARIO_USER, responseClass)
-            .inlineVariables(componentIdentity, scenarioIdentity, userIdentity)
-            .token(currentUser.getToken())
+            .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity(), userIdentity)
+            .token(componentInfoBuilder.getUser().getToken())
             .expectedResponseCode(httpStatus);
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).delete();
         return responseWrapper.getResponseEntity();

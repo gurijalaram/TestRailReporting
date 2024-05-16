@@ -76,32 +76,15 @@ public class CisScenarioUserTest extends CISTestUtil {
             HttpStatus.SC_CREATED);
         softAssertions.assertThat(scenarioUsersResponse.size()).isGreaterThan(0);
 
-        ScenarioUsersResponse getScenarioUsersResponse = CisDiscussionResources.getInternalScenarioUsers(
-            componentInfoBuilder.getComponentIdentity(),
-            componentInfoBuilder.getScenarioIdentity(),
-            ScenarioUsersResponse.class,
-            HttpStatus.SC_OK,
-            componentInfoBuilder.getUser());
+        ScenarioUsersResponse getScenarioUsersResponse = CisDiscussionResources.getInternalScenarioUsers(componentInfoBuilder, ScenarioUsersResponse.class, HttpStatus.SC_OK);
         softAssertions.assertThat(getScenarioUsersResponse.size()).isGreaterThan(0);
 
         InternalScenarioUserRequest deleteUsersRequest = InternalScenarioUserRequest.builder()
             .internalProjectUserInfo(Collections.singletonList(internalScenarioUser2))
             .build();
 
-        CisDiscussionResources.deleteScenarioUsers(deleteUsersRequest,
-            componentInfoBuilder.getComponentIdentity(),
-            componentInfoBuilder.getScenarioIdentity(),
-            null,
-            HttpStatus.SC_NO_CONTENT,
-            componentInfoBuilder.getUser());
-
-        CisDiscussionResources.deleteScenarioUser(
-            componentInfoBuilder.getComponentIdentity(),
-            componentInfoBuilder.getScenarioIdentity(),
-            User1.getUserDetails().getIdentity(),
-            null,
-            HttpStatus.SC_NO_CONTENT,
-            componentInfoBuilder.getUser());
+        CisDiscussionResources.deleteScenarioUsers(deleteUsersRequest, componentInfoBuilder, null, HttpStatus.SC_NO_CONTENT);
+        CisDiscussionResources.deleteScenarioUser(componentInfoBuilder, User1.getUserDetails().getIdentity(), null, HttpStatus.SC_NO_CONTENT);
     }
 
     @Test
@@ -122,13 +105,7 @@ public class CisScenarioUserTest extends CISTestUtil {
             HttpStatus.SC_CREATED);
         softAssertions.assertThat(scenarioUsersResponse.size()).isGreaterThan(0);
 
-        CisErrorMessage cisErrorMessage = CisDiscussionResources.deleteScenarioUser(
-            componentInfoBuilder.getComponentIdentity(),
-            componentInfoBuilder.getScenarioIdentity(),
-            componentInfoBuilder.getUser().getUserDetails().getIdentity(),
-            CisErrorMessage.class,
-            HttpStatus.SC_CONFLICT,
-            componentInfoBuilder.getUser());
+        CisErrorMessage cisErrorMessage = CisDiscussionResources.deleteScenarioUser(componentInfoBuilder, componentInfoBuilder.getUser().getUserDetails().getIdentity(), CisErrorMessage.class, HttpStatus.SC_CONFLICT);
 
         softAssertions.assertThat(cisErrorMessage.getMessage()).isEqualTo("Conflict");
     }
