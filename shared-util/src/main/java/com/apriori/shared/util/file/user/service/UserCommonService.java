@@ -22,7 +22,7 @@ public class UserCommonService {
 
     public static final String DEFAULT_USER_NAME = PropertiesContext.get("global.default_user_name");
     public static final String DEFAULT_PASSWORD = PropertiesContext.get("global.default_password");
-    public static final String DEFAULT_ACCESS_LEVEL = PropertiesContext.get("global.default_access_level");
+    public static final String DEFAULT_ROLE = PropertiesContext.get("global.default_role");
 
     public static final Boolean IS_DIFFERENT_USERS = Boolean.valueOf(PropertiesContext.get("global.different_users"));
     public static final Boolean USE_DEFAULT_USER = Boolean.valueOf(PropertiesContext.get("global.use_default_user"));
@@ -85,14 +85,14 @@ public class UserCommonService {
     private static UserCredentials initUserCredentialObject(String line) {
         String[] values = line.split(",");
 
-        if (userRecordWithAccessLevel(values)) {
+        if (userRecordWithRole(values)) {
             return new UserCredentials(values[0], values[1], values[2]);
         } else {
-            return new UserCredentials(values[0], values[1], DEFAULT_ACCESS_LEVEL);
+            return new UserCredentials(values[0], values[1], DEFAULT_ROLE);
         }
     }
 
-    private static boolean userRecordWithAccessLevel(String[] values) {
+    private static boolean userRecordWithRole(String[] values) {
         return values.length == 3;
     }
 
@@ -101,7 +101,7 @@ public class UserCommonService {
     }
 
     private static UserCredentials createDefaultUser() {
-        log.info(String.format("Creating default user %s/%s/%s", DEFAULT_USER_NAME, DEFAULT_PASSWORD, DEFAULT_ACCESS_LEVEL));
-        return new UserCredentials(DEFAULT_USER_NAME, DEFAULT_PASSWORD, DEFAULT_ACCESS_LEVEL);
+        log.info(String.format("Creating default user %s/%s/%s", DEFAULT_USER_NAME, DEFAULT_PASSWORD, DEFAULT_ROLE));
+        return new UserCredentials(DEFAULT_USER_NAME, DEFAULT_PASSWORD, DEFAULT_ROLE);
     }
 }

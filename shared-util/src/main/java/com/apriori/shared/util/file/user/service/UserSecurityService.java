@@ -42,34 +42,34 @@ public class UserSecurityService {
             return globalUser;
         }
 
-        return globalUser = getSecurityUser(PropertiesContext.get("default_access_level"));
+        return globalUser = getSecurityUser(PropertiesContext.get("default_role"));
     }
 
     private static synchronized UserCredentials getSecurityUser(String security) {
-        Queue<UserCredentials> users = getUsersByAccessLevel().get(security);
+        Queue<UserCredentials> users = getUsersByRole().get(security);
         UserCredentials userCredentials = users.poll();
         users.add(userCredentials);
 
         return userCredentials;
     }
 
-    private static Map<String, Queue<UserCredentials>> getUsersByAccessLevel() {
+    private static Map<String, Queue<UserCredentials>> getUsersByRole() {
         if (usersByAccessLevel != null) {
             return usersByAccessLevel;
         }
 
-        return usersByAccessLevel = initUsersWithAccessLevels();
+        return usersByAccessLevel = initUsersWithRoles();
     }
 
-    private static Map<String, Queue<UserCredentials>> initUsersWithAccessLevels() {
+    private static Map<String, Queue<UserCredentials>> initUsersWithRoles() {
         Map<String, Queue<UserCredentials>> users = new HashMap<>();
-        UserCommonService.initUsers().forEach(user -> insertUserIntoAccessLevelQueue(user, users));
+        UserCommonService.initUsers().forEach(user -> insertUserIntoRoleQueue(user, users));
 
         return users;
     }
 
-    private static void insertUserIntoAccessLevelQueue(UserCredentials user, Map<String, Queue<UserCredentials>> users) {
-        String securityLevel = user.getAccessLevel();
+    private static void insertUserIntoRoleQueue(UserCredentials user, Map<String, Queue<UserCredentials>> users) {
+        String securityLevel = user.getRole();
 
         if (users.containsKey(securityLevel)) {
             users.get(securityLevel).add(user);

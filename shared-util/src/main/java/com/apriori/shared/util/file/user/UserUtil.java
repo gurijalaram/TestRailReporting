@@ -110,7 +110,7 @@ public class UserUtil {
 
     @Attachment
     public static String getUserLogInfo(UserCredentials user) {
-        return String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getAccessLevel());
+        return String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getRole());
     }
 
     /**

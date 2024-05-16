@@ -24,7 +24,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 public class CasUsersTests extends TestUtil {
     private SoftAssertions soft = new SoftAssertions();
-    private String userToken = UserUtil.getUser("admin").getToken();
+    private String userToken = UserUtil.getUser(RolesEnum.APRIORI_DEVELOPER.getRole()).getToken();
 
     // TODO z: fix it threads
     @BeforeEach
