@@ -34,6 +34,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -195,7 +198,6 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
             ExportSetEnum.ALL_PG_NEW.getExportSetName()
         );
 
-        softAssertions.assertThat(jasperReportSummaryBothPgSetsSelected).isNotEqualTo(null);
         softAssertions.assertThat(jasperReportSummaryBothPgSetsSelected.getReportHtmlPart()
             .getElementsContainingText("Rollup:").get(6).siblingElements().get(2).text()).isEqualTo("2X1 CAVITY MOLD");
         String exportSetValueFromChart = jasperReportSummaryBothPgSetsSelected.getReportHtmlPart()
@@ -261,7 +263,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
 
         softAssertions.assertThat(jasperReportSummaryAllChangeLevels.getReportHtmlPart().getElementsContainingText("Change Level:").get(6).siblingElements().get(6).child(0).text()).isEqualTo("High, Low, Medium, No Change");
         softAssertions.assertThat(jasperReportSummaryAllChangeLevels.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isEqualTo(43);
-        ArrayList<Element> percentElementsList = jasperReportSummaryAllChangeLevels.getReportHtmlPart().getElementsByAttributeValue("colspan", "4");
+        ArrayList<Element> percentElementsList = getElementsByColumnSpan(jasperReportSummaryAllChangeLevels, "4");
         softAssertions.assertThat(percentElementsList.size()).isEqualTo(32);
         softAssertions.assertThat(percentElementsList.get(22).text()).isEqualTo("0%");
         softAssertions.assertThat(percentElementsList.get(28).text()).isEqualTo("0%");
@@ -275,7 +277,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
         );
 
         percentElementsList.clear();
-        percentElementsList = jasperReportSummaryLowChangeLevel.getReportHtmlPart().getElementsByAttributeValue("colspan", "4");
+        percentElementsList = getElementsByColumnSpan(jasperReportSummaryLowChangeLevel, "4");
         softAssertions.assertThat(jasperReportSummaryAllChangeLevels.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isEqualTo(43);
         softAssertions.assertThat(percentElementsList.size()).isEqualTo(29);
         softAssertions.assertThat(jasperReportSummaryLowChangeLevel.getReportHtmlPart().getElementsContainingText("Change Level:").get(6).siblingElements().get(6).child(0).text()).isEqualTo("Low");
@@ -293,7 +295,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
         );
 
         percentElementsList.clear();
-        percentElementsList = jasperReportSummaryMediumChangeLevel.getReportHtmlPart().getElementsByAttributeValue("colspan", "4");
+        percentElementsList = getElementsByColumnSpan(jasperReportSummaryMediumChangeLevel, "4");
         softAssertions.assertThat(jasperReportSummaryMediumChangeLevel.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isEqualTo(32);
         softAssertions.assertThat(percentElementsList.size()).isEqualTo(2);
         softAssertions.assertThat(jasperReportSummaryMediumChangeLevel.getReportHtmlPart().getElementsContainingText("Change Level:").get(6).siblingElements().get(6).child(0).text()).isEqualTo("Medium");
@@ -307,7 +309,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
         );
 
         percentElementsList.clear();
-        percentElementsList = jasperReportSummaryHighChangeLevel.getReportHtmlPart().getElementsByAttributeValue("colspan", "4");
+        percentElementsList = getElementsByColumnSpan(jasperReportSummaryHighChangeLevel, "4");
         softAssertions.assertThat(jasperReportSummaryHighChangeLevel.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isEqualTo(32);
         softAssertions.assertThat(percentElementsList.size()).isEqualTo(2);
         softAssertions.assertThat(jasperReportSummaryHighChangeLevel.getReportHtmlPart().getElementsContainingText("Change Level:").get(6).siblingElements().get(6).child(0).text()).isEqualTo("High");
@@ -321,7 +323,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
         );
 
         percentElementsList.clear();
-        percentElementsList = jasperReportSummaryNoChangeChangeLevel.getReportHtmlPart().getElementsByAttributeValue("colspan", "4");
+        percentElementsList = getElementsByColumnSpan(jasperReportSummaryNoChangeChangeLevel, "4");
         softAssertions.assertThat(jasperReportSummaryNoChangeChangeLevel.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isEqualTo(39);
         softAssertions.assertThat(percentElementsList.size()).isEqualTo(23);
         softAssertions.assertThat(jasperReportSummaryNoChangeChangeLevel.getReportHtmlPart().getElementsContainingText("Change Level:").get(6).siblingElements().get(6).child(0).text()).isEqualTo("No Change");
@@ -410,5 +412,244 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
             .isEqualTo("0");
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("13653")
+    @TestRail(id = 13653)
+    @Description("Validate report details align with aP Pro / CID")
+    public void testDataIntegrityAgainstCidAndApPro() {
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericPartNumberUpgradePartComparisonTest("2X1 CAVITY MOLD");
+
+        ArrayList<Element> colSpanTenElementList = getElementsByColumnSpan(jasperReportSummary, "10");
+        ArrayList<Element> colSpanFourteenElementList = getElementsByColumnSpan(jasperReportSummary, "14");
+        String digitalFactoryAssertValue = "aPriori USA";
+        String annualVolumeAssertValue = "5,500";
+        String batchSizeAssertValue = "458";
+
+        softAssertions.assertThat(getElementsByColumnSpan(jasperReportSummary, "2").get(21).child(0).text())
+            .isEqualTo("21.29");
+        softAssertions.assertThat(getElementsByColumnSpan(jasperReportSummary, "5").get(18).child(0).text())
+            .isEqualTo("20.81");
+
+        softAssertions.assertThat(colSpanTenElementList.get(4).child(0).text()).isEqualTo(digitalFactoryAssertValue);
+        softAssertions.assertThat(colSpanFourteenElementList.get(4).child(0).text()).isEqualTo(digitalFactoryAssertValue);
+
+        softAssertions.assertThat(colSpanTenElementList.get(10).child(0).text()).isEqualTo(annualVolumeAssertValue);
+        softAssertions.assertThat(colSpanFourteenElementList.get(10).child(0).text()).isEqualTo(annualVolumeAssertValue);
+
+        softAssertions.assertThat(colSpanTenElementList.get(11).child(0).text()).isEqualTo(batchSizeAssertValue);
+        softAssertions.assertThat(colSpanFourteenElementList.get(11).child(0).text()).isEqualTo(batchSizeAssertValue);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("2430")
+    @TestRail(id = 2430)
+    @Description("Verify appropriate units are displayed")
+    public void verifyAppropriateUnitsAreDisplayed() {
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericPartNumberUpgradePartComparisonTest("2X1 CAVITY MOLD");
+
+        ArrayList<Element> columnSpanSixteenElements = getElementsByColumnSpan(jasperReportSummary, "16");
+
+        softAssertions.assertThat(
+            getElementsByColumnSpan(jasperReportSummary, "19").get(2).child(0).text())
+            .isEqualTo(CurrencyEnum.USD.getCurrency());
+        softAssertions.assertThat(
+            columnSpanSixteenElements.get(5).child(0).text())
+            .contains("(per kg)");
+        softAssertions.assertThat(
+            columnSpanSixteenElements.get(7).child(0).text())
+            .contains("(kg)");
+        softAssertions.assertThat(
+            columnSpanSixteenElements.get(15).child(0).text())
+            .contains("(s)");
+        softAssertions.assertThat(
+            getElementsByColumnSpan(jasperReportSummary, "13").get(0).child(0).text())
+            .contains("(s)");
+        softAssertions.assertThat(
+            getElementsByColumnSpan(jasperReportSummary, "14").get(17).child(0).text())
+            .contains("(hr)");
+        softAssertions.assertThat(
+            getElementsByColumnSpan(jasperReportSummary, "12").get(4).child(0).text())
+            .contains("(per hour)");
+        softAssertions.assertThat(
+            getElementsByColumnSpan(jasperReportSummary, "11").get(0).child(0).text())
+            .contains("(per hour)");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("2431")
+    @TestRail(id = 2431)
+    @Description("Verify calculations are correct")
+    public void verifyCalculationsAreCorrect() {
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericPartNumberUpgradePartComparisonTest("2X1 CAVITY MOLD");
+
+        ArrayList<Element> colSpanTwoElements = getElementsByColumnSpan(jasperReportSummary, "2");
+        ArrayList<Element> colSpanThreeElements = getElementsByColumnSpan(jasperReportSummary, "3");
+        ArrayList<Element> colSpanFourElements = getElementsByColumnSpan(jasperReportSummary, "4");
+        ArrayList<Element> colSpanFiveElements = getElementsByColumnSpan(jasperReportSummary, "5");
+
+        // FBC Percent difference
+        Double fbcOldValue = Double.parseDouble((colSpanTwoElements.get(21).child(0).text()));
+        Double fbcNewValue = Double.parseDouble((colSpanFiveElements.get(18).child(0).text()));
+        String actualFbcPercentDiffValue = colSpanThreeElements.get(10).child(0).text().replace("%", "");
+        softAssertions.assertThat(getExpectedPercentDiffValue(fbcOldValue, fbcNewValue)).startsWith(actualFbcPercentDiffValue);
+
+        // PPC Percent difference
+        Double ppcOldValue = Double.parseDouble((colSpanFourElements.get(20).child(0).text()));
+        Double ppcNewValue = Double.parseDouble((colSpanFourElements.get(21).child(0).text()));
+        String actualPpcPercentDiffValue = colSpanTwoElements.get(54).child(0).text().replace("%", "");
+        softAssertions.assertThat(getExpectedPercentDiffValue(ppcOldValue, ppcNewValue)).isEqualTo(actualPpcPercentDiffValue);
+
+        // Labor rate percent difference
+        Double laborRateOldValue = Double.parseDouble((colSpanTwoElements.get(42).child(0).text()));
+        Double laborRateNewValue = Double.parseDouble((colSpanTwoElements.get(43).child(0).text()));
+        String actualLaborPercentDiffValue = colSpanThreeElements.get(21).child(0).text().replace("%", "");
+        softAssertions.assertThat(getExpectedPercentDiffValue(laborRateOldValue, laborRateNewValue)).isEqualTo(actualLaborPercentDiffValue);
+
+        // Overhead rate (per hour) percent difference
+        Double overheadRateOldValue = Double.parseDouble((colSpanTwoElements.get(62).child(0).text()));
+        Double overheadRateNewValue = Double.parseDouble((colSpanTwoElements.get(63).child(0).text()));
+        String actualOverheadPercentDiffValue = colSpanTwoElements.get(64).child(0).text().replace("%", "");
+        softAssertions.assertThat(getExpectedPercentDiffValue(overheadRateOldValue, overheadRateNewValue)).isEqualTo(actualOverheadPercentDiffValue);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("2432")
+    @TestRail(id = 2432)
+    @Description("Verify image of part is displayed")
+    public void verifyImageOfPartIsDisplayed() {
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericPartNumberUpgradePartComparisonTest("2X1 CAVITY MOLD");
+
+        String styleHeightAssertValue = "height: 199px";
+        Element imageElement = jasperReportSummary.getReportHtmlPart().getElementsByTag("img").get(0);
+
+        softAssertions.assertThat(imageElement.attributes().get("style")).contains(styleHeightAssertValue);
+        softAssertions.assertThat(imageElement.toString()).contains(String.format("style=\"%s\"", styleHeightAssertValue));
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("2433")
+    @TestRail(id = 2433)
+    @Description("Verify conditional formatting is applied correctly")
+    public void verifyColourCoding() {
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericPartNumberUpgradePartComparisonTest("BENTPART_BARBENDBRAKE");
+
+        softAssertions.assertThat(jasperReportSummary).isNotEqualTo(null);
+        String redHexCode = "background-color: #FFB3B3;";
+        String pinkHexCode = "background-color: #B8D9A2;";
+        String greenHexCode = "background-color: #C6E0B4;";
+        String yellowHexCode = "background-color: #FEF9BE;";
+        ArrayList<Element> dataElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("class", "jrxtdatacell");
+
+        // material unit cost
+        softAssertions.assertThat(dataElements.get(8).attributes().get("style")).contains(redHexCode);
+        softAssertions.assertThat(dataElements.get(9).attributes().get("style")).contains(redHexCode);
+
+        // material cost
+        softAssertions.assertThat(dataElements.get(10).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(dataElements.get(11).attributes().get("style")).contains("background-color: #FF9A9A;");
+
+        // rough mass (kg)
+        softAssertions.assertThat(dataElements.get(12).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(dataElements.get(13).attributes().get("style")).contains(greenHexCode);
+
+        // utilisation
+        softAssertions.assertThat(dataElements.get(14).attributes().get("style")).contains("background-color: #B8D9A2;");
+        softAssertions.assertThat(dataElements.get(15).attributes().get("style")).contains("background-color: #B8D9A2;");
+
+        // routing
+        softAssertions.assertThat(dataElements.get(26).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(dataElements.get(27).attributes().get("style")).contains("background-color: #FF9A9A;");
+
+        // costs and setup time
+        ArrayList<Element> colSpanTwoElementList = getElementsByColumnSpan(jasperReportSummary, "2");
+        ArrayList<Element> colSpanThreeElementList = getElementsByColumnSpan(jasperReportSummary, "3");
+        ArrayList<Element> colSpanFourElementList = getElementsByColumnSpan(jasperReportSummary, "4");
+
+        softAssertions.assertThat(colSpanFourElementList.get(5).attributes().get("style")).contains(yellowHexCode);
+        softAssertions.assertThat(colSpanThreeElementList.get(10).attributes().get("style")).contains(yellowHexCode);
+        softAssertions.assertThat(colSpanTwoElementList.get(22).attributes().get("style")).contains(yellowHexCode);
+        softAssertions.assertThat(colSpanFourElementList.get(8).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanTwoElementList.get(26).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanTwoElementList.get(27).attributes().get("style")).contains(greenHexCode);
+
+        softAssertions.assertThat(colSpanFourElementList.get(11).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanThreeElementList.get(16).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanTwoElementList.get(36).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanFourElementList.get(14).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanTwoElementList.get(40).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanTwoElementList.get(46).attributes().get("style")).contains("background-color: #B8D9A2;");
+
+        softAssertions.assertThat(colSpanFourElementList.get(17).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanThreeElementList.get(22).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanTwoElementList.get(50).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanFourElementList.get(20).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanTwoElementList.get(54).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanTwoElementList.get(60).attributes().get("style")).contains(greenHexCode);
+
+        softAssertions.assertThat(colSpanFourElementList.get(23).attributes().get("style")).contains("background-color: #FEF7A5;");
+
+        softAssertions.assertThat(colSpanFourElementList.get(25).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanThreeElementList.get(32).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanTwoElementList.get(68).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanTwoElementList.get(70).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanFourElementList.get(28).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanTwoElementList.get(72).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanTwoElementList.get(73).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanThreeElementList.get(37).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(colSpanTwoElementList.get(78).attributes().get("style")).contains("background-color: #FF9A9A;");
+
+        softAssertions.assertThat(colSpanFourElementList.get(31).attributes().get("style")).contains(redHexCode);
+
+        //background-color: #FF9A9A;
+        softAssertions.assertThat(colSpanFourElementList.get(32).attributes().get("style")).contains("background-color: #FF9A9A;");
+
+        softAssertions.assertThat(colSpanFourElementList.get(33).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanThreeElementList.get(42).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanTwoElementList.get(86).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanFourElementList.get(36).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanTwoElementList.get(90).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(colSpanTwoElementList.get(96).attributes().get("style")).contains(greenHexCode);
+
+        // background-color: #B8D9A2;
+        softAssertions.assertThat(colSpanFourElementList.get(39).attributes().get("style")).contains(pinkHexCode);
+
+        // change part to STOCKMACH_BARFEEDER_3ABFL
+        //JasperReportSummary jasperReportSummary2 = jasperApiUtils.genericPartNumberUpgradePartComparisonTest("BENTPART_BARBENDBRAKE");
+        // can't find part with target cost or other two values below that aren't 0, revisit this
+
+        // target cost
+
+        // diff to target cost
+
+        // %diff to target cost
+
+        softAssertions.assertAll();
+    }
+
+    private ArrayList<Element> getElementsByColumnSpan(JasperReportSummary jasperReportSummary, String columnSpanValue) {
+        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", columnSpanValue);
+    }
+
+    private String getExpectedPercentDiffValue(Double oldValue, Double newValue) {
+        DecimalFormat df = new DecimalFormat("#");
+
+        Double newMinusOldOverhead = newValue - oldValue;
+        double subSumDivideByOldOverhead = newMinusOldOverhead / oldValue;
+        return df.format(Math.round(subSumDivideByOldOverhead * (Double.parseDouble("100"))));
     }
 }
