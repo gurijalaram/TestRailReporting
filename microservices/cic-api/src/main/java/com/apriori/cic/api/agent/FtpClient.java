@@ -31,6 +31,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
@@ -279,13 +280,11 @@ public class FtpClient {
                     // check if the directory is already existing
                     try {
                         attrs = channelSftp.stat(destinationPath + "/" + sourceFile.getName());
-                    } catch (Exception e) {
+                    } catch (SftpException e) {
                         log.error(destinationPath + "/" + sourceFile.getName() + " not found");
                     }
                     // else create a directory
-                    if (attrs != null) {
-                        log.info("Directory exists IsDir=" + attrs.isDir());
-                    } else {
+                    if (attrs == null || !attrs.isDir()) {
                         log.info("Creating dir " + sourceFile.getName());
                         channelSftp.mkdir(sourceFile.getName());
                     }
@@ -294,7 +293,7 @@ public class FtpClient {
                     }
                 }
             }
-        } catch (Exception e) {
+        } catch (SftpException | FileNotFoundException e) {
             throw new IllegalArgumentException(String.format(
                 "DESTINATION FOLDER (%s) ON REMOTE SERVER NOT FOUND!!",
                 destinationPath));
