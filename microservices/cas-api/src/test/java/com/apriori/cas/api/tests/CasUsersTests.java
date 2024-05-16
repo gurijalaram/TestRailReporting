@@ -20,9 +20,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIfEnvironmentVariable(named = "customer", matches = "ap-int")
 public class CasUsersTests extends TestUtil {
     private SoftAssertions soft = new SoftAssertions();
     private String userToken = UserUtil.getUser(APRIORI_DEVELOPER).getToken();
