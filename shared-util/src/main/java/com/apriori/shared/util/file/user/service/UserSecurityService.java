@@ -19,7 +19,7 @@ import java.util.Queue;
 public class UserSecurityService {
 
     private static UserCredentials globalUser;
-    private static Map<String, Queue<UserCredentials>> usersByAccessLevel;
+    private static Map<RolesEnum, Queue<UserCredentials>> usersByAccessLevel;
 
     /**
      * Return single user
@@ -54,7 +54,7 @@ public class UserSecurityService {
         return userCredentials;
     }
 
-    private static Map<String, Queue<UserCredentials>> getUsersByRole() {
+    private static Map<RolesEnum, Queue<UserCredentials>> getUsersByRole() {
         if (usersByAccessLevel != null) {
             return usersByAccessLevel;
         }
@@ -62,15 +62,15 @@ public class UserSecurityService {
         return usersByAccessLevel = initUsersWithRoles();
     }
 
-    private static Map<String, Queue<UserCredentials>> initUsersWithRoles() {
-        Map<String, Queue<UserCredentials>> users = new HashMap<>();
+    private static Map<RolesEnum, Queue<UserCredentials>> initUsersWithRoles() {
+        Map<RolesEnum, Queue<UserCredentials>> users = new HashMap<>();
         UserCommonService.initUsers().forEach(user -> insertUserIntoRoleQueue(user, users));
 
         return users;
     }
 
-    private static void insertUserIntoRoleQueue(UserCredentials user, Map<String, Queue<UserCredentials>> users) {
-        String securityLevel = user.getRole();
+    private static void insertUserIntoRoleQueue(UserCredentials user, Map<RolesEnum, Queue<UserCredentials>> users) {
+        RolesEnum securityLevel = user.getRole();
 
         if (users.containsKey(securityLevel)) {
             users.get(securityLevel).add(user);

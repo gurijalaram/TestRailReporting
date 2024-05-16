@@ -1,5 +1,6 @@
 package com.apriori.shared.util.file.user.service;
 
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.file.InitFileData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.properties.PropertiesContext;
@@ -22,7 +23,7 @@ public class UserCommonService {
 
     public static final String DEFAULT_USER_NAME = PropertiesContext.get("global.default_user_name");
     public static final String DEFAULT_PASSWORD = PropertiesContext.get("global.default_password");
-    public static final String DEFAULT_ROLE = PropertiesContext.get("global.default_role");
+    public static final RolesEnum DEFAULT_ROLE = RolesEnum.valueOf(PropertiesContext.get("global.default_role"));
 
     public static final Boolean IS_DIFFERENT_USERS = Boolean.valueOf(PropertiesContext.get("global.different_users"));
     public static final Boolean USE_DEFAULT_USER = Boolean.valueOf(PropertiesContext.get("global.use_default_user"));
@@ -86,7 +87,7 @@ public class UserCommonService {
         String[] values = line.split(",");
 
         if (userRecordWithRole(values)) {
-            return new UserCredentials(values[0], values[1], values[2]);
+            return new UserCredentials(values[0], values[1], RolesEnum.valueOf(values[2]));
         } else {
             return new UserCredentials(values[0], values[1], DEFAULT_ROLE);
         }

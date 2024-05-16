@@ -1,5 +1,8 @@
 package com.apriori.shared.util.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum RolesEnum {
 
     APRIORI_DEVELOPER("APRIORI_DEVELOPER"),
@@ -15,7 +18,4 @@ public enum RolesEnum {
         this.role = role;
     }
 
-    public String getRole() {
-        return this.role;
-    }
 }

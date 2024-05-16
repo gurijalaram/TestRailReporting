@@ -2,6 +2,7 @@ package com.apriori.shared.util.file.user;
 
 import com.apriori.shared.util.AuthorizationUtil;
 import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.models.response.User;
 
 import com.auth0.jwt.JWT;
@@ -25,10 +26,10 @@ public class UserCredentials implements Serializable {
     private String cloudContext;
     //TODO : change it on Security ENUM when will be information about security levels
     @Getter
-    private String role;
+    private RolesEnum role;
     private User user;
 
-    public UserCredentials(String email, String password, String role) {
+    public UserCredentials(String email, String password, RolesEnum role) {
         this.email = email;
         this.password = password;
         this.role = role;
@@ -46,11 +47,11 @@ public class UserCredentials implements Serializable {
         return new UserCredentials(username, password);
     }
 
-    public static UserCredentials initWithRole(String username, String password, String role) {
+    public static UserCredentials initWithRole(String username, String password, RolesEnum role) {
         return new UserCredentials(username, password, role);
     }
 
-    public UserCredentials setRole(String securityLevel) {
+    public UserCredentials setRole(RolesEnum securityLevel) {
         this.role = securityLevel;
         return this;
     }
