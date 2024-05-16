@@ -1,5 +1,6 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
@@ -37,7 +38,7 @@ public class CasCustomersTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private String userToken = UserUtil.getUser("admin").getToken();
+    private String userToken = UserUtil.getUser(APRIORI_DEVELOPER).getToken();
 
     @BeforeEach
     public void getToken() {

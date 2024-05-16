@@ -1,5 +1,7 @@
 package com.apriori.cic.api.utils;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.cic.api.models.request.AgentPort;
 import com.apriori.cic.api.models.request.ConnectorRequest;
 import com.apriori.cic.api.models.response.AgentConnectionInfo;
@@ -73,7 +75,7 @@ public class AgentService {
         agentCredentials = new AgentCredentials().getAgentCredentials();
         agentData = new NexusComponent();
         agentPort = CicApiTestUtil.getAgentPortData();
-        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser("admin");
+        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(APRIORI_DEVELOPER);
     }
 
     /**

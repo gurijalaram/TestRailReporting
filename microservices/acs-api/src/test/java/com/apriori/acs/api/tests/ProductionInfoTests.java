@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -30,7 +31,7 @@ public class ProductionInfoTests extends TestUtil {
     @TestRail(id = 15430)
     @Description("Get Set Production Info Test")
     public void testGetSetProductionInfo() {
-        UserCredentials userCredentials = UserUtil.getUser("common");
+        UserCredentials userCredentials = UserUtil.getUser(APRIORI_EXPERT);
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
         AcsResources acsResources = new AcsResources(userCredentials);
 

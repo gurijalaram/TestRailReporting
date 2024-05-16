@@ -1,5 +1,6 @@
 package com.apriori.shared.util.file.user.service;
 
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.properties.PropertiesContext;
 
@@ -25,14 +26,14 @@ public class UserSecurityService {
      * if different.users is false
      * else each time return unique user
      *
-     * @param accessLevel - user's access level
+     * @param role - user's role
      * @throws NoSuchElementException if the iteration has no more elements
      */
-    public static UserCredentials getUser(String accessLevel) {
+    public static UserCredentials getUser(RolesEnum role) {
         String tokenEmail = System.getProperty("token_email");
 
         if (tokenEmail == null) {
-            return PropertiesContext.get("global.different_users").equals("true") ? getSecurityUser(accessLevel) : getGlobalUser();
+            return PropertiesContext.get("global.different_users").equals("true") ? getSecurityUser(role) : getGlobalUser();
         }
         return UserCredentials.init(tokenEmail, System.getProperty("password"));
     }
@@ -42,10 +43,10 @@ public class UserSecurityService {
             return globalUser;
         }
 
-        return globalUser = getSecurityUser(PropertiesContext.get("default_role"));
+        return globalUser = getSecurityUser(RolesEnum.valueOf(PropertiesContext.get("default_role")));
     }
 
-    private static synchronized UserCredentials getSecurityUser(String security) {
+    private static synchronized UserCredentials getSecurityUser(RolesEnum security) {
         Queue<UserCredentials> users = getUsersByRole().get(security);
         UserCredentials userCredentials = users.poll();
         users.add(userCredentials);

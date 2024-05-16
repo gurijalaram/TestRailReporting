@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -31,7 +32,7 @@ public class PartPrimaryProcessGroupsTests extends TestUtil {
     @TestRail(id = 10881)
     @Description("Validate Get Part Primary Process Groups Endpoint")
     public void testGetPartPrimaryProcessGroupsEndpoint() {
-        UserCredentials userCredentials = UserUtil.getUser("common");
+        UserCredentials userCredentials = UserUtil.getUser(APRIORI_EXPERT);
         AcsResources acsResources = new AcsResources(userCredentials);
         PartPrimaryProcessGroupsResponse getPartPrimaryProcessGroupsResponse = acsResources.getPartPrimaryProcessGroups();
 

@@ -1,5 +1,7 @@
 package com.apriori.shared.util.nexus.utils;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -146,7 +148,7 @@ public class NexusUtil {
      * Initialization of request entity and credentials
      */
     private static void init() {
-        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser("admin");
+        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(APRIORI_DEVELOPER);
         credential = PropertiesContext.get("global.nexus.username") + ":" + PropertiesContext.get("global.nexus.password");
         nexusComponentData = new NexusComponent();
     }

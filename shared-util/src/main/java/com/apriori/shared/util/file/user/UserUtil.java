@@ -1,5 +1,6 @@
 package com.apriori.shared.util.file.user;
 
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.enums.apis.UsersApiEnum;
 import com.apriori.shared.util.file.user.service.UserCommonService;
 import com.apriori.shared.util.file.user.service.UserSecurityService;
@@ -61,13 +62,13 @@ public class UserUtil {
     }
 
     /**
-     * Return user by access level
+     * Return user by role
      *
-     * @param accessLevel - access level of needed user
+     * @param role - role of needed user
      * @return User
      */
-    public static UserCredentials getUser(String accessLevel) {
-        UserCredentials user = UserSecurityService.getUser(accessLevel);
+    public static UserCredentials getUser(RolesEnum role) {
+        UserCredentials user = UserSecurityService.getUser(role);
         logInfo(user);
         return user;
     }

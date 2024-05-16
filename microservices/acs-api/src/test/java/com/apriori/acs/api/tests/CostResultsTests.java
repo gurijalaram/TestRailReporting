@@ -1,5 +1,7 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
+
 import com.apriori.acs.api.models.response.acs.costresults.CostResultsRootItem;
 import com.apriori.acs.api.models.response.acs.costresults.CostResultsRootResponse;
 import com.apriori.acs.api.models.response.acs.costresults.ProcessInstanceKey;
@@ -28,7 +30,7 @@ public class CostResultsTests {
     private WorkorderApiUtils workorderApiUtils;
 
     public CostResultsTests() {
-        user = UserUtil.getUser("common");
+        user = UserUtil.getUser(APRIORI_EXPERT);
         acsResources = new AcsResources(user);
         workorderApiUtils = new WorkorderApiUtils(user);
     }
