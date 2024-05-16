@@ -293,33 +293,6 @@ public class ProcessRoutingTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("Due to update 14/10/22 routings can't be change for additive manufacturing")
-    @TestRail(id = {7855, 14985, 15799})
-    @Description("Validate behaviour when forcing a material that will fail costing within CID")
-    public void failCostingRouting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
-            .goToAdvancedTab()
-            .openRoutingSelection()
-            .selectRoutingPreferenceByName("Vat Photopolymerization")
-            .submit(EvaluatePage.class)
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isTrue();
-
-        evaluatePage.openDesignGuidance()
-            .selectIssueTypeGcd("Costing Failed", "Additive Manufacturing/Surface Treatment is infeasible", "Component:1");
-
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("This DMLS material is not compatible with Stereolithography.");
-        softAssertions.assertAll();
-    }
-
-    @Test
     @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7844, 7290, 7291, 7292})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")

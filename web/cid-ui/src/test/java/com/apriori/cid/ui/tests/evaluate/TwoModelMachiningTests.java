@@ -285,7 +285,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
 
     @Test
     @Description("Validate the user cannot use two completely different CAD models")
-    @TestRail(id = {7871, 6630})
+    @TestRail(id = {7871, 6630, 29240})
     public void testTwoModelCorrectCADModels() {
         ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
         ComponentInfoBuilder wrongSourcePart = new ComponentRequestUtil().getComponent("PowderMetalShaft");
@@ -314,8 +314,12 @@ public class TwoModelMachiningTests extends TestBaseUI {
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isEqualTo(true);
 
-        guidanceIssuesPage = evaluatePage.openDesignGuidance()
+//        guidanceIssuesPage = evaluatePage.openDesignGuidance()
+        guidanceIssuesPage = new GuidanceIssuesPage(driver)
             .selectIssueTypeGcd("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).as("Design Guidance Drawer automatically opened on Costing Failure")
+                .isEqualTo("Units of the model of the stock differ from the units of the finished model.");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Units of the model of the stock differ from the units of the finished model.");
 
