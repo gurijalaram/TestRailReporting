@@ -106,12 +106,11 @@ public class PsoEditTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Disabled("Ignoring this test only as we need to find a way to count bar horizontally")
     @Test
     @TestRail(id = {7294, 7295})
     @Description("Sand Casting edit PSO")
     public void sandCastPSO() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(CASTING_SAND);
+        component = new ComponentRequestUtil().getComponent("SandCast");
 
         materialProcessPage = new CidAppLoginPage(driver)
             .login(component.getUser())

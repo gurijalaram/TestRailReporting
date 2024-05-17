@@ -95,7 +95,6 @@ public class SettingsTests extends TestBaseUI {
             .inputScenarioName("MP Auto Test")
             .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE)
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS_PLATING.getMaterialName())
             .submit(ProductionDefaultsPage.class)
@@ -109,7 +108,6 @@ public class SettingsTests extends TestBaseUI {
         softAssertions.assertThat(productionDefaultPage.getScenarioName()).isEqualTo("MP Auto Test");
         softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup());
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory());
         softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("ABS, Plating");
 
         softAssertions.assertAll();

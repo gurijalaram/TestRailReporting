@@ -293,8 +293,10 @@ public class EditAssembliesTest extends TestBaseUI {
 
         componentAssembly = assemblyRequestUtil.getAssembly("FUSELAGE_SUBASSEMBLY");
 
-        assemblyUtils.uploadAssembly(componentAssembly);
-        assemblyUtils.costAssembly(componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly)
             .publishAssembly(componentAssembly);
 
@@ -306,7 +308,9 @@ public class EditAssembliesTest extends TestBaseUI {
             .openComponents()
             .selectTableView();
 
-        componentAssembly.getSubComponents().forEach(subcomponent -> assertThat(componentsTablePage.getListOfSubcomponents(), hasItem(subcomponent.getComponentName().toUpperCase())));
+        componentAssembly.getSubComponents().forEach(subcomponent ->
+            softAssertions.assertThat(componentsTablePage.getListOfSubcomponents()).as("Verify subcomponents displayed")
+                .contains(subcomponent.getComponentName().toUpperCase()));
     }
 
     @Test
