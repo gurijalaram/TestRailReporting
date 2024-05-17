@@ -3,6 +3,7 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.sheetmet
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -48,7 +49,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     public void testCostMetricPpc() {
         jasperApiUtils.genericDtcTest(
             partNames,
-            "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+            InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -60,7 +61,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     public void testCostMetricFbc() {
         jasperApiUtils.genericDtcTest(
             partNames,
-            "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+            InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -72,7 +73,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
             partNames,
-            "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
@@ -84,7 +85,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcTest(
             partNames,
-            "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 
@@ -125,7 +126,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         jasperApiUtils.genericDtcScoreTest(
             true,
             partNames,
-            "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.LOW.getDtcScoreName()
         );
     }
 
@@ -142,7 +143,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         jasperApiUtils.genericDtcScoreTest(
             true,
             partNames,
-            "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
     }
 
@@ -159,7 +160,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         jasperApiUtils.genericDtcScoreTest(
             true,
             partNames,
-            "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.HIGH.getDtcScoreName()
         );
     }
 
@@ -177,7 +178,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         jasperApiUtils.genericDtcScoreTest(
             true,
             partNames1,
-            "DTC Score", ""
+            InputControlsEnum.DTC_SCORE.getInputControlId(), ""
         );
     }
 
@@ -193,7 +194,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         );
         jasperApiUtils.genericProcessGroupDtcTest(
             partNames,
-            "Process Group", ProcessGroupEnum.SHEET_METAL.getProcessGroup()
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(), ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
     }
 
@@ -209,7 +210,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            "Sort Order", SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(), SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum()
         );
     }
 
@@ -225,7 +226,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            "Sort Order", SortOrderEnum.BENDS.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(), SortOrderEnum.BENDS.getSortOrderEnum()
         );
     }
 
@@ -241,7 +242,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            "Sort Order", SortOrderEnum.TOLERANCES.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(), SortOrderEnum.TOLERANCES.getSortOrderEnum()
         );
     }
 
@@ -257,7 +258,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            "Sort Order", SortOrderEnum.MACHINING_TIME.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(), SortOrderEnum.MACHINING_TIME.getSortOrderEnum()
         );
     }
 
@@ -273,7 +274,7 @@ public class SheetMetalDtcComparisonReportTests extends JasperApiAuthenticationU
         );
         jasperApiUtils.genericSortOrderDtcComparisonTest(
             partNames,
-            "Sort Order", SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
+            InputControlsEnum.SORT_ORDER.getInputControlId(), SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum()
         );
     }
 }

@@ -30,7 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class AtsAuthorization extends TestUtil {
+public class AtsAuthorizationTests extends TestUtil {
     private AtsTestUtil atsTestUtil = new AtsTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();

@@ -4,6 +4,8 @@ import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cic.api.enums.EmailRecipientType;
 import com.apriori.cic.ui.enums.EmailTemplateEnum;
+import com.apriori.cic.ui.enums.FieldState;
+import com.apriori.shared.util.enums.PropertyEnum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -33,7 +35,9 @@ public class EmailTab extends NotificationsPart {
     public EmailTab selectEmailTemplate(EmailTemplateEnum emailTemplateEnum) {
         pageUtils.waitUntilDropdownOptionsLoaded(getEmailTemplateElement().findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(getEmailTemplateElement());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, emailTemplateEnum.getEmailTemplate())));
+        WebElement webElement = driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, emailTemplateEnum.getEmailTemplate())));
+        pageUtils.moveAndClick(webElement);
+        pageUtils.waitForElementNotEnabled(notificationNextButton, 1);
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
@@ -77,6 +81,31 @@ public class EmailTab extends NotificationsPart {
             pageUtils.waitForElementAndClick(getEmailRecipientElement());
         }
         pageUtils.waitForJavascriptLoadComplete();
+        return this;
+    }
+
+    /**
+     * select cost rounding
+     *
+     * @return EmailTab object
+     */
+    public EmailTab selectCostRounding(FieldState fieldState) {
+        pageUtils.waitForElementAndClick(getEmailConfigCostRoundingElement());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, fieldState)));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
+    }
+
+    /**
+     * select apriori cost type field
+     *
+     * @param aprioriCostType - AprioriCostType enum
+     * @return current class object
+     */
+    public EmailTab selectAprioriCost(PropertyEnum aprioriCostType) {
+        pageUtils.waitForElementAndClick(getEmailConfigCostRoundingElement());
+        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, aprioriCostType.getProperty())));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
 

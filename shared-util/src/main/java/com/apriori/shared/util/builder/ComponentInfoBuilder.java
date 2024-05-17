@@ -51,4 +51,16 @@ public class ComponentInfoBuilder implements Serializable {
     public String getFileNameExtension() {
         return this.componentName.concat(this.extension);
     }
+
+    public void setScenarioNameForAll(String scenarioName) {
+        this.scenarioName = scenarioName;
+        this.getSubComponents().forEach(component -> {
+
+            if (component.getSubComponents() != null) {
+                component.setScenarioNameForAll(scenarioName);
+            } else {
+                component.setScenarioName(scenarioName);
+            }
+        });
+    }
 }
