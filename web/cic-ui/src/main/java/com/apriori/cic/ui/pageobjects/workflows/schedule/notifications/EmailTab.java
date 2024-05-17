@@ -35,7 +35,9 @@ public class EmailTab extends NotificationsPart {
     public EmailTab selectEmailTemplate(EmailTemplateEnum emailTemplateEnum) {
         pageUtils.waitUntilDropdownOptionsLoaded(getEmailTemplateElement().findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(getEmailTemplateElement());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, emailTemplateEnum.getEmailTemplate())));
+        WebElement webElement = driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, emailTemplateEnum.getEmailTemplate())));
+        pageUtils.moveAndClick(webElement);
+        pageUtils.waitForElementNotEnabled(notificationNextButton, 1);
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
