@@ -1,5 +1,7 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.acs.api.models.response.acs.allmaterialstocksinfo.AllMaterialStocksInfoResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
 import com.apriori.acs.api.utils.acs.AcsResources;

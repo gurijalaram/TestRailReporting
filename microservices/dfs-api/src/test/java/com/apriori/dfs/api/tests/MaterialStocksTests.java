@@ -1,5 +1,7 @@
 package com.apriori.dfs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.dfs.api.enums.DFSApiEnum;
 import com.apriori.dfs.api.models.response.MaterialStock;
 import com.apriori.dfs.api.models.response.MaterialStocks;

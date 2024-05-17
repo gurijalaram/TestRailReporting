@@ -1,5 +1,7 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.acs.api.models.response.acs.GcdProperties.GcdPropertiesResponse;
 import com.apriori.acs.api.models.response.acs.GcdProperties.PropertiesToSet;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;

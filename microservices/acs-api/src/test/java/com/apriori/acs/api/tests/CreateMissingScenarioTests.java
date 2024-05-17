@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

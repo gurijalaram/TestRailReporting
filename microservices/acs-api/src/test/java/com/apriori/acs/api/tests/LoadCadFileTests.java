@@ -1,5 +1,7 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
