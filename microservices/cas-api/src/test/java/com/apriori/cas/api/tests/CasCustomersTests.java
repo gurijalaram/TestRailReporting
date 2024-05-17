@@ -11,7 +11,6 @@ import com.apriori.cas.api.models.response.Customer;
 import com.apriori.cas.api.models.response.Customers;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
-import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -40,7 +39,6 @@ public class CasCustomersTests {
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private String userToken = UserUtil.getUser(APRIORI_DEVELOPER).getToken();
 
     @BeforeEach
@@ -63,7 +61,7 @@ public class CasCustomersTests {
     @Description("Get a list of CAS customers sorted by name")
     // TODO z: fix it threads
     public void getCustomersSortedByName() {
-        //                ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
+        //ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
         RequestEntity request = new RequestEntity()
             .endpoint(CASAPIEnum.CUSTOMERS)
             .returnType(Customers.class)
