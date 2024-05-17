@@ -326,7 +326,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
      * @param text text to check on the page
      * @return boolean
      */
-    public boolean ifElementDisplayedOnThePage(String text) {
+    public boolean isElementDisplayedOnThePage(String text) {
         String xpath = "//div[contains(@aria-label,'" + text + "')]";
         WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
         return pageUtils.isElementDisplayed(element);
