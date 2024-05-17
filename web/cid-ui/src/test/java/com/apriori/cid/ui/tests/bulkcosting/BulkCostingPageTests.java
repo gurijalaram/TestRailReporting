@@ -55,7 +55,6 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertThat(bulkCostingPage.isListOfWorksheetsPresent()).isTrue();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-
         bulkCostingPage.selectAndDeleteSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
         worksheetIdentity = null;
         soft.assertThat(bulkCostingPage.isWorksheetNotPresent(worksheetResponse.getResponseEntity().getName())).isTrue();
@@ -105,6 +104,44 @@ public class BulkCostingPageTests extends TestBaseUI {
 
         bulkCostingPage.clickOnRemoveScenarioButtonOnConfirmationScreen();
         soft.assertThat(bulkCostingPage.isScenarioPresentOnPage(inputRowName));
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {30675, 30676, 30674})
+    @Description("update inputs")
+    public void updateInputs() {
+        SoftAssertions soft = new SoftAssertions();
+        setBulkCostingFlag(true);
+        loginPage = new CidAppLoginPage(driver);
+        bulkCostingPage = loginPage
+            .login(userCredentials)
+            .clickBulkCostingButton();
+
+        ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
+        createInputRow(userCredentials, worksheetResponse);
+        bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
+
+        soft.assertThat(bulkCostingPage.getSetInputButtonState("Cannot set inputs with no scenarios selected."))
+            .isEqualTo("Cannot set inputs with no scenarios selected.");
+
+        bulkCostingPage.selectFirstPartInWorkSheet();
+
+        soft.assertThat(bulkCostingPage.getSetInputButtonState("Set Inputs"))
+            .isEqualTo("Set Inputs");
+
+        bulkCostingPage.clickSetInputsButton();
+        soft.assertThat(bulkCostingPage.isScenarioPresentOnPage()).isTrue();
+        bulkCostingPage.selectDropdownProcessGroup("2-Model Machining")
+            .selectDropdownDigitalFactory("AGCO Assumption")
+            .typeIntoAnnualVolume("100")
+            .typeIntoYears("5")
+            .clickOnSaveButtonOnSetInputs()
+            .clickOnCloseButtonOnSetInputs();
+
+        soft.assertThat(bulkCostingPage.isOnBulkAnalysisPage()).isTrue();
+        soft.assertThat(bulkCostingPage.ifElementDisplayedOnThePage("2-Model Machining")).isTrue();
+        soft.assertThat(bulkCostingPage.ifElementDisplayedOnThePage("AGCO Assumption")).isTrue();
         soft.assertAll();
     }
 
