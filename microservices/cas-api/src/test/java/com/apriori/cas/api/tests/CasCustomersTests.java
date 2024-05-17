@@ -1,5 +1,6 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.CustomerEnum.AP_INT;
 import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
@@ -27,11 +28,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Arrays;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIfSystemProperty(named = "customer", matches = AP_INT)
 public class CasCustomersTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
@@ -61,7 +64,6 @@ public class CasCustomersTests {
     // TODO z: fix it threads
     public void getCustomersSortedByName() {
         //                ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
-        // TODO cn - this test depends on a user to have prior access to cas so won't work properly until access is based on roles
         RequestEntity request = new RequestEntity()
             .endpoint(CASAPIEnum.CUSTOMERS)
             .returnType(Customers.class)
@@ -180,7 +182,6 @@ public class CasCustomersTests {
     @Description("Return a paged list of applications licensed for a specific customer.")
     public void getCustomerLicensedApplications() {
         String customerIdentity = casTestUtil.getAprioriInternal().getIdentity();
-
 
         ResponseWrapper<Applications> responseApplications = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_LICENSED_APP,
             Applications.class,
