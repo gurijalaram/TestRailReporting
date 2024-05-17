@@ -314,14 +314,11 @@ public class TwoModelMachiningTests extends TestBaseUI {
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isEqualTo(true);
 
-//        guidanceIssuesPage = evaluatePage.openDesignGuidance()
         guidanceIssuesPage = new GuidanceIssuesPage(driver)
-            .selectIssueTypeGcd("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");
+            .selectIssueTypeGcd("Costing Failed", "Finish model extends outside the source model", "SourceModel:1");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).as("Design Guidance Drawer automatically opened on Costing Failure")
-                .isEqualTo("Units of the model of the stock differ from the units of the finished model.");
-
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Units of the model of the stock differ from the units of the finished model.");
+                .isEqualTo("The finish model may be larger than the source, or their CAD coordinates may not align. Review selection of source and finish models and check that CAD model coordinates align.");
 
         softAssertions.assertAll();
     }
