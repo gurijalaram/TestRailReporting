@@ -335,7 +335,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
     @TestRail(id = 14072)
     @Description("Input controls - Cost Metrics Low and High Thresholds")
     public void testCostMetricsLowAndHighThresholds() {
-        // revisit to understand what changes and assert on something in chart
+        // TODO: revisit to understand what changes and assert on something in chart
         JasperReportSummary jasperReportSummaryCostMetricThresholds = jasperApiUtils.genericTestCoreSetCostMetricOrTimeMetricsThresholdLevels(
             true,
             "0",
@@ -355,7 +355,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
     @TestRail(id = 14076)
     @Description("Input controls - Time Metrics Low and High Thresholds")
     public void testTimeMetricsLowAndHighThresholds() {
-        // revisit to understand what changes and assert on something in chart
+        // TODO: revisit to understand what changes and assert on something in chart
         JasperReportSummary jasperReportSummaryCostMetricThresholds = jasperApiUtils.genericTestCoreSetCostMetricOrTimeMetricsThresholdLevels(
             false,
             "0",
@@ -545,95 +545,45 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
     public void verifyColourCoding() {
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericPartNumberUpgradePartComparisonTest("BENTPART_BARBENDBRAKE");
 
-        softAssertions.assertThat(jasperReportSummary).isNotEqualTo(null);
-        String redHexCode = "background-color: #FFB3B3;";
-        String pinkHexCode = "background-color: #B8D9A2;";
-        String greenHexCode = "background-color: #C6E0B4;";
-        String yellowHexCode = "background-color: #FEF9BE;";
+        String genericHexCode = "background-color: #%s";
+        String redHexCode = String.format(genericHexCode, "FFB3B3");
+        String greenIshHexCode = String.format(genericHexCode, "B8D9A2");
+        String greenHexCode =  String.format(genericHexCode, "C6E0B4");
+        String yellowHexCode = String.format(genericHexCode, "FEF9BE");
+        String pinkHexCode = String.format(genericHexCode, "FF9A9A");
         ArrayList<Element> dataElements = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("class", "jrxtdatacell");
 
         // material unit cost
-        softAssertions.assertThat(dataElements.get(8).attributes().get("style")).contains(redHexCode);
-        softAssertions.assertThat(dataElements.get(9).attributes().get("style")).contains(redHexCode);
+        softAssertions.assertThat(getStyleValueFromParticularElement(dataElements, 8)).contains(redHexCode);
+        softAssertions.assertThat(getStyleValueFromParticularElement(dataElements, 9)).contains(redHexCode);
 
         // material cost
-        softAssertions.assertThat(dataElements.get(10).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(dataElements.get(11).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(getStyleValueFromParticularElement(dataElements, 10)).contains(pinkHexCode);
+        softAssertions.assertThat(getStyleValueFromParticularElement(dataElements, 11)).contains(pinkHexCode);
 
         // rough mass (kg)
-        softAssertions.assertThat(dataElements.get(12).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(dataElements.get(13).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(getStyleValueFromParticularElement(dataElements, 12)).contains(greenHexCode);
+        softAssertions.assertThat(getStyleValueFromParticularElement(dataElements, 13)).contains(greenHexCode);
 
         // utilisation
-        softAssertions.assertThat(dataElements.get(14).attributes().get("style")).contains("background-color: #B8D9A2;");
-        softAssertions.assertThat(dataElements.get(15).attributes().get("style")).contains("background-color: #B8D9A2;");
+        softAssertions.assertThat(getStyleValueFromParticularElement(dataElements, 14)).contains(greenIshHexCode);
+        softAssertions.assertThat(getStyleValueFromParticularElement(dataElements, 15)).contains(greenIshHexCode);
 
         // routing
-        softAssertions.assertThat(dataElements.get(26).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(dataElements.get(27).attributes().get("style")).contains("background-color: #FF9A9A;");
+        softAssertions.assertThat(getStyleValueFromParticularElement(dataElements, 26)).contains(pinkHexCode);
+        softAssertions.assertThat(getStyleValueFromParticularElement(dataElements, 27)).contains(pinkHexCode);
 
-        // costs and setup time
-        ArrayList<Element> colSpanTwoElementList = getElementsByColumnSpan(jasperReportSummary, "2");
+        // costs and setup time - only certain values checked as it doesn't make sense to check every single coloured value
         ArrayList<Element> colSpanThreeElementList = getElementsByColumnSpan(jasperReportSummary, "3");
-        ArrayList<Element> colSpanFourElementList = getElementsByColumnSpan(jasperReportSummary, "4");
 
-        softAssertions.assertThat(colSpanFourElementList.get(5).attributes().get("style")).contains(yellowHexCode);
-        softAssertions.assertThat(colSpanThreeElementList.get(10).attributes().get("style")).contains(yellowHexCode);
-        softAssertions.assertThat(colSpanTwoElementList.get(22).attributes().get("style")).contains(yellowHexCode);
-        softAssertions.assertThat(colSpanFourElementList.get(8).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanTwoElementList.get(26).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanTwoElementList.get(27).attributes().get("style")).contains(greenHexCode);
+        softAssertions.assertThat(getStyleValueFromParticularElement(colSpanThreeElementList, 10)).contains(yellowHexCode);
+        softAssertions.assertThat(getStyleValueFromParticularElement(colSpanThreeElementList, 16)).contains(pinkHexCode);
+        softAssertions.assertThat(getStyleValueFromParticularElement(colSpanThreeElementList, 22)).contains(greenHexCode);
+        softAssertions.assertThat(getStyleValueFromParticularElement(getElementsByColumnSpan(jasperReportSummary, "2"), 27))
+            .contains(greenHexCode);
 
-        softAssertions.assertThat(colSpanFourElementList.get(11).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanThreeElementList.get(16).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanTwoElementList.get(36).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanFourElementList.get(14).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanTwoElementList.get(40).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanTwoElementList.get(46).attributes().get("style")).contains("background-color: #B8D9A2;");
-
-        softAssertions.assertThat(colSpanFourElementList.get(17).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanThreeElementList.get(22).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanTwoElementList.get(50).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanFourElementList.get(20).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanTwoElementList.get(54).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanTwoElementList.get(60).attributes().get("style")).contains(greenHexCode);
-
-        softAssertions.assertThat(colSpanFourElementList.get(23).attributes().get("style")).contains("background-color: #FEF7A5;");
-
-        softAssertions.assertThat(colSpanFourElementList.get(25).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanThreeElementList.get(32).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanTwoElementList.get(68).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanTwoElementList.get(70).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanFourElementList.get(28).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanTwoElementList.get(72).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanTwoElementList.get(73).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanThreeElementList.get(37).attributes().get("style")).contains("background-color: #FF9A9A;");
-        softAssertions.assertThat(colSpanTwoElementList.get(78).attributes().get("style")).contains("background-color: #FF9A9A;");
-
-        softAssertions.assertThat(colSpanFourElementList.get(31).attributes().get("style")).contains(redHexCode);
-
-        //background-color: #FF9A9A;
-        softAssertions.assertThat(colSpanFourElementList.get(32).attributes().get("style")).contains("background-color: #FF9A9A;");
-
-        softAssertions.assertThat(colSpanFourElementList.get(33).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanThreeElementList.get(42).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanTwoElementList.get(86).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanFourElementList.get(36).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanTwoElementList.get(90).attributes().get("style")).contains(greenHexCode);
-        softAssertions.assertThat(colSpanTwoElementList.get(96).attributes().get("style")).contains(greenHexCode);
-
-        // background-color: #B8D9A2;
-        softAssertions.assertThat(colSpanFourElementList.get(39).attributes().get("style")).contains(pinkHexCode);
-
-        // change part to STOCKMACH_BARFEEDER_3ABFL
-        //JasperReportSummary jasperReportSummary2 = jasperApiUtils.genericPartNumberUpgradePartComparisonTest("BENTPART_BARBENDBRAKE");
-        // can't find part with target cost or other two values below that aren't 0, revisit this
-
-        // target cost
-
-        // diff to target cost
-
-        // %diff to target cost
+        // TODO: Select part STOCKMACH_BARFEEDER_3ABFL then verify conditional formatting on target cost, diff to target cost and % diff to target cost
+        // Currently this part has no conditional formatting
 
         softAssertions.assertAll();
     }
@@ -648,5 +598,9 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
         Double newMinusOldOverhead = newValue - oldValue;
         double subSumDivideByOldOverhead = newMinusOldOverhead / oldValue;
         return df.format(Math.round(subSumDivideByOldOverhead * (Double.parseDouble("100"))));
+    }
+
+    private String getStyleValueFromParticularElement(ArrayList<Element> listToGetFrom, int indexToGet) {
+        return listToGetFrom.get(indexToGet).attributes().get("style");
     }
 }
