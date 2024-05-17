@@ -28,9 +28,10 @@ import java.util.Map;
 public class EmailService {
 
     private final String cloudContext = CustomerUtil.getAuthTargetCloudContext(UserUtil.getUser(APRIORI_DEVELOPER));
-    private Map<String, String> headers = new HashMap<>() {{
-        put("ap-cloud-context", cloudContext);
-    }};
+    private Map<String, String> headers =
+        new HashMap<>() {{
+                put("ap-cloud-context", cloudContext);
+            }};
 
     /**
      * Validates that an email has been sent by checking the target account
