@@ -5,12 +5,14 @@ import static com.apriori.css.api.enums.CssSearch.PAGE_SIZE;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_LT;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_CN;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
+import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_NI;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.DELETE;
 
 import com.apriori.cid.api.models.response.scenarios.ScenariosDeleteResponse;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.serialization.util.DateFormattingUtils;
+import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
@@ -97,6 +99,7 @@ public class DeleteScenariosTests {
             COMPONENT_TYPE_EQ.getKey() + componentType,
             SCENARIO_NAME_CN.getKey() + scenarioPartName,
             PAGE_SIZE.getKey() + pageSize,
+            SCENARIO_STATE_NI.getKey() + ScenarioStateEnum.PROCESSING + "|" + ScenarioStateEnum.COSTING,
             SCENARIO_CREATED_AT_LT.getKey() + LocalDateTime.now().minusDays(maxDays).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
 
         log.info("Number of '{}(S)' found for deletion '{}'", componentType, scenarioItems.size());
