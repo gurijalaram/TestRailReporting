@@ -293,33 +293,6 @@ public class ProcessRoutingTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("Due to update 14/10/22 routings can't be change for additive manufacturing")
-    @TestRail(id = {7855, 14985, 15799})
-    @Description("Validate behaviour when forcing a material that will fail costing within CID")
-    public void failCostingRouting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
-            .goToAdvancedTab()
-            .openRoutingSelection()
-            .selectRoutingPreferenceByName("Vat Photopolymerization")
-            .submit(EvaluatePage.class)
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isTrue();
-
-        evaluatePage.openDesignGuidance()
-            .selectIssueTypeGcd("Costing Failed", "Additive Manufacturing/Surface Treatment is infeasible", "Component:1");
-
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("This DMLS material is not compatible with Stereolithography.");
-        softAssertions.assertAll();
-    }
-
-    @Test
     @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7844, 7290, 7291, 7292})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
@@ -381,42 +354,6 @@ public class ProcessRoutingTests extends TestBaseUI {
         softAssertions.assertThat(materialSelectorPage.getListOfMaterialTypes())
             .containsExactlyInAnyOrder("All", "ABS", "Acetal", "Acrylic", "Thermoset", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene",
                 "Polyurethane", "TPA", "TPE", "TPO", "TPS", "TPU", "TPV");
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @Disabled("Due to update 14/10/22 routings can't be change for additive manufacturing")
-    @TestRail(id = {7850})
-    @Description("Validate behaviour when selecting a PG that auto triggers a secondary process")
-    public void routingSecondaryPG() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.ADDITIVE_MANUFACTURING);
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
-            .openMaterialSelectorTable()
-            .selectMaterial(MaterialNameEnum.VISIJET_M3_BLACK.getMaterialName())
-            .submit(EvaluatePage.class)
-            .goToAdvancedTab()
-            .openRoutingSelection()
-            .selectRoutingPreferenceByName("Material Jetting")
-            .submit(EvaluatePage.class)
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Printing / Breakoff");
-
-        evaluatePage.openMaterialSelectorTable()
-            .selectMaterial(MaterialNameEnum.ALUMINIUM_ALSI10MG.getMaterialName())
-            .submit(EvaluatePage.class)
-            .goToAdvancedTab()
-            .openRoutingSelection()
-            .selectRoutingPreferenceByName("Powder Bed Fusion / Direct Metal Laser Sintering")
-            .submit(EvaluatePage.class)
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Stress Relief / Ultrasonic Cleaning");
         softAssertions.assertAll();
     }
 
