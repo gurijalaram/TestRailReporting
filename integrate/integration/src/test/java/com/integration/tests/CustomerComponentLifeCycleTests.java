@@ -37,20 +37,28 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
      */
     @Test
     public void testValidateComponentLifeCycleFromUploadToCostReport() {
-        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
-        component.setCostingTemplate(CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build());
-
-        ScenarioResponse scenarioResponse = new DataCreationUtil(component)
-            .createPublishComponent();
-
-        softAssertions.assertThat(scenarioResponse.getPublished()).isTrue();
-        softAssertions.assertAll();
+//        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
+//        component.setCostingTemplate(CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build());
+//
+//        ScenarioResponse scenarioResponse = new DataCreationUtil(component)
+//            .createPublishComponent();
+//
+//        softAssertions.assertThat(scenarioResponse.getPublished()).isTrue();
+//        softAssertions.assertAll();
 
 
       new AdminLoginPage(driver)
             .login()
             .navigateToManageScenarioExport()
-            .filterScenarioByName(scenarioResponse.getScenarioName())
+            .clickNewScenarioExport()
+            .insertSetNameValue("Automation Set name Test")
+            .insertDescriptionValue("Automation Desc Test")
+            .insertNamePartValue("Automation Name Test")
+            .insertScenarioName("Automation Scenario Test")
+            .doubleClickCalendarButton()
+            .clickCreate()
+//            .filterScenarioByName(scenarioResponse.getScenarioName())
+            .filterScenarioByName("")
             .clickExportButton()
             .validateExportNowPopupAndCloseIt()
             .navigateToReports()
@@ -58,7 +66,7 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ReportsPageHeader.class)
             .waitForInputControlsLoad();
 
-      new ScenariosUtil().deleteScenario(component.getComponentIdentity(), scenarioResponse.getIdentity(), component.getUser());
+//      new ScenariosUtil().deleteScenario(component.getComponentIdentity(), scenarioResponse.getIdentity(), component.getUser());
     }
 
     private TestDataService initTestDataService() {

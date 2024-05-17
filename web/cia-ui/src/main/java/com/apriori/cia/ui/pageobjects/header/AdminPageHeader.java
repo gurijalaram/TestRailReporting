@@ -2,6 +2,7 @@ package com.apriori.cia.ui.pageobjects.header;
 
 import com.apriori.cia.ui.pageobjects.cirpages.CirUserGuidePage;
 import com.apriori.cia.ui.pageobjects.logout.AdminLogoutPage;
+import com.apriori.cia.ui.pageobjects.manage.NewScenarioExportPopup;
 import com.apriori.cia.ui.pageobjects.manage.ScenarioExport;
 import com.apriori.cia.ui.pageobjects.manage.SystemDataExport;
 import com.apriori.cia.ui.pageobjects.userguides.CiaUserGuide;
@@ -66,6 +67,9 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
     @FindBy(xpath = "//h2[contains(text(), 'Admin')]")
     private WebElement adminTitle;
 
+    @FindBy(xpath = "//div[@id='exportscheduleslist_wrapper']//a[@class='btn btn-default btn-primary']")
+    private WebElement newScenarioExportButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -94,6 +98,17 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
      */
     public ScenarioExport navigateToManageScenarioExport() {
         return navigateToSubPage(manageMenuOption, manageScenarioExportMenuOption, ScenarioExport.class);
+    }
+
+
+    /**
+     * Click New ScenarioExport
+     *
+     * @return ScenarioExport popup
+     */
+    public NewScenarioExportPopup clickNewScenarioExport() {
+        pageUtils.waitForElementAndClick(newScenarioExportButton);
+        return PageFactory.initElements(driver, NewScenarioExportPopup.class);
     }
 
     /**
