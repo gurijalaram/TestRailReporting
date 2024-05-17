@@ -1,6 +1,6 @@
 package com.apriori.acs.api.tests.workorders;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -29,7 +29,7 @@ public class CidWorkorderAPITests extends TestUtil {
         NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), NewPartRequest.class);
 
-        UserCredentials user = UserUtil.getUser(APRIORI_EXPERT);
+        UserCredentials user = UserUtil.getUser(APRIORI_DESIGNER);
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         FileResponse fileResponse = fileUploadResources.initializePartUpload(
             fileName,

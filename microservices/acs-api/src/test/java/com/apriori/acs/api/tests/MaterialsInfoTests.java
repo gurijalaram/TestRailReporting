@@ -1,7 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
-
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
 import com.apriori.acs.api.models.response.acs.materialsinfo.MaterialsInfoAdditiveManufacturingResponse;
 import com.apriori.acs.api.models.response.acs.materialsinfo.MaterialsInfoBarAndTubeResponse;
@@ -33,7 +31,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class MaterialsInfoTests {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_EXPERT);
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 22695)

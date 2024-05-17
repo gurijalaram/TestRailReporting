@@ -1,7 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
-
 import com.apriori.acs.api.models.response.acs.GcdTypes.GcdTypesAdditiveManufacturingResponse;
 import com.apriori.acs.api.models.response.acs.GcdTypes.GcdTypesAssemblyResponse;
 import com.apriori.acs.api.models.response.acs.GcdTypes.GcdTypesBarAndTubeFabResponse;
@@ -40,7 +38,7 @@ public class GcdTypesTests {
     private final AcsResources acsResources;
 
     public GcdTypesTests() {
-        UserCredentials userCredentials = UserUtil.getUser(APRIORI_EXPERT);
+        UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
         acsResources = new AcsResources(userCredentials);
     }
 

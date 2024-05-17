@@ -1,7 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
-
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.response.acs.availableroutings.AvailableRoutingsFirstLevel;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -27,7 +25,7 @@ public class AvailableRoutingsTests {
     private final UserCredentials user;
 
     public AvailableRoutingsTests() {
-        user = UserUtil.getUser(APRIORI_EXPERT);
+        user = UserUtil.getUser(APRIORI_DESIGNER);
     }
 
     @Test

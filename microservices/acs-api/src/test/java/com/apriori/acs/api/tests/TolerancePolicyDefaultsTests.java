@@ -1,6 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
@@ -27,7 +26,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class TolerancePolicyDefaultsTests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_EXPERT);
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 10473)

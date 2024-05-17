@@ -1,6 +1,6 @@
 package com.apriori.acs.api.utils.workorders;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -815,7 +815,7 @@ public class FileUploadResources {
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
         return FileManagementController.uploadFile(
-            UserUtil.getUser(APRIORI_EXPERT),
+            UserUtil.getUser(APRIORI_DESIGNER),
             ProcessGroupEnum.fromString(processGroup),
             fileName
         );

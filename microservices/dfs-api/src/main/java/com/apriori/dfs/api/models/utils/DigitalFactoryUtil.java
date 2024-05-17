@@ -1,6 +1,6 @@
 package com.apriori.dfs.api.models.utils;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 
 import com.apriori.dfs.api.enums.DFSApiEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -156,7 +156,7 @@ public class DigitalFactoryUtil {
                                                        String... inlineVariables) {
 
         return HTTPRequest.build(
-            getRequestEntity(expectedResponseCode, expectedType, UserUtil.getUser(APRIORI_EXPERT), inlineVariables))
+            getRequestEntity(expectedResponseCode, expectedType, UserUtil.getUser(APRIORI_DESIGNER), inlineVariables))
             .delete();
     }
 

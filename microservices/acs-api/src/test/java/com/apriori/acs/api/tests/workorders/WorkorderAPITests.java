@@ -1,6 +1,5 @@
 package com.apriori.acs.api.tests.workorders;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -52,7 +51,7 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class WorkorderAPITests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_EXPERT);
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
     private final FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
     private final AcsResources acsResources = new AcsResources(userCredentials);
     private final String assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();

@@ -1,7 +1,5 @@
 package com.apriori.dfs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
-
 import com.apriori.dfs.api.enums.DFSApiEnum;
 import com.apriori.dfs.api.models.response.MaterialStock;
 import com.apriori.dfs.api.models.response.MaterialStocks;
@@ -67,7 +65,7 @@ public class MaterialStocksTests {
         "Both pageNumber and pageSize must be greater than 0";
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final MaterialStockUtil materialStockUtil = new MaterialStockUtil();
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_EXPERT);
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = {29618})

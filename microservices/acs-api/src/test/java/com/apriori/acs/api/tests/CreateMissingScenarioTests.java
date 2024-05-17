@@ -1,6 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,7 +25,7 @@ import java.time.ZoneOffset;
 
 @ExtendWith(TestRulesAPI.class)
 public class CreateMissingScenarioTests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_EXPERT);
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 8767)

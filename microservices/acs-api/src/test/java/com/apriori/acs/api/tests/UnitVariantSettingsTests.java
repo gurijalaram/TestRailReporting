@@ -1,7 +1,5 @@
 package com.apriori.acs.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_EXPERT;
-
 import com.apriori.acs.api.models.response.acs.unitvariantsettings.UnitVariantSetting;
 import com.apriori.acs.api.models.response.acs.unitvariantsettings.UnitVariantSettingsResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
@@ -22,7 +20,7 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class UnitVariantSettingsTests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_EXPERT);
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 8772)
