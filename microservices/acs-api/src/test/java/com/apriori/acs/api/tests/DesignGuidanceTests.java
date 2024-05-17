@@ -44,7 +44,7 @@ public class DesignGuidanceTests {
         CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "DTCCastingIssues.catpart", workorderApiUtils.setupProductionInfoInputs());
         DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
 
-        designGuidanceAssertion(designGuidanceResponse, "DTC_MESSAGES");
+        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
     }
 
     @Test
@@ -56,7 +56,7 @@ public class DesignGuidanceTests {
         CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "DTCCastingIssues.catpart", workorderApiUtils.setupProductionInfoInputs());
         DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
 
-        designGuidanceAssertion(designGuidanceResponse, "DTC_MESSAGES");
+        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
     }
 
     @Test
@@ -68,7 +68,7 @@ public class DesignGuidanceTests {
         CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "piston_model1.prt", workorderApiUtils.setupProductionInfoInputs());
         DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
 
-        designGuidanceAssertion(designGuidanceResponse, "DTC_MESSAGES");
+        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
     }
 
     @Test
@@ -80,7 +80,7 @@ public class DesignGuidanceTests {
         CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "flanged_hole.prt", workorderApiUtils.setupProductionInfoInputs());
         DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
 
-        designGuidanceAssertion(designGuidanceResponse, "DTC_MESSAGES");
+        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
     }
 
     @Test
@@ -92,7 +92,7 @@ public class DesignGuidanceTests {
         CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "FlangedRound.SLDPRT", workorderApiUtils.setupProductionInfoInputs());
         DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
 
-        designGuidanceAssertion(designGuidanceResponse, "DTC_MESSAGES");
+        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
     }
 
     @Test
@@ -104,7 +104,7 @@ public class DesignGuidanceTests {
         CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "SheetMetal.prt", workorderApiUtils.setupProductionInfoInputs());
         DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
 
-        designGuidanceAssertion(designGuidanceResponse, "DTC_MESSAGES");
+        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
     }
 
     @Test
@@ -116,7 +116,7 @@ public class DesignGuidanceTests {
         CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "z_purlin.prt.2", workorderApiUtils.setupProductionInfoInputs());
         DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
 
-        designGuidanceAssertion(designGuidanceResponse, "DTC_MESSAGES");
+        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
     }
 
     @Test
@@ -128,6 +128,6 @@ public class DesignGuidanceTests {
         CostOrderStatusOutputs costOutputs = acsResources.uploadAndCost(processGroup, "Hydroforming.stp", workorderApiUtils.setupProductionInfoInputs());
         DesignGuidanceResponse designGuidanceResponse = acsResources.getDesignGuidance(costOutputs.getScenarioIterationKey(), "DTC_MESSAGES");
 
-        designGuidanceAssertion(designGuidanceResponse, "DTC_MESSAGES");
+        designGuidanceAssertion(designGuidanceResponse, "dtcMessages");
     }
 }
