@@ -45,6 +45,7 @@ public class CostingInput {
     private List<RoutingNodeOptions> routingNodeOptions;
     private String twoModelSourceScenarioIdentity;
     private Integer targetMass;
+    private CostRollupOverrides costRollupOverrides;
 
 
     public static class Threads {

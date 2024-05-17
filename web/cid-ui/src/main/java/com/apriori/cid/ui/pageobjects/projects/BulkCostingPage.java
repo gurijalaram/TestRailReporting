@@ -283,7 +283,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
      * @return this
      */
     public BulkCostingPage typeIntoAnnualVolume(String value) {
-        pageUtils.waitForElementAndClick(annualVolumeInput);
+        pageUtils.clearValueOfElement(annualVolumeInput);
         annualVolumeInput.sendKeys(value);
         return this;
     }
@@ -295,7 +295,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
      * @return this
      */
     public BulkCostingPage typeIntoYears(String value) {
-        pageUtils.waitForElementAndClick(yearsInput);
+        pageUtils.clearValueOfElement(yearsInput);
         yearsInput.sendKeys(value);
         return this;
     }
@@ -331,16 +331,4 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
         WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
         return pageUtils.isElementDisplayed(element);
     }
-
-    /**
-     * check if on bulk analysis page
-     *
-     * @return boolean
-     */
-    public boolean isOnBulkAnalysisPage() {
-        pageUtils.waitForElementAppear(bulkAnalysisTab);
-        return pageUtils.isElementDisplayed(bulkAnalysisTab);
-    }
-
-
 }

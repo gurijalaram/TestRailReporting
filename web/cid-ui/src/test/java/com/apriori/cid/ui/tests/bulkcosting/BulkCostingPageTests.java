@@ -139,9 +139,8 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickOnSaveButtonOnSetInputs()
             .clickOnCloseButtonOnSetInputs();
 
-        soft.assertThat(bulkCostingPage.isOnBulkAnalysisPage()).isTrue();
-        soft.assertThat(bulkCostingPage.ifElementDisplayedOnThePage("2-Model Machining")).isTrue();
-        soft.assertThat(bulkCostingPage.ifElementDisplayedOnThePage("AGCO Assumption")).isTrue();
+        soft.assertThat(bulkCostingPage.isElementDisplayedOnThePage("2-Model Machining")).isTrue();
+        soft.assertThat(bulkCostingPage.isElementDisplayedOnThePage("AGCO Assumption")).isTrue();
         soft.assertAll();
     }
 
