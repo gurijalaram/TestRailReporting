@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
@@ -136,6 +137,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10801})
     @Description("Retain the Status/Cost Maturity/Assignee/Lock during a Shallow Edit")
     public void testShallowEditRetainStatus() {
@@ -170,6 +172,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10802, 10803, 10835, 6613})
     @Description("Modify the Status/Cost Maturity/Lock after a Shallow Edit and ensure subcomponents are associated")
     public void testShallowEditModifyStatusCheckAssociationSmallSetSubcomponents() {
@@ -238,7 +241,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {10806, 10807, 10809, 6614})
     @Description("Shallow Edited assemblies and scenarios can be published into Public Workspace and can also add notes and lock/unlock scenario")
     public void testShallowEditPublishPublicWorkspaceLockNotes() {
