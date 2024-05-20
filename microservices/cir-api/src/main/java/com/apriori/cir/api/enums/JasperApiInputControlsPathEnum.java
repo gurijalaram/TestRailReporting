@@ -101,7 +101,9 @@ public enum JasperApiInputControlsPathEnum implements ExternalEndpointEnum {
     UPGRADE_COMPARISON(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("/upgradeComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;changeLevel;costMetricsLowThreshold;costMetricsHighThreshold;".concat(
         "timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false"))),
     UPGRADE_PART_COMPARISON(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("/upgradePartComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;partNumber;partNumberNew;changeLevel;".concat(
-        "costMetricsLowThreshold;costMetricsHighThreshold;timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false")));
+        "costMetricsLowThreshold;costMetricsHighThreshold;timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values?freshData=false"))),
+    UPGRADE_PART_COMPARISON_MODIFIED_IC(APRIORI_UPGRADE_PROCESS_REPORTS.getEndpointString().concat("/upgradePartComparison/inputControls/useLatestExport;earliestExportDate;latestExportDate;exportSetName;rollup;rollupNew;exportEventId;processGroup;partNumber;".concat(
+        "partNumberNew;changeLevel;costMetricsLowThreshold;costMetricsHighThreshold;timeMetricsLowThreshold;timeMetricsHighThreshold;currencyCode/values/pagination?freshData=false&selectedOnly=true")));
 
     private final String endpoint;
 
