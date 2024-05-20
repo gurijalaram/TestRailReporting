@@ -9,6 +9,7 @@ public enum CssSearch {
     SCENARIO_NAME_EQ("scenarioName[EQ],"),
     SCENARIO_NAME_CN("scenarioName[CN],"),
     SCENARIO_STATE_EQ("scenarioState[EQ],"),
+    SCENARIO_STATE_NI("scenarioState[NI],"),
     LAST_ACTION_EQ("lastAction[EQ],"),
     LATEST_EQ("latest[EQ],"),
     ITERATION_EQ("iteration[EQ],"),
