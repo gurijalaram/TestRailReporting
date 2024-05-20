@@ -3,6 +3,7 @@ package com.apriori.cia.ui.pageobjects.manage;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,6 +22,9 @@ public class NewScenarioExportPopup extends LoadableComponent<NewScenarioExportP
 
     @FindBy(xpath = "//input[@id='DTE_Field_description']")
     private WebElement descriptionInput;
+
+    @FindBy(xpath = "//button[@data-id='DTE_Field_scenarioKey.typeName']")
+    private WebElement componentTypeButton;
 
     @FindBy(xpath = "//input[@id='DTE_Field_scenarioKey-masterName']")
     private WebElement namePartInput;
@@ -91,6 +95,18 @@ public class NewScenarioExportPopup extends LoadableComponent<NewScenarioExportP
      */
     public NewScenarioExportPopup insertNamePartValue(final String namePartValue) {
         return setInputField(namePartInput, namePartValue);
+    }
+
+    /**
+     * Insert value for Name/Part # field
+     *
+     * @return NewScenarioExportPopup
+     */
+    public NewScenarioExportPopup selectComponentType(final String typeName) {
+        pageUtils.waitForElementAndClick(componentTypeButton);
+        pageUtils.waitForElementAndClick(driver.findElement(By.xpath(String.format("//span[text()='%s']", typeName))));
+
+        return this;
     }
 
     /**

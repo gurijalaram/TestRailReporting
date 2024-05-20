@@ -51,7 +51,7 @@ public class ScenarioExport extends AdminHeader {
         return pageUtils.isElementDisplayed(manageScenarioExportTitle);
     }
 
-    public ScenarioExport filterScenarioByName(final String scenarioName) {
+    public ScenarioExport filterByExportSetName(final String scenarioName) {
         WebElement filterField = pageUtils.waitForElementAppear(driver.findElement(By.xpath("//input[ @aria-controls='exportscheduleslist']")));
         filterField.sendKeys(scenarioName);
         return clickRefreshButton();

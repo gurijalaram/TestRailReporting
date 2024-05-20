@@ -16,7 +16,11 @@ import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 
+import org.apache.commons.text.RandomStringGenerator;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.suite.api.Suite;
 
@@ -24,7 +28,9 @@ import org.junit.platform.suite.api.Suite;
 public class CustomerComponentLifeCycleTests extends TestBaseUI {
 
     private static SoftAssertions softAssertions = new SoftAssertions();
-    private UserCredentials testingUser = UserUtil.getUser();
+    private ComponentInfoBuilder component;
+    private ScenarioResponse scenarioResponse;
+
 
 
     /**
@@ -37,28 +43,29 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
      */
     @Test
     public void testValidateComponentLifeCycleFromUploadToCostReport() {
-//        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
-//        component.setCostingTemplate(CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build());
-//
-//        ScenarioResponse scenarioResponse = new DataCreationUtil(component)
-//            .createPublishComponent();
-//
-//        softAssertions.assertThat(scenarioResponse.getPublished()).isTrue();
-//        softAssertions.assertAll();
+        component = new ComponentRequestUtil().getComponent();
+        component.setCostingTemplate(CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build());
 
+        scenarioResponse = new DataCreationUtil(component)
+            .createPublishComponent();
+
+        softAssertions.assertThat(scenarioResponse.getPublished()).isTrue();
+        softAssertions.assertAll();
+
+      final String exportSetName = new GenerateStringUtil().generateStringForAutomationMark();
 
       new AdminLoginPage(driver)
             .login()
             .navigateToManageScenarioExport()
             .clickNewScenarioExport()
-            .insertSetNameValue("Automation Set name Test")
-            .insertDescriptionValue("Automation Desc Test")
-            .insertNamePartValue("Automation Name Test")
-            .insertScenarioName("Automation Scenario Test")
+            .insertSetNameValue(exportSetName)
+            .insertDescriptionValue("Automation Test")
+            .insertNamePartValue(component.getComponentName())
+            .selectComponentType("Part")
+            .insertScenarioName(scenarioResponse.getScenarioName())
             .doubleClickCalendarButton()
             .clickCreate()
-//            .filterScenarioByName(scenarioResponse.getScenarioName())
-            .filterScenarioByName("")
+            .filterByExportSetName(exportSetName)
             .clickExportButton()
             .validateExportNowPopupAndCloseIt()
             .navigateToReports()
@@ -66,7 +73,14 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ReportsPageHeader.class)
             .waitForInputControlsLoad();
 
-//      new ScenariosUtil().deleteScenario(component.getComponentIdentity(), scenarioResponse.getIdentity(), component.getUser());
+
+    }
+
+    @AfterEach
+    public void cleanUp() {
+        if(component != null && scenarioResponse != null){
+            new ScenariosUtil().deleteScenario(component.getComponentIdentity(), scenarioResponse.getIdentity(), component.getUser());
+        }
     }
 
     private TestDataService initTestDataService() {
