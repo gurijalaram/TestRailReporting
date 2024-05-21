@@ -32,6 +32,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Slf4j
 public class FileResourceUtil extends AwsUtil {
@@ -386,5 +387,35 @@ public class FileResourceUtil extends AwsUtil {
     @SneakyThrows
     public static String readFileToString(String fileName) {
         return FileUtils.readFileToString(FileResourceUtil.getResourceAsFile(fileName), StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Find the downloaded file with zip extension
+     *
+     * @param path          path to search for file
+     * @param fileExtension extension of file to search
+     * @return file with complete path
+     */
+    public static String findFileWithExtension(Path path, String fileExtension) {
+        String fileWithExtension = "";
+        try {
+            if (!Files.isDirectory(path)) {
+                throw new IllegalArgumentException("Path must be a directory!");
+            }
+        } catch (Exception ioException) {
+            log.error("PATH NOT FOUND!!");
+        }
+
+        try (Stream<Path> walk = Files.walk(Paths.get(String.valueOf(path)))) {
+            fileWithExtension = walk
+                .filter(p -> !Files.isDirectory(p))   // not a directory
+                .map(p -> p.toString().toLowerCase()) // convert path to string
+                .filter(f -> f.endsWith(fileExtension))       // check end with
+                .findFirst()
+                .get();
+        } catch (Exception ioException) {
+            log.error("FILE NOT FOUND!!");
+        }
+        return fileWithExtension;
     }
 }
