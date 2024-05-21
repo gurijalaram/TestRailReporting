@@ -13,6 +13,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 import io.restassured.RestAssured;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
+import io.restassured.config.SSLConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -81,11 +82,12 @@ public class NexusUtil {
      *
      * @return NexusComponent
      */
-    public static NexusComponent downloadComponent() {
+    public static NexusComponent downloadComponent(NexusAgentItem nexusAgentItem) {
         try {
             nexusComponentData.setBaseFolder(String.valueOf(FileResourceUtil.createTempDir(null)).toLowerCase());
             nexusComponentData.setAgentZipFolder(nexusComponentData.getBaseFolder() + File.separator + StringUtils.substringAfterLast(nexusAgentItem.getName(), "/"));
             nexusComponentData.setAgentUnZipFolder(nexusComponentData.getBaseFolder() + File.separator + FilenameUtils.removeExtension(StringUtils.substringAfterLast(nexusAgentItem.getName(), "/")));
+            nexusComponentData.setAgentItemName(nexusAgentItem.getName());
         } catch (Exception ioException) {
             log.error("PATH NOT FOUND!!");
         }
@@ -208,6 +210,7 @@ public class NexusUtil {
                     }
                 })
                 .config(RestAssuredConfig.config()
+                    .sslConfig(new SSLConfig().relaxedHTTPSValidation())
                     .httpClient(
                         HttpClientConfig.httpClientConfig()
                             .setParam("http.connection.timeout", 60000)
