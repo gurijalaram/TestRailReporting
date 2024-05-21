@@ -5,7 +5,7 @@ import com.apriori.shared.util.annotations.Schema;
 import java.util.ArrayList;
 import java.util.List;
 
-@Schema(location = "workorders/CostWorkOrderStatusResponse.json")
+@Schema(location = "workorders/BomLoaderSchema.json")
 public class ListOfBomLoaderStatuses extends ArrayList<ListOfBomLoaderStatuses> {
 
     private List<ListOfBomLoaderStatus> commandType;

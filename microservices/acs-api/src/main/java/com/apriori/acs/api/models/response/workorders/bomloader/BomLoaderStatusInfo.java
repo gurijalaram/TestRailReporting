@@ -10,9 +10,13 @@ import lombok.Data;
 public class BomLoaderStatusInfo {
     private Integer version;
     private String id;
+    private String priority;
+    private String userId;
     private String status;
     private String searchKey;
     private BomLoaderCommand command;
     private String dateSubmitted;
     private String dateStarted;
+    private String dateCompleted;
+    private String errorMessage;
 }
