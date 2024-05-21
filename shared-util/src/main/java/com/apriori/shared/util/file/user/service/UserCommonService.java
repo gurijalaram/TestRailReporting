@@ -23,7 +23,7 @@ public class UserCommonService {
 
     public static final String DEFAULT_USER_NAME = PropertiesContext.get("global.default_user_name");
     public static final String DEFAULT_PASSWORD = PropertiesContext.get("global.default_password");
-    public static final RolesEnum DEFAULT_ROLE = RolesEnum.valueOf(PropertiesContext.get("global.default_role"));
+    public static final RolesEnum DEFAULT_ROLE = RolesEnum.valueOf(PropertiesContext.get("global.default_role").toUpperCase());
 
     public static final Boolean IS_DIFFERENT_USERS = Boolean.valueOf(PropertiesContext.get("global.different_users"));
     public static final Boolean USE_DEFAULT_USER = Boolean.valueOf(PropertiesContext.get("global.use_default_user"));
