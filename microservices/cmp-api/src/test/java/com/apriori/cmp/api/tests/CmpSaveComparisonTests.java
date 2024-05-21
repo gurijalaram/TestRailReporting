@@ -54,30 +54,6 @@ public class CmpSaveComparisonTests {
         scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-//        component1 = componentsUtil.postComponent(
-//            ComponentInfoBuilder.builder()
-//                .componentName(componentName1)
-//                .scenarioName(scenarioName)
-//                .resourceFile(resourceFile1)
-//                .user(currentUser)
-//                .build()
-//        );
-//        component2 = componentsUtil.postComponent(
-//            ComponentInfoBuilder.builder()
-//                .componentName(componentName2)
-//                .scenarioName(scenarioName)
-//                .resourceFile(resourceFile2)
-//                .user(currentUser)
-//                .build()
-//        );
-//        component3 = componentsUtil.postComponent(
-//            ComponentInfoBuilder.builder()
-//                .componentName(componentName3)
-//                .scenarioName(scenarioName)
-//                .resourceFile(resourceFile3)
-//                .user(currentUser)
-//                .build()
-//        );
         component1 = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
         component2.setUser(component1.getUser());
