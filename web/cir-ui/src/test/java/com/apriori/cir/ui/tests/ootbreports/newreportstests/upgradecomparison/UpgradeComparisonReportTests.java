@@ -22,7 +22,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
