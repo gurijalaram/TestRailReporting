@@ -260,9 +260,9 @@ public class UserPreferencesUtil {
     /**
      * Resets specified settings
      *
-     * @param userCredentials     -the user credentials
-     * @param preferencesEnum-the preference enum
-     *                            * @param value - the value to set
+     * @param userCredentials - the user credentials
+     * @param preferencesEnum - the preference enum
+     * @param value           - the value to set
      */
     public void resetSpecificPreference(UserCredentials userCredentials, PreferencesEnum preferencesEnum, String value) {
         Map<PreferencesEnum, String> updateStrategy = new HashMap<>();

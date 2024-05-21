@@ -20,6 +20,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import com.google.common.collect.Comparators;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.Matchers;
@@ -56,6 +57,7 @@ public class CmpComparisonTests {
     }
 
     @Test
+    @Issue("APD-2992")
     @TestRail(id = {26152, 26183, 26184, 26185, 26186, 26187})
     @Description("Verify comparison for a given user")
     public void verifyComparisonForGivenUser() {
@@ -111,7 +113,7 @@ public class CmpComparisonTests {
 
         softAssertions.assertThat(Comparators.isInOrder(sortResponse.stream().map(GetComparisonResponse::getCreatedAt).collect(Collectors.toList()), Comparator.reverseOrder())).isTrue();
 
-        final String secondUser = comparisonUtils.getCurrentPerson(UserUtil.getUser()).getIdentity();
+        final String secondUser = comparisonUtils.getCurrentPerson(component2.getUser()).getIdentity();
 
         List<GetComparisonResponse> secondUserQuery = comparisonUtils.queryComparison(componentA.getUser(), "pageNumber, 1", "pageSize, 10", "createdBy[EQ],"
             + secondUser);
