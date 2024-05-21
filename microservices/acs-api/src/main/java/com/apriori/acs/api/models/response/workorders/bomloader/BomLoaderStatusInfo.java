@@ -1,6 +1,5 @@
 package com.apriori.acs.api.models.response.workorders.bomloader;
 
-import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostStatusCommand;
 import com.apriori.shared.util.annotations.Schema;
 
 import lombok.Data;

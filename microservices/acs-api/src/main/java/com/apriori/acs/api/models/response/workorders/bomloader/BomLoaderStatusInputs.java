@@ -16,10 +16,6 @@ public class BomLoaderStatusInputs {
         return this;
     }
 
-    public BomLoaderMapping getInputSetId() {
-        return mapping;
-    }
-
     public BomLoaderStatusInputs setmapping(BomLoaderMapping mapping) {
         this.mapping = mapping;
         return this;
