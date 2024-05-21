@@ -22,6 +22,7 @@ public class ScenarioCostingDefaultsResponse {
     private Boolean machiningModeEnabled;
     private Integer computedBatchSize;
     private Integer batchSize;
+    private String costMode;
     private Boolean manuallyCosted;
     private Integer batchSizeOverride;
     private Boolean defaultToPrimaryVpe;
