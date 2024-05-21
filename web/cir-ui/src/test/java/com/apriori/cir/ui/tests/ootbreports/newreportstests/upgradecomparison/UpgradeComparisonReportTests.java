@@ -114,65 +114,53 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
     public void verifyPercentDiffCalculationsAreCorrect() {
         JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCoreCurrencyOnlyUpgradeComparisonTests(CurrencyEnum.GBP.getCurrency());
 
-        ArrayList<Element> colSpanTwoElements = getElementsByColumnSpan(jasperReportSummary, "2");
-        ArrayList<Element> colSpanThreeElements = getElementsByColumnSpan(jasperReportSummary, "3");
-        ArrayList<Element> colSpanFourElements = getElementsByColumnSpan(jasperReportSummary, "4");
-        ArrayList<Element> colSpanFiveElements = getElementsByColumnSpan(jasperReportSummary, "5");
+        ArrayList<Element> colSpanTwoElements = jasperApiUtils.getElementsByColumnSpan(jasperReportSummary, "2");
+        ArrayList<Element> colSpanThreeElements = jasperApiUtils.getElementsByColumnSpan(jasperReportSummary, "3");
+        ArrayList<Element> colSpanFourElements = jasperApiUtils.getElementsByColumnSpan(jasperReportSummary, "4");
+        ArrayList<Element> colSpanFiveElements = jasperApiUtils.getElementsByColumnSpan(jasperReportSummary, "5");
 
         // FBC % diff calculation
         Double fbcOldValue = Double.parseDouble((colSpanFourElements.get(7).text()));
         Double fbcNewValue = Double.parseDouble((colSpanThreeElements.get(8).text()));
         String actualFbcPercentDiffValue = colSpanTwoElements.get(10).text().replace("%", "");
-        softAssertions.assertThat(getExpectedPercentDiffValue(fbcOldValue, fbcNewValue)).startsWith(actualFbcPercentDiffValue);
+        softAssertions.assertThat(jasperApiUtils.getExpectedPercentDiffValue(fbcOldValue, fbcNewValue)).startsWith(actualFbcPercentDiffValue);
 
         // PPC % diff calculation
         Double ppcOldValue = Double.parseDouble((colSpanFourElements.get(8).text()));
         Double ppcNewValue = Double.parseDouble((colSpanTwoElements.get(11).text()));
         String actualPpcPercentDiffValue = colSpanTwoElements.get(12).text().replace("%", "");
-        softAssertions.assertThat(getExpectedPercentDiffValue(ppcOldValue, ppcNewValue)).startsWith(actualPpcPercentDiffValue);
+        softAssertions.assertThat(jasperApiUtils.getExpectedPercentDiffValue(ppcOldValue, ppcNewValue)).startsWith(actualPpcPercentDiffValue);
 
         // Hard Tooling Cost % diff calculation
         Double htcOldValue = Double.parseDouble((colSpanFourElements.get(33).text().replace(",", "")));
         Double htcNewValue = Double.parseDouble((colSpanTwoElements.get(79).text().replace(",", "")));
         String actualHtcPercentDiffValue = colSpanTwoElements.get(80).text().replace("%", "");
-        softAssertions.assertThat(getExpectedPercentDiffValue(htcOldValue, htcNewValue)).startsWith(actualHtcPercentDiffValue);
+        softAssertions.assertThat(jasperApiUtils.getExpectedPercentDiffValue(htcOldValue, htcNewValue)).startsWith(actualHtcPercentDiffValue);
 
         // Material Cost % diff calculation
         Double mcOldValue = Double.parseDouble((colSpanFourElements.get(54).text()));
         Double mcNewValue = Double.parseDouble((colSpanThreeElements.get(64).text()));
         String actualMcPercentDiffValue = colSpanTwoElements.get(136).text().replace("%", "");
-        softAssertions.assertThat(getExpectedPercentDiffValue(mcOldValue, mcNewValue)).startsWith(actualMcPercentDiffValue);
+        softAssertions.assertThat(jasperApiUtils.getExpectedPercentDiffValue(mcOldValue, mcNewValue)).startsWith(actualMcPercentDiffValue);
 
         // Total Cycle Time % diff calculation
         Double ctOldValue = Double.parseDouble((colSpanFiveElements.get(71).text()));
         Double ctNewValue = Double.parseDouble((colSpanTwoElements.get(225).text()));
         String actualCtPercentDiffValue = colSpanThreeElements.get(105).text().replace("%", "");
-        softAssertions.assertThat(getExpectedPercentDiffValue(ctOldValue, ctNewValue)).startsWith(actualCtPercentDiffValue);
+        softAssertions.assertThat(jasperApiUtils.getExpectedPercentDiffValue(ctOldValue, ctNewValue)).startsWith(actualCtPercentDiffValue);
 
         // Total Labour Time % diff calculation
         Double labourTimeOldValue = Double.parseDouble((colSpanFiveElements.get(42).text()));
         Double labourTimeNewValue = Double.parseDouble((colSpanThreeElements.get(56).text()));
         String actualLabourTimePercentDiffValue = colSpanTwoElements.get(116).text().replace("%", "");
-        softAssertions.assertThat(getExpectedPercentDiffValue(labourTimeOldValue, labourTimeNewValue)).startsWith(actualLabourTimePercentDiffValue);
+        softAssertions.assertThat(jasperApiUtils.getExpectedPercentDiffValue(labourTimeOldValue, labourTimeNewValue)).startsWith(actualLabourTimePercentDiffValue);
 
         // Batch Setup Time % diff calculation
         Double batchSetupTimeOldValue = Double.parseDouble((colSpanTwoElements.get(40).text()));
         Double batchSetupTimeNewValue = Double.parseDouble((colSpanThreeElements.get(22).text()));
         String actualBatchSetupTimePercentDiffValue = colSpanTwoElements.get(41).text().replace("%", "");
-        softAssertions.assertThat(getExpectedPercentDiffValue(batchSetupTimeOldValue, batchSetupTimeNewValue)).startsWith(actualBatchSetupTimePercentDiffValue);
+        softAssertions.assertThat(jasperApiUtils.getExpectedPercentDiffValue(batchSetupTimeOldValue, batchSetupTimeNewValue)).startsWith(actualBatchSetupTimePercentDiffValue);
 
         softAssertions.assertAll();
-    }
-
-    private String getExpectedPercentDiffValue(Double oldValue, Double newValue) {
-        DecimalFormat df = new DecimalFormat("#");
-
-        Double newMinusOldOverhead = newValue - oldValue;
-        double subSumDivideByOldOverhead = newMinusOldOverhead / oldValue;
-        return df.format(Math.round(subSumDivideByOldOverhead * (Double.parseDouble("100"))));
-    }
-
-    private ArrayList<Element> getElementsByColumnSpan(JasperReportSummary jasperReportSummary, String columnSpanValue) {
-        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", columnSpanValue);
     }
 }
