@@ -5,10 +5,13 @@ import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.time.Duration;
 
 @Slf4j
 public class ScenarioExport extends AdminHeader {
@@ -18,6 +21,15 @@ public class ScenarioExport extends AdminHeader {
 
     @FindBy(css = "[id='exportscheduleslist']")
     private WebElement exportTable;
+
+    @FindBy(xpath = "//a[text()='View History']")
+    private WebElement viewHistoryTab;
+
+    @FindBy(xpath = "//div[@id='exportscheduleslist_wrapper']//i[@class='fa fa-refresh']")
+    private WebElement refreshButton;
+
+    @FindBy(xpath = "//input[@id='hist-export-name']")
+    private WebElement exportSetNameContainsInput;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -51,29 +63,6 @@ public class ScenarioExport extends AdminHeader {
         return pageUtils.isElementDisplayed(manageScenarioExportTitle);
     }
 
-    public ScenarioExport filterByExportSetName(final String scenarioName) {
-        WebElement filterField = pageUtils.waitForElementAppear(driver.findElement(By.xpath("//input[ @aria-controls='exportscheduleslist']")));
-        filterField.sendKeys(scenarioName);
-        return clickRefreshButton();
-    }
-
-    public ScenarioExport clickRefreshButton() {
-        pageUtils.waitForElementAndClick(By.xpath("//a[@id='ToolTables_exportscheduleslist_3']"));
-        return this;
-    }
-
-    public ScenarioExport clickExportButton() {
-        pageUtils.waitForElementAndClick(By.xpath("(//a[@class='btn btn-default btn-xs'])[1]"));
-        return this;
-    }
-
-    public ScenarioExport validateExportNowPopupAndCloseIt() {
-        pageUtils.waitForElementToAppear(By.xpath("//div[contains(text(), 'Export initiated for export set')]"));
-        pageUtils.waitForElementAndClick(By.xpath("//div[@class='modal error-dialog fade out in']//button[@class='btn btn-primary btn-sm']"));
-        return this;
-    }
-
-
     /**
      * Checks if header is enabled
      *
@@ -82,5 +71,49 @@ public class ScenarioExport extends AdminHeader {
     public boolean isHeaderEnabled() {
         pageUtils.waitForElementToAppear(manageScenarioExportTitle);
         return pageUtils.isElementEnabled(manageScenarioExportTitle);
+    }
+
+
+    /**
+     * Click view history
+     *
+     * @return ScenarioExport popup
+     */
+    public ScenarioExport clickViewHistoryTab() {
+        pageUtils.waitForElementAndClick(viewHistoryTab);
+        return this;
+    }
+
+    public ScenarioExport validateStatusIsSuccessForExportSet(final String exportSetName) {
+        pageUtils.waitForElementToBeClickable(exportSetNameContainsInput);
+        exportSetNameContainsInput.sendKeys(exportSetName);
+        pageUtils.waitForElementAndClick(By.xpath("//button[@class='btn btn-primary']"));
+
+        waitForElementInTable(By.xpath(String.format("//td[@class=' truncated' and text()='%s']", exportSetName)));
+
+        waitForElementInTable(By.xpath("//span[text()='Success']"));
+
+        return this;
+    }
+
+    private void waitForElementInTable(By elementToCheck) {
+        Duration webDriverWait = Duration.ofMinutes(1);
+        int retries = 0;
+        int maxRetries = 4;
+
+        while (retries < maxRetries) {
+            try {
+                retries++;
+                pageUtils.waitForElementToAppear(elementToCheck, webDriverWait);
+                return;
+
+            } catch (TimeoutException e) {
+                log.info("Refreshing tab to get last exportSet");
+                log.debug(e.getMessage());
+                pageUtils.waitForElementAndClick(refreshButton);
+            }
+        }
+
+        throw new RuntimeException("Refreshing ExportSet table");
     }
 }

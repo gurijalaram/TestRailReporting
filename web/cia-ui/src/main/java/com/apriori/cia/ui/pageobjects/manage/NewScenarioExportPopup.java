@@ -13,7 +13,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class NewScenarioExportPopup extends LoadableComponent<NewScenarioExportPopup> {
 
-
     @FindBy(xpath = "//div[@class='DTE_Header_Content']")
     private WebElement titleText;
 
@@ -127,9 +126,9 @@ public class NewScenarioExportPopup extends LoadableComponent<NewScenarioExportP
      */
     public ScenarioExport clickCreate() {
         pageUtils.waitForElementAndClick(createdButton);
+        pageUtils.waitForElementNotVisible(titleText, 2);
         return PageFactory.initElements(driver, ScenarioExport.class);
     }
-
 
     /**
      * Wait input is available and insert value

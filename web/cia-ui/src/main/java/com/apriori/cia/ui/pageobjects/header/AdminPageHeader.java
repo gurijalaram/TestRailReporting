@@ -174,6 +174,7 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
      */
     private ReportsPageHeader navigateToPage(WebElement parentPage) {
         pageUtils.waitForElementAndClick(parentPage);
+        pageUtils.switchToWindow(1);
         return new ReportsPageHeader(driver);
     }
 

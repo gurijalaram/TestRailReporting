@@ -10,6 +10,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.time.Duration;
+
 @Slf4j
 public class ReportsPageHeader extends ReportsHeader {
 
@@ -94,7 +96,7 @@ public class ReportsPageHeader extends ReportsHeader {
      */
     public GenericReportPage waitForInputControlsLoad() {
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        pageUtils.waitForElementToAppear(applyButton);
+        pageUtils.waitForElementToAppear(By.id("apply"), Duration.ofMinutes(1));
         return new GenericReportPage(driver);
     }
 

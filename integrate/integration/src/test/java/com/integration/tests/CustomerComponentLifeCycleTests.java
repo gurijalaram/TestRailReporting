@@ -10,19 +10,17 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.dataservice.TestDataService;
 import com.apriori.shared.util.enums.ReportNamesEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 
-import org.apache.commons.text.RandomStringGenerator;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.suite.api.Suite;
+
+import java.time.Duration;
 
 @Suite
 public class CustomerComponentLifeCycleTests extends TestBaseUI {
@@ -30,7 +28,6 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
     private static SoftAssertions softAssertions = new SoftAssertions();
     private ComponentInfoBuilder component;
     private ScenarioResponse scenarioResponse;
-
 
 
     /**
@@ -52,10 +49,16 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
         softAssertions.assertThat(scenarioResponse.getPublished()).isTrue();
         softAssertions.assertAll();
 
-      final String exportSetName = new GenerateStringUtil().generateStringForAutomationMark();
+        try {
+            Thread.sleep(Duration.ofMinutes(1).toMillis()); // wait until published part will be loaded to aP PRO
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
-      new AdminLoginPage(driver)
-            .login()
+        final String exportSetName = new GenerateStringUtil().generateStringForAutomationMark();
+
+        new AdminLoginPage(driver)
+            .loginWithSpecificUser(UserUtil.getUser())//component.getUser())
             .navigateToManageScenarioExport()
             .clickNewScenarioExport()
             .insertSetNameValue(exportSetName)
@@ -65,9 +68,8 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
             .insertScenarioName(scenarioResponse.getScenarioName())
             .doubleClickCalendarButton()
             .clickCreate()
-            .filterByExportSetName(exportSetName)
-            .clickExportButton()
-            .validateExportNowPopupAndCloseIt()
+            .clickViewHistoryTab()
+            .validateStatusIsSuccessForExportSet(exportSetName)
             .navigateToReports()
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ReportsPageHeader.class)
@@ -78,7 +80,7 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
 
     @AfterEach
     public void cleanUp() {
-        if(component != null && scenarioResponse != null){
+        if (component != null && scenarioResponse != null) {
             new ScenariosUtil().deleteScenario(component.getComponentIdentity(), scenarioResponse.getIdentity(), component.getUser());
         }
     }
