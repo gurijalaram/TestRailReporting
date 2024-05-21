@@ -73,6 +73,9 @@
         "componentsPerProduct": {
           "type": "integer"
         },
+        "costMode": {
+          "type": "string"
+        },
         "manuallyCosted": {
           "type": "boolean"
         },
