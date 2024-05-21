@@ -27,19 +27,33 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     private WebElement isEditedSuccessfully;
     @FindBy(xpath = "//div[contains(@class,'MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24')]")
     private WebElement removeConfirmationLabel;
-
     @FindBy(id = "qa-input-row-delete-new")
     private WebElement removeButton;
     @FindBy(xpath = "//button[contains(@class,'MuiButtonBase-root MuiButton-root')][@data-testid = 'primary-button']")
     private WebElement removeScenarioButton;
     @FindBy(xpath = "//button[contains(.,'Close')]")
     private WebElement closeButton;
+    @FindBy(id = "qa-input-row-set-inputs")
+    private WebElement setInputsButton;
+    @FindBy(xpath = "//h2[contains(.,'Set Inputs')]")
+    private WebElement setInputsLabel;
+    @FindBy(xpath = "//div[@class = 'select-field select-field-process-group-name form-group']/div[1]")
+    private WebElement processGroupDropdown;
+    @FindBy(xpath = "//div[@class = 'select-field select-field-vpe-name form-group digital-factory-select-field']/div[1]")
+    private WebElement digitalFactoryDropdown;
+    @FindBy(xpath = "//input[@name = 'annualVolume']")
+    private WebElement annualVolumeInput;
+    @FindBy(xpath = "//input[@name = 'productionLife']")
+    private WebElement yearsInput;
+    @FindBy(xpath = "//button[contains(.,'Save')]")
+    private WebElement saveButton;
+    @FindBy(xpath = "//a[@href = '/bulk-analysis']")
+    private WebElement bulkAnalysisTab;
     private PageUtils pageUtils;
     private WebDriver driver;
 
     @Override
     protected void load() {
-
     }
 
     @Override
@@ -199,9 +213,122 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
      * @param scenario - scenario name
      * @return boolean value
      */
-
     public boolean isScenarioPresentOnPage(String scenario) {
         return driver.getPageSource().contains(scenario);
     }
 
+    /**
+     * get expected set input button state
+     *
+     * @param attributeValue - expected string in attribute
+     * @return String abut the state of the button
+     */
+    public String getSetInputButtonState(String attributeValue) {
+        pageUtils.waitForElementAppear(setInputsButton);
+        pageUtils.checkElementAttribute(setInputsButton, "aria-label", attributeValue);
+        return setInputsButton.getAttribute("aria-label");
+    }
+
+    /**
+     * click on the button Set Inputs
+     *
+     * @return this
+     */
+    public BulkCostingPage clickSetInputsButton() {
+        pageUtils.waitForElementAndClick(setInputsButton);
+        return this;
+    }
+
+    /**
+     * check if the Set Inputs window is present
+     *
+     * @return boolean value
+     */
+    public boolean isScenarioPresentOnPage() {
+        return pageUtils.waitForWebElement(setInputsLabel);
+    }
+
+    /**
+     * select a value for process group dropdown
+     *
+     * @param value selected value
+     * @return this
+     */
+    public BulkCostingPage selectDropdownProcessGroup(String value) {
+        pageUtils.waitForElementAndClick(processGroupDropdown);
+        String xpath = "//div[contains(.,'" + value + "')][contains(@class,'text-overflow option-content')]";
+        WebElement webElement = pageUtils.waitForElementToAppear(By.xpath(xpath));
+        pageUtils.waitForElementAndClick(webElement);
+        return this;
+    }
+
+    /**
+     * select a value for digital factory dropdown
+     *
+     * @param value selected value
+     * @return this
+     */
+    public BulkCostingPage selectDropdownDigitalFactory(String value) {
+        pageUtils.waitForElementAndClick(digitalFactoryDropdown);
+        String xpath = "//div[contains(.,'" + value + "')][contains(@class,'text-overflow option-content')]";
+        WebElement webElement = pageUtils.waitForElementToAppear(By.xpath(xpath));
+        pageUtils.waitForElementAndClick(webElement);
+        return this;
+    }
+
+    /**
+     * sent values into the input field annual volume
+     *
+     * @param value send value
+     * @return this
+     */
+    public BulkCostingPage typeIntoAnnualVolume(String value) {
+        pageUtils.clearValueOfElement(annualVolumeInput);
+        annualVolumeInput.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * sent values into the input field: Years
+     *
+     * @param value send value
+     * @return this
+     */
+    public BulkCostingPage typeIntoYears(String value) {
+        pageUtils.clearValueOfElement(yearsInput);
+        yearsInput.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * click on the save button in the set inputs
+     *
+     * @return this
+     */
+    public BulkCostingPage clickOnSaveButtonOnSetInputs() {
+        pageUtils.waitForElementAndClick(saveButton);
+        return this;
+    }
+
+    /**
+     * click on the close button in the set inputs
+     *
+     * @return this
+     */
+    public BulkCostingPage clickOnCloseButtonOnSetInputs() {
+        pageUtils.waitForElementAndClick(closeButton);
+        return this;
+    }
+
+    /**
+     * check if element is displayed in the page
+     *
+     * @param text text to check on the page
+     * @return boolean
+     */
+    public boolean isElementDisplayedOnThePage(String text) {
+        String xpath = "//div[contains(@aria-label,'" + text + "')]";
+        WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
+        return pageUtils.isElementDisplayed(element);
+    }
 }
