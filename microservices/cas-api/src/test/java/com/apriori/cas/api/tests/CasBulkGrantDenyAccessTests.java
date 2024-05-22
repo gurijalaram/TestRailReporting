@@ -1,7 +1,5 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
-
 import static com.apriori.cds.api.enums.ApplicationEnum.ACS;
 import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
@@ -17,6 +15,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
@@ -43,7 +42,7 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class CasBulkGrantDenyAccessTests {
-    private final UserCredentials currentUser = UserUtil.getUser("admin");
+    private final UserCredentials currentUser = UserUtil.getUser(RolesEnum.APRIORI_DESIGNER);
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private String acsIdentity;
