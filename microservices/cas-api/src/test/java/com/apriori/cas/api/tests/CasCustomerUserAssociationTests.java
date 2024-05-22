@@ -1,5 +1,7 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.CasErrorMessage;
 import com.apriori.cas.api.models.response.Customer;
@@ -42,7 +44,7 @@ public class CasCustomerUserAssociationTests {
 
     @BeforeAll
     public static void globalSetup() {
-        RequestEntityUtil_Old.useTokenForRequests(UserUtil.getUser("admin").getToken());
+        RequestEntityUtil_Old.useTokenForRequests(UserUtil.getUser(APRIORI_DEVELOPER).getToken());
     }
 
     @BeforeEach

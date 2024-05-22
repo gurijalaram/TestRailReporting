@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,7 +29,7 @@ public class TwoDImageByScenarioIterationKeyTests extends TestUtil {
     @TestRail(id = 10902)
     @Description("Validate Get 2D Image by Scenario Iteration Key Endpoint")
     public void testGet2DImageByScenarioIterationKey() {
-        UserCredentials userCredentials = UserUtil.getUser("common");
+        UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
         AcsResources acsResources = new AcsResources(userCredentials);
 
