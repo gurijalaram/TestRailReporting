@@ -25,7 +25,7 @@ public class ScenarioExport extends AdminHeader {
     @FindBy(xpath = "//a[text()='View History']")
     private WebElement viewHistoryTab;
 
-    @FindBy(xpath = "//div[@id='exportscheduleslist_wrapper']//i[@class='fa fa-refresh']")
+    @FindBy(xpath = "//a[@aria-controls='exporthistorieslist']")
     private WebElement refreshButton;
 
     @FindBy(xpath = "//input[@id='hist-export-name']")
