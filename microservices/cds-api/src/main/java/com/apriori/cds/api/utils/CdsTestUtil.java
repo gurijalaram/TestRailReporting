@@ -1,6 +1,7 @@
 package com.apriori.cds.api.utils;
 
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIS;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
@@ -89,7 +90,7 @@ public class CdsTestUtil extends TestUtil {
     @BeforeAll
     public static void init() {
         requestEntityUtil = RequestEntityUtilBuilder
-            .useRandomUser("admin")
+            .useRandomUser(APRIORI_DEVELOPER)
             .useApUserContextInRequests();
 
         testingUser = requestEntityUtil.getEmbeddedUser();

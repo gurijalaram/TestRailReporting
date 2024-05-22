@@ -1,5 +1,7 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import static com.apriori.cds.api.enums.ApplicationEnum.ACS;
 import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIA;

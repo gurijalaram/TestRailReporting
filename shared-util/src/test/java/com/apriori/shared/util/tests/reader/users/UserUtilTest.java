@@ -1,5 +1,6 @@
 package com.apriori.shared.util.tests.reader.users;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -31,8 +32,8 @@ public class UserUtilTest {
     @Test
     public void testGetTheSameUserWithAccessLevel() {
         System.setProperty("global_different_users", "false");
-        UserCredentials userCredentials = UserUtil.getUser("admin");
-        UserCredentials userCredentialsToCompare = UserUtil.getUser("admin");
+        UserCredentials userCredentials = UserUtil.getUser(APRIORI_DEVELOPER);
+        UserCredentials userCredentialsToCompare = UserUtil.getUser(APRIORI_DEVELOPER);
 
         assertEquals(userCredentials, userCredentialsToCompare, "Users should be the same");
     }
@@ -40,8 +41,8 @@ public class UserUtilTest {
     @Test
     public void testGetDifferentUserWithAccessLevel() {
         System.setProperty("global_different_users", "true");
-        UserCredentials userCredentials = UserUtil.getUser("admin");
-        UserCredentials userCredentialsToCompare = UserUtil.getUser("admin");
+        UserCredentials userCredentials = UserUtil.getUser(APRIORI_DEVELOPER);
+        UserCredentials userCredentialsToCompare = UserUtil.getUser(APRIORI_DEVELOPER);
 
         assertNotEquals(userCredentials, userCredentialsToCompare, "Users should be different");
     }

@@ -24,6 +24,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 public class BulkCostingPageTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private BulkCostingPage bulkCostingPage;
@@ -35,6 +37,7 @@ public class BulkCostingPageTests extends TestBaseUI {
         if (worksheetIdentity != null) {
             BcmUtil bcmUtil = new BcmUtil();
             bcmUtil.deleteWorksheetWithEmail(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT, UserCredentials.init(userCredentials.getEmail(), null));
+            worksheetIdentity = null;
         }
     }
 
@@ -52,9 +55,9 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertThat(bulkCostingPage.isListOfWorksheetsPresent()).isTrue();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-
         bulkCostingPage.selectAndDeleteSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
-        soft.assertThat(bulkCostingPage.isWorksheetIsPresent(worksheetResponse.getResponseEntity().getName())).isFalse();
+        worksheetIdentity = null;
+        soft.assertThat(bulkCostingPage.isWorksheetNotPresent(worksheetResponse.getResponseEntity().getName())).isTrue();
         soft.assertAll();
     }
 
@@ -76,6 +79,71 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertAll();
     }
 
+    @Test
+    @TestRail(id = {30679, 30680, 30681, 30682, 30684})
+    @Description("delete input row for the worksheet")
+    public void deleteInputRow() {
+        SoftAssertions soft = new SoftAssertions();
+        setBulkCostingFlag(true);
+        loginPage = new CidAppLoginPage(driver);
+        bulkCostingPage = loginPage
+            .login(userCredentials)
+            .clickBulkCostingButton();
+
+        ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
+        String inputRowName = createInputRow(userCredentials, worksheetResponse);
+        bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
+        soft.assertThat(bulkCostingPage.getRemoveButtonState("Cannot perform a remove action"))
+            .contains(Arrays.asList("Cannot perform a remove action with no scenarios selected"));
+
+        bulkCostingPage.selectFirstPartInWorkSheet();
+        soft.assertThat(bulkCostingPage.getRemoveButtonState("Remove"))
+            .isEqualTo("Remove");
+        soft.assertThat(bulkCostingPage.clickOnRemoveButtonAngGetConfirmationText())
+            .contains(Arrays.asList("You are attempting to remove", "from the bulk analysis. This action cannot be undone."));
+
+        bulkCostingPage.clickOnRemoveScenarioButtonOnConfirmationScreen();
+        soft.assertThat(bulkCostingPage.isScenarioPresentOnPage(inputRowName));
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {30675, 30676, 30674})
+    @Description("update inputs")
+    public void updateInputs() {
+        SoftAssertions soft = new SoftAssertions();
+        setBulkCostingFlag(true);
+        loginPage = new CidAppLoginPage(driver);
+        bulkCostingPage = loginPage
+            .login(userCredentials)
+            .clickBulkCostingButton();
+
+        ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
+        createInputRow(userCredentials, worksheetResponse);
+        bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
+
+        soft.assertThat(bulkCostingPage.getSetInputButtonState("Cannot set inputs with no scenarios selected."))
+            .isEqualTo("Cannot set inputs with no scenarios selected.");
+
+        bulkCostingPage.selectFirstPartInWorkSheet();
+
+        soft.assertThat(bulkCostingPage.getSetInputButtonState("Set Inputs"))
+            .isEqualTo("Set Inputs");
+
+        bulkCostingPage.clickSetInputsButton();
+        soft.assertThat(bulkCostingPage.isScenarioPresentOnPage()).isTrue();
+        bulkCostingPage.selectDropdownProcessGroup("2-Model Machining")
+            .selectDropdownDigitalFactory("AGCO Assumption")
+            .typeIntoAnnualVolume("100")
+            .typeIntoYears("5")
+            .clickOnSaveButtonOnSetInputs()
+            .clickOnCloseButtonOnSetInputs();
+
+        soft.assertThat(bulkCostingPage.isElementDisplayedOnThePage("2-Model Machining")).isTrue();
+        soft.assertThat(bulkCostingPage.isElementDisplayedOnThePage("AGCO Assumption")).isTrue();
+        soft.assertAll();
+    }
+
     private String createInputRow(UserCredentials userCredentials, ResponseWrapper<WorkSheetResponse> worksheetResponse) {
         CssComponent cssComponent = new CssComponent();
         BcmUtil bcmUtil = new BcmUtil();
@@ -90,7 +158,10 @@ public class BulkCostingPageTests extends TestBaseUI {
     private ResponseWrapper<WorkSheetResponse> createWorksheet(UserCredentials userCredentials) {
         String name = new GenerateStringUtil().saltString("name");
         BcmUtil bcmUtil = new BcmUtil();
-        return bcmUtil.createWorksheetWithEmail(name, UserCredentials.init(userCredentials.getEmail(), null));
+        ResponseWrapper<WorkSheetResponse> response =
+            bcmUtil.createWorksheetWithEmail(name, UserCredentials.init(userCredentials.getEmail(), null));
+        worksheetIdentity = response.getResponseEntity().getIdentity();
+        return response;
     }
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {

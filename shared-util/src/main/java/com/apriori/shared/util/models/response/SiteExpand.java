@@ -17,9 +17,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class SiteExpand {
+    SiteExpandItem response;
     @JsonProperty("_expand")
     private List<String> expand;
-    SiteExpandItem response;
 }

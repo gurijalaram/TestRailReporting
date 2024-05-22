@@ -55,7 +55,7 @@ public class CostingInputsPart extends CICBasePage {
     private WebElement worflowNameField;
 
     @FindBy(css = "div[id^='PLMC_NoCostingInputs_MU-'][id$='_label-3']")
-    private WebElement NoCostingInputLabel;
+    private WebElement noCostingInputLabel;
 
     @FindBy(css = "#ui-datepicker-div > div.ui-datepicker-buttonpane.ui-widget-content > button.ui-datepicker-current.ui-state-default.ui-priority-secondary.ui-corner-all")
     private WebElement customDateCalenderTodayButton;
@@ -164,8 +164,8 @@ public class CostingInputsPart extends CICBasePage {
      * @return WebElement
      */
     public WebElement getNoCostingInputLabel() {
-        pageUtils.waitForElementToAppear(NoCostingInputLabel);
-        return NoCostingInputLabel;
+        pageUtils.waitForElementToAppear(noCostingInputLabel);
+        return noCostingInputLabel;
     }
 
     /**
@@ -404,6 +404,34 @@ public class CostingInputsPart extends CICBasePage {
     }
 
     /**
+     * Get the data row from connector Standard Mappings Rows.
+     *
+     * @param plmTypeAttributes - PlmTypeAttributes enum
+     * @return list<WebElement>  - Number of rows
+     */
+    public List<WebElement> getMatchedConnectFieldRow(PlmTypeAttributes plmTypeAttributes) {
+        List<WebElement> ciConnectFieldColElements = null;
+        for (WebElement webElement : getStandardFieldsRows()) {
+            ciConnectFieldColElements = webElement.findElements(By.cssSelector(cssColumnSelector));
+            WebElement ciConnectFieldColElement = ciConnectFieldColElements.get(0).findElement(By.cssSelector("div[class^='ss-single-selected'] span[class='placeholder']"));
+            if (ciConnectFieldColElement.getText().equals(plmTypeAttributes.getCicGuiField())) {
+                return ciConnectFieldColElements;
+            }
+        }
+        return ciConnectFieldColElements;
+    }
+
+    /**
+     * get the list of standard mappings rows
+     *
+     * @return list of standard mappings rows
+     */
+    public List<WebElement> getStandardFieldsRows() {
+        pageUtils.waitForElementsToAppear(By.xpath(costingInputFlexRows));
+        return driver.findElements(By.xpath(costingInputFlexRows));
+    }
+
+    /**
      * select CI Connect field in Standard mappings rows
      *
      * @param webElement        - selected row element
@@ -559,4 +587,6 @@ public class CostingInputsPart extends CICBasePage {
     private By getColumnSelector() {
         return By.cssSelector("div[class*='cic-input']");
     }
+
+
 }
