@@ -1,5 +1,7 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.acs.api.models.response.acs.designGuidance.DesignGuidanceResponse;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.api.tests.workorders.WorkorderApiUtils;
@@ -21,7 +23,7 @@ public class DesignGuidanceTests {
     private final WorkorderApiUtils workorderApiUtils;
 
     public DesignGuidanceTests() {
-        UserCredentials userCredentials = UserUtil.getUser("common");
+        UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
         acsResources = new AcsResources(userCredentials);
         workorderApiUtils = new WorkorderApiUtils(userCredentials);
     }

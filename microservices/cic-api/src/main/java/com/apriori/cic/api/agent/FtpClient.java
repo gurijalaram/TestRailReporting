@@ -6,6 +6,7 @@ import com.apriori.cic.api.models.response.ConnectorInfo;
 import com.apriori.cic.api.utils.AgentConstants;
 import com.apriori.cic.api.utils.AgentCredentials;
 import com.apriori.cic.api.utils.CicApiTestUtil;
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -57,7 +58,7 @@ public class FtpClient {
     public FtpClient() {
         agentCredentials = new AgentCredentials().getAgentCredentials();
         agentPort = CicApiTestUtil.getAgentPortData();
-        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser("admin");
+        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(RolesEnum.APRIORI_DESIGNER);
         createRemoteSession();
         getSftpConnection();
     }

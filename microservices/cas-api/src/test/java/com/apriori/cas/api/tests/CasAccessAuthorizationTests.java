@@ -1,5 +1,7 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.AccessAuthorization;
 import com.apriori.cas.api.models.response.AccessAuthorizations;
@@ -44,7 +46,7 @@ public class CasAccessAuthorizationTests {
     private String associationIdentity;
     private String apStaffIdentity;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
+    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
 
 
     @BeforeEach
