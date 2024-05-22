@@ -1,5 +1,7 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.CasErrorMessage;
 import com.apriori.cas.api.models.response.Customer;
@@ -31,7 +33,7 @@ public class CasCustomerServiceAccountsTests {
     private Customer onPremCustomer;
     private String customerIdentity;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
+    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
 
     @BeforeEach
     public void setup() {
