@@ -65,7 +65,7 @@ public class NewScenarioExportPopup extends LoadableComponent<NewScenarioExportP
      * @return NewScenarioExportPopup
      */
     public NewScenarioExportPopup doubleClickCalendarButton() {
-        new Actions(driver).doubleClick(dataTimeCalendarButton);
+        new Actions(driver).doubleClick(dataTimeCalendarButton).perform();
         return this;
     }
 
