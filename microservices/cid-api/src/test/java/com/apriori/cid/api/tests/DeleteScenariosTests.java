@@ -1,6 +1,7 @@
 package com.apriori.cid.api.tests;
 
 import static com.apriori.css.api.enums.CssSearch.COMPONENT_TYPE_EQ;
+import static com.apriori.css.api.enums.CssSearch.LATEST_EQ;
 import static com.apriori.css.api.enums.CssSearch.PAGE_SIZE;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_LT;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_CN;
@@ -109,6 +110,7 @@ public class DeleteScenariosTests {
             SCENARIO_NAME_CN.getKey() + scenarioPartName,
             PAGE_SIZE.getKey() + pageSize,
             SCENARIO_STATE_NI.getKey() + ScenarioStateEnum.PROCESSING + "|" + ScenarioStateEnum.COSTING,
+            LATEST_EQ.getKey() + true,
             SCENARIO_CREATED_AT_LT.getKey() + LocalDateTime.now().minusDays(maxDays).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
 
         if (scenarioItems.isEmpty()) {
