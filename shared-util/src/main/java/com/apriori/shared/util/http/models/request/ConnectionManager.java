@@ -48,7 +48,7 @@ import java.util.Map;
 @Slf4j
 class ConnectionManager<T> {
     private static final Boolean IS_JENKINS_BUILD = System.getProperty("mode") != null && !System.getProperty("mode").equals("PROD");
-    private static final boolean SKIP_SCHEMA_MAPPING_EXCEPTION = true;
+    private static final boolean SKIP_SCHEMA_BODY_EXCEPTION_LOGGING = Boolean.parseBoolean(PropertiesContext.get("global.skip_schema_body_exception_logging"));
     private Class<T> returnType;
     private RequestEntity requestEntity;
 
@@ -196,10 +196,10 @@ class ConnectionManager<T> {
             } catch (Exception e) {
 
                 if (IS_JENKINS_BUILD) {
-                    if (SKIP_SCHEMA_MAPPING_EXCEPTION) {
+                    if (SKIP_SCHEMA_BODY_EXCEPTION_LOGGING) {
                         log.error("Response contains MappingException. \n ***Exception message: {}", e.getMessage());
                     }
-                    if (!SKIP_SCHEMA_MAPPING_EXCEPTION) {
+                    if (!SKIP_SCHEMA_BODY_EXCEPTION_LOGGING) {
                         log.error("Response contains MappingException. \n ***Exception message: {} \n ***Response: {}", e.getMessage(), extractedResponse.asPrettyString());
                     }
                     responseEntity = extractedResponse.as((Type) returnType, new Jackson2Mapper(((type, charset) ->
