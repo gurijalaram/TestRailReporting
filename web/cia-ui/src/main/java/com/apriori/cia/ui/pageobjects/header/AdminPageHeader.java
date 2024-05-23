@@ -126,7 +126,9 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
      * @return Reports Page Object Model
      */
     public ReportsPageHeader navigateToReports() {
-        return navigateToPage(reportButton);
+        pageUtils.waitForElementAndClick(reportButton);
+        pageUtils.switchToWindow(1);
+        return new ReportsPageHeader(driver);
     }
 
     /**
@@ -164,18 +166,6 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
     public AdminLogoutPage navigateToAdminLogout() {
         pageUtils.waitForElementToAppear(userButton);
         return navigateToSubPage(userButton, logoutButton, AdminLogoutPage.class);
-    }
-
-    /**
-     * General navigation method
-     *
-     * @param parentPage WebElement
-     * @return Instance of AdminHomePage
-     */
-    private ReportsPageHeader navigateToPage(WebElement parentPage) {
-        pageUtils.waitForElementAndClick(parentPage);
-        pageUtils.switchToWindow(1);
-        return new ReportsPageHeader(driver);
     }
 
     /**

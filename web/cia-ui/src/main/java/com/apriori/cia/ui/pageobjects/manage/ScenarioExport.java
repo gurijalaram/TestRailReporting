@@ -84,6 +84,11 @@ public class ScenarioExport extends AdminHeader {
         return this;
     }
 
+    /**
+     * Validate that the status is success for created export set
+     * @param exportSetName
+     * @return
+     */
     public ScenarioExport validateStatusIsSuccessForExportSet(final String exportSetName) {
         pageUtils.waitForElementToBeClickable(exportSetNameContainsInput);
         exportSetNameContainsInput.sendKeys(exportSetName);

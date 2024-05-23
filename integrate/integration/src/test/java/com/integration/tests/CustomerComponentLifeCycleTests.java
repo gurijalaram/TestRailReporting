@@ -5,12 +5,9 @@ import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.cid.api.utils.DataCreationUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
-import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
-import com.apriori.shared.util.dataservice.TestDataService;
 import com.apriori.shared.util.enums.ReportNamesEnum;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -28,27 +25,21 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
 
     private static SoftAssertions softAssertions = new SoftAssertions();
     private ComponentInfoBuilder component;
-    private ScenarioResponse scenarioResponse;
+    private ScenarioResponse publishedScenarioResponse;
 
-
-    /**
-     * Test to validate component life cycle on customer side
-     * Steps of validation:
-     * 1) cost part in APD
-     * 2) publish part
-     * 3) go to ap admin, run export of that part
-     * 4) go to ap analytics, generate a report or validate that reports input control works
-     */
     @Test
-    @TestRail(id={31015})
+    @TestRail(id = {31015})
     public void testValidateComponentLifeCycleFromUploadToCostReport() {
         component = new ComponentRequestUtil().getComponent();
-        component.setCostingTemplate(CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build());
+        component.setCostingTemplate(
+            CostingTemplate.builder()
+                .processGroupName(component.getProcessGroup().getProcessGroup()).build()
+        );
 
-        scenarioResponse = new DataCreationUtil(component)
+        publishedScenarioResponse = new DataCreationUtil(component)
             .createPublishComponent();
 
-        softAssertions.assertThat(scenarioResponse.getPublished()).isTrue();
+        softAssertions.assertThat(publishedScenarioResponse.getPublished()).isTrue();
         softAssertions.assertAll();
 
         try {
@@ -57,17 +48,19 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
             throw new RuntimeException(e);
         }
 
-        final String exportSetName = new GenerateStringUtil().generateStringForAutomationMark();
+        GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+
+        final String exportSetName = generateStringUtil.generateStringForAutomationMark("SetName");
 
         new AdminLoginPage(driver)
             .loginWithSpecificUser(component.getUser())
             .navigateToManageScenarioExport()
             .clickNewScenarioExport()
             .insertSetNameValue(exportSetName)
-            .insertDescriptionValue("Automation Test")
+            .insertDescriptionValue(generateStringUtil.generateStringForAutomationMark("Description"))
             .insertNamePartValue(component.getComponentName())
             .selectComponentType("Part")
-            .insertScenarioName(scenarioResponse.getScenarioName())
+            .insertScenarioName(publishedScenarioResponse.getScenarioName())
             .doubleClickCalendarButton()
             .clickCreate()
             .clickViewHistoryTab()
@@ -76,14 +69,12 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ReportsPageHeader.class)
             .waitForInputControlsLoad();
-
-
     }
 
     @AfterEach
     public void cleanUp() {
-        if (component != null && scenarioResponse != null) {
-            new ScenariosUtil().deleteScenario(component.getComponentIdentity(), scenarioResponse.getIdentity(), component.getUser());
+        if (component != null && publishedScenarioResponse != null) {
+            new ScenariosUtil().deleteScenario(component.getComponentIdentity(), publishedScenarioResponse.getIdentity(), component.getUser());
         }
     }
 }
