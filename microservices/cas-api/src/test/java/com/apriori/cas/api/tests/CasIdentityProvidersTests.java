@@ -1,5 +1,7 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.Customer;
 import com.apriori.cas.api.models.response.IdentityProvider;
@@ -38,7 +40,7 @@ public class CasIdentityProvidersTests extends TestUtil {
     private String idpIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
+    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
 
     @BeforeEach
     public void setUp() {
