@@ -5,12 +5,14 @@ import static com.apriori.css.api.enums.CssSearch.PAGE_SIZE;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_LT;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_CN;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_PUBLISHED_EQ;
+import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_NI;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.DELETE;
 
 import com.apriori.cid.api.models.response.scenarios.ScenariosDeleteResponse;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.serialization.util.DateFormattingUtils;
+import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
@@ -18,6 +20,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +33,12 @@ public class DeleteScenariosTests {
     private final CssComponent cssComponent = new CssComponent();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private final SoftAssertions softAssertions = new SoftAssertions();
+    private static int number_of_scenarios_marked_for_deletion = 0;
+
+    @AfterAll
+    public static void info() {
+        log.info("*** Total number of scenarios marked for deletion:- {} ***", number_of_scenarios_marked_for_deletion);
+    }
 
     @Test
     @Tag(DELETE)
@@ -58,7 +67,7 @@ public class DeleteScenariosTests {
 
         ScenariosDeleteResponse deletedAssemblies = scenariosUtil.deleteScenariosCompleted(assembliesToDelete, user);
 
-        log.warn("Number of 'ASSEMBLY(S)' deleted '{}'", deletedAssemblies.getSuccesses().size());
+        log.info("Number of 'ASSEMBLY(S)' deleted '{}'", deletedAssemblies.getSuccesses().size());
 
         softAssertions.assertThat(deletedAssemblies.getSuccesses().size()).isEqualTo(assembliesToDelete.size());
 
@@ -66,7 +75,7 @@ public class DeleteScenariosTests {
 
         ScenariosDeleteResponse deletedScenarios = scenariosUtil.deleteScenariosCompleted(scenariosToDelete, user);
 
-        log.warn("Number of 'PART(S)' deleted '{}'", deletedScenarios.getSuccesses().size());
+        log.info("Number of 'PART(S)' deleted '{}'", deletedScenarios.getSuccesses().size());
 
         softAssertions.assertThat(deletedScenarios.getSuccesses().size()).isEqualTo(scenariosToDelete.size());
 
@@ -76,15 +85,17 @@ public class DeleteScenariosTests {
     private void markForDeleteScenarios(Boolean scenarioPublished, UserCredentials user) {
         List<ScenarioItem> assembliesToDelete = searchComponentType("ASSEMBLY", scenarioPublished, user);
 
-        assembliesToDelete.forEach(assembly -> log.warn("ASSEMBLY marked for deletion '{}' with SCENARIO KEY '{}'", assembly.getScenarioName(), assembly.getScenarioKey()));
+        assembliesToDelete.forEach(assembly -> log.info("ASSEMBLY marked for deletion '{}' with SCENARIO KEY '{}'", assembly.getScenarioName(), assembly.getScenarioKey()));
 
         scenariosUtil.deleteScenarios(assembliesToDelete, user, null);
 
         List<ScenarioItem> scenariosToDelete = searchComponentType("PART", scenarioPublished, user);
 
-        scenariosToDelete.forEach(scenario -> log.warn("SCENARIO marked for deletion '{}' with SCENARIO KEY '{}'", scenario.getScenarioName(), scenario.getScenarioKey()));
+        scenariosToDelete.forEach(scenario -> log.info("SCENARIO marked for deletion '{}' with SCENARIO KEY '{}'", scenario.getScenarioName(), scenario.getScenarioKey()));
 
         scenariosUtil.deleteScenarios(scenariosToDelete, user, null);
+
+        number_of_scenarios_marked_for_deletion += assembliesToDelete.size() + scenariosToDelete.size();
     }
 
     private List<ScenarioItem> searchComponentType(String componentType, Boolean scenarioPublished, UserCredentials currentUser) {
@@ -97,9 +108,8 @@ public class DeleteScenariosTests {
             COMPONENT_TYPE_EQ.getKey() + componentType,
             SCENARIO_NAME_CN.getKey() + scenarioPartName,
             PAGE_SIZE.getKey() + pageSize,
+            SCENARIO_STATE_NI.getKey() + ScenarioStateEnum.PROCESSING + "|" + ScenarioStateEnum.COSTING,
             SCENARIO_CREATED_AT_LT.getKey() + LocalDateTime.now().minusDays(maxDays).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
-
-        log.warn("Number of '{}(S)' found for deletion '{}'", componentType, scenarioItems.size());
 
         if (scenarioItems.isEmpty()) {
             throw new RuntimeException("No scenarios found for deletion");

@@ -1,5 +1,7 @@
 package com.apriori.dfs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.dfs.api.enums.DFSApiEnum;
 import com.apriori.dfs.api.models.response.DigitalFactories;
 import com.apriori.dfs.api.models.response.DigitalFactory;
@@ -59,7 +61,7 @@ public class DigitalFactoriesTests {
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final DigitalFactoryUtil digitalFactoryUtil = new DigitalFactoryUtil();
 
-    private final UserCredentials userCredentials = UserUtil.getUser("common");
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = {28958})

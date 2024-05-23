@@ -1,5 +1,7 @@
 package com.apriori.sds.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.sds.api.enums.SDSAPIEnum;
 import com.apriori.sds.api.models.request.PostComponentRequest;
 import com.apriori.sds.api.models.response.ScenarioItemsResponse;
@@ -28,7 +30,7 @@ public class AccessControlTests extends SDSTestUtil {
     @TestRail(id = {13638})
     @Description("Access check: Get a list of all scripts for the correct and wrong user.")
     public void get() {
-        final UserCredentials userCredentials = UserUtil.getUser("common");
+        final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
         final RequestEntity requestEntity =
             requestEntityUtil.init(SDSAPIEnum.GET_SCENARIOS_BY_COMPONENT_IDS, ScenarioItemsResponse.class)
@@ -51,7 +53,7 @@ public class AccessControlTests extends SDSTestUtil {
     public void update() {
         final String updatedNotes = "Automation Notes";
         final String updatedDescription = "Automation Description";
-        final UserCredentials userCredentials = UserUtil.getUser("common");
+        final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
         final ScenarioItem scenarioForUpdate = postTestingComponentAndAddToRemoveList();
 
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
@@ -76,7 +78,7 @@ public class AccessControlTests extends SDSTestUtil {
     @Description("Access check: Delete a scenario for the correct and incorrect user.")
     public void delete() {
         final ScenarioItem componentToDeleteForTestingUser = postTestingComponentAndAddToRemoveList();
-        final UserCredentials userCredentials = UserUtil.getUser("common");
+        final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
         final RequestEntity requestEntity =
             requestEntityUtil.init(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
@@ -96,7 +98,7 @@ public class AccessControlTests extends SDSTestUtil {
     public void publish() {
         final String publishScenarioName = new GenerateStringUtil().generateScenarioName();
         final ScenarioItem testingComponent = postTestingComponentAndAddToRemoveList();
-        final UserCredentials userCredentials = UserUtil.getUser("common");
+        final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
             .scenarioName(publishScenarioName)

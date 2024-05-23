@@ -125,7 +125,7 @@ Get user functionality has reference to `{environment}.properties` file.
        
    **Example of execution API in code** :
    - to receive common user use: `UserUtil.getUser()`
-   - to receive user by access level use: `UserUtil.getUser("Needed access level")  e.g. UserUtil.getUser("admin")`
+   - to receive user by access level use: `UserUtil.getUser("Needed access level")  e.g. UserUtil.getUser(APRIORI_DEVELOPER)`
    
    **UserUtil.getUser()/getUser(accessLevel)**: return UserCredentials.class
    
