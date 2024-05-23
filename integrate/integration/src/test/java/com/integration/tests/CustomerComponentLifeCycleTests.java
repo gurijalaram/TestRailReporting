@@ -14,6 +14,7 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.testconfig.TestBaseUI;
+import com.apriori.shared.util.testrail.TestRail;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
@@ -39,6 +40,7 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
      * 4) go to ap analytics, generate a report or validate that reports input control works
      */
     @Test
+    @TestRail(id={31015})
     public void testValidateComponentLifeCycleFromUploadToCostReport() {
         component = new ComponentRequestUtil().getComponent();
         component.setCostingTemplate(CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build());
