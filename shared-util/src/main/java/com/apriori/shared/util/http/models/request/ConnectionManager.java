@@ -48,7 +48,6 @@ import java.util.Map;
 @Slf4j
 class ConnectionManager<T> {
     private static final Boolean IS_JENKINS_BUILD = System.getProperty("mode") != null && !System.getProperty("mode").equals("PROD");
-    final boolean SKIP_SCHEMA_MAPPING_EXCEPTION = true;
     private Class<T> returnType;
     private RequestEntity requestEntity;
 
@@ -196,7 +195,7 @@ class ConnectionManager<T> {
                 responseEntity = extractedResponse.as((Type) returnType, objectMapper);
 
             } catch (Exception e) {
-                if (IS_JENKINS_BUILD && SKIP_SCHEMA_MAPPING_EXCEPTION) {
+                if (IS_JENKINS_BUILD) {
                     log.error("Response contains MappingException. \n ***Exception message: {}", e.getMessage());
                     responseEntity = extractedResponse.as((Type) returnType, new Jackson2Mapper(((type, charset) ->
                         new com.apriori.shared.util.http.models.request.ObjectMapper()
