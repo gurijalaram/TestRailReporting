@@ -1,5 +1,6 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.CustomerEnum.AP_INT;
 import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
@@ -27,11 +28,13 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.UUID;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIfSystemProperty(named = "customer", matches = AP_INT)
 public class CasSiteLicenseSublicenseTests {
     private SoftAssertions soft = new SoftAssertions();
     private String customerName;
