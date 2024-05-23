@@ -48,7 +48,7 @@ import java.util.Map;
 @Slf4j
 class ConnectionManager<T> {
     private static final Boolean IS_JENKINS_BUILD = System.getProperty("mode") != null && !System.getProperty("mode").equals("PROD");
-
+    final boolean SKIP_SCHEMA_MAPPING_EXCEPTION = true;
     private Class<T> returnType;
     private RequestEntity requestEntity;
 
@@ -154,20 +154,17 @@ class ConnectionManager<T> {
         return !StringUtils.isEmpty(System.getProperty("ignoreSslCheck")) && Boolean.parseBoolean(System.getProperty("ignoreSslCheck"));
     }
 
-    final boolean SKIP_SCHEMA_MAPPING_EXCEPTION = true;
-
     private <T> ResponseWrapper<T> resultOf(ValidatableResponse response) {
 
         final int responseCode = response.extract().statusCode();
         final String responseBody = response.extract().body().asString();
         final Headers responseHeaders = response.extract().headers();
-
-        T responseEntity = null;
+        T responseEntity;
 
         if (returnType != null) {
             Class<InputStream> testClass = InputStream.class;
             if (returnType == testClass) {
-                 responseEntity = (T) response.extract().asInputStream();
+                responseEntity = (T) response.extract().asInputStream();
                 return ResponseWrapper.build(responseCode, responseHeaders, responseBody, responseEntity);
             }
             String schemaLocation;
@@ -195,24 +192,18 @@ class ConnectionManager<T> {
                 .extract()
                 .response();
 
-//            T responseEntity;
-
             try {
                 responseEntity = extractedResponse.as((Type) returnType, objectMapper);
 
             } catch (Exception e) {
-                if (IS_JENKINS_BUILD && !SKIP_SCHEMA_MAPPING_EXCEPTION) {
-                    log.error("Response contains MappingException. \n ***Exception message: {} \n ***Response: {}", e.getMessage(), extractedResponse.asPrettyString());
+                if (IS_JENKINS_BUILD && SKIP_SCHEMA_MAPPING_EXCEPTION) {
+                    log.error("Response contains MappingException. \n ***Exception message: {}", e.getMessage());
                     responseEntity = extractedResponse.as((Type) returnType, new Jackson2Mapper(((type, charset) ->
                         new com.apriori.shared.util.http.models.request.ObjectMapper()
                             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                     )));
-                }
-                else {
-////                    e.getClass();
-                    log.error("*****Exception class" + e.getClass());
-                    log.error(e.getMessage());
-//                    throw new RuntimeException(e.getMessage());
+                } else {
+                    throw new IllegalArgumentException(e.getMessage());
                 }
             }
 
