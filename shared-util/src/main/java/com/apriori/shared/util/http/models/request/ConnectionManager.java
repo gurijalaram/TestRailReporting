@@ -145,7 +145,6 @@ class ConnectionManager<T> {
             requestSpecification = requestSpecification.expect().statusCode(requestEntity.expectedResponseCode())
                 .request();
         }
-
         return requestSpecification;
     }
 
@@ -185,7 +184,6 @@ class ConnectionManager<T> {
                 new com.apriori.shared.util.http.models.request.ObjectMapper())
             );
 
-
             Response extractedResponse = response.assertThat()
                 .body(matchesJsonSchema(resource))
                 .extract()
@@ -205,7 +203,6 @@ class ConnectionManager<T> {
                     throw new IllegalArgumentException(e.getMessage());
                 }
             }
-
             return ResponseWrapper.build(responseCode, responseHeaders, responseBody, responseEntity);
         } else {
             return ResponseWrapper.build(responseCode, responseHeaders, responseBody, null);
@@ -225,7 +222,6 @@ class ConnectionManager<T> {
                 .relaxedHTTPSValidation()
                 .get(requestEntity.buildEndpoint())
                 .then()
-
         );
     }
 
