@@ -198,8 +198,7 @@ class ConnectionManager<T> {
                 if (IS_JENKINS_BUILD) {
                     if (SKIP_SCHEMA_BODY_EXCEPTION_LOGGING) {
                         log.error("Response contains MappingException. \n ***Exception message: {}", e.getMessage());
-                    }
-                    if (!SKIP_SCHEMA_BODY_EXCEPTION_LOGGING) {
+                    } else {
                         log.error("Response contains MappingException. \n ***Exception message: {} \n ***Response: {}", e.getMessage(), extractedResponse.asPrettyString());
                     }
                     responseEntity = extractedResponse.as((Type) returnType, new Jackson2Mapper(((type, charset) ->
