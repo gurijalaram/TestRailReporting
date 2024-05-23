@@ -60,7 +60,7 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
         final String exportSetName = new GenerateStringUtil().generateStringForAutomationMark();
 
         new AdminLoginPage(driver)
-            .loginWithSpecificUser(UserUtil.getUser())//component.getUser())
+            .loginWithSpecificUser(component.getUser())
             .navigateToManageScenarioExport()
             .clickNewScenarioExport()
             .insertSetNameValue(exportSetName)
@@ -85,22 +85,5 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
         if (component != null && scenarioResponse != null) {
             new ScenariosUtil().deleteScenario(component.getComponentIdentity(), scenarioResponse.getIdentity(), component.getUser());
         }
-    }
-
-    private TestDataService initTestDataService() {
-        TestDataService testDataService = new TestDataService();
-        testDataService.setInputData(testDataService.deserializeDataToMap("CIDIntegrationTestData.json"));
-        testDataService.getInputData().replace("scenarioName", "Automation_" + GenerateStringUtil.saltString((String) testDataService.getInputData().get("scenarioName")));
-        testDataService.getInputData().replace("exportSetName", "Automation_" + GenerateStringUtil.saltString((String) testDataService.getInputData().get("exportSetName")));
-
-        return testDataService;
-    }
-
-    public void validateInputControlsPresentForComponentCostReport() {
-        new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ReportsPageHeader.class)
-            .waitForInputControlsLoad();
     }
 }
