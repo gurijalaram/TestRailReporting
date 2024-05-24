@@ -179,14 +179,19 @@ public class JasperApiUtils {
      * @param changeLevelsToSet - ArrayList of Strings of change levels to set
      * @return JasperReportSummary instance
      */
-    public JasperReportSummary genericTestCoreSetChangeLevel(ArrayList<String> changeLevelsToSet) {
+    public JasperReportSummary genericTestCoreSetChangeLevel(boolean setPartNumber, ArrayList<String> changeLevelsToSet) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
         String firstExportSetValue = inputControls.getExportSetName().getOption(ExportSetEnum.ALL_PG_CURRENT.getExportSetName()).getValue();
         String secondExportSetValue = inputControls.getExportSetName().getOption(ExportSetEnum.ALL_PG_NEW.getExportSetName()).getValue();
         String rollupValue = inputControls.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
-        //String partNumber = inputControls.getPartNumber().getOption("2X1 CAVITY MOLD").getValue();
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        if (setPartNumber) {
+            this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.PART_NUMBER.getInputControlId())
+                .setValue(Collections.singletonList(inputControls.getPartNumber().getOption("2X1 CAVITY MOLD").getValue()));
+            this.reportRequest.getParameters().getReportParameterByName("partNumberNew").setValue(Collections.singletonList("223"));
+        }
 
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId())
             .setValue(Arrays.asList(firstExportSetValue, secondExportSetValue));
@@ -194,11 +199,7 @@ public class JasperApiUtils {
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId())
             .setValue(Collections.singletonList(rollupValue));
 
-        /*this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.PART_NUMBER.getInputControlId())
-            .setValue(Collections.singletonList(partNumber));*/
-
         this.reportRequest.getParameters().getReportParameterByName("rollupNew").setValue(Collections.singletonList("298"));
-        //this.reportRequest.getParameters().getReportParameterByName("partNumberNew").setValue(Collections.singletonList("223"));
 
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EARLIEST_EXPORT_DATE.getInputControlId())
             .setValue(Collections.singletonList("2023-04-13T06:57:36"));
@@ -225,14 +226,19 @@ public class JasperApiUtils {
      * @param highThreshold - String of high threshold to set
      * @return JasperReportSummary instance
      */
-    public JasperReportSummary genericTestCoreSetCostMetricOrTimeMetricsThresholdLevels(boolean setCostMetricThresholds, String lowThreshold, String highThreshold) {
+    public JasperReportSummary genericTestCoreSetCostMetricOrTimeMetricsThresholdLevels(boolean setPartNumber, boolean setCostMetricThresholds, String lowThreshold, String highThreshold) {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
         String firstExportSetValue = inputControls.getExportSetName().getOption(ExportSetEnum.ALL_PG_CURRENT.getExportSetName()).getValue();
         String secondExportSetValue = inputControls.getExportSetName().getOption(ExportSetEnum.ALL_PG_NEW.getExportSetName()).getValue();
         String rollupValue = inputControls.getRollup().getOption(RollupEnum.ALL_PG.getRollupName()).getValue();
-        String partNumber = inputControls.getPartNumber().getOption("2X1 CAVITY MOLD").getValue();
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        if (setPartNumber) {
+            this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.PART_NUMBER.getInputControlId())
+                .setValue(Collections.singletonList(inputControls.getPartNumber().getOption("2X1 CAVITY MOLD").getValue()));
+            this.reportRequest.getParameters().getReportParameterByName("partNumberNew").setValue(Collections.singletonList("223"));
+        }
 
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId())
             .setValue(Arrays.asList(firstExportSetValue, secondExportSetValue));
@@ -240,11 +246,7 @@ public class JasperApiUtils {
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId())
             .setValue(Collections.singletonList(rollupValue));
 
-        this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.PART_NUMBER.getInputControlId())
-            .setValue(Collections.singletonList(partNumber));
-
         this.reportRequest.getParameters().getReportParameterByName("rollupNew").setValue(Collections.singletonList("298"));
-        this.reportRequest.getParameters().getReportParameterByName("partNumberNew").setValue(Collections.singletonList("223"));
 
         this.reportRequest.getParameters().getReportParameterByName(InputControlsEnum.EARLIEST_EXPORT_DATE.getInputControlId())
             .setValue(Collections.singletonList("2023-04-13T06:57:36"));

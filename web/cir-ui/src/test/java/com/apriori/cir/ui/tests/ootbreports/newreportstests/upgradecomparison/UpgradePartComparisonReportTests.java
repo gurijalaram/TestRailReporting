@@ -255,6 +255,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
         // all levels
         ArrayList<String> changeListArrayList = new ArrayList<>(Arrays.asList("High", "Medium", "Low", "No Change"));
         JasperReportSummary jasperReportSummaryAllChangeLevels = jasperApiUtils.genericTestCoreSetChangeLevel(
+            true,
             changeListArrayList
         );
 
@@ -270,6 +271,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
         changeListArrayList.clear();
         changeListArrayList.add("Low");
         JasperReportSummary jasperReportSummaryLowChangeLevel = jasperApiUtils.genericTestCoreSetChangeLevel(
+            true,
             changeListArrayList
         );
 
@@ -288,6 +290,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
         changeListArrayList.clear();
         changeListArrayList.add("Medium");
         JasperReportSummary jasperReportSummaryMediumChangeLevel = jasperApiUtils.genericTestCoreSetChangeLevel(
+            true,
             changeListArrayList
         );
 
@@ -302,6 +305,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
         changeListArrayList.clear();
         changeListArrayList.add("High");
         JasperReportSummary jasperReportSummaryHighChangeLevel = jasperApiUtils.genericTestCoreSetChangeLevel(
+            true,
             changeListArrayList
         );
 
@@ -316,6 +320,7 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
         changeListArrayList.clear();
         changeListArrayList.add("No Change");
         JasperReportSummary jasperReportSummaryNoChangeChangeLevel = jasperApiUtils.genericTestCoreSetChangeLevel(
+            true,
             changeListArrayList
         );
 
@@ -335,8 +340,9 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
     @TestRail(id = 14072)
     @Description("Input controls - Cost Metrics Low and High Thresholds")
     public void testCostMetricsLowAndHighThresholds() {
-        // TODO: revisit to understand what changes and assert on something in chart
+        // TODO: revisit to understand what changes (not clear) and assert on something in chart
         JasperReportSummary jasperReportSummaryCostMetricThresholds = jasperApiUtils.genericTestCoreSetCostMetricOrTimeMetricsThresholdLevels(
+            true,
             true,
             "0",
             "40"
@@ -355,8 +361,9 @@ public class UpgradePartComparisonReportTests extends JasperApiAuthenticationUti
     @TestRail(id = 14076)
     @Description("Input controls - Time Metrics Low and High Thresholds")
     public void testTimeMetricsLowAndHighThresholds() {
-        // TODO: revisit to understand what changes and assert on something in chart
+        // TODO: revisit to understand what changes (not clear) and assert on something in chart
         JasperReportSummary jasperReportSummaryCostMetricThresholds = jasperApiUtils.genericTestCoreSetCostMetricOrTimeMetricsThresholdLevels(
+            true,
             false,
             "0",
             "40"

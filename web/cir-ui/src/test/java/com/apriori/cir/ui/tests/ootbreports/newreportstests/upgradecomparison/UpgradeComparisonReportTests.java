@@ -406,6 +406,7 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
         // all levels
         ArrayList<String> changeListArrayList = new ArrayList<>(Arrays.asList("High", "Medium", "Low", "No Change"));
         JasperReportSummary jasperReportSummaryAllChangeLevels = jasperApiUtils.genericTestCoreSetChangeLevel(
+            false,
             changeListArrayList
         );
 
@@ -420,6 +421,7 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
         changeListArrayList.clear();
         changeListArrayList.add("Low");
         JasperReportSummary jasperReportSummaryLowChangeLevel = jasperApiUtils.genericTestCoreSetChangeLevel(
+            false,
             changeListArrayList
         );
 
@@ -435,6 +437,7 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
         changeListArrayList.clear();
         changeListArrayList.add("Medium");
         JasperReportSummary jasperReportSummaryMediumChangeLevel = jasperApiUtils.genericTestCoreSetChangeLevel(
+            false,
             changeListArrayList
         );
 
@@ -449,6 +452,7 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
         changeListArrayList.clear();
         changeListArrayList.add("High");
         JasperReportSummary jasperReportSummaryHighChangeLevel = jasperApiUtils.genericTestCoreSetChangeLevel(
+            false,
             changeListArrayList
         );
 
@@ -461,12 +465,55 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
         changeListArrayList.clear();
         changeListArrayList.add("No Change");
         JasperReportSummary jasperReportSummaryNoChangeChangeLevel = jasperApiUtils.genericTestCoreSetChangeLevel(
+            false,
             changeListArrayList
         );
 
         softAssertions.assertThat(jasperReportSummaryNoChangeChangeLevel.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isGreaterThanOrEqualTo(18);
         softAssertions.assertThat(jasperReportSummaryNoChangeChangeLevel.getReportHtmlPart().getElementsContainingText("Change Level:").get(6).siblingElements().get(6).child(0).text()).isEqualTo("No Change");
         softAssertions.assertThat(jasperReportSummaryNoChangeChangeLevel.getReportHtmlPart().toString().contains(">0%")).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("14071")
+    @TestRail(id = 14071)
+    @Description("Input controls - Cost Metrics Low and High Thresholds")
+    public void testCostMetricsLowAndHighThresholds() {
+        // TODO: revisit to understand what changes (not clear) and assert on something in chart
+        JasperReportSummary jasperReportSummaryCostMetricThresholds = jasperApiUtils.genericTestCoreSetCostMetricOrTimeMetricsThresholdLevels(
+            false,
+            true,
+            "0",
+            "40"
+        );
+
+        softAssertions.assertThat(jasperReportSummaryCostMetricThresholds.getReportHtmlPart().getElementsContainingText("Cost Metrics High Threshold:").get(6).siblingElements().get(10).child(0).text()).isEqualTo("40%");
+        softAssertions.assertThat(jasperReportSummaryCostMetricThresholds.getReportHtmlPart().getElementsContainingText("Cost Metrics Med Threshold:").get(6).siblingElements().get(10).child(0).text()).isEqualTo("0%");
+        softAssertions.assertThat(jasperReportSummaryCostMetricThresholds.getReportHtmlPart().getElementsContainingText("Cost Metrics Low Threshold:").get(6).siblingElements().get(10).child(0).text()).isEqualTo("0%");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("14075")
+    @TestRail(id = 14075)
+    @Description("Input controls - Time Metrics Low and High Thresholds")
+    public void testTimeMetricsLowAndHighThresholds() {
+        // TODO: revisit to understand what changes (not clear) and assert on something in chart
+        JasperReportSummary jasperReportSummaryCostMetricThresholds = jasperApiUtils.genericTestCoreSetCostMetricOrTimeMetricsThresholdLevels(
+            false,
+            false,
+            "0",
+            "40"
+        );
+
+        softAssertions.assertThat(jasperReportSummaryCostMetricThresholds.getReportHtmlPart().getElementsContainingText("Time Metrics High Threshold:").get(6).siblingElements().get(14).child(0).text()).isEqualTo("40%");
+        softAssertions.assertThat(jasperReportSummaryCostMetricThresholds.getReportHtmlPart().getElementsContainingText("Time Metrics Med Threshold:").get(6).siblingElements().get(14).child(0).text()).isEqualTo("0%");
+        softAssertions.assertThat(jasperReportSummaryCostMetricThresholds.getReportHtmlPart().getElementsContainingText("Time Metrics Low Threshold:").get(6).siblingElements().get(14).child(0).text()).isEqualTo("0%");
 
         softAssertions.assertAll();
     }
