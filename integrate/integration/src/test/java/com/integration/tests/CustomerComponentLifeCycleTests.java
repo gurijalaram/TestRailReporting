@@ -42,12 +42,6 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
         softAssertions.assertThat(publishedScenarioResponse.getPublished()).isTrue();
         softAssertions.assertAll();
 
-        try {
-            Thread.sleep(Duration.ofMinutes(1).toMillis()); // wait until published part will be loaded to aP PRO
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
         final String exportSetName = generateStringUtil.generateStringForAutomationMark("SetName");
