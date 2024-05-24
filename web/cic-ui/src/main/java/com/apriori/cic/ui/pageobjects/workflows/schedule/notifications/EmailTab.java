@@ -3,6 +3,8 @@ package com.apriori.cic.ui.pageobjects.workflows.schedule.notifications;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cic.api.enums.EmailRecipientType;
+import com.apriori.cic.api.enums.PlmTypeAttributes;
+import com.apriori.cic.ui.enums.EmailConfigSummaryEnum;
 import com.apriori.cic.ui.enums.EmailTemplateEnum;
 import com.apriori.cic.ui.enums.FieldState;
 import com.apriori.shared.util.enums.PropertyEnum;
@@ -11,6 +13,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 /**
  * Email tab in Notification part during workflow creation or modification
@@ -62,7 +66,7 @@ public class EmailTab extends NotificationsPart {
      */
     public EmailTab selectRecipient(EmailRecipientType recipientFieldType, String emailAddress) {
         pageUtils.waitForElementAndClick(getEmailRecipientElement());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, recipientFieldType.getEmailRecipientType())));
+        pageUtils.moveAndClick(driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, recipientFieldType.getEmailRecipientType()))));
         pageUtils.waitForElementAppear(recipientEmailAddressTxtElement);
         pageUtils.setValueOfElement(recipientEmailAddressTxtElement, emailAddress);
         if (pageUtils.isElementDisplayed(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'ss-open')]"))) {
@@ -74,11 +78,11 @@ public class EmailTab extends NotificationsPart {
 
     public EmailTab selectRecipient() {
         pageUtils.waitForElementAndClick(getEmailRecipientElement());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getRecipientEmailType())));
+        pageUtils.moveAndClick(driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getRecipientEmailType()))));
         pageUtils.waitForElementAppear(recipientEmailAddressTxtElement);
         pageUtils.setValueOfElement(recipientEmailAddressTxtElement, workFlowData.getNotificationsData().getRecipientEmailAddress());
         if (pageUtils.isElementDisplayed(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'ss-open')]"))) {
-            pageUtils.waitForElementAndClick(getEmailRecipientElement());
+            pageUtils.moveAndClick(getEmailRecipientElement());
         }
         pageUtils.waitForJavascriptLoadComplete();
         return this;
@@ -109,6 +113,31 @@ public class EmailTab extends NotificationsPart {
         return this;
     }
 
+    /**
+     * select cost rounding
+     *
+     * @return EmailTab object
+     */
+    public EmailTab selectScenarioLink(PlmTypeAttributes plmTypeAttributes) {
+        pageUtils.waitForElementAndClick(getEmailConfigScenarioLinkElement());
+        pageUtils.moveAndClick(driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, plmTypeAttributes.getCicGuiField()))));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
+    }
+
+    /**
+     * select cost rounding
+     *
+     * @return EmailTab object
+     */
+    public EmailTab selectField(EmailConfigSummaryEnum emailConfigSummaryField, PlmTypeAttributes plmTypeAttributes) {
+        pageUtils.waitForElementAndClick(getEmailConfigFieldElement(emailConfigSummaryField));
+        pageUtils.waitForElementAppear(searchTextboxElement).sendKeys(plmTypeAttributes.getCicGuiField());
+        pageUtils.moveAndClick(driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, plmTypeAttributes.getCicGuiField()))));
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
+    }
+
     public WebElement getEmailTemplateElement() {
         pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]")));
         return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
@@ -133,10 +162,34 @@ public class EmailTab extends NotificationsPart {
             .toRightOf(By.xpath(EMAIL_TAB_ELEMENT + "//input[@value='aPriori Cost']")));
     }
 
+    public WebElement getEmailConfigScenarioLinkElement() {
+        pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//input[@value='Cost Rounding']")));
+        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
+            .toRightOf(getEmailConfigTextElement(EmailConfigSummaryEnum.SCENARIO_LINK)));
+    }
+
+    public WebElement getEmailConfigFieldElement(EmailConfigSummaryEnum emailConfigSummaryEnum) {
+        pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//input[@value='Cost Rounding']")));
+        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
+            .toRightOf(getEmailConfigTextElement(emailConfigSummaryEnum)));
+    }
+
+
     public WebElement getEmailRecipientTxtElement() {
         pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//input[@type='text']")));
         return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//input[@type='text']"))
             .toRightOf(getEmailRecipientElement()));
+    }
+
+    private WebElement getEmailConfigTextElement(EmailConfigSummaryEnum configSummaryTemplateField) {
+        List<WebElement> templateFieldElements = driver.findElements(with(By.xpath(EMAIL_TAB_ELEMENT + "//input[@type='text'] [@disabled='disabled']")));
+        return templateFieldElements.stream()
+            .filter(webElement -> webElement.getAttribute("value").equals(configSummaryTemplateField.getEmailConfigSummaryField()))
+            .findFirst().get();
+    }
+
+    private WebElement getOpenSearchTextBoxElement() {
+        return driver.findElement(By.xpath("//div[contains(@class, 'ss-open')]//input[@type='search']"));
     }
 
 }

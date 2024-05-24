@@ -59,7 +59,8 @@ public class AttachReportTab extends NotificationsPart {
     public AttachReportTab selectReportName(ReportsEnum reportsEnum) {
         pageUtils.waitUntilDropdownOptionsLoaded(getReportNameDropdownElement().findElement(By.tagName("select")));
         pageUtils.waitForElementAndClick(getReportNameDropdownElement());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, reportsEnum.getReportName())));
+        WebElement webElement = driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, reportsEnum.getReportName())));
+        pageUtils.moveAndClick(webElement);
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
@@ -87,7 +88,7 @@ public class AttachReportTab extends NotificationsPart {
     public AttachReportTab selectCostRounding(FieldState fieldState) {
         pageUtils.waitForElementAppear(reportConfigurationLbl);
         pageUtils.waitForElementAndClick(getCostRoundingDdl());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, fieldState)));
+        pageUtils.waitForElementAndClick(By.xpath(String.format("//div[contains(@class, 'ss-open')]//div[@class='ss-option']/..//div[.='%s']", fieldState)));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
