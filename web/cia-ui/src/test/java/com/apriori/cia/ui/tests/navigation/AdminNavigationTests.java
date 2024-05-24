@@ -10,6 +10,7 @@ import com.apriori.cia.ui.pageobjects.manage.ScenarioExport;
 import com.apriori.cia.ui.pageobjects.manage.SystemDataExport;
 import com.apriori.cia.ui.pageobjects.userguides.CiaUserGuide;
 import com.apriori.cia.ui.utils.Constants;
+import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -139,7 +140,7 @@ public class AdminNavigationTests extends TestBaseUI {
     @TestRail(id = {2966})
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
-        homePage = new AdminLoginPage(driver)
+        ReportsPageHeader jasperReportsPage = new AdminLoginPage(driver)
             .login()
             .navigateToReports();
 
