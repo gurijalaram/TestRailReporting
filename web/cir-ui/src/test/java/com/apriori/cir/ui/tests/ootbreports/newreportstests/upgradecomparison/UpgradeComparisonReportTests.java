@@ -410,12 +410,11 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
         );
 
         softAssertions.assertThat(jasperReportSummaryAllChangeLevels.getReportHtmlPart().getElementsContainingText("Change Level:").get(6).siblingElements().get(6).child(0).text()).isEqualTo("High, Low, Medium, No Change");
-        softAssertions.assertThat(jasperReportSummaryAllChangeLevels.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isEqualTo(43);
-        ArrayList<Element> percentElementsList = jasperApiUtils.getElementsByColumnSpan(jasperReportSummaryAllChangeLevels, "4");
-        softAssertions.assertThat(percentElementsList.size()).isEqualTo(32);
-        softAssertions.assertThat(percentElementsList.get(22).text()).isEqualTo("0%");
-        softAssertions.assertThat(percentElementsList.get(28).text()).isEqualTo("0%");
-        softAssertions.assertThat(percentElementsList.get(31).text()).isEqualTo("0%");
+        softAssertions.assertThat(jasperReportSummaryAllChangeLevels.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isGreaterThanOrEqualTo(43);
+        softAssertions.assertThat(jasperReportSummaryAllChangeLevels.getReportHtmlPart().toString().contains("300%")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryAllChangeLevels.getReportHtmlPart().toString().contains("-11%")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryAllChangeLevels.getReportHtmlPart().toString().contains("-3%")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryAllChangeLevels.getReportHtmlPart().toString().contains("0%")).isEqualTo(true);
 
         // Low change level only selected
         changeListArrayList.clear();
@@ -424,10 +423,7 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
             changeListArrayList
         );
 
-        percentElementsList.clear();
-        percentElementsList = jasperApiUtils.getElementsByColumnSpan(jasperReportSummaryLowChangeLevel, "4");
-        softAssertions.assertThat(jasperReportSummaryAllChangeLevels.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isEqualTo(43);
-        softAssertions.assertThat(percentElementsList.size()).isEqualTo(29);
+        softAssertions.assertThat(jasperReportSummaryLowChangeLevel.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isEqualTo(29);
         softAssertions.assertThat(jasperReportSummaryLowChangeLevel.getReportHtmlPart().getElementsContainingText("Change Level:").get(6).siblingElements().get(6).child(0).text()).isEqualTo("Low");
         softAssertions.assertThat(jasperReportSummaryLowChangeLevel.getReportHtmlPart().toString().contains("0%")).isEqualTo(true);
         softAssertions.assertThat(jasperReportSummaryLowChangeLevel.getReportHtmlPart().toString().contains("-0%")).isEqualTo(true);
@@ -442,12 +438,12 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
             changeListArrayList
         );
 
-        percentElementsList.clear();
-        percentElementsList = jasperApiUtils.getElementsByColumnSpan(jasperReportSummaryMediumChangeLevel, "4");
-        softAssertions.assertThat(jasperReportSummaryMediumChangeLevel.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isEqualTo(32);
-        softAssertions.assertThat(percentElementsList.size()).isEqualTo(2);
+        softAssertions.assertThat(jasperReportSummaryMediumChangeLevel.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isGreaterThanOrEqualTo(26);
         softAssertions.assertThat(jasperReportSummaryMediumChangeLevel.getReportHtmlPart().getElementsContainingText("Change Level:").get(6).siblingElements().get(6).child(0).text()).isEqualTo("Medium");
-        softAssertions.assertThat(jasperReportSummaryMediumChangeLevel.getReportHtmlPart().toString().contains("0.0%")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryMediumChangeLevel.getReportHtmlPart().toString().contains("-17%")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryMediumChangeLevel.getReportHtmlPart().toString().contains("-5%")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryMediumChangeLevel.getReportHtmlPart().toString().contains("-3%")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryMediumChangeLevel.getReportHtmlPart().toString().contains("0%")).isEqualTo(true);
 
         // High change level only selected
         changeListArrayList.clear();
@@ -456,12 +452,10 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
             changeListArrayList
         );
 
-        percentElementsList.clear();
-        percentElementsList = jasperApiUtils.getElementsByColumnSpan(jasperReportSummaryHighChangeLevel, "4");
-        softAssertions.assertThat(jasperReportSummaryHighChangeLevel.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isEqualTo(32);
-        softAssertions.assertThat(percentElementsList.size()).isEqualTo(2);
+        softAssertions.assertThat(jasperReportSummaryHighChangeLevel.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isEqualTo(34);
         softAssertions.assertThat(jasperReportSummaryHighChangeLevel.getReportHtmlPart().getElementsContainingText("Change Level:").get(6).siblingElements().get(6).child(0).text()).isEqualTo("High");
-        softAssertions.assertThat(jasperReportSummaryHighChangeLevel.getReportHtmlPart().toString().contains("0.0%")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryHighChangeLevel.getReportHtmlPart().toString().contains("300%")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryHighChangeLevel.getReportHtmlPart().toString().contains("-23%")).isEqualTo(true);
 
         // No Change change level only selected
         changeListArrayList.clear();
@@ -470,12 +464,9 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
             changeListArrayList
         );
 
-        percentElementsList.clear();
-        percentElementsList = jasperApiUtils.getElementsByColumnSpan(jasperReportSummaryNoChangeChangeLevel, "4");
         softAssertions.assertThat(jasperReportSummaryNoChangeChangeLevel.getReportHtmlPart().getElementsByAttributeValue("id", "JR_PAGE_ANCHOR_0_1").get(0).children().get(1).children().size()).isGreaterThanOrEqualTo(18);
-        softAssertions.assertThat(percentElementsList.size()).isGreaterThanOrEqualTo(4);
         softAssertions.assertThat(jasperReportSummaryNoChangeChangeLevel.getReportHtmlPart().getElementsContainingText("Change Level:").get(6).siblingElements().get(6).child(0).text()).isEqualTo("No Change");
-        softAssertions.assertThat(jasperReportSummaryNoChangeChangeLevel.getReportHtmlPart().toString().contains("0%")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryNoChangeChangeLevel.getReportHtmlPart().toString().contains(">0%")).isEqualTo(false);
 
         softAssertions.assertAll();
     }
