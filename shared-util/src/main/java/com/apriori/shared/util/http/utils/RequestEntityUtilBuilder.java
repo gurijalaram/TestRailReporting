@@ -1,5 +1,6 @@
 package com.apriori.shared.util.http.utils;
 
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 
@@ -15,12 +16,12 @@ public class RequestEntityUtilBuilder {
     }
 
     /**
-     * Use a random user received by {@link UserUtil#getUser(String)}
+     * Use a random user received by {@link UserUtil#getUser(com.apriori.shared.util.enums.RolesEnum)}
      * in all requests initialized by the current RequestEntityUtil object
      * @return current RequestEntityUtil object
      */
-    public static RequestEntityUtil useRandomUser(final String accessLevel) {
-        return new RequestEntityUtil(UserUtil.getUser(accessLevel));
+    public static RequestEntityUtil useRandomUser(final RolesEnum role) {
+        return new RequestEntityUtil(UserUtil.getUser(role));
     }
 
     /**

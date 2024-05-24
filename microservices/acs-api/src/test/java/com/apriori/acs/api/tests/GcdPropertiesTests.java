@@ -1,5 +1,7 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.acs.api.models.response.acs.GcdProperties.GcdPropertiesResponse;
 import com.apriori.acs.api.models.response.acs.GcdProperties.PropertiesToSet;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -21,7 +23,7 @@ import java.util.Collections;
 
 @ExtendWith(TestRulesAPI.class)
 public class GcdPropertiesTests {
-    private final UserCredentials userCredentials = UserUtil.getUser("common");
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     private void saveGcdPropertiesAssertion(GcdPropertiesResponse gcdPropertiesResponse) {
 

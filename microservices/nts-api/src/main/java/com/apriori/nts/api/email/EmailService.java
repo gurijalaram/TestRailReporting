@@ -1,5 +1,7 @@
 package com.apriori.nts.api.email;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.nts.api.enums.NTSAPIEnum;
 import com.apriori.nts.api.models.response.Email;
 import com.apriori.nts.api.models.response.EmailsItems;
@@ -25,10 +27,11 @@ import java.util.Map;
 @Slf4j
 public class EmailService {
 
-    private final String cloudContext = CustomerUtil.getAuthTargetCloudContext(UserUtil.getUser("admin"));
-    private Map<String, String> headers = new HashMap<String, String>() {{
-            put("ap-cloud-context", cloudContext);
-        }};
+    private final String cloudContext = CustomerUtil.getAuthTargetCloudContext(UserUtil.getUser(APRIORI_DEVELOPER));
+    private Map<String, String> headers =
+        new HashMap<>() {{
+                put("ap-cloud-context", cloudContext);
+            }};
 
     /**
      * Validates that an email has been sent by checking the target account

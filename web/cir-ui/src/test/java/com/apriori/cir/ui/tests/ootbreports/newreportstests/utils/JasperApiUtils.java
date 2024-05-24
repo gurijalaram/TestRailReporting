@@ -25,12 +25,14 @@ import com.apriori.shared.util.enums.ProcessGroupEnum;
 
 import com.google.common.base.Stopwatch;
 import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Element;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -47,6 +49,7 @@ import java.util.stream.Stream;
 public class JasperApiUtils {
     private JasperApiInputControlsPathEnum reportValueForInputControls;
     private SoftAssertions softAssertions = new SoftAssertions();
+    @Getter
     private ReportRequest reportRequest;
     private String reportsJsonFileName;
     private String exportSetName;
@@ -1188,8 +1191,30 @@ public class JasperApiUtils {
         return count;
     }
 
-    public ReportRequest getReportRequest() {
-        return reportRequest;
+    /**
+     * Works out and returns expected percentage difference value (Upgrade Comparison and Upgrade Part Comparison Report)
+     *
+     * @param oldValue - Double of first value for calculations
+     * @param newValue - Double of second value for calculations
+     * @return - String of expected percentage difference value
+     */
+    public String getExpectedPercentDiffValue(Double oldValue, Double newValue) {
+        DecimalFormat df = new DecimalFormat("#");
+
+        Double newMinusOldOverhead = newValue - oldValue;
+        double subSumDivideByOldOverhead = newMinusOldOverhead / oldValue;
+        return df.format(Math.round(subSumDivideByOldOverhead * (Double.parseDouble("100"))));
+    }
+
+    /**
+     * Generic method to get a list of elements based on their column span attribute (a common method to get values for assertion in jasper api)
+     *
+     * @param jasperReportSummary - JasperReportSummary to use to get elements
+     * @param columnSpanValue - String of column span value to use to retrieve values
+     * @return ArrayList of Elements by their column span
+     */
+    public ArrayList<Element> getElementsByColumnSpan(JasperReportSummary jasperReportSummary, String columnSpanValue) {
+        return jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", columnSpanValue);
     }
 
     private ArrayList<String> getScenarioCycleTimeValues(String currencyToGet) {
