@@ -49,6 +49,14 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     private WebElement saveButton;
     @FindBy(xpath = "//a[@href = '/bulk-analysis']")
     private WebElement bulkAnalysisTab;
+    @FindBy(id = "qa-bcm-sub-header-info-button")
+    private WebElement infoButton;
+    @FindBy(xpath = "//h2[contains(.,'Bulk Analysis Info')]")
+    private WebElement bulkAnalysisInfoHeader;
+    @FindBy(xpath = "//input[@name = 'name']")
+    private WebElement nameInputFieldBulkAnalysisInfo;
+    @FindBy(xpath = "//button[@data-testid = 'primary-button']")
+    private WebElement enabledSaveButtonOnBulkAnalysisInfo;
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -92,6 +100,19 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
         pageUtils.waitForElementAndClick(checkBox2);
         pageUtils.waitForElementAndClick(deleteButton);
         pageUtils.waitForElementAndClick(confirmDeleteButton);
+        return this;
+    }
+
+    /**
+     * select worksheet
+     *
+     * @param nameBulkAnalysis - name of the worksheet
+     * @return page object
+     */
+    public BulkCostingPage selectBulkAnalysis(String nameBulkAnalysis) {
+        String xpath = "//div[contains(@class,'table-row')][contains(.,'" + nameBulkAnalysis + "')]/descendant::span";
+        WebElement checkBox2 = pageUtils.waitForElementToBeClickable(By.xpath(xpath));
+        pageUtils.waitForElementAndClick(checkBox2);
         return this;
     }
 
@@ -141,6 +162,18 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
         String xpath = "//div[contains(.,'" + worksheetName + "')][contains(@data-testid,'text-overflow')]";
         pageUtils.waitForElementsToNotAppear(By.xpath(xpath));
         return !(pageUtils.isElementDisplayed(By.xpath(xpath)));
+    }
+
+    /**
+     * Check if worksheet is present on UI
+     *
+     * @param worksheetName - name of the worksheet
+     * @return the boolean value
+     */
+    public boolean isWorksheetPresent(String worksheetName) {
+        String xpath = "//div[contains(.,'" + worksheetName + "')][contains(@data-testid,'text-overflow')]";
+        pageUtils.waitForElementToAppear(By.xpath(xpath));
+        return pageUtils.isElementDisplayed(By.xpath(xpath));
     }
 
     /**
@@ -330,5 +363,62 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
         String xpath = "//div[contains(@aria-label,'" + text + "')]";
         WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
         return pageUtils.isElementDisplayed(element);
+    }
+
+    /**
+     * get expected Info button state
+     *
+     * @param attributeValue - expected string in attribute
+     * @return String abut the state of the button
+     */
+    public String getInfoButtonState(String attributeValue) {
+        pageUtils.waitForElementAppear(infoButton);
+        pageUtils.checkElementAttribute(infoButton, "aria-label", attributeValue);
+        return infoButton.getAttribute("aria-label");
+    }
+
+    /**
+     * click on the info button
+     *
+     * @return page object
+     */
+    public BulkCostingPage clickOnTheInfoButton() {
+        pageUtils.waitForElementToBeClickable(infoButton);
+        pageUtils.waitForElementAndClick(infoButton);
+        return this;
+    }
+
+    /**
+     * is Bulk Analysis Info Header on the Info Window is displayed
+     *
+     * @return boolean
+     */
+    public boolean isBulkAnalysisInfoWindowIsDisplayed() {
+        pageUtils.waitForElementAppear(bulkAnalysisInfoHeader);
+        return pageUtils.isElementDisplayed(bulkAnalysisInfoHeader);
+    }
+
+    /**
+     * sent values into the input field name in the Bulk Analysis Info
+     *
+     * @param value - value to be added to the original name
+     * @return page object
+     */
+    public BulkCostingPage changeTheNaneOfBulkAnalysisName(String value) {
+        pageUtils.waitForElementAppear(nameInputFieldBulkAnalysisInfo);
+        pageUtils.clearValueOfElement(nameInputFieldBulkAnalysisInfo);
+        nameInputFieldBulkAnalysisInfo.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * click omn Save Button on Bulk  Analysis Info Page
+     *
+     * @return page object
+     */
+    public BulkCostingPage clickOnSaveButtonOnBulkAnalysisInfo() {
+        pageUtils.waitForElementToBeClickable(enabledSaveButtonOnBulkAnalysisInfo);
+        pageUtils.waitForElementAndClick(enabledSaveButtonOnBulkAnalysisInfo);
+        return this;
     }
 }
