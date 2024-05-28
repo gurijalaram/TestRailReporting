@@ -1,4 +1,4 @@
 package com.apriori.cds.api.utils;
 
-public class InstallationsUtil {
+public class UserUtil {
 }

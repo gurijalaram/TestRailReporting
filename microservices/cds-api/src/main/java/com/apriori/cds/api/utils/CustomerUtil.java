@@ -1,4 +1,4 @@
 package com.apriori.cds.api.utils;
 
-public class CustomersUtil {
+public class CustomerUtil {
 }
