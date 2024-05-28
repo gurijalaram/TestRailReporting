@@ -1,5 +1,6 @@
 package com.apriori.acs.api.utils.workorders;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -55,6 +56,7 @@ import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.fms.api.controller.FileManagementController;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -80,8 +82,7 @@ import java.util.concurrent.TimeUnit;
 public class FileUploadResources {
 
     private static final long WAIT_TIME = 180;
-
-    private static final String token = new OldAuthorizationUtil().getTokenAsString();
+    private String token;
 
     private static final HashMap<String, String> headers = new HashMap<>();
 
@@ -93,6 +94,10 @@ public class FileUploadResources {
     private Assembly currentAssembly;
 
     private String currentWorkorderId;
+
+    public FileUploadResources(UserCredentials user) {
+        this.token = new OldAuthorizationUtil().getTokenAsString(user);
+    }
 
     /**
      * Uploads part to CID
@@ -810,7 +815,7 @@ public class FileUploadResources {
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
         return FileManagementController.uploadFile(
-            UserUtil.getUser("common"),
+            UserUtil.getUser(APRIORI_DESIGNER),
             ProcessGroupEnum.fromString(processGroup),
             fileName
         );

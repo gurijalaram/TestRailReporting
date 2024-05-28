@@ -1,5 +1,7 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.acs.api.models.response.acs.scenariosinfo.ScenariosInfoItem;
 import com.apriori.acs.api.models.response.acs.scenariosinfo.ScenariosInfoResponse;
 import com.apriori.acs.api.models.response.workorders.genericclasses.ScenarioIterationKey;
@@ -8,6 +10,8 @@ import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
@@ -26,6 +30,7 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class ScenariosInfoTests extends TestUtil {
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 9597)
@@ -62,7 +67,7 @@ public class ScenariosInfoTests extends TestUtil {
         keyOne.setIteration(3000000);
         keyTwo.setIteration(4000000);
 
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
 
         ResponseWrapper<ScenariosInfoResponse> response = acsResources.getScenariosInformation(
             keyOne,
@@ -79,7 +84,7 @@ public class ScenariosInfoTests extends TestUtil {
     @TestRail(id = 10203)
     @Description("Negative Get Scenarios Info - Empty Body")
     public void negativeGetScenariosInfoEmptyBodyTest() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
 
         ResponseWrapper<ScenariosInfoResponse> response = acsResources.getScenariosInfoNullBody();
 
@@ -98,7 +103,7 @@ public class ScenariosInfoTests extends TestUtil {
     private List<FileUploadOutputs> fileUpload(List<String> fileNames) {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        FileUploadResources fileUploadResources = new FileUploadResources();
+        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
         List<FileResponse> fileResponses = new ArrayList<>();
         List<FileUploadOutputs> fileUploadOutputs = new ArrayList<>();
@@ -131,7 +136,7 @@ public class ScenariosInfoTests extends TestUtil {
             scenarioIterationKeys.add(fileUploadOutput.getScenarioIterationKey());
         }
 
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         ResponseWrapper<ScenariosInfoResponse> response = acsResources.getScenariosInformationOneScenario(scenarioIterationKeys);
 
         return new ArrayList<>(response.getResponseEntity());

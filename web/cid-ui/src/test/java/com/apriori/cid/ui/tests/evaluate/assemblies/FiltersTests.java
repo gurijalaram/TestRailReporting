@@ -485,31 +485,6 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("This test has never worked on Jenkins because the time cannot be changed, should be a manual test")
-    @Issue("BA-2610")
-    @TestRail(id = 6094)
-    @Description("Validate Private filter displays only Private Scenarios")
-    public void verifyFilterPersistenceTest() {
-
-        currentUser = UserUtil.getUser();
-        String filterName = generateStringUtil.generateFilterName();
-
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .filter()
-            .newFilter()
-            .inputName(filterName)
-            .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.LESS_THAN, LocalDateTime.now().minusHours(1))
-            .submit(ExplorePage.class)
-            .selectFilter(filterName)
-            .logout()
-            .login(currentUser)
-            .selectFilter(filterName);
-
-        assertThat(explorePage.getCurrentFilter()).isEqualTo(filterName);
-    }
-
-    @Test
     @TestRail(id = 6100)
     @Description("Validate that user can cancel action New, Rename, Save As before saving")
     public void cancelFilterTest() {

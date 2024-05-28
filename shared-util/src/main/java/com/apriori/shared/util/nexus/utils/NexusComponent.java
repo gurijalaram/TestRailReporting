@@ -16,4 +16,6 @@ public class NexusComponent {
     private String installExecutableFile;
     private String webLoginSession;
     private String privateKeyFile;
+    private String agentInstallFolder;
+    private String agentItemName;
 }

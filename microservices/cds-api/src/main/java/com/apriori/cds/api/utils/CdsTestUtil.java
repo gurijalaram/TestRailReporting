@@ -1,6 +1,7 @@
 package com.apriori.cds.api.utils;
 
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIS;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
@@ -89,7 +90,7 @@ public class CdsTestUtil extends TestUtil {
     @BeforeAll
     public static void init() {
         requestEntityUtil = RequestEntityUtilBuilder
-            .useRandomUser("admin")
+            .useRandomUser(APRIORI_DEVELOPER)
             .useApUserContextInRequests();
 
         testingUser = requestEntityUtil.getEmbeddedUser();
@@ -859,7 +860,7 @@ public class CdsTestUtil extends TestUtil {
             .body(
                 "accessControl",
                 AccessControlRequest.builder()
-                    .customerIdentity(RequestEntityUtilBuilder.useRandomUser().getEmbeddedUser().getApUser().getCustomerIdentity())
+                    .customerIdentity(RequestEntityUtilBuilder.useRandomUser().getEmbeddedUser().getUserDetails().getCustomerIdentity())
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
                     .applicationIdentity(new CdsTestUtil().getApplicationIdentity(CIS))

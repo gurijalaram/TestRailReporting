@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -9,6 +10,8 @@ import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -26,8 +29,9 @@ public class TwoDImageByScenarioIterationKeyTests extends TestUtil {
     @TestRail(id = 10902)
     @Description("Validate Get 2D Image by Scenario Iteration Key Endpoint")
     public void testGet2DImageByScenarioIterationKey() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
+        UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
+        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
+        AcsResources acsResources = new AcsResources(userCredentials);
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 

@@ -1,5 +1,7 @@
 package com.apriori.dfs.api.models.utils;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.dfs.api.enums.DFSApiEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -9,7 +11,6 @@ import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.interfaces.EndpointEnum;
-import com.apriori.shared.util.models.response.User;
 
 public class DigitalFactoryUtil {
 
@@ -155,7 +156,7 @@ public class DigitalFactoryUtil {
                                                        String... inlineVariables) {
 
         return HTTPRequest.build(
-            getRequestEntity(expectedResponseCode, expectedType, UserUtil.getUser("common"), inlineVariables))
+            getRequestEntity(expectedResponseCode, expectedType, UserUtil.getUser(APRIORI_DESIGNER), inlineVariables))
             .delete();
     }
 

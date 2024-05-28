@@ -1,14 +1,18 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.response.acs.availableroutings.AvailableRoutingsFirstLevel;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.api.models.response.workorders.upload.FileUploadOutputs;
-import com.apriori.acs.api.tests.workorders.WorkorderAPITests;
+import com.apriori.acs.api.tests.workorders.WorkorderApiUtils;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -20,15 +24,20 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class AvailableRoutingsTests {
+    private final UserCredentials user;
+
+    public AvailableRoutingsTests() {
+        user = UserUtil.getUser(APRIORI_DESIGNER);
+    }
 
     @Test
     @TestRail(id = 14814)
     @Description("Get available routings after Cost")
     public void testGetAvailableRoutingsCosted() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -71,8 +80,8 @@ public class AvailableRoutingsTests {
     @TestRail(id = 14812)
     @Description("Get available routings before Cost")
     public void testGetAvailableRoutingsUncosted() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -109,10 +118,10 @@ public class AvailableRoutingsTests {
     @TestRail(id = 14823)
     @Description("Get available routings after Cost for Additive Manufacturing scenario")
     public void testGetAvailableRoutingsAdditiveManufacturing() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -152,13 +161,13 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14824)
+    @TestRail(id = {14824, 6124})
     @Description("Get available routings after Cost for Bar & Tube Fab scenario")
     public void testGetAvailableRoutingsBarandTube() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -198,13 +207,13 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14825)
+    @TestRail(id = {14825, 6125})
     @Description("Get available routings after Cost for Casting - Die scenario")
     public void testGetAvailableRoutingsCastingDie() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -247,10 +256,10 @@ public class AvailableRoutingsTests {
     @TestRail(id = 14826)
     @Description("Get available routings after Cost for Casting - Investment scenario")
     public void testGetAvailableRoutingsCastingInvestment() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -293,10 +302,10 @@ public class AvailableRoutingsTests {
     @TestRail(id = 14827)
     @Description("Get available routings after Cost for Casting - Sand scenario")
     public void testGetAvailableRoutingsCastingSand() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -336,13 +345,13 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14828)
+    @TestRail(id = {14828, 5441, 6631, 6632})
     @Description("Get available routings after Cost for Forging scenario")
     public void testGetAvailableRoutingsForging() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -382,13 +391,13 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14829)
+    @TestRail(id = {14829, 6126, 6461})
     @Description("Get available routings after Cost for Plastic Molding scenario")
     public void testGetAvailableRoutingsPlasticMolding() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -428,13 +437,13 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14830)
+    @TestRail(id = {14830, 6142})
     @Description("Get available routings after Cost for Powder Metal scenario")
     public void testGetAvailableRoutingsPowderMetal() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -476,10 +485,10 @@ public class AvailableRoutingsTests {
     @TestRail(id = 14834)
     @Description("Get available routings after Cost for Rapid Prototyping scenario")
     public void testGetAvailableRoutingsRapidPrototyping() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -519,13 +528,13 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14835)
+    @TestRail(id = {14835, 6061, 8336})
     @Description("Get available routings after Cost for Roto & Blow Molding scenario")
     public void testGetAvailableRoutingsRotoandBlowMolding() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -568,10 +577,10 @@ public class AvailableRoutingsTests {
     @TestRail(id = 14836)
     @Description("Get available routings after Cost for Sheet Metal scenario")
     public void testGetAvailableRoutingsSheetMetal() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -614,10 +623,10 @@ public class AvailableRoutingsTests {
     @TestRail(id = 14837)
     @Description("Get available routings after Cost for Sheet Metal - Hydroforming scenario")
     public void testGetAvailableRoutingsSheetMetalHydroforming() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -660,10 +669,10 @@ public class AvailableRoutingsTests {
     @TestRail(id = 14838)
     @Description("Get available routings after Cost for Sheet Metal - Roll Forming scenario")
     public void testGetAvailableRoutingsSheetMetalRollForming() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -705,10 +714,10 @@ public class AvailableRoutingsTests {
     @TestRail(id = 14839)
     @Description("Get available routings after Cost for Sheet Metal - Stretch Forming scenario")
     public void testGetAvailableRoutingsSheetMetalStretchForming() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -751,10 +760,10 @@ public class AvailableRoutingsTests {
     @TestRail(id = 148340)
     @Description("Get available routings after Cost for Sheet Metal - Transfer Die scenario")
     public void testGetAvailableRoutingsSheetMetalTransferDie() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -796,10 +805,10 @@ public class AvailableRoutingsTests {
     @TestRail(id = 14841)
     @Description("Get available routings after Cost for Sheet Plastic scenario")
     public void testGetAvailableRoutingsSheetPlastic() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -839,13 +848,13 @@ public class AvailableRoutingsTests {
     }
 
     @Test
-    @TestRail(id = 14842)
+    @TestRail(id = {14842, 6123})
     @Description("Get available routings after Cost for Stock Machining scenario")
     public void testGetAvailableRoutingsStockMachining() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+        FileUploadResources fileUploadResources = new FileUploadResources(user);
+        AcsResources acsResources = new AcsResources(user);
+        WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
+        NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 

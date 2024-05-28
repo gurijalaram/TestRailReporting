@@ -4,6 +4,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.ActiveLicenseModules;
 import com.apriori.cds.api.models.response.CdsErrorResponse;
+import com.apriori.cds.api.models.response.LicenseExpand;
 import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.models.response.Licenses;
 import com.apriori.cds.api.models.response.SubLicense;
@@ -106,7 +107,7 @@ public class CdsLicenseTests {
     @Description("Activate a license.")
     public void activateLicenseTest() {
         setCustomerData();
-        String userIdentity = UserUtil.getUser().getApUser().getIdentity();
+        String userIdentity = UserUtil.getUser().getUserDetails().getIdentity();
 
         cdsTestUtil.activateLicense(customerIdentity, siteIdentity, licenseIdentity, userIdentity);
         ResponseWrapper<LicenseResponse> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
@@ -158,7 +159,7 @@ public class CdsLicenseTests {
     @Description("Get a list of active licensed sub-modules")
     public void getActiveModules() {
         setCustomerData();
-        String userIdentity = UserUtil.getUser().getApUser().getIdentity();
+        String userIdentity = UserUtil.getUser().getUserDetails().getIdentity();
 
         cdsTestUtil.activateLicense(customerIdentity, siteIdentity, licenseIdentity, userIdentity);
         ResponseWrapper<ActiveLicenseModules> activeModules = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACTIVE_MODULES, ActiveLicenseModules.class, HttpStatus.SC_OK,
@@ -376,6 +377,24 @@ public class CdsLicenseTests {
             subLicenseIdentity,
             userIdentity
         );
+    }
+
+    @Test
+    @TestRail(id = {30678})
+    @Description("get API Expand for Customer Licenses API")
+    public void getApiExpandCustomerLicenses() {
+        String paramName = "_expand";
+        String paramValue = "licensedModules,subLicenses.users.all";
+        Customer customer = cdsTestUtil.getAprioriInternal();
+        String licenseIdentity = cdsTestUtil.getCommonRequest(CDSAPIEnum.LICENSES_BY_CUSTOMER_ID, Licenses.class, HttpStatus.SC_OK, customer.getIdentity()).getResponseEntity()
+            .getItems().get(0).getIdentity();
+
+        LicenseExpand expandResponse = cdsTestUtil.getCommonRequestWithParams(
+            CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID, LicenseExpand.class, HttpStatus.SC_OK, paramName, paramValue, customer.getIdentity(), licenseIdentity).getResponseEntity();
+
+        soft.assertThat(expandResponse.getExpand())
+            .contains("licensedModules", "subLicenses.users.all");
+        soft.assertAll();
     }
 
     private void setCustomerData() {

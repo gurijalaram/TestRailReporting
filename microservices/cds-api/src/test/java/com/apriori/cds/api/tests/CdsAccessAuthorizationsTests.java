@@ -1,5 +1,7 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.AccessAuthorization;
@@ -48,7 +50,7 @@ public class CdsAccessAuthorizationsTests {
     private ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
     private ResponseWrapper<AssociationUserItems> associationUser;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
+    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
 
     @BeforeEach
     public void setDetails() {
@@ -56,11 +58,11 @@ public class CdsAccessAuthorizationsTests {
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         emailPattern = "\\S+@".concat(customerName);
-        apStaffIdentity = currentUser.getApUser().getIdentity();
+        apStaffIdentity = currentUser.getUserDetails().getIdentity();
 
         customer = cdsTestUtil.addCASCustomer(customerName, cloudRef, emailPattern, currentUser);
         customerIdentity = customer.getResponseEntity().getIdentity();
-        apCustomerIdentity = currentUser.getApUser().getCustomerIdentity();
+        apCustomerIdentity = currentUser.getUserDetails().getCustomerIdentity();
         customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, HttpStatus.SC_OK, apCustomerIdentity);
         associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).toList().get(0).getIdentity();
         associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
