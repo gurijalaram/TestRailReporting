@@ -1,8 +1,8 @@
 package com.apriori.cds.api.utils;
 
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIS;
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
