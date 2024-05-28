@@ -1,12 +1,11 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.CustomerEnum.AP_INT;
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static com.apriori.cds.api.enums.ApplicationEnum.ACS;
 import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIR;
 import static com.apriori.cds.api.enums.ApplicationEnum.CLOUD_HOME;
+import static com.apriori.shared.util.enums.CustomerEnum.AP_INT;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.AccessControls;
@@ -170,11 +169,11 @@ public class CasBulkGrantDenyAccessTests {
         casTestUtil.grantDenyAll(customerIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "grant-all", null);
 
         ResponseWrapper<AccessControls> userControlsGranted = casTestUtil.getCommonRequest(CASAPIEnum.ACCESS_CONTROLS, AccessControls.class, HttpStatus.SC_OK,
-                customerIdentity,
-                userIdentity);
+            customerIdentity,
+            userIdentity);
         soft.assertThat(userControlsGranted.getResponseEntity().getItems().get(2).getDeploymentIdentity())
-                .overridingErrorMessage("Expected all users were granted access control to customer application")
-                .isEqualTo(deploymentIdentity);
+            .overridingErrorMessage("Expected all users were granted access control to customer application")
+            .isEqualTo(deploymentIdentity);
 
         casTestUtil.grantDenyAll(customerIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, "deny-all", null);
 
@@ -182,8 +181,8 @@ public class CasBulkGrantDenyAccessTests {
             customerIdentity,
             userIdentity);
         soft.assertThat(userDeniedControls.getResponseEntity().getTotalItemCount())
-                .overridingErrorMessage("Expected all users were denied access control to customer application")
-                .isEqualTo(2L);
+            .overridingErrorMessage("Expected all users were denied access control to customer application")
+            .isEqualTo(2L);
         soft.assertAll();
     }
 
