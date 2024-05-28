@@ -144,6 +144,34 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertAll();
     }
 
+    @Test
+    @TestRail(id = {29876, 29875, 29877, 29878})
+    @Description("edit Bulk Analysis name")
+    public void editBulkAnalysisName() {
+        SoftAssertions soft = new SoftAssertions();
+        setBulkCostingFlag(true);
+        loginPage = new CidAppLoginPage(driver);
+        bulkCostingPage = loginPage
+            .login(userCredentials)
+            .clickBulkCostingButton();
+
+        ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
+        createInputRow(userCredentials, worksheetResponse);
+        soft.assertThat(bulkCostingPage.getInfoButtonState("Cannot show worksheet info with no worksheet selected."))
+            .isEqualTo("Cannot show worksheet info with no worksheet selected.");
+
+        bulkCostingPage.selectBulkAnalysis(worksheetResponse.getResponseEntity().getName());
+        soft.assertThat(bulkCostingPage.getInfoButtonState("Worksheet Info")).isEqualTo("Worksheet Info");
+
+        bulkCostingPage.clickOnTheInfoButton();
+        soft.assertThat(bulkCostingPage.isBulkAnalysisInfoWindowIsDisplayed()).isTrue();
+        String value = worksheetResponse.getResponseEntity().getName().concat("_updated");
+        bulkCostingPage.changeTheNaneOfBulkAnalysisName(value)
+            .clickOnSaveButtonOnBulkAnalysisInfo();
+        soft.assertThat(bulkCostingPage.isWorksheetPresent(value)).isTrue();
+        soft.assertAll();
+    }
+
     private String createInputRow(UserCredentials userCredentials, ResponseWrapper<WorkSheetResponse> worksheetResponse) {
         CssComponent cssComponent = new CssComponent();
         BcmUtil bcmUtil = new BcmUtil();
