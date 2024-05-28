@@ -462,7 +462,6 @@ public class JasperApiUtils {
 
         setTwoExportSetsParametersByName(valueOneToSet, valueTwoToSet);
         setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(), rollupValue);
-        //setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), currencyToSet);
         setReportParameterByName(InputControlsEnum.PROCESS_GROUP.getInputControlId(),
             inputControlState.getProcessGroup().getOption(processGroupToSet).getValue());
         setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
