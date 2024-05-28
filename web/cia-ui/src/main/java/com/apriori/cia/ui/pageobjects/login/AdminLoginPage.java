@@ -50,4 +50,13 @@ public class AdminLoginPage extends AdminHeader {
     public AdminHomePage login() {
         return aprioriLoginService.login(userCredentials, AdminHomePage.class);
     }
+
+    /**
+     * Login to CIA with specific user
+     *
+     * @return new page object
+     */
+    public AdminHomePage loginWithSpecificUser(final UserCredentials customUserCredentials) {
+        return aprioriLoginService.login(customUserCredentials, AdminHomePage.class);
+    }
 }

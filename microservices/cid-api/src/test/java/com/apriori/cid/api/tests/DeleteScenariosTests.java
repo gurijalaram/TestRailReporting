@@ -1,6 +1,7 @@
 package com.apriori.cid.api.tests;
 
 import static com.apriori.css.api.enums.CssSearch.COMPONENT_TYPE_EQ;
+import static com.apriori.css.api.enums.CssSearch.LATEST_EQ;
 import static com.apriori.css.api.enums.CssSearch.PAGE_SIZE;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_CREATED_AT_LT;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_CN;
@@ -30,10 +31,10 @@ import java.util.List;
 @Slf4j
 public class DeleteScenariosTests {
 
+    private static int number_of_scenarios_marked_for_deletion = 0;
     private final CssComponent cssComponent = new CssComponent();
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private final SoftAssertions softAssertions = new SoftAssertions();
-    private static int number_of_scenarios_marked_for_deletion = 0;
 
     @AfterAll
     public static void info() {
@@ -108,11 +109,12 @@ public class DeleteScenariosTests {
             COMPONENT_TYPE_EQ.getKey() + componentType,
             SCENARIO_NAME_CN.getKey() + scenarioPartName,
             PAGE_SIZE.getKey() + pageSize,
-            SCENARIO_STATE_NI.getKey() + ScenarioStateEnum.PROCESSING + "|" + ScenarioStateEnum.COSTING,
+            SCENARIO_STATE_NI.getKey() + ScenarioStateEnum.PROCESSING + "|" + ScenarioStateEnum.PROCESSING_FAILED + "|" + ScenarioStateEnum.COSTING,
+            LATEST_EQ.getKey() + true,
             SCENARIO_CREATED_AT_LT.getKey() + LocalDateTime.now().minusDays(maxDays).format(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));
 
         if (scenarioItems.isEmpty()) {
-            throw new RuntimeException("No scenarios found for deletion");
+            log.info("No scenarios found for deletion with Scenario Part Name:- {} and Component Type:- {}", scenarioPartName, componentType);
         }
 
         return scenarioItems;
