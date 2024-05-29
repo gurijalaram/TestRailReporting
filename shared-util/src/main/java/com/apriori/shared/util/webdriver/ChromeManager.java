@@ -1,5 +1,6 @@
 package com.apriori.shared.util.webdriver;
 
+import static com.apriori.shared.util.testconfig.TestBaseUI.downloadPath;
 import static com.apriori.shared.util.webdriver.DriverFactory.mode;
 import static com.apriori.shared.util.webdriver.DriverFactory.os;
 import static io.github.bonigarcia.wdm.config.OperatingSystem.LINUX;
@@ -53,8 +54,6 @@ public class ChromeManager implements DriverManager<ChromeOptions> {
             chromeOptions.addArguments("--unsafely-treat-insecure-origin-as-secure=http://host.docker.internal:3003, http://host.docker.internal:3002");
         }
 
-        chromeOptions.setExperimentalOption("prefs", chromePrefs);
-
         if (!StringUtils.isEmpty(System.getProperty("ignoreSslCheck")) && Boolean.parseBoolean(System.getProperty("ignoreSslCheck"))) {
             chromeOptions.addArguments("--ignore-certificate-errors");
         }
@@ -73,6 +72,9 @@ public class ChromeManager implements DriverManager<ChromeOptions> {
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--headless");
         }
+        chromePrefs.put("download.default_directory", downloadPath);
+        chromeOptions.setExperimentalOption("prefs", chromePrefs);
+
         chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 
         return chromeOptions;
