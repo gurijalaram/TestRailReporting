@@ -1,7 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
-
 import static com.apriori.cid.ui.utils.PartNamesEnum.CENTRE_BOLT;
 import static com.apriori.cid.ui.utils.PartNamesEnum.CENTRE_WASHER;
 import static com.apriori.cid.ui.utils.PartNamesEnum.DISPLAY;
@@ -12,6 +10,7 @@ import static com.apriori.cid.ui.utils.PartNamesEnum.LEFT_PADDLE;
 import static com.apriori.cid.ui.utils.PartNamesEnum.MECHANISM_BODY;
 import static com.apriori.cid.ui.utils.PartNamesEnum.PADDLE_BAR;
 import static com.apriori.cid.ui.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTablePage;

@@ -1,7 +1,6 @@
 package com.apriori.cid.ui.tests.explore;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
