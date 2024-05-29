@@ -1,5 +1,7 @@
 package com.apriori.ags.api.utils;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.ags.api.enums.AgsApiEnum;
 import com.apriori.bcm.api.models.request.AddInputsRequest;
 import com.apriori.bcm.api.models.request.GroupItems;
@@ -46,7 +48,7 @@ import java.util.stream.Collectors;
 
 public class AgsUtil extends TestUtil {
 
-    protected static UserCredentials testingUser = UserUtil.getUser("admin");
+    protected static UserCredentials testingUser = UserUtil.getUser(APRIORI_DEVELOPER);
     protected static RequestEntityUtil requestEntityUtil;
     private Map<String, String> headers = new HashMap<String, String>() {
         {
@@ -57,7 +59,7 @@ public class AgsUtil extends TestUtil {
     @BeforeAll
     public static void init() {
         requestEntityUtil = RequestEntityUtilBuilder
-            .useRandomUser("admin")
+            .useRandomUser(APRIORI_DEVELOPER)
             .useTokenInRequests();
 
         testingUser = requestEntityUtil.getEmbeddedUser();

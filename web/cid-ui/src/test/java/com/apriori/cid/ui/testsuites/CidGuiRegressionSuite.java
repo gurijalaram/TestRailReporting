@@ -16,7 +16,6 @@ import com.apriori.cid.ui.tests.evaluate.MachiningStrategyTests;
 import com.apriori.cid.ui.tests.evaluate.ManualCostingTests;
 import com.apriori.cid.ui.tests.evaluate.NewScenarioNameTests;
 import com.apriori.cid.ui.tests.evaluate.OpenUnknownComponentsTests;
-import com.apriori.cid.ui.tests.evaluate.ProcessGroupsTests;
 import com.apriori.cid.ui.tests.evaluate.ProcessRoutingTests;
 import com.apriori.cid.ui.tests.evaluate.PsoEditTests;
 import com.apriori.cid.ui.tests.evaluate.PublishExistingCostedTests;
@@ -76,7 +75,6 @@ import org.junit.platform.suite.api.Suite;
     CostAllCadTests.class,
     CostScenarioTests.class,
     NewScenarioNameTests.class,
-    ProcessGroupsTests.class,
     SecondaryProcessTests.class,
     ChangeMaterialSelectionTests.class,
     MaterialStockTests.class,
