@@ -29,7 +29,8 @@ public enum ReportNamesEnum {
     TARGET_AND_QUOTED_COST_TREND("Target and Quoted Cost Trend"),
     TARGET_AND_QUOTED_COST_VALUE_TRACKING("Target and Quoted Cost Value Tracking"),
     TARGET_AND_QUOTED_COST_VALUE_TRACKING_DETAILS("Target and Quoted Cost Value Tracking Details"),
-    UPGRADE_PART_COMPARISON("Upgrade Part Comparison");
+    UPGRADE_PART_COMPARISON("Upgrade Part Comparison"),
+    UPGRADE_COMPARISON("Upgrade Comparison");
 
     private final String reportName;
 

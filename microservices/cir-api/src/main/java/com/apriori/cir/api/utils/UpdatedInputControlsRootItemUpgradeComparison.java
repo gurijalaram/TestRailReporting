@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.ArrayList;
 
 @Data
-@Schema(location = "UpdatedInputControlsUpgradePartComparisonResponse.json")
-public class UpdatedInputControlsRootItemUpgradePartComparison {
+@Schema(location = "UpdatedInputControlsUpgradeComparisonResponse.json")
+public class UpdatedInputControlsRootItemUpgradeComparison {
     public ArrayList<InputControlState> inputControlState;
 }
