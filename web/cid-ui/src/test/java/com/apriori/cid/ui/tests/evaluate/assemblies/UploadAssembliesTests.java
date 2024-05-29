@@ -1,10 +1,7 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
-import static com.apriori.shared.util.enums.ProcessGroupEnum.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -27,8 +24,6 @@ import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.UnitsEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -45,6 +40,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(ASSEMBLY)
 public class UploadAssembliesTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
@@ -190,7 +186,6 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = 5621)
     @Description("Validate sub components such as bolts or screws can exist in multiple assemblies")
     public void uploadAnAssemblyThatIsPartOfAnotherAssembly() {
@@ -302,7 +297,6 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {12139, 12101, 12136})
     @Description("Column configuration in Tree View with All filter does not affect column configuration in List View")
     public void testColumnConfigurationListView() {
@@ -385,7 +379,6 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6564})
     @Description("Assembly costs with multiple quantity of parts")
     public void costAssemblyWithMultipleQuantityOfParts() {
