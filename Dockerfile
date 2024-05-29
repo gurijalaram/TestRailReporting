@@ -23,7 +23,7 @@ ARG TESTS
 
 ENV JAVA_OPTS="$JAVA_OPTS $JAVAOPTS"
 
-RUN --mount=type=bind,source=/home/seluser/Downloads,target=./downloads \
+RUN --mount=type=bind,source=./downloads,target=/home/seluser/Downloads \
     --mount=type=secret,id=aws_config,target=/root/.aws/config \
     --mount=type=secret,id=aws_creds,target=/root/.aws/credentials \
     gradle --build-cache --info :$FOLDER:$MODULE:test --tests $TESTS
