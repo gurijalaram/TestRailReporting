@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 public class RandomCustomerData {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private String customerName = generateStringUtil.generateCustomerName();
     private String cloudRef = generateStringUtil.generateCloudReference();
     private String salesForceId = generateStringUtil.generateSalesForceId();
