@@ -10,6 +10,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.designguidance.GuidanceIssuesPage
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.TolerancesPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.cid.ui.utils.EvaluateDfmIconEnum;
 import com.apriori.cid.ui.utils.ToleranceEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
@@ -209,25 +210,31 @@ public class DTCMachiningTests extends TestBaseUI {
     }*/
 
     @Test
-    @TestRail(id = {6438})
+    @TestRail(id = {6438, 6453})
     @Description("Verify Sharp corners on curved walls are highlighted")
     public void sharpCornerCurvedWall() {
         component = new ComponentRequestUtil().getComponent("1379344_BEFORE_DTC");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(component.getUser())
+        evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
-            .costScenario(3)
-            .openDesignGuidance()
+            .costScenario(3);
+
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.HIGH.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
+
+        guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Curved Wall", "CurvedWall:22");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Side Milling: Feature contains a sharp corner that would require a zero tool diameter. " +
-            "If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Side Milling: Feature contains a sharp corner that would require a zero tool diameter. " +
+            "If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule.");
+
+        softAssertions.assertAll();
     }
 
     /*    @Test
