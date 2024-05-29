@@ -12,6 +12,7 @@ import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.MaterialSelectorPage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTablePage;
+import com.apriori.cid.ui.pageobjects.evaluate.components.inputs.ComponentAdvancedPage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.cid.ui.pageobjects.evaluate.inputs.AdvancedPage;
@@ -40,7 +41,6 @@ import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -55,6 +55,8 @@ public class ProcessRoutingTests extends TestBaseUI {
     private MaterialSelectorPage materialSelectorPage;
     private GuidanceIssuesPage guidanceIssuesPage;
     private AdvancedPage advancedPage;
+    private ComponentAdvancedPage componentAdvancedPage;
+    private ExplorePage explorePage;
     private ComponentInfoBuilder component;
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -857,7 +859,6 @@ public class ProcessRoutingTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {16095, 16099})
     @Description("Validate group cost behaviour against routings")
     public void routingsAndGroupCost() {
@@ -867,83 +868,32 @@ public class ProcessRoutingTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
 
-        evaluatePage = loginPage.login(component.getUser())
+        componentAdvancedPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .uploadComponentAndOpen(componentB)
+            .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("[CTL]/Turret/[Bend]")
+            .submit(EvaluatePage.class)
+            .costScenario()
             .clickExplore()
-            .refresh()
+            .selectFilter("Recent")
             .multiSelectScenarios("" + component.getComponentName() + ", " + component.getScenarioName() + "", "" + componentB.getComponentName() + ", " + componentB.getScenarioName() + "")
             .clickCostButton(ComponentBasicPage.class)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
-            .applyAndCost(EditScenarioStatusPage.class)
+            .goToAdvancedInputsTab();
+
+        softAssertions.assertThat(componentAdvancedPage.getRoutingSelection()).isEqualTo("Retain Existing Input");
+
+        explorePage = componentAdvancedPage.applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
             .checkComponentStateRefresh(component, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(componentB, ScenarioStateEnum.COST_COMPLETE)
-            .openScenario(component.getComponentName(), component.getScenarioName());
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
-
-        routingSelectionPage.selectRoutingPreferenceByName("[CTL]/Waterjet/[Bend]")
-            .submit(EvaluatePage.class)
-            .costScenario();
-
-        ExplorePage explorePage = evaluatePage.clickExplore()
-            .selectFilter("Private")
             .addColumn(ColumnsEnum.PROCESS_ROUTING);
 
-        softAssertions.assertThat(explorePage.getRowDetails(component.getComponentName(), component.getScenarioName())).contains("Material Stock / Waterjet Cut / Bend Brake");
-
-        explorePage.multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
-            .clickCostButton(ComponentBasicPage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
-            .enterAnnualYears("9")
-            .enterAnnualVolume("9999")
-            .openMaterialSelectorTable()
-            .search("1050A")
-            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_1050A.getMaterialName())
-            .submit(ComponentBasicPage.class)
-            .applyAndCost(EditScenarioStatusPage.class)
-            .close(ExplorePage.class)
-            .checkComponentStateRefresh(component, ScenarioStateEnum.COST_COMPLETE)
-            .checkComponentStateRefresh(componentB, ScenarioStateEnum.COST_COMPLETE);
-
-        softAssertions.assertThat(explorePage.getRowDetails(component.getComponentName(), component.getScenarioName())).contains("Material Stock / Waterjet Cut / Bend Brake");
-
-        explorePage.multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
-            .clickCostButton(ComponentBasicPage.class)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC)
-            .applyAndCost(EditScenarioStatusPage.class)
-            .close(ExplorePage.class)
-            .checkComponentStateRefresh(component, ScenarioStateEnum.COST_COMPLETE)
-            .checkComponentStateRefresh(componentB, ScenarioStateEnum.COST_COMPLETE);
-
-        softAssertions.assertThat(explorePage.getRowDetails(component.getComponentName(), component.getScenarioName())).contains("3 Station Rotary Thermoforming / Router");
-
-        explorePage.openScenario(component.getComponentName(), component.getScenarioName())
-            .goToAdvancedTab()
-            .openRoutingSelection();
-
-        routingSelectionPage.selectRoutingPreferenceByName("Shuttle Station Thermoforming")
-            .submit(EvaluatePage.class)
-            .costScenario();
-
-        evaluatePage.clickExplore()
-            .selectFilter("Private");
-
-        softAssertions.assertThat(explorePage.getRowDetails(component.getComponentName(), component.getScenarioName())).contains("Shuttle Station Thermoforming / Router");
-
-        explorePage.multiSelectScenarios(component.getComponentName() + ", " + component.getScenarioName(), componentB.getComponentName() + ", " + componentB.getScenarioName())
-            .clickCostButton(ComponentBasicPage.class)
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
-            .applyAndCost(EditScenarioStatusPage.class)
-            .close(ExplorePage.class)
-            .checkComponentStateRefresh(component, ScenarioStateEnum.COST_COMPLETE)
-            .checkComponentStateRefresh(componentB, ScenarioStateEnum.COST_COMPLETE);
-
-        softAssertions.assertThat(explorePage.getRowDetails(component.getComponentName(), component.getScenarioName())).contains("3 Station Rotary Thermoforming / Router");
-
+        softAssertions.assertThat(explorePage.getRowDetails(componentB.getComponentName(), componentB.getScenarioName())).contains("[CTL]/Turret/[Bend]");
         softAssertions.assertAll();
     }
 

@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate.materialutilization;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -11,9 +10,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.materialprocess.PartNestingPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
-import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -21,8 +18,6 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 public class PartNestingTests extends TestBaseUI {
 
@@ -37,16 +32,20 @@ public class PartNestingTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
-    @TestRail(id = {5922})
-    @Description("Validate Part Nesting Tab can be accessed")
-    public void partNestingTabAccessible() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+    @Tag(SMOKE)
+    @TestRail(id = {7699, 5922})
+    @Description("Select Rectangular method of Part Nesting and cost")
+    public void partNestingTabRectangularNesting() {
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("bracket_basic", ProcessGroupEnum.SHEET_METAL);
 
         partNestingPage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("[CTL]/Turret/[Bend]")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .openPartNestingTab();
@@ -55,79 +54,49 @@ public class PartNestingTests extends TestBaseUI {
         softAssertions.assertThat(partNestingPage.getNestingInfo("Blank Size")).isEqualTo("470.78mm x 400.00mm");
         softAssertions.assertThat(partNestingPage.getNestingInfo("Parts Per Sheet")).isEqualTo("15");
 
+        partNestingPage = partNestingPage.selectUtilizationModeDropDown("Rectangular Nesting")
+            .closePanel()
+            .costScenario()
+            .openMaterialProcess()
+            .openPartNestingTab()
+            .selectUtilizationModeDropDown("Rectangular Nesting");
+
+        softAssertions.assertThat(partNestingPage.getUtilizationMode()).isEqualTo("Machine Default");
+
         softAssertions.assertAll();
     }
 
     @Test
-    @Tag(SMOKE)
-    @TestRail(id = {7699})
-    @Description("Select Rectangular method of Part Nesting and cost")
-    public void partNestingTabRectangularNesting() {
-        component = new ComponentRequestUtil().getComponentWithProcessGroup("bracket_basic", ProcessGroupEnum.SHEET_METAL);
-
-        evaluatePage = new CidAppLoginPage(driver)
-            .login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
-            .openMaterialProcess()
-            .openPartNestingTab()
-            .selectUtilizationModeDropDown("Rectangular Nesting")
-            .closePanel()
-            .costScenario()
-            .openMaterialProcess()
-            .openPartNestingTab()
-            .selectUtilizationModeDropDown("Rectangular Nesting")
-            .closePanel();
-
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE), is(true));
-    }
-
-    @Test
-    @Tag(EXTENDED_REGRESSION)
-    @TestRail(id = {7698})
+    @TestRail(id = {7698, 7699})
     @Description("Select True Part method of Part Nesting and cost")
     public void partNestingTabTruePartNesting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("bracket_basic", ProcessGroupEnum.SHEET_METAL);
 
-        evaluatePage = new CidAppLoginPage(driver)
+        partNestingPage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("[CTL]/Turret/[Bend]")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
-            .openPartNestingTab()
-            .selectUtilizationModeDropDown("Machine Default")
-            .selectUtilizationModeDropDown("True-Part Shape Nesting")
-            .closePanel();
+            .openPartNestingTab();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE), is(true));
-    }
+        softAssertions.assertThat(partNestingPage.getUtilizationMode()).isEqualTo("True-Part Shape Nesting");
 
-    @Test
-    @Tag(EXTENDED_REGRESSION)
-    @TestRail(id = {7699})
-    @Description("Select Machine Default method of Part Nesting and cost")
-    public void partNestingTabMachineDefaultNesting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
-
-        evaluatePage = new CidAppLoginPage(driver)
-            .login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
-            .openMaterialProcess()
-            .openPartNestingTab()
-            .selectUtilizationModeDropDown("Machine Default")
+        partNestingPage.selectUtilizationModeDropDown("Machine Default")
             .closePanel()
             .costScenario()
             .openMaterialProcess()
-            .openPartNestingTab()
-            .selectUtilizationModeDropDown("Machine Default")
-            .closePanel();
+            .openPartNestingTab();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE), is(true));
+        softAssertions.assertThat(partNestingPage.getUtilizationMode()).isEqualTo("Machine Default");
+
+        softAssertions.assertAll();
     }
+
 
     @Test
     @TestRail(id = {5923})
