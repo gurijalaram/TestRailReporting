@@ -70,4 +70,41 @@ public class CostWorksheetTests extends BcmUtil {
             .isEqualTo(String.format("Worksheet: '%s' doesn't exists for a user.", notExistingIdentity));
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(id = {31006, 31007})
+    @Description("Verify costing worksheet when one of the scenario is not in costable state or all input rows are not in costable state")
+    public void costNotCostableState() {
+        String name = GenerateStringUtil.saltString("name");
+        WorkSheetResponse newWorksheet = createWorksheet(name).getResponseEntity();
+        worksheetIdentity = newWorksheet.getIdentity();
+
+        ScenarioItem scenarioItem =
+            cssComponent.postSearchRequest(testingUser, "PART")
+                .getResponseEntity().getItems().stream().filter(item -> item.getScenarioPublished().equals(true))
+                .findFirst().orElse(null);
+
+        String inputRowPublicIdentity = createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+            scenarioItem.getScenarioIdentity(),
+            worksheetIdentity).getResponseEntity().getIdentity();
+
+        ErrorResponse publicWorksheetNotCosted = costWorksheet(ErrorResponse.class, worksheetIdentity, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
+
+        softAssertions.assertThat(publicWorksheetNotCosted.getMessage())
+            .isEqualTo("Unable to initiate costing for the worksheet, no scenarios in a costable state.");
+
+        ScenarioItem cssComponentResponses = cssComponent
+            .getBaseCssComponents(testingUser, SCENARIO_PUBLISHED_EQ.getKey() + false, SCENARIO_STATE_EQ.getKey() + "NOT_COSTED").get(0);
+
+        String inputRowPrivateIdentity = createWorkSheetInputRow(cssComponentResponses.getComponentIdentity(),
+            cssComponentResponses.getScenarioIdentity(),
+            worksheetIdentity).getResponseEntity().getIdentity();
+
+        InputRowsGroupsResponse costPublicAndPrivateWorksheet = costWorksheet(InputRowsGroupsResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
+
+        softAssertions.assertThat(costPublicAndPrivateWorksheet.getSuccesses().get(0).getInputRowIdentity()).isEqualTo(inputRowPrivateIdentity);
+        softAssertions.assertThat(costPublicAndPrivateWorksheet.getFailures().get(0).getInputRowIdentity()).isEqualTo(inputRowPublicIdentity);
+        softAssertions.assertThat(costPublicAndPrivateWorksheet.getFailures().get(0).getError()).contains("Could not initiate costing", "as it is either not costable or public");
+        softAssertions.assertAll();
+    }
 }

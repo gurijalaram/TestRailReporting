@@ -1,4 +1,5 @@
 dependencies {
     implementation project(':shared-util')
     implementation project(':web-app-util')
+    implementation project(':web:cir-ui')
 }

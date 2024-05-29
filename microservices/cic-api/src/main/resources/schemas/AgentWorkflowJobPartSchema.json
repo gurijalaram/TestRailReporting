@@ -59,6 +59,9 @@
         "productionLife": {
           "type": "number"
         },
+        "userDefinedAttributes": {
+          "type": "object"
+        },
         "machiningMode": {
           "type": "string"
         },
@@ -76,6 +79,7 @@
         "annualVolume",
         "batchSize",
         "productionLife",
+        "userDefinedAttributes",
         "machiningMode",
         "targetCost",
         "targetMass"

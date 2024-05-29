@@ -1,5 +1,7 @@
 package com.apriori.qds.api.utils;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.qds.api.models.request.bidpackage.BidPackageParameters;
 import com.apriori.qds.api.models.request.bidpackage.BidPackageRequest;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -19,7 +21,7 @@ public class QdsApiTestUtils extends TestUtil {
 
     @BeforeAll
     public static void init() {
-        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser("admin")
+        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(APRIORI_DEVELOPER)
             .useApUserContextInRequests()
             .useTokenInRequests();
 

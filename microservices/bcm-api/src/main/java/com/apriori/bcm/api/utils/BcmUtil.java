@@ -1,5 +1,7 @@
 package com.apriori.bcm.api.utils;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.bcm.api.enums.BcmAppAPIEnum;
 import com.apriori.bcm.api.models.request.AddInputsRequest;
 import com.apriori.bcm.api.models.request.GroupItems;
@@ -39,13 +41,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class BcmUtil extends TestUtil {
 
-    protected static UserCredentials testingUser = UserUtil.getUser("admin");
+    protected static UserCredentials testingUser = UserUtil.getUser(APRIORI_DEVELOPER);
     protected static RequestEntityUtil requestEntityUtil;
 
     @BeforeAll
     public static void init() {
         requestEntityUtil = RequestEntityUtilBuilder
-            .useRandomUser("admin")
+            .useRandomUser(APRIORI_DEVELOPER)
             .useApUserContextInRequests();
 
         testingUser = requestEntityUtil.getEmbeddedUser();

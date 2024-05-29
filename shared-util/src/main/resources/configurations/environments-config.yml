@@ -76,7 +76,7 @@ int-core:
 staging:
   name: staging
   aws_parameter_store_name: stage
-  base_url: https://na-1-v22-1-demo.${${customer}.cloud_reference_name}.staging.apriori.net/
+  base_url: https://na-1-install.${${customer}.cloud_reference_name}.staging.apriori.net/
   multi_tenant_installation_name: ${${deployment}.name} na-1
   #  TODO: uncomment for staging local run
   secret_key: K6JWVF8KV884
@@ -242,6 +242,7 @@ development:
   name: development
   aws_parameter_store_name: development
   base_url: https://cloud.na-1.development.apriori.net/
+  base_url_reports: https://na-1-install.apriori-internal.development.apriori.net/
   multi_tenant_installation_name: ${${deployment}.name}
   secret_key: O85XMATZEMBO
   user_identity: 4N630F61FGNG
@@ -257,6 +258,6 @@ development:
     identity_role: 67J517C9L763
 
   reports:
-    ui_url: ${base_url}jasperserver-pro/
+    ui_url: ${base_url_reports}jasperserver-pro/
 
 ########################################################################################################################
