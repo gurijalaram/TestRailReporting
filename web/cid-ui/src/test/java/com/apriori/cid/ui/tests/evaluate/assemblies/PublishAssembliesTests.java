@@ -1,6 +1,8 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,6 +29,7 @@ import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
+import groovyjarjarantlr4.v4.analysis.LeftRecursiveRuleAnalyzer;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
@@ -97,6 +100,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11812, 6042, 11902, 10762, 11861})
     @Description("Verify publish scenario modal appears when publish button is clicked")
     public void testIncludeSubcomponentsAndCost() {
@@ -130,6 +134,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 11811)
     @Description("Publish button becomes unavailable when public sub-component selected alongside private sub-component(s)")
     public void testPublishButtonAvailability() {
@@ -166,6 +171,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 11828)
     @Description("Validate an error message appears if any issues occur")
     public void testPublishWithExistingScenarioName() {
@@ -207,6 +213,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 11829)
     @Description("Validate a public iteration of the sub component is created")
     public void testCreatingPublicIterationOfSubcomponent() {
@@ -239,6 +246,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11813, 11814, 11808, 6051})
     @Description("Validate public scenarios are overridden from publish modal")
     public void testOverridePublicScenarios() {
@@ -293,6 +301,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10773, 10775})
     @Description("Shallow Publish correctly publishes to Public Workspace")
     public void testShallowPublishInPublicWorkspace() {
@@ -333,6 +342,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10771, 10772, 10776, 10777, 10778, 6746, 6615, 6616, 6617, 6056, 6057})
     @Description("Modify the Status/ Cost Maturity/ Assignee/ Lock during a Shallow Publish")
     public void testShallowPublishWithModifiedFeatures() {
@@ -406,6 +416,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10770)
     @Description("Retain the Status/ Cost Maturity/ Lock during a Shallow Publish")
     public void testShallowPublishWithRetainedFeatures() {
@@ -455,6 +466,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10787, 10789})
     @Description("Shallow Publish over existing Public Scenarios")
     public void testShallowPublishOverExistingPublicScenario() {
@@ -500,6 +512,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10786)
     @Description("Attempt to Shallow Publish over existing Public locked scenarios")
     public void testShallowPublishExistingPublicLockedScenario() {
@@ -538,6 +551,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10780)
     @Description("Shallow Publish an assembly with Out of Date cost results")
     public void testShallowPublishWithOutOfDateCostResults() {
@@ -586,6 +600,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11094, 11095})
     @Description("Validate when I select a sub components in a processing state the set inputs button is disabled until the scenario is unselected")
     public void testInputsEnabledDisabled() {
@@ -622,6 +637,7 @@ public class PublishAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11824, 11825})
     @Description("Validate when I select any sub components in a processing state the publish button is disabled")
     public void testPublishButtonDisabledEnabled() {
