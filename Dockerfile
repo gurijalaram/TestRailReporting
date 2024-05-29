@@ -12,10 +12,11 @@ FROM sdk as build
 ARG FOLDER
 ARG MODULE
 RUN gradle --build-cache --quiet clean :$FOLDER:$MODULE:build -x test
-VOLUME ./downloads:/home/seluser/downloads
 
 # Build & Test.
 FROM build as test
+
+VOLUME ./downloads:/home/seluser/downloads
 
 ARG JAVAOPTS
 ARG FOLDER
