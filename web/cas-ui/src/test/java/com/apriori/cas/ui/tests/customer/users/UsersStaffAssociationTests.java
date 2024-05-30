@@ -11,6 +11,7 @@ import com.apriori.cas.ui.pageobjects.customer.users.StaffPage;
 import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -42,7 +43,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
     private static final String STAFF_TEST_CUSTOMER = "Staff Association Test Customer";
     private static final String STAFF_TEST_USER = "staff-test-user";
     private Customer targetCustomer;
-    private Customer aprioriInternal;
+    private String customerIdentity;
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
     private StaffPage staffPage;
@@ -57,13 +58,13 @@ public class UsersStaffAssociationTests extends TestBaseUI {
         String email = STAFF_TEST_CUSTOMER.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
-        aprioriInternal = cdsTestUtil.getAprioriInternal();
+        customerIdentity = CustomerUtil.getCustomerData().getIdentity();
         sourceUsers = new ArrayList<>(cdsTestUtil.findAll(
             CDSAPIEnum.CUSTOMER_USERS,
             Users.class,
             existingUsers,
             Collections.emptyMap(),
-            aprioriInternal.getIdentity()
+            customerIdentity
         ));
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
@@ -80,14 +81,14 @@ public class UsersStaffAssociationTests extends TestBaseUI {
 
     @AfterEach
     public void teardown() {
-        sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, aprioriInternal.getIdentity(), user.getIdentity()));
+        sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
     private void populateStaffTestUsers(int count) {
         String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         for (int i = sourceUsers.size(); i < count; ++i) {
-            String identity = aprioriInternal.getIdentity();
+            String identity = customerIdentity;
             String username = String.format("%s-%s-%s", STAFF_TEST_USER, now, i);
             User added = cdsTestUtil.addUser(identity, username, "apriori").getResponseEntity();
             sourceUsers.add(added);

@@ -39,7 +39,7 @@ public class ReportAnIssueTests extends TestBaseUI {
     @Description("Verify contents of Report an issue modal from various views")
     public void testReportAnIssueFieldValues() {
         currentUser = UserUtil.getUser();
-        customerDetails = CustomerUtil.getCurrentCustomerData();
+        customerDetails = CustomerUtil.getCustomerData();
 
         final String asmName = "titan charger ass";
         final String asmExtension = ".SLDASM";

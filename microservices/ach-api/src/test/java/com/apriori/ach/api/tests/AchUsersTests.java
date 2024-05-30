@@ -45,9 +45,7 @@ import java.util.Map;
 public class AchUsersTests extends AchTestUtil {
     private static final String USER_ADMIN = "testUser1";
     private static final String NOT_ADMIN_USER = "testUser11";
-    private static final Customer customer = PropertiesContext.get("customer").equals("ap-int")
-        ? CustomerUtil.getCustomerData("widgets")
-        : CustomerUtil.getCurrentCustomerData();
+    private static final Customer customer = CustomerUtil.getCustomerData();
     private static final String customerIdentity = customer.getIdentity();
     private RequestEntityUtil requestEntityUtilNoAdmin;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();

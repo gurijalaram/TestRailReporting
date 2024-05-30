@@ -7,7 +7,7 @@
 # Define main configurations
 env: qa-test
 deployment: production
-customer: ap-int
+customer: apriori-internal
 
 # Deployment
 production:
