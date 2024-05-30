@@ -37,8 +37,8 @@ public class EmailTab extends NotificationsPart {
      * @return current class object
      */
     public EmailTab selectEmailTemplate(EmailTemplateEnum emailTemplateEnum) {
-        pageUtils.waitUntilDropdownOptionsLoaded(getEmailTemplateElement().findElement(By.tagName("select")));
-        pageUtils.waitForElementAndClick(getEmailTemplateElement());
+        pageUtils.waitUntilDropdownOptionsLoaded(getEmailTabElement("Template").findElement(By.tagName("select")));
+        pageUtils.waitForElementAndClick(getEmailTabElement("Template"));
         WebElement webElement = driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, emailTemplateEnum.getEmailTemplate())));
         pageUtils.moveAndClick(webElement);
         pageUtils.waitForElementNotEnabled(notificationNextButton, 1);
@@ -47,9 +47,9 @@ public class EmailTab extends NotificationsPart {
     }
 
     public EmailTab selectEmailTemplate() {
-        pageUtils.waitUntilDropdownOptionsLoaded(getEmailTemplateElement().findElement(By.tagName("select")));
+        pageUtils.waitUntilDropdownOptionsLoaded(getEmailTabElement("Template").findElement(By.tagName("select")));
         pageUtils.waitForElementEnabled(notificationNextButton);
-        pageUtils.waitForElementAndClick(getEmailTemplateElement());
+        pageUtils.waitForElementAndClick(getEmailTabElement("Template"));
         WebElement webElement = driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getEmailTemplate())));
         pageUtils.moveAndClick(webElement);
         pageUtils.waitForElementNotEnabled(notificationNextButton, 1);
@@ -65,24 +65,24 @@ public class EmailTab extends NotificationsPart {
      * @return current class object
      */
     public EmailTab selectRecipient(EmailRecipientType recipientFieldType, String emailAddress) {
-        pageUtils.waitForElementAndClick(getEmailRecipientElement());
+        pageUtils.waitForElementAndClick(getEmailTabFieldElement("Recipient"));
         pageUtils.moveAndClick(driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, recipientFieldType.getEmailRecipientType()))));
         pageUtils.waitForElementAppear(recipientEmailAddressTxtElement);
         pageUtils.setValueOfElement(recipientEmailAddressTxtElement, emailAddress);
         if (pageUtils.isElementDisplayed(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'ss-open')]"))) {
-            pageUtils.waitForElementAndClick(getEmailRecipientElement());
+            pageUtils.waitForElementAndClick(getEmailTabFieldElement("Recipient"));
         }
         pageUtils.waitForJavascriptLoadComplete();
         return this;
     }
 
     public EmailTab selectRecipient() {
-        pageUtils.waitForElementAndClick(getEmailRecipientElement());
+        pageUtils.waitForElementAndClick(getEmailTabFieldElement("Recipient"));
         pageUtils.moveAndClick(driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, workFlowData.getNotificationsData().getRecipientEmailType()))));
         pageUtils.waitForElementAppear(recipientEmailAddressTxtElement);
         pageUtils.setValueOfElement(recipientEmailAddressTxtElement, workFlowData.getNotificationsData().getRecipientEmailAddress());
         if (pageUtils.isElementDisplayed(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'ss-open')]"))) {
-            pageUtils.moveAndClick(getEmailRecipientElement());
+            pageUtils.moveAndClick(getEmailTabFieldElement("Recipient"));
         }
         pageUtils.waitForJavascriptLoadComplete();
         return this;
@@ -94,7 +94,7 @@ public class EmailTab extends NotificationsPart {
      * @return EmailTab object
      */
     public EmailTab selectCostRounding(FieldState fieldState) {
-        pageUtils.waitForElementAndClick(getEmailConfigCostRoundingElement());
+        pageUtils.waitForElementAndClick(getEmailTabTxtElement("Cost Rounding"));
         pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, fieldState)));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
@@ -107,7 +107,7 @@ public class EmailTab extends NotificationsPart {
      * @return current class object
      */
     public EmailTab selectAprioriCost(PropertyEnum aprioriCostType) {
-        pageUtils.waitForElementAndClick(getEmailConfigCostRoundingElement());
+        pageUtils.waitForElementAndClick(getEmailTabTxtElement("aPriori Cost"));
         pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, aprioriCostType.getProperty())));
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
@@ -138,49 +138,35 @@ public class EmailTab extends NotificationsPart {
         return this;
     }
 
-    public WebElement getEmailTemplateElement() {
-        pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]")));
-        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
-            .below(By.xpath(EMAIL_TAB_ELEMENT + "//span[.='Template']")));
-    }
-
-    public WebElement getEmailRecipientElement() {
-        pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//span[.='Recipient']")));
-        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
-            .below(By.xpath(EMAIL_TAB_ELEMENT + "//span[.='Recipient']")));
-    }
-
-    public WebElement getEmailConfigCostRoundingElement() {
-        pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//input[@value='Cost Rounding']")));
-        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
-            .toRightOf(By.xpath(EMAIL_TAB_ELEMENT + "//input[@value='Cost Rounding']")));
-    }
-
-    public WebElement getEmailConfigAprioriCostElement() {
-        pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//input[@value='aPriori Cost']")));
-        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
-            .toRightOf(By.xpath(EMAIL_TAB_ELEMENT + "//input[@value='aPriori Cost']")));
-    }
-
+    /**
+     * get Email Config scenario link element
+     *
+     * @return WebElement
+     */
     public WebElement getEmailConfigScenarioLinkElement() {
         pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//input[@value='Cost Rounding']")));
         return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
             .toRightOf(getEmailConfigTextElement(EmailConfigSummaryEnum.SCENARIO_LINK)));
     }
 
+    /**
+     * get Email Config Field Element based on the parameter
+     *
+     * @param emailConfigSummaryEnum - EmailConfigSummaryEnum
+     * @return WebElement
+     */
     public WebElement getEmailConfigFieldElement(EmailConfigSummaryEnum emailConfigSummaryEnum) {
         pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//input[@value='Cost Rounding']")));
         return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
             .toRightOf(getEmailConfigTextElement(emailConfigSummaryEnum)));
     }
 
-
-    public WebElement getEmailRecipientTxtElement() {
-        pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//input[@type='text']")));
-        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//input[@type='text']"))
-            .toRightOf(getEmailRecipientElement()));
-    }
-
+    /**
+     * get Email Config custom text element
+     *
+     * @param configSummaryTemplateField - EmailConfigSummaryEnum
+     * @return WebElement
+     */
     private WebElement getEmailConfigTextElement(EmailConfigSummaryEnum configSummaryTemplateField) {
         List<WebElement> templateFieldElements = driver.findElements(with(By.xpath(EMAIL_TAB_ELEMENT + "//input[@type='text'] [@disabled='disabled']")));
         return templateFieldElements.stream()
@@ -188,8 +174,40 @@ public class EmailTab extends NotificationsPart {
             .findFirst().get();
     }
 
-    private WebElement getOpenSearchTextBoxElement() {
-        return driver.findElement(By.xpath("//div[contains(@class, 'ss-open')]//input[@type='search']"));
+    /**
+     * get Email tab txt field element
+     *
+     * @param txtFieldName - txt field name
+     * @return WebElement
+     */
+    public WebElement getEmailTabTxtElement(String txtFieldName) {
+        pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + String.format("//input[@value='%s']", txtFieldName))));
+        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
+            .toRightOf(By.xpath(EMAIL_TAB_ELEMENT + String.format("//input[@value='%s']", txtFieldName))));
+    }
+
+    /**
+     * Get Element in Email Tab based field name
+     *
+     * @param elementTxt - Field text
+     * @return WebElement
+     */
+    private WebElement getEmailTabElement(String elementTxt) {
+        pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]")));
+        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
+            .below(By.xpath(EMAIL_TAB_ELEMENT + String.format("//span[.='%s']", elementTxt))));
+    }
+
+    /**
+     * get Email tab field element
+     *
+     * @param fieldName - Field Name
+     * @return WebElement
+     */
+    private WebElement getEmailTabFieldElement(String fieldName) {
+        pageUtils.waitForElementAppear(driver.findElement(By.xpath(EMAIL_TAB_ELEMENT + String.format("//span[.='%s']", fieldName))));
+        return driver.findElement(with(By.xpath(EMAIL_TAB_ELEMENT + "//div[contains(@class, 'dropdown')]"))
+            .below(By.xpath(EMAIL_TAB_ELEMENT + String.format("//span[.='%s']", fieldName))));
     }
 
 }
