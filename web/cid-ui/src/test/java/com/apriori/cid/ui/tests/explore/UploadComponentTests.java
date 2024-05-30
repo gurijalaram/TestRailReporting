@@ -3,6 +3,7 @@ package com.apriori.cid.ui.tests.explore;
 import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SANITY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
@@ -303,6 +304,7 @@ public class UploadComponentTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10750)
     @Description("Validate updated workflow of importing/uploading an assembly into CID")
     public void testUploadViaExploreAndEvaluatePage() {

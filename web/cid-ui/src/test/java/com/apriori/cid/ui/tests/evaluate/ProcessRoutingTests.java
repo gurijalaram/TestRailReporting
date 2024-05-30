@@ -3,6 +3,7 @@ package com.apriori.cid.ui.tests.evaluate;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.SHEET_METAL;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
@@ -898,6 +899,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {16098, 11903, 10767, 6562, 11909})
     @Description("Validate sub-component can be costed with an alternate routing in an assembly")
     public void testRoutingsInAssembly() {
