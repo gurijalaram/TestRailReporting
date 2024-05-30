@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate.dtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cid.api.utils.UserPreferencesUtil;
@@ -49,7 +48,6 @@ public class DTCCastingTests extends TestBaseUI {
 
     @Test
     @Issue("APD-1286")
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6468, 6379, 6383, 6389, 6382, 6292})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {

@@ -152,7 +152,6 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6285, 6286, 5429})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
@@ -176,7 +175,6 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6287, 6288})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {

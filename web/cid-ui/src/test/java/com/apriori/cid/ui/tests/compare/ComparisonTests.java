@@ -104,7 +104,6 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7035})
     @Description("Validate user can select explore tab and then comparison tab again")
     public void goToExploreReturnCompare() {
@@ -340,7 +339,6 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {5784})
     @Description("User can add columns to the part table within the Add Scenarios dialog box")
     public void addColumnsConfigure() {
@@ -816,7 +814,6 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6482, 6483})
     @Description("Validate the user can create a comparison including parts with all dfm risk ratings for all process groups")
     public void comparisonWithAllProcessGroupsAndDFM() {
