@@ -1,11 +1,13 @@
 package com.apriori.cds.api.utils;
 
 
+import static com.apriori.cds.api.enums.ApplicationEnum.CIS;
 import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
 import com.apriori.cds.api.enums.AppAccessControlsEnum;
+import com.apriori.cds.api.enums.ApplicationEnum;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.enums.DeploymentEnum;
@@ -54,8 +56,8 @@ import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Application;
+import com.apriori.shared.util.models.response.Applications;
 import com.apriori.shared.util.models.response.Customer;
-import com.apriori.shared.util.models.response.Customers;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.Features;
@@ -78,7 +80,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class CdsTestUtil extends TestUtil {
@@ -93,6 +94,21 @@ public class CdsTestUtil extends TestUtil {
             .useApUserContextInRequests();
 
         testingUser = requestEntityUtil.getEmbeddedUser();
+    }
+
+    /**
+     * Calls an API with GET verb
+     *
+     * @param applicationCloudReference - the application cloud reference
+     * @return string
+     */
+    public String getApplicationIdentity(ApplicationEnum applicationCloudReference) {
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.APPLICATIONS, Applications.class)
+            .queryParams(new QueryParams().use("cloudReference[EQ]", applicationCloudReference.getApplication()))
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<Applications> response = HTTPRequest.build(requestEntity).get();
+        return response.getResponseEntity().getItems().stream().findFirst().get().getIdentity();
     }
 
     /**
@@ -141,25 +157,6 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<Customer> createCustomer(RandomCustomerData rcd) {
         return addCustomer(rcd.getCustomerName(), rcd.getCustomerType(), rcd.getCloudRef(), rcd.getSalesForceId(), rcd.getEmailPattern());
-    }
-
-    /**
-     * Gets the special customer "aPriori Internal"
-     *
-     * @return The customer representing aPriori Internal
-     */
-    public Customer getAprioriInternal() {
-
-        Map<String, Object> filters = new HashMap<>();
-        filters.put("name[EQ]", "aPriori Internal");
-
-        Customer customer = findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, filters, Collections.emptyMap());
-
-        if (customer == null) {
-            throw new IllegalStateException("Customer, aPriori Internal, is missing.  The data set is corrupted.");
-        }
-
-        return customer;
     }
 
     /**
@@ -489,11 +486,11 @@ public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add an installation with feature to a customer
      *
-     * @param customerIdentity              - the customer id
-     * @param deploymentIdentity            - the deployment id
-     * @param siteIdentity                  - the site Identity
-     * @param realmKey                      - the realm key
-     * @param cloudReference                - the cloud reference
+     * @param customerIdentity   - the customer id
+     * @param deploymentIdentity - the deployment id
+     * @param siteIdentity       - the site Identity
+     * @param realmKey           - the realm key
+     * @param cloudReference     - the cloud reference
      * @return new object
      */
     public ResponseWrapper<InstallationItems> addInstallationWithFeature(
@@ -863,10 +860,10 @@ public class CdsTestUtil extends TestUtil {
             .body(
                 "accessControl",
                 AccessControlRequest.builder()
-                    .customerIdentity(testingUser.getUserDetails().getCustomerIdentity())
+                    .customerIdentity(RequestEntityUtilBuilder.useRandomUser().getEmbeddedUser().getUserDetails().getCustomerIdentity())
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
-                    .applicationIdentity(PropertiesContext.get("cds.ap_workspace_application_identity"))
+                    .applicationIdentity(new CdsTestUtil().getApplicationIdentity(CIS))
                     .createdBy("#SYSTEM00000")
                     .roleName("USER")
                     .roleIdentity(PropertiesContext.get("cds.identity_role"))
@@ -1244,7 +1241,6 @@ public class CdsTestUtil extends TestUtil {
                 .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).get();
     }
-
 
     /**
      * Creates or updates user enablements

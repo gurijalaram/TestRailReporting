@@ -10,6 +10,7 @@ import static com.apriori.cid.ui.utils.PartNamesEnum.LEFT_PADDLE;
 import static com.apriori.cid.ui.utils.PartNamesEnum.MECHANISM_BODY;
 import static com.apriori.cid.ui.utils.PartNamesEnum.PADDLE_BAR;
 import static com.apriori.cid.ui.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTablePage;
@@ -21,6 +22,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class LargeGroupEditAssemblies2 extends TestBaseUI {
@@ -33,6 +35,7 @@ public class LargeGroupEditAssemblies2 extends TestBaseUI {
 
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10886, 10887, 10888})
     @Description("group Edit private sub Components disallowed")
     public void cannotEditPrivateComponents() {

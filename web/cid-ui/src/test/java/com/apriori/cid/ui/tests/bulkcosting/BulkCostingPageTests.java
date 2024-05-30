@@ -7,11 +7,11 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.css.api.utils.CssComponent;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Deployments;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
@@ -64,7 +64,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Test
     @TestRail(id = {30730})
     @Description("create inputRow for the worksheet")
-    public void createInputRow() {
+    public void testCreateInputRow() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -82,7 +82,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Test
     @TestRail(id = {30679, 30680, 30681, 30682, 30684})
     @Description("delete input row for the worksheet")
-    public void deleteInputRow() {
+    public void testDeleteInputRow() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -110,7 +110,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Test
     @TestRail(id = {30675, 30676, 30674})
     @Description("update inputs")
-    public void updateInputs() {
+    public void testUpdateInputs() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -194,9 +194,7 @@ public class BulkCostingPageTests extends TestBaseUI {
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {
         CdsTestUtil cdsTestUtil = new CdsTestUtil();
-        Customer customer;
-        customer = cdsTestUtil.getAprioriInternal();
-        String customerIdentity = customer.getIdentity();
+        String customerIdentity = CustomerUtil.getCustomerData().getIdentity();
 
         ResponseWrapper<Deployments> deployments = cdsTestUtil.getCommonRequest(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID,
             Deployments.class,

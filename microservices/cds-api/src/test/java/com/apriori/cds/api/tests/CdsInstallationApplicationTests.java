@@ -1,5 +1,7 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.InstallationItems;
@@ -88,7 +90,7 @@ public class CdsInstallationApplicationTests {
     @Description("Adds an application to an installation and deletes it")
     public void addApplicationToInstallation() {
         String realmKey = generateStringUtil.generateRealmKey();
-        String appIdentity = Constants.getApProApplicationIdentity();
+        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
 
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();

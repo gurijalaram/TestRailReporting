@@ -363,8 +363,9 @@ public class TableUtils {
     /**
      * Wait until Table element value is available and handle stale element exception
      *
-     * @param
-     * @return webelement
+     * @param element     - the webelement
+     * @param cellValue   - the cell value
+     * @param columnIndex - the column index
      */
     @SneakyThrows
     public void waitForSteadinessOfElement(WebElement element, String cellValue, Integer columnIndex) {

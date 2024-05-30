@@ -1,5 +1,8 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
+import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.SiteItems;
@@ -74,7 +77,7 @@ public class CdsSitesApplicationsTests {
     @TestRail(id = {6058})
     @Description("Add an application to a site")
     public void addApplicationSite() {
-        String appIdentity = Constants.getApProApplicationIdentity();
+        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
 
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
 
@@ -92,7 +95,7 @@ public class CdsSitesApplicationsTests {
     @TestRail(id = {6060})
     @Description("Returns a specific LicensedApplication for a specific customer site")
     public void getApplicationSite() {
-        String appIdentity = Constants.getCiaApplicationIdentity();
+        String appIdentity = cdsTestUtil.getApplicationIdentity(CIA);
 
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
@@ -119,7 +122,7 @@ public class CdsSitesApplicationsTests {
             licensedApplicationIdentity
         );
         soft.assertThat(licensedApplicationResponse.getResponseEntity().getApplication()).isEqualTo("aP Admin");
-        soft.assertThat(licensedApplicationResponse.getResponseEntity().getApplicationIdentity()).isEqualTo(Constants.getCiaApplicationIdentity());
+        soft.assertThat(licensedApplicationResponse.getResponseEntity().getApplicationIdentity()).isEqualTo(appIdentity);
         soft.assertAll();
     }
 }
