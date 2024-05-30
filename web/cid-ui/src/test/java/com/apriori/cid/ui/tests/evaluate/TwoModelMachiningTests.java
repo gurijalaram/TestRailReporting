@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -19,7 +18,6 @@ import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -28,8 +26,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 public class TwoModelMachiningTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
@@ -135,7 +131,6 @@ public class TwoModelMachiningTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @Description("Validate the user can have multi level 2 model parts (source has been 2 model machined)")
     @TestRail(id = {7865, 7869, 7872})
     public void multiLevel2Model() {
@@ -224,7 +219,6 @@ public class TwoModelMachiningTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @Description("Validate the user can switch the source part")
     @TestRail(id = {6467, 7873, 7874})
     public void switchSourcePart() {
