@@ -16,11 +16,8 @@ import com.apriori.shared.util.testrail.TestRail;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.suite.api.Suite;
 
-import java.time.Duration;
 
-@Suite
 public class CustomerComponentLifeCycleTests extends TestBaseUI {
 
     private static SoftAssertions softAssertions = new SoftAssertions();

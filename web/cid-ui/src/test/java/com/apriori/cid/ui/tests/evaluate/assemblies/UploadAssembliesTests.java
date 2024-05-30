@@ -1,10 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
-import static com.apriori.shared.util.enums.ProcessGroupEnum.ASSEMBLY;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -27,8 +23,6 @@ import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.UnitsEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -45,6 +39,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(ASSEMBLY)
 public class UploadAssembliesTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
@@ -74,6 +69,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11908, 11905, 10764, 11867, 11906, 10765, 11868, 11907, 10766})
     @Description("Upload multiple Assemblies of differing platforms")
     public void testMultipleAssemblyUpload() {
@@ -147,7 +143,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {5620, 6513, 6514})
     @Description("User can upload an assembly when the same assembly with same scenario name exists in the public workspace")
     public void uploadAnAssemblyExistingInThePublicWorkspace() {
@@ -190,7 +186,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = 5621)
     @Description("Validate sub components such as bolts or screws can exist in multiple assemblies")
     public void uploadAnAssemblyThatIsPartOfAnotherAssembly() {
@@ -237,6 +233,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {12156, 6557, 6524})
     @Description("Column Configuration button in Tree View is clickable and opens menu")
     public void testColumnConfigurationButton() {
@@ -302,7 +299,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {12139, 12101, 12136})
     @Description("Column configuration in Tree View with All filter does not affect column configuration in List View")
     public void testColumnConfigurationListView() {
@@ -358,6 +355,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {6546})
     @Description("Changing unit user preferences when viewing assembly")
     public void testUnitPreferenceInAssembly() {
@@ -385,7 +383,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {6564})
     @Description("Assembly costs with multiple quantity of parts")
     public void costAssemblyWithMultipleQuantityOfParts() {
@@ -418,6 +416,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 5625)
     @Description("Validate missing sub-assembly association when manually uploaded")
     public void verifySubAsmAssociationOnUpload() {
@@ -455,6 +454,7 @@ public class UploadAssembliesTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10748, 10761})
     @Description("Changing unit user preferences when viewing assembly")
     public void testCopyScenarioRetainsAsmAssociation() {

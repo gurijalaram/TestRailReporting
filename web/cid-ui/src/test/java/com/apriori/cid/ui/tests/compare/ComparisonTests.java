@@ -4,6 +4,7 @@ import static com.apriori.cid.ui.utils.ColumnsEnum.COMPONENT_NAME;
 import static com.apriori.cid.ui.utils.ColumnsEnum.COST_MATURITY;
 import static com.apriori.cid.ui.utils.ColumnsEnum.SCENARIO_NAME;
 import static com.apriori.cid.ui.utils.ColumnsEnum.STATUS;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -702,7 +703,7 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {6534})
     @Description("User can add assemblies to existing comparison containing part scenario")
     public void addAssemblyToExistingComparison() {
@@ -739,7 +740,7 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {6537, 6535})
     @Description("Assemblies in comparison can be interacted with in a similar way as part scenarios - open, basis, delete")
     public void interactWithAssemblyInComparison() {

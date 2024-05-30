@@ -51,6 +51,9 @@ public class ComponentAdvancedPage extends LoadableComponent<ComponentAdvancedPa
     @FindBy(css = "[id='qa-secondary-digital-factory-select-part-costing']")
     private WebElement secDigitalFactoryList;
 
+    @FindBy(css = "[id='qa-routing-modal-select-field']")
+    private WebElement routingSelection;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private InputsController inputsController;
@@ -189,6 +192,15 @@ public class ComponentAdvancedPage extends LoadableComponent<ComponentAdvancedPa
      */
     public <T> T applyAndCost(Class<T> klass) {
         return modalDialogController.applyCost(klass);
+    }
+
+    /**
+     * Gets the routing selection information
+     *
+     * @return utilization mode as String
+     */
+    public String getRoutingSelection() {
+        return pageUtils.waitForElementToAppear(routingSelection).getAttribute("textContent");
     }
 
     /**
