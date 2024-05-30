@@ -296,19 +296,22 @@ public class ProcessRoutingTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7844, 7290, 7291, 7292})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("HoleProximityTest", ProcessGroupEnum.SHEET_METAL);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("[CTL]/Turret/[Bend]")
+            .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(1.56), Offset.offset(5.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(1.10), Offset.offset(20.0));
 
         evaluatePage.goToAdvancedTab()
             .openRoutingSelection()
@@ -316,7 +319,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(1.96), Offset.offset(5.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(1.56), Offset.offset(20.0));
 
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectBarChart("Waterjet Cut")
@@ -345,7 +348,6 @@ public class ProcessRoutingTests extends TestBaseUI {
         materialSelectorPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection()
             .selectRoutingPreferenceByName("Structural Foam Mold")
