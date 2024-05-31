@@ -67,21 +67,25 @@ public class DTCMachiningTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6441})
+    @TestRail(id = {6441, 6454})
     @Description("Testing DTC Machining Sharp Corner on a Curved Surface")
     public void testDTCCurvedSurface() {
         component = new ComponentRequestUtil().getComponent("Machining-DTC_Issue_SharpCorner_CurvedWall-CurvedSurface");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(component.getUser())
+        evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
             .submit(EvaluatePage.class)
-            .costScenario()
-            .openDesignGuidance()
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
+
+        guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Curved Surface", "CurvedSurface:1");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Contouring: Feature contains a sharp corner that would require a zero tool diameter"));
@@ -273,7 +277,7 @@ public class DTCMachiningTests extends TestBaseUI {
     }*/
 
     @Test
-    @TestRail(id = {6452})
+    @TestRail(id = {6452, 6456})
     @Description("Verify tolerances which induce an additional operation are correctly respected in CI Design geometry tab")
     public void toleranceInducingTest() {
         component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.STOCK_MACHINING);
@@ -288,6 +292,7 @@ public class DTCMachiningTests extends TestBaseUI {
             .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.CRITICAL.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");
 
         tolerancesPage = evaluatePage.openDesignGuidance()

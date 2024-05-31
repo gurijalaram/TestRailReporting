@@ -78,13 +78,13 @@ public class DTCPlasticMouldingTests extends TestBaseUI {
 
     @Tag(SMOKE)
     @Test
-    @TestRail(id = {6411, 6412})
+    @TestRail(id = {6411, 6412, 6462, 6415, 6416})
     @Description("Min. draft for SFM Moulding (>0.5 Degrees)")
     public void structuralFoamMouldDraft() {
         component = new ComponentRequestUtil().getComponent("Plastic moulded cap noDraft");
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(component.getUser())
+        evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .costScenario()
@@ -92,8 +92,12 @@ public class DTCPlasticMouldingTests extends TestBaseUI {
             .openRoutingSelection()
             .selectRoutingPreferenceByName("Structural Foam Mold")
             .submit(EvaluatePage.class)
-            .costScenario()
-            .openDesignGuidance()
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
+
+        guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Draft Issue, Draft Angle", "Planar Face", "PlanarFace:10");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Surface draft is less than the recommended draft angle for this material.");
