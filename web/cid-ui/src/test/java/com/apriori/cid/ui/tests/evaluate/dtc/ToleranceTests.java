@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate.dtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.IGNORE;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -609,7 +608,6 @@ public class ToleranceTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6465, 6978, 7814})
     @Description("Validate conditions used for original costing are maintained between different users")
     public void tolerancesDiffUsers() {
