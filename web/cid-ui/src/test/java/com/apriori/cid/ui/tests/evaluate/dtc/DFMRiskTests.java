@@ -1,7 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.dtc;
 
 import static com.apriori.shared.util.enums.ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,7 +13,6 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -232,18 +230,9 @@ public class DFMRiskTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
 
         softAssertions.assertAll();
-
-        // TODO uncomment this section when revert is implemented
-        /*
-        evaluatePage.revert()
-            .revertScenario();
-
-        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High")), is(true));*/
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6480, 6481})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
@@ -257,7 +246,11 @@ public class DFMRiskTests extends TestBaseUI {
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
-            .costScenario(3);
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.HIGH.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
@@ -270,14 +263,6 @@ public class DFMRiskTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
-
-        // TODO uncomment this section when revert is implemented
-        /*
-        evaluatePage.revert()
-            .revertScenario();
-
-        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High")), is(true));*/
 
         softAssertions.assertAll();
     }

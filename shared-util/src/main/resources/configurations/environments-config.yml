@@ -6,7 +6,7 @@
 qa-test:
   name: qa-test
   aws_parameter_store_name: qa-test
-  base_url: https://na-1-install.${${customer}.cloud_reference_name}.qa-test.apriori.net/
+  base_url: https://na-1-install.${customer}.qa-test.apriori.net/
   multi_tenant_installation_name: core-na-1 - ${${deployment}.name}
 
   admin:
@@ -17,13 +17,7 @@ qa-test:
 
   cds:
     apriori_core_services_installation_identity: 7CAIEIB9J1NI
-    apriori_cloud_home_identity: 1J8M416FBJBK
-    appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity: 7FLINC95H3A3
-    cia_application_identity: 1J8M416FBJCD
-    ap_workspace_application_identity: H337GKD0M01A
-    cir_application_identity: 1J8M416FBJDE
-    acs_application_identity: DD4356A476DC
     identity_role: 67J517C9L763
 
   reports:
@@ -41,7 +35,7 @@ qa-test:
 int-core:
   name: int-core
   aws_parameter_store_name: int-blue
-  base_url: https://cost.${${customer}.cloud_reference_name}.int.apriori.net/
+  base_url: https://cost.${customer}.int.apriori.net/
   multi_tenant_installation_name: Core Services
   secret_key: 65J1ID2B6LDG
 
@@ -60,10 +54,7 @@ int-core:
 
   cds:
     apriori_core_services_installation_identity: 70EGN68B5CMH
-    apriori_cloud_home_identity: 1J8M416FBJBK
-    appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity: H337GKD0LA0N
-    cia_application_identity: 1J8M416FBJCD
     identity_role: 67J517C9L762
 
   reports:
@@ -76,19 +67,14 @@ int-core:
 staging:
   name: staging
   aws_parameter_store_name: stage
-  base_url: https://na-1-install.${${customer}.cloud_reference_name}.staging.apriori.net/
+  base_url: https://na-1-install.${customer}.staging.apriori.net/
   multi_tenant_installation_name: ${${deployment}.name} na-1
   #  TODO: uncomment for staging local run
   secret_key: K6JWVF8KV884
 
   cds:
     apriori_core_services_installation_identity: 2GIKI57NE7M4
-    appro_application_identity: 1J8M416FBJ94
-    cia_application_identity: 1J8M416FBJCD
-    cir_application_identity: 1J8M416FBJDE
-    acs_application_identity: DD4356A476DC
     apriori_production_deployment_identity: 7G0JGBE2N4GN
-    apriori_cloud_home_identity: 1J8M416FBJDE
     identity_role: 7G0JGBE2N2GE
 
   reports:
@@ -166,13 +152,8 @@ local:
   cds:
     api_url: ${local.base_url}:8808/
     apriori_core_services_installation_identity: 70EGN68B5CMH
-    apriori_cloud_home_identity: 1J8M416FBJBK
-    appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity: H337GKD0LA0N
     identity_role: H337GKD0L80E
-    cia_application_identity: 1J8M416FBJCD
-    cir_application_identity: 1J8M416FBJDE
-    acs_application_identity: DD4356A476DC
 
   cidapp:
     ui_url: ${local.base_url}:3003/
@@ -249,12 +230,7 @@ development:
 
   cds:
     apriori_core_services_installation_identity: ND11N124DE4F
-    apriori_cloud_home_identity: 1J8M416FBJBK
-    appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity: N6LFCKE8GL94
-    cia_application_identity: 1J8M416FBJCD
-    cir_application_identity: 1J8M416FBJDE
-    acs_application_identity: DD4356A476DC
     identity_role: 67J517C9L763
 
   reports:

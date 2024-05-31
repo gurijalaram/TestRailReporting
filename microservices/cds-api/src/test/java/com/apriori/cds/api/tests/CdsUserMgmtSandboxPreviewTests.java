@@ -1,9 +1,13 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.ACS;
+import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
+import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
+import static com.apriori.cds.api.enums.ApplicationEnum.CIR;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.Constants;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -25,20 +29,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsUserMgmtSandboxPreviewTests {
-    private final String appIdentity = Constants.getApProApplicationIdentity();
-    private final String ciaIdentity = Constants.getCiaApplicationIdentity();
-    private final String cirIdentity = Constants.getCirAppIdentity();
-    private final String acsIdentity = Constants.getACSAppIdentity();
+    private final String customerAssignedRole = "APRIORI_DEVELOPER";
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
     private String customerIdentity;
     private String siteIdentity;
     private String previewInstallationIdentity;
     private String sandboxInstallationIdentity;
     private String userIdentity;
-    private final String customerAssignedRole = "APRIORI_DEVELOPER";
 
     @AfterEach
     public void cleanUp() {
@@ -189,6 +190,9 @@ public class CdsUserMgmtSandboxPreviewTests {
     }
 
     private void createSandboxDeployment() {
+        String ciaIdentity = cdsTestUtil.getApplicationIdentity(CIA);
+        String cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
+        String acsIdentity = cdsTestUtil.getApplicationIdentity(ACS);
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
         String deploymentSandboxIdentity = response.getResponseEntity().getIdentity();
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentSandboxIdentity, "Sandbox Installation", generateStringUtil.generateRealmKey(), generateStringUtil.generateCloudReference(), siteIdentity, false);
@@ -201,6 +205,9 @@ public class CdsUserMgmtSandboxPreviewTests {
     }
 
     private void createPreviewDeployment() {
+        String ciaIdentity = cdsTestUtil.getApplicationIdentity(CIA);
+        String cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
+        String acsIdentity = cdsTestUtil.getApplicationIdentity(ACS);
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         String deploymentPreviewIdentity = response.getResponseEntity().getIdentity();
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentPreviewIdentity, "Preview Installation", generateStringUtil.generateRealmKey(), generateStringUtil.generateCloudReference(), siteIdentity, false);

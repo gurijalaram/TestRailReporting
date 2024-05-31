@@ -246,7 +246,7 @@ public class UserPreferencesUtil {
     /**
      * Set specific preferences
      *
-     * @param userCredentials -the user credentials
+     * @param userCredentials - the user credentials
      * @param preferencesEnum - the preference enum
      * @param value           - the value to set
      */
