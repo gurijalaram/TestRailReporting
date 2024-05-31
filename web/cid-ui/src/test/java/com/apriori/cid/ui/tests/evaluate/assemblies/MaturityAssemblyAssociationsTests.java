@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
@@ -133,7 +134,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {21671, 21687, 21688})
     @Description("Validate, with Prefer Maturity strategy, private sub-components with low and medium maturity")
     public void testMaturityPresetPrivateLowAndMedium() {
@@ -216,7 +217,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {21689, 21690, 21691})
     @Description("Validate, with Prefer Maturity strategy, private sub-components with high maturity and cost complete status")
     public void testMaturityPresetPrivateHighComplete() {
@@ -304,7 +305,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {21692, 21693, 21694, 21695})
     @Description("Validate, with Prefer Maturity strategy, public sub-components with same scenario name and low then medium maturity")
     public void testMaturityPresetPublicWithSameNameLowAndMedium() {
@@ -387,7 +388,7 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {21696, 21697, 21698})
     @Description("Validate, with Prefer Maturity strategy, public sub-components with high maturity and cost complete status")
     public void testMaturityPresetPublicHighComplete() {
