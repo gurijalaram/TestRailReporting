@@ -44,9 +44,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.componentiteration.AnalysisOfScenario;
-import com.apriori.shared.util.models.response.component.componentiteration.ComponentIteration;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -106,7 +104,6 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7035})
     @Description("Validate user can select explore tab and then comparison tab again")
     public void goToExploreReturnCompare() {
@@ -342,7 +339,6 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {5784})
     @Description("User can add columns to the part table within the Add Scenarios dialog box")
     public void addColumnsConfigure() {
@@ -435,7 +431,6 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7033})
     @Description("Validate user can drag and drop rows of comparison")
     public void dragAndDropCard() {
@@ -455,12 +450,12 @@ public class ComparisonTests extends TestBaseUI {
             .selectManualComparison();
 
         softAssertions.assertThat(comparePage.getCardHeader()).containsExactly(
-            "Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Sustainability", "Cost Results");
+            "Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Cost Results");
 
         comparePage.dragDropCard("Material & Utilization", "Info & Inputs");
 
         softAssertions.assertThat(comparePage.getCardHeader()).containsExactly(
-            "Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Sustainability", "Cost Results");
+            "Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Cost Results");
 
         softAssertions.assertAll();
     }
@@ -819,7 +814,6 @@ public class ComparisonTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6482, 6483})
     @Description("Validate the user can create a comparison including parts with all dfm risk ratings for all process groups")
     public void comparisonWithAllProcessGroupsAndDFM() {
