@@ -8,7 +8,7 @@ import com.apriori.cas.ui.components.SourceListComponent;
 import com.apriori.cas.ui.components.TableComponent;
 import com.apriori.cas.ui.pageobjects.customeradmin.CustomerAdminPage;
 import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
-import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.Obligation;
 import com.apriori.shared.util.models.response.Customer;
@@ -27,12 +27,10 @@ public class CustomersTests extends TestBaseUI {
     String customerSalesforceID;
     private CustomerAdminPage customerAdminPage;
     private Customer aprioriInternal;
-    private CdsTestUtil cdsTestUtil;
 
     @BeforeEach
     public void setup() {
-        cdsTestUtil = new CdsTestUtil();
-        aprioriInternal = cdsTestUtil.getAprioriInternal();
+        aprioriInternal = CustomerUtil.getCustomerData();
         customerIdentity = aprioriInternal.getIdentity();
         customerSalesforceID = aprioriInternal.getSalesforceId();
         customerAdminPage = new CasLoginPage(driver)

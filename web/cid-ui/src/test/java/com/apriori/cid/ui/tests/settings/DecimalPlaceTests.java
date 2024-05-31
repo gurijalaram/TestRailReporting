@@ -2,6 +2,7 @@ package com.apriori.cid.ui.tests.settings;
 
 import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_UNITED_KINGDOM;
 import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_USA;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
@@ -256,6 +257,7 @@ public class DecimalPlaceTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {5294})
     @Description("Ensure number of decimal places is respected in Assemblies")
     public void decimalPlacesForAssembly() {
