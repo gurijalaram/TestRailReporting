@@ -66,7 +66,7 @@ public class ReportsPageHeader extends ReportsHeader {
     @FindBy(id = "loading")
     private WebElement loadingPopup;
 
-    @FindBy(xpath = "//h2[contains(text(), 'Domains')]")
+    @FindBy(xpath = "//*[@class='workflow-title' and contains(text(), 'Domains')]")
     private WebElement domainsItem;
 
     private final WebDriver driver;
