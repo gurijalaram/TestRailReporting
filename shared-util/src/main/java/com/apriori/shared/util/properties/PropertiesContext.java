@@ -186,6 +186,6 @@ public class PropertiesContext {
      * @return - true/false
      */
     static boolean isAPCustomer() {
-        return PropertiesContext.get("customer").equals(AP_INT);
+        return PropertiesContext.get("customer").equals(AP_INT.getCustomer());
     }
 }
