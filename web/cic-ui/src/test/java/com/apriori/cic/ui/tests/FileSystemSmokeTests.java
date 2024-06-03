@@ -33,7 +33,7 @@ import org.junit.jupiter.api.Test;
 public class FileSystemSmokeTests extends CicGuiTestUtil {
 
     private static JobDefinition jobDefinitionData;
-    private static FileSystemAgent fileSystemAgent;
+    private FileSystemAgent fileSystemAgent;
     private WorkflowHome workflowHome;
     private SoftAssertions softAssertions;
     private String scenarioName;
