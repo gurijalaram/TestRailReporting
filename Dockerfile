@@ -16,8 +16,6 @@ RUN gradle --build-cache --quiet clean :$FOLDER:$MODULE:build -x test
 # Build & Test.
 FROM build as test
 
-VOLUME /home/seluser/downloads:./downloads
-
 ARG JAVAOPTS
 ARG FOLDER
 ARG MODULE
