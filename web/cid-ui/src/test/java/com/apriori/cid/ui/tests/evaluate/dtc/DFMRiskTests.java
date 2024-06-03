@@ -19,7 +19,6 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -394,9 +393,13 @@ public class DFMRiskTests extends TestBaseUI {
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("3 Axis Mill Routing")
+            .submit(EvaluatePage.class)
             .costScenario(5);
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).as("Initial Fully Burdened Cost").isCloseTo(Double.valueOf(756.32), Offset.offset(30.0));
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
@@ -404,7 +407,7 @@ public class DFMRiskTests extends TestBaseUI {
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).as("Updated Fully Burdened Cost").isCloseTo(Double.valueOf(343.45), Offset.offset(30.0));
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
         // TODO uncomment this section when revert is implemented
         /*evaluatePage.revert()
