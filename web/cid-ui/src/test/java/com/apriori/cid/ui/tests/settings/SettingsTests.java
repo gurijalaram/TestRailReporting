@@ -1,7 +1,7 @@
 package com.apriori.cid.ui.tests.settings;
 
 import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_USA;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -621,6 +621,7 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {17154, 17155, 17156, 17157, 21547, 21548})
     @Description("Assembly Strategy stuff")
     public void testAssemblyStrategyDropdown() {
@@ -702,6 +703,7 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {17154, 17155, 17156, 17157, 21653, 21654, 21655, 21656})
     @Description("Verify Assembly Strategy Dropdown and Description Cards")
     public void testAssemblyStrategyDropdownCards() {

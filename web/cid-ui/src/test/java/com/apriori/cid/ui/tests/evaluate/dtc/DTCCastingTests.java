@@ -275,6 +275,10 @@ public class DTCCastingTests extends TestBaseUI {
         guidanceIssuesPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("High Pressure Die Cast")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
