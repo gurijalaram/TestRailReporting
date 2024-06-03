@@ -509,7 +509,7 @@ public class ExploreToolbar extends MainNavBar {
         log.info("Current absolute path is: {}", s);
         log.info("This path of is: {}", Path.of("").toAbsolutePath());
         try {
-            Thread.sleep(30000);
+            Thread.sleep(60000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
