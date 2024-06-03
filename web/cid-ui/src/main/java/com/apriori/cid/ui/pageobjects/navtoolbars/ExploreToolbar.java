@@ -500,7 +500,7 @@ public class ExploreToolbar extends MainNavBar {
         String fileName = reportsData.getHeaders().get("Content-Disposition").getValue().split("=")[1].replace("\"", "");
 
         File file = new File(downloadPath + fileName);
-        log.info(Arrays.toString(new File(downloadPath).listFiles()));
+        log.info("All files in dir: {}", Arrays.toString(new File(downloadPath).listFiles()));
         file.deleteOnExit();
 
         return file;
