@@ -1,8 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.dtc;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.StringContains.containsString;
 
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.GuidanceIssuesPage;
