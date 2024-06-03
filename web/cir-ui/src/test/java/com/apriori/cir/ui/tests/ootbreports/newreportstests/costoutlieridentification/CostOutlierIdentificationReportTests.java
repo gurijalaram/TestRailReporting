@@ -3,7 +3,6 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.costoutlieridentifi
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.JasperReportSummaryIncRawData;
 import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
@@ -18,6 +17,7 @@ import com.apriori.cir.ui.utils.Constants;
 import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
 import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.ExportSetEnum;
+import com.apriori.shared.util.enums.ReportNamesEnum;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -29,7 +29,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,6 +39,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     private String reportsJsonFileName = JasperApiEnum.COST_OUTLIER_IDENTIFICATION.getEndpoint();
     private JasperApiInputControlsPathEnum reportsNameForInputControls = JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private Document genericHtmlResponse;
     private JasperApiUtils jasperApiUtils;
 
     @BeforeEach
@@ -224,70 +224,30 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     @Description("Validate percent difference calculation")
     public void validatePercentDifferenceCalculation() {
         // Cost Outlier Identification
-        JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
+        String chartDataRaw = genericCostOutlierReportGeneration(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName());
 
-        InputControl inputControl = jasperReportUtil.getInputControls(reportsNameForInputControls);
-        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(),
-            CurrencyEnum.USD.getCurrency());
+        double quotedCostOne = 3.2;
+        double aprioriCostOne = 2.12;
+        double firstTwoSumsResultOne = (quotedCostOne - aprioriCostOne) * 100;
+        double thirdSumResultOne = firstTwoSumsResultOne / quotedCostOne;
 
-        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
-            inputControl.getExportSetName()
-                .getOption(ExportSetEnum.SHEET_METAL_DTC.getExportSetName()).getValue());
+        softAssertions.assertThat(chartDataRaw.contains(Double.toString(thirdSumResultOne).substring(0, 3))).isEqualTo(true);
 
-        jasperApiUtils.setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(),
-            inputControl.getRollup()
-                .getOption(RollupEnum.SHEET_METAL_DTC.getRollupName()).getValue());
+        double firstTwoSumsResultTwo = (0.26 - 0.39) * 100;
+        double thirdSumResultTwo = firstTwoSumsResultTwo / 0.26;
 
-        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
-            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
-
-        JasperReportSummaryIncRawDataAsString jasperReportSummaryIncRawDataAsString = jasperReportUtil
-            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
-
-        String chartDataRaw = jasperReportSummaryIncRawDataAsString.getChartDataRawAsString();
-
-        Double quotedCostOne = 3.2;
-        Double aprioriCostOne = 2.12;
-        Double firstTwoSumsResultOne = (quotedCostOne - aprioriCostOne) * 100;
-        Double thirdSumResultOne = firstTwoSumsResultOne / quotedCostOne;
-
-        softAssertions.assertThat(chartDataRaw.contains(thirdSumResultOne.toString().substring(0, 3))).isEqualTo(true);
-
-        Double firstTwoSumsResultTwo = (0.26 - 0.39) * 100;
-        Double thirdSumResultTwo = firstTwoSumsResultTwo / 0.26;
-
-        softAssertions.assertThat(chartDataRaw.contains(thirdSumResultTwo.toString().substring(0, 2))).isEqualTo(true);
+        softAssertions.assertThat(chartDataRaw.contains(Double.toString(thirdSumResultTwo).substring(0, 2))).isEqualTo(true);
 
         // Cost Outlier Identification Details
-        InputControl inputControlDetails = jasperReportUtil.getInputControls(JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS);
-        JasperApiUtils jasperApiUtilsDetails = new JasperApiUtils(jSessionId, exportSetName,
-            JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint(), JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS);
-        jasperApiUtilsDetails.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(),
-            CurrencyEnum.USD.getCurrency());
+        genericCostOutlierReportGeneration(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName());
 
-        jasperApiUtilsDetails.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
-            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
-
-        jasperApiUtilsDetails.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
-            inputControlDetails.getExportSetName()
-                .getOption(ExportSetEnum.SHEET_METAL_DTC.getExportSetName()).getValue());
-
-        jasperApiUtilsDetails.setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(),
-            inputControlDetails.getRollup()
-                .getOption(RollupEnum.SHEET_METAL_DTC.getRollupName()).getValue());
-
-        JasperReportSummaryIncRawDataAsString jasperReportSummaryIncRawDataAsStringDetails = jasperReportUtil
-            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtilsDetails.getReportRequest());
-
-        Document reportHtmlPart = jasperReportSummaryIncRawDataAsStringDetails.getReportHtmlPart();
-
-        Double quotedCostThree = Double.parseDouble(reportHtmlPart.getElementsByAttributeValue("colspan", "4").get(5).child(0).text());
-        Double aprioriCostThree = Double.parseDouble(reportHtmlPart.getElementsByAttributeValue("colspan", "4").get(6).child(0).text());
-        String expectedPercentDifferenceCostThree = reportHtmlPart.getElementsByAttributeValue("colspan", "2").get(16).child(0).text();
+        Double quotedCostThree = Double.parseDouble(genericHtmlResponse.getElementsByAttributeValue("colspan", "4").get(5).child(0).text());
+        Double aprioriCostThree = Double.parseDouble(genericHtmlResponse.getElementsByAttributeValue("colspan", "4").get(6).child(0).text());
+        String expectedPercentDifferenceCostThree = genericHtmlResponse.getElementsByAttributeValue("colspan", "2").get(16).child(0).text();
         Double firstTwoSumsResultThree = (quotedCostThree - aprioriCostThree) * 100;
-        Double thirdSumResultThree = firstTwoSumsResultThree / quotedCostThree;
+        double thirdSumResultThree = firstTwoSumsResultThree / quotedCostThree;
 
-        softAssertions.assertThat(thirdSumResultThree.toString()).startsWith(expectedPercentDifferenceCostThree.substring(0, 3));
+        softAssertions.assertThat(Double.toString(thirdSumResultThree)).startsWith(expectedPercentDifferenceCostThree.substring(0, 3));
 
         softAssertions.assertAll();
     }
@@ -299,57 +259,17 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     @Description("Validate annualised potential savings calculation")
     public void validateAnnualisedPotentialSavingsCalculation() {
         // Cost Outlier Identification
-        JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
+        String chartDataRaw = genericCostOutlierReportGeneration(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName());
 
-        InputControl inputControl = jasperReportUtil.getInputControls(reportsNameForInputControls);
-        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(),
-            CurrencyEnum.USD.getCurrency());
+        double potentialSavings = 3.2 - 2.12;
+        double annualisedPotentialSavings = potentialSavings * 190000;
 
-        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
-            inputControl.getExportSetName()
-                .getOption(ExportSetEnum.SHEET_METAL_DTC.getExportSetName()).getValue());
-
-        jasperApiUtils.setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(),
-            inputControl.getRollup()
-                .getOption(RollupEnum.SHEET_METAL_DTC.getRollupName()).getValue());
-
-        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
-            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
-
-        JasperReportSummaryIncRawDataAsString jasperReportSummaryIncRawDataAsString = jasperReportUtil
-            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
-
-        String chartDataRaw = jasperReportSummaryIncRawDataAsString.getChartDataRawAsString();
-
-        Double potentialSavings = 3.2 - 2.12;
-        Double annualisedPotentialSavings = potentialSavings * 190000;
-
-        softAssertions.assertThat(annualisedPotentialSavings.toString()).startsWith("205");
+        softAssertions.assertThat(Double.toString(annualisedPotentialSavings)).startsWith("205");
         softAssertions.assertThat(chartDataRaw.contains("205857.23")).isEqualTo(true);
 
         // Cost Outlier Identification Details
-        InputControl inputControlDetails = jasperReportUtil.getInputControls(JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS);
-        JasperApiUtils jasperApiUtilsDetails = new JasperApiUtils(jSessionId, exportSetName,
-            JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint(), JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS);
-        jasperApiUtilsDetails.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(),
-            CurrencyEnum.USD.getCurrency());
-
-        jasperApiUtilsDetails.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
-            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
-
-        jasperApiUtilsDetails.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
-            inputControlDetails.getExportSetName()
-                .getOption(ExportSetEnum.SHEET_METAL_DTC.getExportSetName()).getValue());
-
-        jasperApiUtilsDetails.setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(),
-            inputControlDetails.getRollup()
-                .getOption(RollupEnum.SHEET_METAL_DTC.getRollupName()).getValue());
-
-        JasperReportSummaryIncRawDataAsString jasperReportSummaryIncRawDataAsStringDetails = jasperReportUtil
-            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtilsDetails.getReportRequest());
-
-        Document reportHtmlPart = jasperReportSummaryIncRawDataAsStringDetails.getReportHtmlPart();
-        ArrayList<Element> colSpanTwoElementList = reportHtmlPart.getElementsByAttributeValue("colspan", "2");
+        genericCostOutlierReportGeneration(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName());
+        ArrayList<Element> colSpanTwoElementList = genericHtmlResponse.getElementsByAttributeValue("colspan", "2");
 
         Double annualVolumeTwo = Double.parseDouble(colSpanTwoElementList.get(122).child(0).text().replace(",", ""));
         Double potentialSavingsTwo = Double.parseDouble(colSpanTwoElementList.get(123).child(0).text().substring(1, 5));
@@ -373,5 +293,41 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
         Double difference = largerValue - smallerValue;
         return difference.compareTo(0.00) >= 0 &&
             difference.compareTo(2.00) <= 0;
+    }
+
+    private String genericCostOutlierReportGeneration(String reportName) {
+        JasperReportUtil jasperReportUtil = new JasperReportUtil(jSessionId);
+        InputControl inputControl = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        JasperApiUtils jasperApiUtilsToUse = jasperApiUtils;
+
+        if (reportName.equals(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName())) {
+            JasperApiUtils jasperApiUtilsDetails = new JasperApiUtils(jSessionId, exportSetName,
+                JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint(), JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS);
+            inputControl = jasperReportUtil.getInputControls(JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS);
+            jasperApiUtilsToUse = jasperApiUtilsDetails;
+        }
+
+        jasperApiUtilsToUse.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(),
+            CurrencyEnum.USD.getCurrency());
+
+        jasperApiUtilsToUse.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+            inputControl.getExportSetName()
+                .getOption(ExportSetEnum.SHEET_METAL_DTC.getExportSetName()).getValue());
+
+        jasperApiUtilsToUse.setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(),
+            inputControl.getRollup()
+                .getOption(RollupEnum.SHEET_METAL_DTC.getRollupName()).getValue());
+
+        jasperApiUtilsToUse.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(),
+            DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now()));
+
+        JasperReportSummaryIncRawDataAsString jasperReportSummaryIncRawDataAsString = jasperReportUtil
+            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtilsToUse.getReportRequest());
+
+        if (!jasperReportSummaryIncRawDataAsString.getReportHtmlPart().toString().isEmpty()) {
+            this.genericHtmlResponse = jasperReportSummaryIncRawDataAsString.getReportHtmlPart();
+        }
+
+        return jasperReportSummaryIncRawDataAsString.getChartDataRawAsString();
     }
 }
