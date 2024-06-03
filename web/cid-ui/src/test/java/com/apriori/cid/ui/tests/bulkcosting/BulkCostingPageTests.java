@@ -145,9 +145,9 @@ public class BulkCostingPageTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {29876, 29875, 29877, 29878})
-    @Description("edit Bulk Analysis name")
-    public void editBulkAnalysisName() {
+    @TestRail(id = {29876, 29875, 29877, 29878, 29924})
+    @Description("edit Bulk Analysis name and later on search on it")
+    public void editBulkAnalysisNameAndSearchOnIt() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -165,12 +165,19 @@ public class BulkCostingPageTests extends TestBaseUI {
 
         bulkCostingPage.clickOnTheInfoButton();
         soft.assertThat(bulkCostingPage.isBulkAnalysisInfoWindowIsDisplayed()).isTrue();
-        String value = worksheetResponse.getResponseEntity().getName().concat("_updated");
-        bulkCostingPage.changeTheNaneOfBulkAnalysisName(value)
+        String worksheetName = worksheetResponse.getResponseEntity().getName().concat("_updated");
+        bulkCostingPage.changeTheNaneOfBulkAnalysisName(worksheetName)
             .clickOnSaveButtonOnBulkAnalysisInfo();
-        soft.assertThat(bulkCostingPage.isWorksheetPresent(value)).isTrue();
+        soft.assertThat(bulkCostingPage.isWorksheetPresent(worksheetName)).isTrue();
+
+        bulkCostingPage.typeIntoSearchWorkSheetInput(worksheetName)
+            .clickOnSubmitOnSearchBulkAnalysis();
+
+        soft.assertThat(bulkCostingPage.checkExpectedNumbersOfRows(1)).isTrue();
+        soft.assertThat(bulkCostingPage.getTextFromTheFirstRow()).contains(Arrays.asList(worksheetName));
         soft.assertAll();
     }
+
 
     private String createInputRow(UserCredentials userCredentials, ResponseWrapper<WorkSheetResponse> worksheetResponse) {
         CssComponent cssComponent = new CssComponent();
