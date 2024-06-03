@@ -230,6 +230,21 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
+     * Add further Criteria
+     *
+     * @param propertyEnum  - property from the enum
+     * @param operationEnum - operation from the enum
+     * @param value         - the value
+     * @return current page object
+     */
+    public FilterPage includeCriteria(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String value) {
+        index = getIndex();
+
+        inputValue(index, propertyEnum, value);
+        return this;
+    }
+
+    /**
      * Adds a criteria
      *
      * @param propertyEnum  - property from the enum
