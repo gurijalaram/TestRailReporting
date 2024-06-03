@@ -72,6 +72,7 @@ public class ChromeManager implements DriverManager<ChromeOptions> {
             chromeOptions.addArguments("--headless");
         }
         chromeOptions.setExperimentalOption("prefs", chromePrefs);
+        chromeOptions.setCapability("se:downloadsEnabled", true);
 
         chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 
