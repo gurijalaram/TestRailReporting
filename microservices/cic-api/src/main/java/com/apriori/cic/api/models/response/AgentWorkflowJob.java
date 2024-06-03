@@ -15,12 +15,14 @@ import java.time.LocalDateTime;
 public class AgentWorkflowJob {
     public String identity;
     public String status;
-    public int componentsProcessed;
-    public int componentsFailed;
-    public int componentsTotal;
+    public Integer componentsProcessed;
+    public Integer componentsFailed;
+    public Integer componentsTotal;
     public String errorMessage;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     public LocalDateTime startedAt;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     public LocalDateTime completedAt;
+    public String outputFolder;
+
 }
