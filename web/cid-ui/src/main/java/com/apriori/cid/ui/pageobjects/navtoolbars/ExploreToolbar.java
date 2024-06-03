@@ -506,7 +506,7 @@ public class ExploreToolbar extends MainNavBar {
         log.info("Current download path is: {}", downloadPath);
         Path currentRelativePath = Paths.get("");
         String s = currentRelativePath.toAbsolutePath().toString();
-        log.info("Current absolute path is: {}" ,s);
+        log.info("Current absolute path is: {}", s);
         log.info("This path of is: {}", Path.of("").toAbsolutePath());
         file.deleteOnExit();
 
