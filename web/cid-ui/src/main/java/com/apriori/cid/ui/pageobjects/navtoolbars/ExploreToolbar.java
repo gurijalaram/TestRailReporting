@@ -26,6 +26,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -502,6 +504,10 @@ public class ExploreToolbar extends MainNavBar {
         File file = new File(downloadPath + fileName);
         log.info("All files in dir: {}", Arrays.toString(new File(downloadPath).listFiles()));
         log.info("Current download path is: {}", downloadPath);
+        Path currentRelativePath = Paths.get("");
+        String s = currentRelativePath.toAbsolutePath().toString();
+        log.info("Current absolute path is: {}" ,s);
+        log.info("This path of is: {}", Path.of("").toAbsolutePath());
         file.deleteOnExit();
 
         return file;
