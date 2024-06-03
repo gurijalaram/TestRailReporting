@@ -52,7 +52,7 @@ public class DTCPlasticMouldingTests extends TestBaseUI {
             .openDesignGuidance()
             .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:3");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface has a draft angle less than the recommended draft angle for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Part of this surface has a draft angle less than the recommended draft angle for this material.");
 
         guidanceIssuesPage.closePanel()
             .openMaterialSelectorTable()

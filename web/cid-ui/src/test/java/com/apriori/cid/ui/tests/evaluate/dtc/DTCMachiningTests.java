@@ -88,7 +88,9 @@ public class DTCMachiningTests extends TestBaseUI {
         guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Curved Surface", "CurvedSurface:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Contouring: Feature contains a sharp corner that would require a zero tool diameter"));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Contouring: Feature contains a sharp corner that would require a zero tool diameter");
+
+        softAssertions.assertAll();
     }
 
     @Test
