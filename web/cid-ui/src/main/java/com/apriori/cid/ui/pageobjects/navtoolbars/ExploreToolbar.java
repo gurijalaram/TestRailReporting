@@ -508,6 +508,11 @@ public class ExploreToolbar extends MainNavBar {
         String s = currentRelativePath.toAbsolutePath().toString();
         log.info("Current absolute path is: {}", s);
         log.info("This path of is: {}", Path.of("").toAbsolutePath());
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         //file.deleteOnExit();
 
         return file;
