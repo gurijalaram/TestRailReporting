@@ -7,13 +7,12 @@ import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.help.ReportAnIssue;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.models.AuthorizationUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -40,7 +39,7 @@ public class ReportAnIssueTests extends TestBaseUI {
     @Description("Verify contents of Report an issue modal from various views")
     public void testReportAnIssueFieldValues() {
         currentUser = UserUtil.getUser();
-        customerDetails = CustomerUtil.getCurrentCustomerData();
+        customerDetails = CustomerUtil.getCustomerData();
 
         final String asmName = "titan charger ass";
         final String asmExtension = ".SLDASM";

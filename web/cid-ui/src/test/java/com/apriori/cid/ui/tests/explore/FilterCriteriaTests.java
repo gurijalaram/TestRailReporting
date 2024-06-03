@@ -1,6 +1,7 @@
 package com.apriori.cid.ui.tests.explore;
 
 import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING_DIE;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -127,6 +128,7 @@ public class FilterCriteriaTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {6216})
     @Description("Test private criteria assembly")
     public void testPrivateCriteriaAssembly() {
@@ -148,6 +150,7 @@ public class FilterCriteriaTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {6217})
     @Description("Test public criteria assembly status")
     public void testPublicCriteriaAssemblyStatus() {

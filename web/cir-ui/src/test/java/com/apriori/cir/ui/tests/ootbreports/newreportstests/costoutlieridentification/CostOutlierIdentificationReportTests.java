@@ -43,7 +43,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     @Description("Input controls - Cost Metric - FBC")
     public void testCostMetricFbcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierTest(
-            Arrays.asList("Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName())
+            Arrays.asList(InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName())
         );
     }
 
@@ -54,7 +54,7 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
     @Description("Input controls - Cost Metric - PPC")
     public void testCostMetricPpcFunctionality() {
         jasperApiUtils.genericCostMetricCostOutlierTest(
-            Arrays.asList("Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName())
+            Arrays.asList(InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.PIECE_PART_COST.getCostMetricName())
         );
     }
 

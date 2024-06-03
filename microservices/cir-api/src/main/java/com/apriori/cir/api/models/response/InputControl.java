@@ -69,6 +69,14 @@ public class InputControl {
         return getPropertyValueIfExist("processGroup");
     }
 
+    public InputControlState getPartNumber() {
+        return getPropertyValueIfExist("partNumber");
+    }
+
+    public InputControlState getAssemblySelect() {
+        return getPropertyValueIfExist("assemblySelect");
+    }
+
     private InputControlState getPropertyValueIfExist(final String propertyName) {
         return getInputControlStateByName(propertyName);
     }

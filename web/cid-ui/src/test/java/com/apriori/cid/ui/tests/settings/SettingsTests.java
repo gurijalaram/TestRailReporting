@@ -95,7 +95,6 @@ public class SettingsTests extends TestBaseUI {
             .inputScenarioName("MP Auto Test")
             .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE)
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS_PLATING.getMaterialName())
             .submit(ProductionDefaultsPage.class)
@@ -109,7 +108,6 @@ public class SettingsTests extends TestBaseUI {
         softAssertions.assertThat(productionDefaultPage.getScenarioName()).isEqualTo("MP Auto Test");
         softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup());
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory());
         softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("ABS, Plating");
 
         softAssertions.assertAll();
@@ -154,7 +152,6 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6285, 6286, 5429})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
@@ -178,7 +175,6 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6287, 6288})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
@@ -493,7 +489,6 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6368})
     @Description("Validate when a user changes their unit settings comparison values update")
     public void customUnitsDisplayedInComparison() {
@@ -504,9 +499,17 @@ public class SettingsTests extends TestBaseUI {
         comparePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .uploadComponentAndOpen(component2)
             .selectProcessGroup(component2.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")

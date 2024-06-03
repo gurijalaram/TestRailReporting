@@ -1,7 +1,7 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
 import static com.apriori.cid.ui.utils.PartNamesEnum.PIN;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
@@ -29,7 +29,7 @@ public class LargeGroupAssemblyTests extends TestBaseUI {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {11807, 11804})
     @Description("Publish button becomes unavailable when 11+ private sub-components selected")
     public void testPublishButtonAvailability() {

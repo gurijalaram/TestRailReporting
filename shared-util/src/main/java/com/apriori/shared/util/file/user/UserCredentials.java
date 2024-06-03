@@ -1,9 +1,12 @@
 package com.apriori.shared.util.file.user;
 
-import com.apriori.shared.util.models.AuthorizationUtil;
-import com.apriori.shared.util.models.CustomerUtil;
+import com.apriori.shared.util.AuthorizationUtil;
+import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.enums.RolesEnum;
+import com.apriori.shared.util.models.response.User;
 
 import com.auth0.jwt.JWT;
+import lombok.Getter;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -12,21 +15,24 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
 public class UserCredentials implements Serializable {
-
-    private final int tokenMinTimeInMinutes = 10;
+    private static final int TOKEN_MIN_TIME_IN_MINUTES = 10;
     private volatile String token;
-
+    @Getter
     private String email;
+    @Getter
     private String password;
     private String username;
+    @Getter
     private String cloudContext;
     //TODO : change it on Security ENUM when will be information about security levels
-    private String accessLevel;
+    @Getter
+    private RolesEnum role;
+    private User user;
 
-    public UserCredentials(String email, String password, String accessLevel) {
+    public UserCredentials(String email, String password, RolesEnum role) {
         this.email = email;
         this.password = password;
-        this.accessLevel = accessLevel;
+        this.role = role;
     }
 
     public UserCredentials(String email, String password) {
@@ -41,21 +47,13 @@ public class UserCredentials implements Serializable {
         return new UserCredentials(username, password);
     }
 
-    public static UserCredentials initWithAccessLevel(String username, String password, String accessLevel) {
-        return new UserCredentials(username, password, accessLevel);
+    public static UserCredentials initWithRole(String username, String password, RolesEnum role) {
+        return new UserCredentials(username, password, role);
     }
 
-    public String getAccessLevel() {
-        return accessLevel;
-    }
-
-    public UserCredentials setAccessLevel(String securityLevel) {
-        this.accessLevel = securityLevel;
+    public UserCredentials setRole(RolesEnum securityLevel) {
+        this.role = securityLevel;
         return this;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public UserCredentials setEmail(String email) {
@@ -72,10 +70,6 @@ public class UserCredentials implements Serializable {
         return this;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public UserCredentials setPassword(String password) {
         this.password = password;
         return this;
@@ -87,7 +81,7 @@ public class UserCredentials implements Serializable {
         }
         if (ChronoUnit.MINUTES.between(LocalTime.now(),
             Instant.ofEpochMilli(new JWT().decodeJwt(token).getExpiresAt().getTime())
-                .atZone(ZoneId.systemDefault()).toLocalTime()) <= tokenMinTimeInMinutes) {
+                .atZone(ZoneId.systemDefault()).toLocalTime()) <= TOKEN_MIN_TIME_IN_MINUTES) {
             generateToken();
         }
         return token;
@@ -100,12 +94,12 @@ public class UserCredentials implements Serializable {
         return this;
     }
 
-    public String getCloudContext() {
-        return cloudContext;
-    }
-
     public UserCredentials generateCloudContext() {
         this.cloudContext = cloudContext != null ? cloudContext : CustomerUtil.getAuthTargetCloudContext(this);
         return this;
+    }
+
+    public synchronized User getUserDetails() {
+        return user != null ? user : UserUtil.getUserByEmail(this);
     }
 }

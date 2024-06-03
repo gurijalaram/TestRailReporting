@@ -6,8 +6,8 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.Customer;
 
 import lombok.SneakyThrows;
@@ -47,7 +47,7 @@ public class CustomerUtilTest {
 
     @Test
     public void getApIntCustomerDataTest() {
-        final Customer apIntCustomerData = CustomerUtil.getApIntCustomerData();
+        final Customer apIntCustomerData = CustomerUtil.getCustomerData();
 
         assertThat(apIntCustomerData, is(not(nullValue())));
     }
@@ -63,10 +63,8 @@ public class CustomerUtilTest {
 
     @Test
     public void getCustomerDataTest() {
-        final Customer customerData = CustomerUtil.getCurrentCustomerData();
+        final Customer customerData = CustomerUtil.getCustomerData();
 
         assertThat(customerData, is(not(nullValue())));
     }
-
-
 }

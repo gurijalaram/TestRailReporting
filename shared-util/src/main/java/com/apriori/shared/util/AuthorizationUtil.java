@@ -1,4 +1,4 @@
-package com.apriori.shared.util.models;
+package com.apriori.shared.util;
 
 import com.apriori.shared.util.enums.TokenEnum;
 import com.apriori.shared.util.file.user.UserCredentials;

@@ -19,14 +19,13 @@ import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.css.api.enums.CssSearch;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.serialization.util.DateFormattingUtils;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.DateUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
-import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 

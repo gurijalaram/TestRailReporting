@@ -4,7 +4,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.CustomerAssociationItems;
 import com.apriori.cds.api.models.response.CustomerAssociationResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.Constants;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -27,7 +27,7 @@ public class CdsCustomerAssociationTests {
         ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS,
             CustomerAssociationResponse.class,
             HttpStatus.SC_OK,
-            Constants.getAPrioriInternalCustomerIdentity()
+            UserUtil.getUser().getUserDetails().getCustomerIdentity()
         );
 
         soft.assertThat(response.getResponseEntity().getTotalItemCount()).isGreaterThanOrEqualTo(1);
@@ -42,13 +42,13 @@ public class CdsCustomerAssociationTests {
         ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS,
             CustomerAssociationResponse.class,
             HttpStatus.SC_OK,
-            Constants.getAPrioriInternalCustomerIdentity()
+            UserUtil.getUser().getUserDetails().getCustomerIdentity()
         );
         String associationIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
         ResponseWrapper<CustomerAssociationItems> association = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_CUSTOMERS_ASSOCIATION_BY_CUSTOMER_ASSOCIATION_ID,
             CustomerAssociationItems.class,
             HttpStatus.SC_OK,
-            Constants.getAPrioriInternalCustomerIdentity(),
+            UserUtil.getUser().getUserDetails().getCustomerIdentity(),
             associationIdentity
         );
 

@@ -16,9 +16,9 @@ import com.apriori.cic.ui.pageobjects.workflows.WorkflowHome;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.SchedulePage;
 import com.apriori.cic.ui.utils.CicGuiTestUtil;
 import com.apriori.nts.api.reports.partscost.PartsCost;
-import com.apriori.shared.util.ExcelService;
 import com.apriori.shared.util.dataservice.TestDataService;
 import com.apriori.shared.util.email.GraphEmailService;
+import com.apriori.shared.util.file.ExcelService;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.EmailMessage;
@@ -90,8 +90,9 @@ public class CICIntegrationTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(id = 12046)
-    @Description("Create Workflow, Invoke workflow, verify Parts Cost watchpoint report from email and delete workflow")
+    @TestRail(id = {12046, 29572})
+    @Description("Create Workflow, Invoke workflow, verify Parts Cost watchpoint report from email and delete workflow" +
+        "Test Watchpoint Report email attachment")
     public void testVerifyWatchPointReport() {
         WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowData.json", WorkFlowData.class);
         PartsCost xlsWatchPointReportExpectedData = new TestDataService().getReportData("PartCostReport.json", PartsCost.class);

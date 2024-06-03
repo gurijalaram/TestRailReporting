@@ -16,6 +16,11 @@
       "processGroup": "SHEET_METAL"
     },
     {
+      "componentName": "HoleProximityTest",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
       "componentName": "extremebends",
       "extension": ".prt.1",
       "processGroup": "SHEET_METAL"

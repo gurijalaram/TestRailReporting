@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate.dtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cid.api.utils.UserPreferencesUtil;
@@ -16,7 +15,6 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -26,8 +24,6 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
 
 public class DTCCastingTests extends TestBaseUI {
 
@@ -52,7 +48,6 @@ public class DTCCastingTests extends TestBaseUI {
 
     @Test
     @Issue("APD-1286")
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6468, 6379, 6383, 6389, 6382, 6292})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
@@ -140,11 +135,10 @@ public class DTCCastingTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6379, 6384, 6388})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void gravityDieCasting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues",ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(component.getUser())
@@ -154,7 +148,6 @@ public class DTCCastingTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(component)
             .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
-            .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection()
             .selectRoutingPreferenceByName("Gravity Die Cast")
@@ -214,7 +207,11 @@ public class DTCCastingTests extends TestBaseUI {
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
-            .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("ManualFloor")
+            .submit(EvaluatePage.class)
+            .costScenario()
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");

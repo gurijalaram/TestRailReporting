@@ -20,9 +20,9 @@ import com.apriori.cic.ui.pageobjects.workflows.WorkflowHome;
 import com.apriori.cic.ui.utils.CicGuiTestUtil;
 import com.apriori.cir.ui.pageobjects.header.ReportsHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
-import com.apriori.shared.util.PDFDocument;
 import com.apriori.shared.util.dataservice.TestDataService;
 import com.apriori.shared.util.email.GraphEmailService;
+import com.apriori.shared.util.file.PDFDocument;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.models.response.EmailMessage;
 import com.apriori.shared.util.properties.PropertiesContext;
@@ -68,8 +68,10 @@ public class CIRIntegrationTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(id = {12046})
-    @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow")
+    @TestRail(id = {12046, 3967, 4044})
+    @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow" +
+        "Test DTC Component Summary Report email attachment" +
+        "Check the contents of the DTC Part Summary report tally with the costing results expected")
     public void testVerifyCIRReport() {
         WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowData.json", WorkFlowData.class);
         String randomNumber = RandomStringUtils.randomNumeric(6);

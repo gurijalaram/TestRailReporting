@@ -221,38 +221,4 @@ public class SheetMetalDTCTests extends TestBaseUI {
 
         softAssertions.assertAll();
     }
-
-    @Test
-    //TODO update testrail case 719 when editing tolerances are ported
-    @Disabled("Requires tolerances for additional operation")
-    @Tags({@Tag(SMOKE),
-        @Tag(IGNORE)})
-    @TestRail(id = {6502})
-    @Description("Verify tolerances which induce an additional operation")
-    public void toleranceAdditionalOp() {
-        component = new ComponentRequestUtil().getComponent("bracket_basic_matPMI");
-
-        loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(component.getUser())
-            /*.openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
-
-        settingsPage = new SettingsPage(driver);
-        guidanceIssuesPage = settingsPage.save(ExplorePage.class)*/
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .openMaterialSelectorTable()
-            .search("AISI 1020")
-            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .openDesignGuidance()
-            .selectIssueTypeGcd("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
-
-        softAssertions.assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2")).isEqualTo(0.02);
-        softAssertions.assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2")).isEqualTo(0.06);
-
-        softAssertions.assertAll();
-    }
 }
