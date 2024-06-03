@@ -20,14 +20,19 @@ import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.HasDownloads;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -508,8 +513,26 @@ public class ExploreToolbar extends MainNavBar {
         String s = currentRelativePath.toAbsolutePath().toString();
         log.info("Current absolute path is: {}", s);
         log.info("This path of is: {}", Path.of("").toAbsolutePath());
+
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+            .until(d -> !((HasDownloads) d).getDownloadableFiles().isEmpty());
+
+        String fileNameDownload = ((HasDownloads) driver).getDownloadableFiles().get(0);
+
+        Path targetLocation = null;
         try {
-            Thread.sleep(60000);
+            targetLocation = Files.createTempDirectory("download");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            ((HasDownloads) driver).downloadFile(fileNameDownload, targetLocation);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            Thread.sleep(240000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
