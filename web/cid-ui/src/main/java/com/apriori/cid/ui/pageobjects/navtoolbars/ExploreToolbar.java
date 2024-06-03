@@ -26,6 +26,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -499,6 +500,7 @@ public class ExploreToolbar extends MainNavBar {
         String fileName = reportsData.getHeaders().get("Content-Disposition").getValue().split("=")[1].replace("\"", "");
 
         File file = new File(downloadPath + fileName);
+        log.info(Arrays.toString(new File(downloadPath).listFiles()));
         file.deleteOnExit();
 
         return file;
