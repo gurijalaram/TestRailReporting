@@ -36,6 +36,9 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
     @FindBy(xpath = "//div[contains(@class, 'widget-checkbox')]//span[.='Return only the latest revision of each part from the PLM system']")
     protected WebElement revisionLatestCheckBoxLblElement;
 
+    @FindBy(xpath = "//div[contains(@class, 'ss-open')]//input[@type='search']")
+    protected WebElement searchTextboxElement;
+
     @FindBy(css = "div[class$='modalTitle']")
     protected WebElement workflowPopUpTitleElement;
 
