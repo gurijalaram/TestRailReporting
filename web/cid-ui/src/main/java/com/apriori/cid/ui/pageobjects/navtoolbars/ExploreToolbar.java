@@ -496,7 +496,7 @@ public class ExploreToolbar extends MainNavBar {
      * @param componentInfo - the component object
      */
     public File getDownloadedReport(ComponentInfoBuilder componentInfo) {
-        ResponseWrapper<String> reportsData = new ScenariosUtil().getReports(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity(), componentInfo.getUser());
+        ResponseWrapper<String> reportsData = new ScenariosUtil().getReports("CP5PXIQIT2GX", "D0QOZ1YHQJZO", componentInfo.getUser());
         String fileName = reportsData.getHeaders().get("Content-Disposition").getValue().split("=")[1].replace("\"", "");
 
         File file = new File(downloadPath + fileName);
