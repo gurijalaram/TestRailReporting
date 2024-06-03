@@ -1,6 +1,5 @@
 package com.apriori.shared.util.webdriver;
 
-import static com.apriori.shared.util.testconfig.TestBaseUI.downloadPath;
 import static com.apriori.shared.util.webdriver.DriverFactory.mode;
 import static com.apriori.shared.util.webdriver.DriverFactory.os;
 import static io.github.bonigarcia.wdm.config.OperatingSystem.LINUX;
@@ -72,7 +71,6 @@ public class ChromeManager implements DriverManager<ChromeOptions> {
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--headless");
         }
-        chromePrefs.put("download.default_directory", downloadPath);
         chromeOptions.setExperimentalOption("prefs", chromePrefs);
 
         chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
