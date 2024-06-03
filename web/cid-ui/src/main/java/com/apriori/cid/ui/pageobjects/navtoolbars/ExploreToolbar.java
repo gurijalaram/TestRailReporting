@@ -501,6 +501,7 @@ public class ExploreToolbar extends MainNavBar {
 
         File file = new File(downloadPath + fileName);
         log.info("All files in dir: {}", Arrays.toString(new File(downloadPath).listFiles()));
+        log.info("Current download path is: {}", downloadPath);
         file.deleteOnExit();
 
         return file;
