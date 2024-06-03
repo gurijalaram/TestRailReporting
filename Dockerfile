@@ -12,6 +12,7 @@ FROM sdk as build
 ARG FOLDER
 ARG MODULE
 RUN gradle --build-cache --quiet clean :$FOLDER:$MODULE:build -x test
+RUN mkdir -p /build-workspace/downloads
 
 # Build & Test.
 FROM build as test
@@ -23,7 +24,7 @@ ARG TESTS
 
 ENV JAVA_OPTS="$JAVA_OPTS $JAVAOPTS"
 
-RUN --mount=type=bind,src=home/seluser/downloads,target=build-workspace/downloads \
+RUN --mount=type=bind,src=build-workspace/downloads,target=home/seluser/downloads \
     --mount=type=secret,id=aws_config,target=/root/.aws/config \
     --mount=type=secret,id=aws_creds,target=/root/.aws/credentials \
     gradle --build-cache --info :$FOLDER:$MODULE:test --tests $TESTS
