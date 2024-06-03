@@ -1,5 +1,7 @@
 package com.apriori.cic.ui.tests;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
+
 import com.apriori.cic.api.agent.FileSystemAgent;
 import com.apriori.cic.api.enums.CICPartSelectionType;
 import com.apriori.cic.api.enums.EmailRecipientType;
@@ -25,6 +27,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class FileSystemSmokeTests extends CicGuiTestUtil {
@@ -46,6 +49,7 @@ public class FileSystemSmokeTests extends CicGuiTestUtil {
     }
 
     @Test
+    @Tag(SMOKE)
     @TestRail(id = {30959, 30962})
     @Description("Create and Process File System work flow" +
         "DTC Component Summary [CIR] report written to File System")
@@ -95,6 +99,7 @@ public class FileSystemSmokeTests extends CicGuiTestUtil {
     }
 
     @Test
+    @Tag(SMOKE)
     @TestRail(id = {30963})
     @Description("Part Cost[SSR] report written to File System")
     public void testVerifyPartCostReportForFileSystemWorkflow() {
