@@ -1,19 +1,10 @@
 package com.apriori.cic.api.agent;
 
-import com.apriori.cic.api.models.request.AgentPort;
-import com.apriori.cic.api.models.response.AgentConnectionOptions;
-import com.apriori.cic.api.models.response.ConnectorInfo;
 import com.apriori.cic.api.utils.AgentConstants;
 import com.apriori.cic.api.utils.AgentCredentials;
-import com.apriori.cic.api.utils.CicApiTestUtil;
-import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.http.utils.AwsParameterStoreUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
-import com.apriori.shared.util.nexus.models.response.NexusAgentItem;
 import com.apriori.shared.util.nexus.utils.NexusComponent;
-import com.apriori.shared.util.nexus.utils.NexusSearchParameters;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
@@ -43,37 +34,26 @@ public class FtpClient {
     private Session jschSession = null;
     private Channel channel = null;
     private ChannelSftp channelSftp = null;
-    private AgentCredentials agentCredentials;
-    private NexusAgentItem nexusAgentItem = null;
-    private AgentConnectionOptions agentConnectionOptions = null;
-    private ConnectorInfo connectorInfo = null;
-    private NexusSearchParameters nexusSearchParameters;
-    private AgentPort agentPort;
-    private RequestEntityUtil requestEntityUtil;
-    private String awsPrivateKeyFile;
 
+    private final AgentCredentials agentCredentials;
     private static final int SESSION_TIMEOUT = 10000;
     private static final int CHANNEL_TIMEOUT = 5000;
 
     public FtpClient() {
         agentCredentials = new AgentCredentials().getAgentCredentials();
-        agentPort = CicApiTestUtil.getAgentPortData();
-        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(RolesEnum.APRIORI_DESIGNER);
         createRemoteSession();
         getSftpConnection();
     }
 
     /**
      * Create Session to connect to VM
-     *
-     * @return current class object
      */
     @SneakyThrows
     private void createRemoteSession() {
         JSch jsch = new JSch();
         try {
             String keyFolder = String.valueOf(FileResourceUtil.createTempDir(null)).toLowerCase();
-            awsPrivateKeyFile = keyFolder + File.separator + "key" + File.separator +
+            String awsPrivateKeyFile = keyFolder + File.separator + "key" + File.separator +
                 StringUtils.substringAfterLast(AgentConstants.AWS_SYSTEM_PARAMETER_PRIVATE_KEY, "/");
             String privateKey = AwsParameterStoreUtil.getSystemParameter(AgentConstants.AWS_SYSTEM_PARAMETER_PRIVATE_KEY);
             log.info("########## PRIVATE KEY RETRIEVED FROM AWS SUCCESSFULLY. ########  " + awsPrivateKeyFile);
@@ -93,8 +73,6 @@ public class FtpClient {
 
     /**
      * Create and SFTP connection to VM to delete the folder and upload the files.
-     *
-     * @return current class object
      */
     private void getSftpConnection() {
         try {
@@ -151,6 +129,46 @@ public class FtpClient {
         runService(agentInstallFolder, "stop");
         runService(agentInstallFolder, "start");
         return this;
+    }
+
+    /**
+     * get list of files from remote folder
+     *
+     * @param remoteFolderToSearch - remoteFolder
+     * @return List<Vector < ChannelSftp.LsEntry>
+     */
+    public Vector<ChannelSftp.LsEntry> getFilesList(String remoteFolderToSearch) {
+        Vector<ChannelSftp.LsEntry> remoteFileList;
+        try {
+            channelSftp.cd(remoteFolderToSearch);
+            remoteFileList = channelSftp.ls(remoteFolderToSearch);
+        } catch (SftpException e) {
+            throw new IllegalArgumentException("REPORTS FOLDER NOT FOUND!!! " + e.getMessage());
+        }
+        return remoteFileList;
+    }
+
+    /**
+     * get matched Remote folder
+     *
+     * @param baseFolder            - base Folder
+     * @param searchForRemoteFolder - folder to search
+     * @return matched folder if it exists
+     */
+    public String getMatchedFolder(String baseFolder, String searchForRemoteFolder) {
+        String remoteWorkflowJobFolder;
+        try {
+            channelSftp.cd(baseFolder);
+            remoteWorkflowJobFolder = getFilesList(baseFolder)
+                .stream()
+                .filter(item -> item.getFilename().contains(searchForRemoteFolder))
+                .map(ChannelSftp.LsEntry::getFilename)
+                .findFirst()
+                .orElse(null);
+        } catch (SftpException e) {
+            throw new IllegalArgumentException("REPORTS FOLDER NOT FOUND!!! " + e.getMessage());
+        }
+        return remoteWorkflowJobFolder;
     }
 
     /**
@@ -224,7 +242,7 @@ public class FtpClient {
      * @param path folder to be deleted
      * @return boolean (true or false) indicates succesfull deletion.
      */
-    private Boolean recursiveFolderDelete(String path) {
+    public Boolean recursiveFolderDelete(String path) {
         Boolean isDeleted = false;
         try {
             channelSftp.cd(path); // Change Directory on SFTP Server
@@ -263,9 +281,10 @@ public class FtpClient {
      * @param sourcePath
      * @param destinationPath
      */
-    private void recursiveFolderUpload(String sourcePath, String destinationPath) {
+    public void recursiveFolderUpload(String sourcePath, String destinationPath) {
         try {
             File sourceFile = new File(sourcePath);
+
             if (sourceFile.isFile()) {
                 // copy if it is a file
                 channelSftp.cd(destinationPath);
@@ -293,6 +312,21 @@ public class FtpClient {
                         recursiveFolderUpload(f.getAbsolutePath(), destinationPath + "/" + sourceFile.getName());
                     }
                 }
+            }
+        } catch (SftpException | FileNotFoundException e) {
+            throw new IllegalArgumentException(String.format(
+                "DESTINATION FOLDER (%s) ON REMOTE SERVER NOT FOUND!!",
+                destinationPath));
+        }
+    }
+
+    public void uploadFileToAgent(String sourcePath, String destinationPath) {
+        try {
+            File sourceFile = new File(sourcePath);
+            String inputFileName = "cig-input.xlsx";
+            channelSftp.cd(destinationPath);
+            if (!sourceFile.getName().startsWith(".")) {
+                channelSftp.put(new FileInputStream(sourceFile), inputFileName, ChannelSftp.OVERWRITE);
             }
         } catch (SftpException | FileNotFoundException e) {
             throw new IllegalArgumentException(String.format(

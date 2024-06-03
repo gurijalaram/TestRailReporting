@@ -104,19 +104,9 @@ public class ExcelService {
     public String getCellData(String colName, int rowNum) {
         String cellValue = StringUtils.EMPTY;
         try {
-            if (rowNum <= 0) {
-                return StringUtils.EMPTY;
-            }
-            if (null != this.sheet.getRow(rowNum)) {
-                Iterator<Cell> iterator = (Iterator<Cell>) this.sheet.getRow(rowNum);
-                while (iterator.hasNext()) {
-                    Cell headerCell = iterator.next();
-                    if (null != headerCell && headerCell.getStringCellValue().trim() == colName.trim()) {
-                        Cell targetCell = this.sheet.getRow(rowNum - 1).getCell(headerCell.getColumnIndex());
-                        cellValue = targetCell.getStringCellValue();
-                    }
-                }
-            }
+            Row headerRow = this.sheet.getRow(0);
+            Integer columnIndex = getColumnIndexByName(headerRow, colName);
+            cellValue =  getCellData(columnIndex, rowNum);
         } catch (Exception e) {
             log.info("No Matching data found in row " + rowNum + " and column " + colName);
         }
@@ -207,5 +197,16 @@ public class ExcelService {
             return;
         }
         log.error(String.format("No Worksheet -%s- found in Excel file: %s", this.xlSheet, this.xlPath));
+    }
+
+    private Integer getColumnIndexByName(Row headerRow, String columnName) {
+        int columnIndex = -1;
+        for (Cell cell : headerRow) {
+            if (cell.getStringCellValue().equals(columnName)) {
+                columnIndex = cell.getColumnIndex();
+                break;
+            }
+        }
+        return columnIndex;
     }
 }
