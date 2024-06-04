@@ -241,10 +241,10 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
         // Cost Outlier Identification Details
         genericCostOutlierReportGeneration(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName());
 
-        Double quotedCostThree = Double.parseDouble(genericHtmlResponse.getElementsByAttributeValue("colspan", "4").get(5).child(0).text());
-        Double aprioriCostThree = Double.parseDouble(genericHtmlResponse.getElementsByAttributeValue("colspan", "4").get(6).child(0).text());
+        double quotedCostThree = Double.parseDouble(genericHtmlResponse.getElementsByAttributeValue("colspan", "4").get(5).child(0).text());
+        double aprioriCostThree = Double.parseDouble(genericHtmlResponse.getElementsByAttributeValue("colspan", "4").get(6).child(0).text());
         String expectedPercentDifferenceCostThree = genericHtmlResponse.getElementsByAttributeValue("colspan", "2").get(16).child(0).text();
-        Double firstTwoSumsResultThree = (quotedCostThree - aprioriCostThree) * 100;
+        double firstTwoSumsResultThree = (quotedCostThree - aprioriCostThree) * 100;
         double thirdSumResultThree = firstTwoSumsResultThree / quotedCostThree;
 
         softAssertions.assertThat(Double.toString(thirdSumResultThree)).startsWith(expectedPercentDifferenceCostThree.substring(0, 3));
@@ -271,12 +271,12 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
         genericCostOutlierReportGeneration(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getReportName());
         ArrayList<Element> colSpanTwoElementList = genericHtmlResponse.getElementsByAttributeValue("colspan", "2");
 
-        Double annualVolumeTwo = Double.parseDouble(colSpanTwoElementList.get(122).child(0).text().replace(",", ""));
-        Double potentialSavingsTwo = Double.parseDouble(colSpanTwoElementList.get(123).child(0).text().substring(1, 5));
-        Double actualAnnualisedPotentialSavings = Double.parseDouble(colSpanTwoElementList.get(125).child(0).text().substring(1, 10).replace(",", ""));
-        Double expectedAnnualisedPotentialSavings = annualVolumeTwo * potentialSavingsTwo;
+        double annualVolumeTwo = Double.parseDouble(colSpanTwoElementList.get(122).child(0).text().replace(",", ""));
+        double potentialSavingsTwo = Double.parseDouble(colSpanTwoElementList.get(123).child(0).text().substring(1, 5));
+        double actualAnnualisedPotentialSavings = Double.parseDouble(colSpanTwoElementList.get(125).child(0).text().substring(1, 10).replace(",", ""));
+        double expectedAnnualisedPotentialSavings = annualVolumeTwo * potentialSavingsTwo;
 
-        softAssertions.assertThat(expectedAnnualisedPotentialSavings.toString()).startsWith(actualAnnualisedPotentialSavings.toString().substring(0, 2));
+        softAssertions.assertThat(Double.toString(expectedAnnualisedPotentialSavings)).startsWith(Double.toString(actualAnnualisedPotentialSavings).substring(0, 2));
         softAssertions.assertThat(areValuesAlmostEqual(expectedAnnualisedPotentialSavings, actualAnnualisedPotentialSavings)).isEqualTo(true);
 
         softAssertions.assertAll();
