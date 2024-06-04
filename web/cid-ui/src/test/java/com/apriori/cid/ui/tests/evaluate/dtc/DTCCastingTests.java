@@ -51,7 +51,7 @@ public class DTCCastingTests extends TestBaseUI {
     @TestRail(id = {6468, 6379, 6383, 6389, 6382, 6292})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_SAND);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -82,6 +82,8 @@ public class DTCCastingTests extends TestBaseUI {
 
         guidanceIssuesPage.selectIssueTypeGcd("Radius Issue", "Minimum Internal Edge Radius", "SharpEdge:38");
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Internal edge radius is less than the recommended internal edge radius for this material.");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -162,6 +164,7 @@ public class DTCCastingTests extends TestBaseUI {
 
         guidanceIssuesPage.selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:7");
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Part of this surface has a draft angle less than the recommended draft angle for this material.");
+
         softAssertions.assertAll();
     }
 
