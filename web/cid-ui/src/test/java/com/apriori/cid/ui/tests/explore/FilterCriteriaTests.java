@@ -402,7 +402,7 @@ public class FilterCriteriaTests extends TestBaseUI {
             .newFilter()
             .inputName(mixedFilter)
             .addCriteria(PropertyEnum.COST_MODE, OperationEnum.IN, "Simulate")
-            .addCriteria(PropertyEnum.COST_MODE, OperationEnum.IN, "Manual")
+            .includeCriteria(PropertyEnum.COST_MODE, "Manual")
             .save(FilterPage.class)
             .submit(ExplorePage.class);
 
