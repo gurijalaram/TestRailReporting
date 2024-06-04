@@ -13,13 +13,13 @@ import com.apriori.cas.api.models.response.SubLicenses;
 import com.apriori.cas.api.models.response.SublicenseAssociation;
 import com.apriori.cas.api.models.response.UserLicensing;
 import com.apriori.cas.api.utils.CasTestUtil;
-import com.apriori.cas.api.utils.Constants;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.User;
@@ -27,6 +27,7 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
@@ -35,6 +36,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -52,10 +54,19 @@ public class CasUserSubLicensesTests {
     private CasTestUtil casTestUtil = new CasTestUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
+    private String casLicense;
+    private String casExpiredLicense;
+    private String casApInternalLicense;
+    private String casMasterLicense;
 
+    @SneakyThrows
     @BeforeEach
     public void getToken() {
         RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+        casLicense = new String(FileResourceUtil.getResourceFileStream("CasLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
+        casExpiredLicense = new String(FileResourceUtil.getResourceFileStream("CasExpiredLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
+        casApInternalLicense = new String(FileResourceUtil.getResourceFileStream("CasApInternalLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
+        casMasterLicense = new String(FileResourceUtil.getResourceFileStream("CasMasterLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
     }
 
     @AfterEach
@@ -87,7 +98,7 @@ public class CasUserSubLicensesTests {
         setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(com.apriori.cas.api.utils.Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(casExpiredLicense, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
         LocalDate expireDate = licenseResponse.getResponseEntity().getSubLicenses().get(0).getExpiresAt();
@@ -106,7 +117,7 @@ public class CasUserSubLicensesTests {
         setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_MASTER_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(casMasterLicense, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
 
@@ -119,12 +130,12 @@ public class CasUserSubLicensesTests {
 
     @Test
     @TestRail(id = {10879})
-    @Description("Make sure users cannot be assigned to a masterLicense")
+    @Description("Make sure users cannot be assigned to aP Internal License")
     public void aprioriInternalLicense() {
         setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_APRIORI_INTERNAL_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(casApInternalLicense, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
 
@@ -142,7 +153,7 @@ public class CasUserSubLicensesTests {
         setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(casLicense, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
         ResponseWrapper<SubLicenses> subLicenses = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class, HttpStatus.SC_OK,
@@ -182,7 +193,7 @@ public class CasUserSubLicensesTests {
         setCustomerData();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(casLicense, customerIdentity, siteIdentity, customerName, siteId, subLicenseId);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
         ResponseWrapper<SubLicenses> subLicenses = casTestUtil.getCommonRequest(CASAPIEnum.SUBLICENSES_BY_LICENSE_ID, SubLicenses.class, HttpStatus.SC_OK,
