@@ -437,7 +437,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     public BulkCostingPage typeIntoSearchWorkSheetInput(String value) {
         pageUtils.waitForElementToBeClickable(searchBulkAnalysisInput);
         pageUtils.clearValueOfElement(searchBulkAnalysisInput);
-        searchBulkAnalysisInput.sendKeys(value);
+        pageUtils.setValueOfElement(searchBulkAnalysisInput, value);
         return this;
     }
 
@@ -472,6 +472,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
      */
     public String getTextFromTheFirstRow() {
         pageUtils.waitForElementsToAppear(rowsInTableBulkAnalysis);
+        pageUtils.waitFor(500);
         return rowsInTableBulkAnalysis.get(0).getText();
     }
 
