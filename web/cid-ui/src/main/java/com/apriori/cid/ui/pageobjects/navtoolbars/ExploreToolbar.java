@@ -29,11 +29,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -507,38 +504,28 @@ public class ExploreToolbar extends MainNavBar {
         String fileName = reportsData.getHeaders().get("Content-Disposition").getValue().split("=")[1].replace("\"", "");
 
         File file = new File(downloadPath + fileName);
-        log.info("All files in dir: {}", Arrays.toString(new File(downloadPath).listFiles()));
-        log.info("Current download path is: {}", downloadPath);
-        Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString();
-        log.info("Current absolute path is: {}", s);
-        log.info("This path of is: {}", Path.of("").toAbsolutePath());
-
-        new WebDriverWait(driver, Duration.ofSeconds(5))
-            .until(d -> !((HasDownloads) d).getDownloadableFiles().isEmpty());
-
-        String fileNameDownload = ((HasDownloads) driver).getDownloadableFiles().get(0);
-
-        Path targetLocation = null;
-        try {
-            targetLocation = Files.createTempDirectory("download");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            ((HasDownloads) driver).downloadFile(fileNameDownload, targetLocation);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            Thread.sleep(240000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        //file.deleteOnExit();
+        waitDownloadFile(downloadPath, fileName);
+        file.deleteOnExit();
 
         return file;
+    }
+
+    /**
+     * Instructs webdriver to wait for the file to download to the host then downloads (move) it to client.
+     *
+     * @param downloadPath - the path to store the file on the client machine
+     * @param filename     - the name of the downloaded file
+     */
+    public void waitDownloadFile(String downloadPath, String filename) {
+        new WebDriverWait(driver, Duration.ofSeconds(60))
+            .pollingEvery(Duration.ofMillis(500))
+            .until(d -> ((HasDownloads) d).getDownloadableFiles().contains(filename));
+
+        try {
+            ((HasDownloads) driver).downloadFile(filename, Path.of(downloadPath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
