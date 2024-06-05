@@ -34,7 +34,6 @@ public class TwoModelMachiningTests extends TestBaseUI {
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
     private SourceModelExplorePage sourceModelExplorePage;
-    private ScenarioTableController scenarioTableController;
 
     private GuidanceIssuesPage guidanceIssuesPage;
     private SoftAssertions softAssertions = new SoftAssertions();
