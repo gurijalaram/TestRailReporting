@@ -63,7 +63,7 @@ public class WatchpointReportTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    //@Test
+    @Test
     @Tag(SMOKE)
     @Issue("BA-2962")
     @TestRail(id = {28525, 28526})
