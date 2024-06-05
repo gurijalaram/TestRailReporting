@@ -518,13 +518,13 @@ public class ExploreToolbar extends MainNavBar {
     public File downloadFile(String downloadPath, String fileName) {
         File file = new File(System.getProperty("user.home") + File.separator + "downloads" + File.separator + fileName);
 
-//        if (driver instanceof RemoteWebDriver) {
+        //if (driver instanceof RemoteWebDriver) {
             new WebDriverWait(driver, Duration.ofSeconds(60))
                 .pollingEvery(Duration.ofMillis(500))
                 .until(d -> ((HasDownloads) d).getDownloadableFiles().contains(fileName));
 
             ((HasDownloads) driver).downloadFile(fileName, Path.of(downloadPath));
-//        }
+        //}
         FileUtils.forceDeleteOnExit(file);
 
         return file;
