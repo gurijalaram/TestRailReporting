@@ -70,6 +70,8 @@ public class ExploreToolbar extends MainNavBar {
     private WebElement publishButton;
     @FindBy(css = "[id='qa-sub-header-cost-button'] button")
     private WebElement costButton;
+    @FindBy(css = "[id='qa-sub-header-save-as-button'] button")
+    private WebElement saveButton;
     @FindBy(css = "[id='qa-action-bar-reports-dropdown'] .btn-secondary")
     private WebElement reportButton;
     @FindBy(id = "qa-action-bar-generate-report")
@@ -98,6 +100,16 @@ public class ExploreToolbar extends MainNavBar {
      */
     public <T> T clickCostButton(Class<T> klass) {
         pageUtils.waitForElementAndClick(costButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Clicks the save button
+     *
+     * @return current page object
+     */
+    public <T> T clickSaveButton(Class<T> klass) {
+        pageUtils.waitForElementAndClick(saveButton);
         return PageFactory.initElements(driver, klass);
     }
 

@@ -6,12 +6,14 @@ import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.ChangeSummaryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.SwitchCostModePage;
 import com.apriori.cid.ui.utils.CurrencyEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
+import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -59,6 +61,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
         softAssertions.assertThat(evaluatePage.isManualCostModeSelected()).as("Verify switch to manual mode").isTrue();
         softAssertions.assertThat(evaluatePage.isSaveAsButtonEnabled()).as("Verify Save button currently disabled").isFalse();
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNSAVED)).isEqualTo(true);
 
         evaluatePage.clickAPrioriModeButton()
             .clickCancel();
@@ -179,5 +182,22 @@ public class ManualCostingTests  extends TestBaseUI {
             .as("Verify Currency updates to that set in Preferences").contains(CurrencyEnum.EUR.getCurrency().split(" ")[0]);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {30102, 30104, 30105, 30107, 30108, 30109, 30110, 30111, 30112})
+    @Description("Verify Manually Costed Scenarios cannot be used in 2-Model Machining Source Model")
+    public void testManuallyCostedAs2MMSource() {
+        component = new ComponentRequestUtil().getComponent();
+
+        evaluatePage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .clickManualModeButtonWhileUncosted()
+            .enterPiecePartCost("42")
+            .enterTotalCapitalInvestment("316")
+            .clickCostButton()
+            .waitForCostLabelNotContain(NewCostingLabelEnum.SAVING_IN_PROGRESS, 2)
+            .publishScenario(PublishPage.class)
+            .publish(component, EvaluatePage.class);
     }
 }
