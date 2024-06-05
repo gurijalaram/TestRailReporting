@@ -506,7 +506,7 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @return string
      */
-    public String getUpdateTimestamp() {
+    public String getUpdatedTimestamp() {
         pageUtils.waitForElementsToNotAppear(refreshLabel);
         return lastUpdatedAlert.getText();
     }
