@@ -517,7 +517,7 @@ public class ExploreToolbar extends MainNavBar {
      */
     @SneakyThrows
     public File downloadFile(String downloadPath, String fileName) {
-        File file = new File(System.getProperty("user.home") + File.separator + "downloads"+ File.separator + fileName);
+        File file = new File(System.getProperty("user.home") + File.separator + "downloads" + File.separator + fileName);
 
         if (driver instanceof RemoteWebDriver) {
             new WebDriverWait(driver, Duration.ofSeconds(60))
