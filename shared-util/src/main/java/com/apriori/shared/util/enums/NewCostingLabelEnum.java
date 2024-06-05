@@ -16,7 +16,8 @@ public enum NewCostingLabelEnum {
     PROCESSING_UPDATE_CAD("Processing Update Cad File Action"),
     COSTING_FAILED("Costing Failed"),
     PROCESSING_CREATE_ACTION("Processing Create Action"),
-    PROCESSING_REPORT_ACTION("Processing Report Action");
+    PROCESSING_REPORT_ACTION("Processing Report Action"),
+    SAVING_IN_PROGRESS("Saving in Progress");
 
     private final String costingText;
 

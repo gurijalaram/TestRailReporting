@@ -7,12 +7,15 @@ import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.ChangeSummaryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
+import com.apriori.cid.ui.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.cid.ui.pageobjects.navtoolbars.SwitchCostModePage;
 import com.apriori.cid.ui.utils.CurrencyEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
+import com.apriori.shared.util.enums.MaterialNameEnum;
+import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.componentiteration.ComponentIteration;
@@ -61,12 +64,12 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.isManualCostModeSelected()).as("Verify switch to manual mode").isTrue();
         softAssertions.assertThat(evaluatePage.isSaveButtonEnabled()).as("Verify Save button currently disabled").isFalse();
 
-        evaluatePage.clickAPrioriModeButton()
+        evaluatePage.clickSimulateModeButton()
             .clickCancel();
 
         softAssertions.assertThat(evaluatePage.isManualCostModeSelected()).as("Verify cancel returns to manual mode").isTrue();
 
-        switchCostModePage = evaluatePage.clickAPrioriModeButton();
+        switchCostModePage = evaluatePage.clickSimulateModeButton();
 
         softAssertions.assertThat(switchCostModePage.continueButtonText())
             .as("Verify Continue to aPriori Mode button text").isEqualTo("CONTINUE TO APRIORI MODE");
@@ -81,7 +84,7 @@ public class ManualCostingTests  extends TestBaseUI {
             .as("Verify Continue to aPriori Mode button text").isEqualTo("CONTINUE TO MANUAL MODE");
 
         evaluatePage = switchCostModePage.clickContinue()
-                .clickAPrioriModeButton()
+                .clickSimulateModeButton()
                 .clickContinue();
 
         softAssertions.assertThat(evaluatePage.getAnnualVolume()).as("Verify uncosted changes not retained").isNotEqualTo("5501");
@@ -198,11 +201,62 @@ public class ManualCostingTests  extends TestBaseUI {
             .clickSaveButton();
 
         ResponseWrapper<ComponentIteration> results = iterationsUtil.getComponentIterationLatest(component);
-        softAssertions.assertThat(results.getResponseEntity().getAnalysisOfScenario().getPieceCost())
-            .as("Verify that default value for Piece Part Cost saves as 0").isEqualTo(0.00);
-        softAssertions.assertThat(results.getResponseEntity().getAnalysisOfScenario().getCapitalInvestment())
-            .as("Verify that default value for Total Capital Investment saves as 0").isEqualTo(0.00);
+        softAssertions.assertThat(evaluatePage.getPiecePartCost())
+                .as("Verify default value for Piece Part Cost is an empty field").isEqualTo("");
+        softAssertions.assertThat(results.getResponseEntity().getCostingInput().getCostRollupOverrides().getPiecePartCost())
+            .as("Verify that default value for Piece Part Cost saves as 0.0").isEqualTo(null);
+        softAssertions.assertThat(evaluatePage.getPiecePartCost())
+            .as("Verify default value for Total Capital Investment is an empty field").isEqualTo("");
+        softAssertions.assertThat(results.getResponseEntity().getCostingInput().getCostRollupOverrides().getTotalCapitalInvestment())
+            .as("Verify that default value for Total Capital Investment saves as 0.0").isEqualTo(null);
+
+        evaluatePage.enterPiecePartCost("15.98")
+            .enterTotalCapitalInvestment("480.31")
+            .clickSaveButton();
+
+        results = iterationsUtil.getComponentIterationLatest(component);
+        softAssertions.assertThat(evaluatePage.getPiecePartCost())
+            .as("Verify value for Piece Part Cost is as set").isEqualTo("15.98");
+        softAssertions.assertThat(results.getResponseEntity().getCostingInput().getCostRollupOverrides().getPiecePartCost())
+            .as("Verify that value for Piece Part Cost saved").isEqualTo(15.98);
+        softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment())
+            .as("Verify value for Total Capital Investment is as set").isEqualTo("480.31");
+        softAssertions.assertThat(results.getResponseEntity().getCostingInput().getCostRollupOverrides().getTotalCapitalInvestment())
+            .as("Verify that value for Total Capital Investment saved").isEqualTo(480.31);
+
+        evaluatePage.clickSimulateModeButton()
+            .clickContinue()
+            .openMaterialSelectorTable()
+            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName())
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .expandSecondaryProcessTree("Anodize, Anodizing Tank")
+            .selectSecondaryProcess("Anodize:Anodize Type I")
+            .submit(EvaluateToolbar.class)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).as("Verify Cost Failed as expected").isTrue();
+
+        evaluatePage.clickManualModeButton()
+            .clickContinue()
+            .enterPiecePartCost("10.99")
+            .enterTotalCapitalInvestment("103.97")
+            .clickSaveButton();
+
+        softAssertions.assertThat(evaluatePage.getPiecePartCost())
+            .as("Verify value for Piece Part Cost is as set").isEqualTo("10.99");
+        softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment())
+            .as("Verify value for Total Capital Investment is as set").isEqualTo("103.97");
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {})
+    @Description("Verify status tile messages while in Manual Cost Mode")
+    public void testStatusTileForManual() {
+        component = new ComponentRequestUtil().getComponent();
     }
 }

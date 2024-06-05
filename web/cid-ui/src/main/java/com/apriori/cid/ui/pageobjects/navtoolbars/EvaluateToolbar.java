@@ -126,6 +126,17 @@ public class EvaluateToolbar extends ExploreToolbar {
 
     /**
      * Method to check cost label is in correct state
+     */
+    public void waitForSaveLabel(int timeoutInMinutes) {
+        By costingDialog = By.cssSelector("[role='dialog'] .dialog-title");
+
+        pageUtils.waitForElementToAppear(costingDialog);
+        pageUtils.waitForElementsToNotAppear(costingDialog);
+        pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", NewCostingLabelEnum.SAVING_IN_PROGRESS.getCostingText())), timeoutInMinutes);
+    }
+
+    /**
+     * Method to check cost label is in correct state
      *
      * @param costLabel        - the cost label type
      * @param timeoutInMinutes - time out in minutes
@@ -192,11 +203,11 @@ public class EvaluateToolbar extends ExploreToolbar {
     }
 
     /**
-     * Select 'aPriori' Cost Mode
+     * Select 'Simulate' Cost Mode
      *
      * @return - New EvaluatePage PO
      */
-    public SwitchCostModePage clickAPrioriModeButton() {
+    public SwitchCostModePage clickSimulateModeButton() {
         pageUtils.waitForElementAndClick(aprioriCostModeButton);
         return new SwitchCostModePage(driver);
     }
@@ -268,6 +279,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      */
     public EvaluatePage clickSaveButton() {
         pageUtils.waitForElementAndClick(saveAsButton);
+        waitForSaveLabel(2);
         return new EvaluatePage(driver);
     }
 
