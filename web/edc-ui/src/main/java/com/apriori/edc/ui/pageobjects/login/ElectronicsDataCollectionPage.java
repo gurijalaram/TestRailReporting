@@ -1,8 +1,9 @@
 package com.apriori.edc.ui.pageobjects.login;
 
+import static com.apriori.shared.util.testconfig.TestBaseUI.homeDownloadPath;
+
 import com.apriori.edc.ui.pageobjects.navtoolbars.NavigationBar;
 import com.apriori.edc.ui.utils.RightClickOptionEnum;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -11,7 +12,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 @Slf4j
 public class ElectronicsDataCollectionPage extends NavigationBar {
@@ -119,15 +119,12 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
      * @return String - BOM ID
      */
 
-    public String rightClickOnFirstBomAndChooseOption(RightClickOptionEnum option) {
-        String downloadPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
+    public File rightClickOnFirstBomAndChooseOption(RightClickOptionEnum option) {
         getPageUtils().rightClick(getPageUtils().waitForElementToAppear(firstBOMOnTheList));
 
         WebElement  firstDivElement = getDriver().findElement(By.xpath("//div[@class = 'panel-body']/div[1]"));
         WebElement  firstLinkElement = getDriver().findElement(By.xpath("//div[@class = 'panel-body']/a[1]"));
         String bomID = firstLinkElement.getAttribute("id");
-        String filePath = downloadPath + bomID + ".csv";
-        FileResourceUtil.deleteFileWhenAppears(Paths.get(filePath),1);
         By optionXpath = By.xpath(String.format("//span[contains(.,'%s')]", option.getOption()));
         WebElement optionChosen = firstDivElement.findElement(optionXpath);
 
@@ -135,6 +132,6 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
         if (option.equals(RightClickOptionEnum.DELETE)) {
             getPageUtils().waitForElementToAppear(deleteButton).click();
         }
-        return bomID;
+        return getPageUtils().downloadFile(homeDownloadPath, bomID +  ".csv");
     }
 }

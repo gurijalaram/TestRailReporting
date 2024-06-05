@@ -1632,14 +1632,22 @@ public class PageUtils {
     @SneakyThrows
     public File downloadFile(String downloadPath, String fileName) {
         File file = new File(downloadPath + fileName);
+        long initialTime = System.currentTimeMillis() / 1000;
+        final int waitTimeInSec = 30;
+        final int pollingTime = 100;
 
         if (!testMode.equals(TestMode.QA_LOCAL)) {
-            new WebDriverWait(driver, Duration.ofSeconds(60))
-                .pollingEvery(Duration.ofMillis(500))
+            new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
+                .pollingEvery(Duration.ofMillis(pollingTime))
                 .until(d -> ((HasDownloads) d).getDownloadableFiles().contains(fileName));
 
             ((HasDownloads) driver).downloadFile(fileName, Path.of(downloadPath));
+        } else {
+            do {
+                Thread.sleep(pollingTime);
+            } while (((System.currentTimeMillis() / 1000) - initialTime) < waitTimeInSec && !file.exists());
         }
+
         file.deleteOnExit();
 
         return file;
