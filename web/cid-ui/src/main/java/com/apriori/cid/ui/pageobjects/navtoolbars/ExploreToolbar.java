@@ -25,7 +25,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.HasDownloads;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -519,13 +518,13 @@ public class ExploreToolbar extends MainNavBar {
     public File downloadFile(String downloadPath, String fileName) {
         File file = new File(System.getProperty("user.home") + File.separator + "downloads" + File.separator + fileName);
 
-        if (driver instanceof RemoteWebDriver) {
+//        if (driver instanceof RemoteWebDriver) {
             new WebDriverWait(driver, Duration.ofSeconds(60))
                 .pollingEvery(Duration.ofMillis(500))
                 .until(d -> ((HasDownloads) d).getDownloadableFiles().contains(fileName));
 
             ((HasDownloads) driver).downloadFile(fileName, Path.of(downloadPath));
-        }
+//        }
         FileUtils.forceDeleteOnExit(file);
 
         return file;
