@@ -18,17 +18,19 @@ import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.web.app.util.PageUtils;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.HasDownloads;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.List;
@@ -503,29 +505,30 @@ public class ExploreToolbar extends MainNavBar {
         ResponseWrapper<String> reportsData = new ScenariosUtil().getReports("CP5PXIQIT2GX", "D0QOZ1YHQJZO", componentInfo.getUser());
         String fileName = reportsData.getHeaders().get("Content-Disposition").getValue().split("=")[1].replace("\"", "");
 
-        File file = new File(downloadPath + fileName);
-        waitDownloadFile(downloadPath, fileName);
-        file.deleteOnExit();
-
-        return file;
+        return downloadFile(downloadPath, fileName);
     }
 
     /**
      * Instructs webdriver to wait for the file to download to the host then downloads (move) it to client.
+     * This method also checks if driver is an instance of RemoteDriver to see what operation is to be carried out.
      *
      * @param downloadPath - the path to store the file on the client machine
-     * @param filename     - the name of the downloaded file
+     * @param fileName     - the name of the downloaded file
      */
-    public void waitDownloadFile(String downloadPath, String filename) {
-        new WebDriverWait(driver, Duration.ofSeconds(60))
-            .pollingEvery(Duration.ofMillis(500))
-            .until(d -> ((HasDownloads) d).getDownloadableFiles().contains(filename));
+    @SneakyThrows
+    public File downloadFile(String downloadPath, String fileName) {
+        File file = new File(System.getProperty("user.home") + File.separator + "downloads"+ File.separator + fileName);
 
-        try {
-            ((HasDownloads) driver).downloadFile(filename, Path.of(downloadPath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (driver instanceof RemoteWebDriver) {
+            new WebDriverWait(driver, Duration.ofSeconds(60))
+                .pollingEvery(Duration.ofMillis(500))
+                .until(d -> ((HasDownloads) d).getDownloadableFiles().contains(fileName));
+
+            ((HasDownloads) driver).downloadFile(fileName, Path.of(downloadPath));
         }
+        FileUtils.forceDeleteOnExit(file);
+
+        return file;
     }
 
     /**
