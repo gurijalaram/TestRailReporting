@@ -58,10 +58,9 @@ public class PartNestingTests extends TestBaseUI {
             .closePanel()
             .costScenario()
             .openMaterialProcess()
-            .openPartNestingTab()
-            .selectUtilizationModeDropDown("Rectangular Nesting");
+            .openPartNestingTab();
 
-        softAssertions.assertThat(partNestingPage.getUtilizationMode()).isEqualTo("Machine Default");
+        softAssertions.assertThat(partNestingPage.getUtilizationMode()).isEqualTo("Rectangular Nesting");
 
         softAssertions.assertAll();
     }
