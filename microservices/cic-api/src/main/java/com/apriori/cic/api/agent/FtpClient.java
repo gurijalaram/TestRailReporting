@@ -58,7 +58,7 @@ public class FtpClient {
     public FtpClient() {
         agentCredentials = new AgentCredentials().getAgentCredentials();
         agentPort = CicApiTestUtil.getAgentPortData();
-        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(RolesEnum.APRIORI_DESIGNER);
+        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(RolesEnum.APRIORI_DEVELOPER);
         createRemoteSession();
         getSftpConnection();
     }
