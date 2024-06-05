@@ -44,8 +44,7 @@ public class WatchpointReportTests extends TestBaseUI {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
-            .navigateToScenario("https://ci-design.na-1.qa-test.apriori.net/components/CP5PXIQIT2GX/scenarios/D0QOZ1YHQJZO")
-            /*.uploadComponentAndOpen(component)
+            .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .costScenario();
 
@@ -56,7 +55,7 @@ public class WatchpointReportTests extends TestBaseUI {
 
         evaluatePage.clickReportDropdown()
             .generateReport(EvaluatePage.class)
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3)*/
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_REPORT_ACTION, 3)
             .downloadReport(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.getDownloadedReport(component).length()).isGreaterThan(0);
