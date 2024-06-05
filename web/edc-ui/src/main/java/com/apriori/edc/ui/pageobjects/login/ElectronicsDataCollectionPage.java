@@ -116,7 +116,7 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
     /**
      * right click on first BOM on the list and choose one option
      *
-     * @return String - BOM ID
+     * @return File
      */
 
     public File rightClickOnFirstBomAndChooseOption(RightClickOptionEnum option) {
