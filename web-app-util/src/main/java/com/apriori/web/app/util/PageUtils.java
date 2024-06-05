@@ -1,6 +1,6 @@
 package com.apriori.web.app.util;
 
-import static com.apriori.shared.util.webdriver.DriverFactory.getTestMode;
+import static com.apriori.shared.util.webdriver.DriverFactory.testMode;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
@@ -16,7 +16,6 @@ import com.apriori.shared.util.http.utils.Obligation;
 import com.apriori.shared.util.testconfig.TestMode;
 
 import lombok.SneakyThrows;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -1628,14 +1627,14 @@ public class PageUtils {
     public File downloadFile(String downloadPath, String fileName) {
         File file = new File(downloadPath + fileName);
 
-        if (!getTestMode().equals(TestMode.QA_LOCAL)) {
+        if (!testMode.equals(TestMode.QA_LOCAL)) {
             new WebDriverWait(driver, Duration.ofSeconds(60))
                 .pollingEvery(Duration.ofMillis(500))
                 .until(d -> ((HasDownloads) d).getDownloadableFiles().contains(fileName));
 
             ((HasDownloads) driver).downloadFile(fileName, Path.of(downloadPath));
         }
-        FileUtils.forceDeleteOnExit(file);
+        file.deleteOnExit();
 
         return file;
     }
