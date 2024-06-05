@@ -276,7 +276,7 @@ public abstract class SDSTestUtil extends TestUtil {
         ResponseWrapper<Customers> customersResponse = HTTPRequest.build(
             requestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customers.class)
                 .token(testingUser.getToken())
-                .queryParams(new QueryParams().use("cloudReference[EQ]", PropertiesContext.get("${customer}.cloud_reference_name")))
+                .queryParams(new QueryParams().use("cloudReference[EQ]", PropertiesContext.get("customer")))
         ).get();
 
         Customer customer = customersResponse.getResponseEntity().getItems().get(0);
