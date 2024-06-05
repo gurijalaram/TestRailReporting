@@ -1,5 +1,7 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
+
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -21,6 +23,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -63,6 +66,7 @@ public class UpdateCADFileTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10903, 10961, 12032})
     @Description("Validate Update CAD file for an assembly scenario then update CAD file via Components Table for missing sub-component")
     public void updateAssemblyCADFileTest() {
@@ -131,6 +135,7 @@ public class UpdateCADFileTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10928, 10929, 10933, 11967})
     @Description("Verify enabled/disabled behaviour of Update CAD button in Assembly Explorer Table")
     public void verifyUpdateCADButtonAsmExplorerTableTest() {
@@ -161,6 +166,7 @@ public class UpdateCADFileTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 11965)
     @Description("Validate updating of CAD file for the sub-component of a sub-assembly via components table.")
     public void updateSubAssemblyCADFilesFromComponentTableTest() {
@@ -229,6 +235,7 @@ public class UpdateCADFileTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10908, 10909, 12131})
     @Description("Validate updating sub-assembly and sub-component CAD files by opening new tab from Components Table.")
     public void updateSubComponentCADFileTest() {

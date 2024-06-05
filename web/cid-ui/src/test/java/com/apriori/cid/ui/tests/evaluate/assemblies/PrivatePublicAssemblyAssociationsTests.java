@@ -1,6 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -134,7 +134,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {21707, 21708, 21709, 21710, 11955, 11958, 6600})
     @Description("Validate assembly association priority for Default strategy")
     public void testDefaultAssemblyAssociationsWorkflow() {
@@ -189,7 +189,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {21699, 21701, 21702, 21703})
     @Description("Validate assembly association priority for Prefer Private strategy")
     public void testPreferPrivateAssemblyAssociationsWorkflow() {
@@ -251,7 +251,7 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {21700, 21704, 21705, 21706})
     @Description("Validate assembly association priority for Prefer Public strategy")
     public void testPreferPublicAssemblyAssociationsWorkflow() {

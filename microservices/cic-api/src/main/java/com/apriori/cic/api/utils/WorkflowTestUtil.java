@@ -436,6 +436,24 @@ public class WorkflowTestUtil extends CicUtil {
     }
 
     /**
+     * verify data in pdf document
+     *
+     * @param pdfDocument        - PDFDocument
+     * @param expectedPdfContent - expected pdf content
+     * @return Boolean
+     */
+    public Boolean verifyPdfDocumentContent(PDFDocument pdfDocument, List<String> expectedPdfContent) {
+        String pdfContent = pdfDocument.getDocumentContents();
+        return expectedPdfContent.stream()
+            .peek(item -> {
+                if (!pdfContent.contains(item)) {
+                    log.debug(String.format("ACTUAL Email content : (%s) <=> EXPECTED Content  : (%s)", pdfContent, item));
+                }
+            })
+            .allMatch(pdfContent::contains);
+    }
+
+    /**
      * verify Email Body Content
      *
      * @param emailMessage EmailMessage object

@@ -1,7 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -31,7 +30,6 @@ import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
@@ -71,7 +69,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
     @Test
     @Issue("APD-2431")
-    @Tag(SMOKE)
+    @Tag(ASSEMBLY)
     @TestRail(id = 10768)
     @Description("Shallow Publish assembly and scenarios costed in CI Design")
     public void testShallowPublishCostedCID() {
@@ -107,7 +105,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
-    @Tag(SMOKE)
+    @Tag(ASSEMBLY)
     @TestRail(id = {10799, 6076, 6515})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testShallowEditCostedCID() {
@@ -136,6 +134,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10801})
     @Description("Retain the Status/Cost Maturity/Assignee/Lock during a Shallow Edit")
     public void testShallowEditRetainStatus() {
@@ -170,6 +169,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10802, 10803, 10835, 6613})
     @Description("Modify the Status/Cost Maturity/Lock after a Shallow Edit and ensure subcomponents are associated")
     public void testShallowEditModifyStatusCheckAssociationSmallSetSubcomponents() {
@@ -211,7 +211,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
-    @Tag(SMOKE)
+    @Tag(ASSEMBLY)
     @TestRail(id = {10804, 6733, 6594})
     @Description("Shallow Edit keeps original assembly intact on Public Workspace")
     public void testShallowEditCheckDuplicate() {
@@ -238,7 +238,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {10806, 10807, 10809, 6614})
     @Description("Shallow Edited assemblies and scenarios can be published into Public Workspace and can also add notes and lock/unlock scenario")
     public void testShallowEditPublishPublicWorkspaceLockNotes() {
@@ -287,6 +287,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
     @Disabled("A unique assembly is needed to do this and then some post steps to delete this unique assembly and subcomponents")
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10836, 10811})
     @Description("Shallow Edit an assembly with larger set of sub-components ")
     public void testUploadCostPublishAssemblyLargeSetSubcomponents() {
@@ -301,19 +302,19 @@ public class EditAssembliesTest extends TestBaseUI {
             .publishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsTablePage = loginPage.login(componentAssembly.getUser())
+        componentsTreePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
-            .openComponents()
-            .selectTableView();
+            .openComponents();
 
         componentAssembly.getSubComponents().forEach(subcomponent ->
-            softAssertions.assertThat(componentsTablePage.getListOfSubcomponents()).as("Verify subcomponents displayed")
+            softAssertions.assertThat(componentsTreePage.getListOfSubcomponents()).as("Verify subcomponents displayed")
                 .contains(subcomponent.getComponentName().toUpperCase()));
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10810, 11904})
     @Description("Shallow Edit assembly and scenarios that was uncosted in CI Design")
     public void testUploadUncostedAssemblySubcomponentOverride() {
@@ -343,7 +344,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {10813, 10815, 11032})
     @Description("Attempt to Shallow Edit over existing Private locked scenarios and renaming")
     public void testShallowEditPrivateLockedRename() {
@@ -387,6 +388,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10814, 6596, 6046})
     @Description("Shallow Edit over existing Private scenarios with override")
     public void testShallowEditPrivateOverride() {
@@ -416,6 +418,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @Issue("BA-2965")
     @TestRail(id = {10895, 10897})
     @Description("Edit public sub-component with Private counterpart (Override)")
@@ -462,6 +465,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10896, 10898, 5619, 5428})
     @Description("Edit public sub-component with Private counterpart (Override)")
     public void testEditPublicAndRenamePrivateSubcomponent() {
@@ -499,6 +503,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10899)
     @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Override)")
     public void testEditPublicSubcomponentsMixedWithPrivateThenOverride() {
@@ -543,6 +548,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10900)
     @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Rename)")
     public void testEditPublicSubcomponentsMixedWithPrivateThenRename() {
@@ -584,6 +590,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 11142)
     @Description("Validate an error message appears if any issues occur")
     public void testEditWithExistingPrivateScenarioName() {
@@ -623,6 +630,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 10810)
     @Description("Shallow Edit an assembly with uncosted scenarios")
     public void testShallowEditCostedAssemblyWithUncostedSubComponents() {
@@ -661,6 +669,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {12040, 11954, 6521, 10874, 11027})
     @Description("Validate I can switch between public sub components when private iteration is deleted")
     public void testSwitchingPublicSubcomponentsWithDeletedPrivateIteration() {
@@ -731,6 +740,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @Issue("BA-2965")
     @TestRail(id = {12037})
     @Description("Validate I can switch between public sub components")
@@ -797,6 +807,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11133, 11141})
     @Description("Validate the edit button will only be enabled when top level sub components are selected")
     public void testEditButtonSubAssembly() {
@@ -830,6 +841,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 6595)
     @Description("Validate that ONLY the selected assembly scenario is copied to the private workspace and not the components within it")
     public void testEditPublicAssembly() {
@@ -865,6 +877,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {6601, 6602, 11869, 12022, 12023, 6522})
     @Description("Validate user can open a public component from a private workspace")
     public void testOpeningPublicComponentFromPrivateWorkspace() {
@@ -916,6 +929,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11960})
     @Description("Validate a private sub component will take preference over a public iteration when editing a public assembly")
     public void testEditPublicAssemblyAssociationsPrivatePreference() {
@@ -968,6 +982,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11961, 11956})
     @Description("Validate a new private sub component will take preference over a public iteration when editing a public assembly")
     public void testEditPublicAssemblyAssociationsPrivateNewScenarioPreferenceAndDelete() {
@@ -1042,6 +1057,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10843})
     @Description("Validate assembly explorer table updates when sub-components changed")
     public void testAssemblyExplorerTableUpdates() {
@@ -1109,6 +1125,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10860, 21552})
     @Description("Validate 'missing' scenario created if sub-component deleted'")
     public void testMissingSubComponentOnDeletion() {

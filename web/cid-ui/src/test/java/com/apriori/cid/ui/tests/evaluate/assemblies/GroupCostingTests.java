@@ -1,5 +1,7 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
+
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
@@ -16,6 +18,7 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Percentage;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -39,6 +42,7 @@ public class GroupCostingTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11088, 11089, 11093, 12041})
     @Description("Verify set inputs button only available for 10 or less sub-components")
     public void selectMaxTenSubComponentsTest() {
@@ -79,6 +83,7 @@ public class GroupCostingTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11097, 11090, 11092, 11094, 11091})
     @Description("Verify sub-components are group costed successfully.")
     public void groupCostSubComponentsTest() {

@@ -1,6 +1,5 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.CustomerEnum.AP_INT;
 import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
@@ -19,11 +18,11 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-@EnabledIfSystemProperty(named = "customer", matches = AP_INT)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasConfigurationsTests extends TestUtil {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();

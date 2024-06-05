@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
@@ -64,7 +65,7 @@ public class WatchpointReportTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(SMOKE)
+    @Tag(ASSEMBLY)
     @Issue("BA-2962")
     @TestRail(id = {28525, 28526})
     @Description("Generate and download a Assembly Cost Report")

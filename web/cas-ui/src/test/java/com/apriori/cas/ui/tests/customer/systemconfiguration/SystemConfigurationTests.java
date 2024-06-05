@@ -8,6 +8,7 @@ import com.apriori.cas.ui.pageobjects.customer.systemconfiguration.SystemConfigu
 import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
@@ -27,7 +28,6 @@ public class SystemConfigurationTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
-
         systemConfigurationPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
             .openAprioriInternal()
@@ -39,7 +39,7 @@ public class SystemConfigurationTests extends TestBaseUI {
     @Description("Validate aPriori Internal Site and deployment can be selected in dropdown on System Configuration page")
     public void validateSelectSiteAndDeployment() {
         cdsTestUtil = new CdsTestUtil();
-        aprioriInternal = cdsTestUtil.getAprioriInternal();
+        aprioriInternal = CustomerUtil.getCustomerData();
         String customerIdentity = aprioriInternal.getIdentity();
         ResponseWrapper<Sites> aprioriInternalSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customerIdentity);
         String internalSiteName = aprioriInternalSites.getResponseEntity().getItems().get(0).getName();

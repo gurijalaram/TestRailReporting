@@ -16,6 +16,11 @@
       "processGroup": "SHEET_METAL"
     },
     {
+      "componentName": "HoleProximityTest",
+      "extension": ".SLDPRT",
+      "processGroup": "SHEET_METAL"
+    },
+    {
       "componentName": "extremebends",
       "extension": ".prt.1",
       "processGroup": "SHEET_METAL"
@@ -409,6 +414,11 @@
       "componentName": "sheet_plastic",
       "extension": ".STEP",
       "processGroup": "SHEET_PLASTIC"
+    },
+    {
+      "componentName": "ap_blow_molding_excerise_EL0000",
+      "extension": ".STEP",
+      "processGroup": "FORGING"
     },
     {
       "componentName": "Hydroforming",

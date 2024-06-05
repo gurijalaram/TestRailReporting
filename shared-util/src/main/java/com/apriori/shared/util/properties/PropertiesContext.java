@@ -1,5 +1,7 @@
 package com.apriori.shared.util.properties;
 
+import static com.apriori.shared.util.enums.CustomerEnum.AP_INT;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -176,5 +178,14 @@ public class PropertiesContext {
         propertyName = propertyName.replace(".", "/");
 
         return StringUtils.startsWith(propertyName, "/") ? propertyName : "/" + propertyName;
+    }
+
+    /**
+     * Check to see if customer is apriori-internal
+     *
+     * @return - true/false
+     */
+    static boolean isAPCustomer() {
+        return PropertiesContext.get("customer").equals(AP_INT.getCustomer());
     }
 }
