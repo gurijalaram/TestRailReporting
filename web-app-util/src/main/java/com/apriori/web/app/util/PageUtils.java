@@ -632,7 +632,7 @@ public class PageUtils {
     public WebElement waitForElementToAppear(WebElement element) {
         long webDriverWait = 5L;
         int retries = 0;
-        int maxRetries = 12;
+        int maxRetries = 36;
         Exception ex;
 
         while (retries < maxRetries) {
