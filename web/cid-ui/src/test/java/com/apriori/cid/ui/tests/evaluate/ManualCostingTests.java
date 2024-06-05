@@ -1,6 +1,7 @@
 package com.apriori.cid.ui.tests.evaluate;
 
 import com.apriori.cid.api.utils.ComponentsUtil;
+import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.ChangeSummaryPage;
@@ -12,25 +13,25 @@ import com.apriori.cid.ui.utils.StatusIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.component.componentiteration.ComponentIteration;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 public class ManualCostingTests  extends TestBaseUI {
 
-    private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private SwitchCostModePage switchCostModePage;
 
     private static ScenariosUtil scenariosUtil = new ScenariosUtil();
     private static ComponentsUtil componentsUtil = new ComponentsUtil();
+    private static IterationsUtil iterationsUtil = new IterationsUtil();
     private SoftAssertions softAssertions = new SoftAssertions();
 
     private ComponentInfoBuilder component;
@@ -58,7 +59,7 @@ public class ManualCostingTests  extends TestBaseUI {
             .enterTotalCapitalInvestment("316");
 
         softAssertions.assertThat(evaluatePage.isManualCostModeSelected()).as("Verify switch to manual mode").isTrue();
-        softAssertions.assertThat(evaluatePage.isSaveAsButtonEnabled()).as("Verify Save button currently disabled").isFalse();
+        softAssertions.assertThat(evaluatePage.isSaveButtonEnabled()).as("Verify Save button currently disabled").isFalse();
 
         evaluatePage.clickAPrioriModeButton()
             .clickCancel();
@@ -177,6 +178,30 @@ public class ManualCostingTests  extends TestBaseUI {
 
         softAssertions.assertThat(evaluatePage.getPiecePartCostLabelText())
             .as("Verify Currency updates to that set in Preferences").contains(CurrencyEnum.EUR.getCurrency().split(" ")[0]);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {31058, 31059, 31060, 31062, 31064})
+    @Description("Test Scenario can be Manually Costed via UI")
+    public void testPerformManualCost() {
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        componentsUtil.postComponent(component);
+        scenariosUtil.postCostScenario(component);
+
+        evaluatePage = new CidAppLoginPage(driver).login(component.getUser())
+            .openScenario(component.getComponentName(), component.getScenarioName());
+
+        evaluatePage.clickManualModeButton()
+            .clickContinue()
+            .clickSaveButton();
+
+        ResponseWrapper<ComponentIteration> results = iterationsUtil.getComponentIterationLatest(component);
+        softAssertions.assertThat(results.getResponseEntity().getAnalysisOfScenario().getPieceCost())
+            .as("Verify that default value for Piece Part Cost saves as 0").isEqualTo(0.00);
+        softAssertions.assertThat(results.getResponseEntity().getAnalysisOfScenario().getCapitalInvestment())
+            .as("Verify that default value for Total Capital Investment saves as 0").isEqualTo(0.00);
 
         softAssertions.assertAll();
     }

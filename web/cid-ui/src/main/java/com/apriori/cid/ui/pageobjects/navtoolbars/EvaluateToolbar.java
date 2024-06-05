@@ -256,7 +256,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      *
      * @return - Boolean of Manual Costing Save As button enabled state
      */
-    public Boolean isSaveAsButtonEnabled() {
+    public Boolean isSaveButtonEnabled() {
         pageUtils.waitForElementToAppear(saveAsButton);
         return saveAsButton.isEnabled();
     }
@@ -266,7 +266,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      *
      * @return - New Evaluate Page
      */
-    public EvaluatePage clickSaveAsButton() {
+    public EvaluatePage clickSaveButton() {
         pageUtils.waitForElementAndClick(saveAsButton);
         return new EvaluatePage(driver);
     }
