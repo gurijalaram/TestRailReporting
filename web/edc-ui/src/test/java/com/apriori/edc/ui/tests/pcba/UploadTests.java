@@ -139,7 +139,7 @@ public class UploadTests extends TestBaseUI {
 
         String bomIdName =
             electronicsDataCollectionPage.rightClickOnFirstBomAndChooseOption(RightClickOptionEnum.EXPORT);
-        String filePath = downloadPath + bomIdName + ".csv";
+        String filePath = dirDownloadPath + bomIdName + ".csv";
 
         softAssertions.assertThat(FileResourceUtil.deleteFileWhenAppears(Paths.get(filePath), 3)).isTrue();
         softAssertions.assertAll();
