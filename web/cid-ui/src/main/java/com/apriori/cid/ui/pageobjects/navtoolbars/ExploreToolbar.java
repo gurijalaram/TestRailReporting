@@ -1,7 +1,5 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
-import static com.apriori.shared.util.testconfig.TestBaseUI.downloadPath;
-
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.compare.CreateComparePage;
@@ -503,6 +501,7 @@ public class ExploreToolbar extends MainNavBar {
     public File getDownloadedReport(ComponentInfoBuilder componentInfo) {
         ResponseWrapper<String> reportsData = new ScenariosUtil().getReports("CP5PXIQIT2GX", "D0QOZ1YHQJZO", componentInfo.getUser());
         String fileName = reportsData.getHeaders().get("Content-Disposition").getValue().split("=")[1].replace("\"", "");
+        String downloadPath = System.getProperty("user.home") + File.separator + "downloads" + File.separator;
 
         return downloadFile(downloadPath, fileName);
     }
@@ -516,7 +515,7 @@ public class ExploreToolbar extends MainNavBar {
      */
     @SneakyThrows
     public File downloadFile(String downloadPath, String fileName) {
-        File file = new File(System.getProperty("user.home") + File.separator + "downloads" + File.separator + fileName);
+        File file = new File(downloadPath + fileName);
 
         new WebDriverWait(driver, Duration.ofSeconds(60))
             .pollingEvery(Duration.ofMillis(500))
