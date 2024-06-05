@@ -131,7 +131,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      */
     private void collapseDropdowns() {
         driver.findElements(By.cssSelector("[role='cell'] .expanded"))
-            .forEach(WebElement::click);
+            .forEach(dropdown -> pageUtils.waitForElementAndClick(dropdown));
     }
 
     /**
