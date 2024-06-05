@@ -1,5 +1,7 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
+import static com.apriori.shared.util.testconfig.TestBaseUI.homeDownloadPath;
+
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.compare.CreateComparePage;
@@ -16,20 +18,14 @@ import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.web.app.util.PageUtils;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.HasDownloads;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.time.Duration;
 import java.util.List;
 
 /**
@@ -501,30 +497,8 @@ public class ExploreToolbar extends MainNavBar {
     public File getDownloadedReport(ComponentInfoBuilder componentInfo) {
         ResponseWrapper<String> reportsData = new ScenariosUtil().getReports("CP5PXIQIT2GX", "D0QOZ1YHQJZO", componentInfo.getUser());
         String fileName = reportsData.getHeaders().get("Content-Disposition").getValue().split("=")[1].replace("\"", "");
-        String downloadPath = System.getProperty("user.home") + File.separator + "downloads" + File.separator;
 
-        return downloadFile(downloadPath, fileName);
-    }
-
-    /**
-     * Instructs webdriver to wait for the file to download to the host then downloads (move) it to client.
-     * This method also checks if driver is an instance of RemoteDriver to see what operation is to be carried out.
-     *
-     * @param downloadPath - the path to store the file on the client machine
-     * @param fileName     - the name of the downloaded file
-     */
-    @SneakyThrows
-    public File downloadFile(String downloadPath, String fileName) {
-        File file = new File(downloadPath + fileName);
-
-        new WebDriverWait(driver, Duration.ofSeconds(60))
-            .pollingEvery(Duration.ofMillis(500))
-            .until(d -> ((HasDownloads) d).getDownloadableFiles().contains(fileName));
-
-        ((HasDownloads) driver).downloadFile(fileName, Path.of(downloadPath));
-        FileUtils.forceDeleteOnExit(file);
-
-        return file;
+        return pageUtils.downloadFile(homeDownloadPath, fileName);
     }
 
     /**
