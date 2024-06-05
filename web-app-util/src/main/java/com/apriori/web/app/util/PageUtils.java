@@ -37,6 +37,7 @@ import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -47,6 +48,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -1568,16 +1570,20 @@ public class PageUtils {
      * @param url - url to navigate
      * @return current redirected url
      */
-    public String stopPageLoadAndGetCurrentUrl(String url) {
-        String currentUrl;
-        try {
-            driver.manage().timeouts().pageLoadTimeout(DURATION_SLOW);
-            driver.navigate().to(url);
-            currentUrl = driver.getCurrentUrl();
-        } catch (Exception interruptedException) {
-            currentUrl = driver.getCurrentUrl();
-        }
-        return currentUrl;
+    public Boolean verifyCurrentUrl(String url, String expectedText) {
+        driver.navigate().to(url);
+        FluentWait wait = new FluentWait<WebDriver>(driver)
+            .pollingEvery(Duration.ofMillis(100))
+            .withTimeout(Duration.ofSeconds(5))
+            .ignoring(StaleElementReferenceException.class)
+            .ignoring(NoSuchElementException.class);
+
+        Function<WebDriver, Boolean> notEnabled = new Function<WebDriver, Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                return (driver.getCurrentUrl().contains(expectedText));
+            }
+        };
+        return (Boolean) wait.until(notEnabled);
     }
 
     /**

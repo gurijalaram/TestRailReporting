@@ -5,7 +5,6 @@ import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIR;
 import static com.apriori.cds.api.enums.ApplicationEnum.CLOUD_HOME;
-import static com.apriori.shared.util.enums.CustomerEnum.AP_INT;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.AccessControls;
@@ -35,7 +34,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
-@EnabledIfSystemProperty(named = "customer", matches = AP_INT)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasBulkGrantDenyAccessTests {
     private final UserCredentials currentUser = UserUtil.getUser(RolesEnum.APRIORI_DESIGNER);
     private final CasTestUtil casTestUtil = new CasTestUtil();

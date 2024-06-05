@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.explore;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cid.ui.pageobjects.evaluate.components.inputs.ComponentBasicPage;
@@ -92,7 +93,7 @@ public class GroupDeleteTests extends TestBaseUI {
     @Test
     @TestRail(id = {15017, 15016, 15020})
     @Description("Verify user can delete 2 or more assemblies. Verify correct behavior of Delete button when multi-selecting.")
-    @Tag(SMOKE)
+    @Tag(ASSEMBLY)
     public void testGroupDeleteAssemblies() {
         final String assemblyName = "titan cordless drill 2";
         final String assemblyName2 = "titan charger ass";

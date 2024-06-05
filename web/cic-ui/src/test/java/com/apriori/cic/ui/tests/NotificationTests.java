@@ -77,8 +77,8 @@ public class NotificationTests extends WorkflowTestUtil {
         assertFalse(notificationsPart.getNotificationNextButton().isEnabled(),"Verify next button is disabled");
         notificationsPart.selectEmailTab().selectRecipient();
         assertTrue(notificationsPart.getNotificationNextButton().isEnabled(),"Verify next button is enabled Tab");
-        assertEquals("Verify Costing round drop down defaulted to Yes", "Yes", notificationsPart.selectEmailTab().getEmailConfigCostRoundingElement().getText());
-        assertEquals("Verify aPriori Costing round drop down defaulted to Fully Burdened Cost", "Fully Burdened Cost", notificationsPart.selectEmailTab().getEmailConfigAprioriCostElement().getText());
+        assertEquals("Verify Costing round drop down defaulted to Yes", "Yes", notificationsPart.selectEmailTab().getEmailTabTxtElement("Cost Rounding").getText());
+        assertEquals("Verify aPriori Costing round drop down defaulted to Fully Burdened Cost", "Fully Burdened Cost", notificationsPart.selectEmailTab().getEmailTabTxtElement("aPriori Cost").getText());
     }
 
     @Test

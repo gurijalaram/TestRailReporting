@@ -3,7 +3,6 @@ package com.apriori.cid.ui.tests.evaluate.assemblies;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
-import com.apriori.cid.api.utils.AssociationStatus;
 import com.apriori.cid.ui.pageobjects.common.FilterPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.SetInputStatusPage;
@@ -454,6 +453,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {6075, 6080})
     @Description("Validate Private filter displays only Private Scenarios")
     public void verifyFilterContentTest() {
@@ -500,6 +500,7 @@ public class FiltersTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 6100)
     @Description("Validate that user can cancel action New, Rename, Save As before saving")
     public void cancelFilterTest() {
