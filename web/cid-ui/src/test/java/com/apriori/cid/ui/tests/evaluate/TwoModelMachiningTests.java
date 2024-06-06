@@ -4,7 +4,6 @@ import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cid.ui.pageobjects.common.ScenarioTableController;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.SourceModelExplorePage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.GuidanceIssuesPage;
@@ -34,8 +33,8 @@ public class TwoModelMachiningTests extends TestBaseUI {
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
     private SourceModelExplorePage sourceModelExplorePage;
-
     private GuidanceIssuesPage guidanceIssuesPage;
+    
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public TwoModelMachiningTests() {
