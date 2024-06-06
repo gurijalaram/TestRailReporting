@@ -21,7 +21,6 @@ public enum NewCostingLabelEnum {
     SAVING_IN_PROGRESS("Saving in Progress"),
     SAVED("Saved");
 
-
     private final String costingText;
 
     NewCostingLabelEnum(String costingLabel) {

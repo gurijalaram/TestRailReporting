@@ -171,17 +171,6 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
     }
 
     /**
-     * Check is row is clickable
-     *
-     * @param componentName - the component name
-     * @param scenarioName  - scenario name
-     * @return new page object
-     */
-    public boolean isRowClickable(String componentName, String scenarioName) {
-        return scenarioTableController.isScenarioClickable(componentName, scenarioName);
-    }
-
-    /**
      * Sorts the column
      *
      * @param column - the column
