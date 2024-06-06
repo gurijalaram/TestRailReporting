@@ -217,7 +217,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      *
      * @return - Boolean of mode state
      */
-    public Boolean isAPrioriCostModeSelected() {
+    public Boolean isSimulateCostModeSelected() {
         pageUtils.waitForElementToAppear(aprioriCostModeButton);
         return Boolean.parseBoolean(aprioriCostModeButton.getAttribute("aria-pressed"));
     }

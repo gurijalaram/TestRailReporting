@@ -6,8 +6,12 @@ import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.api.utils.UserPreferencesUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.ChangeSummaryPage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
+import com.apriori.cid.ui.pageobjects.evaluate.components.inputs.ComponentBasicPage;
+import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
+import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.EvaluateToolbar;
+import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.SwitchCostModePage;
 import com.apriori.cid.ui.utils.CurrencyEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
@@ -17,7 +21,10 @@ import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.component.CostRollupOverrides;
+import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.componentiteration.ComponentIteration;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -30,6 +37,7 @@ import org.junit.jupiter.api.Test;
 public class ManualCostingTests  extends TestBaseUI {
 
     private EvaluatePage evaluatePage;
+    private ExplorePage explorePage;
     private SwitchCostModePage switchCostModePage;
 
     private static ScenariosUtil scenariosUtil = new ScenariosUtil();
@@ -55,7 +63,7 @@ public class ManualCostingTests  extends TestBaseUI {
         evaluatePage = new CidAppLoginPage(driver).login(component.getUser())
             .uploadComponentAndOpen(component);
 
-        softAssertions.assertThat(evaluatePage.isAPrioriCostModeSelected()).as("Verify Cost Mode is aPriori by default").isTrue();
+        softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected()).as("Verify Cost Mode is aPriori by default").isTrue();
 
         evaluatePage.clickManualModeButtonWhileUncosted()
             .enterPiecePartCost("42")
@@ -75,7 +83,7 @@ public class ManualCostingTests  extends TestBaseUI {
             .as("Verify Continue to aPriori Mode button text").isEqualTo("CONTINUE TO APRIORI MODE");
 
         evaluatePage = switchCostModePage.clickContinue();
-        softAssertions.assertThat(evaluatePage.isAPrioriCostModeSelected()).as("Verify Cost Mode is toggled back to aPriori").isTrue();
+        softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected()).as("Verify Cost Mode is toggled back to aPriori").isTrue();
 
         switchCostModePage = evaluatePage.enterAnnualVolume("5501")
                 .clickManualModeButton();
@@ -99,7 +107,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
         evaluatePage = switchCostModePage.clickCancel();
 
-        softAssertions.assertThat(evaluatePage.isAPrioriCostModeSelected()).as("Verify cancel returns to aPriori mode").isTrue();
+        softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected()).as("Verify cancel returns to aPriori mode").isTrue();
         softAssertions.assertThat(evaluatePage.getDigitalFactory())
             .as("Verify uncosted changes retained after cancel").isEqualTo(DigitalFactoryEnum.APRIORI_FINLAND.getDigitalFactory());
         softAssertions.assertThat(evaluatePage.getAnnualVolume())
@@ -254,9 +262,86 @@ public class ManualCostingTests  extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {})
-    @Description("Verify status tile messages while in Manual Cost Mode")
-    public void testStatusTileForManual() {
-        component = new ComponentRequestUtil().getComponent();
+    @TestRail(id = {31009, 31010, 31017, 31018, 31020, 31021, 31022})
+    @Description("Verify all actions can be performed on Manually Costed Scenario")
+    public void testActionsForManuallyCostedScenarios() {
+        String copiedScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        componentsUtil.postComponent(component);
+        component.setCostingTemplate(CostingTemplate.builder()
+            .costMode("MANUAL")
+            .costRollupOverrides(CostRollupOverrides.builder()
+                .piecePartCost(16.75)
+                .totalCapitalInvestment(98.34)
+                .build())
+            .build());
+        scenariosUtil.postCostScenario(component);
+
+        ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
+        component2.setUser(component.getUser());
+        componentsUtil.postComponent(component2);
+        scenariosUtil.postCostScenario(component2);
+
+        evaluatePage = new CidAppLoginPage(driver).login(component.getUser())
+            .openScenario(component.getComponentName(), component.getScenarioName());
+
+        evaluatePage.clickActions()
+            .updateCadFile(component.getResourceFile())
+            .submit(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_UPDATE_CAD)).as("Verify Update CAD status displayed").isTrue();
+        evaluatePage.waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 2);
+
+        evaluatePage.publishScenario(PublishPage.class)
+            .publish(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION)).as("Verify Publishing status displayed").isTrue();
+        evaluatePage.waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2);
+        softAssertions.assertThat(evaluatePage.isEditButtonEnabled()).as("Verify Edit button is displayed and enabled").isTrue();
+
+        evaluatePage.editScenario(EditScenarioStatusPage.class)
+            .clickHere();
+
+        softAssertions.assertThat(evaluatePage.isPublishButtonEnabled()).as("Verify Publish button now displayed and enabled").isTrue();
+
+        evaluatePage.copyScenario()
+            .enterScenarioName(copiedScenarioName)
+            .submit(EvaluatePage.class);
+
+        ComponentInfoBuilder copiedScenario = scenariosUtil.getComponentDetails(component.getComponentName(), copiedScenarioName, component.getUser());
+
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).as("Verify copied scenario now open").isEqualTo(copiedScenarioName);
+        softAssertions.assertThat(evaluatePage.getPiecePartCost()).as("Verify PPC copied successfully").isEqualTo("16.75");
+        softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment()).as("Verify TCI copied successfully").isEqualTo("98.34");
+
+        explorePage = evaluatePage.clickExplore();
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()))
+            .as("Verify Public and Private copies exist").isEqualTo(2);
+
+        explorePage.selectFilter("Private");
+
+        ComponentBasicPage componentBasicPage = explorePage.multiSelectScenarios(
+                    component.getComponentName() + "," + component.getScenarioName(),
+                    component2.getComponentName() + "," + component2.getScenarioName())
+                .clickCostButton(ComponentBasicPage.class);
+
+        softAssertions.assertThat(componentBasicPage.getAlertMessage())
+            .as("Verify warning that Manually Costed scenario included in selection")
+            .isEqualTo("One or more of the selected components were last costed in Manual mode. If you choose to continue, they will be recosted in Simulate mode.");
+
+        explorePage = componentBasicPage.applyAndCost(EditScenarioStatusPage.class)
+            .close(ExplorePage.class);
+
+        scenariosUtil.getScenarioCompleted(component);
+        scenariosUtil.getScenarioCompleted(component2);
+
+        evaluatePage = explorePage.openScenario(component.getComponentName(), component.getScenarioName());
+
+        softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected())
+            .as("Verify Manually Costed scenario switched to Simulate on Group Cost").isTrue();
+
+        softAssertions.assertAll();
     }
 }
