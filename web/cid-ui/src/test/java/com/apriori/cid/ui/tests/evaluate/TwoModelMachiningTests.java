@@ -113,11 +113,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(sourcePart.getComponentName());
 
-
-//        softAssertions.assertThat(evaluatePage.getSourceModelMaterial()).isEqualTo(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName());
-//        softAssertions.assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePart.getScenarioName())).isEqualTo(true);
-//        softAssertions.assertThat(sourceModelExplorePage.highlightScenario(sourcePart.getComponentName(), sourcePart.getScenarioName()));
-        softAssertions.assertThat(sourceModelExplorePage.isRowClickable(sourcePart.getComponentName(), sourcePart.getScenarioName())).isFalse();
+        softAssertions.assertThat(sourceModelExplorePage.isScenarioClickable(sourcePart.getComponentName(), sourcePart.getScenarioName())).isFalse();
 
         softAssertions.assertAll();
     }
