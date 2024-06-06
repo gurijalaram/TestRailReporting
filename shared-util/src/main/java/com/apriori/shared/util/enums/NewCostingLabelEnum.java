@@ -17,7 +17,9 @@ public enum NewCostingLabelEnum {
     COSTING_FAILED("Costing Failed"),
     PROCESSING_CREATE_ACTION("Processing Create Action"),
     PROCESSING_REPORT_ACTION("Processing Report Action"),
-    SAVING_IN_PROGRESS("Saving in Progress");
+    UNSAVED("Unsaved"),
+    SAVING_IN_PROGRESS("Saving in Progress"),
+    SAVED("Saved");
 
     private final String costingText;
 

@@ -12,6 +12,7 @@ import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
+import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.SwitchCostModePage;
 import com.apriori.cid.ui.utils.CurrencyEnum;
 import com.apriori.cid.ui.utils.StatusIconEnum;
@@ -26,6 +27,7 @@ import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.CostRollupOverrides;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.componentiteration.ComponentIteration;
+import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -36,6 +38,7 @@ import org.junit.jupiter.api.Test;
 
 public class ManualCostingTests  extends TestBaseUI {
 
+    private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
     private SwitchCostModePage switchCostModePage;
@@ -70,7 +73,8 @@ public class ManualCostingTests  extends TestBaseUI {
             .enterTotalCapitalInvestment("316");
 
         softAssertions.assertThat(evaluatePage.isManualCostModeSelected()).as("Verify switch to manual mode").isTrue();
-        softAssertions.assertThat(evaluatePage.isSaveButtonEnabled()).as("Verify Save button currently disabled").isFalse();
+        softAssertions.assertThat(evaluatePage.isSaveAsButtonEnabled()).as("Verify Save button currently disabled").isFalse();
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNSAVED)).isEqualTo(true);
 
         evaluatePage.clickSimulateModeButton()
             .clickCancel();
@@ -343,5 +347,22 @@ public class ManualCostingTests  extends TestBaseUI {
             .as("Verify Manually Costed scenario switched to Simulate on Group Cost").isTrue();
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {30102, 30104, 30105, 30107, 30108, 30109, 30110, 30111, 30112})
+    @Description("Verify Manually Costed Scenarios cannot be used in 2-Model Machining Source Model")
+    public void testManuallyCostedAs2MMSource() {
+        component = new ComponentRequestUtil().getComponent();
+
+        evaluatePage = new CidAppLoginPage(driver).login(component.getUser())
+            .uploadComponentAndOpen(component)
+            .clickManualModeButtonWhileUncosted()
+            .enterPiecePartCost("42")
+            .enterTotalCapitalInvestment("316")
+            .clickCostButton()
+            .waitForCostLabelNotContain(NewCostingLabelEnum.SAVING_IN_PROGRESS, 2)
+            .publishScenario(PublishPage.class)
+            .publish(component, EvaluatePage.class);
     }
 }
