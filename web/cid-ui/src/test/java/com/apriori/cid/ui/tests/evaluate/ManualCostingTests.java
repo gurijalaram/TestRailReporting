@@ -73,7 +73,7 @@ public class ManualCostingTests  extends TestBaseUI {
             .enterTotalCapitalInvestment("316");
 
         softAssertions.assertThat(evaluatePage.isManualCostModeSelected()).as("Verify switch to manual mode").isTrue();
-        softAssertions.assertThat(evaluatePage.isSaveAsButtonEnabled()).as("Verify Save button currently disabled").isFalse();
+        softAssertions.assertThat(evaluatePage.isSaveButtonEnabled()).as("Verify Save button currently disabled").isTrue();
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNSAVED)).isEqualTo(true);
 
         evaluatePage.clickSimulateModeButton()
@@ -304,7 +304,7 @@ public class ManualCostingTests  extends TestBaseUI {
         evaluatePage.waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2);
         softAssertions.assertThat(evaluatePage.isEditButtonEnabled()).as("Verify Edit button is displayed and enabled").isTrue();
 
-        evaluatePage.editScenario(EditScenarioStatusPage.class)
+        evaluatePage = evaluatePage.editScenario(EditScenarioStatusPage.class)
             .clickHere();
 
         softAssertions.assertThat(evaluatePage.isPublishButtonEnabled()).as("Verify Publish button now displayed and enabled").isTrue();
@@ -319,7 +319,8 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getPiecePartCost()).as("Verify PPC copied successfully").isEqualTo("16.75");
         softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment()).as("Verify TCI copied successfully").isEqualTo("98.34");
 
-        explorePage = evaluatePage.clickExplore();
+        explorePage = evaluatePage.clickExplore()
+            .selectFilter("Recent");
 
         softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()))
             .as("Verify Public and Private copies exist").isEqualTo(2);
@@ -345,6 +346,8 @@ public class ManualCostingTests  extends TestBaseUI {
 
         softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected())
             .as("Verify Manually Costed scenario switched to Simulate on Group Cost").isTrue();
+
+        //ToDo:- Perform Group cost with copied scenario then manually cost at least one of them and perform delete.
 
         softAssertions.assertAll();
     }
