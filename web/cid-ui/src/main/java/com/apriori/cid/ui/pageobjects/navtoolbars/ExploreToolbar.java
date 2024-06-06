@@ -1,5 +1,7 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
+import static com.apriori.shared.util.testconfig.TestBaseUI.homeDownloadPath;
+
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.cid.ui.pageobjects.compare.CreateComparePage;
@@ -508,10 +510,7 @@ public class ExploreToolbar extends MainNavBar {
         ResponseWrapper<String> reportsData = new ScenariosUtil().getReports(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity(), componentInfo.getUser());
         String fileName = reportsData.getHeaders().get("Content-Disposition").getValue().split("=")[1].replace("\"", "");
 
-        File file = new File(pageUtils.downloadPath + fileName);
-        file.deleteOnExit();
-
-        return file;
+        return pageUtils.downloadFile(homeDownloadPath, fileName);
     }
 
     /**
@@ -519,7 +518,7 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @return string
      */
-    public String getUpdateTimestamp() {
+    public String getUpdatedTimestamp() {
         pageUtils.waitForElementsToNotAppear(refreshLabel);
         return lastUpdatedAlert.getText();
     }

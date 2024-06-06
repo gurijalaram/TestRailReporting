@@ -1,8 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
@@ -32,7 +30,6 @@ import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.ScenarioStateEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
@@ -72,7 +69,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
     @Test
     @Issue("APD-2431")
-    @Tag(SMOKE)
+    @Tag(ASSEMBLY)
     @TestRail(id = 10768)
     @Description("Shallow Publish assembly and scenarios costed in CI Design")
     public void testShallowPublishCostedCID() {
@@ -108,7 +105,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
-    @Tag(SMOKE)
+    @Tag(ASSEMBLY)
     @TestRail(id = {10799, 6076, 6515})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testShallowEditCostedCID() {
@@ -214,7 +211,7 @@ public class EditAssembliesTest extends TestBaseUI {
     }
 
     @Test
-    @Tag(SMOKE)
+    @Tag(ASSEMBLY)
     @TestRail(id = {10804, 6733, 6594})
     @Description("Shallow Edit keeps original assembly intact on Public Workspace")
     public void testShallowEditCheckDuplicate() {
