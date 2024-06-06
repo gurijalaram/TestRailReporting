@@ -495,17 +495,6 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
-     * Checks if row is clickable
-     *
-     * @param componentName - component name
-     * @param scenarioName  - scenario name
-     * @return current page object
-     */
-    public boolean isScenarioClickable(String componentName, String scenarioName) {
-        return pageUtils.isElementClickable(pageUtils.waitForElementToAppear(byComponentName(componentName, scenarioName)));
-    }
-
-    /**
      * Find scenario checkbox
      *
      * @param componentName - component name
