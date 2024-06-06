@@ -99,7 +99,6 @@ public class JasperApiUtils {
         JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperSessionID);
         InputControl inputControls = jasperReportUtil.getInputControls(reportValueForInputControls);
         String currentExportSet = inputControls.getExportSetName().getOption(exportSetName).getValue();
-        //setReportParameterByName(InputControlsEnum.ROLLUP.getInputControlId(), inputControls.getRollup().getOption(RollupEnum.UC_CASTING_DTC_ALL.getRollupName()).getValue());
 
         String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
 
@@ -826,6 +825,7 @@ public class JasperApiUtils {
 
     /**
      * Generic test for minimum annual spend input control on a dtc details report
+     *
      * @param isNoDataAvailableExpected - boolean flag for if we are expecting no data available or not
      */
     public void genericMinAnnualSpendDtcDetailsTest(boolean isNoDataAvailableExpected) {
@@ -837,7 +837,6 @@ public class JasperApiUtils {
 
         if (!isNoDataAvailableExpected) {
             String minAnnualSpendValue = jasperReportSummary.getReportHtmlPart().getElementsByAttributeValue("colspan", "4").get(9).text();
-            //softAssertions.assertThat(minAnnualSpendValue).isEqualTo("34,661,340.98");
             softAssertions.assertThat(minAnnualSpendValue).isNotEqualTo(minimumAnnualSpendValue);
         } else {
             softAssertions.assertThat(jasperReportSummary.getReportHtmlPart().toString()).contains("No data available");
