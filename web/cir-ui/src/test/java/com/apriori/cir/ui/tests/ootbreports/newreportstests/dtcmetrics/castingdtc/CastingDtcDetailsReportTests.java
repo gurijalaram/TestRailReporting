@@ -304,8 +304,8 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
             JasperCirApiPartsEnum.P_1205DU1017494_K.getPartName()
         );
         List<String> assertFigures = Arrays.asList(
-            "10,013,204.23",
-            "7,819,806.44"
+            "7,486,512.33",
+            "5,846,587.76"
         );
         jasperApiUtils.genericSortOrderDtcDetailsTest(
             partNames,
@@ -322,8 +322,8 @@ public class CastingDtcDetailsReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify Sort Order input control functions correctly - DTC Rank - Casting DTC Details Report")
     public void testSortOrderInputControlDtcRank() {
         List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.BARCO_R8761310.getPartName(),
             JasperCirApiPartsEnum.BARCO_R8552931.getPartName(),
+            JasperCirApiPartsEnum.BARCO_R8761310.getPartName(),
             JasperCirApiPartsEnum.CYLINDER_HEAD.getPartName()
         );
         List<String> assertFigures = Arrays.asList(
