@@ -195,6 +195,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Finds the scenario by component name and scenario name
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return by
+     */
+    public By byComponentRow(String componentName, String scenarioName) {
+        return By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//span[normalize-space(.)='%s']/ancestor::div[@role='row']", scenarioName.trim(), componentName.toUpperCase().trim()));
+    }
+
+    /**
      * Checks the scenario is not displayed
      *
      * @param componentName - component name

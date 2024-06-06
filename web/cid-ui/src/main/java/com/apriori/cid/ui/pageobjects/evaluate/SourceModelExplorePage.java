@@ -194,6 +194,17 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
     }
 
     /**
+     * Checks if the scenario is clickable
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return by
+     */
+    public boolean isScenarioClickable(String componentName, String scenarioName) {
+        return !pageUtils.waitForElementToAppear(scenarioTableController.byComponentRow(componentName, scenarioName)).getAttribute("class").contains("disabled");
+    }
+
+    /**
      * Gets sort order
      *
      * @param column - the column
