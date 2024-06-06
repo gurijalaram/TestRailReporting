@@ -354,31 +354,6 @@ public class FileResourceUtil extends AwsUtil {
     }
 
     /**
-     * Wait certain time to check if file exists(appear)  - if exists - delete it
-     *
-     * @param path          - path to the file
-     * @param waitTimeInSec - how long wait to appear
-     * @throws Exception
-     */
-    public static Boolean deleteFileWhenAppears(Path path, Integer waitTimeInSec) {
-        long initialTime = System.currentTimeMillis() / 1000;
-        do {
-            try {
-                Thread.sleep(200);
-                if (Files.deleteIfExists(path)) {
-                    log.info("File was removed. File path: {}", path);
-                    return true;
-                }
-            } catch (IOException | InterruptedException e) {
-                log.error("Failed to remove file.");
-                throw new IllegalArgumentException(e);
-            }
-        } while (((System.currentTimeMillis() / 1000) - initialTime) < waitTimeInSec);
-
-        return false;
-    }
-
-    /**
      * Reads a file from an input stream as string
      *
      * @param fileName - the file name
