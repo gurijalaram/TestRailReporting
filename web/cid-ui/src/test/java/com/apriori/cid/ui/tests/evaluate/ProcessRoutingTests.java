@@ -831,7 +831,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7857})
     @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
     public void routingTolerances() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -841,6 +841,10 @@ public class ProcessRoutingTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("High Pressure Die Cast")
+            .submit(EvaluatePage.class)
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Melting / High Pressure Die Casting / Trim / 5 Axis Mill");
