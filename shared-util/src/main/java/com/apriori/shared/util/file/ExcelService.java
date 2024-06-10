@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class to handle excel files (xls or xlsx)
@@ -106,7 +107,7 @@ public class ExcelService {
         try {
             Row headerRow = this.sheet.getRow(0);
             Integer columnIndex = getColumnIndexByName(headerRow, colName);
-            cellValue =  getCellData(columnIndex, rowNum);
+            cellValue = getCellData(columnIndex, rowNum);
         } catch (Exception e) {
             log.info("No Matching data found in row " + rowNum + " and column " + colName);
         }
@@ -199,14 +200,20 @@ public class ExcelService {
         log.error(String.format("No Worksheet -%s- found in Excel file: %s", this.xlSheet, this.xlPath));
     }
 
+    /**
+     * get Column index by name
+     *
+     * @param headerRow  - Row
+     * @param columnName - column name
+     * @return - integer
+     */
     private Integer getColumnIndexByName(Row headerRow, String columnName) {
-        int columnIndex = -1;
-        for (Cell cell : headerRow) {
+        AtomicInteger columnIndex = new AtomicInteger(-1);
+        headerRow.forEach(cell -> {
             if (cell.getStringCellValue().equals(columnName)) {
-                columnIndex = cell.getColumnIndex();
-                break;
+                columnIndex.set(cell.getColumnIndex());
             }
-        }
-        return columnIndex;
+        });
+        return columnIndex.get();
     }
 }

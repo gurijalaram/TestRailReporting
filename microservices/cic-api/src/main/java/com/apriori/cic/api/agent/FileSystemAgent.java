@@ -60,6 +60,12 @@ public class FileSystemAgent extends Agent {
         return this;
     }
 
+    /**
+     * upload options file to remote agent workflow folder
+     *
+     * @param workflowName  - Workflow name
+     * @param inputFileName - options file to be copied
+     */
     @SneakyThrows
     public void uploadInputFileToRemoteWorkflowFolder(String workflowName, String inputFileName) {
         try {
@@ -78,6 +84,14 @@ public class FileSystemAgent extends Agent {
         }
     }
 
+    /**
+     * verify report data
+     *
+     * @param inputFile    - expected data file
+     * @param workflowName - workflow name
+     * @param jobId        - workflow job id
+     * @return - true or false
+     */
     public Boolean verifyReports(String inputFile, String workflowName, String jobId) {
         String outputFolder = getWorkflowOutputFolder(workflowName, jobId);
         List<PartData> partDataList = getInputFileData(inputFile);
@@ -101,6 +115,13 @@ public class FileSystemAgent extends Agent {
         }
     }
 
+    /**
+     * verify workflow output file
+     *
+     * @param workflowName - workflow name
+     * @param jobId        - workflow job id
+     * @return - true or false
+     */
     public Boolean verifyOutputFile(String workflowName, String jobId) {
         String outputFolder = getWorkflowOutputFolder(workflowName, jobId);
         String workflowFolder;
@@ -116,11 +137,22 @@ public class FileSystemAgent extends Agent {
         return isOutFileExists;
     }
 
+    /**
+     * delete workflow folder from agent VM
+     *
+     * @param workflowName - workflow name
+     * @return true or false
+     */
     public Boolean deleteWorkflowFromAgent(String workflowName) {
         return ftpClient.recursiveFolderDelete(String.format(AgentConstants.REMOTE_FS_ROOT_FOLDER, PropertiesContext.get("env"), PropertiesContext.get("customer"), workflowName));
     }
 
-
+    /**
+     * de-serialize input file to Part Data object
+     *
+     * @param inputFileName - input file name
+     * @return - PartData list
+     */
     private List<PartData> getInputFileData(String inputFileName) {
         List<PartData> partDataList = new ArrayList<>();
         PartData partData;
@@ -138,6 +170,12 @@ public class FileSystemAgent extends Agent {
         return partDataList;
     }
 
+    /**
+     * get workflow output folder from Agent
+     * @param workflowName - workflow name
+     * @param jobId - job id
+     * @return - folder name
+     */
     private String getWorkflowOutputFolder(String workflowName, String jobId) {
         String workflowFolder = StringUtils.EMPTY;
         String outputFolder = StringUtils.EMPTY;
@@ -148,13 +186,20 @@ public class FileSystemAgent extends Agent {
             return ftpClient.getMatchedFolder(destinationFolder, searchForRemoteFolder);
         } catch (Exception e) {
             log.warn(String.format(
-                "Either directory >> %s << not exists or already deleted from remote agent VM",
+                "Either directory >> %s << does not exists or already deleted from remote agent VM",
                 workflowFolder
             ));
         }
         return outputFolder;
     }
 
+    /**
+     * get file name from s3 bucket
+     * @param s3ComponentName - component name
+     * @param processGroup - ProcessGroupEnum
+     * @param newFileName - file name to be saved
+     * @return File
+     */
     @SneakyThrows
     public static File getCloudFileAndSaveWithName(String s3ComponentName, ProcessGroupEnum processGroup, String newFileName) {
         File tempFile = FileResourceUtil.getCloudFile(processGroup, s3ComponentName);

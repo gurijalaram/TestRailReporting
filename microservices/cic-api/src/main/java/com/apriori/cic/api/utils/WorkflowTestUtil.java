@@ -47,7 +47,7 @@ public class WorkflowTestUtil extends CicUtil {
      * @param sessionID           JSessionID
      * @return current class object
      */
-    public WorkflowTestUtil create(WorkflowRequest workflowRequestData, String sessionID) {
+    public WorkflowTestUtil createWorkflow(WorkflowRequest workflowRequestData, String sessionID) {
         workflowResponse = CicApiTestUtil.createWorkflow(workflowRequestData, sessionID);
         if (workflowResponse == null) {
             throw new RuntimeException("Workflow creation failed!!");
@@ -161,7 +161,7 @@ public class WorkflowTestUtil extends CicUtil {
      * @return AgentWorkflowJobResults
      */
     public AgentWorkflowJobResults createWorkflowAndGetJobResult(WorkflowRequest workflowRequestData, String sessionID) {
-        return create(workflowRequestData, sessionID)
+        return createWorkflow(workflowRequestData, sessionID)
             .getWorkflowId(workflowRequestData.getName())
             .invokeQueryWorkflow()
             .track()
