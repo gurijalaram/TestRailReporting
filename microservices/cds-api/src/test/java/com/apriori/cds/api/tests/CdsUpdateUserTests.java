@@ -1,6 +1,7 @@
 package com.apriori.cds.api.tests;
 
 import com.apriori.cds.api.enums.CDSAPIEnum;
+import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.databind.node.BooleanNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,12 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
-public class CdsUpdateUserTests {
+public class CdsUpdateUserTests extends CdsTestUtil {
 
     private final GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private final SoftAssertions soft = new SoftAssertions();
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
-
     private final List<User> createdUsers = new ArrayList<>();
 
     User generateTargetUser() {
@@ -41,7 +41,7 @@ public class CdsUpdateUserTests {
         String pattern = aprioriInternal.getEmailRegexPatterns().stream().findFirst().orElseThrow();
         String domain = pattern.replace("\\S+@", "").replace(".com", "");
 
-        ResponseWrapper<User> added = cdsTestUtil.addUser(
+        ResponseWrapper<User> added = addUser(
             aprioriInternal.getIdentity(),
             userName,
             domain
@@ -88,15 +88,15 @@ public class CdsUpdateUserTests {
     }
 
     @BeforeEach()
-    void setUp() {
+    public void setUp() {
 
         createdUsers.clear();
     }
 
     @AfterEach()
-    void cleanup() {
+    public void cleanup() {
 
-        createdUsers.forEach(u -> cdsTestUtil.delete(
+        createdUsers.forEach(u -> delete(
             CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,
             u.getCustomerIdentity(),
             u.getIdentity()
@@ -106,15 +106,17 @@ public class CdsUpdateUserTests {
     @Test
     @TestRail(id = 29190)
     @Description("API updates user enablements")
-    void patch_shouldSetEnablementsAlone() {
+    public void patch_shouldSetEnablementsAlone() {
 
         ObjectNode enablements = createEnablementsNode();
         ObjectNode user = createUserNode(null, enablements);
         User current = generateTargetUser();
 
-        User actual = cdsTestUtil.patchUser(
+        User actual = patchUser(
+            User.class,
             current.getCustomerIdentity(),
             current.getIdentity(),
+            HttpStatus.SC_OK,
             user
         ).getResponseEntity();
 
@@ -130,15 +132,17 @@ public class CdsUpdateUserTests {
     @Test
     @TestRail(id = 29189)
     @Description("API updates user profile")
-    void patch_shouldSetProfileInformationAlone() {
+    public void patch_shouldSetProfileInformationAlone() {
 
         ObjectNode profile = createProfileNode();
         ObjectNode user = createUserNode(profile, null);
         User current = generateTargetUser();
 
-        User actual = cdsTestUtil.patchUser(
+        User actual = patchUser(
+            User.class,
             current.getCustomerIdentity(),
             current.getIdentity(),
+            HttpStatus.SC_OK,
             user
         ).getResponseEntity();
 
@@ -150,16 +154,18 @@ public class CdsUpdateUserTests {
     @Test
     @TestRail(id = 29191)
     @Description("API updates user profile and enablements")
-    void patch_ShouldUpdateProfileAndEnablements() {
+    public void patch_ShouldUpdateProfileAndEnablements() {
 
         ObjectNode enablements = createEnablementsNode();
         ObjectNode profile = createProfileNode();
         ObjectNode user = createUserNode(profile, enablements);
         User current = generateTargetUser();
 
-        User actual = cdsTestUtil.patchUser(
+        User actual = patchUser(
+            User.class,
             current.getCustomerIdentity(),
             current.getIdentity(),
+            HttpStatus.SC_OK,
             user
         ).getResponseEntity();
 
@@ -171,6 +177,48 @@ public class CdsUpdateUserTests {
             .isTrue();
         soft.assertThat(actual.getUserProfile().getFamilyName()).isEqualTo(profile.get("familyName").asText());
         soft.assertThat(actual.getUserProfile().getGivenName()).isEqualTo(profile.get("givenName").asText());
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(id = 29303)
+    @Description("PATCH User request doesn't update enablements for CI Generate User")
+    public void doNotUpdateCiGenerateEnablements() {
+        User ciGenerateUser = getUserByEmail("aPrioriCIGenerateUser@apriori.com").getResponseEntity().getItems().get(0);
+        ObjectNode enablements = createEnablementsNode();
+        ObjectNode user = createUserNode(null, enablements);
+
+        ErrorResponse updateEnablements = patchUser(
+            ErrorResponse.class,
+            ciGenerateUser.getCustomerIdentity(),
+            ciGenerateUser.getIdentity(),
+            HttpStatus.SC_CONFLICT,
+            user
+        ).getResponseEntity();
+
+        soft.assertThat(updateEnablements.getMessage())
+            .isEqualTo("Enablements can not be updated for the user.");
+        soft.assertAll();
+    }
+
+    @Test
+    @TestRail(id = 29302)
+    @Description("PATCH User request doesn't update enablements for Service Accounts")
+    public void doNotUpdateServiceAccountEnablements() {
+        User serviceAccountWidgets = getUserByEmail("widgets.service-account.1@apriori-cloud.net").getResponseEntity().getItems().get(0);
+        ObjectNode enablements = createEnablementsNode();
+        ObjectNode user = createUserNode(null, enablements);
+
+        ErrorResponse updateEnablements = patchUser(
+            ErrorResponse.class,
+            serviceAccountWidgets.getCustomerIdentity(),
+            serviceAccountWidgets.getIdentity(),
+            HttpStatus.SC_CONFLICT,
+            user
+        ).getResponseEntity();
+
+        soft.assertThat(updateEnablements.getMessage())
+            .isEqualTo("Enablements can not be updated for the user.");
         soft.assertAll();
     }
 }

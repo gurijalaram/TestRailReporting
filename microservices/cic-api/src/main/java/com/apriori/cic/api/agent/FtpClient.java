@@ -284,7 +284,6 @@ public class FtpClient {
     public void recursiveFolderUpload(String sourcePath, String destinationPath) {
         try {
             File sourceFile = new File(sourcePath);
-
             if (sourceFile.isFile()) {
                 // copy if it is a file
                 channelSftp.cd(destinationPath);

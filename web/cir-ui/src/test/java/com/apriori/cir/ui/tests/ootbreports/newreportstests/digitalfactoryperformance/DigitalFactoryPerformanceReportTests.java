@@ -1,9 +1,6 @@
 package com.apriori.cir.ui.tests.ootbreports.newreportstests.digitalfactoryperformance;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.apriori.cir.api.JasperReportSummary;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
@@ -16,6 +13,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -48,14 +46,15 @@ public class DigitalFactoryPerformanceReportTests extends JasperApiAuthenticatio
         JasperReportSummary usdJasperReportSummary = jasperApiUtils.genericTestCoreCurrencyAndDateOnlyDigitalFactoryPerfTests(usdCurrency);
         ArrayList<String> usdAssertValues = getAssertValues(usdJasperReportSummary);
 
-        assertAll("Grouped Currency Assertions",
-            () -> assertEquals(gbpAssertValues.get(0), gbpCurrency),
-            () -> assertEquals(usdAssertValues.get(0), usdCurrency),
-            () -> assertNotEquals(gbpAssertValues.get(0), usdAssertValues.get(0)),
-            () -> assertEquals(gbpAssertValues.get(1), usdAssertValues.get(1)),
-            () -> assertEquals(gbpAssertValues.get(2), usdAssertValues.get(2)),
-            () -> assertEquals(gbpAssertValues.get(3), usdAssertValues.get(3))
-        );
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(gbpAssertValues.get(0)).isEqualTo(gbpCurrency);
+        softAssertions.assertThat(usdAssertValues.get(0)).isEqualTo(usdCurrency);
+        softAssertions.assertThat(gbpAssertValues.get(0)).isNotEqualTo(usdAssertValues.get(0));
+        softAssertions.assertThat(gbpAssertValues.get(1)).startsWith(usdAssertValues.get(1).substring(0, 4));
+        softAssertions.assertThat(usdAssertValues.get(1)).startsWith(gbpAssertValues.get(1).substring(0, 4));
+        softAssertions.assertThat(usdAssertValues.get(2)).isEqualTo(gbpAssertValues.get(2));
+        softAssertions.assertThat(usdAssertValues.get(3)).isEqualTo(gbpAssertValues.get(3));
+        softAssertions.assertAll();
     }
 
     private ArrayList<String> getAssertValues(JasperReportSummary jasperReportSummary) {

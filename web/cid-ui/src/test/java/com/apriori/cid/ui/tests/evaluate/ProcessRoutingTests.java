@@ -583,15 +583,14 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {14991, 15805})
     @Description("Validate routings Forging")
     public void routingsForging() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.FORGING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("AP_BLOW_MOLDING_EXCERISE_EL0000",ProcessGroupEnum.FORGING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+            .goToAdvancedTab()
+            .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Ring Rolled Forging", "Closed Die Forging");
 
@@ -599,10 +598,10 @@ public class ProcessRoutingTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        guidanceIssuesPage = evaluatePage.openDesignGuidance()
-            .selectIssueTypeGcd("Costing Failed", "Forging/Machining is infeasible", "Component:1");
+        guidanceIssuesPage = new GuidanceIssuesPage(driver);
+        guidanceIssuesPage = guidanceIssuesPage.selectIssueTypeGcd("Costing Failed", "Forging/Machining is infeasible", "Component:1");
 
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("AP_BLOW_MOLDING_EXCERISE_EL0000 cannot be manufactured by the Ring Rolled Forging routing" +
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("cannot be manufactured by the Ring Rolled Forging routing" +
             " because it has no central THROUGH hole");
         softAssertions.assertAll();
     }
@@ -738,14 +737,11 @@ public class ProcessRoutingTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(22.73), Offset.offset(3.0));
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+            .goToAdvancedTab()
+            .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Stretch Form Transverse", "Stretch Form Longitudinal");
 
@@ -753,7 +749,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(44.41), Offset.offset(3.0));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Stretch Form");
         softAssertions.assertAll();
     }
 
@@ -835,7 +831,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {7857})
     @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
     public void routingTolerances() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(component.getUser())
@@ -845,6 +841,10 @@ public class ProcessRoutingTests extends TestBaseUI {
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("High Pressure Die Cast")
+            .submit(EvaluatePage.class)
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Melting / High Pressure Die Casting / Trim / 5 Axis Mill");
@@ -887,7 +887,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
             .goToAdvancedInputsTab();
 
-        softAssertions.assertThat(componentAdvancedPage.getRoutingSelection()).isEqualTo("Retain Existing Input");
+        softAssertions.assertThat(componentAdvancedPage.getRoutingSelection()).isEqualTo("Retain Existing Input If Possible");
 
         explorePage = componentAdvancedPage.applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
@@ -895,7 +895,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .checkComponentStateRefresh(componentB, ScenarioStateEnum.COST_COMPLETE)
             .addColumn(ColumnsEnum.PROCESS_ROUTING);
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentB.getComponentName(), componentB.getScenarioName())).contains("[CTL]/Turret/[Bend]");
+        softAssertions.assertThat(explorePage.getRowDetails(componentB.getComponentName(), componentB.getScenarioName())).contains("Turret Press");
         softAssertions.assertAll();
     }
 

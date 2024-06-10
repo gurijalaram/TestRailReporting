@@ -1,5 +1,6 @@
 package com.apriori.web.app.util;
 
+import static com.apriori.shared.util.webdriver.DriverFactory.testMode;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
@@ -12,13 +13,16 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllE
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.testconfig.TestMode;
 
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.HasDownloads;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
@@ -44,6 +48,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,7 +87,6 @@ public class PageUtils {
 
     public static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
     static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
-    public String downloadPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
     private WebDriver driver;
     private List<Class<? extends WebDriverException>> ignoredWebDriverExceptions = Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class,
         StaleElementReferenceException.class, ElementNotInteractableException.class);
@@ -1616,5 +1620,36 @@ public class PageUtils {
             retries++;
         }
         return element;
+    }
+
+    /**
+     * Instructs webdriver to wait for the file to download to the host then downloads (move) it to client.
+     * This method also checks if driver is an instance of RemoteDriver to see what operation is to be carried out.
+     *
+     * @param downloadPath - the path to store the file on the client machine
+     * @param fileName     - the name of the downloaded file
+     */
+    @SneakyThrows
+    public File downloadFile(String downloadPath, String fileName) {
+        File file = new File(downloadPath + fileName);
+        long initialTime = System.currentTimeMillis() / 1000;
+        final int waitTimeInSec = 30;
+        final int pollingTime = 100;
+
+        if (!testMode.equals(TestMode.QA_LOCAL)) {
+            new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
+                .pollingEvery(Duration.ofMillis(pollingTime))
+                .until(d -> ((HasDownloads) d).getDownloadableFiles().contains(fileName));
+
+            ((HasDownloads) driver).downloadFile(fileName, Path.of(downloadPath));
+        } else {
+            do {
+                Thread.sleep(pollingTime);
+            } while (((System.currentTimeMillis() / 1000) - initialTime) < waitTimeInSec && !file.exists());
+        }
+
+        file.deleteOnExit();
+
+        return file;
     }
 }

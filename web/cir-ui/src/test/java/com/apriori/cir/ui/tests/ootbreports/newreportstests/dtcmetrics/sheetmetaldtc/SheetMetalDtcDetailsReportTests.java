@@ -167,7 +167,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     @TestRail(id = 29706)
     @Description("Verify Minimum Annual Spend input control functions correctly - Sheet Metal DTC Details Report")
     public void testMinimumAnnualSpend() {
-        jasperApiUtils.genericMinAnnualSpendDtcDetailsTest(true);
+        jasperApiUtils.genericMinAnnualSpendDtcDetailsTest(false);
     }
 
     @Test
