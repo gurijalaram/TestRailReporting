@@ -65,15 +65,15 @@ public class CustomerUtil {
     private static String generateAuthTargetCloudContext(UserCredentials userCredentials) {
 
         final String customerIdentity = getCustomerData().getIdentity();
-        final String installationName = PropertiesContext.get("${env}.multi_tenant_installation_name");
-        final String applicationNameFromConfig = getApplicationName();
+        final String installationName = PropertiesContext.get("${customer}.multi_tenant_installation_name");
+        final String serviceName = PropertiesContext.get("${customer}.service_name");
 
         Deployment deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
 
         Installation installationItem = deploymentItem.getInstallations()
             .stream()
 
-            .filter(element -> element.getName().equals(installationName))
+            .filter(element -> element.getName().equalsIgnoreCase(installationName))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(
                     String.format("Could not find installation with name %s\nfor deployment %s",
@@ -83,11 +83,11 @@ public class CustomerUtil {
 
         Application applicationItem = installationItem.getApplications()
             .stream()
-            .filter(element -> element.getServiceName().equalsIgnoreCase(applicationNameFromConfig))
+            .filter(element -> element.getServiceName().equalsIgnoreCase(serviceName))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(
                     String.format("Could not find application with name %s\nfor installation %s\nand deployment %s",
-                        applicationNameFromConfig, installationName, deploymentItem.getName())
+                        serviceName, installationName, deploymentItem.getName())
                 )
             );
 
@@ -138,14 +138,6 @@ public class CustomerUtil {
         ResponseWrapper<Deployments> response = HTTPRequest.build(requestEntity).get();
 
         return response.getResponseEntity().getItems();
-    }
-
-    private static String getApplicationName() {
-        try {
-            return PropertiesContext.get("application_name");
-        } catch (IllegalArgumentException e) {
-            return "cid";
-        }
     }
 
     /**

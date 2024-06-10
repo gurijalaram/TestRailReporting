@@ -28,6 +28,9 @@ apriori-internal:
       port: 8808
       connector: EN-consvwc02
 
+  multi_tenant_installation_name: core-na-1 - production
+  service_name: cid
+
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name
   qa-test:
@@ -44,7 +47,6 @@ apriori-internal:
   local:
     user_staff_identity: 4N630F61FGNG
 
-
   development:
     customer_identity: 212B5ABD2F6C
 
@@ -59,6 +61,9 @@ widgets:
       connector: WC-consvwc02
       agent_name: 59cf01bd-b45c-4252-a94c-e433fbc342fa_Agent
 
+  multi_tenant_installation_name: n. virginia v23
+  service_name: pro
+
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name
   staging:
@@ -69,5 +74,10 @@ sprockets:
   qa-test:
     token_subject: c8fc
 
-########################################################################################################################
+  multi_tenant_installation_name: singapore v22
+  service_name: pro
 
+###################################################### GADGETS #########################################################
+gadgets:
+  multi_tenant_installation_name: ireland v23
+  service_name: pro

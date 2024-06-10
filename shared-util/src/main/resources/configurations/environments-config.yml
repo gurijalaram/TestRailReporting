@@ -7,7 +7,6 @@ qa-test:
   name: qa-test
   aws_parameter_store_name: qa-test
   base_url: https://na-1-install.${customer}.qa-test.apriori.net/
-  multi_tenant_installation_name: core-na-1 - ${${deployment}.name}
 
   admin:
     ui_url: ${base_url}apriori/login
@@ -37,7 +36,6 @@ staging:
   name: staging
   aws_parameter_store_name: stage
   base_url: https://na-1-install.${customer}.staging.apriori.net/
-  multi_tenant_installation_name: ${${deployment}.name} na-1
   #  TODO: uncomment for staging local run
   secret_key: K6JWVF8KV884
 
@@ -83,7 +81,7 @@ local:
   base_url: http://localhost
   name: local
   secret_key: O85XMATZEMBO
-  multi_tenant_installation_name: US 1
+  #multi_tenant_installation_name: US 1
 
   admin:
     ui_url: ${local.base_url}/apriori/login
@@ -175,7 +173,6 @@ development:
   aws_parameter_store_name: development
   base_url: https://cloud.na-1.development.apriori.net/
   base_url_reports: https://na-1-install.apriori-internal.development.apriori.net/
-  multi_tenant_installation_name: ${${deployment}.name}
   secret_key: O85XMATZEMBO
   user_identity: 4N630F61FGNG
 
