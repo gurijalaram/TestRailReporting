@@ -31,37 +31,6 @@ qa-test:
 
 ########################################################################################################################
 
-######################################################## INT-CORE ######################################################
-int-core:
-  name: int-core
-  aws_parameter_store_name: int-blue
-  base_url: https://cost.${customer}.int.apriori.net/
-  multi_tenant_installation_name: Core Services
-  secret_key: 65J1ID2B6LDG
-
-
-  core_service_url_template: core.int.apriori.net/
-  deployment_url_template: core.int.apriori.net/
-
-  admin:
-    ui_url: ${qa-test.base_url}apriori/login
-
-  bcs:
-    report_identity: 50A4DFJF3NC7
-    reportType_identity: 0J3JMAA4MCAJ
-    part_identity: 6E5GDN0CHB95
-    batch_identity: 6N92EN8EHM52
-
-  cds:
-    apriori_core_services_installation_identity: 70EGN68B5CMH
-    apriori_production_deployment_identity: H337GKD0LA0N
-    identity_role: 67J517C9L762
-
-  reports:
-    ui_url: ${qa-test.base_url}jasperserver-pro/
-
-########################################################################################################################
-
 
 ######################################################## STAGING #######################################################
 staging:
@@ -96,24 +65,6 @@ onprem:
   name: onprem
   deployment_url_template: ${base_url}
   users_csv_file: onprem-users.csv
-
-########################################################################################################################
-
-
-######################################################## MIGRATION #####################################################
-migration:
-  name: migration
-  aws_parameter_store_name: mig-21-1
-  secret_key: X0V4XXK2SF87
-
-########################################################################################################################
-
-
-######################################################## MIGRATION-PREVIEW #############################################
-migration-preview:
-  name: migration-preview
-  aws_parameter_store_name: mig-21-1
-  secret_key: X0V4XXK2SF87
 
 ########################################################################################################################
 
