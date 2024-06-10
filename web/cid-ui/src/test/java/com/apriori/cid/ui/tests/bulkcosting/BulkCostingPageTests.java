@@ -62,7 +62,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {30730,29964})
+    @TestRail(id = {30730, 29964})
     @Description("create inputRow for the worksheet")
     public void testCreateInputRow() {
         SoftAssertions soft = new SoftAssertions();
@@ -73,8 +73,8 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        String inputRowName1 = createInputRow(userCredentials, worksheetResponse,5);
-        String inputRowName2 = createInputRow(userCredentials, worksheetResponse,6);
+        String inputRowName1 = createInputRow(userCredentials, worksheetResponse, 5);
+        String inputRowName2 = createInputRow(userCredentials, worksheetResponse, 6);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
         soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName1)).isTrue();
         soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName2)).isTrue();
@@ -93,7 +93,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        String inputRowName = createInputRow(userCredentials, worksheetResponse,5);
+        String inputRowName = createInputRow(userCredentials, worksheetResponse, 5);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
         soft.assertThat(bulkCostingPage.getRemoveButtonState("Cannot perform a remove action"))
             .contains(Arrays.asList("Cannot perform a remove action with no scenarios selected"));
@@ -121,7 +121,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        createInputRow(userCredentials, worksheetResponse,5);
+        createInputRow(userCredentials, worksheetResponse, 5);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
 
         soft.assertThat(bulkCostingPage.getSetInputButtonState("Cannot set inputs with no scenarios selected."))
@@ -158,7 +158,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        createInputRow(userCredentials, worksheetResponse,5);
+        createInputRow(userCredentials, worksheetResponse, 5);
         soft.assertThat(bulkCostingPage.getInfoButtonState("Cannot show worksheet info with no worksheet selected."))
             .isEqualTo("Cannot show worksheet info with no worksheet selected.");
 
