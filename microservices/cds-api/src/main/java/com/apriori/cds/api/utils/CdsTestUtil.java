@@ -1,19 +1,16 @@
 package com.apriori.cds.api.utils;
 
 
-import static com.apriori.cds.api.enums.ApplicationEnum.CIS;
 import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
 import com.apriori.cds.api.enums.AppAccessControlsEnum;
-import com.apriori.cds.api.enums.ApplicationEnum;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.enums.DeploymentEnum;
 import com.apriori.cds.api.models.Apps;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
-import com.apriori.cds.api.models.request.AccessControlRequest;
 import com.apriori.cds.api.models.request.ActivateLicense;
 import com.apriori.cds.api.models.request.ActivateLicenseRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
@@ -56,7 +53,6 @@ import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Application;
-import com.apriori.shared.util.models.response.Applications;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
@@ -66,7 +62,6 @@ import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
 import com.apriori.shared.util.models.response.Users;
-import com.apriori.shared.util.properties.PropertiesContext;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.SneakyThrows;
@@ -95,21 +90,6 @@ public class CdsTestUtil extends TestUtil {
             .useApUserContextInRequests();
 
         testingUser = requestEntityUtil.getEmbeddedUser();
-    }
-
-    /**
-     * Calls an API with GET verb
-     *
-     * @param applicationCloudReference - the application cloud reference
-     * @return string
-     */
-    public String getApplicationIdentity(ApplicationEnum applicationCloudReference) {
-        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.APPLICATIONS, Applications.class)
-            .queryParams(new QueryParams().use("cloudReference[EQ]", applicationCloudReference.getApplication()))
-            .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<Applications> response = HTTPRequest.build(requestEntity).get();
-        return response.getResponseEntity().getItems().stream().findFirst().get().getIdentity();
     }
 
     /**
@@ -855,32 +835,6 @@ public class CdsTestUtil extends TestUtil {
                 .build());
 
         HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Post to add out of context access control
-     *
-     * @return new object
-     */
-    public ResponseWrapper<AccessControlResponse> addAccessControl(String customerIdentity, String userIdentity) {
-
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControlResponse.class)
-            .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "accessControl",
-                AccessControlRequest.builder()
-                    .customerIdentity(RequestEntityUtilBuilder.useRandomUser().getEmbeddedUser().getUserDetails().getCustomerIdentity())
-                    .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
-                    .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
-                    .applicationIdentity(new CdsTestUtil().getApplicationIdentity(CIS))
-                    .createdBy("#SYSTEM00000")
-                    .roleName("USER")
-                    .roleIdentity(PropertiesContext.get("cds.identity_role"))
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
     }
 
     /**

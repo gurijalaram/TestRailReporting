@@ -9,6 +9,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.AccessControlResponse;
 import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.models.response.InstallationItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -35,8 +36,9 @@ import java.util.stream.Collectors;
 public class CdsUserManagementHighMemTests {
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
+    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final ApplicationUtil applicationUtil = new ApplicationUtil();
+    private final String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
     private String customerIdentity;
     private String siteIdentity;
     private String deploymentIdentity;
@@ -155,9 +157,9 @@ public class CdsUserManagementHighMemTests {
         RandomCustomerData rcd = new RandomCustomerData();
         ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
-        String ciaIdentity = cdsTestUtil.getApplicationIdentity(CIA);
-        String cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
-        String acsIdentity = cdsTestUtil.getApplicationIdentity(ACS);
+        String ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
+        String cirIdentity = applicationUtil.getApplicationIdentity(CIR);
+        String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();

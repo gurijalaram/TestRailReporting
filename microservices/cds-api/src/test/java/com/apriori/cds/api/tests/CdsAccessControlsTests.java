@@ -4,6 +4,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.AccessControlResponse;
 import com.apriori.cds.api.models.response.AccessControls;
+import com.apriori.cds.api.utils.AccessUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
@@ -27,6 +28,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private AccessUtil accessUtil = new AccessUtil();
     private String customerIdentity;
     private String userIdentity;
     private SoftAssertions soft = new SoftAssertions();
@@ -54,7 +56,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     @Description("Adding out of context access control")
     public void postAccessControl() {
         setCustomerData();
-        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
+        ResponseWrapper<AccessControlResponse> accessControlResponse = accessUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getIdentity();
 
         accessControlIdentityHolder = IdentityHolder.builder()
@@ -72,7 +74,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     @Description("Get Access controls by Customer and User")
     public void getAccessControl() {
         setCustomerData();
-        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
+        ResponseWrapper<AccessControlResponse> accessControlResponse = accessUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getIdentity();
 
         accessControlIdentityHolder = IdentityHolder.builder()
@@ -92,7 +94,7 @@ public class CdsAccessControlsTests extends CdsTestUtil {
     @Description("Get access control by Control ID")
     public void getAccessControlById() {
         setCustomerData();
-        ResponseWrapper<AccessControlResponse> accessControl = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
+        ResponseWrapper<AccessControlResponse> accessControl = accessUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControl.getResponseEntity().getIdentity();
 
         accessControlIdentityHolder = IdentityHolder.builder()

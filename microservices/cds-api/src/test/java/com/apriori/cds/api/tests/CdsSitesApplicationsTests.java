@@ -6,6 +6,7 @@ import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.SiteItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -29,7 +30,8 @@ public class CdsSitesApplicationsTests {
     private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder licensedAppIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final ApplicationUtil applicationUtil = new ApplicationUtil();
     private String customerIdentity;
     private String customerName;
     private String cloudRef;
@@ -77,7 +79,7 @@ public class CdsSitesApplicationsTests {
     @TestRail(id = {6058})
     @Description("Add an application to a site")
     public void addApplicationSite() {
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
 
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
 
@@ -95,7 +97,7 @@ public class CdsSitesApplicationsTests {
     @TestRail(id = {6060})
     @Description("Returns a specific LicensedApplication for a specific customer site")
     public void getApplicationSite() {
-        String appIdentity = cdsTestUtil.getApplicationIdentity(CIA);
+        String appIdentity = applicationUtil.getApplicationIdentity(CIA);
 
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();

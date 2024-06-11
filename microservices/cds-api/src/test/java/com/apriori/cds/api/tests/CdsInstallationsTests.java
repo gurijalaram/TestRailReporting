@@ -6,6 +6,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.models.response.InstallationResponse;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -31,7 +32,8 @@ public class CdsInstallationsTests {
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final ApplicationUtil applicationUtil = new ApplicationUtil();
 
     @AfterEach
     public void cleanUp() {
@@ -87,7 +89,7 @@ public class CdsInstallationsTests {
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
 
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
@@ -134,7 +136,7 @@ public class CdsInstallationsTests {
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 
@@ -187,7 +189,7 @@ public class CdsInstallationsTests {
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 

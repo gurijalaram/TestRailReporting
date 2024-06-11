@@ -7,6 +7,7 @@ import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.models.response.FeatureResponse;
 import com.apriori.cds.api.models.response.InstallationItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -30,6 +31,7 @@ public class CdsFeatureTests {
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final ApplicationUtil applicationUtil = new ApplicationUtil();
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
     private String installationIdentity;
@@ -94,7 +96,6 @@ public class CdsFeatureTests {
         soft.assertThat(errorResponse.getMessage())
             .isEqualTo("'deploymentIdentity' is not a valid identity.");
         soft.assertAll();
-
     }
 
     @Test
@@ -115,7 +116,7 @@ public class CdsFeatureTests {
             installationIdentity
         );
 
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 
@@ -198,7 +199,7 @@ public class CdsFeatureTests {
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentity = installation.getResponseEntity().getIdentity();
 
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 

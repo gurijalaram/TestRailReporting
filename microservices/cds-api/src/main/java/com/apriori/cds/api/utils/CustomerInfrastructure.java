@@ -13,7 +13,8 @@ import com.apriori.shared.util.models.response.LicensedApplications;
 import com.apriori.shared.util.models.response.Site;
 
 public class CustomerInfrastructure extends CdsTestUtil {
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final ApplicationUtil applicationUtil = new ApplicationUtil();
     private String siteIdentity;
     private String licensedApProIdentity;
     private String licensedCiaIdentity;
@@ -22,10 +23,10 @@ public class CustomerInfrastructure extends CdsTestUtil {
     private String installationIdentity;
 
     public void createCustomerInfrastructure(RandomCustomerData rcd, String customerIdentity) {
-        String ciaIdentity = cdsTestUtil.getApplicationIdentity(CIA);
-        String cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
-        String acsIdentity = cdsTestUtil.getApplicationIdentity(ACS);
+        String ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
+        String cirIdentity = applicationUtil.getApplicationIdentity(CIR);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
+        String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();
 

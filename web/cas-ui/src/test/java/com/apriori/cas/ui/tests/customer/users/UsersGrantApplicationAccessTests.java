@@ -11,6 +11,7 @@ import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.InstallationItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -40,6 +41,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
     private IdentityHolder installationIdentityHolder;
     private IdentityHolder licensedAppIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private final ApplicationUtil applicationUtil = new ApplicationUtil();
     private CdsTestUtil cdsTestUtil;
     private Customer targetCustomer;
     private String customerIdentity;
@@ -77,7 +79,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
         String realmKey = generateStringUtil.generateRealmKey();
-        appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
+        appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> newApplication = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();
 

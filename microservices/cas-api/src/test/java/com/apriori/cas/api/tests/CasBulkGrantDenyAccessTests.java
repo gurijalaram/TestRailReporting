@@ -14,6 +14,7 @@ import com.apriori.cas.api.models.response.Sites;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.enums.RolesEnum;
@@ -48,6 +49,7 @@ public class CasBulkGrantDenyAccessTests {
     private final UserCredentials currentUser = UserUtil.getUser(RolesEnum.APRIORI_DESIGNER);
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final ApplicationUtil applicationUtil = new ApplicationUtil();
     private String acsIdentity;
     private String ciaIdentity;
     private String appIdentity;
@@ -72,12 +74,12 @@ public class CasBulkGrantDenyAccessTests {
     @BeforeEach
     public void setup() {
         RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
-        appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
-        ciaIdentity = cdsTestUtil.getApplicationIdentity(CIA);
-        cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
-        acsIdentity = cdsTestUtil.getApplicationIdentity(ACS);
-        achIdentity = cdsTestUtil.getApplicationIdentity(CLOUD_HOME);
-        apWIdentity = cdsTestUtil.getApplicationIdentity(CIS);
+        appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
+        ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
+        cirIdentity = applicationUtil.getApplicationIdentity(CIR);
+        acsIdentity = applicationUtil.getApplicationIdentity(ACS);
+        achIdentity = applicationUtil.getApplicationIdentity(CLOUD_HOME);
+        apWIdentity = applicationUtil.getApplicationIdentity(CIS);
         aprioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
         apSiteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity).getResponseEntity().getItems().stream().filter(site -> site.getName().contains("Internal")).collect(Collectors.toList()).get(0).getIdentity();
         apDeploymentIdentity = PropertiesContext.get("cds.apriori_production_deployment_identity");

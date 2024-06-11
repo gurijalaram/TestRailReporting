@@ -5,6 +5,7 @@ import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.InstallationItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -29,7 +30,8 @@ public class CdsInstallationApplicationTests {
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final ApplicationUtil applicationUtil = new ApplicationUtil();
     private String customerIdentity;
     private String customerName;
     private String cloudRef;
@@ -90,7 +92,7 @@ public class CdsInstallationApplicationTests {
     @Description("Adds an application to an installation and deletes it")
     public void addApplicationToInstallation() {
         String realmKey = generateStringUtil.generateRealmKey();
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
 
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
