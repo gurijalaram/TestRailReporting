@@ -9,11 +9,13 @@ import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
+import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.PostComponentResponse;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -31,14 +33,19 @@ public class ComponentRedirectTests {
     @TestRail(id = 14197)
     @Description("Verify receipt of 301 response when getting component details of a file which already exists")
     public void receive301AfterUploadOfExistingComponent() {
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         component = new ComponentRequestUtil().getComponent();
+        ComponentInfoBuilder component2 = SerializationUtils.clone(component);
+        component2.setScenarioName(scenarioName2);
 
-        PostComponentResponse existingPartResponse = componentsUtil.postComponentResponse(component);
+        componentsUtil.postComponent(component);
+        PostComponentResponse existingPartResponse = componentsUtil.postComponentResponse(component2);
 
-        component.setComponentIdentity(existingPartResponse.getSuccesses().get(0).getComponentIdentity());
-        component.setScenarioIdentity(existingPartResponse.getSuccesses().get(0).getScenarioIdentity());
+        component2.setComponentIdentity(existingPartResponse.getSuccesses().get(0).getComponentIdentity());
+        component2.setScenarioIdentity(existingPartResponse.getSuccesses().get(0).getScenarioIdentity());
 
-        assertThat(componentsUtil.getComponentIdentityExpectingStatusCode(component, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
+        //ToDo:- This doesn't cover the contents of the test - Modify it to match
+        assertThat(componentsUtil.getComponentIdentityExpectingStatusCode(component2, HttpStatus.SC_MOVED_PERMANENTLY).getBody(), is(emptyString()));
     }
 
     @Test
@@ -64,6 +71,8 @@ public class ComponentRedirectTests {
     public void receive301AfterUploadOfExistingComponentWithOverriddenScenario() {
 
         component = new ComponentRequestUtil().getComponent();
+        componentsUtil.postComponent(component);
+        component.setOverrideScenario(true);
 
         PostComponentResponse existingPartScenarioResponse = componentsUtil.postComponentResponse(component);
 
