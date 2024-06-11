@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate.dtc;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,8 +23,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class ThreadTests extends TestBaseUI {
 
     private SoftAssertions softAssertions = new SoftAssertions();
@@ -44,77 +41,19 @@ public class ThreadTests extends TestBaseUI {
         }
     }
 
-    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
-    /*@Test
-    @Description("Test to check edit thread button is disabled")
-    public void threadButtonDisabled() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap noDraft.CATPart");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        investigationPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading");
-
-        assertThat(investigationPage.getEditButton().isEnabled(), is(false));
-    }*/
-
-    /*@Category({CustomerSmokeTests.class, SmokeTests.class})
     @Test
-    @TestRail(id = {28,1631"})
-    @Description("C28 Test to check thread length persist")
-    public void editThread() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Plastic moulded cap noDraft.CATPart");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading")
-                .editThread("Simple Holes", "SimpleHole:1")
-                .selectThreadDropdown("Yes")
-                .enterThreadLength("0.28")
-                .apply(InvestigationPage.class)
-                .selectEditButton();
-
-        assertThat(threadingPage.isThreadLength("0.28"), is(true));
-    }*/
-
-    @Test
-    @Tag(EXTENDED_REGRESSION)
-    @TestRail(id = {8902})
+    @TestRail(id = {8902, 8903})
     @Description("Testing to verify costed thread with attribute change")
     public void selectScenario() {
-        component = new ComponentRequestUtil().getComponent("DTCCastingIssues");
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.STOCK_MACHINING);
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario(7)
-            .openDesignGuidance()
-            .openThreadsTab()
-            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
-
-        softAssertions.assertThat(threadingPage.getThreaded("SimpleHole:1")).contains("check");
-
-        threadingPage.closePanel()
-            .selectProcessGroup(component.getProcessGroup())
-            .openMaterialSelectorTable()
-            .search("11000")
-            .selectMaterial(MaterialNameEnum.COPPER_UNS_C11000.getMaterialName())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("4 Axis Mill Routing")
             .submit(EvaluatePage.class)
             .costScenario(7)
             .openDesignGuidance()
@@ -122,248 +61,6 @@ public class ThreadTests extends TestBaseUI {
             .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
         softAssertions.assertThat(threadingPage.getThreaded("SimpleHole:1")).contains("check");
-
-        softAssertions.assertAll();
-    }
-
-    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
-    /*@Test
-    @TestRail(id = {29"})
-    @Description("Test to set dropdown value to no")
-    public void setDropdownValueNo() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading")
-                .editThread("Simple Holes", "SimpleHole:1")
-                .selectThreadDropdown("No")
-                .apply(InvestigationPage.class)
-                .selectEditButton();
-
-        assertThat(threadingPage.isThreadingStatus("No"), is(true));
-    }*/
-
-    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
-    /*@Test
-    @TestRail(id = {3847"})
-    @Description("Test to set dropdown value to yes")
-    public void setDropdownValueYes() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CurvedWall.CATPart");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .selectVPE(DigitalFactoryEnum.APRIORI_USA.getVpe())
-                .costScenario(3);
-
-        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High"), is(true));
-
-        threadingPage = evaluatePage.openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading")
-                .editThread("Curved Walls", "CurvedWall:1")
-                .selectThreadDropdown("Yes")
-                .enterThreadLength("0.64")
-                .apply(InvestigationPage.class)
-                .selectEditButton();
-
-        assertThat(threadingPage.isThreadLength("0.64"), is(true));
-    }*/
-
-    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
-    /*@Test
-    @Description("Testing warning message displayed when thread length is removed")
-    public void costedThreadLengthRemoved() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading")
-                .editThread("Curved Walls", "CurvedWall:24")
-                .selectThreadDropdown("Yes")
-                .enterThreadLength("0.25")
-                .apply(InvestigationPage.class)
-                .selectEditButton();
-
-        assertThat(threadingPage.isThreadLength("0.25"), is(true));
-        warningPage = threadingPage.removeThreadLength()
-                .apply(WarningPage.class);
-
-        assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
-    }*/
-
-    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
-    /*@Test
-    @TestRail(id = {32", "33"})
-    @Description("Testing changing the thread value and cancelling doesn't remove the value")
-    public void changeThreadValueCancel() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading")
-                .editThread("Simple Holes", "SimpleHole:1")
-                .selectThreadDropdown("Yes")
-                .enterThreadLength("0.26")
-                .apply(InvestigationPage.class)
-                .selectEditButton()
-                .enterThreadLength("1.70")
-                .cancel()
-                .selectEditButton();
-
-        assertThat(threadingPage.isThreadLength("0.26"), is(true));
-    }*/
-
-    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
-    /*@Test
-    @TestRail(id = {32", "34"})
-    @Description("Testing that adding text values in the thread length shows a warning message")
-    public void junkValuesCharTest() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CurvedWall.CATPart");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        warningPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading")
-                .editThread("Curved Walls", "CurvedWall:1")
-                .selectThreadDropdown("Yes")
-                .enterThreadLength("apriori")
-                .apply(WarningPage.class);
-
-        assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
-    }*/
-
-    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
-    /*@Test
-    @Description("Testing that adding no value in the thread shows a warning message")
-    public void junkValueTest() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CurvedWall.CATPart");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        warningPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading")
-                .editThread("Curved Walls", "CurvedWall:1")
-                .selectThreadDropdown("Yes")
-                .enterThreadLength("")
-                .apply(WarningPage.class);
-
-        assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
-    }*/
-
-    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
-    /*@Test
-    @TestRail(id = {35"})
-    @Description("Testing that adding a value of 0 in the thread shows a warning message")
-    public void zeroValueTest() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        warningPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading")
-                .editThread("Curved Walls", "CurvedWall:25")
-                .selectThreadDropdown("Yes")
-                .enterThreadLength("0")
-                .apply(WarningPage.class);
-
-        assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
-    }*/
-
-    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
-    /*@Test
-    @Tag(SMOKE)
-    @TestRail(id = {30"})
-    @Description("Testing a public thread cannot be edited")
-    public void cannotEditPublicThread() {
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CurvedWall.CATPart");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        investigationPage = loginPage.login(currentUser)
-                .uploadFileAndOk(testScenarioName, resourceFile, EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .selectPublishButton()
-                .openScenario(testScenarioName, "CurvedWall")
-                .openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading");
-
-        assertThat(investigationPage.getEditButton().isEnabled(), is(false));
-    }*/
-
-    @Test
-    @Tag(EXTENDED_REGRESSION)
-    @TestRail(id = {8903})
-    @Description("Testing thread length persist when attributes are changed from process group")
-    public void maintainingThreadChangeAttributes() {
-        component = new ComponentRequestUtil().getComponent("DTCCastingIssues");
-
-        loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario(7)
-            .openDesignGuidance()
-            .openThreadsTab()
-            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
-
         softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
 
         threadingPage.closePanel()
@@ -372,19 +69,23 @@ public class ThreadTests extends TestBaseUI {
             .search("1095")
             .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1095.getMaterialName())
             .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("[CTL]/Waterjet/[Bend]")
+            .submit(EvaluatePage.class)
             .costScenario(7)
             .openDesignGuidance()
             .openThreadsTab()
             .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
         softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
+        softAssertions.assertThat(threadingPage.getThreaded("SimpleHole:1")).contains("check");
 
         softAssertions.assertAll();
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
-    @TestRail(id = {8904, 6358, 6359})
+    @TestRail(id = {8904, 6358, 6359, 8905, 6299, 6362, 8268})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
         component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
@@ -393,7 +94,11 @@ public class ThreadTests extends TestBaseUI {
         threadingPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Gravity Die Cast")
+            .submit(EvaluatePage.class)
+            .costScenario(7)
             .openDesignGuidance()
             .openThreadsTab()
             .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
@@ -412,26 +117,6 @@ public class ThreadTests extends TestBaseUI {
 
         softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("0.79in");
 
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {8905, 6299, 6362})
-    @Description("Testing thread units persist when changed to centimetres")
-    public void validateThreadUnitsCM() {
-        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.CASTING_DIE);
-
-        loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openThreadsTab()
-            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
-
-        softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
-
         threadingPage.closePanel()
             .openSettings()
             .selectUnits(UnitsEnum.CUSTOM)
@@ -448,25 +133,27 @@ public class ThreadTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
-    @TestRail(id = {8906})
-    @Description("Testing threading persist when secondary process is added")
-    public void maintainingThreadSecondaryProcessGroup() {
-        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.STOCK_MACHINING);
+    @TestRail(id = {8268, 8906})
+    @Description("Testing compatible thread length for NX files and SP")
+    public void threadsCompatibleCadNX() {
+        component = new ComponentRequestUtil().getComponent("100plusThreads");
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("[CTL]/Fiber Laser/[Bend]")
+            .submit(EvaluatePage.class)
+            .costScenario(7)
             .openDesignGuidance()
             .openThreadsTab()
-            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:15");
 
-        softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
+        softAssertions.assertThat(threadingPage.getLength("SimpleHole:15")).isEqualTo("15.00mm");
 
         threadingPage.closePanel()
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToOtherSecProcessesTab()
@@ -475,47 +162,10 @@ public class ThreadTests extends TestBaseUI {
             .costScenario()
             .openDesignGuidance()
             .openThreadsTab()
-            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
-
-        softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {8268})
-    @Description("Testing compatible thread length for DTC files")
-    public void threadsCompatibleCadDTC() {
-        component = new ComponentRequestUtil().getComponent("CatiaPMIThreads");
-
-        loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openThreadsTab()
-            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
-
-        assertThat(threadingPage.getLength("SimpleHole:1"), is("10.00mm"));
-    }
-
-    @Test
-    @TestRail(id = {8268})
-    @Description("Testing compatible thread length for NX files")
-    public void threadsCompatibleCadNX() {
-        component = new ComponentRequestUtil().getComponent("100plusThreads");
-
-        loginPage = new CidAppLoginPage(driver);
-        threadingPage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
-            .costScenario(5)
-            .openDesignGuidance()
-            .openThreadsTab()
             .selectIssueTypeGcd("Simple Holes", "SimpleHole:15");
 
-        assertThat(threadingPage.getLength("SimpleHole:1"), is("15.00mm"));
+        softAssertions.assertThat(threadingPage.getLength("SimpleHole:15")).isEqualTo("15.00mm");
+        softAssertions.assertAll();
     }
 
     @Test
@@ -529,6 +179,10 @@ public class ThreadTests extends TestBaseUI {
         threadingPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("[CTL]/[Bend]")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .openThreadsTab()
@@ -536,43 +190,4 @@ public class ThreadTests extends TestBaseUI {
 
         assertThat(threadingPage.getLength("SimpleHole:13"), is("4.06mm"));
     }
-
-    // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
-    /*@Test
-    @TestRail(id = {64"})
-    @Description("Validate thread filter behaves correctly in Investigation tab.")
-    public void threadFilter() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "CREO-PMI-Threads.prt.1");
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        investigationPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.getProcessGroup())
-                .costScenario()
-                .openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading")
-                .selectFilterDropdown("Threaded in CAD")
-                .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:13");
-
-        assertThat(investigationPage.getGcdRow("SimpleHole:13"), hasItems("CAD", "4.06"));
-
-        investigationPage.selectEditButton()
-                .enterThreadLength("7")
-                .apply(InvestigationPage.class);
-
-        designGuidancePage = new DesignGuidancePage(driver);
-        investigationPage = designGuidancePage.closePanel()
-                .costScenario()
-                .openDesignGuidance()
-                .openInvestigationTab()
-                .selectInvestigationTopic("Threading")
-                .selectFilterDropdown("Overridden GCDs")
-                .selectGcdTypeAndGcd("Simple Holes", "SimpleHole:13");
-
-        assertThat(investigationPage.getGcdRow("SimpleHole:13"), hasItems("Manual", "7.00"));
-    }*/
 }

@@ -8,6 +8,7 @@ import com.apriori.qa.ach.ui.pageobjects.CloudHomeLoginPage;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.qa.ach.ui.utils.AchEnvironmentUIUtil;
 import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.enums.CustomerEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.testrail.TestRail;
@@ -69,7 +70,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
     }
 
     private List<ApplicationDTO> getMappedMultiTenantApplications(Deployment customerDeployment) {
-        final String apInternalCustomerIdentity = CustomerUtil.getCustomerData().getIdentity();
+        final String apInternalCustomerIdentity = CustomerUtil.getCustomerData(CustomerEnum.AP_INT.getCustomer()).getIdentity();
 
         return achEnvironmentAPIUtil.mapMultiTenantDeploymentDataToDTO(
             achEnvironmentAPIUtil.getCustomerDeploymentInformation(apInternalCustomerIdentity), customerDeployment.getInstallations().get(0).getRegion()

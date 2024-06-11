@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -61,6 +62,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 11154)
     @Description("Include and Exclude buttons disabled by default")
     public void testIncludeAndExcludeDisabledButtons() {
@@ -81,6 +83,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = 11150)
     @Description("Exclude all sub-components from top-level assembly")
     public void testExcludeButtons() {
@@ -103,7 +106,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {11874, 11843, 11842, 11155, 11148})
     @Description("Verify Include and Exclude buttons disabled if mixture selected")
     public void testIncludeAndExcludeDisabledButtonsWithMixedSelections() {
@@ -144,6 +147,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {11153, 11152, 11151})
     @Description("Include all sub-components from top-level assembly")
     public void testIncludeButtonEnabledWithCostedComponents() {
@@ -171,7 +175,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {11150, 11149, 11156})
     @Description("Include all sub-components from top-level assembly")
     public void testExcludeButtonEnabledWithCostedComponents() {
@@ -197,7 +201,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {12089, 6554})
     @Description("Verify Excluded scenarios are not highlighted in flattened view")
     public void testExcludedScenarioInFlattenedView() {
@@ -221,7 +225,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {11921, 11920, 11919})
     @Description("Include all sub-components from top-level assembly")
     public void testIncludeSubcomponentsAndCost() {
@@ -272,7 +276,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {11918, 11917, 11916})
     @Description("Exclude all sub-components from top-level assembly")
     public void testExcludeSubcomponentsAndCost() {
@@ -314,6 +318,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @Issues({@Issue("AP-74028")})
     @TestRail(id = {12135, 12052, 12138})
     @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
@@ -385,6 +390,7 @@ public class IncludeAndExcludeTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @Issue("2657")
     @TestRail(id = {11099})
     @Description("Validate  the set inputs button cannot be selected when sub assemblies and parts are selected")

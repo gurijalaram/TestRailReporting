@@ -4,9 +4,8 @@ import static com.apriori.cds.api.enums.ApplicationEnum.ACS;
 import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIR;
+import static com.apriori.cds.api.enums.ApplicationEnum.CIS;
 import static com.apriori.cds.api.enums.ApplicationEnum.CLOUD_HOME;
-import static com.apriori.shared.util.enums.CustomerEnum.AP_INT;
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.AccessControls;
@@ -17,6 +16,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
@@ -35,7 +35,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
@@ -43,16 +43,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
-@EnabledIfSystemProperty(named = "customer", matches = AP_INT)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasBulkGrantDenyAccessTests {
-    private final UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
+    private final UserCredentials currentUser = UserUtil.getUser(RolesEnum.APRIORI_DESIGNER);
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private String appIdentity;
-    private String ciaIdentity;
-    private String cirIdentity;
     private String acsIdentity;
+    private String ciaIdentity;
+    private String appIdentity;
     private String achIdentity;
+    private String cirIdentity;
     private SoftAssertions soft = new SoftAssertions();
     private List<User> sourceUsers;
     private String customerIdentity;
@@ -77,11 +77,11 @@ public class CasBulkGrantDenyAccessTests {
         cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
         acsIdentity = cdsTestUtil.getApplicationIdentity(ACS);
         achIdentity = cdsTestUtil.getApplicationIdentity(CLOUD_HOME);
+        apWIdentity = cdsTestUtil.getApplicationIdentity(CIS);
         aprioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
         apSiteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity).getResponseEntity().getItems().stream().filter(site -> site.getName().contains("Internal")).collect(Collectors.toList()).get(0).getIdentity();
         apDeploymentIdentity = PropertiesContext.get("cds.apriori_production_deployment_identity");
         apInstallationIdentity = PropertiesContext.get("cds.apriori_core_services_installation_identity");
-        apWIdentity = PropertiesContext.get("cds.ap_workspace_application_identity");
     }
 
     @AfterEach

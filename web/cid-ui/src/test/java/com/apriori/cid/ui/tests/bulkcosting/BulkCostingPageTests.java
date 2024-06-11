@@ -62,9 +62,9 @@ public class BulkCostingPageTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {30730})
+    @TestRail(id = {30730, 29964})
     @Description("create inputRow for the worksheet")
-    public void createInputRow() {
+    public void testCreateInputRow() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -73,16 +73,18 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        String inputRowName = createInputRow(userCredentials, worksheetResponse);
+        String inputRowName1 = createInputRow(userCredentials, worksheetResponse, 5);
+        String inputRowName2 = createInputRow(userCredentials, worksheetResponse, 6);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
-        soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName)).isTrue();
+        soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName1)).isTrue();
+        soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName2)).isTrue();
         soft.assertAll();
     }
 
     @Test
     @TestRail(id = {30679, 30680, 30681, 30682, 30684})
     @Description("delete input row for the worksheet")
-    public void deleteInputRow() {
+    public void testDeleteInputRow() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -91,7 +93,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        String inputRowName = createInputRow(userCredentials, worksheetResponse);
+        String inputRowName = createInputRow(userCredentials, worksheetResponse, 5);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
         soft.assertThat(bulkCostingPage.getRemoveButtonState("Cannot perform a remove action"))
             .contains(Arrays.asList("Cannot perform a remove action with no scenarios selected"));
@@ -110,7 +112,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     @Test
     @TestRail(id = {30675, 30676, 30674})
     @Description("update inputs")
-    public void updateInputs() {
+    public void testUpdateInputs() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -119,7 +121,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        createInputRow(userCredentials, worksheetResponse);
+        createInputRow(userCredentials, worksheetResponse, 5);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
 
         soft.assertThat(bulkCostingPage.getSetInputButtonState("Cannot set inputs with no scenarios selected."))
@@ -145,9 +147,9 @@ public class BulkCostingPageTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {29876, 29875, 29877, 29878})
-    @Description("edit Bulk Analysis name")
-    public void editBulkAnalysisName() {
+    @TestRail(id = {29876, 29875, 29877, 29878, 29924})
+    @Description("edit Bulk Analysis name and later on search on it")
+    public void editBulkAnalysisNameAndSearchOnIt() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -156,7 +158,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        createInputRow(userCredentials, worksheetResponse);
+        createInputRow(userCredentials, worksheetResponse, 5);
         soft.assertThat(bulkCostingPage.getInfoButtonState("Cannot show worksheet info with no worksheet selected."))
             .isEqualTo("Cannot show worksheet info with no worksheet selected.");
 
@@ -165,19 +167,26 @@ public class BulkCostingPageTests extends TestBaseUI {
 
         bulkCostingPage.clickOnTheInfoButton();
         soft.assertThat(bulkCostingPage.isBulkAnalysisInfoWindowIsDisplayed()).isTrue();
-        String value = worksheetResponse.getResponseEntity().getName().concat("_updated");
-        bulkCostingPage.changeTheNaneOfBulkAnalysisName(value)
+        String worksheetName = worksheetResponse.getResponseEntity().getName().concat("_updated");
+        bulkCostingPage.changeTheNaneOfBulkAnalysisName(worksheetName)
             .clickOnSaveButtonOnBulkAnalysisInfo();
-        soft.assertThat(bulkCostingPage.isWorksheetPresent(value)).isTrue();
+        soft.assertThat(bulkCostingPage.isWorksheetPresent(worksheetName)).isTrue();
+
+        bulkCostingPage.typeIntoSearchWorkSheetInput(worksheetName)
+            .clickOnSubmitOnSearchBulkAnalysis();
+
+        soft.assertThat(bulkCostingPage.checkExpectedNumbersOfRows(1)).isTrue();
+        soft.assertThat(bulkCostingPage.getTextFromTheFirstRow()).contains(Arrays.asList(worksheetName));
         soft.assertAll();
     }
 
-    private String createInputRow(UserCredentials userCredentials, ResponseWrapper<WorkSheetResponse> worksheetResponse) {
+
+    private String createInputRow(UserCredentials userCredentials, ResponseWrapper<WorkSheetResponse> worksheetResponse, int itemNumber) {
         CssComponent cssComponent = new CssComponent();
         BcmUtil bcmUtil = new BcmUtil();
         ScenarioItem scenarioItem =
             cssComponent.postSearchRequest(userCredentials, "PART")
-                .getResponseEntity().getItems().get(5);
+                .getResponseEntity().getItems().get(itemNumber);
         bcmUtil.createWorkSheetInputRowWithEmail(scenarioItem.getComponentIdentity(),
             scenarioItem.getScenarioIdentity(), worksheetResponse.getResponseEntity().getIdentity(), userCredentials);
         return scenarioItem.getComponentDisplayName();

@@ -15,7 +15,6 @@ import com.apriori.shared.util.enums.ReportNamesEnum;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 
 import com.google.common.base.Stopwatch;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.jsoup.nodes.Document;
@@ -49,13 +48,13 @@ public class GenericAssemblyCostTests {
         log.debug(String.format("Report generation took: %s", timer.elapsed(TimeUnit.SECONDS)));
 
         String currencyValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
-        String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(19).parent().parent().child(2).child(0).text();
+        String capInvValueGBP = jasperReportSummaryGBP.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).siblingElements().get(2).text();
 
         jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
         JasperReportSummary jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummary(jasperApiUtils.getReportRequest());
 
         String currencyValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(3).text();
-        String capInvValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Capital Investments").get(19).parent().parent().child(2).child(0).text();
+        String capInvValueUSD = jasperReportSummaryUSD.getReportHtmlPart().getElementsContainingText("Capital Investments").get(6).siblingElements().get(2).text();
 
         softAssertions.assertThat(currencyValueGBP).isNotEqualTo(currencyValueUSD);
         softAssertions.assertThat(capInvValueGBP).isNotEqualTo(capInvValueUSD);
@@ -233,7 +232,7 @@ public class GenericAssemblyCostTests {
         ).isEqualTo("Initial");
 
         softAssertions.assertThat(topLevelReportHtmlPart
-            .getElementsContainingText("Capital Investments").get(18).siblingElements().get(1).child(0).text()
+            .getElementsContainingText("Capital Investments").get(6).siblingElements().get(2).child(0).text()
         ).isEqualTo("962.80");
 
         softAssertions.assertAll();

@@ -354,7 +354,6 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
     public ViewSearchResultsPage searchForReport(String textToType) {
         pageUtils.waitForElementAndClick(searchInput);
         searchInput.sendKeys(textToType);
-        pageUtils.waitForSteadinessOfElement(By.cssSelector("span[id='globalSearch'] > a"));
         searchInput.sendKeys(Keys.ENTER);
         pageUtils.isPageLoaded(homePageAprioriLogo);
         pageUtils.waitForElementToAppear(By.xpath(String.format("//a[text() = '%s']", textToType)));

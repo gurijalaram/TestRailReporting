@@ -69,6 +69,7 @@ import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -297,14 +298,16 @@ public class CdsTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).patch();
     }
 
-    public ResponseWrapper<User> patchUser(
+    public <T> ResponseWrapper<T> patchUser(
+        Class<T> klass,
         String customerIdentity,
         String userIdentity,
+        Integer expectedResponseCode,
         JsonNode user) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, klass)
             .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(HttpStatus.SC_OK)
+            .expectedResponseCode(expectedResponseCode)
             .body("user", user);
 
         return HTTPRequest.build(requestEntity).patch();
@@ -706,10 +709,13 @@ public class CdsTestUtil extends TestUtil {
      * @param customerName     - the customer name
      * @return new object
      */
+    @SneakyThrows
     public ResponseWrapper<IdentityProviderResponse> addSaml(
         String customerIdentity,
         String userIdentity,
         String customerName) {
+
+        String signingCertificate = new String(FileResourceUtil.getResourceFileStream("SigningCert.txt").readAllBytes(), StandardCharsets.UTF_8);
 
         RequestEntity requestEntity = RequestEntityUtil_Old
             .init(CDSAPIEnum.SAML_BY_CUSTOMER_ID, IdentityProviderResponse.class)
@@ -726,7 +732,7 @@ public class CdsTestUtil extends TestUtil {
                     .active(true)
                     .createdBy("#SYSTEM00000")
                     .signInUrl(Constants.SIGNIN_URL)
-                    .signingCertificate(Constants.SIGNIN_CERT)
+                    .signingCertificate(signingCertificate)
                     .signingCertificateExpiresAt("2030-07-22T22:45:45.245Z")
                     .signRequest(true)
                     .signRequestAlgorithm("RSA_SHA256")
@@ -792,6 +798,7 @@ public class CdsTestUtil extends TestUtil {
      * @param subLicenseId     - the sublicense id
      * @return new object
      */
+    @SneakyThrows
     public ResponseWrapper<LicenseResponse> addLicense(
         String customerIdentity,
         String siteIdentity,
@@ -799,6 +806,9 @@ public class CdsTestUtil extends TestUtil {
         String siteId,
         String licenseId,
         String subLicenseId) {
+
+        String licenseXml = new String(FileResourceUtil.getResourceFileStream("CdsLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
+        String licenseTemplate = new String(FileResourceUtil.getResourceFileStream("CdsLicenseTemplate.xml").readAllBytes(), StandardCharsets.UTF_8);
 
         RequestEntity requestEntity = RequestEntityUtil_Old
             .init(CDSAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
@@ -811,8 +821,8 @@ public class CdsTestUtil extends TestUtil {
                         .apVersion("2020 R1")
                         .createdBy("#SYSTEM00000")
                         .active("false")
-                        .license(String.format(Constants.CDS_LICENSE, customerName, siteId, licenseId, subLicenseId))
-                        .licenseTemplate(String.format(Constants.CDS_LICENSE_TEMPLATE, customerName))
+                        .license(String.format(licenseXml, customerName, siteId, licenseId, subLicenseId))
+                        .licenseTemplate(String.format(licenseTemplate, customerName))
                         .build())
                 .build());
 

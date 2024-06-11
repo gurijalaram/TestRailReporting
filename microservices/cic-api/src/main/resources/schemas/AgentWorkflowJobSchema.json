@@ -27,6 +27,9 @@
         },
         "completedAt": {
           "type": "string"
+        },
+        "outputFolder": {
+          "type": "string"
         }
       },
       "required": [
@@ -39,7 +42,8 @@
       ],
       "optional": [
         "errorMessage",
-        "completedAt"
+        "completedAt",
+        "outputFolder"
       ]
     }
   },

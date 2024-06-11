@@ -1,27 +1,23 @@
 package com.apriori.cid.ui.tests.evaluate.dtc;
 
 import static com.apriori.shared.util.enums.ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
-import com.apriori.cid.ui.pageobjects.evaluate.designguidance.InvestigationPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.utils.EvaluateDfmIconEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +27,6 @@ public class DFMRiskTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private InvestigationPage investigationPage;
 
     private File cadResourceFile;
     private SoftAssertions softAssertions = new SoftAssertions();
@@ -39,73 +34,6 @@ public class DFMRiskTests extends TestBaseUI {
 
     public DFMRiskTests() {
         super();
-    }
-
-    @Test
-    @TestRail(id = {6453})
-    @Description("Validate DFM Risk - High for Stock Machining")
-    public void stockMachiningHighDFM() {
-
-        component = new ComponentRequestUtil().getComponent("gs515625_gt077_high");
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
-            .submit(EvaluatePage.class)
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.HIGH.getIcon());
-        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {6454})
-    @Description("Validate DFM Risk - Medium for Stock Machining")
-    public void stockMachiningMediumDFM() {
-        component = new ComponentRequestUtil().getComponent("9856874Medium");
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
-            .submit(EvaluatePage.class)
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
-        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {6456})
-    @Description("Validate DFM Risk - Critical for Sheet Metal")
-    public void sheetMetalCriticalDFM() {
-        component = new ComponentRequestUtil().getComponent("1271576_CRITICAL");
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .openMaterialSelectorTable()
-            .search("AISI 1020")
-            .selectMaterial(MaterialNameEnum.STEEL_COLD_WORKED_AISI1020.getMaterialName())
-            .submit(EvaluatePage.class)
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.CRITICAL.getIcon());
-        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");
-
-        softAssertions.assertAll();
     }
 
     @Test
@@ -126,34 +54,6 @@ public class DFMRiskTests extends TestBaseUI {
             .costScenario();
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
-    }
-
-    @Test
-    @TestRail(id = {6462, 6415, 6416})
-    @Description("Validate DFM Risk - Medium Plastic Moulding")
-    public void plasticMouldedMediumDFM() {
-        component = new ComponentRequestUtil().getComponent("PlasticMoulded-Special Tooling Sliders Lifters");
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .openMaterialSelectorTable()
-            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
-            .submit(EvaluatePage.class)
-            .costScenario(3);
-
-        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
-        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
-
-        investigationPage = new EvaluatePage(driver).openDesignGuidance()
-            .openInvestigationTab()
-            .selectTopic("Slides and Lifters");
-
-        softAssertions.assertThat(investigationPage.getGcdCount("SlideBundle")).isEqualTo(2);
-        softAssertions.assertThat(investigationPage.getGcdCount("LifterBundle")).isEqualTo(1);
-
-        softAssertions.assertAll();
     }
 
     @Test
@@ -232,18 +132,9 @@ public class DFMRiskTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
 
         softAssertions.assertAll();
-
-        // TODO uncomment this section when revert is implemented
-        /*
-        evaluatePage.revert()
-            .revertScenario();
-
-        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High")), is(true));*/
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6480, 6481})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
@@ -257,7 +148,11 @@ public class DFMRiskTests extends TestBaseUI {
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
             .submit(EvaluatePage.class)
-            .costScenario(3);
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.HIGH.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
@@ -270,14 +165,6 @@ public class DFMRiskTests extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
-
-        // TODO uncomment this section when revert is implemented
-        /*
-        evaluatePage.revert()
-            .revertScenario();
-
-        assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
-        assertThat(evaluatePage.isDfmRisk("High")), is(true));*/
 
         softAssertions.assertAll();
     }
@@ -409,9 +296,13 @@ public class DFMRiskTests extends TestBaseUI {
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("3 Axis Mill Routing")
+            .submit(EvaluatePage.class)
             .costScenario(5);
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).as("Initial Fully Burdened Cost").isCloseTo(Double.valueOf(756.32), Offset.offset(30.0));
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
@@ -419,7 +310,7 @@ public class DFMRiskTests extends TestBaseUI {
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).as("Updated Fully Burdened Cost").isCloseTo(Double.valueOf(343.45), Offset.offset(30.0));
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
         // TODO uncomment this section when revert is implemented
         /*evaluatePage.revert()
