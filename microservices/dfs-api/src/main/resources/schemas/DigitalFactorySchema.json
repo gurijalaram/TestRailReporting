@@ -32,7 +32,7 @@
       "type": "string"
     },
     "identity": {
-      "type": "string",
+      "type": "string"
     },
     "inheritedDigitalFactories": {
       "type": "array",
