@@ -22,7 +22,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 public class UploadTests extends TestBaseUI {
 
@@ -120,7 +119,6 @@ public class UploadTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Disabled("Ignored due to file location")
     @Test
     @TestRail(id = 1732)
     @Description("BOM can be exported to file from main page")
@@ -137,11 +135,9 @@ public class UploadTests extends TestBaseUI {
         electronicsDataCollectionPage =
             uploadedFilePage.backToElectronicsDataCollectionPage();
 
-        String bomIdName =
-            electronicsDataCollectionPage.rightClickOnFirstBomAndChooseOption(RightClickOptionEnum.EXPORT);
-        String filePath = downloadPath + bomIdName + ".csv";
+        File bomIdName = electronicsDataCollectionPage.rightClickOnFirstBomAndChooseOption(RightClickOptionEnum.EXPORT);
 
-        softAssertions.assertThat(FileResourceUtil.deleteFileWhenAppears(Paths.get(filePath), 3)).isTrue();
+        softAssertions.assertThat(bomIdName.length()).isGreaterThan(0);
         softAssertions.assertAll();
     }
 }

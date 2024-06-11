@@ -1,12 +1,13 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.models.response.FeatureResponse;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.Constants;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
@@ -114,7 +115,7 @@ public class CdsFeatureTests {
             installationIdentity
         );
 
-        String appIdentity = Constants.getApProApplicationIdentity();
+        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 
@@ -197,7 +198,7 @@ public class CdsFeatureTests {
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentity = installation.getResponseEntity().getIdentity();
 
-        String appIdentity = Constants.getApProApplicationIdentity();
+        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 

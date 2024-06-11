@@ -368,6 +368,29 @@ public class WorkflowTestUtil extends CicUtil {
     }
 
     /**
+     * verify CID part number in PDF report
+     *
+     * @param emailMessageAttachments - EmailMessageAttachments
+     * @param agentWorkflowJobResults - AgentWorkflowJobResults
+     * @return Boolean
+     */
+    public Boolean verifyJobPartsInPdfReport(EmailMessageAttachments emailMessageAttachments, AgentWorkflowJobResults agentWorkflowJobResults) {
+        return emailMessageAttachments.value.stream()
+            .map(emailMessageAttachment -> (PDFDocument) emailMessageAttachment.getFileAttachment())
+            .anyMatch(pdfDocument ->
+                agentWorkflowJobResults.stream()
+                    .peek(workflowJobPartsResult -> {
+                        if (!pdfDocument.getDocumentContents().contains(workflowJobPartsResult.getCidPartNumber())) {
+                            log.debug(String.format("ACTUAL Document content : (%s) <=> EXPECTED CID PART Number : (%s)", pdfDocument.getDocumentContents(), workflowJobPartsResult.getCidPartNumber()));
+                        }
+                    })
+                    .anyMatch(workflowJobPartsResult ->
+                        pdfDocument.getDocumentContents().contains(workflowJobPartsResult.getCidPartNumber())
+                    )
+            );
+    }
+
+    /**
      * Verify Report in received email report
      *
      * @param emailMessageAttachments - AgentWorkflowJobResults
@@ -413,6 +436,24 @@ public class WorkflowTestUtil extends CicUtil {
     }
 
     /**
+     * verify data in pdf document
+     *
+     * @param pdfDocument        - PDFDocument
+     * @param expectedPdfContent - expected pdf content
+     * @return Boolean
+     */
+    public Boolean verifyPdfDocumentContent(PDFDocument pdfDocument, List<String> expectedPdfContent) {
+        String pdfContent = pdfDocument.getDocumentContents();
+        return expectedPdfContent.stream()
+            .peek(item -> {
+                if (!pdfContent.contains(item)) {
+                    log.debug(String.format("ACTUAL Email content : (%s) <=> EXPECTED Content  : (%s)", pdfContent, item));
+                }
+            })
+            .allMatch(pdfContent::contains);
+    }
+
+    /**
      * verify Email Body Content
      *
      * @param emailMessage EmailMessage object
@@ -434,10 +475,10 @@ public class WorkflowTestUtil extends CicUtil {
     /**
      * wait until parts are costed to expected status get Job Parts
      *
-     * @param jobID          - Job ID
-     * @param expectedCount  - Expected parts count
-     * @param expectedStatus - expected part status
-     * @param session        - web Session
+     * @param jobID            - Job ID
+     * @param expectedCount    - Expected parts count
+     * @param connectorJobPart - ConnectorJobPart
+     * @param session          - web Session
      * @return ConnectorJobParts
      */
     @SneakyThrows
@@ -488,7 +529,7 @@ public class WorkflowTestUtil extends CicUtil {
      * get the parts count by part status
      *
      * @param connectorJobParts - ConnectorJobParts
-     * @param expectedStatus    - expected part status
+     * @param expectedJobPart   - ConnectorJobPart
      * @return Integer
      */
     public List<ConnectorJobPart> getPartsCount(ConnectorJobParts connectorJobParts, ConnectorJobPart expectedJobPart) {
@@ -497,6 +538,13 @@ public class WorkflowTestUtil extends CicUtil {
             .collect(Collectors.toList());
     }
 
+    /**
+     * verify parts
+     *
+     * @param connectorJobParts
+     * @param partList          - list of parts
+     * @return Boolean
+     */
     public Boolean verifyParts(List<ConnectorJobPart> connectorJobParts, List<String> partList) {
         return connectorJobParts.stream()
             .map(part -> part.getPartNumber())
@@ -511,5 +559,4 @@ public class WorkflowTestUtil extends CicUtil {
                     )
             );
     }
-
 }

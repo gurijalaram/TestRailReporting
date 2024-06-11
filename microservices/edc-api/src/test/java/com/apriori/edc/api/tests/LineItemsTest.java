@@ -1,6 +1,7 @@
 package com.apriori.edc.api.tests;
 
 import static com.apriori.edc.api.utils.BillOfMaterialsUtil.postBillOfMaterialsWithToken;
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 
 import com.apriori.edc.api.enums.EDCAPIEnum;
 import com.apriori.edc.api.models.response.line.items.LineItemsItemsResponse;
@@ -50,7 +51,7 @@ public class LineItemsTest extends LineItemsUtil {
 
     @BeforeEach
     public void setUp() {
-        userToken = UserUtil.getUser("admin").getToken();
+        userToken = UserUtil.getUser(APRIORI_DEVELOPER).getToken();
         RequestEntityUtil_Old.useTokenForRequests(userToken);
         billOfMaterialsIdentity = postBillOfMaterialsWithToken(filename, userToken).getResponseEntity().getIdentity();
     }

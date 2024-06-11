@@ -1,5 +1,7 @@
 package com.apriori.ach.api.utils;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.ach.api.enums.ACHAPIEnum;
 import com.apriori.ach.api.models.response.CustomerAch;
 import com.apriori.ach.api.models.response.CustomersAch;
@@ -33,7 +35,7 @@ public class AchTestUtil extends TestUtil {
     @BeforeEach
     public void init() {
         requestEntityUtil = RequestEntityUtilBuilder
-            .useRandomUser("admin")
+            .useRandomUser(APRIORI_DEVELOPER)
             .useTokenInRequests();
     }
 

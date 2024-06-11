@@ -1,5 +1,7 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.Customer;
 import com.apriori.cas.api.models.response.UsersData;
@@ -28,6 +30,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.io.ByteArrayInputStream;
@@ -42,6 +45,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomersUsersTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
@@ -50,7 +54,7 @@ public class CasCustomersUsersTests {
     private String customerIdentity;
     private String userIdentity;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
+    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
 
     @BeforeEach
     public void getToken() {
@@ -145,7 +149,7 @@ public class CasCustomersUsersTests {
         customerIdentity = newCustomer.getIdentity();
         List<String> headers = Arrays.asList(
             "loginID", "email", "firstName", "lastName", "fullName", "isAdmin", "isVPEAdmin", "isJasperAdmin", "AppStream", "ReportUser", "defaultPassword", "resetPassword",
-            "userLicenseName", "preferredCurrency", "schemaPrivileges", "defaultSchema", "rolesAccessControlsMapping", "defaultRole", "roleName", "applicationList", "prefix", "suffix", "jobTitle",
+            "userLicenseName", "preferredCurrency", "schemaPrivileges", "defaultSchema", "roles", "defaultRole", "roleName", "applicationList", "prefix", "suffix", "jobTitle",
             "department", "city/town", "state/province", "county", "countryCode", "timezone"
         );
 

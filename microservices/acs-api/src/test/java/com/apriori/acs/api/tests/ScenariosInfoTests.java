@@ -1,5 +1,7 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.acs.api.models.response.acs.scenariosinfo.ScenariosInfoItem;
 import com.apriori.acs.api.models.response.acs.scenariosinfo.ScenariosInfoResponse;
 import com.apriori.acs.api.models.response.workorders.genericclasses.ScenarioIterationKey;
@@ -28,7 +30,7 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class ScenariosInfoTests extends TestUtil {
-    private final UserCredentials userCredentials = UserUtil.getUser("common");
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 9597)

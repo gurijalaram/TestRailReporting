@@ -53,8 +53,6 @@ public class ChromeManager implements DriverManager<ChromeOptions> {
             chromeOptions.addArguments("--unsafely-treat-insecure-origin-as-secure=http://host.docker.internal:3003, http://host.docker.internal:3002");
         }
 
-        chromeOptions.setExperimentalOption("prefs", chromePrefs);
-
         if (!StringUtils.isEmpty(System.getProperty("ignoreSslCheck")) && Boolean.parseBoolean(System.getProperty("ignoreSslCheck"))) {
             chromeOptions.addArguments("--ignore-certificate-errors");
         }
@@ -73,6 +71,8 @@ public class ChromeManager implements DriverManager<ChromeOptions> {
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--headless");
         }
+        chromeOptions.setExperimentalOption("prefs", chromePrefs);
+        chromeOptions.setCapability("se:downloadsEnabled", true);
         chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
 
         return chromeOptions;

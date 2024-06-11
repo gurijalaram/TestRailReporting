@@ -49,7 +49,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     public void testCostMetricPpc() {
         jasperApiUtils.genericDtcDetailsTest(
             mostCommonPartNames,
-            "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+            InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -61,7 +61,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     public void testCostMetricFbc() {
         jasperApiUtils.genericDtcDetailsTest(
             mostCommonPartNames,
-            "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+            InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -73,7 +73,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcDetailsTest(
             mostCommonPartNames,
-            "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
@@ -85,7 +85,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcDetailsTest(
             mostCommonPartNames,
-            "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 
@@ -110,7 +110,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     public void testSingleProcessGroup() {
         jasperApiUtils.genericProcessGroupDtcDetailsTest(
             mostCommonPartNames,
-            "Process Group",
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(),
             ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
     }
@@ -128,7 +128,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
         );
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.LOW.getDtcScoreName()
         );
     }
 
@@ -145,7 +145,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
         );
         jasperApiUtils.genericDtcDetailsTest(
             partNames,
-            "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
     }
 
@@ -157,7 +157,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     public void testDtcScoreHigh() {
         jasperApiUtils.genericDtcDetailsTest(
             mostCommonPartNames,
-            "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.HIGH.getDtcScoreName()
         );
     }
 
@@ -167,7 +167,7 @@ public class SheetMetalDtcDetailsReportTests extends JasperApiAuthenticationUtil
     @TestRail(id = 29706)
     @Description("Verify Minimum Annual Spend input control functions correctly - Sheet Metal DTC Details Report")
     public void testMinimumAnnualSpend() {
-        jasperApiUtils.genericMinAnnualSpendDtcDetailsTest(true);
+        jasperApiUtils.genericMinAnnualSpendDtcDetailsTest(false);
     }
 
     @Test

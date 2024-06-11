@@ -1,5 +1,7 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.CasErrorMessage;
 import com.apriori.cas.api.models.response.Customer;
@@ -24,12 +26,14 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomerUserAssociationTests {
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private final CasTestUtil casTestUtil = new CasTestUtil();
@@ -42,7 +46,7 @@ public class CasCustomerUserAssociationTests {
 
     @BeforeAll
     public static void globalSetup() {
-        RequestEntityUtil_Old.useTokenForRequests(UserUtil.getUser("admin").getToken());
+        RequestEntityUtil_Old.useTokenForRequests(UserUtil.getUser(APRIORI_DEVELOPER).getToken());
     }
 
     @BeforeEach

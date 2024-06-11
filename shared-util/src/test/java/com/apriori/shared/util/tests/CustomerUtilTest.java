@@ -47,7 +47,7 @@ public class CustomerUtilTest {
 
     @Test
     public void getApIntCustomerDataTest() {
-        final Customer apIntCustomerData = CustomerUtil.getApIntCustomerData();
+        final Customer apIntCustomerData = CustomerUtil.getCustomerData();
 
         assertThat(apIntCustomerData, is(not(nullValue())));
     }
@@ -63,10 +63,8 @@ public class CustomerUtilTest {
 
     @Test
     public void getCustomerDataTest() {
-        final Customer customerData = CustomerUtil.getCurrentCustomerData();
+        final Customer customerData = CustomerUtil.getCustomerData();
 
         assertThat(customerData, is(not(nullValue())));
     }
-
-
 }

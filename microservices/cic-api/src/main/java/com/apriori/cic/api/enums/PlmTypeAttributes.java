@@ -42,7 +42,9 @@ public enum PlmTypeAttributes {
     PLM_RISK_RATING("riskRating", "[\"All\"]", "Risk Rating"),
     PLM_COST_ROUNDING("roundToDollar", "true", "Cost Rounding"),
     PLM_MACHINING_MODE("machiningMode", "MAY_BE_MACHINED", "Machining Mode"),
-    PLM_STRING1("String1", "String1", "String1");
+    PLM_STRING1("String1", "String1", "String1"),
+    PLM_APW_SCENARIO_LINK("scenarioLink", "aPWScenarioLink", "aPW Scenario Link"),
+    PLM_APD_SCENARIO_LINK("scenarioLink", "apdScenarioLink", "aPD Scenario Link");
     
     private final String key;
     private final String value;

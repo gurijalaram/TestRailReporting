@@ -76,7 +76,7 @@ public class CisBidPackageProjectResources extends CISTestUtil {
      * @return klass object
      */
     public static <T> T getBidPackageProjects(String bidPackageIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECTS, klass)
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECTS, klass)
             .inlineVariables(bidPackageIdentity)
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
@@ -94,7 +94,7 @@ public class CisBidPackageProjectResources extends CISTestUtil {
      * @param currentUser               - UserCredentials
      */
     public static void deleteBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT, null)
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT, null)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
@@ -114,7 +114,7 @@ public class CisBidPackageProjectResources extends CISTestUtil {
      * @return klass object
      */
     public static <T> T getBidPackageProject(String bidPackageIdentity, String bidPackageProjectIdentity, Class<T> klass, Integer httpStatus, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT, klass)
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT, klass)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .token(currentUser.getToken())
             .expectedResponseCode(httpStatus);
@@ -136,7 +136,7 @@ public class CisBidPackageProjectResources extends CISTestUtil {
      * @return - response klass
      */
     public static <T> T updateBidPackageProject(BidPackageProjectRequest bidPackageProjectRequestBuilder, String bidPackageIdentity, String bidPackageProjectIdentity, UserCredentials currentUser, Class<T> klass, Integer httpStatus) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT, klass)
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT, klass)
             .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
             .body(bidPackageProjectRequestBuilder)
             .token(currentUser.getToken())
@@ -156,14 +156,15 @@ public class CisBidPackageProjectResources extends CISTestUtil {
      * @param projectIdentity                     the project identity
      * @param responseClass                       the response class
      * @param currentUser                         the current user
+     * @param httpStatus                          expected http status code
      * @return the response entity
      */
-    public static <T> T createBidPackageProjectUser(BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder, String bidPackageIdentity, String projectIdentity, Class<T> responseClass, UserCredentials currentUser) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT_USERS, responseClass)
+    public static <T> T createBidPackageProjectUser(BidPackageProjectUserRequest bidPackageProjectUserRequestBuilder, String bidPackageIdentity, String projectIdentity, Class<T> responseClass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT_USERS, responseClass)
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(bidPackageProjectUserRequestBuilder)
             .token(currentUser.getToken())
-            .expectedResponseCode(HttpStatus.SC_OK);
+            .expectedResponseCode(httpStatus);
 
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
         return responseWrapper.getResponseEntity();
@@ -178,18 +179,39 @@ public class CisBidPackageProjectResources extends CISTestUtil {
      * @param currentUser        the current user
      * @return the bid package project users delete response
      */
-    public static BidPackageProjectUsersDeleteResponse deleteBidPackageProjectUser(List<BidPackageProjectUserParameters> userIdList, String bidPackageIdentity, String projectIdentity, UserCredentials currentUser) {
+    public static BidPackageProjectUsersDeleteResponse deleteBidPackageProjectUsers(List<BidPackageProjectUserParameters> userIdList, String bidPackageIdentity, String projectIdentity, UserCredentials currentUser) {
         BidPackageProjectUserRequest deleteRequest = BidPackageProjectUserRequest.builder()
             .projectUsers(userIdList)
             .build();
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CisAPIEnum.BID_PACKAGE_PROJECT_USERS_DELETE, BidPackageProjectUsersDeleteResponse.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT_USERS_DELETE, BidPackageProjectUsersDeleteResponse.class)
             .inlineVariables(bidPackageIdentity, projectIdentity)
             .body(deleteRequest)
             .token(currentUser.getToken())
             .expectedResponseCode(HttpStatus.SC_OK);
 
         ResponseWrapper<BidPackageProjectUsersDeleteResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
+        return responseWrapper.getResponseEntity();
+    }
+
+    /**
+     * get Bid Package Project Users.
+     *
+     * @param bidPackageIdentity        - bid package Identity
+     * @param bidPackageProjectIdentity - Bid package project identity
+     * @param klass                     - expected response class
+     * @param httpStatus                - expected http status code
+     * @param currentUser               - User
+     * @param <T>                       - expected response class type
+     * @return - expected response
+     */
+    public static <T> T getBidPackageProjectUsers(String bidPackageIdentity, String bidPackageProjectIdentity, Class<T> klass, Integer httpStatus, UserCredentials currentUser) {
+        RequestEntity requestEntity = requestEntityUtil.init(CisAPIEnum.BID_PACKAGE_PROJECT_USERS, klass)
+            .inlineVariables(bidPackageIdentity, bidPackageProjectIdentity)
+            .token(currentUser.getToken())
+            .expectedResponseCode(httpStatus);
+
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).get();
         return responseWrapper.getResponseEntity();
     }
 }

@@ -3,6 +3,7 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.dtcmetrics.castingd
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.DtcScoreEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -60,7 +61,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     public void testCostMetricInputControlPpc() {
         jasperApiUtils.genericDtcTest(
             mostCommonPartNames,
-            "Cost Metric", CostMetricEnum.PIECE_PART_COST.getCostMetricName()
+            InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.PIECE_PART_COST.getCostMetricName()
         );
     }
 
@@ -72,7 +73,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     public void testCostMetricInputControlFbc() {
         jasperApiUtils.genericDtcTest(
             mostCommonPartNames,
-            "Cost Metric", CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
+            InputControlsEnum.COST_METRIC.getInputControlId(), CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName()
         );
     }
 
@@ -84,7 +85,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     public void testMassMetricInputControlFinishMass() {
         jasperApiUtils.genericDtcTest(
             mostCommonPartNames,
-            "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
@@ -96,7 +97,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     public void testMassMetricInputControlRoughMass() {
         jasperApiUtils.genericDtcTest(
             mostCommonPartNames,
-            "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 
@@ -112,7 +113,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
         );
         jasperApiUtils.genericProcessGroupDtcTest(
             partNames,
-            "Process Group", ProcessGroupEnum.CASTING_DIE.getProcessGroup()
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(), ProcessGroupEnum.CASTING_DIE.getProcessGroup()
         );
     }
 
@@ -128,7 +129,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
         );
         jasperApiUtils.genericProcessGroupDtcTest(
             partNames,
-            "Process Group", ProcessGroupEnum.CASTING_SAND.getProcessGroup()
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(), ProcessGroupEnum.CASTING_SAND.getProcessGroup()
         );
     }
 
@@ -144,7 +145,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
         );
         jasperApiUtils.genericProcessGroupDtcTest(
             partNames,
-            "Process Group",
+            InputControlsEnum.PROCESS_GROUP.getInputControlId(),
             ProcessGroupEnum.CASTING_DIE.getProcessGroup().concat(", ").concat(ProcessGroupEnum.CASTING_SAND.getProcessGroup())
         );
     }
@@ -163,7 +164,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericDtcScoreTest(
             true,
             partNames,
-            "DTC Score", DtcScoreEnum.LOW.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.LOW.getDtcScoreName()
         );
     }
 
@@ -174,14 +175,14 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
         List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.CASE_08.getPartName(),
-            JasperCirApiPartsEnum.BARCO_R8762839_ORIGIN.getPartName(),
-            JasperCirApiPartsEnum.C192308.getPartName()
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.E3_241_4_N.getPartName(),
+            JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName()
         );
         jasperApiUtils.genericDtcScoreTest(
             true,
             partNames,
-            "DTC Score", DtcScoreEnum.MEDIUM.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.MEDIUM.getDtcScoreName()
         );
     }
 
@@ -199,7 +200,7 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
         jasperApiUtils.genericDtcScoreTest(
             true,
             partNames,
-            "DTC Score", DtcScoreEnum.HIGH.getDtcScoreName()
+            InputControlsEnum.DTC_SCORE.getInputControlId(), DtcScoreEnum.HIGH.getDtcScoreName()
         );
     }
 

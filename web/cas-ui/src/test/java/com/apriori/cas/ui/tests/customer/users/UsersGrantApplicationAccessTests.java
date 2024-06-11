@@ -1,5 +1,6 @@
 package com.apriori.cas.ui.tests.customer.users;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cas.ui.components.CardsViewComponent;
@@ -76,7 +77,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
         String realmKey = generateStringUtil.generateRealmKey();
-        appIdentity = Constants.getApProApplicationIdentity();
+        appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> newApplication = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();
 

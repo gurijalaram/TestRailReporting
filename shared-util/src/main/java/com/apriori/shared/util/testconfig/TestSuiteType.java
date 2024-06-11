@@ -4,6 +4,7 @@ public enum TestSuiteType {
     SMOKE("SMOKE"),
     REGRESSION("REGRESSION"),
     EXTENDED_REGRESSION("EXTENDED_REGRESSION"),
+    ASSEMBLY("ASSEMBLY"),
     SANITY("SANITY"),
     API_SANITY("API_SANITY"),
     CUSTOMER("CUSTOMER"),
@@ -30,6 +31,7 @@ public enum TestSuiteType {
         public static final String SMOKE = "SMOKE";
         public static final String REGRESSION = "REGRESSION";
         public static final String EXTENDED_REGRESSION = "EXTENDED_REGRESSION";
+        public static final String ASSEMBLY = "ASSEMBLY";
         public static final String SANITY = "SANITY";
         public static final String API_SANITY = "API_SANITY";
         public static final String CUSTOMER = "CUSTOMER";
