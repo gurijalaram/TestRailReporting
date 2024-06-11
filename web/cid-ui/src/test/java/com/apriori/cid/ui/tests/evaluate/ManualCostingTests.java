@@ -1,6 +1,5 @@
 package com.apriori.cid.ui.tests.evaluate;
 
-import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -37,7 +36,6 @@ import org.junit.jupiter.api.Test;
 
 public class ManualCostingTests  extends TestBaseUI {
 
-    private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
     private SwitchCostModePage switchCostModePage;
