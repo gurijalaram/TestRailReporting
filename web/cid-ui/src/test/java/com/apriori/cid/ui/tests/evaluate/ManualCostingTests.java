@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate;
 
+import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -22,6 +23,7 @@ import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.component.CostRollupOverrides;
@@ -301,12 +303,15 @@ public class ManualCostingTests  extends TestBaseUI {
             .publish(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION)).as("Verify Publishing status displayed").isTrue();
-        evaluatePage.waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2);
+        evaluatePage = evaluatePage.waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 2);
+
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).as("Verify scenario is now Public").isTrue();
         softAssertions.assertThat(evaluatePage.isEditButtonEnabled()).as("Verify Edit button is displayed and enabled").isTrue();
 
         evaluatePage = evaluatePage.editScenario(EditScenarioStatusPage.class)
             .clickHere();
 
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).as("Verify scenario is now Private").isTrue();
         softAssertions.assertThat(evaluatePage.isPublishButtonEnabled()).as("Verify Publish button now displayed and enabled").isTrue();
 
         evaluatePage.copyScenario()
@@ -347,7 +352,43 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected())
             .as("Verify Manually Costed scenario switched to Simulate on Group Cost").isTrue();
 
-        //ToDo:- Perform Group cost with copied scenario then manually cost at least one of them and perform delete.
+        explorePage = evaluatePage.clickExplore()
+            .refresh()
+            .multiSelectScenarios(
+                copiedScenario.getComponentName() + "," + copiedScenario.getScenarioName(),
+                component2.getComponentName() + "," + component2.getScenarioName())
+            .clickCostButton(ComponentBasicPage.class)
+            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
+            .applyAndCost(EditScenarioStatusPage.class)
+            .close(ExplorePage.class);
+
+        scenariosUtil.getScenarioCompleted(copiedScenario);
+        scenariosUtil.getScenarioCompleted(component2);
+
+        evaluatePage = explorePage.refresh()
+            .openScenario(copiedScenario.getComponentName(), copiedScenario.getScenarioName());
+
+        softAssertions.assertThat(evaluatePage.isSimulateCostModeSelected())
+            .as("Verify Manually Costed scenario switched to Simulate on Group Cost").isTrue();
+        softAssertions.assertThat(evaluatePage.getDigitalFactory())
+            .as("Verify previously selected Digital Factory used").isEqualTo(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
+
+        evaluatePage.clickManualModeButton()
+            .clickContinue()
+            .enterPiecePartCost("15.59")
+            .enterTotalCapitalInvestment("64.31")
+            .clickSaveButton();
+
+        explorePage = evaluatePage.clickExplore()
+            .multiSelectScenarios(copiedScenario.getComponentName() + "," + copiedScenario.getScenarioName())
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class)
+            .checkComponentDelete(copiedScenario)
+            .refresh();
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(copiedScenario.getComponentName(), copiedScenario.getScenarioName()))
+            .as("Verify scenario removed from explore page").isEqualTo(0);
 
         softAssertions.assertAll();
     }
