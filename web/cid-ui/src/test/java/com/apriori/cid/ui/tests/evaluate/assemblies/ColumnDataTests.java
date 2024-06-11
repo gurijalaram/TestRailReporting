@@ -81,7 +81,7 @@ public class ColumnDataTests extends TestBaseUI {
 
         PersonResponse person = new PeopleUtil().getCurrentPerson(currentUser);
 
-        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.PROCESS_GROUP, bigRingIdentity, currentUser)).isEqualTo(ProcessGroupEnum.SHEET_METAL.getProcessGroup());
+        softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.PROCESS_GROUP, bigRingIdentity, currentUser)).isEqualTo(ProcessGroupEnum.FORGING.getProcessGroup());
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.DIGITAL_FACTORY, bigRingIdentity, currentUser)).isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
         softAssertions.assertThat(componentsTablePage.getColumnData(ColumnsEnum.LAST_UPDATED_BY, pinIdentity, currentUser))
             .isEqualTo(person.getGivenName() + " " + person.getFamilyName());

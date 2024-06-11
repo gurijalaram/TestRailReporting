@@ -1,5 +1,7 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.acs.api.models.request.workorders.NewPartRequest;
 import com.apriori.acs.api.models.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
 import com.apriori.acs.api.models.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -28,7 +30,7 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class ActiveDimensionsByScenarioIterationKeyTests extends TestUtil {
-    private final UserCredentials user = UserUtil.getUser("common");
+    private final UserCredentials user = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 10941)

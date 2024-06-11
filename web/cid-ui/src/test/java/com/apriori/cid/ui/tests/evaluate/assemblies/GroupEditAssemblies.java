@@ -1,7 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTreePage;
@@ -33,7 +32,7 @@ public class GroupEditAssemblies extends TestBaseUI {
     }
 
     @Test
-    @Tag(SMOKE)
+    @Tag(ASSEMBLY)
     @TestRail(id = {10882, 10890, 10893})
     @Description("Group edit subcomponents")
     public void editButtonAvailable() {
@@ -69,7 +68,7 @@ public class GroupEditAssemblies extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {10891, 11132})
     @Description("Group edit subcomponents")
     public void overridePrivateSubComponent() {
@@ -104,7 +103,7 @@ public class GroupEditAssemblies extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
+    @Tag(ASSEMBLY)
     @TestRail(id = {10889, 11953})
     @Description("Group edit subcomponents")
     public void privateAndPublicSubComponents() {

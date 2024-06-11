@@ -149,15 +149,23 @@ public class CustomerUtil {
     }
 
     /**
-     * Get customer data
-     * By a cloud reference name filter all customers to find a user used for the environment
+     * Get customer data by a cloud reference name.  Filter all customers to find a user used for the environment
      *
      * @return Customer object
      */
     public static Customer getCustomerData() {
+        return getCustomerData(PropertiesContext.get("customer"));
+    }
+
+    /**
+     * Get customer data by a cloud reference name.  Filter all customers to find a user used for the environment
+     *
+     * @return Customer object
+     */
+    public static Customer getCustomerData(String customer) {
         RequestEntity customerRequest = RequestEntityUtil_Old.init(CustomersApiEnum.CUSTOMERS, Customers.class)
             .expectedResponseCode(HttpStatus.SC_OK)
-            .queryParams(new QueryParams().use("cloudReference[EQ]", PropertiesContext.get("customer")));
+            .queryParams(new QueryParams().use("cloudReference[EQ]", customer));
 
         ResponseWrapper<Customers> customersResponseWrapper = HTTPRequest.build(customerRequest).get();
 

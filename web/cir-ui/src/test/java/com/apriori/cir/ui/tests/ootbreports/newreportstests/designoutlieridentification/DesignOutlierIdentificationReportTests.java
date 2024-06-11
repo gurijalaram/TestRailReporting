@@ -3,6 +3,7 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.designoutlieridenti
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
+import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
@@ -43,7 +44,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     public void testMassMetricFinishMass() {
         jasperApiUtils.genericDtcTest(
             mostCommonPartNames,
-            "Mass Metric", MassMetricEnum.FINISH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.FINISH_MASS.getMassMetricName()
         );
     }
 
@@ -55,7 +56,7 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
     public void testMassMetricRoughMass() {
         jasperApiUtils.genericDtcTest(
             mostCommonPartNames,
-            "Mass Metric", MassMetricEnum.ROUGH_MASS.getMassMetricName()
+            InputControlsEnum.MASS_METRIC.getInputControlId(), MassMetricEnum.ROUGH_MASS.getMassMetricName()
         );
     }
 }

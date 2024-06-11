@@ -1,5 +1,7 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.AccessAuthorization;
 import com.apriori.cas.api.models.response.AccessAuthorizations;
@@ -26,9 +28,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasAccessAuthorizationTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
@@ -44,7 +48,7 @@ public class CasAccessAuthorizationTests {
     private String associationIdentity;
     private String apStaffIdentity;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
+    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
 
 
     @BeforeEach

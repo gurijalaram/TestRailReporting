@@ -1,5 +1,7 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.AccessAuthorization;
@@ -48,7 +50,7 @@ public class CdsAccessAuthorizationsTests {
     private ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
     private ResponseWrapper<AssociationUserItems> associationUser;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser("admin");
+    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
 
     @BeforeEach
     public void setDetails() {

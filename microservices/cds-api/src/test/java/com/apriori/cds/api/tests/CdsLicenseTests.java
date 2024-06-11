@@ -4,6 +4,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.ActiveLicenseModules;
 import com.apriori.cds.api.models.response.CdsErrorResponse;
+import com.apriori.cds.api.models.response.LicenseExpand;
 import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.models.response.Licenses;
 import com.apriori.cds.api.models.response.SubLicense;
@@ -14,6 +15,7 @@ import com.apriori.cds.api.models.response.UsersLicensing;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -376,6 +378,24 @@ public class CdsLicenseTests {
             subLicenseIdentity,
             userIdentity
         );
+    }
+
+    @Test
+    @TestRail(id = {30678})
+    @Description("get API Expand for Customer Licenses API")
+    public void getApiExpandCustomerLicenses() {
+        String paramName = "_expand";
+        String paramValue = "licensedModules,subLicenses.users.all";
+        Customer customer = CustomerUtil.getCustomerData();
+        String licenseIdentity = cdsTestUtil.getCommonRequest(CDSAPIEnum.LICENSES_BY_CUSTOMER_ID, Licenses.class, HttpStatus.SC_OK, customer.getIdentity()).getResponseEntity()
+            .getItems().get(0).getIdentity();
+
+        LicenseExpand expandResponse = cdsTestUtil.getCommonRequestWithParams(
+            CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID, LicenseExpand.class, HttpStatus.SC_OK, paramName, paramValue, customer.getIdentity(), licenseIdentity).getResponseEntity();
+
+        soft.assertThat(expandResponse.getExpand())
+            .contains("licensedModules", "subLicenses.users.all");
+        soft.assertAll();
     }
 
     private void setCustomerData() {

@@ -1,6 +1,7 @@
 package com.apriori.cds.api.models.response;
 
 import com.apriori.serialization.util.deserializers.DateDeserializer_yyyyMMdd;
+import com.apriori.serialization.util.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
 import com.apriori.serialization.util.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.shared.util.annotations.Schema;
 
@@ -25,6 +26,10 @@ public class SubLicense {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
+    private LocalDateTime updatedAt;
+    private String updatedBy;
     private String name;
     private String uuid;
     private List<String> licensedModuleNames = null;

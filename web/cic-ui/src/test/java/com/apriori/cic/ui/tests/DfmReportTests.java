@@ -4,6 +4,7 @@ import com.apriori.cic.api.enums.CICPartSelectionType;
 import com.apriori.cic.api.enums.EmailRecipientType;
 import com.apriori.cic.api.enums.MappingRule;
 import com.apriori.cic.api.enums.PlmTypeAttributes;
+import com.apriori.cic.api.enums.ReportsEnum;
 import com.apriori.cic.api.models.request.AgentPort;
 import com.apriori.cic.api.models.response.AgentWorkflowJobResults;
 import com.apriori.cic.api.utils.CicApiTestUtil;
@@ -11,14 +12,17 @@ import com.apriori.cic.api.utils.WorkflowDataUtil;
 import com.apriori.cic.ui.enums.CheckboxState;
 import com.apriori.cic.ui.enums.EmailTemplateEnum;
 import com.apriori.cic.ui.enums.FieldState;
+import com.apriori.cic.ui.enums.PartSelectionType;
 import com.apriori.cic.ui.enums.RuleOperatorEnum;
 import com.apriori.cic.ui.pageobjects.login.CicLoginPage;
 import com.apriori.cic.ui.pageobjects.workflows.WorkflowHome;
 import com.apriori.cic.ui.utils.CicGuiTestUtil;
 import com.apriori.shared.util.email.GraphEmailService;
 import com.apriori.shared.util.enums.PropertyEnum;
+import com.apriori.shared.util.file.PDFDocument;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.models.response.EmailMessage;
+import com.apriori.shared.util.models.response.EmailMessageAttachments;
 import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -237,6 +241,83 @@ public class DfmReportTests extends CicGuiTestUtil {
             "aP Generate Analysis Summary",
             "$1");
         softAssertions.assertThat(this.verifyEmailBody(emailMessage, expectedEmailContent)).isTrue();
+    }
+
+    @Test
+    @TestRail(id = {4051, 4390, 4048})
+    @Description("Test Email Configuration - CostRounding set to Yes and apriori cost set to Fully Burdened Cost" +
+        "verify the changed workflow details in PDF report")
+    public void testVerifyDTCAprioriCostSetToFBC() {
+        String randomNumber = RandomStringUtils.randomNumeric(6);
+        scenarioName = PropertiesContext.get("customer") + randomNumber;
+        workflowRequestDataBuilder.setName("- - 0AWF" + randomNumber);
+        log.info(String.format("Start Creating Workflow >> %s <<", workflowRequestDataBuilder.getName()));
+        workflowHome = ciConnectHome.clickWorkflowMenu()
+            .selectScheduleTab()
+            .clickNewButton()
+            .enterWorkflowNameField(workflowRequestDataBuilder.getName())
+            .selectWorkflowConnector(agentPort.getConnector())
+            .selectEnabledCheckbox("off")
+            .clickNextBtnInDetailsTab()
+            .selectReturnLatestRevisionOnlyCheckbox(CheckboxState.on)
+            .addRule(PlmTypeAttributes.PLM_PART_NUMBER, RuleOperatorEnum.EQUAL, "0000003990")
+            .clickWFQueryDefNextBtn()
+            .addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, scenarioName)
+            .addCostingInputRow(PlmTypeAttributes.PLM_PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")
+            .clickCINextBtn()
+            .selectEmailTab()
+            .selectEmailTemplate(EmailTemplateEnum.DFM_PART_SUMMARY)
+            .selectRecipient(EmailRecipientType.CONSTANT, PropertiesContext.get("global.report_email_address"))
+            .selectCostRounding(FieldState.No)
+            .selectAttachReport()
+            .selectReportName(ReportsEnum.DFM_MULTIPLE_COMPONENT_SUMMARY)
+            .clickCINotificationNextBtn()
+            .clickSaveButton();
+
+        softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition created");
+
+        AgentWorkflowJobResults agentWorkflowJobResults = this.getWorkflow()
+            .invokeWorkflow()
+            .trackWorkflow()
+            .getJobResult();
+
+        softAssertions.assertThat(agentWorkflowJobResults.size()).isEqualTo(1);
+        softAssertions.assertThat(agentWorkflowJobResults.get(0).getPartType().equals("PART")).isTrue();
+        softAssertions.assertThat(agentWorkflowJobResults.get(0).getResult().getFullyBurdenedCost().toString().contains("2.2")).isTrue();
+
+        emailMessage = GraphEmailService.searchEmailMessageWithAttachments(scenarioName);
+        expectedEmailContent = Arrays.asList(scenarioName,
+            "aP Generate Analysis Summary",
+            "$2");
+        softAssertions.assertThat(this.verifyEmailBody(emailMessage, expectedEmailContent)).isTrue();
+
+        workflowHome = workflowHome.selectScheduleTab().selectWorkflow(workflowRequestDataBuilder.getName())
+            .clickEditWorkflowBtn()
+            .selectPartSelectionType(PartSelectionType.QUERY)
+            .clickNextBtnInDetailsTab()
+            .clickWFQueryDefNextBtn()
+            .addCostingInputRow(PlmTypeAttributes.PLM_BATCH_SIZE, MappingRule.CONSTANT, "1000")
+            .addCostingInputRow(PlmTypeAttributes.PLM_ANNUAL_VOLUME, MappingRule.CONSTANT, "5000")
+            .clickCINextBtn()
+            .clickCINotificationNextBtn()
+            .clickSaveButton();
+
+        softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition updated!");
+        if (softAssertions.wasSuccess()) {
+            AgentWorkflowJobResults agentWorkflowUpdatedJobResults = this.getWorkflow()
+                .invokeWorkflow()
+                .trackWorkflow()
+                .getJobResult();
+
+            softAssertions.assertThat(agentWorkflowUpdatedJobResults.get(0).getInput().getBatchSize()).isEqualTo(1000);
+
+            EmailMessage updatedEmailMessage = GraphEmailService.searchEmailMessageWithAttachments(scenarioName);
+            EmailMessageAttachments emailMessageAttachments = updatedEmailMessage.emailMessageAttachments();
+            softAssertions.assertThat(emailMessageAttachments.value.size()).isEqualTo(1);
+            softAssertions.assertThat(emailMessageAttachments.value.get(0).getName().contains("DFMMultipleComponentsSummary")).isTrue();
+            PDFDocument pdfDocument = (PDFDocument) updatedEmailMessage.emailMessageAttachment().getFileAttachment();
+            softAssertions.assertThat(pdfDocument.getDocumentContents()).contains("5,000");
+        }
     }
 
     @AfterEach

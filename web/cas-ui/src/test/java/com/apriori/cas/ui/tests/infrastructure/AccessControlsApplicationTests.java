@@ -1,5 +1,6 @@
 package com.apriori.cas.ui.tests.infrastructure;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
@@ -10,7 +11,6 @@ import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.Constants;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -73,7 +73,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
         String realmKey = generateStringUtil.generateRealmKey();
-        appIdentity = Constants.getApProApplicationIdentity();
+        appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> newApplication = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();
 

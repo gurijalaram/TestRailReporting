@@ -1,11 +1,9 @@
 package com.apriori.cid.ui.tests.evaluate;
 
 import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING_DIE;
-import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING_SAND;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.POWDER_METAL;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -22,11 +20,8 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class PsoEditTests extends TestBaseUI {
@@ -69,7 +64,6 @@ public class PsoEditTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7269, 7297, 7289, 7296})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
@@ -79,6 +73,10 @@ public class PsoEditTests extends TestBaseUI {
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("High Pressure Die Cast")
+            .submit(EvaluatePage.class)
             .costScenario(7)
             .openMaterialProcess()
             .selectBarChart("High Pressure Die Casting")
@@ -106,12 +104,11 @@ public class PsoEditTests extends TestBaseUI {
         softAssertions.assertAll();
     }
 
-    @Disabled("Ignoring this test only as we need to find a way to count bar horizontally")
     @Test
     @TestRail(id = {7294, 7295})
     @Description("Sand Casting edit PSO")
     public void sandCastPSO() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(CASTING_SAND);
+        component = new ComponentRequestUtil().getComponent("SandCast");
 
         materialProcessPage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -135,16 +132,19 @@ public class PsoEditTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {7293})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(STOCK_MACHINING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("225_gasket-1-solid1", STOCK_MACHINING);
 
         materialProcessPage = new CidAppLoginPage(driver)
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("2AL+3AM Routing")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Band Saw")
@@ -182,7 +182,6 @@ public class PsoEditTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {8972})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
@@ -192,6 +191,10 @@ public class PsoEditTests extends TestBaseUI {
             .login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Injection Molding")

@@ -1,5 +1,6 @@
 package com.apriori.web.app.util;
 
+import static com.apriori.shared.util.webdriver.DriverFactory.testMode;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
@@ -12,13 +13,16 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllE
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.testconfig.TestMode;
 
+import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.HasDownloads;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
@@ -37,16 +41,19 @@ import org.openqa.selenium.interactions.Locatable;
 import org.openqa.selenium.remote.Augmenter;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -80,7 +87,6 @@ public class PageUtils {
 
     public static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
     static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
-    public String downloadPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
     private WebDriver driver;
     private List<Class<? extends WebDriverException>> ignoredWebDriverExceptions = Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class,
         StaleElementReferenceException.class, ElementNotInteractableException.class);
@@ -567,6 +573,29 @@ public class PageUtils {
         new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
             .ignoreAll(ignoredWebDriverExceptions)
             .until(invisibilityOfAllElements(element));
+    }
+
+    /**
+     * Waits for the element to be invisible
+     *
+     * @param element - the element
+     * @return true/false
+     */
+    public void waitForElementsToChangeAttributeValue(WebElement element, String attribute, String attributeValue) {
+        long webDriverWait = 120L;
+
+        new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(new ExpectedCondition<Boolean>() {
+                public Boolean apply(WebDriver driver) {
+                    String enabled = element.getAttribute(attribute);
+                    if (enabled.contains(attributeValue)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            });
     }
 
     /**
@@ -1479,7 +1508,7 @@ public class PageUtils {
      * before throwing exception
      */
     public void waitForJavascriptLoadComplete() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS));
         wait.until((ExpectedCondition<Boolean>) wdriver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete"));
     }
 
@@ -1545,16 +1574,20 @@ public class PageUtils {
      * @param url - url to navigate
      * @return current redirected url
      */
-    public String stopPageLoadAndGetCurrentUrl(String url) {
-        String currentUrl;
-        try {
-            driver.manage().timeouts().pageLoadTimeout(DURATION_SLOW);
-            driver.navigate().to(url);
-            currentUrl = driver.getCurrentUrl();
-        } catch (Exception interruptedException) {
-            currentUrl = driver.getCurrentUrl();
-        }
-        return currentUrl;
+    public Boolean verifyCurrentUrl(String url, String expectedText) {
+        driver.navigate().to(url);
+        FluentWait wait = new FluentWait<WebDriver>(driver)
+            .pollingEvery(Duration.ofMillis(100))
+            .withTimeout(Duration.ofSeconds(5))
+            .ignoring(StaleElementReferenceException.class)
+            .ignoring(NoSuchElementException.class);
+
+        Function<WebDriver, Boolean> notEnabled = new Function<WebDriver, Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                return (driver.getCurrentUrl().contains(expectedText));
+            }
+        };
+        return (Boolean) wait.until(notEnabled);
     }
 
     /**
@@ -1587,5 +1620,36 @@ public class PageUtils {
             retries++;
         }
         return element;
+    }
+
+    /**
+     * Instructs webdriver to wait for the file to download to the host then downloads (move) it to client.
+     * This method also checks if driver is an instance of RemoteDriver to see what operation is to be carried out.
+     *
+     * @param downloadPath - the path to store the file on the client machine
+     * @param fileName     - the name of the downloaded file
+     */
+    @SneakyThrows
+    public File downloadFile(String downloadPath, String fileName) {
+        File file = new File(downloadPath + fileName);
+        long initialTime = System.currentTimeMillis() / 1000;
+        final int waitTimeInSec = 30;
+        final int pollingTime = 100;
+
+        if (!testMode.equals(TestMode.QA_LOCAL)) {
+            new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
+                .pollingEvery(Duration.ofMillis(pollingTime))
+                .until(d -> ((HasDownloads) d).getDownloadableFiles().contains(fileName));
+
+            ((HasDownloads) driver).downloadFile(fileName, Path.of(downloadPath));
+        } else {
+            do {
+                Thread.sleep(pollingTime);
+            } while (((System.currentTimeMillis() / 1000) - initialTime) < waitTimeInSec && !file.exists());
+        }
+
+        file.deleteOnExit();
+
+        return file;
     }
 }

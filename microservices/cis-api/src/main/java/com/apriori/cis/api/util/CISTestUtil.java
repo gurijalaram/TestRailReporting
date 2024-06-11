@@ -1,5 +1,7 @@
 package com.apriori.cis.api.util;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
+
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
@@ -14,7 +16,7 @@ public abstract class CISTestUtil extends TestUtil {
 
     @BeforeAll
     public static void init() {
-        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser("admin")
+        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(APRIORI_DEVELOPER)
             .useApUserContextInRequests()
             .useTokenInRequests();
 
