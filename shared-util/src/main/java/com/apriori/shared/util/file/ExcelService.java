@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class to handle excel files (xls or xlsx)
@@ -104,19 +105,9 @@ public class ExcelService {
     public String getCellData(String colName, int rowNum) {
         String cellValue = StringUtils.EMPTY;
         try {
-            if (rowNum <= 0) {
-                return StringUtils.EMPTY;
-            }
-            if (null != this.sheet.getRow(rowNum)) {
-                Iterator<Cell> iterator = (Iterator<Cell>) this.sheet.getRow(rowNum);
-                while (iterator.hasNext()) {
-                    Cell headerCell = iterator.next();
-                    if (null != headerCell && headerCell.getStringCellValue().trim() == colName.trim()) {
-                        Cell targetCell = this.sheet.getRow(rowNum - 1).getCell(headerCell.getColumnIndex());
-                        cellValue = targetCell.getStringCellValue();
-                    }
-                }
-            }
+            Row headerRow = this.sheet.getRow(0);
+            Integer columnIndex = getColumnIndexByName(headerRow, colName);
+            cellValue = getCellData(columnIndex, rowNum);
         } catch (Exception e) {
             log.info("No Matching data found in row " + rowNum + " and column " + colName);
         }
@@ -207,5 +198,22 @@ public class ExcelService {
             return;
         }
         log.error(String.format("No Worksheet -%s- found in Excel file: %s", this.xlSheet, this.xlPath));
+    }
+
+    /**
+     * get Column index by name
+     *
+     * @param headerRow  - Row
+     * @param columnName - column name
+     * @return - integer
+     */
+    private Integer getColumnIndexByName(Row headerRow, String columnName) {
+        AtomicInteger columnIndex = new AtomicInteger(-1);
+        headerRow.forEach(cell -> {
+            if (cell.getStringCellValue().equals(columnName)) {
+                columnIndex.set(cell.getColumnIndex());
+            }
+        });
+        return columnIndex.get();
     }
 }
