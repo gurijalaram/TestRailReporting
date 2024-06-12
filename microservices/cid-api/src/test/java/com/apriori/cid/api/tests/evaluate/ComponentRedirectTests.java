@@ -1,13 +1,9 @@
 package com.apriori.cid.api.tests.evaluate;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.REGRESSION;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.is;
 
 import com.apriori.cid.api.enums.CidAppAPIEnum;
 import com.apriori.cid.api.models.response.ComponentIdentityResponse;
-import com.apriori.cid.api.models.response.scenarios.ScenarioResponse;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
