@@ -117,22 +117,14 @@ public class EvaluateToolbar extends ExploreToolbar {
      * Method to check cost label is in correct state
      */
     public void waitForCostLabel(int timeoutInMinutes) {
-        By costingDialog = By.cssSelector("[role='dialog'] .dialog-title");
-
-        pageUtils.waitForElementToAppear(costingDialog);
-        pageUtils.waitForElementsToNotAppear(costingDialog);
-        pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText())), timeoutInMinutes);
+        waitForLabel(NewCostingLabelEnum.COSTING_IN_PROGRESS, timeoutInMinutes);
     }
 
     /**
      * Method to check cost label is in correct state
      */
     public void waitForSaveLabel(int timeoutInMinutes) {
-        By costingDialog = By.cssSelector("[role='dialog'] .dialog-title");
-
-        pageUtils.waitForElementToAppear(costingDialog);
-        pageUtils.waitForElementsToNotAppear(costingDialog);
-        pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", NewCostingLabelEnum.SAVING_IN_PROGRESS.getCostingText())), timeoutInMinutes);
+        waitForLabel(NewCostingLabelEnum.SAVING_IN_PROGRESS, timeoutInMinutes);
     }
 
     /**
@@ -281,6 +273,20 @@ public class EvaluateToolbar extends ExploreToolbar {
         pageUtils.waitForElementAndClick(saveAsButton);
         waitForSaveLabel(2);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Wait for the status label to finish Costing/Saving
+     *
+     * @param inProgressLabel - Enum for Cost/Save label
+     * @param timeoutInMinutes - Time in minutes before wait times out
+     */
+    private void waitForLabel(NewCostingLabelEnum inProgressLabel, int timeoutInMinutes) {
+        By costingDialog = By.cssSelector("[role='dialog'] .dialog-title");
+
+        pageUtils.waitForElementToAppear(costingDialog);
+        pageUtils.waitForElementsToNotAppear(costingDialog);
+        pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", inProgressLabel.getCostingText())), timeoutInMinutes);
     }
 
 }

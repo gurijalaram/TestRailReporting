@@ -405,10 +405,10 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private int findIndex(final PropertyEnum propertyEnum) {
         int index = 0;
         if (pageUtils.isElementDisplayed(By.cssSelector(".inputs-row.row"))) {
-            List<WebElement> criteria = driver.findElements(By.cssSelector(".inputs-row.row"));
-            WebElement row = criteria.stream().filter(crit -> !crit.findElements(By.cssSelector(String.format("div[aria-label='%s']", propertyEnum.getProperty()))).isEmpty())
+            List<WebElement> criterion = driver.findElements(By.cssSelector(".inputs-row.row"));
+            WebElement row = criterion.stream().filter(criteria -> !criteria.findElements(By.cssSelector(String.format("div[aria-label='%s']", propertyEnum.getProperty()))).isEmpty())
                 .toList().get(0);
-            index = criteria.indexOf(row);
+            index = criterion.indexOf(row);
         }
         return index > 0 ? index : 0;
     }
