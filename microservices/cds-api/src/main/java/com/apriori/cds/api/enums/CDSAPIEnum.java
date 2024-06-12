@@ -5,10 +5,10 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum CDSAPIEnum implements ExternalEndpointEnum {
 
-    //AP
+    // AP
     AP_VERSION("/ap-versions"),
 
-    // APPLICATION
+    // APPLICATIONS
     APPLICATIONS("/applications"),
     APPLICATION_BY_ID("/applications/%s"),
     CUSTOMER_APPLICATION_BY_ID("/applications/%s/customers"),
@@ -33,7 +33,7 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     // CONFIGURATIONS
     CONFIGURATIONS_EMAIL("/configurations/blacklisted-email-domains"),
 
-    // LICENSE
+    // LICENSES
     LICENSES_BY_CUSTOMER_ID("/customers/%s/licenses"),
     SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID("/customers/%s/licenses/%s"),
     SUB_LICENSES("/customers/%s/sites/%s/licenses/%s/sub-licenses"),
@@ -77,14 +77,14 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     INSTALLATIONS("/installations"),
     INSTALLATION_BY_ID("/installations/%s"),
 
-    //FEATURE
+    //FEATURES
     INSTALLATION_FEATURES("/customers/%s/deployments/%s/installations/%s/features"),
 
     //SAML
     SAML_BY_CUSTOMER_ID("/customers/%s/identity-providers"),
     SAML_BY_CUSTOMER_PROVIDER_IDS("/customers/%s/identity-providers/%s"),
 
-    //ACCESS CONTROL
+    //ACCESS CONTROLS
     ACCESS_CONTROLS("/customers/%s/users/%s/access-controls"),
     ACCESS_CONTROL_BY_ID("/customers/%s/users/%s/access-controls/%s"),
 

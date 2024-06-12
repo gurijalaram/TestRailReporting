@@ -7,15 +7,25 @@ import com.apriori.cds.api.models.request.AccessControlRequest;
 import com.apriori.cds.api.models.response.AccessControlResponse;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
 
 public class AccessUtil {
-    private final ApplicationUtil applicationUtil = new ApplicationUtil();
+    private RequestEntityUtil requestEntityUtil;
+
+    private final ApplicationUtil applicationUtil;
+
+    // constructor that accepts requestEntity (user data) we created in the test
+    public AccessUtil(RequestEntityUtil requestEntityUtil) {
+        this.requestEntityUtil = requestEntityUtil;
+        applicationUtil = new ApplicationUtil(requestEntityUtil);
+    }
+
+    // no constructor needed in here as this method is only used twice so was easy to change
 
     /**
      * Post to add out of context access control
@@ -24,7 +34,7 @@ public class AccessUtil {
      */
     public ResponseWrapper<AccessControlResponse> addAccessControl(String customerIdentity, String userIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControlResponse.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControlResponse.class)
             .inlineVariables(customerIdentity, userIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(

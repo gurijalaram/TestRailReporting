@@ -9,6 +9,7 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
@@ -19,19 +20,33 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class CdsAccessControlsTests extends CdsTestUtil {
+public class CdsAccessControlsTests {
     private IdentityHolder accessControlIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private AccessUtil accessUtil = new AccessUtil();
+    private CustomerInfrastructure customerInfrastructure;
+    private CdsTestUtil cdsTestUtil;
+    private AccessUtil accessUtil;
     private String customerIdentity;
     private String userIdentity;
     private SoftAssertions soft = new SoftAssertions();
+    private RequestEntityUtil requestEntityUtil;
+
+    @BeforeEach
+    public void init() {
+        // KEY POINTS -
+        // object is no longer initialized at class level.
+        // user is initialized here and passed along to constructor when object is created hence user data persist.
+        // i know this will be a nightmare to refactor but we should consider composition over blind extension (class extends class)
+        requestEntityUtil = TestHelper.init();
+        accessUtil = new AccessUtil(requestEntityUtil);
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {

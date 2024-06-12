@@ -81,7 +81,7 @@ public class CdsSitesApplicationsTests {
     public void addApplicationSite() {
         String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
 
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
 
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityHolder = IdentityHolder.builder()
@@ -99,7 +99,7 @@ public class CdsSitesApplicationsTests {
     public void getApplicationSite() {
         String appIdentity = applicationUtil.getApplicationIdentity(CIA);
 
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityHolder = IdentityHolder.builder()
              .customerIdentity(customerIdentity)

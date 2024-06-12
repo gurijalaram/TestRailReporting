@@ -76,7 +76,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
         String realmKey = generateStringUtil.generateRealmKey();
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
-        ResponseWrapper<LicensedApplications> newApplication = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> newApplication = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();
 
         licensedAppIdentityHolder = IdentityHolder.builder()
@@ -94,7 +94,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
                 .installationIdentity(installationIdentity)
                 .build();
 
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         infrastructurePage = new CasLoginPage(driver)
                 .login(UserUtil.getUser())

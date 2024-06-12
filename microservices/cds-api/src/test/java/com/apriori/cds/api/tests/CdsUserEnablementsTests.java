@@ -6,10 +6,10 @@ import com.apriori.cds.api.enums.CDSRolesEnum;
 import com.apriori.cds.api.enums.DeploymentEnum;
 import com.apriori.cds.api.models.Apps;
 import com.apriori.cds.api.models.AppsItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Customer;
@@ -18,9 +18,6 @@ import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
@@ -28,12 +25,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @ExtendWith(TestRulesAPI.class)
@@ -41,7 +33,8 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private final ApplicationUtil applicationUtil = new ApplicationUtil();
     private String customerIdentity;
     private String userIdentity;
     private final String customerAssignedRole = "APRIORI_CONTRIBUTOR";
@@ -110,7 +103,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.CONTRIBUTOR.getRole());
 
         AppsItems applicationsResponse = AppsItems.builder()
-            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .appsList(Arrays.asList(applicationUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
             .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
@@ -137,7 +130,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.ANALYST.getRole());
 
         AppsItems applicationsResponse = AppsItems.builder()
-            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .appsList(Arrays.asList(applicationUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
             .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
@@ -164,7 +157,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.DESIGNER.getRole());
 
         AppsItems applicationsResponse = AppsItems.builder()
-            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .appsList(Arrays.asList(applicationUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
             .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
@@ -191,7 +184,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.EXPERT.getRole());
 
         AppsItems applicationsResponse = AppsItems.builder()
-            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .appsList(Arrays.asList(applicationUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
             .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
@@ -218,7 +211,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getCustomerAssignedRole()).isEqualTo(CDSRolesEnum.DEVELOPER.getRole());
 
         AppsItems applicationsResponse = AppsItems.builder()
-            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .appsList(Arrays.asList(applicationUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
             .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
@@ -247,7 +240,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getConnectAdminEnabled()).isTrue();
 
         AppsItems applicationsResponse = AppsItems.builder()
-            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .appsList(Arrays.asList(applicationUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
             .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
@@ -276,7 +269,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getUserAdminEnabled()).isTrue();
 
         AppsItems applicationsResponse = AppsItems.builder()
-            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .appsList(Arrays.asList(applicationUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
             .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
@@ -305,7 +298,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         soft.assertThat(enablements.getUserAdminEnabled()).isTrue();
 
         AppsItems applicationsResponse = AppsItems.builder()
-            .appsList(Arrays.asList(cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
+            .appsList(Arrays.asList(applicationUtil.getUserApplications(user, DeploymentEnum.PRODUCTION)))
             .build();
         soft.assertThatList(applicationsResponse.getAppsList().get(0).getApplications())
             .containsExactlyInAnyOrder((appsItems.getAppsList().get(0).getApplications())
@@ -340,8 +333,8 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
 
         AppsItems applicationsResponse = AppsItems.builder()
             .appsList(Arrays.asList(
-                cdsTestUtil.getUserApplications(user, DeploymentEnum.PRODUCTION),
-                cdsTestUtil.getUserApplications(user, DeploymentEnum.SANDBOX)
+                applicationUtil.getUserApplications(user, DeploymentEnum.PRODUCTION),
+                applicationUtil.getUserApplications(user, DeploymentEnum.SANDBOX)
             ))
             .build();
 

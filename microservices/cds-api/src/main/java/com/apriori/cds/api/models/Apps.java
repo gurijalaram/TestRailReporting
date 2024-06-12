@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+// TODO: 12/06/2024 cn - fix this class name
 public class Apps {
     public String deployment;
     public List<AppAccessControlsEnum> applications;

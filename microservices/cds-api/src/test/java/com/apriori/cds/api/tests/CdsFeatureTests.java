@@ -117,7 +117,7 @@ public class CdsFeatureTests {
         );
 
         String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 
         installationIdentityHolder = IdentityHolder.builder()
@@ -200,7 +200,7 @@ public class CdsFeatureTests {
         installationIdentity = installation.getResponseEntity().getIdentity();
 
         String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 
         installationIdentityHolder = IdentityHolder.builder()

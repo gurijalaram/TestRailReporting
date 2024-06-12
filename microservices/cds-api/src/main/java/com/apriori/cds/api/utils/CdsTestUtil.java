@@ -1,20 +1,15 @@
 package com.apriori.cds.api.utils;
 
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
-import com.apriori.cds.api.enums.AppAccessControlsEnum;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
-import com.apriori.cds.api.enums.DeploymentEnum;
-import com.apriori.cds.api.models.Apps;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
 import com.apriori.cds.api.models.request.ActivateLicense;
 import com.apriori.cds.api.models.request.ActivateLicenseRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
-import com.apriori.cds.api.models.request.ApplicationInstallationRequest;
 import com.apriori.cds.api.models.request.CASCustomerRequest;
 import com.apriori.cds.api.models.request.CustomAttributeRequest;
 import com.apriori.cds.api.models.request.FeatureRequest;
@@ -23,8 +18,6 @@ import com.apriori.cds.api.models.request.LicenseRequest;
 import com.apriori.cds.api.models.request.PostBatch;
 import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.AccessAuthorization;
-import com.apriori.cds.api.models.response.AccessControlResponse;
-import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.models.response.AssociationUserItems;
 import com.apriori.cds.api.models.response.AttributeMappings;
 import com.apriori.cds.api.models.response.CredentialsItems;
@@ -47,17 +40,14 @@ import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
-import com.apriori.shared.util.models.response.Application;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.Features;
-import com.apriori.shared.util.models.response.LicensedApplications;
 import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
@@ -66,31 +56,36 @@ import com.apriori.shared.util.models.response.Users;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.BeforeAll;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class CdsTestUtil extends TestUtil {
 
-    protected static RequestEntityUtil requestEntityUtil;
-    protected static UserCredentials testingUser;
+    private RequestEntityUtil requestEntityUtil;
 
-    @BeforeAll
-    public static void init() {
-        requestEntityUtil = RequestEntityUtilBuilder
-            .useRandomUser(APRIORI_DEVELOPER)
-            .useApUserContextInRequests();
-
-        testingUser = requestEntityUtil.getEmbeddedUser();
+    // constructor that accepts requestEntity (user data) we created in the test
+    public CdsTestUtil(RequestEntityUtil requestEntityUtil) {
+        this.requestEntityUtil = requestEntityUtil;
     }
+
+    // this empty constructor is needed just for now to avoid multiple errors.
+    public CdsTestUtil() {
+    }
+
+//    @BeforeAll
+//    public static void init() {
+//        requestEntityUtil = RequestEntityUtilBuilder
+//            .useRandomUser(APRIORI_DEVELOPER)
+//            .useApUserContextInRequests();
+//
+//        testingUser = requestEntityUtil.getEmbeddedUser();
+//    }
 
     /**
      * POST call to add a customer
@@ -378,39 +373,6 @@ public class CdsTestUtil extends TestUtil {
                     .isDefault("true")
                     .createdBy("#SYSTEM00000")
                     .apVersion("2020 R1")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * POST call to add an application to a site
-     *
-     * @param customerIdentity - the customer id
-     * @param siteIdentity     - the site id
-     * @return new object
-     */
-    public ResponseWrapper<LicensedApplications> addApplicationToSite(
-        String customerIdentity,
-        String siteIdentity,
-        String appIdentity) {
-
-        RequestEntity requestEntity = RequestEntityUtil_Old
-            .init(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS, LicensedApplications.class)
-            .inlineVariables(customerIdentity, siteIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .headers(new HashMap<String, String>() {
-
-                {
-                    put("Content-Type", "application/json");
-                }
-            })
-            .body(
-                "licensedApplication",
-                LicensedApplications.builder()
-                    .applicationIdentity(appIdentity)
-                    .createdBy("#SYSTEM00000")
                     .build()
             );
 
@@ -1028,36 +990,6 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * @param customerIdentity     customer id
-     * @param deploymentIdentity   deployment id
-     * @param installationIdentity installation id
-     * @param appIdentity          application id
-     * @param siteIdentity         site id
-     * @return new object
-     */
-    public ResponseWrapper<InstallationItems> addApplicationInstallation(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity,
-        String appIdentity,
-        String siteIdentity) {
-
-        RequestEntity requestEntity = RequestEntityUtil_Old
-            .init(CDSAPIEnum.APPLICATION_INSTALLATION, InstallationItems.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "installation",
-                ApplicationInstallationRequest.builder()
-                    .applicationIdentity(appIdentity)
-                    .siteIdentity(siteIdentity)
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
      * Uploads batch users file via CAS API
      *
      * @param users            - string of users file
@@ -1239,43 +1171,5 @@ public class CdsTestUtil extends TestUtil {
             .expectedResponseCode(SC_CREATED);
 
         return HTTPRequest.build(requestEntity).put();
-    }
-
-    /**
-     * this method returns the list of the application which user is entitled for
-     */
-    public Apps getUserApplications(User user, DeploymentEnum deploymentVar) {
-        RequestEntity requestEntity =
-            requestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
-                .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
-                .expectedResponseCode(HttpStatus.SC_OK);
-        ResponseWrapper<AccessControls> accessControl = HTTPRequest.build(requestEntity).get();
-        List<AccessControlResponse> accessControlItems = accessControl.getResponseEntity().getItems();
-
-        Apps apps = Apps.builder()
-            .deployment(deploymentVar.getDeployment())
-            .applications(new ArrayList<>())
-            .build();
-        for (AccessControlResponse item : accessControlItems) {
-            RequestEntity requestEntityApp =
-                requestEntityUtil.init(CDSAPIEnum.APPLICATION_BY_ID, Application.class)
-                    .inlineVariables(item.getApplicationIdentity())
-                    .expectedResponseCode(HttpStatus.SC_OK);
-            ResponseWrapper<Application> application =
-                HTTPRequest.build(requestEntityApp).get();
-
-            RequestEntity requestEntityDep =
-                requestEntityUtil.init(CDSAPIEnum.DEPLOYMENT_BY_CUSTOMER_DEPLOYMENT_IDS, Deployment.class)
-                    .inlineVariables(user.getCustomerIdentity(), item.getDeploymentIdentity())
-                    .expectedResponseCode(HttpStatus.SC_OK);
-            ResponseWrapper<Deployment> deployment =
-                HTTPRequest.build(requestEntityDep).get();
-
-            if (deployment.getResponseEntity().getName().equals(deploymentVar.getDeployment())) {
-                apps.getApplications()
-                    .add(AppAccessControlsEnum.fromString(application.getResponseEntity().getName()));
-            }
-        }
-        return apps;
     }
 }
