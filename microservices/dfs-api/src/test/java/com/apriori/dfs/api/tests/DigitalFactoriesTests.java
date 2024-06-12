@@ -49,7 +49,8 @@ public class DigitalFactoriesTests {
     private static final String INVALID_OR_MISSING_CREDENTIAL_MSG = "Invalid or missing credential";
     private static final String INVALID_SHARED_SECRET = "InvalidSharedSecret";
     private static final String NO_SHARED_SECRET = "";
-    private static final String VALID_DIGITAL_FACTORY_ID = "ABCDEFGHIJK2";
+    private static final String VALID_BASELINE_DIGITAL_FACTORY_ID = "ABCDEFGHIJK2";
+    private static final String VALID_OVERLAY_DIGITAL_FACTORY_ID = "ABCDEFGHIJK4";
     private static final String NON_EXISTENT_DIGITAL_FACTORY_ID = "ABCDEFGHIJK5";
     private static final String USER_CONTEXT_NOT_FOUND_MSG = "'ap-user-context' is required";
     private static final String UNAUTHORIZED_ERROR = "Unauthorized";
@@ -57,6 +58,7 @@ public class DigitalFactoriesTests {
     private static final String NOT_ACCEPTABLE_MSG = "Could not find acceptable representation";
     private static final String BOTH_PAGE_NUMBER_AND_PAGE_SIZE_MUST_BE_GREATER_THAN_0 =
         "Both pageNumber and pageSize must be greater than 0";
+    private static final String CONTAINS_INHERITANCE = "inheritedDigitalFactories";
 
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final DigitalFactoryUtil digitalFactoryUtil = new DigitalFactoryUtil();
@@ -64,7 +66,7 @@ public class DigitalFactoriesTests {
     private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
-    @TestRail(id = {28958})
+    @TestRail(id = {28958, 31073})
     @Description("Gets a list of digital factories when shared secret is valid")
     public void findDigitalFactoriesWithValidSharedSecretTest() {
 
@@ -76,6 +78,7 @@ public class DigitalFactoriesTests {
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
         softAssertions.assertThat(responseWrapper.getResponseEntity().getItems().size()).isGreaterThan(0);
+        softAssertions.assertThat(responseWrapper.getBody().contains(CONTAINS_INHERITANCE)).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -293,7 +296,7 @@ public class DigitalFactoriesTests {
     }
 
     @Test
-    @TestRail(id = {28959})
+    @TestRail(id = {28959, 31071})
     @Description("Gets a digital factory by identity when shared secret/identity are valid")
     public void getDigitalFactoryByIdentityTest() {
 
@@ -301,11 +304,28 @@ public class DigitalFactoriesTests {
             HttpStatusCode.OK,
             DigitalFactory.class,
             userCredentials,
-            VALID_DIGITAL_FACTORY_ID
+            VALID_BASELINE_DIGITAL_FACTORY_ID
         );
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isNotNull();
         softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isEqualTo(DF_NAME);
+        softAssertions.assertThat(responseWrapper.getBody().contains(CONTAINS_INHERITANCE)).isEqualTo(false);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(id = {31072})
+    @Description("Gets a digital factory that contains inheritance")
+    public void getDigitalFactoryInheritance() {
+
+        ResponseWrapper<DigitalFactory> responseWrapper = digitalFactoryUtil.getDigitalFactory(
+            HttpStatusCode.OK,
+            DigitalFactory.class,
+            userCredentials,
+            VALID_OVERLAY_DIGITAL_FACTORY_ID
+        );
+
+        softAssertions.assertThat(responseWrapper.getBody().contains(CONTAINS_INHERITANCE)).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -318,7 +338,7 @@ public class DigitalFactoriesTests {
             HttpStatusCode.UNAUTHORIZED,
             ErrorMessage.class,
             userCredentials,
-            VALID_DIGITAL_FACTORY_ID,
+            VALID_BASELINE_DIGITAL_FACTORY_ID,
             INVALID_SHARED_SECRET
         );
 
@@ -334,7 +354,7 @@ public class DigitalFactoriesTests {
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.getDigitalFactoryWithoutKeyParameter(
             HttpStatusCode.UNAUTHORIZED,
             ErrorMessage.class,
-            VALID_DIGITAL_FACTORY_ID
+            VALID_BASELINE_DIGITAL_FACTORY_ID
         );
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(UNAUTHORIZED_ERROR);
@@ -351,7 +371,7 @@ public class DigitalFactoriesTests {
             HttpStatusCode.UNAUTHORIZED,
             ErrorMessage.class,
             userCredentials,
-            VALID_DIGITAL_FACTORY_ID,
+            VALID_BASELINE_DIGITAL_FACTORY_ID,
             NO_SHARED_SECRET
         );
 
@@ -371,11 +391,11 @@ public class DigitalFactoriesTests {
             HttpStatusCode.NOT_FOUND,
             ErrorMessage.class,
             fakeUser,
-            VALID_DIGITAL_FACTORY_ID
+            VALID_BASELINE_DIGITAL_FACTORY_ID
         );
 
         String expectedMessage =
-            String.format("Resource 'DigitalFactory' with identity '%s' was not found", VALID_DIGITAL_FACTORY_ID);
+            String.format("Resource 'DigitalFactory' with identity '%s' was not found", VALID_BASELINE_DIGITAL_FACTORY_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(NOT_FOUND_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(expectedMessage);
@@ -391,7 +411,7 @@ public class DigitalFactoriesTests {
             HttpStatusCode.BAD_REQUEST,
             ErrorMessage.class,
             (UserCredentials) null,
-            VALID_DIGITAL_FACTORY_ID
+            VALID_BASELINE_DIGITAL_FACTORY_ID
         );
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(BAD_REQUEST_ERROR);
@@ -526,7 +546,7 @@ public class DigitalFactoriesTests {
     public void deleteDigitalFactoryByIdentityTest() {
 
         ResponseWrapper<Void> responseWrapper = digitalFactoryUtil.deleteDigitalFactory(
-            HttpStatusCode.NO_CONTENT, null, VALID_DIGITAL_FACTORY_ID);
+            HttpStatusCode.NO_CONTENT, null, VALID_BASELINE_DIGITAL_FACTORY_ID);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity()).isNull();
         softAssertions.assertThat(responseWrapper.getBody()).isEmpty();
@@ -539,7 +559,7 @@ public class DigitalFactoriesTests {
     public void deleteDigitalFactoryWithInvalidSharedSecretTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.deleteDigitalFactory(
-            HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, INVALID_SHARED_SECRET);
+            HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, VALID_BASELINE_DIGITAL_FACTORY_ID, INVALID_SHARED_SECRET);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(UNAUTHORIZED_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(INVALID_OR_MISSING_CREDENTIAL_MSG);
@@ -552,7 +572,7 @@ public class DigitalFactoriesTests {
     public void deleteDigitalFactoryWithEmptySharedSecretTest() {
 
         ResponseWrapper<ErrorMessage> responseWrapper = digitalFactoryUtil.deleteDigitalFactory(
-            HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, VALID_DIGITAL_FACTORY_ID, NO_SHARED_SECRET);
+            HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, VALID_BASELINE_DIGITAL_FACTORY_ID, NO_SHARED_SECRET);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getError()).isEqualTo(UNAUTHORIZED_ERROR);
         softAssertions.assertThat(responseWrapper.getResponseEntity().getMessage()).isEqualTo(INVALID_CREDENTIAL_MSG);
