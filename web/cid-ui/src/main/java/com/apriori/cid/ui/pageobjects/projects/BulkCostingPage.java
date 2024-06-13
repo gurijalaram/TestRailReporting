@@ -1,6 +1,7 @@
 package com.apriori.cid.ui.pageobjects.projects;
 
 
+import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.web.app.util.PageUtils;
 
 import org.openqa.selenium.By;
@@ -63,6 +64,9 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     private WebElement submitIconOnBulkAnalysisInput;
     @FindBy(xpath = "//div[contains(@role,'rowgroup')]/div")
     private List<WebElement> rowsInTableBulkAnalysis;
+
+    @FindBy(xpath = "//div[contains(@data-header-id,'componentDisplayName')]")
+    private List<WebElement> componentNameLink;
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -476,5 +480,15 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
         return rowsInTableBulkAnalysis.get(0).getText();
     }
 
-
+    /**
+     * click on chosen componentName link -
+     *
+     * @param number - pass 1 to choose the 1st row
+     * @return page object
+     */
+    public EvaluatePage selectComponentByRow(int number) {
+        pageUtils.waitForElementToBeClickable(componentNameLink.get(number));
+        pageUtils.waitForElementAndClick(componentNameLink.get(number));
+        return new EvaluatePage(driver);
+    }
 }

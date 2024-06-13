@@ -4,6 +4,7 @@ import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.css.api.utils.CssComponent;
@@ -62,9 +63,9 @@ public class BulkCostingPageTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {30730, 29964})
-    @Description("create inputRow for the worksheet")
-    public void testCreateInputRow() {
+    @TestRail(id = {30730, 29964, 31068})
+    @Description("create inputRow for the worksheet and go to evaluate page")
+    public void testCreateInputAndGoToEvaluatePageRow() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -78,6 +79,9 @@ public class BulkCostingPageTests extends TestBaseUI {
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
         soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName1)).isTrue();
         soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName2)).isTrue();
+
+        EvaluatePage evaluatePage = bulkCostingPage.selectComponentByRow(1);
+        soft.assertThat(evaluatePage.isDesignGuidanceButtonDisplayed()).isTrue();
         soft.assertAll();
     }
 
