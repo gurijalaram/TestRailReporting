@@ -8,6 +8,9 @@ public enum CustomersApiEnum implements ExternalEndpointEnum {
     // SITES
     SITES_BY_CUSTOMER_ID("/customers/%s/sites"),
 
+    // APPLICATION
+    APPLICATIONS("/applications"),
+
     //CUSTOMERS
     CUSTOMERS("/customers");
 

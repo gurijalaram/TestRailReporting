@@ -8,7 +8,7 @@ import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.response.Application;
+import com.apriori.shared.util.models.response.Applications;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Customers;
 import com.apriori.shared.util.models.response.Deployment;
@@ -65,15 +65,13 @@ public class CustomerUtil {
     private static String generateAuthTargetCloudContext(UserCredentials userCredentials) {
 
         final String customerIdentity = getCustomerData().getIdentity();
-        final String installationName = PropertiesContext.get("${env}.multi_tenant_installation_name");
-        final String applicationNameFromConfig = getApplicationName();
-
+        final String installationName = PropertiesContext.get("${customer}.multi_tenant_installation_name");
         Deployment deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
 
         Installation installationItem = deploymentItem.getInstallations()
             .stream()
 
-            .filter(element -> element.getName().equals(installationName))
+            .filter(element -> element.getName().equalsIgnoreCase(installationName))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(
                     String.format("Could not find installation with name %s\nfor deployment %s",
@@ -81,21 +79,26 @@ public class CustomerUtil {
                 )
             );
 
-        Application applicationItem = installationItem.getApplications()
-            .stream()
-            .filter(element -> element.getServiceName().equalsIgnoreCase(applicationNameFromConfig))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(
-                    String.format("Could not find application with name %s\nfor installation %s\nand deployment %s",
-                        applicationNameFromConfig, installationName, deploymentItem.getName())
-                )
-            );
+        return customerIdentity +
+            deploymentItem.getIdentity() +
+            installationItem.getIdentity() +
+            getApplicationIdentity();
+    }
 
-        return new StringBuilder(customerIdentity)
-            .append(deploymentItem.getIdentity())
-            .append(installationItem.getIdentity())
-            .append(applicationItem.getIdentity())
-            .toString();
+    /**
+     * Calls an API with GET verb
+     *
+     * @return string
+     */
+    // TODO: 10/06/2024 cn - this is a duplicate of a cds method which needs to be refactored when cdstestutil is being worked on
+    private static String getApplicationIdentity() {
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CustomersApiEnum.APPLICATIONS, Applications.class)
+            .queryParams(new QueryParams().use("cloudReference[EQ]", "ci-design"))
+            .expectedResponseCode(org.apache.http.HttpStatus.SC_OK);
+
+        ResponseWrapper<Applications> response = HTTPRequest.build(requestEntity).get();
+
+        return response.getResponseEntity().getItems().stream().findFirst().get().getIdentity();
     }
 
     private static String generateTokenSubject() {
@@ -138,14 +141,6 @@ public class CustomerUtil {
         ResponseWrapper<Deployments> response = HTTPRequest.build(requestEntity).get();
 
         return response.getResponseEntity().getItems();
-    }
-
-    private static String getApplicationName() {
-        try {
-            return PropertiesContext.get("application_name");
-        } catch (IllegalArgumentException e) {
-            return "cid";
-        }
     }
 
     /**
