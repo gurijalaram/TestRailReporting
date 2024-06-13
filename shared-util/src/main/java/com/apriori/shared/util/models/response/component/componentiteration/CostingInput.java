@@ -1,5 +1,7 @@
 package com.apriori.shared.util.models.response.component.componentiteration;
 
+import com.apriori.shared.util.models.response.component.CostRollupOverrides;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +20,7 @@ public class CostingInput {
     private Integer annualVolume;
     private Integer batchSize;
     private String costMode;
+    private CostRollupOverrides costRollupOverrides;
     private CustomAttributes customAttributes;
     private String materialName;
     private String machiningMode;
