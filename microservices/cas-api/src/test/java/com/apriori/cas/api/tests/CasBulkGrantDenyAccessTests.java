@@ -4,6 +4,7 @@ import static com.apriori.cds.api.enums.ApplicationEnum.ACS;
 import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
 import static com.apriori.cds.api.enums.ApplicationEnum.CIR;
+import static com.apriori.cds.api.enums.ApplicationEnum.CIS;
 import static com.apriori.cds.api.enums.ApplicationEnum.CLOUD_HOME;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
@@ -76,11 +77,11 @@ public class CasBulkGrantDenyAccessTests {
         cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
         acsIdentity = cdsTestUtil.getApplicationIdentity(ACS);
         achIdentity = cdsTestUtil.getApplicationIdentity(CLOUD_HOME);
+        apWIdentity = cdsTestUtil.getApplicationIdentity(CIS);
         aprioriIdentity = casTestUtil.getAprioriInternal().getIdentity();
         apSiteIdentity = casTestUtil.getCommonRequest(CASAPIEnum.SITES, Sites.class, HttpStatus.SC_OK, aprioriIdentity).getResponseEntity().getItems().stream().filter(site -> site.getName().contains("Internal")).collect(Collectors.toList()).get(0).getIdentity();
         apDeploymentIdentity = PropertiesContext.get("cds.apriori_production_deployment_identity");
         apInstallationIdentity = PropertiesContext.get("cds.apriori_core_services_installation_identity");
-        apWIdentity = PropertiesContext.get("cds.ap_workspace_application_identity");
     }
 
     @AfterEach

@@ -254,7 +254,7 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
                 ""
             );
 
-        InputControlState useLatestExportDateAllIcState = inputControlsUseLatestExportScenario.getResponseEntity().getInputControlState().get(8);
+        InputControlState useLatestExportDateAllIcState = inputControlsUseLatestExportAll.getResponseEntity().getInputControlState().get(8);
         softAssertions.assertThat(useLatestExportDateAllIcState.getTotalCount()).isEqualTo("3");
         softAssertions.assertThat(useLatestExportDateAllIcState.getOptions().get(1).getLabel()).isEqualTo("All");
         softAssertions.assertThat(useLatestExportDateAllIcState.getOptions().get(1).getSelected()).isEqualTo(true);
@@ -273,7 +273,7 @@ public class UpgradeComparisonReportTests extends JasperApiAuthenticationUtil {
                 ""
             );
 
-        InputControlState useLatestExportDateNoIcState = inputControlsUseLatestExportScenario.getResponseEntity().getInputControlState().get(8);
+        InputControlState useLatestExportDateNoIcState = inputControlsUseLatestExportNo.getResponseEntity().getInputControlState().get(8);
         softAssertions.assertThat(useLatestExportDateNoIcState.getTotalCount()).isEqualTo("3");
         softAssertions.assertThat(useLatestExportDateNoIcState.getOptions().get(2).getLabel()).isEqualTo("No");
         softAssertions.assertThat(useLatestExportDateNoIcState.getOptions().get(2).getSelected()).isEqualTo(true);

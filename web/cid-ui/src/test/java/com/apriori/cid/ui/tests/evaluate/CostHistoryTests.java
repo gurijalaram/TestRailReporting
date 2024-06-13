@@ -11,6 +11,7 @@ import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.models.response.component.CostRollupOverrides;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.SecondaryDigitalFactories;
 import com.apriori.shared.util.models.response.component.SecondaryProcesses;
@@ -72,6 +73,10 @@ public class CostHistoryTests extends TestBaseUI {
             CostingTemplate.builder()
                 .secondaryProcesses(SecondaryProcesses.builder()
                     .heatTreatment(List.of("Certification"))
+                    .otherSecondaryProcesses(List.of(""))
+                    .machining(List.of(""))
+                    .surfaceTreatment(List.of(""))
+                    .castingDie(List.of(""))
                     .build())
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
@@ -111,13 +116,22 @@ public class CostHistoryTests extends TestBaseUI {
                 .secondaryDigitalFactories(secondaryDF)
                 .build());
         scenariosUtil.postGroupCostScenarios(castingPart);
+
+        castingPart.setCostingTemplate(CostingTemplate.builder()
+            .costMode("MANUAL")
+            .costRollupOverrides(CostRollupOverrides.builder()
+                .piecePartCost(2.3)
+                .totalCapitalInvestment(1.9)
+                .build())
+            .build());
+        scenariosUtil.postCostScenario(castingPart);
     }
 
     private final List<String> defaultGraphIterationNames = Arrays.asList("Iteration 2", "Iteration 3", "Iteration 4", "Iteration 5",
-        "Iteration 6", "Iteration 7", "Iteration 8", "Iteration 9", "Iteration 10", "Iteration 11");
+        "Iteration 6", "Iteration 7", "Iteration 8", "Iteration 9", "Iteration 10", "Iteration 11", "Iteration 12");
 
     @Test
-    @TestRail(id = {28442, 28443, 28444, 28447})
+    @TestRail(id = {28442, 28443, 28444, 28447, 31031})
     @Description("Verify Cost History available")
     public void testCostHistory() {
 
@@ -155,7 +169,7 @@ public class CostHistoryTests extends TestBaseUI {
         softAssertions.assertThat(changeSummary.getChangedFrom("Digital Factory")).as("Verify changed from in Digital Factory").isEqualTo("-");
         softAssertions.assertThat(changeSummary.getChangedTo("Digital Factory")).as("Verify changed to in Digital Factory").isEqualTo("aPriori USA");
 
-        softAssertions.assertThat(costHistoryPage.iterationCount()).as("count").isEqualTo(11);
+        softAssertions.assertThat(costHistoryPage.iterationCount()).as("count").isEqualTo(defaultGraphIterationNames.size() + 1);
 
         changeSummary = changeSummary.close(CostHistoryPage.class)
             .openChangeSummary(6);
@@ -196,6 +210,14 @@ public class CostHistoryTests extends TestBaseUI {
             .as("Verify changed from in Secondary Digital Factories-Surface Treatment").isEqualTo("-");
         softAssertions.assertThat(changeSummary.getChangedTo("Secondary Digital Factories-Surface Treatment"))
             .as("Verify changed to in Secondary Digital Factories-Surface Treatment").isEqualTo(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory());
+
+        changeSummary = changeSummary.close(CostHistoryPage.class)
+            .openChangeSummary(12);
+
+        softAssertions.assertThat(changeSummary.getChangedFrom("Cost Mode"))
+            .as("Verify changed from in Cost Mode").isEqualTo("SIMULATE");
+        softAssertions.assertThat(changeSummary.getChangedTo("Cost Mode"))
+            .as("Verify changed to in Cost Mode").isEqualTo("MANUAL");
 
         softAssertions.assertAll();
     }

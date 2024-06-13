@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
+import com.apriori.cid.ui.pageobjects.evaluate.SourceModelExplorePage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.cid.ui.pageobjects.evaluate.inputs.AdvancedPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
@@ -31,8 +32,9 @@ public class TwoModelMachiningTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
-
+    private SourceModelExplorePage sourceModelExplorePage;
     private GuidanceIssuesPage guidanceIssuesPage;
+
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public TwoModelMachiningTests() {
@@ -85,6 +87,34 @@ public class TwoModelMachiningTests extends TestBaseUI {
             .selectOptions();
 
         assertThat(processSetupOptionsPage.getCadModelSensitivity(), is("42"));*/
+    }
+
+    @Test
+    @Description("Validate Manually Costed parts cannot be set as Source")
+    @TestRail(id = {7861, 7862, 7863, 7864, 7870})
+    public void testManuallyCostedAsSource() {
+        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getUniqueComponent("casting_AFTER_machining");
+        twoModelPart.setUser(sourcePart.getUser());
+
+        loginPage = new CidAppLoginPage(driver);
+        sourceModelExplorePage = loginPage.login(sourcePart.getUser())
+            .uploadComponentAndOpen(sourcePart)
+            .clickManualModeButtonWhileUncosted()
+            .enterPiecePartCost("42")
+            .enterTotalCapitalInvestment("316")
+            .clickSaveButton()
+            .clickExplore()
+            .uploadComponentAndOpen(twoModelPart)
+            .selectProcessGroup(twoModelPart.getProcessGroup())
+            .selectSourcePart()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickSearch(sourcePart.getComponentName());
+
+        softAssertions.assertThat(sourceModelExplorePage.isScenarioClickable(sourcePart.getComponentName(), sourcePart.getScenarioName())).isFalse();
+
+        softAssertions.assertAll();
     }
 
     @Test
