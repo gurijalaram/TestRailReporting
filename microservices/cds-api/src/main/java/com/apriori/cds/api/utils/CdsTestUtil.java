@@ -40,7 +40,6 @@ import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
@@ -69,7 +68,6 @@ public class CdsTestUtil extends TestUtil {
 
     private RequestEntityUtil requestEntityUtil;
 
-    // constructor that accepts requestEntity (user data) we created in the test
     public CdsTestUtil(RequestEntityUtil requestEntityUtil) {
         this.requestEntityUtil = requestEntityUtil;
     }
@@ -77,15 +75,6 @@ public class CdsTestUtil extends TestUtil {
     // this empty constructor is needed just for now to avoid multiple errors.
     public CdsTestUtil() {
     }
-
-//    @BeforeAll
-//    public static void init() {
-//        requestEntityUtil = RequestEntityUtilBuilder
-//            .useRandomUser(APRIORI_DEVELOPER)
-//            .useApUserContextInRequests();
-//
-//        testingUser = requestEntityUtil.getEmbeddedUser();
-//    }
 
     /**
      * POST call to add a customer
@@ -103,7 +92,7 @@ public class CdsTestUtil extends TestUtil {
         String salesForceId,
         String email) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.CUSTOMERS, Customer.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customer.class)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
                 "customer",
@@ -149,7 +138,7 @@ public class CdsTestUtil extends TestUtil {
         String email,
         UserCredentials currentUser) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CASCustomerEnum.CUSTOMERS, Customer.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CASCustomerEnum.CUSTOMERS, Customer.class)
             .token(currentUser.getToken())
             .body(
                 "customer",
@@ -180,7 +169,7 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<Customer> updateCustomer(String customerIdentity, String updatedEmailPattern) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(HttpStatus.SC_OK)
             .headers(new HashMap<String, String>() {
@@ -213,7 +202,7 @@ public class CdsTestUtil extends TestUtil {
         requestBody.setUsername(userName);
         requestBody.setEmail(userName + "@" + domain + ".com");
         requestBody.getUserProfile().setGivenName(userName);
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("user", requestBody);
@@ -237,7 +226,7 @@ public class CdsTestUtil extends TestUtil {
         requestBody.setEmail(userName + "@" + domain + ".com");
         requestBody.getUserProfile().setGivenName(userName);
         requestBody.getEnablements().setCustomerAssignedRole(customerAssignedRole);
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("user", requestBody);
@@ -253,7 +242,7 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<User> patchUser(User user) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class)
             .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(
@@ -280,7 +269,7 @@ public class CdsTestUtil extends TestUtil {
         Integer expectedResponseCode,
         JsonNode user) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, klass)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, klass)
             .inlineVariables(customerIdentity, userIdentity)
             .expectedResponseCode(expectedResponseCode)
             .body("user", user);
@@ -303,7 +292,7 @@ public class CdsTestUtil extends TestUtil {
         String passwordHashCurrent,
         String passwordSalt) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old
+        RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.USER_CREDENTIALS_BY_CUSTOMER_USER_IDS, CredentialsItems.class)
             .inlineVariables(customerIdentity, userIdentity)
             .expectedResponseCode(HttpStatus.SC_OK)
@@ -330,7 +319,7 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<Site> addSite(String customerIdentity, String siteName, String siteID) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Site.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Site.class)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
@@ -359,7 +348,7 @@ public class CdsTestUtil extends TestUtil {
         String siteIdentity,
         String deploymentType) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployment.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployment.class)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
@@ -398,7 +387,7 @@ public class CdsTestUtil extends TestUtil {
         String siteIdentity,
         Boolean highMem) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old
+        RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)
             .inlineVariables(customerIdentity, deploymentIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
@@ -457,7 +446,7 @@ public class CdsTestUtil extends TestUtil {
             .bulkCostingEnabled(bulkCostingEnabled)
             .build());
 
-        RequestEntity requestEntity = RequestEntityUtil_Old
+        RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)
             .inlineVariables(customerIdentity, deploymentIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
@@ -477,7 +466,7 @@ public class CdsTestUtil extends TestUtil {
         String installationIdentity,
         Boolean bulkCostingEnabled) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(FeatureRequest.builder()
@@ -500,7 +489,7 @@ public class CdsTestUtil extends TestUtil {
         String installationIdentity,
         Boolean bulkCostingEnabled) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
             .body(FeatureRequest.builder()
@@ -520,7 +509,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean bulkCosting) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(FeatureRequest.builder()
@@ -542,7 +531,7 @@ public class CdsTestUtil extends TestUtil {
         String deploymentIdentity,
         String installationIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
             .body(FeatureRequest.builder()
@@ -568,7 +557,7 @@ public class CdsTestUtil extends TestUtil {
         String deploymentIdentity,
         String installationIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old
+        RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS, InstallationItems.class)
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .expectedResponseCode(HttpStatus.SC_OK)
@@ -596,7 +585,7 @@ public class CdsTestUtil extends TestUtil {
         String associationIdentity,
         String userIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old
+        RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS, AssociationUserItems.class)
             .inlineVariables(apCustomerIdentity, associationIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
@@ -628,7 +617,7 @@ public class CdsTestUtil extends TestUtil {
         String subLicenseIdentity,
         String userIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old
+        RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USERS, SubLicenseAssociationUser.class)
             .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
@@ -659,7 +648,7 @@ public class CdsTestUtil extends TestUtil {
 
         String signingCertificate = new String(FileResourceUtil.getResourceFileStream("SigningCert.txt").readAllBytes(), StandardCharsets.UTF_8);
 
-        RequestEntity requestEntity = RequestEntityUtil_Old
+        RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.SAML_BY_CUSTOMER_ID, IdentityProviderResponse.class)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
@@ -706,7 +695,7 @@ public class CdsTestUtil extends TestUtil {
         String idpIdentity,
         String userIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old
+        RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS, IdentityProviderResponse.class)
             .inlineVariables(customerIdentity, idpIdentity)
             .expectedResponseCode(HttpStatus.SC_OK)
@@ -752,7 +741,7 @@ public class CdsTestUtil extends TestUtil {
         String licenseXml = new String(FileResourceUtil.getResourceFileStream("CdsLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
         String licenseTemplate = new String(FileResourceUtil.getResourceFileStream("CdsLicenseTemplate.xml").readAllBytes(), StandardCharsets.UTF_8);
 
-        RequestEntity requestEntity = RequestEntityUtil_Old
+        RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
             .inlineVariables(customerIdentity, siteIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
@@ -786,7 +775,7 @@ public class CdsTestUtil extends TestUtil {
         String licenseIdentity,
         String userIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.LICENSE_ACTIVATE, LicenseResponse.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.LICENSE_ACTIVATE, LicenseResponse.class)
             .inlineVariables(customerIdentity, siteIdentity, licenseIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(ActivateLicenseRequest.builder()
@@ -808,7 +797,7 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<CustomAttribute> addCustomAttribute(String customerIdentity, String userIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
@@ -838,7 +827,7 @@ public class CdsTestUtil extends TestUtil {
         String userIdentity,
         String updatedDepartment) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
@@ -868,7 +857,7 @@ public class CdsTestUtil extends TestUtil {
         String attributeIdentity,
         String updatedDepartment) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity, attributeIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
@@ -891,7 +880,7 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<UserPreference> addUserPreference(String customerIdentity, String userIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.USER_PREFERENCES, UserPreference.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_PREFERENCES, UserPreference.class)
             .inlineVariables(customerIdentity, userIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
@@ -921,7 +910,7 @@ public class CdsTestUtil extends TestUtil {
         String preferenceIdentity,
         String updatedPreference) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
             .inlineVariables(customerIdentity, userIdentity, preferenceIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
@@ -948,7 +937,7 @@ public class CdsTestUtil extends TestUtil {
         String userIdentity,
         String preferenceName) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
             .inlineVariables(customerIdentity, userIdentity, preferenceName)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
@@ -974,7 +963,7 @@ public class CdsTestUtil extends TestUtil {
         String userIdentity,
         String serviceAccount) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old
+        RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.ACCESS_AUTHORIZATIONS, AccessAuthorization.class)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
@@ -1013,7 +1002,7 @@ public class CdsTestUtil extends TestUtil {
 
         InputStream usersBatch = new ByteArrayInputStream(sb.toString().getBytes(StandardCharsets.UTF_8));
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CASCustomerEnum.CUSTOMERS_BATCH, PostBatch.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CASCustomerEnum.CUSTOMERS_BATCH, PostBatch.class)
             .token(currentUser.getToken())
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .multiPartFiles(new MultiPartFiles().use(
@@ -1037,7 +1026,7 @@ public class CdsTestUtil extends TestUtil {
         String fileName,
         UserCredentials currentUser) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CASCustomerEnum.CUSTOMERS_BATCH, PostBatch.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CASCustomerEnum.CUSTOMERS_BATCH, PostBatch.class)
             .token(currentUser.getToken())
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .multiPartFiles(new MultiPartFiles().use("multiPartFile", FileResourceUtil.getResourceAsFile(fileName)))
@@ -1055,7 +1044,7 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<UserRole> createRoleForUser(String customerIdentity, String userIdentity, String role) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.USER_ROLES, UserRole.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_ROLES, UserRole.class)
             .inlineVariables(customerIdentity, userIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
@@ -1078,7 +1067,7 @@ public class CdsTestUtil extends TestUtil {
      */
     public ErrorResponse createInvalidRoleForUser(String customerIdentity, String userIdentity, String role) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.USER_ROLES, ErrorResponse.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_ROLES, ErrorResponse.class)
             .inlineVariables(customerIdentity, userIdentity)
             .body(
                 "role",
@@ -1101,7 +1090,7 @@ public class CdsTestUtil extends TestUtil {
      */
     public Roles getRoles(QueryParams queryParams, String... inlineVariables) {
 
-        final RequestEntity requestEntity = RequestEntityUtil_Old
+        final RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.ROLES, Roles.class)
             .inlineVariables(inlineVariables)
             .queryParams(queryParams)
@@ -1155,7 +1144,7 @@ public class CdsTestUtil extends TestUtil {
         boolean sandbox,
         boolean preview) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.USER_ENABLEMENTS, Enablements.class)
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_ENABLEMENTS, Enablements.class)
             .inlineVariables(customerIdentity, userIdentity)
             .body(
                 "enablements",

@@ -9,7 +9,6 @@ import com.apriori.cds.api.models.request.ApplicationInstallationRequest;
 import com.apriori.cds.api.models.response.AccessControlResponse;
 import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.models.response.InstallationItems;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.QueryParams;
@@ -27,21 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ApplicationUtil {
-//    private static RequestEntityUtil requestEntityUtil;
-//    private static UserCredentials testingUser;
-//
-//    public ApplicationUtil() {
-//        requestEntityUtil = RequestEntityUtilBuilder
-//            .useRandomUser(APRIORI_DEVELOPER)
-//            .useApUserContextInRequests();
-//
-//        testingUser = requestEntityUtil.getEmbeddedUser();
-//    }
-
     private RequestEntityUtil requestEntityUtil;
-    protected static UserCredentials testingUser;
 
-    // constructor that accepts requestEntity (user data) we created in the test
     public ApplicationUtil(RequestEntityUtil requestEntityUtil) {
         this.requestEntityUtil = requestEntityUtil;
     }

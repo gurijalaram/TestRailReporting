@@ -27,22 +27,17 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 public class CdsAccessControlsTests {
     private IdentityHolder accessControlIdentityHolder;
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private final GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
     private AccessUtil accessUtil;
     private String customerIdentity;
     private String userIdentity;
-    private SoftAssertions soft = new SoftAssertions();
-    private RequestEntityUtil requestEntityUtil;
+    private final SoftAssertions soft = new SoftAssertions();
 
     @BeforeEach
     public void init() {
-        // KEY POINTS -
-        // object is no longer initialized at class level.
-        // user is initialized here and passed along to constructor when object is created hence user data persist.
-        // i know this will be a nightmare to refactor but we should consider composition over blind extension (class extends class)
-        requestEntityUtil = TestHelper.init();
+        RequestEntityUtil requestEntityUtil = TestHelper.init();
         accessUtil = new AccessUtil(requestEntityUtil);
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);

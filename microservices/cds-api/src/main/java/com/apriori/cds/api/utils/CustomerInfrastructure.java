@@ -13,8 +13,8 @@ import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.LicensedApplications;
 import com.apriori.shared.util.models.response.Site;
 
-public class CustomerInfrastructure extends CdsTestUtil {
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+public class CustomerInfrastructure {
+    private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
     private String siteIdentity;
     private String licensedApProIdentity;
@@ -23,12 +23,9 @@ public class CustomerInfrastructure extends CdsTestUtil {
     private String licensedAcsIdentity;
     private String installationIdentity;
 
-    private RequestEntityUtil requestEntityUtil;
-
-    // constructor that accepts requestEntity (user data) we created in the test
     public CustomerInfrastructure(RequestEntityUtil requestEntityUtil) {
-        this.requestEntityUtil = requestEntityUtil;
         this.applicationUtil = new ApplicationUtil(requestEntityUtil);
+        this.cdsTestUtil = new CdsTestUtil(requestEntityUtil);
     }
 
     // this empty constructor is needed just for now to avoid multiple errors.
