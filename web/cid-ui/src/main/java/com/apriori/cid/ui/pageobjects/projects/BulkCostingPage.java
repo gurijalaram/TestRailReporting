@@ -486,7 +486,7 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
      * @param number - pass 1 to choose the 1st row
      * @return page object
      */
-    public EvaluatePage clickOnChosenComponentLink(int number) {
+    public EvaluatePage selectComponentByRow(int number) {
         pageUtils.waitForElementToBeClickable(componentNameLink.get(number));
         pageUtils.waitForElementAndClick(componentNameLink.get(number));
         return new EvaluatePage(driver);

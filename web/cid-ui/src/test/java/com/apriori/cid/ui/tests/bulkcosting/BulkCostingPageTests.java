@@ -80,8 +80,8 @@ public class BulkCostingPageTests extends TestBaseUI {
         soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName1)).isTrue();
         soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName2)).isTrue();
 
-        EvaluatePage evaluatePage = bulkCostingPage.clickOnChosenComponentLink(1);
-        soft.assertThat(evaluatePage.isOnEvaluatePage()).isTrue();
+        EvaluatePage evaluatePage = bulkCostingPage.selectComponentByRow(1);
+        soft.assertThat(evaluatePage.isDesignGuidanceButtonDisplayed()).isTrue();
         soft.assertAll();
     }
 

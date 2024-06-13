@@ -1074,14 +1074,4 @@ public class EvaluatePage extends EvaluateToolbar {
         return totalCapitalInvestmentInput.getAttribute("value");
     }
 
-
-    /**
-     * is on Evaluate Page
-     *
-     * @return boolean
-     */
-    public boolean isOnEvaluatePage() {
-        pageUtils.waitForElementToAppear(evaluateTabActive);
-        return pageUtils.isPageLoaded(evaluateTabActive);
-    }
 }
