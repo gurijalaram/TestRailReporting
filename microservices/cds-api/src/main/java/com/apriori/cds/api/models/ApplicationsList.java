@@ -14,6 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AppsItems {
-    public List<Apps> appsList;
+public class ApplicationsList {
+    public List<Applications> applicationsList;
 }

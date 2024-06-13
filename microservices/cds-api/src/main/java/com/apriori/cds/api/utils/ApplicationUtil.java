@@ -4,7 +4,7 @@ import com.apriori.cds.api.enums.AppAccessControlsEnum;
 import com.apriori.cds.api.enums.ApplicationEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.enums.DeploymentEnum;
-import com.apriori.cds.api.models.Apps;
+import com.apriori.cds.api.models.Applications;
 import com.apriori.cds.api.models.request.ApplicationInstallationRequest;
 import com.apriori.cds.api.models.response.AccessControlResponse;
 import com.apriori.cds.api.models.response.AccessControls;
@@ -16,7 +16,6 @@ import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Application;
-import com.apriori.shared.util.models.response.Applications;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.LicensedApplications;
 import com.apriori.shared.util.models.response.User;
@@ -58,18 +57,18 @@ public class ApplicationUtil {
      * @return string
      */
     public String getApplicationIdentity(ApplicationEnum applicationCloudReference) {
-        final RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.APPLICATIONS, Applications.class)
+        final RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.APPLICATIONS, com.apriori.shared.util.models.response.Applications.class)
             .queryParams(new QueryParams().use("cloudReference[EQ]", applicationCloudReference.getApplication()))
             .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper<Applications> response = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<com.apriori.shared.util.models.response.Applications> response = HTTPRequest.build(requestEntity).get();
         return response.getResponseEntity().getItems().stream().findFirst().get().getIdentity();
     }
 
     /**
      * this method returns the list of the application which user is entitled for
      */
-    public Apps getUserApplications(User user, DeploymentEnum deploymentVar) {
+    public Applications getUserApplications(User user, DeploymentEnum deploymentVar) {
         RequestEntity requestEntity =
             requestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class)
                 .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
@@ -77,7 +76,7 @@ public class ApplicationUtil {
         ResponseWrapper<AccessControls> accessControl = HTTPRequest.build(requestEntity).get();
         List<AccessControlResponse> accessControlItems = accessControl.getResponseEntity().getItems();
 
-        Apps apps = Apps.builder()
+        Applications applications = Applications.builder()
             .deployment(deploymentVar.getDeployment())
             .applications(new ArrayList<>())
             .build();
@@ -97,11 +96,11 @@ public class ApplicationUtil {
                 HTTPRequest.build(requestEntityDep).get();
 
             if (deployment.getResponseEntity().getName().equals(deploymentVar.getDeployment())) {
-                apps.getApplications()
+                applications.getApplications()
                     .add(AppAccessControlsEnum.fromString(application.getResponseEntity().getName()));
             }
         }
-        return apps;
+        return applications;
     }
 
     /**
