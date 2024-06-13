@@ -188,6 +188,8 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] span")
     private WebElement totalCapitalInvestmentError;
+    @FindBy(xpath = "div[id = 'qa-total-capital-investment-input-field'] span")
+    private WebElement evaluateTabActive;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -1073,4 +1075,13 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
 
+    /**
+     * is on Evaluate Page
+     *
+     * @return boolean
+     */
+    public boolean isOnEvaluatePage() {
+        pageUtils.waitForElementToAppear(evaluateTabActive);
+        return pageUtils.isPageLoaded(evaluateTabActive);
+    }
 }
