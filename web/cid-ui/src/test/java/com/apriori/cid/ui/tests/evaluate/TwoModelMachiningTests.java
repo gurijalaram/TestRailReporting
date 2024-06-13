@@ -103,7 +103,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
             .clickManualModeButtonWhileUncosted()
             .enterPiecePartCost("42")
             .enterTotalCapitalInvestment("316")
-            .clickSaveAsButton()
+            .clickSaveButton()
             .clickExplore()
             .uploadComponentAndOpen(twoModelPart)
             .selectProcessGroup(twoModelPart.getProcessGroup())

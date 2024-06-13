@@ -204,8 +204,8 @@ public class EvaluatePage extends EvaluateToolbar {
         this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
         pageUtils.waitForElementsToNotAppear(panelLoaders);
+        this.get();
     }
 
     /**
