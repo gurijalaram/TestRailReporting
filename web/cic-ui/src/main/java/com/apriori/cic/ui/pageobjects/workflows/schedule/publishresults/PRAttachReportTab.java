@@ -23,6 +23,9 @@ public class PRAttachReportTab extends PublishResultsPart {
     @FindBy(xpath = "//div[@tab-number='5']//div[@tab-number='2']//span[.='Report Configuration']")
     private WebElement reportConfigurationLbl;
 
+    @FindBy(xpath = "//div[@tab-number='5']//div[@tab-number='2']//span[.='No report configuration defined.']")
+    private WebElement noReportsDefinedElement;
+
     public PRAttachReportTab(WebDriver driver) {
         super(driver);
     }
@@ -48,7 +51,14 @@ public class PRAttachReportTab extends PublishResultsPart {
      */
     public PRAttachReportTab selectReportName(ReportsEnum reportsEnum) {
         pageUtils.waitForElementAndClick(getReportNameDropdownElement());
-        pageUtils.waitForElementAndClick(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, reportsEnum.getReportName())));
+        pageUtils.moveAndClick(driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, reportsEnum.getReportName()))));
+        switch (reportsEnum) {
+            case PART_COST:
+                pageUtils.waitForElementAppear(noReportsDefinedElement);
+                break;
+            default:
+                pageUtils.waitForElementAppear(getCurrencyCodeElement());
+        }
         pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
         return this;
     }
@@ -114,7 +124,7 @@ public class PRAttachReportTab extends PublishResultsPart {
      */
     public WebElement getCurrencyCodeDdl() {
         WebElement currencyTextBoxElement = getAttachReportTextFields().stream()
-            .filter(webElement -> webElement.getText().equals("Curreny Code"))
+            .filter(webElement -> webElement.getAttribute("value").equals("Currency Code"))
             .findFirst()
             .get();
 
@@ -151,6 +161,18 @@ public class PRAttachReportTab extends PublishResultsPart {
         pageUtils.waitForElementAppear(driver.findElement(By.xpath("//div[@tab-number='5']//div[@tab-number='2']//span[.='Report Name']")));
         return driver.findElement(with(By.xpath("//div[@tab-number='5']//div[@tab-number='2']//div[@class='widget-content widget-dropdown']"))
             .below(By.xpath("//div[@tab-number='5']//div[@tab-number='2']//div//span[.='Report Name']")));
+    }
+
+    /**
+     * get currency code disabled text element
+     *
+     * @return WebElement
+     */
+    private WebElement getCurrencyCodeElement() {
+        return getAttachReportTextFields().stream()
+            .filter(webElement -> webElement.getAttribute("value").equals("Currency Code"))
+            .findFirst()
+            .get();
     }
 
 }

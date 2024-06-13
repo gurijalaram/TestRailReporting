@@ -243,6 +243,18 @@ public class DetailsPart extends CICBasePage {
     }
 
     /**
+     * Click New Workflow button
+     *
+     * @return NewEditWorkflow page object
+     */
+    public CostingInputsPart clickNextBtnForFileSystem() {
+        pageUtils.waitForElementAndClick(this.getNextButtonElement());
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementToAppear(workflowPopUpActiveTabElement);
+        return new CostingInputsPart(driver);
+    }
+
+    /**
      * Click Next Button in  Workflow details tab
      *
      * @return QueryDefinitions class object
@@ -263,7 +275,6 @@ public class DetailsPart extends CICBasePage {
         }
         return queryDefinitions;
     }
-
 
     /**
      * Set a schedule on the Details tab on a New Workflow dialogue
