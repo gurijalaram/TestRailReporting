@@ -14,44 +14,27 @@ import java.util.List;
 @Data
 @Schema(location = "DigitalFactorySchema.json")
 public class DigitalFactory {
-
     private String identity;
-
     private Integer annualVolume;
-
     private Integer batchesPerYear;
-
     private String currencyCode;
-
     private String customerIdentity;
-
     private String description;
-
     private String location;
-
     private String name;
-
+    private List<InheritedDigitalFactories> inheritedDigitalFactories;
     private List<PermissionType> permissions;
-
     private List<String> processGroups;
-
     private Integer productionLife;
-
     private String revision;
-
     private String subjectIdentity;
-
     private String type;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-
     private String createdBy;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-
     private String updatedBy;
 }
