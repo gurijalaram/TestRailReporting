@@ -14,16 +14,17 @@ import com.apriori.shared.util.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
 
-public class AccessUtil {
-    private RequestEntityUtil requestEntityUtil;
+public class AccessUtil extends BaseUtil<AccessUtil> {
+//    private RequestEntityUtil requestEntityUtil;
 
-    private final ApplicationUtil applicationUtil;
+    private final ApplicationUtil applicationUtil = new ApplicationUtil()
+        .setRequestEntityUtil(requestEntityUtil);
 
     // constructor that accepts requestEntity (user data) we created in the test
-    public AccessUtil(RequestEntityUtil requestEntityUtil) {
-        this.requestEntityUtil = requestEntityUtil;
-        applicationUtil = new ApplicationUtil(requestEntityUtil);
-    }
+//    public AccessUtil(RequestEntityUtil requestEntityUtil) {
+//        this.requestEntityUtil = requestEntityUtil;
+//        applicationUtil = new ApplicationUtil(requestEntityUtil);
+//    }
 
     // no constructor needed in here as this method is only used twice so was easy to change
 

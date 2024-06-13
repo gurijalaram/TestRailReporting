@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ApplicationUtil {
+public class ApplicationUtil extends BaseUtil<ApplicationUtil> {
 //    private static RequestEntityUtil requestEntityUtil;
 //    private static UserCredentials testingUser;
 //
@@ -39,17 +39,17 @@ public class ApplicationUtil {
 //        testingUser = requestEntityUtil.getEmbeddedUser();
 //    }
 
-    private RequestEntityUtil requestEntityUtil;
-    protected static UserCredentials testingUser;
+//    private RequestEntityUtil requestEntityUtil;
+//    protected static UserCredentials testingUser;
 
     // constructor that accepts requestEntity (user data) we created in the test
-    public ApplicationUtil(RequestEntityUtil requestEntityUtil) {
-        this.requestEntityUtil = requestEntityUtil;
-    }
+//    public ApplicationUtil(RequestEntityUtil requestEntityUtil) {
+//        this.requestEntityUtil = requestEntityUtil;
+//    }
 
     // this empty constructor is needed just for now to avoid multiple errors.
-    public ApplicationUtil() {
-    }
+//    public ApplicationUtil() {
+//    }
 
     /**
      * Calls an API with GET verb
