@@ -58,13 +58,13 @@ public class AchUsersTests extends AchTestUtil {
 
     @BeforeEach
     public void setup() {
-        requestEntityUtil = RequestEntityUtilBuilder
-            .useCustomUser(new UserCredentials(USER_ADMIN, null))
-            .useCustomTokenInRequests(getWidgetsUserToken(USER_ADMIN));
-
         serviceCustomer = PropertiesContext.get("customer").equalsIgnoreCase(AP_INT.getCustomer())
             ? CustomerUtil.getCustomerData(WIDGETS.getCustomer()) : CustomerUtil.getCustomerData();
         customerIdentity = serviceCustomer.getIdentity();
+
+        requestEntityUtil = RequestEntityUtilBuilder
+            .useCustomUser(new UserCredentials(USER_ADMIN, null))
+            .useCustomTokenInRequests(getWidgetsUserToken(USER_ADMIN));
 
         requestEntityUtilNoAdmin = RequestEntityUtilBuilder
             .useCustomUser(new UserCredentials(NOT_ADMIN_USER, null))
