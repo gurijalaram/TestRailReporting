@@ -1,5 +1,8 @@
 package com.apriori.ach.api.tests;
 
+import static com.apriori.shared.util.enums.CustomerEnum.AP_INT;
+import static com.apriori.shared.util.enums.CustomerEnum.WIDGETS;
+
 import com.apriori.ach.api.enums.ACHAPIEnum;
 import com.apriori.ach.api.models.response.AchErrorResponse;
 import com.apriori.ach.api.utils.AchTestUtil;
@@ -45,8 +48,8 @@ import java.util.Map;
 public class AchUsersTests extends AchTestUtil {
     private static final String USER_ADMIN = "testUser1";
     private static final String NOT_ADMIN_USER = "testUser11";
-    private static final Customer customer = CustomerUtil.getCustomerData();
-    private static final String customerIdentity = customer.getIdentity();
+    private static Customer serviceCustomer;
+    private static String customerIdentity;
     private RequestEntityUtil requestEntityUtilNoAdmin;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private SoftAssertions soft = new SoftAssertions();
@@ -58,6 +61,10 @@ public class AchUsersTests extends AchTestUtil {
         requestEntityUtil = RequestEntityUtilBuilder
             .useCustomUser(new UserCredentials(USER_ADMIN, null))
             .useCustomTokenInRequests(getWidgetsUserToken(USER_ADMIN));
+
+        serviceCustomer = PropertiesContext.get("customer").equalsIgnoreCase(AP_INT.getCustomer())
+            ? CustomerUtil.getCustomerData(WIDGETS.getCustomer()) : CustomerUtil.getCustomerData();
+        customerIdentity = serviceCustomer.getIdentity();
 
         requestEntityUtilNoAdmin = RequestEntityUtilBuilder
             .useCustomUser(new UserCredentials(NOT_ADMIN_USER, null))
@@ -200,7 +207,7 @@ public class AchUsersTests extends AchTestUtil {
     @Description("unable to create AP_STAFF_USER for widgets customer")
     public void unableToCreateApStaffUserForWidgets() {
         String userName = new GenerateStringUtil().generateUserName();
-        ResponseWrapper<AchErrorResponse> newUser = createNewUserApStaff(AchErrorResponse.class, customerIdentity, userName, domain, HttpStatus.SC_CONFLICT,requestEntityUtil);
+        ResponseWrapper<AchErrorResponse> newUser = createNewUserApStaff(AchErrorResponse.class, customerIdentity, userName, domain, HttpStatus.SC_CONFLICT, requestEntityUtil);
 
         soft.assertThat(newUser.getResponseEntity().getMessage())
             .isEqualTo("Can't create an AP_STAFF_USER user type for the given customer.");
@@ -275,6 +282,16 @@ public class AchUsersTests extends AchTestUtil {
         soft.assertAll();
     }
 
+    private static String generateTokenSubject() {
+        final String customerSiteId = CustomerUtil.getCustomerSiteIdByCustomer(serviceCustomer);
+
+        if (StringUtils.isBlank(customerSiteId)) {
+            log.error("Customer site id is empty. Customer: {}", serviceCustomer.getCloudReference());
+        }
+
+        return customerSiteId.substring(customerSiteId.length() - 4);
+    }
+
     private String getWidgetsUserToken(String name) {
         RequestEntity requestEntity = requestEntityUtil.init(TokenEnum.POST_TOKEN, Token.class)
             .body(TokenRequest.builder()
@@ -283,7 +300,7 @@ public class AchUsersTests extends AchTestUtil {
                     .subject(generateTokenSubject())
                     .claims(Claims.builder()
                         .name(name)
-                        .email(String.format("%s@%s.aprioritest.com", name, customer.getName()))
+                        .email(String.format("%s@%s.aprioritest.com", name, serviceCustomer.getName()))
                         .build())
                     .build())
                 .build())
@@ -291,16 +308,6 @@ public class AchUsersTests extends AchTestUtil {
         ResponseWrapper<Token> tokenResponse = HTTPRequest.build(requestEntity).post();
 
         return tokenResponse.getResponseEntity().getToken();
-    }
-
-    private static String generateTokenSubject() {
-        final String customerSiteId = CustomerUtil.getCustomerSiteIdByCustomer(customer);
-
-        if (StringUtils.isBlank(customerSiteId)) {
-            log.error("Customer site id is empty. Customer: {}", customer.getCloudReference());
-        }
-
-        return customerSiteId.substring(customerSiteId.length() - 4);
     }
 
     private User getUser(String name, String customerIdentity) {
