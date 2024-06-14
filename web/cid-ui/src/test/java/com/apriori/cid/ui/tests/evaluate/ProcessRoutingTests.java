@@ -260,7 +260,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15012, 14401, 15050, 15988, 7851, 7852})
     @Description("Validate the information updates in the routing modal box")
     public void testLastRouting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("manifold2", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         routingSelectionPage = loginPage.login(component.getUser())
@@ -270,8 +270,8 @@ public class ProcessRoutingTests extends TestBaseUI {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.52")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Incomplete");
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$2.63")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isAprioriLogoDisplayed("High Pressure Die Cast")).isEqualTo(true);
 
         routingSelectionPage.selectRoutingPreferenceByName("Gravity Die Cast");
@@ -283,8 +283,8 @@ public class ProcessRoutingTests extends TestBaseUI {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$4.75")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Incomplete");
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$3.96")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isUserTileDisplayed("Gravity Die Cast")).isTrue();
         softAssertions.assertThat(routingSelectionPage.getSelectionStatus("Gravity Die Cast")).isEqualTo("Selected");
         softAssertions.assertAll();
@@ -739,7 +739,7 @@ public class ProcessRoutingTests extends TestBaseUI {
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Stretch Form Transverse", "Stretch Form Longitudinal");
 
-        routingSelectionPage.selectRoutingPreferenceByName("Stretch Form Longitudinal")
+        evaluatePage = routingSelectionPage.selectRoutingPreferenceByName("Stretch Form Longitudinal")
             .submit(EvaluatePage.class)
             .costScenario();
 
