@@ -284,7 +284,7 @@ public class CasTestUtil extends TestUtil {
         GenerateStringUtil generator = new GenerateStringUtil();
         return createCustomer(
             generator.generateCustomerName(),
-            generator.generateCloudReference(),
+            generator.getRandomStringSpecLength(16).toLowerCase(),
             generator.getRandomString(),
             "apriori.com",
             "apriori.co.uk",

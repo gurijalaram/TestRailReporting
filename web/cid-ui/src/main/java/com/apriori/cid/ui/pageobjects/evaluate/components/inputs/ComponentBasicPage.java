@@ -20,6 +20,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
 
+    @FindBy(css = "div[role='dialog'] div[data-testid='alert-messaging']")
+    private WebElement alertMessage;
+
     @FindBy(xpath = "//div[@role='dialog']//button[.='Basic']")
     private WebElement basicTab;
 
@@ -94,6 +97,24 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
     protected void isLoaded() throws Error {
         assertTrue(basicTab.getAttribute("class").contains("active"), "Basic tab was not selected");
         pageUtils.waitForElementToAppear(processGroupDropdown);
+    }
+
+    /**
+     * Check if alert message has been displayed
+     *
+     * @return Boolean representation of alert visibility
+     */
+    public Boolean isAlertDisplayed() {
+        return alertMessage.isDisplayed();
+    }
+
+    /**
+     * Get alert message text
+     *
+     * @return Text of alert message
+     */
+    public String getAlertMessage() {
+        return alertMessage.getText();
     }
 
     /**

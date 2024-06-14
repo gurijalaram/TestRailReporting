@@ -47,31 +47,13 @@ public class WorkflowTestUtil extends CicUtil {
      * @param sessionID           JSessionID
      * @return current class object
      */
-    public WorkflowTestUtil create(WorkflowRequest workflowRequestData, String sessionID) {
+    public WorkflowTestUtil createWorkflow(WorkflowRequest workflowRequestData, String sessionID) {
         workflowResponse = CicApiTestUtil.createWorkflow(workflowRequestData, sessionID);
         if (workflowResponse == null) {
             throw new RuntimeException("Workflow creation failed!!");
         }
         if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
             log.debug(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowRequestData.getName()));
-        }
-        return this;
-    }
-
-    /**
-     * Create workflow
-     *
-     * @return current class object
-     */
-    public WorkflowTestUtil create() {
-        this.workflowRequestDataBuilder.setCustomer(CicApiTestUtil.getCustomerName());
-        this.workflowRequestDataBuilder.setPlmSystem(CicApiTestUtil.getAgent(this.cicLoginUtil.getSessionId()));
-        workflowResponse = CicApiTestUtil.createWorkflow(this.workflowRequestDataBuilder, cicLoginUtil.getSessionId());
-        if (workflowResponse == null) {
-            throw new RuntimeException("Workflow creation failed!!");
-        }
-        if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
-            log.debug(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", this.workflowRequestDataBuilder.getName()));
         }
         return this;
     }
@@ -87,34 +69,6 @@ public class WorkflowTestUtil extends CicUtil {
         if (agentWorkflowResponse == null) {
             throw new RuntimeException("FAILED TO FIND WORKFLOW!!!");
         }
-        return this;
-    }
-
-
-    /**
-     * Get matching workflow from list of returned workflows
-     *
-     * @return Current class object
-     */
-    public WorkflowTestUtil getWorkflowId() {
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName());
-        if (agentWorkflowResponse == null) {
-            throw new RuntimeException("FAILED TO FIND WORKFLOW!!!");
-        }
-        return this;
-    }
-
-    /**
-     * Invoke Workflow of Part Selection Type REST with number of parts
-     *
-     * @return WorkflowTestUtil
-     */
-    public WorkflowTestUtil invokeRestWorkflow() {
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            this.workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
         return this;
     }
 
@@ -207,7 +161,7 @@ public class WorkflowTestUtil extends CicUtil {
      * @return AgentWorkflowJobResults
      */
     public AgentWorkflowJobResults createWorkflowAndGetJobResult(WorkflowRequest workflowRequestData, String sessionID) {
-        return create(workflowRequestData, sessionID)
+        return createWorkflow(workflowRequestData, sessionID)
             .getWorkflowId(workflowRequestData.getName())
             .invokeQueryWorkflow()
             .track()
@@ -225,6 +179,37 @@ public class WorkflowTestUtil extends CicUtil {
     }
 
     /**
+     * Create workflow
+     *
+     * @return current class object
+     */
+    public WorkflowTestUtil create() {
+        this.workflowRequestDataBuilder.setCustomer(CicApiTestUtil.getCustomerName());
+        this.workflowRequestDataBuilder.setPlmSystem(CicApiTestUtil.getAgent(this.cicLoginUtil.getSessionId()));
+        workflowResponse = CicApiTestUtil.createWorkflow(this.workflowRequestDataBuilder, cicLoginUtil.getSessionId());
+        if (workflowResponse == null) {
+            throw new RuntimeException("Workflow creation failed!!");
+        }
+        if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
+            log.debug(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", this.workflowRequestDataBuilder.getName()));
+        }
+        return this;
+    }
+
+    /**
+     * Get matching workflow from list of returned workflows
+     *
+     * @return Current class object
+     */
+    public WorkflowTestUtil getWorkflowId() {
+        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName());
+        if (agentWorkflowResponse == null) {
+            throw new RuntimeException("FAILED TO FIND WORKFLOW!!!");
+        }
+        return this;
+    }
+
+    /**
      * delete workflow
      *
      * @return current class object
@@ -233,6 +218,20 @@ public class WorkflowTestUtil extends CicUtil {
         if (this.workflowRequestDataBuilder != null) {
             CicApiTestUtil.deleteWorkFlow(this.cicLoginUtil.getSessionId(), CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName()));
         }
+        return this;
+    }
+
+    /**
+     * Invoke Workflow of Part Selection Type REST with number of parts
+     *
+     * @return WorkflowTestUtil
+     */
+    public WorkflowTestUtil invokeRestWorkflow() {
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
+            agentWorkflowResponse.getId(),
+            this.workflowPartsRequestDataBuilder,
+            AgentWorkflowJobRun.class,
+            HttpStatus.SC_OK);
         return this;
     }
 

@@ -5,7 +5,6 @@ import static com.apriori.cid.ui.utils.ColumnsEnum.COST_MATURITY;
 import static com.apriori.cid.ui.utils.ColumnsEnum.SCENARIO_NAME;
 import static com.apriori.cid.ui.utils.ColumnsEnum.STATUS;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -817,14 +816,14 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {6482, 6483})
     @Description("Validate the user can create a comparison including parts with all dfm risk ratings for all process groups")
     public void comparisonWithAllProcessGroupsAndDFM() {
-        component = new ComponentRequestUtil().getComponentByExtension("catpart");
-        component2 = new ComponentRequestUtil().getComponentByExtension("ipt");
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("DTCCastingIssues", ProcessGroupEnum.STOCK_MACHINING);
+        component2 = new ComponentRequestUtil().getComponentWithProcessGroup("Part0005b", ProcessGroupEnum.SHEET_METAL);
         component2.setUser(component.getUser());
-        ComponentInfoBuilder component3 = new ComponentRequestUtil().getComponentByExtension("SLDPRT");
+        ComponentInfoBuilder component3 = new ComponentRequestUtil().getComponentWithProcessGroup("2062987", ProcessGroupEnum.PLASTIC_MOLDING);
         component3.setUser(component.getUser());
-        ComponentInfoBuilder component4 = new ComponentRequestUtil().getComponentByExtension("x_t");
+        ComponentInfoBuilder component4 = new ComponentRequestUtil().getComponentWithProcessGroup("Bishop", ProcessGroupEnum.PLASTIC_MOLDING);
         component4.setUser(component.getUser());
-        ComponentInfoBuilder component5 = new ComponentRequestUtil().getComponentByExtension("ipt");
+        ComponentInfoBuilder component5 = new ComponentRequestUtil().getComponentWithProcessGroup("SandCastIssues", ProcessGroupEnum.CASTING_SAND);
         component5.setUser(component.getUser());
 
 
@@ -832,18 +831,38 @@ public class ComparisonTests extends TestBaseUI {
         comparePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario(4)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("4 Axis Mill Routing")
+            .submit(EvaluatePage.class)
+            .costScenario()
             .uploadComponentAndOpen(component2)
             .selectProcessGroup(component2.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("[CTL]/Turret/[Bend]")
+            .submit(EvaluatePage.class)
             .costScenario()
             .uploadComponentAndOpen(component3)
             .selectProcessGroup(component3.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .uploadComponentAndOpen(component4)
             .selectProcessGroup(component4.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .uploadComponentAndOpen(component5)
             .selectProcessGroup(component5.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("ManualFloor")
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .selectFilter("Private")
@@ -858,7 +877,7 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.getOutput(component2.getComponentName(), component2.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("High");
         softAssertions.assertThat(comparePage.getOutput(component3.getComponentName(), component3.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Low");
         softAssertions.assertThat(comparePage.getOutput(component4.getComponentName(), component4.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Medium");
-        softAssertions.assertThat(comparePage.getOutput(component5.getComponentName(), component5.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Low");
+        softAssertions.assertThat(comparePage.getOutput(component5.getComponentName(), component5.getScenarioName(), ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Critical");
 
         softAssertions.assertThat(comparePage.isArrowColour(component2.getComponentName(), component2.getScenarioName(),
             ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
@@ -872,7 +891,7 @@ public class ComparisonTests extends TestBaseUI {
         softAssertions.assertThat(comparePage.isDeltaIcon(component2.getComponentName(), component2.getScenarioName(),
             ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.ARROW_UP)).isEqualTo(true);
         softAssertions.assertThat(comparePage.isDeltaIcon(component5.getComponentName(), component5.getScenarioName(),
-            ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.MINUS)).isEqualTo(true);
+            ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.MINUS)).isEqualTo(false);
 
         softAssertions.assertAll();
     }

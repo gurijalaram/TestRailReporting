@@ -230,6 +230,20 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
+     * Add further Criteria
+     *
+     * @param propertyEnum  - property from the enum
+     * @param value         - the value
+     * @return current page object
+     */
+    public FilterPage includeCriteria(final PropertyEnum propertyEnum, final String value) {
+        index = findIndex(propertyEnum);
+
+        inputValue(index, propertyEnum, value);
+        return this;
+    }
+
+    /**
      * Adds a criteria
      *
      * @param propertyEnum  - property from the enum
@@ -381,6 +395,22 @@ public class FilterPage extends LoadableComponent<FilterPage> {
             rows = driver.findElements(By.cssSelector(".inputs-row.row")).size();
         }
         return rows > 0 ? rows : 0;
+    }
+
+    /**
+     * Counts the number of criteria rows that exist and sets the index based on this number
+     *
+     * @return int
+     */
+    private int findIndex(final PropertyEnum propertyEnum) {
+        int index = 0;
+        if (pageUtils.isElementDisplayed(By.cssSelector(".inputs-row.row"))) {
+            List<WebElement> criterion = driver.findElements(By.cssSelector(".inputs-row.row"));
+            WebElement row = criterion.stream().filter(criteria -> !criteria.findElements(By.cssSelector(String.format("div[aria-label='%s']", propertyEnum.getProperty()))).isEmpty())
+                .toList().get(0);
+            index = criterion.indexOf(row);
+        }
+        return index > 0 ? index : 0;
     }
 
     /**

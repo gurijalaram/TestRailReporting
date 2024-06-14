@@ -188,6 +188,8 @@ public class EvaluatePage extends EvaluateToolbar {
 
     @FindBy(css = "div[id = 'qa-total-capital-investment-input-field'] span")
     private WebElement totalCapitalInvestmentError;
+    @FindBy(xpath = "div[id = 'qa-total-capital-investment-input-field'] span")
+    private WebElement evaluateTabActive;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -204,8 +206,8 @@ public class EvaluatePage extends EvaluateToolbar {
         this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        this.get();
         pageUtils.waitForElementsToNotAppear(panelLoaders);
+        this.get();
     }
 
     /**
@@ -1071,6 +1073,5 @@ public class EvaluatePage extends EvaluateToolbar {
         pageUtils.waitForElementToAppear(totalCapitalInvestmentInput);
         return totalCapitalInvestmentInput.getAttribute("value");
     }
-
 
 }

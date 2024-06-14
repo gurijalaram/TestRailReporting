@@ -7,6 +7,7 @@ public enum ColumnsEnum {
     ASSIGNED_AT("Assigned At"),
     ASSIGNED_BY("Assigned By"),
     COST_MATURITY("Cost Maturity"),
+    COST_MODE("Cost Mode"),
     DESCRIPTION("Description"),
     LOCKED("Locked"),
     LOCKED_AT("Locked At"),

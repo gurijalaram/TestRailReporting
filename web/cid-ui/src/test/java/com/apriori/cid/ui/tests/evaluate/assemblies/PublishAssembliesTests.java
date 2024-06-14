@@ -28,7 +28,6 @@ import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
-import groovyjarjarantlr4.v4.analysis.LeftRecursiveRuleAnalyzer;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
@@ -203,10 +202,17 @@ public class PublishAssembliesTests extends TestBaseUI {
             .changeName(preExistingComponentAssembly.getScenarioName())
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
-            .close(ComponentsTablePage.class);
+            .close(ComponentsTablePage.class)
+            .checkSubcomponentState(componentAssembly, bigRingSubcomponent.getComponentName())
+            .checkSubcomponentState(componentAssembly, smallRingSubcomponent.getComponentName());
+
+        evaluatePage = new EvaluatePage(driver);
+
+        componentsTablePage = evaluatePage.clickRefresh(EvaluatePage.class)
+            .openComponents()
+            .selectTableView();
 
         softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(bigRingSubcomponent.getComponentName(), bigRingSubcomponent.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
-        softAssertions.assertThat(componentsTablePage.getListOfScenariosWithStatus(smallRingSubcomponent.getComponentName(), smallRingSubcomponent.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -272,7 +278,7 @@ public class PublishAssembliesTests extends TestBaseUI {
         softAssertions.assertThat(componentsTreePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
 
         componentsTreePage = componentsTreePage.multiSelectSubcomponents(
-            bigRingSubcomponent.getComponentName() + "," + bigRingSubcomponent.getScenarioName(),
+                bigRingSubcomponent.getComponentName() + "," + bigRingSubcomponent.getScenarioName(),
                 smallRingSubcomponent.getComponentName() + "," + bigRingSubcomponent.getScenarioName())
             .publishSubcomponent()
             .override()

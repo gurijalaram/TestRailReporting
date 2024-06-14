@@ -38,6 +38,7 @@ public enum PropertyEnum {
     ASSIGNEE("Assignee"),
     COMPONENT_TYPE("Component Type"),
     COST_MATURITY("Cost Maturity"),
+    COST_MODE("Cost Mode"),
     CREATED_BY("Created By"),
     LAST_UPDATED_BY("Last Updated By"),
     STATE("State"),
@@ -49,7 +50,7 @@ public enum PropertyEnum {
         FULLY_BURDENED_COST, MATERIAL_COST, PIECE_PART_COST, TOTAL_CAPITAL_INVESTMENT, CYCLE_TIME, FINISH_MASS, PROCESS_ROUTING, UTILIZATION);
     public static EnumSet<PropertyEnum> toggleGroup = EnumSet.of(CAD_CONNECTED, LOCKED, PUBLISH);
     public static EnumSet<PropertyEnum> dateGroup = EnumSet.of(CREATED_AT, LAST_UPDATED_AT);
-    public static EnumSet<PropertyEnum> dropdownGroup = EnumSet.of(PROCESS_GROUP, DIGITAL_FACTORY, ASSIGNEE, COMPONENT_TYPE, COST_MATURITY, CREATED_BY, LAST_UPDATED_BY, STATE, STATUS, DFM);
+    public static EnumSet<PropertyEnum> dropdownGroup = EnumSet.of(PROCESS_GROUP, DIGITAL_FACTORY, ASSIGNEE, COMPONENT_TYPE, COST_MATURITY, COST_MODE, CREATED_BY, LAST_UPDATED_BY, STATE, STATUS, DFM);
     private final String property;
 
     PropertyEnum(String property) {
