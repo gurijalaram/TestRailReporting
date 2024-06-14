@@ -24,7 +24,8 @@ import java.lang.reflect.Method;
 public class TestBaseUI {
     protected DriverFactory driverFactory;
     protected WebDriver driver;
-    protected String downloadPath = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
+    public static String dirDownloadPath = System.getProperty("user.dir") + File.separator + "downloads" + File.separator;
+    public static String homeDownloadPath = System.getProperty("user.home") + File.separator + "downloads" + File.separator;
 
     @BeforeEach
     public void setUp(TestInfo testInfo) {

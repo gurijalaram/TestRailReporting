@@ -124,4 +124,13 @@ public abstract class Agent {
     public void closeConnection() {
         ftpClient.close();
     }
+
+    /**
+     * get Agent Port
+     *
+     * @return AgentPort
+     */
+    public AgentPort getAgentPort() {
+        return agentPort;
+    }
 }

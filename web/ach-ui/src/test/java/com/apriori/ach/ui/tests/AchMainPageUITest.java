@@ -70,7 +70,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
     }
 
     private List<ApplicationDTO> getMappedMultiTenantApplications(Deployment customerDeployment) {
-        final String apInternalCustomerIdentity = CustomerUtil.getCustomerData(CustomerEnum.AP_INT).getIdentity();
+        final String apInternalCustomerIdentity = CustomerUtil.getCustomerData(CustomerEnum.AP_INT.getCustomer()).getIdentity();
 
         return achEnvironmentAPIUtil.mapMultiTenantDeploymentDataToDTO(
             achEnvironmentAPIUtil.getCustomerDeploymentInformation(apInternalCustomerIdentity), customerDeployment.getInstallations().get(0).getRegion()

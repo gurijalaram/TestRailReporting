@@ -1,6 +1,7 @@
 package com.apriori.cid.ui.pageobjects.projects;
 
 
+import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.web.app.util.PageUtils;
 
 import org.openqa.selenium.By;
@@ -57,6 +58,15 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
     private WebElement nameInputFieldBulkAnalysisInfo;
     @FindBy(xpath = "//button[@data-testid = 'primary-button']")
     private WebElement enabledSaveButtonOnBulkAnalysisInfo;
+    @FindBy(xpath = "//input[contains(@name,'search')]")
+    private WebElement searchBulkAnalysisInput;
+    @FindBy(xpath = "//button[contains(@type,'submit')]")
+    private WebElement submitIconOnBulkAnalysisInput;
+    @FindBy(xpath = "//div[contains(@role,'rowgroup')]/div")
+    private List<WebElement> rowsInTableBulkAnalysis;
+
+    @FindBy(xpath = "//div[contains(@data-header-id,'componentDisplayName')]")
+    private List<WebElement> componentNameLink;
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -420,5 +430,65 @@ public class BulkCostingPage extends LoadableComponent<BulkCostingPage> {
         pageUtils.waitForElementToBeClickable(enabledSaveButtonOnBulkAnalysisInfo);
         pageUtils.waitForElementAndClick(enabledSaveButtonOnBulkAnalysisInfo);
         return this;
+    }
+
+    /**
+     * sent values into the input field: search bulk analysis
+     *
+     * @param value send value
+     * @return this
+     */
+    public BulkCostingPage typeIntoSearchWorkSheetInput(String value) {
+        pageUtils.waitForElementToBeClickable(searchBulkAnalysisInput);
+        pageUtils.clearValueOfElement(searchBulkAnalysisInput);
+        pageUtils.setValueOfElement(searchBulkAnalysisInput, value);
+        return this;
+    }
+
+    /**
+     * click on submit icon on search bulk analysis input field
+     *
+     * @return page object
+     */
+    public BulkCostingPage clickOnSubmitOnSearchBulkAnalysis() {
+        pageUtils.waitForElementToBeClickable(submitIconOnBulkAnalysisInput);
+        pageUtils.waitForElementAndClick(submitIconOnBulkAnalysisInput);
+        return this;
+    }
+
+    /**
+     * if expected amount of rows are displayed
+     *
+     * @param number amount of rows to be displayed
+     * @return boolean
+     */
+    public boolean checkExpectedNumbersOfRows(int number) {
+        pageUtils.waitForElementsToAppear(rowsInTableBulkAnalysis);
+        List<WebElement> list =
+            pageUtils.waitForSpecificElementsNumberToAppear(By.xpath("//div[contains(@role,'rowgroup')]/div"), number);
+        return (list.size()) == number;
+    }
+
+    /**
+     * get the whole text from the row
+     *
+     * @return string - text
+     */
+    public String getTextFromTheFirstRow() {
+        pageUtils.waitForElementsToAppear(rowsInTableBulkAnalysis);
+        pageUtils.waitFor(500);
+        return rowsInTableBulkAnalysis.get(0).getText();
+    }
+
+    /**
+     * click on chosen componentName link -
+     *
+     * @param number - pass 1 to choose the 1st row
+     * @return page object
+     */
+    public EvaluatePage selectComponentByRow(int number) {
+        pageUtils.waitForElementToBeClickable(componentNameLink.get(number));
+        pageUtils.waitForElementAndClick(componentNameLink.get(number));
+        return new EvaluatePage(driver);
     }
 }

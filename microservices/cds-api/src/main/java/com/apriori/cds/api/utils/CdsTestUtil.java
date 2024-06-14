@@ -298,14 +298,16 @@ public class CdsTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).patch();
     }
 
-    public ResponseWrapper<User> patchUser(
+    public <T> ResponseWrapper<T> patchUser(
+        Class<T> klass,
         String customerIdentity,
         String userIdentity,
+        Integer expectedResponseCode,
         JsonNode user) {
 
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class)
+        RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, klass)
             .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(HttpStatus.SC_OK)
+            .expectedResponseCode(expectedResponseCode)
             .body("user", user);
 
         return HTTPRequest.build(requestEntity).patch();

@@ -149,8 +149,8 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     public void testDtcScoreMedium() {
         List<String> partNames = Arrays.asList(
             JasperCirApiPartsEnum.P_2980123_CLAMP.getPartName(),
-            JasperCirApiPartsEnum.P_1684402_TOP_BRACKET.getPartName(),
-            JasperCirApiPartsEnum.P_2840020_BRACKET.getPartName()
+            JasperCirApiPartsEnum.AP_SHEET_METAL_EXERCISE.getPartName(),
+            JasperCirApiPartsEnum.P_3574715_BULK_LOAD.getPartName()
         );
         jasperApiUtils.genericDtcScoreTest(
             true,

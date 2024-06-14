@@ -894,4 +894,27 @@ public class ScenariosUtil {
 
         return HTTPRequest.build(requestEntity).get();
     }
+
+    /**
+    * Create ComponentInfoBuilder for scenario added/updated/copied in UI
+    *
+    * @param componentName - The name of the component
+    * @param scenarioName - The scenario name of the component
+    * @param userDetails - User Credentials of owner
+    *
+    * @return ComponentInfoBuilder of scenario
+    */
+    public ComponentInfoBuilder getComponentDetails(String componentName, String scenarioName, UserCredentials userDetails) {
+        List<ScenarioItem> componentDetails = componentsUtil.getUnCostedComponent(componentName, scenarioName, userDetails);
+
+        ComponentInfoBuilder component = ComponentInfoBuilder.builder()
+            .scenarioName(scenarioName)
+            .scenarioIdentity(componentDetails.get(0).getScenarioIdentity())
+            .componentIdentity(componentDetails.get(0).getComponentIdentity())
+            .componentName(componentName)
+            .user(userDetails)
+            .build();
+
+        return component;
+    }
 }

@@ -1,11 +1,9 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.CustomerEnum.AP_INT;
 import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.Customer;
-import com.apriori.cas.api.models.response.Customers;
 import com.apriori.cas.api.models.response.Site;
 import com.apriori.cas.api.models.response.Sites;
 import com.apriori.cas.api.models.response.ValidateSite;
@@ -26,11 +24,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-@EnabledIfSystemProperty(named = "customer", matches = AP_INT)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasSitesTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
@@ -76,7 +74,7 @@ public class CasSitesTests {
 
         String siteIdentity = sitesResponse.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Site> site = casTestUtil.getCommonRequest(CASAPIEnum.SITE_ID, Site.class, HttpStatus.SC_OK, customerIdentity, siteIdentity);
+        ResponseWrapper<Site> site = casTestUtil.getCommonRequest(CASAPIEnum.SITE_ID, Site.class, HttpStatus.SC_OK, aPrioriIdentity, siteIdentity);
 
         soft.assertThat(site.getResponseEntity().getIdentity())
             .isEqualTo(siteIdentity);
@@ -95,7 +93,7 @@ public class CasSitesTests {
 
         String siteId = sitesResponse.getResponseEntity().getItems().get(0).getSiteId();
 
-        ResponseWrapper<ValidateSite> siteResponse = CasTestUtil.validateSite(customerIdentity, siteId);
+        ResponseWrapper<ValidateSite> siteResponse = CasTestUtil.validateSite(aPrioriIdentity, siteId);
 
         soft.assertThat(siteResponse.getResponseEntity().getStatus())
             .isEqualTo("EXISTS");

@@ -4,6 +4,7 @@ import com.apriori.cic.api.agent.Agent;
 import com.apriori.cic.api.agent.AgentRepository;
 import com.apriori.cic.api.agent.AgentService;
 import com.apriori.cic.api.utils.CicLoginUtil;
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.nexus.utils.NexusComponent;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -25,7 +26,7 @@ public class CicAgentInstallTest extends TestBaseUI {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser()).navigateToUserMenu().getWebSession();
+        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser(RolesEnum.APRIORI_DEVELOPER)).navigateToUserMenu().getWebSession();
         agent = AgentService.getAgent();
         agentRepository = new AgentRepository();
     }

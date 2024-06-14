@@ -175,9 +175,9 @@ public class CastingDtcReportTests extends JasperApiAuthenticationUtil {
     @Description("Verify DTC Score Input Control - Medium Selection - Casting DTC Report")
     public void testDtcScoreMedium() {
         List<String> partNames = Arrays.asList(
-            JasperCirApiPartsEnum.CASE_08.getPartName(),
-            JasperCirApiPartsEnum.BARCO_R8762839_ORIGIN.getPartName(),
-            JasperCirApiPartsEnum.C192308.getPartName()
+            JasperCirApiPartsEnum.JEEP_WJ_FRONT_BRAKE_DISC_99_04.getPartName(),
+            JasperCirApiPartsEnum.E3_241_4_N.getPartName(),
+            JasperCirApiPartsEnum.P_40137441_MLDES_0002.getPartName()
         );
         jasperApiUtils.genericDtcScoreTest(
             true,
