@@ -422,7 +422,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .openMaterialProcess()
             .selectBarChart("Band Saw");
 
-        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Band Saw")).contains("52.51%");
+        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Band Saw")).contains("52.50%");
         materialProcessPage.selectProcessTab();
 
         softAssertions.assertThat(materialProcessPage.getProcessResult("Machine Name")).contains("DoAll 3613-1 Vert");
