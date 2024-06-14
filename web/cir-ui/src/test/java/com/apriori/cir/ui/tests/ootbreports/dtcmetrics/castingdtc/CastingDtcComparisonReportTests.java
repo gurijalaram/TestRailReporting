@@ -13,6 +13,7 @@ import com.apriori.cir.ui.enums.MassMetricEnum;
 import com.apriori.cir.ui.enums.RollupEnum;
 import com.apriori.cir.ui.enums.SortOrderEnum;
 import com.apriori.cir.ui.enums.SortOrderItemsEnum;
+import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.cir.ui.pageobjects.login.ReportsLoginPage;
 import com.apriori.cir.ui.pageobjects.view.reports.CastingDtcReportPage;
 import com.apriori.cir.ui.tests.inputcontrols.InputControlsTests;
@@ -180,7 +181,7 @@ public class CastingDtcComparisonReportTests extends TestBaseUI {
         castingDtcReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), CastingDtcReportPage.class)
+            .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), ReportsPageHeader.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), CastingDtcReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)

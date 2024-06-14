@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.either;
 import static org.hamcrest.Matchers.equalTo;
@@ -9,6 +10,8 @@ import static org.hamcrest.core.StringContains.containsString;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -20,12 +23,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class UserPreferenceByNameTests extends TestUtil {
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 10798)
     @Description("Validate Get User Preference By Name Endpoint")
     public void testGetUserPreferenceByName() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         String annualVolumeResponse = acsResources.getUserPreferenceByName("prod.info.default.annual.volume");
         String toleranceModeResponse = acsResources.getUserPreferenceByName("TolerancePolicyDefaults.toleranceMode");
 
@@ -37,7 +41,7 @@ public class UserPreferenceByNameTests extends TestUtil {
     @TestRail(id = 10846)
     @Description("Validate Get User Preference By Name Endpoint - Negative - Invalid User")
     public void testGetUserPreferenceByNameInvalid() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getUserPreferenceByNameInvalidUser();
 
         assertOnInvalidResponse(genericErrorResponse);
@@ -50,7 +54,7 @@ public class UserPreferenceByNameTests extends TestUtil {
         String useVpeKey = "prod.info.default.use.vpe.for.all.processes";
         String toleranceModeKey = "TolerancePolicyDefaults.toleranceMode";
 
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         String useVpeCurrentValue = acsResources.getUserPreferenceByName(useVpeKey);
         String toleranceModeCurrentValue = acsResources.getUserPreferenceByName(toleranceModeKey);
         String useVpeValueToSet = useVpeCurrentValue.equals("false") ? "true" : "false";
@@ -70,7 +74,7 @@ public class UserPreferenceByNameTests extends TestUtil {
     @TestRail(id = 10848)
     @Description("Validate Set User Preferences By Name - Negative - Invalid User")
     public void testSetUserPreferenceByNameInvalidUser() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.setUserPreferencesInvalidUser();
 
         assertOnInvalidResponse(genericErrorResponse);

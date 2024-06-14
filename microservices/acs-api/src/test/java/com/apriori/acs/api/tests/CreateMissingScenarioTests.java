@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,6 +11,8 @@ import com.apriori.acs.api.models.response.acs.missingscenario.MissingScenarioRe
 import com.apriori.acs.api.models.response.acs.scenarioinfobyscenarioiterationkey.ScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.api.utils.Constants;
 import com.apriori.acs.api.utils.acs.AcsResources;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -23,12 +26,13 @@ import java.time.ZoneOffset;
 
 @ExtendWith(TestRulesAPI.class)
 public class CreateMissingScenarioTests extends TestUtil {
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 8767)
     @Description("Test Create Missing Scenario")
     public void testCreateMissingScenario() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         MissingScenarioResponse createMissingScenarioResponse = acsResources.createMissingScenario();
 
         assertThat(createMissingScenarioResponse.isResourceCreated(), is(equalTo(true)));

@@ -1,5 +1,7 @@
 package com.apriori.cas.api.utils;
 
+import static com.apriori.cds.api.enums.ApplicationEnum.CIS;
+
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.requests.BulkAccessControlRequest;
 import com.apriori.cas.api.models.response.AccessAuthorization;
@@ -19,6 +21,8 @@ import com.apriori.cas.api.models.response.Site;
 import com.apriori.cas.api.models.response.ValidateSite;
 import com.apriori.cds.api.models.request.License;
 import com.apriori.cds.api.models.request.LicenseRequest;
+import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -27,7 +31,6 @@ import com.apriori.shared.util.http.utils.MultiPartFiles;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
 import com.apriori.shared.util.models.response.Users;
@@ -281,7 +284,7 @@ public class CasTestUtil extends TestUtil {
         GenerateStringUtil generator = new GenerateStringUtil();
         return createCustomer(
             generator.generateCustomerName(),
-            generator.generateCloudReference(),
+            generator.getRandomStringSpecLength(16).toLowerCase(),
             generator.getRandomString(),
             "apriori.com",
             "apriori.co.uk",
@@ -573,7 +576,7 @@ public class CasTestUtil extends TestUtil {
             .body("accessControl",
                 AccessControl.builder()
                     .customerIdentity(CustomerUtil.getCurrentCustomerIdentity())
-                    .applicationIdentity(PropertiesContext.get("cds.ap_workspace_application_identity"))
+                    .applicationIdentity(new CdsTestUtil().getApplicationIdentity(CIS))
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
                     .build());

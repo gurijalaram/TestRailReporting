@@ -1,12 +1,13 @@
 package com.apriori.cid.ui.tests.evaluate;
 
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
+import com.apriori.cid.ui.pageobjects.evaluate.SourceModelExplorePage;
 import com.apriori.cid.ui.pageobjects.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.cid.ui.pageobjects.evaluate.inputs.AdvancedPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
@@ -18,7 +19,6 @@ import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -28,14 +28,13 @@ import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class TwoModelMachiningTests extends TestBaseUI {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
-
+    private SourceModelExplorePage sourceModelExplorePage;
     private GuidanceIssuesPage guidanceIssuesPage;
+
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public TwoModelMachiningTests() {
@@ -91,6 +90,34 @@ public class TwoModelMachiningTests extends TestBaseUI {
     }
 
     @Test
+    @Description("Validate Manually Costed parts cannot be set as Source")
+    @TestRail(id = {7861, 7862, 7863, 7864, 7870})
+    public void testManuallyCostedAsSource() {
+        ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
+        ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getUniqueComponent("casting_AFTER_machining");
+        twoModelPart.setUser(sourcePart.getUser());
+
+        loginPage = new CidAppLoginPage(driver);
+        sourceModelExplorePage = loginPage.login(sourcePart.getUser())
+            .uploadComponentAndOpen(sourcePart)
+            .clickManualModeButtonWhileUncosted()
+            .enterPiecePartCost("42")
+            .enterTotalCapitalInvestment("316")
+            .clickSaveButton()
+            .clickExplore()
+            .uploadComponentAndOpen(twoModelPart)
+            .selectProcessGroup(twoModelPart.getProcessGroup())
+            .selectSourcePart()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickSearch(sourcePart.getComponentName());
+
+        softAssertions.assertThat(sourceModelExplorePage.isScenarioClickable(sourcePart.getComponentName(), sourcePart.getScenarioName())).isFalse();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
     @Description("Validate the User can open the source part in the evaluate tab")
     @TestRail(id = {6466, 7866, 12511})
     public void testOpenSourceModel() {
@@ -106,6 +133,11 @@ public class TwoModelMachiningTests extends TestBaseUI {
             .search("ANSI AL380")
             .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
             .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("High Pressure Die Cast")
+            .submit(AdvancedPage.class)
+            .goToBasicTab()
             .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
@@ -129,7 +161,6 @@ public class TwoModelMachiningTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @Description("Validate the user can have multi level 2 model parts (source has been 2 model machined)")
     @TestRail(id = {7865, 7869, 7872})
     public void multiLevel2Model() {
@@ -218,7 +249,6 @@ public class TwoModelMachiningTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @Description("Validate the user can switch the source part")
     @TestRail(id = {6467, 7873, 7874})
     public void switchSourcePart() {
@@ -279,7 +309,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
 
     @Test
     @Description("Validate the user cannot use two completely different CAD models")
-    @TestRail(id = {7871, 6630})
+    @TestRail(id = {7871, 6630, 29240})
     public void testTwoModelCorrectCADModels() {
         ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
         ComponentInfoBuilder wrongSourcePart = new ComponentRequestUtil().getComponent("PowderMetalShaft");
@@ -308,10 +338,11 @@ public class TwoModelMachiningTests extends TestBaseUI {
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isEqualTo(true);
 
-        guidanceIssuesPage = evaluatePage.openDesignGuidance()
-            .selectIssueTypeGcd("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");
+        guidanceIssuesPage = new GuidanceIssuesPage(driver)
+            .selectIssueTypeGcd("Costing Failed", "Finish model extends outside the source model", "SourceModel:1");
 
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Units of the model of the stock differ from the units of the finished model.");
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).as("Design Guidance Drawer automatically opened on Costing Failure")
+                .isEqualTo("The finish model may be larger than the source, or their CAD coordinates may not align. Review selection of source and finish models and check that CAD model coordinates align.");
 
         softAssertions.assertAll();
     }

@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class CdsAccessControlsTests {
+public class CdsAccessControlsTests extends CdsTestUtil {
     private IdentityHolder accessControlIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();

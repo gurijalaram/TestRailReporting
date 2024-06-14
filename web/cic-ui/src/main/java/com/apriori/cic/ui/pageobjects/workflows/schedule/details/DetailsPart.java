@@ -2,6 +2,7 @@ package com.apriori.cic.ui.pageobjects.workflows.schedule.details;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.cic.ui.enums.PartSelectionType;
 import com.apriori.cic.ui.pageobjects.CICBasePage;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.cic.ui.pageobjects.workflows.schedule.querydefinitions.QueryDefinitions;
@@ -204,6 +205,20 @@ public class DetailsPart extends CICBasePage {
         return this;
     }
 
+    /**
+     * Select an identify components process through
+     */
+    public DetailsPart selectPartSelectionType(PartSelectionType partSelectionType) {
+        if (!getComponentProcessDropDownElement().findElement(By.cssSelector("div[class^='ss-single-selected'] span[class='placeholder']")).getText()
+            .equals(partSelectionType.getPartSelectionType())) {
+            pageUtils.waitForElementAndClick(getComponentProcessDropDownElement());
+            WebElement partSelectionElement = driver.findElement(By.xpath(String.format(OPTIONS_CONTAINS_TEXT, partSelectionType.getPartSelectionType())));
+            pageUtils.moveAndClick(partSelectionElement);
+        }
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        return this;
+    }
+
 
     /**
      * Click New Workflow button
@@ -228,6 +243,18 @@ public class DetailsPart extends CICBasePage {
     }
 
     /**
+     * Click New Workflow button
+     *
+     * @return NewEditWorkflow page object
+     */
+    public CostingInputsPart clickNextBtnForFileSystem() {
+        pageUtils.waitForElementAndClick(this.getNextButtonElement());
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(".data-loading"));
+        pageUtils.waitForElementToAppear(workflowPopUpActiveTabElement);
+        return new CostingInputsPart(driver);
+    }
+
+    /**
      * Click Next Button in  Workflow details tab
      *
      * @return QueryDefinitions class object
@@ -248,7 +275,6 @@ public class DetailsPart extends CICBasePage {
         }
         return queryDefinitions;
     }
-
 
     /**
      * Set a schedule on the Details tab on a New Workflow dialogue
@@ -559,6 +585,10 @@ public class DetailsPart extends CICBasePage {
 
     private WebElement getConnectorDropDownElement() {
         return driver.findElement(with(By.xpath("//div")).below(By.xpath("//span[.='Connector']")));
+    }
+
+    private WebElement getComponentProcessDropDownElement() {
+        return driver.findElement(with(By.xpath("//div")).below(By.xpath("//span[.='Identify Components to Process Through']")));
     }
 
     private WebElement getCostingInputAddRowButton() {

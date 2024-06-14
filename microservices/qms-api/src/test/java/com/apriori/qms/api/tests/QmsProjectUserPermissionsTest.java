@@ -21,6 +21,7 @@ import com.apriori.qms.api.models.response.bidpackage.BidPackageProjectUsersResp
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioProjectUserResponse;
 import com.apriori.qms.api.utils.QmsApiTestUtils;
 import com.apriori.serialization.util.DateFormattingUtils;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -29,10 +30,8 @@ import com.apriori.shared.util.http.utils.DateUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.response.ApwErrorMessage;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
-import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 

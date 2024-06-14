@@ -14,6 +14,7 @@ import static com.apriori.cid.ui.utils.PartNamesEnum.PIN;
 import static com.apriori.cid.ui.utils.PartNamesEnum.SEAT;
 import static com.apriori.cid.ui.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
 import static com.apriori.cid.ui.utils.PartNamesEnum.WASHER;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.ui.pageobjects.evaluate.components.ComponentsTablePage;
@@ -28,6 +29,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 public class LargeGroupEditAssemblies extends TestBaseUI {
@@ -41,6 +43,7 @@ public class LargeGroupEditAssemblies extends TestBaseUI {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {10883, 10884, 10885, 10894, 11140})
     @Description("group Edit sub Components")
     public void editButtonUnavailable() {

@@ -1,8 +1,12 @@
 package com.apriori.cic.api.tests;
 
-import com.apriori.cic.api.utils.AgentService;
+import com.apriori.cic.api.agent.Agent;
+import com.apriori.cic.api.agent.AgentRepository;
+import com.apriori.cic.api.agent.AgentService;
 import com.apriori.cic.api.utils.CicLoginUtil;
+import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.file.user.UserUtil;
+import com.apriori.shared.util.nexus.utils.NexusComponent;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -16,13 +20,15 @@ public class CicAgentInstallTest extends TestBaseUI {
 
     private static String loginSession;
     private static SoftAssertions softAssertions;
-    private static AgentService agentService;
+    private static Agent agent;
+    private static AgentRepository agentRepository;
 
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser()).navigateToUserMenu().getWebSession();
-        agentService = new AgentService();
+        loginSession = new CicLoginUtil(driver).login(UserUtil.getUser(RolesEnum.APRIORI_DEVELOPER)).navigateToUserMenu().getWebSession();
+        agent = AgentService.getAgent();
+        agentRepository = new AgentRepository();
     }
 
     @Test
@@ -40,21 +46,12 @@ public class CicAgentInstallTest extends TestBaseUI {
         "11. 5577 - Install the certificates and verify connector is connected to PLM system" +
         "12. This test covers installation and uninstallation of FileSystem, Windchill, and Teamcenter in CLI mode.")
     public void downloadAndInstallAgent() {
-        agentService.searchNexusRepositoryByGroup()
-            .downloadAgentFile()
-            .unZip()
-            .getConnector(loginSession)
-            .getConnectorOptions()
-            .updateOptionsFile()
-            .createRemoteSession()
-            .getSftpConnection()
-            .cleanUnInstall()
-            .uploadAndInstall()
-            .installCertificates()
-            .executeAgentService()
-            .close();
-
-        softAssertions.assertThat(agentService.getConnectorStatusInfo().getConnectionStatus()).isEqualTo("Connected to PLM");
+        NexusComponent nexusComponent = agentRepository.downloadAgent(agentRepository.searchNexusRepositoryByGroup());
+        agent.unInstall()
+            .setConnectorOptions(nexusComponent, loginSession)
+            .install(nexusComponent)
+            .closeConnection();
+        softAssertions.assertThat(agent.getConnectorStatusInfo(loginSession).getConnectionStatus()).isEqualTo("Connected to PLM");
     }
 
     @AfterEach

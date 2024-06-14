@@ -19,4 +19,5 @@ public class AgentWorkflowJobPartCostingInput {
     private String machiningMode;
     private Double targetCost;
     private Double targetMass;
+    private Object userDefinedAttributes;
 }

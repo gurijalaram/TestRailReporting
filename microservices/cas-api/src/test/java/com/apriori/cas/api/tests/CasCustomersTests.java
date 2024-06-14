@@ -1,5 +1,6 @@
 package com.apriori.cas.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.API_SANITY;
 
 import com.apriori.cas.api.enums.CASAPIEnum;
@@ -9,7 +10,6 @@ import com.apriori.cas.api.models.response.Customer;
 import com.apriori.cas.api.models.response.Customers;
 import com.apriori.cas.api.utils.CasTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
-import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -26,18 +26,19 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Arrays;
 
 @ExtendWith(TestRulesAPI.class)
+@EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomersTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private String userToken = UserUtil.getUser("admin").getToken();
+    private String userToken = UserUtil.getUser(APRIORI_DEVELOPER).getToken();
 
     @BeforeEach
     public void getToken() {
@@ -59,7 +60,7 @@ public class CasCustomersTests {
     @Description("Get a list of CAS customers sorted by name")
     // TODO z: fix it threads
     public void getCustomersSortedByName() {
-        //                ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
+        //ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMERS, Customers.class, HttpStatus.SC_OK);
         RequestEntity request = new RequestEntity()
             .endpoint(CASAPIEnum.CUSTOMERS)
             .returnType(Customers.class)
@@ -178,7 +179,6 @@ public class CasCustomersTests {
     @Description("Return a paged list of applications licensed for a specific customer.")
     public void getCustomerLicensedApplications() {
         String customerIdentity = casTestUtil.getAprioriInternal().getIdentity();
-
 
         ResponseWrapper<Applications> responseApplications = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_LICENSED_APP,
             Applications.class,

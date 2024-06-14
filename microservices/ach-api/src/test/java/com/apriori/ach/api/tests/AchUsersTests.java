@@ -5,6 +5,7 @@ import com.apriori.ach.api.models.response.AchErrorResponse;
 import com.apriori.ach.api.utils.AchTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.enums.TokenEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -13,7 +14,6 @@ import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.CustomerUtil;
 import com.apriori.shared.util.models.request.TokenRequest;
 import com.apriori.shared.util.models.response.Claims;
 import com.apriori.shared.util.models.response.Customer;
@@ -45,9 +45,7 @@ import java.util.Map;
 public class AchUsersTests extends AchTestUtil {
     private static final String USER_ADMIN = "testUser1";
     private static final String NOT_ADMIN_USER = "testUser11";
-    private static final Customer customer = PropertiesContext.get("customer").equals("ap-int")
-        ? CustomerUtil.getCustomerData("widgets")
-        : CustomerUtil.getCurrentCustomerData();
+    private static final Customer customer = CustomerUtil.getCustomerData();
     private static final String customerIdentity = customer.getIdentity();
     private RequestEntityUtil requestEntityUtilNoAdmin;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();

@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -12,6 +13,8 @@ import com.apriori.acs.api.models.response.acs.displayunits.UnitVariantSettingsI
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
 import com.apriori.shared.util.enums.CurrencyEnum;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -23,11 +26,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith(TestRulesAPI.class)
 public class DisplayUnitsTests extends TestUtil {
 
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
+
     @Test
     @TestRail(id = 8769)
     @Description("Test Get Display Units")
     public void testGetDisplayUnits() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         DisplayUnitsResponse getDisplayUnitsResponse = acsResources.getDisplayUnits();
 
         assertThat(getDisplayUnitsResponse, is(notNullValue()));
@@ -52,7 +57,7 @@ public class DisplayUnitsTests extends TestUtil {
     @TestRail(id = 8770)
     @Description("Test Set Currency Display Unit")
     public void setCurrencyDisplayUnitTest() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         DisplayUnitsResponse getDisplayUnitsResponse = acsResources.getDisplayUnits();
 
         String currencyCodeToCheck = getDisplayUnitsResponse.getCurrencyCode().equals(CurrencyEnum.USD.getCurrency()) ? CurrencyEnum.GBP.getCurrency() : CurrencyEnum.USD.getCurrency();
@@ -85,7 +90,7 @@ public class DisplayUnitsTests extends TestUtil {
     @TestRail(id = 8771)
     @Description("Test Set Length and Mass Display Unit")
     public void setLengthAndMassDisplayUnitTest() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         DisplayUnitsResponse getDisplayUnitsResponse = acsResources.getDisplayUnits();
 
         String lengthToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength().equals("mm") ? "in" : "mm";

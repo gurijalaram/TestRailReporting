@@ -34,9 +34,7 @@ public class LoginService extends LoadableComponent<LoginService> {
 
         url = application == null || application.isEmpty() ? PropertiesContext.get("cloud.ui_url") : PropertiesContext.get("" + application + ".ui_url");
 
-        driver.get(url);
-
-        log.info("CURRENTLY ON INSTANCE: " + url);
+        log.info("CURRENTLY ON INSTANCE: {}", url);
         PageFactory.initElements(driver, this);
         this.get();
     }

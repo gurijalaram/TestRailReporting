@@ -50,20 +50,20 @@ public class TableHeadersTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6347})
+    @TestRail(id = {6347,30931})
     @Description("Test added columns are displayed in the workspace")
     public void testAddColumnHeaders() {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .configure()
-            .selectColumn(ColumnsEnum.DESCRIPTION)
+            .selectColumn(ColumnsEnum.COST_MODE)
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.DESCRIPTION.getColumns()));
+        assertThat(explorePage.getTableHeaders(), hasItems(ColumnsEnum.COST_MODE.getColumns()));
 
         explorePage.configure()
-            .selectColumn(ColumnsEnum.DESCRIPTION)
+            .selectColumn(ColumnsEnum.COST_MODE)
             .moveColumn(DirectionEnum.LEFT)
             .submit(ExplorePage.class);
     }
@@ -129,7 +129,7 @@ public class TableHeadersTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser());
 
-        String timestamp1 = explorePage.getUpdateTimestamp();
+        String timestamp1 = explorePage.getUpdatedTimestamp();
         String formattedTime = DateTime.now().toString("h:mma");
 
         softAssertions.assertThat(timestamp1).as("Verify Last Updated Timestamp on initial load").contains("Last updated at " + formattedTime);
@@ -140,7 +140,7 @@ public class TableHeadersTests extends TestBaseUI {
             .submit()
             .clickClose();
 
-        String timestamp2 = explorePage.getUpdateTimestamp();
+        String timestamp2 = explorePage.getUpdatedTimestamp();
         formattedTime = DateTime.now().toString("h:mma");
 
         softAssertions.assertThat(timestamp2).as("Verify Last Updated Timestamp is updated after scenario is created").contains("Last updated at " + formattedTime);
@@ -152,7 +152,7 @@ public class TableHeadersTests extends TestBaseUI {
             .openComponent(component.getComponentName())
             .clickExplore();
 
-        String timestamp3 = explorePage.getUpdateTimestamp();
+        String timestamp3 = explorePage.getUpdatedTimestamp();
         formattedTime = DateTime.now().toString("h:mma");
 
         softAssertions.assertThat(timestamp3).as("Verify Last Updated Timestamp after additional single upload").contains("Last updated at " + formattedTime);
@@ -165,7 +165,7 @@ public class TableHeadersTests extends TestBaseUI {
 
         explorePage.refresh();
 
-        String timestamp4 = explorePage.getUpdateTimestamp();
+        String timestamp4 = explorePage.getUpdatedTimestamp();
         formattedTime = DateTime.now().toString("h:mma");
 
         softAssertions.assertThat(timestamp4).as("Verify Last Updated Timestamp after refresh").contains("Last updated at " + formattedTime);

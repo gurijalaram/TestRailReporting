@@ -78,13 +78,14 @@ public class AssemblyReportTests extends CicGuiTestUtil {
 
     @Test
     @Tag(SMOKE)
-    @TestRail(id = {11103, 11096, 11109, 11968, 11077, 11072, 11071, 11982})
+    @TestRail(id = {11103, 11096, 11109, 11968, 11077, 11072, 11071, 11982, 3966})
     @Description("Assemblies are returned from Windchill with default agent configuration" +
         "DTC Component Summary Reports are generated for assemblies" +
         "Assemblies are included in component counts" +
         "All assemblies costed with Process Group 'Assembly' when different process group read from PLM" +
         "Material set in Workflow with mapping rule Mapped from PLM (not applicable to assemblies) is ignored for any assemblies costed in resulting jobs" +
-        "Return Latest Revision option can be applied to assemblies")
+        "Return Latest Revision option can be applied to assemblies" +
+        "Sanity Test Email Is sent to Recipient")
     public void testVerifyDTCReportForAssemblies() {
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_ASSEMBLY, 6);
         String randomNumber = RandomStringUtils.randomNumeric(6);
@@ -145,7 +146,7 @@ public class AssemblyReportTests extends CicGuiTestUtil {
     }
 
     @Test
-    @TestRail(id = {11102, 11067, 11098, 11973})
+    @TestRail(id = {11102, 11067, 11098, 11973, 29571})
     @Description("Assemblies are costed bottom up - sub assemblies costed first " +
         "Parts costed before assemblies for simple single level assemblies" +
         "Assemblies are included in DFM Multiple Component Summary Report " +
@@ -171,6 +172,11 @@ public class AssemblyReportTests extends CicGuiTestUtil {
             .addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, scenarioName)
             .addCostingInputRow(PlmTypeAttributes.PLM_PROCESS_GROUP, MappingRule.MAPPED_FROM_PLM, "")
             .clickCINextBtn()
+            .selectEmailTab()
+            .selectEmailTemplate(EmailTemplateEnum.DFM_PART_SUMMARY)
+            .selectRecipient(EmailRecipientType.CONSTANT, PropertiesContext.get("global.report_email_address"))
+            .selectAttachReport()
+            .selectReportName(ReportsEnum.DFM_MULTIPLE_COMPONENT_SUMMARY)
             .clickCINotificationNextBtn()
             .clickSaveButton();
 
@@ -206,12 +212,11 @@ public class AssemblyReportTests extends CicGuiTestUtil {
         // Read the email and verify content and attached watch point report
         EmailMessage emailMessage = GraphEmailService.searchEmailMessageWithAttachments(scenarioName);
         softAssertions.assertThat(emailMessage.getBody().getContent().contains(scenarioName)).isTrue();
-        softAssertions.assertThat(emailMessage.getBody().getContent().contains("aP Generate Analysis Summary")).isTrue();
+        softAssertions.assertThat(emailMessage.getBody().getContent().contains("DFM Multiple Components Summary Report")).isTrue();
         EmailMessageAttachments emailMessageAttachments = emailMessage.emailMessageAttachments();
-        softAssertions.assertThat(emailMessageAttachments.value.size()).isEqualTo(6);
-        softAssertions.assertThat(this.verifyEmailAttachedReportName(emailMessageAttachments, plmPartData)).isTrue();
-        softAssertions.assertThat(this.verifyPdfDocumentContent(emailMessageAttachments, plmPartData)).isTrue();
-
+        softAssertions.assertThat(emailMessageAttachments.value.size()).isEqualTo(1);
+        softAssertions.assertThat(emailMessageAttachments.value.get(0).getName().contains("DFMMultipleComponentsSummary")).isTrue();
+        softAssertions.assertThat(this.verifyJobPartsInPdfReport(emailMessageAttachments, agentWorkflowJobResults)).isTrue();
         emailMessage.deleteEmailMessage();
     }
 

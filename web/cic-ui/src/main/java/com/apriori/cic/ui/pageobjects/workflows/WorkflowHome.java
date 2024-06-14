@@ -166,4 +166,7 @@ public class WorkflowHome extends CICBasePage {
         return driver.manage().getCookieNamed("JSESSIONID").getValue();
     }
 
+    public Boolean verifyPageUrl(String decodedUrl, String expectedTextInUrl) {
+        return pageUtils.verifyCurrentUrl(decodedUrl, expectedTextInUrl);
+    }
 }

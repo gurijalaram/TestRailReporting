@@ -1,6 +1,6 @@
 package com.apriori.shared.util.http.utils;
 
-import com.apriori.shared.util.enums.AuthUserContextEnum;
+import com.apriori.shared.util.enums.apis.AuthUserContextEnum;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.models.response.User;
@@ -34,11 +34,9 @@ public class AuthUserContextUtil {
             .inlineVariables(identity);
 
         ResponseWrapper<User> userIdResponse = HTTPRequest.build(idEntity).get();
-
         Gson gson = new GsonBuilder().setPrettyPrinting()
             .excludeFieldsWithoutExposeAnnotation()
             .create();
-
         //Get the actual [User] object and store it as bytes. At this point we don't want the root name [response] to be included
         byte[] userIdBytes = gson.toJson(userIdResponse.getResponseEntity()).getBytes(StandardCharsets.UTF_8);
 

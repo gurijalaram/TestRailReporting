@@ -5,11 +5,10 @@ import com.apriori.sds.api.models.request.ConnectionRequest;
 import com.apriori.sds.api.models.response.Connection;
 import com.apriori.sds.api.models.response.ConnectionsItemsResponse;
 import com.apriori.sds.api.util.SDSTestUtil;
+import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.models.CustomerUtil;
-import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 

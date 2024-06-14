@@ -44,7 +44,6 @@ import com.apriori.acs.api.utils.OldAuthorizationUtil;
 import com.apriori.acs.api.utils.workorders.FileUploadResources;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -68,15 +67,15 @@ import java.util.List;
 @Slf4j
 public class AcsResources {
     private static String token = "";
-
+    private final UserCredentials userCredentials;
     private static final HashMap<String, String> headers = new HashMap<>();
 
     private final String validUsername;
     private final String invalidUsername;
 
-    public AcsResources() {
-        UserCredentials user = UserUtil.getUser("common");
-        token = new OldAuthorizationUtil().getTokenAsString();
+    public AcsResources(UserCredentials user) {
+        this.userCredentials = user;
+        token = new OldAuthorizationUtil().getTokenAsString(user);
         validUsername = user.getEmail().split("@")[0];
         invalidUsername = user.getUsername().split("@")[0].concat("41");
     }
@@ -1046,7 +1045,7 @@ public class AcsResources {
      * @return CostResultsResponse object
      */
     public CostOrderStatusOutputs uploadAndCost(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
-        FileUploadResources fileUploadResources = new FileUploadResources();
+        FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 

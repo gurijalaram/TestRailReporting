@@ -1,5 +1,6 @@
 package com.apriori.acs.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.equalTo;
@@ -13,6 +14,8 @@ import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCre
 import com.apriori.acs.api.models.response.acs.tolerancepolicydefaults.PropertyValueMap;
 import com.apriori.acs.api.models.response.acs.tolerancepolicydefaults.TolerancePolicyDefaultsResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
+import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -24,12 +27,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class TolerancePolicyDefaultsTests extends TestUtil {
+    private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
     @Test
     @TestRail(id = 10473)
     @Description("Test Get Tolerance Policy Defaults")
     public void testGetTolerancePolicyDefaults() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         TolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources.getTolerancePolicyDefaults();
 
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
@@ -49,7 +53,7 @@ public class TolerancePolicyDefaultsTests extends TestUtil {
     @TestRail(id = 10555)
     @Description("Test Error on Get Tolerance Policy Defaults Endpoint")
     public void testErrorOnGetTolerancePolicyDefaultsEndpoint() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.TOLERANCE_POLICY_DEFAULTS);
 
         assertOnInvalidResponse(genericErrorResponse);
@@ -63,7 +67,7 @@ public class TolerancePolicyDefaultsTests extends TestUtil {
         String toleranceMode = "PARTOVERRIDE";
         boolean useCadToleranceThreshold = false;
 
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         GenericResourceCreatedResponse setTolerancePolicyDefaultsResponse = acsResources.setTolerancePolicyDefaults(
             totalRunoutOverrride,
             toleranceMode,
@@ -84,7 +88,7 @@ public class TolerancePolicyDefaultsTests extends TestUtil {
     @TestRail(id = 10557)
     @Description("Test Set Tolerance Policy Defaults Invalid User")
     public void testSetGetTolerancePolicyDefaultsInvalidUser() {
-        AcsResources acsResources = new AcsResources();
+        AcsResources acsResources = new AcsResources(userCredentials);
         GenericErrorResponse genericErrorResponse = acsResources.setTolerancePolicyDefaultsInvalidUsername();
 
         assertOnInvalidResponse(genericErrorResponse);

@@ -9,11 +9,12 @@ import com.apriori.cic.api.models.response.AgentWorkflowJobResults;
 import com.apriori.cic.api.models.response.AgentWorkflowJobRun;
 import com.apriori.cic.api.models.response.ConnectorJobPart;
 import com.apriori.cic.api.models.response.ConnectorJobParts;
-import com.apriori.shared.util.PDFDocument;
+import com.apriori.shared.util.file.PDFDocument;
 import com.apriori.shared.util.file.part.PartData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.json.JsonManager;
+import com.apriori.shared.util.models.response.EmailMessage;
 import com.apriori.shared.util.models.response.EmailMessageAttachments;
 
 import lombok.SneakyThrows;
@@ -46,31 +47,13 @@ public class WorkflowTestUtil extends CicUtil {
      * @param sessionID           JSessionID
      * @return current class object
      */
-    public WorkflowTestUtil create(WorkflowRequest workflowRequestData, String sessionID) {
+    public WorkflowTestUtil createWorkflow(WorkflowRequest workflowRequestData, String sessionID) {
         workflowResponse = CicApiTestUtil.createWorkflow(workflowRequestData, sessionID);
         if (workflowResponse == null) {
             throw new RuntimeException("Workflow creation failed!!");
         }
         if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
             log.debug(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", workflowRequestData.getName()));
-        }
-        return this;
-    }
-
-    /**
-     * Create workflow
-     *
-     * @return current class object
-     */
-    public WorkflowTestUtil create() {
-        this.workflowRequestDataBuilder.setCustomer(CicApiTestUtil.getCustomerName());
-        this.workflowRequestDataBuilder.setPlmSystem(CicApiTestUtil.getAgent(this.cicLoginUtil.getSessionId()));
-        workflowResponse = CicApiTestUtil.createWorkflow(this.workflowRequestDataBuilder, cicLoginUtil.getSessionId());
-        if (workflowResponse == null) {
-            throw new RuntimeException("Workflow creation failed!!");
-        }
-        if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
-            log.debug(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", this.workflowRequestDataBuilder.getName()));
         }
         return this;
     }
@@ -86,34 +69,6 @@ public class WorkflowTestUtil extends CicUtil {
         if (agentWorkflowResponse == null) {
             throw new RuntimeException("FAILED TO FIND WORKFLOW!!!");
         }
-        return this;
-    }
-
-
-    /**
-     * Get matching workflow from list of returned workflows
-     *
-     * @return Current class object
-     */
-    public WorkflowTestUtil getWorkflowId() {
-        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName());
-        if (agentWorkflowResponse == null) {
-            throw new RuntimeException("FAILED TO FIND WORKFLOW!!!");
-        }
-        return this;
-    }
-
-    /**
-     * Invoke Workflow of Part Selection Type REST with number of parts
-     *
-     * @return WorkflowTestUtil
-     */
-    public WorkflowTestUtil invokeRestWorkflow() {
-        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
-            agentWorkflowResponse.getId(),
-            this.workflowPartsRequestDataBuilder,
-            AgentWorkflowJobRun.class,
-            HttpStatus.SC_OK);
         return this;
     }
 
@@ -206,7 +161,7 @@ public class WorkflowTestUtil extends CicUtil {
      * @return AgentWorkflowJobResults
      */
     public AgentWorkflowJobResults createWorkflowAndGetJobResult(WorkflowRequest workflowRequestData, String sessionID) {
-        return create(workflowRequestData, sessionID)
+        return createWorkflow(workflowRequestData, sessionID)
             .getWorkflowId(workflowRequestData.getName())
             .invokeQueryWorkflow()
             .track()
@@ -224,6 +179,37 @@ public class WorkflowTestUtil extends CicUtil {
     }
 
     /**
+     * Create workflow
+     *
+     * @return current class object
+     */
+    public WorkflowTestUtil create() {
+        this.workflowRequestDataBuilder.setCustomer(CicApiTestUtil.getCustomerName());
+        this.workflowRequestDataBuilder.setPlmSystem(CicApiTestUtil.getAgent(this.cicLoginUtil.getSessionId()));
+        workflowResponse = CicApiTestUtil.createWorkflow(this.workflowRequestDataBuilder, cicLoginUtil.getSessionId());
+        if (workflowResponse == null) {
+            throw new RuntimeException("Workflow creation failed!!");
+        }
+        if (workflowResponse.getBody().contains("CreateJobDefinition") && workflowResponse.getBody().contains(">true<")) {
+            log.debug(String.format("WORKFLOW CREATED SUCCESSFULLY (%s)", this.workflowRequestDataBuilder.getName()));
+        }
+        return this;
+    }
+
+    /**
+     * Get matching workflow from list of returned workflows
+     *
+     * @return Current class object
+     */
+    public WorkflowTestUtil getWorkflowId() {
+        agentWorkflowResponse = CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName());
+        if (agentWorkflowResponse == null) {
+            throw new RuntimeException("FAILED TO FIND WORKFLOW!!!");
+        }
+        return this;
+    }
+
+    /**
      * delete workflow
      *
      * @return current class object
@@ -232,6 +218,20 @@ public class WorkflowTestUtil extends CicUtil {
         if (this.workflowRequestDataBuilder != null) {
             CicApiTestUtil.deleteWorkFlow(this.cicLoginUtil.getSessionId(), CicApiTestUtil.getMatchedWorkflowId(this.workflowRequestDataBuilder.getName()));
         }
+        return this;
+    }
+
+    /**
+     * Invoke Workflow of Part Selection Type REST with number of parts
+     *
+     * @return WorkflowTestUtil
+     */
+    public WorkflowTestUtil invokeRestWorkflow() {
+        agentWorkflowJobRunResponse = CicApiTestUtil.runCicAgentWorkflowPartList(
+            agentWorkflowResponse.getId(),
+            this.workflowPartsRequestDataBuilder,
+            AgentWorkflowJobRun.class,
+            HttpStatus.SC_OK);
         return this;
     }
 
@@ -367,6 +367,29 @@ public class WorkflowTestUtil extends CicUtil {
     }
 
     /**
+     * verify CID part number in PDF report
+     *
+     * @param emailMessageAttachments - EmailMessageAttachments
+     * @param agentWorkflowJobResults - AgentWorkflowJobResults
+     * @return Boolean
+     */
+    public Boolean verifyJobPartsInPdfReport(EmailMessageAttachments emailMessageAttachments, AgentWorkflowJobResults agentWorkflowJobResults) {
+        return emailMessageAttachments.value.stream()
+            .map(emailMessageAttachment -> (PDFDocument) emailMessageAttachment.getFileAttachment())
+            .anyMatch(pdfDocument ->
+                agentWorkflowJobResults.stream()
+                    .peek(workflowJobPartsResult -> {
+                        if (!pdfDocument.getDocumentContents().contains(workflowJobPartsResult.getCidPartNumber())) {
+                            log.debug(String.format("ACTUAL Document content : (%s) <=> EXPECTED CID PART Number : (%s)", pdfDocument.getDocumentContents(), workflowJobPartsResult.getCidPartNumber()));
+                        }
+                    })
+                    .anyMatch(workflowJobPartsResult ->
+                        pdfDocument.getDocumentContents().contains(workflowJobPartsResult.getCidPartNumber())
+                    )
+            );
+    }
+
+    /**
      * Verify Report in received email report
      *
      * @param emailMessageAttachments - AgentWorkflowJobResults
@@ -411,14 +434,50 @@ public class WorkflowTestUtil extends CicUtil {
             );
     }
 
+    /**
+     * verify data in pdf document
+     *
+     * @param pdfDocument        - PDFDocument
+     * @param expectedPdfContent - expected pdf content
+     * @return Boolean
+     */
+    public Boolean verifyPdfDocumentContent(PDFDocument pdfDocument, List<String> expectedPdfContent) {
+        String pdfContent = pdfDocument.getDocumentContents();
+        return expectedPdfContent.stream()
+            .peek(item -> {
+                if (!pdfContent.contains(item)) {
+                    log.debug(String.format("ACTUAL Email content : (%s) <=> EXPECTED Content  : (%s)", pdfContent, item));
+                }
+            })
+            .allMatch(pdfContent::contains);
+    }
+
+    /**
+     * verify Email Body Content
+     *
+     * @param emailMessage EmailMessage object
+     * @param contentList  - expected content list
+     * @return Boolean
+     */
+    public Boolean verifyEmailBody(EmailMessage emailMessage, List<String> contentList) {
+        String emailContent = emailMessage.getBody().getContent();
+        return contentList.stream()
+            .peek(item -> {
+                if (!emailContent.contains(item)) {
+                    log.debug(String.format("ACTUAL Email content : (%s) <=> EXPECTED Content  : (%s)", emailContent, item));
+                }
+            })
+            .allMatch(emailContent::contains);
+    }
+
 
     /**
      * wait until parts are costed to expected status get Job Parts
      *
-     * @param jobID          - Job ID
-     * @param expectedCount  - Expected parts count
-     * @param expectedStatus - expected part status
-     * @param session        - web Session
+     * @param jobID            - Job ID
+     * @param expectedCount    - Expected parts count
+     * @param connectorJobPart - ConnectorJobPart
+     * @param session          - web Session
      * @return ConnectorJobParts
      */
     @SneakyThrows
@@ -469,7 +528,7 @@ public class WorkflowTestUtil extends CicUtil {
      * get the parts count by part status
      *
      * @param connectorJobParts - ConnectorJobParts
-     * @param expectedStatus    - expected part status
+     * @param expectedJobPart   - ConnectorJobPart
      * @return Integer
      */
     public List<ConnectorJobPart> getPartsCount(ConnectorJobParts connectorJobParts, ConnectorJobPart expectedJobPart) {
@@ -478,6 +537,13 @@ public class WorkflowTestUtil extends CicUtil {
             .collect(Collectors.toList());
     }
 
+    /**
+     * verify parts
+     *
+     * @param connectorJobParts
+     * @param partList          - list of parts
+     * @return Boolean
+     */
     public Boolean verifyParts(List<ConnectorJobPart> connectorJobParts, List<String> partList) {
         return connectorJobParts.stream()
             .map(part -> part.getPartNumber())
@@ -492,5 +558,4 @@ public class WorkflowTestUtil extends CicUtil {
                     )
             );
     }
-
 }

@@ -1,10 +1,20 @@
 package com.apriori.shared.util.file.user;
 
+import com.apriori.shared.util.enums.RolesEnum;
+import com.apriori.shared.util.enums.apis.UsersApiEnum;
 import com.apriori.shared.util.file.user.service.UserCommonService;
 import com.apriori.shared.util.file.user.service.UserSecurityService;
+import com.apriori.shared.util.http.models.entity.RequestEntity;
+import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.QueryParams;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.models.response.User;
+import com.apriori.shared.util.models.response.Users;
 
 import io.qameta.allure.Attachment;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.hc.core5.http.HttpStatus;
 
 import java.util.List;
 
@@ -52,13 +62,13 @@ public class UserUtil {
     }
 
     /**
-     * Return user by access level
+     * Return user by role
      *
-     * @param accessLevel - access level of needed user
+     * @param role - role of needed user
      * @return User
      */
-    public static UserCredentials getUser(String accessLevel) {
-        UserCredentials user = UserSecurityService.getUser(accessLevel);
+    public static UserCredentials getUser(RolesEnum role) {
+        UserCredentials user = UserSecurityService.getUser(role);
         logInfo(user);
         return user;
     }
@@ -101,7 +111,21 @@ public class UserUtil {
 
     @Attachment
     public static String getUserLogInfo(UserCredentials user) {
-        return String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getAccessLevel());
+        return String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getRole());
     }
 
+    /**
+     * GET user by email
+     *
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public static User getUserByEmail(UserCredentials userCredentials) {
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(UsersApiEnum.USERS, Users.class)
+            .queryParams(new QueryParams().use("email[EQ]", userCredentials.getEmail()))
+            .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper<Users> response = HTTPRequest.build(requestEntity).get();
+        return response.getResponseEntity().getItems().stream().findFirst().get();
+    }
 }

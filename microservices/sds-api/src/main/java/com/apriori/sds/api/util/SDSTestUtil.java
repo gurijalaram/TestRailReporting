@@ -3,6 +3,7 @@ package com.apriori.sds.api.util;
 import static com.apriori.css.api.enums.CssSearch.COMPONENT_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.css.api.enums.CssSearch.SCENARIO_STATE_EQ;
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.apriori.cds.api.enums.CDSAPIEnum;
@@ -65,7 +66,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     @BeforeAll
     public static void init() {
-        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser("admin")
+        requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(APRIORI_DEVELOPER)
             .useApUserContextInRequests()
             .useTokenInRequests();
 
@@ -254,7 +255,7 @@ public abstract class SDSTestUtil extends TestUtil {
     }
 
     public static Map<String, String> getContextHeaders() {
-        return new HashMap<String, String>() {
+        return new HashMap<>() {
             {
                 put("ap-application-context", getApApplicationContext());
                 put("ap-cloud-context", testingUser.generateCloudContext().getCloudContext());
@@ -275,7 +276,7 @@ public abstract class SDSTestUtil extends TestUtil {
         ResponseWrapper<Customers> customersResponse = HTTPRequest.build(
             requestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customers.class)
                 .token(testingUser.getToken())
-                .queryParams(new QueryParams().use("cloudReference[EQ]", PropertiesContext.get("${customer}.cloud_reference_name")))
+                .queryParams(new QueryParams().use("cloudReference[EQ]", PropertiesContext.get("customer")))
         ).get();
 
         Customer customer = customersResponse.getResponseEntity().getItems().get(0);

@@ -4,6 +4,8 @@ import com.apriori.shared.util.interfaces.ExternalEndpointEnum;
 import com.apriori.shared.util.properties.PropertiesContext;
 
 public enum AgsApiEnum implements ExternalEndpointEnum {
+
+    // BCM
     WORKSHEETS("/worksheets"),
     WORKSHEET_BY_ID("/worksheets/%s"),
     WORKSHEET_INPUT_NAME("/worksheets/%s/inputRows"),
@@ -13,7 +15,11 @@ public enum AgsApiEnum implements ExternalEndpointEnum {
     COST_WORKSHEET("/worksheets/%s/cost"),
     MULTIPLE_ROWS("/worksheets/%s/inputRowGroup"),
     DELETE_MULTIPLE_WORKSHEETS("/worksheets/delete"),
-    CANDIDATES("/worksheets/%s/candidates");
+    CANDIDATES("/worksheets/%s/candidates"),
+
+    // CSS
+    SCENARIO_ITERATIONS("/scenario-iterations"),
+    SCENARIO_ITERATIONS_SEARCH("/scenario-iterations/search");
 
     private final String endpoint;
 

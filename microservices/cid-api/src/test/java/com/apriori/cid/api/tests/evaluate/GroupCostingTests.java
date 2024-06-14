@@ -83,7 +83,7 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly));
+        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly).getCostingTemplate());
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
         softAssertions = new SoftAssertions();
@@ -160,7 +160,7 @@ public class GroupCostingTests {
             .uploadAssembly(componentAssembly);
 
         componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setScenarioIdentity(""));
-        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly));
+        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly).getCostingTemplate());
 
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
@@ -195,7 +195,7 @@ public class GroupCostingTests {
             .uploadAssembly(componentAssembly);
 
         componentAssembly.getSubComponents().forEach(subComponent -> subComponent.setComponentIdentity(""));
-        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly));
+        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly).getCostingTemplate());
 
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
@@ -248,7 +248,7 @@ public class GroupCostingTests {
 
         assemblyUtils.uploadAssembly(componentAssembly);
 
-        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly));
+        componentAssembly.setCostingTemplate(scenariosUtil.postCostingTemplate(componentAssembly).getCostingTemplate());
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
         softAssertions = new SoftAssertions();

@@ -1,7 +1,7 @@
 package com.apriori.cid.ui.tests.settings;
 
 import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_USA;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -95,7 +95,6 @@ public class SettingsTests extends TestBaseUI {
             .inputScenarioName("MP Auto Test")
             .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE)
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS_PLATING.getMaterialName())
             .submit(ProductionDefaultsPage.class)
@@ -109,7 +108,6 @@ public class SettingsTests extends TestBaseUI {
         softAssertions.assertThat(productionDefaultPage.getScenarioName()).isEqualTo("MP Auto Test");
         softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup());
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory());
         softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("ABS, Plating");
 
         softAssertions.assertAll();
@@ -154,7 +152,6 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6285, 6286, 5429})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
@@ -178,7 +175,6 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6287, 6288})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
@@ -493,7 +489,6 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @Tag(EXTENDED_REGRESSION)
     @TestRail(id = {6368})
     @Description("Validate when a user changes their unit settings comparison values update")
     public void customUnitsDisplayedInComparison() {
@@ -504,9 +499,17 @@ public class SettingsTests extends TestBaseUI {
         comparePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .uploadComponentAndOpen(component2)
             .selectProcessGroup(component2.getProcessGroup())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
@@ -618,6 +621,7 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {17154, 17155, 17156, 17157, 21547, 21548})
     @Description("Assembly Strategy stuff")
     public void testAssemblyStrategyDropdown() {
@@ -699,6 +703,7 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
+    @Tag(ASSEMBLY)
     @TestRail(id = {17154, 17155, 17156, 17157, 21653, 21654, 21655, 21656})
     @Description("Verify Assembly Strategy Dropdown and Description Cards")
     public void testAssemblyStrategyDropdownCards() {

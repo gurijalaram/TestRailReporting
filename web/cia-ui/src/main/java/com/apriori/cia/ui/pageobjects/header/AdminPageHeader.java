@@ -1,11 +1,12 @@
 package com.apriori.cia.ui.pageobjects.header;
 
 import com.apriori.cia.ui.pageobjects.cirpages.CirUserGuidePage;
-import com.apriori.cia.ui.pageobjects.homepage.AdminHomePage;
 import com.apriori.cia.ui.pageobjects.logout.AdminLogoutPage;
+import com.apriori.cia.ui.pageobjects.manage.NewScenarioExportPopup;
 import com.apriori.cia.ui.pageobjects.manage.ScenarioExport;
 import com.apriori.cia.ui.pageobjects.manage.SystemDataExport;
 import com.apriori.cia.ui.pageobjects.userguides.CiaUserGuide;
+import com.apriori.cir.ui.pageobjects.header.ReportsPageHeader;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -66,6 +67,9 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
     @FindBy(xpath = "//h2[contains(text(), 'Admin')]")
     private WebElement adminTitle;
 
+    @FindBy(xpath = "//div[@id='exportscheduleslist_wrapper']//a[@class='btn btn-default btn-primary']")
+    private WebElement newScenarioExportButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -96,6 +100,17 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
         return navigateToSubPage(manageMenuOption, manageScenarioExportMenuOption, ScenarioExport.class);
     }
 
+
+    /**
+     * Click New ScenarioExport
+     *
+     * @return ScenarioExport popup
+     */
+    public NewScenarioExportPopup clickNewScenarioExport() {
+        pageUtils.waitForElementAndClick(newScenarioExportButton);
+        return PageFactory.initElements(driver, NewScenarioExportPopup.class);
+    }
+
     /**
      * Navigates to Manage System Data Export
      *
@@ -110,8 +125,10 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
      *
      * @return Reports Page Object Model
      */
-    public AdminHomePage navigateToReports() {
-        return navigateToPage(reportButton);
+    public ReportsPageHeader navigateToReports() {
+        pageUtils.waitForElementAndClick(reportButton);
+        pageUtils.switchToWindow(1);
+        return new ReportsPageHeader(driver);
     }
 
     /**
@@ -149,17 +166,6 @@ public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
     public AdminLogoutPage navigateToAdminLogout() {
         pageUtils.waitForElementToAppear(userButton);
         return navigateToSubPage(userButton, logoutButton, AdminLogoutPage.class);
-    }
-
-    /**
-     * General navigation method
-     *
-     * @param parentPage WebElement
-     * @return Instance of AdminHomePage
-     */
-    private AdminHomePage navigateToPage(WebElement parentPage) {
-        pageUtils.waitForElementAndClick(parentPage);
-        return new AdminHomePage(driver);
     }
 
     /**

@@ -8,6 +8,7 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
@@ -46,6 +47,7 @@ public class ScenarioIterationService {
         RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS, ComponentResponse.class)
                 .token(currentUser.getToken())
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()))
                 .queryParams(queryParams);
         return HTTPRequest.build(requestEntity).get();
     }
@@ -60,7 +62,8 @@ public class ScenarioIterationService {
         RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ErrorRequestResponse.class)
                 .body(scenarioIterationRequest)
-                .token(currentUser.getToken());
+                .token(currentUser.getToken())
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -74,7 +77,8 @@ public class ScenarioIterationService {
         RequestEntity requestEntity =
             RequestEntityUtil_Old.init(CssAPIEnum.SCENARIO_ITERATIONS_QUERY, ComponentResponse.class)
                 .body(scenarioIterationRequest)
-                .token(currentUser.getToken());
+                .token(currentUser.getToken())
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
         return HTTPRequest.build(requestEntity).post();
     }
 

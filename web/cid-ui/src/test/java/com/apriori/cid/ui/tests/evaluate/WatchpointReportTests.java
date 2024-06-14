@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate;
 
+import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
@@ -18,7 +19,6 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -37,9 +37,7 @@ public class WatchpointReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("Ticket has been pulled from release")
     @Tag(SMOKE)
-    @Issue("BA-2962")
     @TestRail(id = {21933, 21934, 21940})
     @Description("Generate and download a Part Cost Report")
     public void partCostReport() {
@@ -67,8 +65,7 @@ public class WatchpointReportTests extends TestBaseUI {
     }
 
     @Test
-    @Disabled("Ticket has been pulled from release")
-    @Tag(SMOKE)
+    @Tag(ASSEMBLY)
     @Issue("BA-2962")
     @TestRail(id = {28525, 28526})
     @Description("Generate and download a Assembly Cost Report")
@@ -98,6 +95,7 @@ public class WatchpointReportTests extends TestBaseUI {
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)

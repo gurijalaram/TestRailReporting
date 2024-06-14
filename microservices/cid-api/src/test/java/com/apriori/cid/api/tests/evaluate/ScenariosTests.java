@@ -7,6 +7,7 @@ import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -37,27 +38,18 @@ public class ScenariosTests {
     @TestRail(id = 10620)
     @Description("Copy a scenario")
     public void testCopyScenario() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        String filename = "oldham.asm.1";
-        String componentName = "OLDHAM";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
-        UserCredentials currentUser = UserUtil.getUser();
-        File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
 
-        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder oldhamAsm = new AssemblyRequestUtil().getAssembly("OLDHAM");
+
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(oldhamAsm);
 
         ResponseWrapper<Scenario> copyScenarioResponse = scenariosUtil.postCopyScenario(ComponentInfoBuilder
             .builder()
             .scenarioName(newScenarioName)
             .componentIdentity(postComponentResponse.getComponentIdentity())
             .scenarioIdentity(postComponentResponse.getScenarioIdentity())
-            .user(currentUser)
+            .user(oldhamAsm.getUser())
             .build());
 
         softAssertions = new SoftAssertions();
@@ -68,7 +60,7 @@ public class ScenariosTests {
         //Rechecking the original scenario has not changed
         ScenarioResponse scenarioRepresentation = scenariosUtil.getScenarioCompleted(postComponentResponse);
 
-        softAssertions.assertThat(scenarioRepresentation.getScenarioName()).isEqualTo(scenarioName);
+        softAssertions.assertThat(scenarioRepresentation.getScenarioName()).isEqualTo(oldhamAsm.getScenarioName());
 
         softAssertions.assertAll();
     }
