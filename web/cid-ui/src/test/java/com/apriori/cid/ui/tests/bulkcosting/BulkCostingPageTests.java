@@ -4,6 +4,7 @@ import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.css.api.utils.CssComponent;
@@ -62,9 +63,9 @@ public class BulkCostingPageTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {30730})
-    @Description("create inputRow for the worksheet")
-    public void testCreateInputRow() {
+    @TestRail(id = {30730, 29964, 31068})
+    @Description("create inputRow for the worksheet and go to evaluate page")
+    public void testCreateInputAndGoToEvaluatePageRow() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
         loginPage = new CidAppLoginPage(driver);
@@ -73,9 +74,14 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        String inputRowName = createInputRow(userCredentials, worksheetResponse);
+        String inputRowName1 = createInputRow(userCredentials, worksheetResponse, 5);
+        String inputRowName2 = createInputRow(userCredentials, worksheetResponse, 6);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
-        soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName)).isTrue();
+        soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName1)).isTrue();
+        soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName2)).isTrue();
+
+        EvaluatePage evaluatePage = bulkCostingPage.selectComponentByRow(1);
+        soft.assertThat(evaluatePage.isDesignGuidanceButtonDisplayed()).isTrue();
         soft.assertAll();
     }
 
@@ -91,7 +97,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        String inputRowName = createInputRow(userCredentials, worksheetResponse);
+        String inputRowName = createInputRow(userCredentials, worksheetResponse, 5);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
         soft.assertThat(bulkCostingPage.getRemoveButtonState("Cannot perform a remove action"))
             .contains(Arrays.asList("Cannot perform a remove action with no scenarios selected"));
@@ -119,7 +125,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        createInputRow(userCredentials, worksheetResponse);
+        createInputRow(userCredentials, worksheetResponse, 5);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getResponseEntity().getName());
 
         soft.assertThat(bulkCostingPage.getSetInputButtonState("Cannot set inputs with no scenarios selected."))
@@ -156,7 +162,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             .clickBulkCostingButton();
 
         ResponseWrapper<WorkSheetResponse> worksheetResponse = createWorksheet(userCredentials);
-        createInputRow(userCredentials, worksheetResponse);
+        createInputRow(userCredentials, worksheetResponse, 5);
         soft.assertThat(bulkCostingPage.getInfoButtonState("Cannot show worksheet info with no worksheet selected."))
             .isEqualTo("Cannot show worksheet info with no worksheet selected.");
 
@@ -179,12 +185,12 @@ public class BulkCostingPageTests extends TestBaseUI {
     }
 
 
-    private String createInputRow(UserCredentials userCredentials, ResponseWrapper<WorkSheetResponse> worksheetResponse) {
+    private String createInputRow(UserCredentials userCredentials, ResponseWrapper<WorkSheetResponse> worksheetResponse, int itemNumber) {
         CssComponent cssComponent = new CssComponent();
         BcmUtil bcmUtil = new BcmUtil();
         ScenarioItem scenarioItem =
             cssComponent.postSearchRequest(userCredentials, "PART")
-                .getResponseEntity().getItems().get(5);
+                .getResponseEntity().getItems().get(itemNumber);
         bcmUtil.createWorkSheetInputRowWithEmail(scenarioItem.getComponentIdentity(),
             scenarioItem.getScenarioIdentity(), worksheetResponse.getResponseEntity().getIdentity(), userCredentials);
         return scenarioItem.getComponentDisplayName();

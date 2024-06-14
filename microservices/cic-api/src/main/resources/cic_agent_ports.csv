@@ -7,4 +7,5 @@ qa-test,apriori-internal,windchill,8811,WC-consvwc02,http://conqscic02.fbc.com
 qa-test,widgets,filesystem,8814,FS-consvwc02,http://conqscic02.fbc.com
 staging,apriori-internal,windchill,8812,WC-consvwc02,http://conqscic02.fbc.com
 staging,apriori-internal,filesystem,8813,FS-consvwc02,http://conqscic02.fbc.com
+qa-test,widgets,filesystem,8814,FS-consvwc02,http://conqscic02.fbc.com
 development,apriori-internal,windchill,8811,WC-consvwc02,http://conqscic02.fbc.com

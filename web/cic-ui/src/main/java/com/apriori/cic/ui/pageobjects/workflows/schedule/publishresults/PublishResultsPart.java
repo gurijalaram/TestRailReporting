@@ -75,6 +75,7 @@ public class PublishResultsPart extends CICBasePage {
         if (this.attachReportTab.isEnabled()) {
             pageUtils.waitForElementAndClick(attachReportTab);
         }
+        pageUtils.waitForElementToBeClickable(getSaveButtonElement());
         return new PRAttachReportTab(driver);
     }
 
