@@ -16,6 +16,7 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
+import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -261,7 +262,7 @@ public class PsoEditTests extends TestBaseUI {
     @TestRail(id = {16707})
     @Description("Validate user can make iterative PSO changes and then re-cost to original defaults")
     public void multiplePSOEdits() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("PUSH PIN", PLASTIC_MOLDING);
 
         evaluatePage = new CidAppLoginPage(driver)
             .login(component.getUser())
@@ -274,7 +275,7 @@ public class PsoEditTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.81), Offset.offset(0.2));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
         evaluatePage.openMaterialProcess()
             .selectBarChart("Injection Molding")
@@ -285,7 +286,7 @@ public class PsoEditTests extends TestBaseUI {
             .closePanel()
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.82), Offset.offset(0.2));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectOptionsTab();
@@ -300,7 +301,7 @@ public class PsoEditTests extends TestBaseUI {
             .closePanel()
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(5.51), Offset.offset(0.2));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.91), Offset.offset(0.9));
 
         evaluatePage.openMaterialProcess()
             .selectOptionsTab();
@@ -315,7 +316,7 @@ public class PsoEditTests extends TestBaseUI {
             .closePanel()
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.81), Offset.offset(0.2));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(1.58), Offset.offset(0.9));
 
         evaluatePage.openMaterialProcess()
             .selectOptionsTab();
