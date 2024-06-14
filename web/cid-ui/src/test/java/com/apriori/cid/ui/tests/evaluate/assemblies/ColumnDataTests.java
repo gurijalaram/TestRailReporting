@@ -73,7 +73,7 @@ public class ColumnDataTests extends TestBaseUI {
         String pinIdentity = cssComponent.findFirst(pin, scenarioName, currentUser).getScenarioIdentity();
         String smallRingIdentity = cssComponent.findFirst(small_ring, scenarioName, currentUser).getScenarioIdentity();
 
-        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.ANNUAL_VOLUME, hingeIdentity, currentUser)).isEqualTo("5,500");
+        softAssertions.assertThat(explorePage.getColumnData(ColumnsEnum.ANNUAL_VOLUME, hingeIdentity, currentUser)).isEqualTo("500");
 
         componentsTablePage = explorePage.navigateToScenario(componentAssembly)
             .openComponents()
