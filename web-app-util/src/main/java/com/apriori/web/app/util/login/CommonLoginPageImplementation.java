@@ -64,7 +64,7 @@ public class CommonLoginPageImplementation extends LoadableComponent<CommonLogin
 
         driver.get(url);
 
-        log.info("CURRENTLY ON INSTANCE: " + url);
+        log.info("CURRENTLY ON INSTANCE: {}", url);
         PageFactory.initElements(driver, this);
         this.get();
     }

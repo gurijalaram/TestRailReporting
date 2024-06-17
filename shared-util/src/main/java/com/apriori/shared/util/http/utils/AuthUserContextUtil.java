@@ -34,11 +34,9 @@ public class AuthUserContextUtil {
             .inlineVariables(identity);
 
         ResponseWrapper<User> userIdResponse = HTTPRequest.build(idEntity).get();
-
         Gson gson = new GsonBuilder().setPrettyPrinting()
             .excludeFieldsWithoutExposeAnnotation()
             .create();
-
         //Get the actual [User] object and store it as bytes. At this point we don't want the root name [response] to be included
         byte[] userIdBytes = gson.toJson(userIdResponse.getResponseEntity()).getBytes(StandardCharsets.UTF_8);
 
