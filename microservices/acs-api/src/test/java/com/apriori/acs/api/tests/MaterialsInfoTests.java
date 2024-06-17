@@ -3,7 +3,6 @@ package com.apriori.acs.api.tests;
 import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
 
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericExtendedPropertyInfoItem;
-import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.api.models.response.acs.materialsinfo.MaterialsInfoAdditiveManufacturingResponse;
 import com.apriori.acs.api.models.response.acs.materialsinfo.MaterialsInfoBarAndTubeResponse;
 import com.apriori.acs.api.models.response.acs.materialsinfo.MaterialsInfoCastingDieResponse;
@@ -29,8 +28,6 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
