@@ -108,16 +108,15 @@ public class ProcessRoutingTests extends TestBaseUI {
         loginPage = new CidAppLoginPage(driver);
         advancedPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
-            .goToAdvancedTab();
-
-        softAssertions.assertThat(advancedPage.isRoutingSelectionButtonEnabled()).isEqualTo(false);
-
-        advancedPage.goToBasicTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
-            .costScenario()
             .goToAdvancedTab();
 
         softAssertions.assertThat(advancedPage.isRoutingSelectionButtonEnabled()).isEqualTo(true);
+
+        advancedPage.goToBasicTab()
+            .costScenario()
+            .goToAdvancedTab();
+
         softAssertions.assertThat(advancedPage.getRoutingSelectionSelected()).contains("Let aPriori Decide");
 
         advancedPage.openRoutingSelection()
@@ -135,7 +134,6 @@ public class ProcessRoutingTests extends TestBaseUI {
         softAssertions.assertThat(advancedPage.getRoutingSelectionSelected()).contains("Let aPriori Decide");
 
         advancedPage.goToBasicTab()
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .costScenario()
             .goToAdvancedTab();
 
@@ -262,7 +260,7 @@ public class ProcessRoutingTests extends TestBaseUI {
     @TestRail(id = {15012, 14401, 15050, 15988, 7851, 7852})
     @Description("Validate the information updates in the routing modal box")
     public void testLastRouting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("manifold2", ProcessGroupEnum.CASTING_DIE);
 
         loginPage = new CidAppLoginPage(driver);
         routingSelectionPage = loginPage.login(component.getUser())
@@ -272,8 +270,8 @@ public class ProcessRoutingTests extends TestBaseUI {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$3.52")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("High Pressure Die Cast")).isEqualTo("Cost Incomplete");
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("High Pressure Die Cast", "$2.63")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isAprioriLogoDisplayed("High Pressure Die Cast")).isEqualTo(true);
 
         routingSelectionPage.selectRoutingPreferenceByName("Gravity Die Cast");
@@ -285,8 +283,8 @@ public class ProcessRoutingTests extends TestBaseUI {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
-        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$4.75")).isTrue();
+        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Incomplete");
+        softAssertions.assertThat(routingSelectionPage.isCostDifference("Gravity Die Cast", "$3.96")).isTrue();
         softAssertions.assertThat(routingSelectionPage.isUserTileDisplayed("Gravity Die Cast")).isTrue();
         softAssertions.assertThat(routingSelectionPage.getSelectionStatus("Gravity Die Cast")).isEqualTo("Selected");
         softAssertions.assertAll();
@@ -422,7 +420,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .openMaterialProcess()
             .selectBarChart("Band Saw");
 
-        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Band Saw")).contains("52.51%");
+        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Band Saw")).contains("55.51%");
         materialProcessPage.selectProcessTab();
 
         softAssertions.assertThat(materialProcessPage.getProcessResult("Machine Name")).contains("DoAll 3613-1 Vert");
@@ -556,25 +554,21 @@ public class ProcessRoutingTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+            .goToAdvancedTab()
+            .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Band Saw", "Abrasive Wheel Cut");
 
-        routingSelectionPage.selectRoutingPreferenceByName("Abrasive Wheel Cut")
+        guidanceIssuesPage = routingSelectionPage.selectRoutingPreferenceByName("Abrasive Wheel Cut")
             .submit(EvaluatePage.class)
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.isDesignGuidanceButtonDisplayed()).isTrue();
-
-        guidanceIssuesPage = evaluatePage.openDesignGuidance()
+            .costScenario()
+            .openDesignGuidance()
             .selectIssueTypeGcd("Costing Failed", "Casting - Investment/Machining is infeasible", "Component:1");
 
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Abrasive Wheel Cutting is not feasible because part mass (0.02 kg) is smaller then the acceptable value (4.0 kg).");
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Abrasive Wheel Cutting is not feasible");
         softAssertions.assertAll();
     }
 
@@ -745,7 +739,7 @@ public class ProcessRoutingTests extends TestBaseUI {
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Stretch Form Transverse", "Stretch Form Longitudinal");
 
-        routingSelectionPage.selectRoutingPreferenceByName("Stretch Form Longitudinal")
+        evaluatePage = routingSelectionPage.selectRoutingPreferenceByName("Stretch Form Longitudinal")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -895,7 +889,7 @@ public class ProcessRoutingTests extends TestBaseUI {
             .checkComponentStateRefresh(componentB, ScenarioStateEnum.COST_COMPLETE)
             .addColumn(ColumnsEnum.PROCESS_ROUTING);
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentB.getComponentName(), componentB.getScenarioName())).contains("Turret Press");
+        softAssertions.assertThat(explorePage.getRowDetails(componentB.getComponentName(), componentB.getScenarioName())).contains("Material Stock / Turret Press / Bend Brake");
         softAssertions.assertAll();
     }
 

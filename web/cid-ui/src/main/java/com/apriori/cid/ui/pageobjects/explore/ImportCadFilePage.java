@@ -44,7 +44,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = "div[class='Toastify__toast-body']")
     private WebElement alertWarning;
 
-    @FindBy(css = "[data-testid='alert-messaging']")
+    @FindBy(css = "[data-testid='assembly-association-strategy-message']")
     private WebElement associationAlert;
 
     @FindBy(xpath = "//input[@name='primaryScenarioName']/following-sibling::span")
