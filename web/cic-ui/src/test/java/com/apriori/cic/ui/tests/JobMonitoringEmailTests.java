@@ -165,7 +165,7 @@ public class JobMonitoringEmailTests extends CicGuiTestUtil {
 
     @AfterEach
     public void cleanup() {
-        CicApiTestUtil.deleteWorkFlow(this.ciConnectHome.getSession(), CicApiTestUtil.getMatchedWorkflowId(workflowName));
+        workflowHome.selectScheduleTab().selectWorkflow(workflowName).clickDeleteBtn().clickConfirmDeleteBtn();
         softAssertions.assertAll();
     }
 }

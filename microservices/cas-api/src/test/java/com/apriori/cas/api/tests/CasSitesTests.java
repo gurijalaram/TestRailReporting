@@ -74,7 +74,7 @@ public class CasSitesTests {
 
         String siteIdentity = sitesResponse.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Site> site = casTestUtil.getCommonRequest(CASAPIEnum.SITE_ID, Site.class, HttpStatus.SC_OK, customerIdentity, siteIdentity);
+        ResponseWrapper<Site> site = casTestUtil.getCommonRequest(CASAPIEnum.SITE_ID, Site.class, HttpStatus.SC_OK, aPrioriIdentity, siteIdentity);
 
         soft.assertThat(site.getResponseEntity().getIdentity())
             .isEqualTo(siteIdentity);
@@ -93,7 +93,7 @@ public class CasSitesTests {
 
         String siteId = sitesResponse.getResponseEntity().getItems().get(0).getSiteId();
 
-        ResponseWrapper<ValidateSite> siteResponse = CasTestUtil.validateSite(customerIdentity, siteId);
+        ResponseWrapper<ValidateSite> siteResponse = CasTestUtil.validateSite(aPrioriIdentity, siteId);
 
         soft.assertThat(siteResponse.getResponseEntity().getStatus())
             .isEqualTo("EXISTS");
