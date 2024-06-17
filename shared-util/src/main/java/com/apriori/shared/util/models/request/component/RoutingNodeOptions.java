@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoutingNodeOptions implements Serializable{
+public class RoutingNodeOptions implements Serializable {
     private String identity;
     private String digitalFactoryName;
     @JsonProperty("name")
