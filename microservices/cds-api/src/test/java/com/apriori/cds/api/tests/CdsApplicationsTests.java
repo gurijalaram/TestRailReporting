@@ -5,6 +5,8 @@ import static com.apriori.cds.api.enums.ApplicationEnum.AP_PRO;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Application;
 import com.apriori.shared.util.models.response.Applications;
 import com.apriori.shared.util.models.response.Customers;
@@ -14,14 +16,22 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsApplicationsTests {
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private final ApplicationUtil applicationUtil = new ApplicationUtil();
+    private CdsTestUtil cdsTestUtil;
+    private ApplicationUtil applicationUtil;
     private SoftAssertions soft = new SoftAssertions();
+
+    @BeforeEach
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        applicationUtil = new ApplicationUtil(requestEntityUtil);
+    }
 
     @Test
     @TestRail(id = {3251})

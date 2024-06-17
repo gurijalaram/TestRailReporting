@@ -69,9 +69,11 @@ public class CdsTestUtil extends TestUtil {
     private RequestEntityUtil requestEntityUtil;
 
     public CdsTestUtil(RequestEntityUtil requestEntityUtil) {
+        super.requestEntityUtil = requestEntityUtil;
         this.requestEntityUtil = requestEntityUtil;
     }
 
+    // TODO: 14/06/2024 cn - remove in next iteration
     // this empty constructor is needed just for now to avoid multiple errors.
     public CdsTestUtil() {
     }

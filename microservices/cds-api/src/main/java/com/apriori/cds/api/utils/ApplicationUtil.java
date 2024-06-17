@@ -32,10 +32,6 @@ public class ApplicationUtil {
         this.requestEntityUtil = requestEntityUtil;
     }
 
-    // this empty constructor is needed just for now to avoid multiple errors.
-    public ApplicationUtil() {
-    }
-
     /**
      * Calls an API with GET verb
      *

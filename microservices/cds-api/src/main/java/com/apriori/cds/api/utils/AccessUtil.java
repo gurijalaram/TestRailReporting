@@ -23,8 +23,6 @@ public class AccessUtil {
         this.applicationUtil = new ApplicationUtil(requestEntityUtil);
     }
 
-    // no constructor needed in here as this method is only used twice so was easy to change
-
     /**
      * Post to add out of context access control
      *

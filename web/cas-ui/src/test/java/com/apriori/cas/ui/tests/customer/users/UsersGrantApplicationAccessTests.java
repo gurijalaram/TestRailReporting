@@ -17,7 +17,9 @@ import com.apriori.cds.api.utils.Constants;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.LicensedApplications;
@@ -41,7 +43,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
     private IdentityHolder installationIdentityHolder;
     private IdentityHolder licensedAppIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private final ApplicationUtil applicationUtil = new ApplicationUtil();
+    private ApplicationUtil applicationUtil;
     private CdsTestUtil cdsTestUtil;
     private Customer targetCustomer;
     private String customerIdentity;
@@ -59,6 +61,10 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        applicationUtil = new ApplicationUtil(requestEntityUtil);
+
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesforce = generateStringUtil.generateSalesForceId();
         customerName = generateStringUtil.generateCustomerName();
@@ -66,7 +72,6 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         String email = "\\S+@".concat(customerName);
         String customerType = Constants.ON_PREM_CUSTOMER;
 
-        cdsTestUtil = new CdsTestUtil();
         targetCustomer = cdsTestUtil.addCustomer(customerName, customerType, null, salesforce, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         user = cdsTestUtil.addUser(customerIdentity, userName, customerName);

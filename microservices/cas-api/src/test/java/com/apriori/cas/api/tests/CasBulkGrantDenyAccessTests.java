@@ -17,11 +17,9 @@ import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.enums.RolesEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.LicensedApplications;
 import com.apriori.shared.util.models.response.Site;
@@ -46,10 +44,9 @@ import java.util.stream.Collectors;
 @ExtendWith(TestRulesAPI.class)
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasBulkGrantDenyAccessTests {
-    private final UserCredentials currentUser = UserUtil.getUser(RolesEnum.APRIORI_DESIGNER);
-    private final CasTestUtil casTestUtil = new CasTestUtil();
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private final ApplicationUtil applicationUtil = new ApplicationUtil();
+    private CasTestUtil casTestUtil;
+    private CdsTestUtil cdsTestUtil;
+    private ApplicationUtil applicationUtil;
     private String acsIdentity;
     private String ciaIdentity;
     private String appIdentity;
@@ -73,7 +70,11 @@ public class CasBulkGrantDenyAccessTests {
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        casTestUtil = new CasTestUtil(requestEntityUtil);
+        applicationUtil = new ApplicationUtil(requestEntityUtil);
+
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
         cirIdentity = applicationUtil.getApplicationIdentity(CIR);

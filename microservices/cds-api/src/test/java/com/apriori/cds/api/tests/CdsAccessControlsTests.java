@@ -11,6 +11,7 @@ import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -37,7 +38,7 @@ public class CdsAccessControlsTests {
 
     @BeforeEach
     public void init() {
-        RequestEntityUtil requestEntityUtil = TestHelper.init();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         accessUtil = new AccessUtil(requestEntityUtil);
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);

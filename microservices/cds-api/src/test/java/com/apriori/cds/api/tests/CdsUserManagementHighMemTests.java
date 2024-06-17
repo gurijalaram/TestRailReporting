@@ -13,7 +13,9 @@ import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.LicensedApplications;
@@ -26,6 +28,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -34,11 +37,12 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsUserManagementHighMemTests {
+    private final String customerAssignedRole = "APRIORI_DEVELOPER";
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private final ApplicationUtil applicationUtil = new ApplicationUtil();
-    private final String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
+    private CdsTestUtil cdsTestUtil;
+    private ApplicationUtil applicationUtil;
+    private String appIdentity;
     private String customerIdentity;
     private String siteIdentity;
     private String deploymentIdentity;
@@ -49,7 +53,14 @@ public class CdsUserManagementHighMemTests {
     private String installationIdentityReg;
     private String installationIdentityHighMem;
     private String userIdentity;
-    private final String customerAssignedRole = "APRIORI_DEVELOPER";
+
+    @BeforeEach
+    public void setDetails() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        applicationUtil = new ApplicationUtil(requestEntityUtil);
+        appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
+    }
 
     @AfterEach
     public void cleanUp() {
