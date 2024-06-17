@@ -38,11 +38,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class MaterialsInfoTests {
     private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 
-    @AfterEach
-    public void cleanup() {
-        new AcsResources(userCredentials).resetSettings();
-    }
-
     @Test
     @TestRail(id = 22695)
     @Description("Test Get Materials Info endpoint for Additive Manufacturing")
