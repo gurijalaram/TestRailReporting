@@ -33,6 +33,8 @@ public class UserPreferencesResponse {
     private String prodInfoDefaultProductionLife;
     @JsonProperty("prod.info.default.use.vpe.for.all.processes")
     private String prodInfoDefaultUseVpeForAllProcesses;
+    @JsonProperty("prod.info.default.vpe")
+    private String prodInfoDefaultVpe;
     @JsonProperty("prod.info.vpe")
     private String prodInfoVpe;
     private String selectionColor;

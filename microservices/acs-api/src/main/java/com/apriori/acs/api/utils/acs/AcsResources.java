@@ -1080,4 +1080,53 @@ public class AcsResources {
         headers.put("apriori.tenant", defaultString);
         headers.put("Authorization", "Bearer " + token);
     }
+
+    /**
+     * Reset All User Preferences
+     *
+     * @return GenericResourceCreatedResponse instance
+     */
+    public GenericResourceCreatedResponse resetSettings() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil_Old
+            .init(AcsApiEnum.USER_PREFERENCES, GenericResourceCreatedResponse.class)
+            .headers(headers)
+            .body(UserPreferencesInputs.builder()
+                .costTableDecimalPlaces("2")
+                .tolerancePolicyDefaultsToleranceMode("SYSTEMDEFAULT")
+                .prodInfoDefaultVpe("aPriori USA")
+                .defaultScenarioName("Initial")
+                .prodInfoDefaultAnnualVolume("5500")
+                .prodInfoDefaultBatchSize(null)
+                .prodInfoDefaultMaterial(null)
+                .prodInfoDefaultPg(null)
+                .prodInfoDefaultMaterialCatalogName(null)
+                .prodInfoDefaultProductionLife("5")
+                .tolerancePolicyDefaultsBendAngleToleranceOverride(null)
+                .tolerancePolicyDefaultsCadToleranceReplacement(null)
+                .tolerancePolicyDefaultsUseCadToleranceThreshhold("false")
+                .tolerancePolicyDefaultsDiamToleranceOverride(null)
+                .tolerancePolicyDefaultsFlatnessOverride(null)
+                .tolerancePolicyDefaultsMinCadToleranceThreshhold(null)
+                .tolerancePolicyDefaultsFlatnessOverride(null)
+                .tolerancePolicyDefaultsPerpendicularityOverride(null)
+                .tolerancePolicyDefaultsPositionToleranceOverride(null)
+                .tolerancePolicyDefaultsPerpendicularityOverride(null)
+                .tolerancePolicyDefaultsParallelismOverride(null)
+                .tolerancePolicyDefaultsProfileOfSurfaceOverride(null)
+                .tolerancePolicyDefaultsRoughnessOverride(null)
+                .tolerancePolicyDefaultsRoughnessRzOverride(null)
+                .tolerancePolicyDefaultsRunoutOverride(null)
+                .tolerancePolicyDefaultsStraightnessOverride(null)
+                .tolerancePolicyDefaultsSymmetryOverride(null)
+                .tolerancePolicyDefaultsToleranceOverride(null)
+                .tolerancePolicyDefaultsTotalRunoutOverride(null)
+                .tolerancePolicyDefaultsBendAngleToleranceOverride(null)
+                .prodInfoDefaultUseVpeForAllProcesses("false")
+                .build())
+            .inlineVariables(validUsername);
+
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
 }
