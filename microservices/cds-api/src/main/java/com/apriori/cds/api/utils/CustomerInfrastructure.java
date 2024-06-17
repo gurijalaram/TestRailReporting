@@ -16,6 +16,7 @@ import com.apriori.shared.util.models.response.Site;
 public class CustomerInfrastructure {
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
+    private SiteUtil siteUtil;
     private String siteIdentity;
     private String licensedApProIdentity;
     private String licensedCiaIdentity;
@@ -26,6 +27,7 @@ public class CustomerInfrastructure {
     public CustomerInfrastructure(RequestEntityUtil requestEntityUtil) {
         this.applicationUtil = new ApplicationUtil(requestEntityUtil);
         this.cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        this.siteUtil = new SiteUtil(requestEntityUtil);
     }
 
     // this empty constructor is needed just for now to avoid multiple errors.
@@ -37,7 +39,7 @@ public class CustomerInfrastructure {
         String cirIdentity = applicationUtil.getApplicationIdentity(CIR);
         String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
