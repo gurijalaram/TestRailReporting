@@ -6,11 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoutingNodeOptions {
+public class RoutingNodeOptions implements Serializable{
     private String identity;
     private String digitalFactoryName;
     @JsonProperty("name")
