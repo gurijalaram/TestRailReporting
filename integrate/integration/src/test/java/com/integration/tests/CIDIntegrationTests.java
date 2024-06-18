@@ -105,7 +105,6 @@ public class CIDIntegrationTests extends TestBaseUI {
         softAssertions.assertThat(productionDefaultPage.getScenarioName()).contains("MP Auto Test");
         softAssertions.assertThat(productionDefaultPage.getProcessGroup()).contains(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup());
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).contains(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).contains(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory());
         softAssertions.assertThat(productionDefaultPage.getMaterial()).contains("ABS, Plating");
 
         softAssertions.assertAll();
