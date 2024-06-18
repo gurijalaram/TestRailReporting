@@ -32,6 +32,9 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
     @FindBy(css = ".scenario-preview")
     private WebElement previewData;
 
+    @FindBy(css = ".preview-cost-breakdown-section.collapse show")
+    private WebElement costBreakdown;
+
     @FindBy(css = "[id='qa-scenario-explorer-preview-button'] button")
     private WebElement previewButton;
 
@@ -115,6 +118,16 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
         By result = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
         pageUtils.waitForElementToAppear(result);
         return Double.parseDouble(driver.findElement(result).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
+     * Get manual costing Cost Breakdown message
+     *
+     * @return string
+     */
+    public String getManualCostBreakdown() {
+        By manual = By.cssSelector("[id='qa-scenario-preview-cost-breakdown-section.collapse show']");
+        return pageUtils.waitForElementToAppear(manual).getAttribute("content");
     }
 
     /**

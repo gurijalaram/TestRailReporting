@@ -9,6 +9,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
+import com.apriori.cid.ui.pageobjects.explore.PreviewPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
@@ -31,6 +32,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,6 +40,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
+    private PreviewPage previewPage;
     private SwitchCostModePage switchCostModePage;
 
     private static ScenariosUtil scenariosUtil = new ScenariosUtil();
@@ -319,9 +322,15 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(evaluatePage.getPiecePartCost()).as("Verify PPC copied successfully").isEqualTo("16.75");
         softAssertions.assertThat(evaluatePage.getTotalCapitalInvestment()).as("Verify TCI copied successfully").isEqualTo("98.34");
 
-        explorePage = evaluatePage.clickExplore()
-            .selectFilter("Recent");
+        previewPage = evaluatePage.clickExplore()
+            .selectFilter("Recent")
+            .highlightScenario(component.getComponentName(), component.getScenarioName())
+            .openPreviewPanel();
 
+        softAssertions.assertThat(previewPage.isImageDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(previewPage.getManualCostBreakdown()).isEqualTo("Cost Breakdown is not available for manually costed parts.");
+        softAssertions.assertThat(previewPage.getMaterialResult("Piece Part Cost")).as("Piece Part Cost").isCloseTo(Double.valueOf(16.75), Offset.offset(16.75));
+        softAssertions.assertThat(previewPage.getMaterialResult("Fully Burdened Cost")).as("Fully Burdened Cost").isCloseTo(Double.valueOf(16.75), Offset.offset(16.75));
         softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()))
             .as("Verify Public and Private copies exist").isEqualTo(2);
 
