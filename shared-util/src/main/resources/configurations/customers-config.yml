@@ -32,27 +32,12 @@ apriori-internal:
 
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name
-  qa-test:
-    user_staff_identity: AK8JJH37GM54
-
-  int-core:
-    user_staff_identity: 8GFDIG229629
-
   staging:
-    customer_identity: 7G0JGBE2N4GM
-    user_staff_identity: 6AHL1HHGB15E
     token_subject: 2b68
-
-  local:
-    user_staff_identity: 4N630F61FGNG
-
-  development:
-    customer_identity: 212B5ABD2F6C
 
 ######################################################## WIDGETS #######################################################
 widgets:
   ci-connect:
-    customer_identity: 52IC4D3J98GN
     customer_name: 130cf4de-82aa-460c-9991-014a63b7dc20_Customer
     agent_type: windchill
     windchill:
@@ -64,8 +49,6 @@ widgets:
 
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name
-  staging:
-    customer_identity: 2F265BC1MKAB
 
 ####################################################### SPROCKETS ######################################################
 sprockets:
