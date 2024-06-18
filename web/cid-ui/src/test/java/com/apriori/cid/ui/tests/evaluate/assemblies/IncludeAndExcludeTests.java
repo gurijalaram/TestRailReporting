@@ -1,7 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -18,10 +17,7 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -38,7 +34,6 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class IncludeAndExcludeTests extends TestBaseUI {
 
@@ -208,6 +203,9 @@ public class IncludeAndExcludeTests extends TestBaseUI {
         componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
         ComponentInfoBuilder pin = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("pin")).findFirst().get();
         ComponentInfoBuilder smallRing = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("small ring")).findFirst().get();
+
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         componentsTreePage = loginPage.login(componentAssembly.getUser())

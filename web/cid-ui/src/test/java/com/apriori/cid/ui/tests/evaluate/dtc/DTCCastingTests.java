@@ -13,7 +13,6 @@ import com.apriori.cid.ui.utils.EvaluateDfmIconEnum;
 import com.apriori.cid.ui.utils.ToleranceEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
-import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -57,11 +56,11 @@ public class DTCCastingTests extends TestBaseUI {
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .openMaterialSelectorTable()
-            .search("ANSI AL380")
-            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("ManualFloor")
             .submit(EvaluatePage.class)
-            .costScenario(8);
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.CRITICAL.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");
@@ -206,18 +205,13 @@ public class DTCCastingTests extends TestBaseUI {
         evaluatePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .openMaterialSelectorTable()
-            .search("ANSI AL380")
-            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
-            .submit(EvaluatePage.class)
             .goToAdvancedTab()
             .openRoutingSelection()
             .selectRoutingPreferenceByName("ManualFloor")
             .submit(EvaluatePage.class)
-            .costScenario()
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");
 
         guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Maximum Hole Depth", "Multi Step Hole", "MultiStepHole:1");

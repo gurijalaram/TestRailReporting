@@ -903,14 +903,10 @@ public class ProcessRoutingTests extends TestBaseUI {
         ComponentInfoBuilder subComponentB = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("piston_pin")).collect(Collectors.toList()).get(0);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(componentAssembly.getUser())
+        advancedPage = loginPage.login(componentAssembly.getUser())
             .uploadComponentAndOpen(subComponentA)
             .selectProcessGroup(subComponentA.getProcessGroup())
-            .costScenario();
-
-        advancedPage = evaluatePage.goToAdvancedTab();
-
-        advancedPage.openRoutingSelection()
+            .goToAdvancedTab().openRoutingSelection()
             .selectRoutingPreferenceByName("Structural Foam Mold")
             .submit(EvaluatePage.class)
             .costScenario()
