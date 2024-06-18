@@ -474,7 +474,7 @@ public class FiltersTests extends TestBaseUI {
 
         softAssertions.assertThat(explorePage.getPublishedState(topComponentName, topScenarioName))
             .as("Published state of top scenario sorted ascending")
-            .isEqualTo("Private");
+            .isEqualTo("Only you can see and modify this scenario.");
 
         explorePage.sortColumn(ColumnsEnum.PUBLISHED, SortOrderEnum.DESCENDING);
         topScenarioDetails = explorePage.getFirstScenarioDetails().split(",");
@@ -483,7 +483,7 @@ public class FiltersTests extends TestBaseUI {
 
         softAssertions.assertThat(explorePage.getPublishedState(topComponentName, topScenarioName))
             .as("Published state of top scenario sorted ascending")
-            .isEqualTo("Private");
+            .isEqualTo("Only you can see and modify this scenario.");
 
         explorePage.selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);

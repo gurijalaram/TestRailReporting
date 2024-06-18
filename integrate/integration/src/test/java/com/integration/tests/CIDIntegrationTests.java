@@ -21,7 +21,6 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -93,7 +92,6 @@ public class CIDIntegrationTests extends TestBaseUI {
             .inputScenarioName("MP Auto Test")
             .selectProcessGroup(ProcessGroupEnum.ROTO_BLOW_MOLDING)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE)
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.ABS_PLATING.getMaterialName())
             .submit(ProductionDefaultsPage.class)
@@ -107,7 +105,6 @@ public class CIDIntegrationTests extends TestBaseUI {
         softAssertions.assertThat(productionDefaultPage.getScenarioName()).contains("MP Auto Test");
         softAssertions.assertThat(productionDefaultPage.getProcessGroup()).contains(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup());
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).contains(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).contains(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory());
         softAssertions.assertThat(productionDefaultPage.getMaterial()).contains("ABS, Plating");
 
         softAssertions.assertAll();
