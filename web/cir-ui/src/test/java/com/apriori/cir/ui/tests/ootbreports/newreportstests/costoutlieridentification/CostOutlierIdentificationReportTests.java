@@ -7,7 +7,10 @@ import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.response.InputControl;
+import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
+import com.apriori.cir.api.utils.UpdatedInputControlsRootItemCostOutlierIdentification;
+import com.apriori.cir.api.utils.UpdatedInputControlsRootItemUpgradePartComparison;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.RollupEnum;
@@ -18,6 +21,7 @@ import com.apriori.cir.ui.utils.JasperApiAuthenticationUtil;
 import com.apriori.shared.util.enums.CurrencyEnum;
 import com.apriori.shared.util.enums.ExportSetEnum;
 import com.apriori.shared.util.enums.ReportNamesEnum;
+import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
@@ -278,6 +282,158 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
 
         softAssertions.assertThat(Double.toString(expectedAnnualisedPotentialSavings)).startsWith(Double.toString(actualAnnualisedPotentialSavings).substring(0, 2));
         softAssertions.assertThat(areValuesAlmostEqual(expectedAnnualisedPotentialSavings, actualAnnualisedPotentialSavings)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("14031")
+    @TestRail(id = 14031)
+    @Description("Input controls - Use Latest Export")
+    public void testUseLatestExportInputControl() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String currentRollup = inputControls.getRollup().getOption("QA TEST 1 (Base)").getValue();
+        String currentExportSet = inputControls.getExportSetName()
+            .getOption(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName()).getValue();
+
+        ResponseWrapper<UpdatedInputControlsRootItemCostOutlierIdentification> inputControlsUseLatestExportScenario =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemCostOutlierIdentification.class,
+                false,
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+                currentExportSet,
+                InputControlsEnum.ROLLUP.getInputControlId(),
+                currentRollup,
+                ""
+            );
+
+        ArrayList<InputControlState> inputControlStateArrayList = inputControlsUseLatestExportScenario.getResponseEntity().getInputControlState();
+        softAssertions.assertThat(inputControlStateArrayList.get(9).getOptions().get(0).getSelected()).isEqualTo(true);
+        softAssertions.assertThat(inputControlStateArrayList.get(9).getOptions().get(0).getLabel()).isEqualTo("Scenario");
+        softAssertions.assertThat(inputControlStateArrayList.get(10).getTotalCount()).isEqualTo("12");
+
+        // repeat as above for all
+        ResponseWrapper<UpdatedInputControlsRootItemCostOutlierIdentification> inputControlsUseLatestExportAll =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemCostOutlierIdentification.class,
+                false,
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+                exportSetName,
+                InputControlsEnum.ROLLUP.getInputControlId(),
+                currentRollup,
+                InputControlsEnum.USE_LATEST_EXPORT.getInputControlId(),
+                "All",
+                ""
+            );
+
+        ArrayList<InputControlState> inputControlStateArrayList2 = inputControlsUseLatestExportAll.getResponseEntity().getInputControlState();
+        softAssertions.assertThat(inputControlStateArrayList2.get(9).getOptions().get(1).getSelected()).isEqualTo(true);
+        softAssertions.assertThat(inputControlStateArrayList2.get(9).getOptions().get(1).getLabel()).isEqualTo("All");
+        softAssertions.assertThat(inputControlStateArrayList2.get(10).getTotalCount()).isEqualTo("0");
+        softAssertions.assertThat(inputControlStateArrayList2.get(11).getTotalCount()).isEqualTo("0");
+        softAssertions.assertThat(inputControlStateArrayList2.get(11).getError()).isEqualTo("This field is mandatory so you must enter data.");
+
+        // repeat as above for no
+        ResponseWrapper<UpdatedInputControlsRootItemCostOutlierIdentification> inputControlsUseLatestExportNo =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemCostOutlierIdentification.class,
+                false,
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+                exportSetName,
+                InputControlsEnum.ROLLUP.getInputControlId(),
+                currentRollup,
+                InputControlsEnum.USE_LATEST_EXPORT.getInputControlId(),
+                "No",
+                ""
+            );
+
+        ArrayList<InputControlState> inputControlStateArrayList3 = inputControlsUseLatestExportNo.getResponseEntity().getInputControlState();
+        softAssertions.assertThat(inputControlStateArrayList3.get(9).getOptions().get(2).getSelected()).isEqualTo(true);
+        softAssertions.assertThat(inputControlStateArrayList3.get(9).getOptions().get(2).getLabel()).isEqualTo("No");
+        softAssertions.assertThat(inputControlStateArrayList3.get(10).getTotalCount()).isEqualTo("12");
+        softAssertions.assertThat(inputControlStateArrayList3.get(11).getTotalCount()).isEqualTo("16");
+        softAssertions.assertThat(inputControlStateArrayList3.get(11).getOptions().get(0).getLabel()).isEqualTo(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName().concat(" (value tracking)"));
+        softAssertions.assertThat(inputControlStateArrayList3.get(11).getOptions().get(0).getSelected()).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("13958")
+    @TestRail(id = 13958)
+    @Description("Input controls - Date ranges (Earliest and Latest export date)")
+    public void testDateRangesInputControl() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        ResponseWrapper<UpdatedInputControlsRootItemCostOutlierIdentification> inputControlsSetEarliestExportDate =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemCostOutlierIdentification.class,
+                false,
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                InputControlsEnum.EARLIEST_EXPORT_DATE.getInputControlId(),
+                currentDateTime,
+                ""
+            );
+
+        softAssertions.assertThat(inputControlsSetEarliestExportDate.getResponseEntity().getInputControlState().get(10).getTotalCount())
+            .isEqualTo("0");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("13922")
+    @TestRail(id = 13922)
+    @Description("Input controls - Rollup")
+    public void testRollupInputControl() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jSessionId);
+        InputControl inputControls = jasperReportUtil.getInputControls(reportsNameForInputControls);
+        String currentExportSetValue = inputControls.getExportSetName().getOption(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName()).getValue();
+
+        ResponseWrapper<UpdatedInputControlsRootItemCostOutlierIdentification> inputControlsRollup =
+            jasperReportUtil.getInputControlsModified(
+                UpdatedInputControlsRootItemCostOutlierIdentification.class,
+                false,
+                ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
+                InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+                currentExportSetValue,
+                ""
+            );
+
+        ArrayList<InputControlState> inputControlStateArrayList = inputControlsRollup.getResponseEntity().getInputControlState();
+        String costOutlierExportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
+        softAssertions.assertThat(Integer.parseInt(inputControlStateArrayList.get(10).getTotalCount())).isGreaterThanOrEqualTo(12);
+        softAssertions.assertThat(inputControlStateArrayList.get(10).getOption(costOutlierExportSetName).getLabel()).isEqualTo(
+            costOutlierExportSetName
+        );
+        softAssertions.assertThat(inputControlStateArrayList.get(10).getOption(costOutlierExportSetName).getSelected()).isEqualTo(true);
+        softAssertions.assertThat(inputControlStateArrayList.get(10).getOption(costOutlierExportSetName).getLabel()).isEqualTo(
+            costOutlierExportSetName
+        );
+        softAssertions.assertThat(inputControlStateArrayList.get(10).getOption(costOutlierExportSetName).getSelected()).isEqualTo(true);
+
+        softAssertions.assertThat(inputControlStateArrayList.get(11).getTotalCount()).isEqualTo("1");
+        softAssertions.assertThat(inputControlStateArrayList.get(11).getOptions().get(0).getLabel()).isEqualTo(
+            RollupEnum.QA_TEST_ONE.getRollupName().concat(" (Base)")
+        );
+        softAssertions.assertThat(inputControlStateArrayList.get(11).getOptions().get(0).getSelected()).isEqualTo(true);
+
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(
+            InputControlsEnum.EXPORT_SET_NAME.getInputControlId(),
+            ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName()
+        );
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart()
+            .getElementsContainingText("Rollup:").get(6).siblingElements().get(2).text()
+        ).isEqualTo(RollupEnum.QA_TEST_ONE.getRollupName());
 
         softAssertions.assertAll();
     }
