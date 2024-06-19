@@ -35,4 +35,6 @@ public class SiteVariables {
     private String updatedBy;
     private String updatedByName;
     private String value;
+    private String variableType;
+    private Integer version;
 }

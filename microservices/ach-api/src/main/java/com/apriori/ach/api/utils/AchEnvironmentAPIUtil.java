@@ -144,13 +144,14 @@ public class AchEnvironmentAPIUtil extends TestUtil {
         return mappedApplicationDTOs;
     }
 
-    public List<ApplicationDTO> mapMultiTenantDeploymentDataToDTO(Deployment customerDeployment, final String regionNameToFilter) {
+    public List<ApplicationDTO> mapMultiTenantDeploymentDataToDTO(Deployment customerDeployment) {
         final List<ApplicationDTO> mappedApplicationDTOs = new ArrayList<>();
-        final String installationNameToFilter = customerDeployment.getName() + " " + regionNameToFilter;
+        final String regionNameToFilter = PropertiesContext.get("default.aws_region");
+        final String installationDescriptionToFilter = "Multi-tenant";
 
         customerDeployment.getInstallations()
             .stream()
-            .filter(installation -> installation.getName().equals(installationNameToFilter) && installation.getRegion().equals(regionNameToFilter))
+            .filter(installation -> installation.getDescription().contains(installationDescriptionToFilter) && installation.getRegion().equals(regionNameToFilter))
             .findAny()
             .map(installation -> {
                 installation.getApplications().forEach(
