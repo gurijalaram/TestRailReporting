@@ -127,7 +127,7 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
      */
     public String getManualCostBreakdown() {
         By manual = By.cssSelector("div[id='qa-scenario-preview-cost-breakdown-section'] div.show");
-        return pageUtils.waitForElementToAppear(manual).getAttribute("content");
+        return pageUtils.waitForElementToAppear(manual).getText();
     }
 
     /**
