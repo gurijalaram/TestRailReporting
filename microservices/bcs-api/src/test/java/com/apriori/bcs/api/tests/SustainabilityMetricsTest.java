@@ -38,7 +38,7 @@ public class SustainabilityMetricsTest {
     public void createBatchWithSupportedSustainabilityMetrics() {
         final String partName = "26131";
         final File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, partName + ".par");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         QueryParams partQueryParams = new QueryParams()
             .use(PartFieldsEnum.ANNUAL_VOLUME.getPartFieldName(), "1000")

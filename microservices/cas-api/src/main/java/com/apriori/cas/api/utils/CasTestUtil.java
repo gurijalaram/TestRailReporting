@@ -283,9 +283,9 @@ public class CasTestUtil extends TestUtil {
     public ResponseWrapper<Customer> createCustomer() {
         GenerateStringUtil generator = new GenerateStringUtil();
         return createCustomer(
-            generator.generateCustomerName(),
+            generator.generateAlphabeticString("Customer", 6),
             generator.getRandomStringSpecLength(16).toLowerCase(),
-            generator.getRandomString(),
+            generator.getRandomStringSpecLength(12),
             "apriori.com",
             "apriori.co.uk",
             "test.com",
@@ -445,7 +445,7 @@ public class CasTestUtil extends TestUtil {
                 Customer.builder()
                     .name(name)
                     .cloudReference(null)
-                    .description(generator.getRandomString())
+                    .description(generator.getRandomStringSpecLength(12))
                     .salesforceId(generator.generateSalesForceId())
                     .customerType("ON_PREMISE_ONLY")
                     .active(true)

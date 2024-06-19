@@ -43,7 +43,7 @@ public class CdsSitesApplicationsTests {
 
     @BeforeEach
     public void setDetails() {
-        customerName = generateStringUtil.generateCustomerName();
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);
@@ -52,7 +52,7 @@ public class CdsSitesApplicationsTests {
         customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        siteName = generateStringUtil.generateSiteName();
+        siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         siteID = generateStringUtil.generateSiteID();
 
         site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);

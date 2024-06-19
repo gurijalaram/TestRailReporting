@@ -349,7 +349,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Attempt to Shallow Edit over existing Private locked scenarios and renaming")
     public void testShallowEditPrivateLockedRename() {
 
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String refreshMessage = "This assembly has uncosted changes. If you continue, these changes will be lost.";
 
@@ -469,7 +469,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @TestRail(id = {10896, 10898, 5619, 5428})
     @Description("Edit public sub-component with Private counterpart (Override)")
     public void testEditPublicAndRenamePrivateSubcomponent() {
-        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final String BIG_RING = "big ring";
         final String SMALL_RING = "small ring";
@@ -553,7 +553,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Rename)")
     public void testEditPublicSubcomponentsMixedWithPrivateThenRename() {
 
-        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyRequestUtil.getAssembly("flange c");
         ComponentInfoBuilder bolt = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("bolt")).findFirst().get();
@@ -597,7 +597,7 @@ public class EditAssembliesTest extends TestBaseUI {
 
         ComponentInfoBuilder preExistingComponentAssembly = new AssemblyRequestUtil().getAssembly("Titan Battery Ass");
         componentAssembly = SerializationUtils.clone(preExistingComponentAssembly);
-        String asmScenarioName = new GenerateStringUtil().generateScenarioName();
+        String asmScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         componentAssembly.setScenarioName(asmScenarioName);
         componentAssembly.getSubComponents().forEach(component -> component.setScenarioName(asmScenarioName));
 
@@ -745,7 +745,7 @@ public class EditAssembliesTest extends TestBaseUI {
     @TestRail(id = {12037})
     @Description("Validate I can switch between public sub components")
     public void testSwitchBetweenPublicSubcomponents() {
-        String editedComponentScenarioName = new GenerateStringUtil().generateScenarioName();
+        String editedComponentScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final String PIN = "Pin";
 
@@ -991,7 +991,7 @@ public class EditAssembliesTest extends TestBaseUI {
         final String pin = "Pin";
         final String small_ring = "small ring";
 
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyRequestUtil.getAssembly("Hinge assembly");
         ComponentInfoBuilder bigRing = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(big_ring)).findFirst().get();

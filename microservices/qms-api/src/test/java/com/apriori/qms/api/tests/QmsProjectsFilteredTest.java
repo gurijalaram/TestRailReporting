@@ -89,7 +89,7 @@ public class QmsProjectsFilteredTest extends TestUtil {
             .customerIdentity(customerIdentity)
             .build());
 
-        projectName = "a-" + new GenerateStringUtil().getRandomString() + "-00";
+        projectName = "a-" + new GenerateStringUtil().getRandomStringSpecLength(12) + "-00";
         status = "IN_NEGOTIATION";
         owner = new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail());
         dueAtLT = DateUtil.getDateDaysAfter(12, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);

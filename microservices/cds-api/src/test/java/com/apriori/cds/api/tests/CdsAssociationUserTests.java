@@ -46,7 +46,7 @@ public class CdsAssociationUserTests {
     public void setDetails() {
         url = Constants.getServiceUrl();
 
-        customerName = generateStringUtil.generateCustomerName();
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);

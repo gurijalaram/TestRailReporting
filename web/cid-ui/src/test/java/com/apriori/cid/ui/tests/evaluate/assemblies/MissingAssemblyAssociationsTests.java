@@ -48,7 +48,7 @@ public class MissingAssemblyAssociationsTests extends TestBaseUI {
     @TestRail(id = {21669, 21670})
     @Description("Validate, with Prefer Maturity strategy, private sub-components with same scenario name are associated to assembly")
     public void testMaturityPresetPrivateWithSameNameAndMissing() {
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String asmStrategy = "PREFER_HIGH_MATURITY";
 

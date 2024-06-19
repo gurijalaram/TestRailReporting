@@ -36,7 +36,7 @@ public class QmsBidPackageItemTest extends TestUtil {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(

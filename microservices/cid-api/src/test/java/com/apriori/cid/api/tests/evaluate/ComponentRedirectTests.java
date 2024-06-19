@@ -37,7 +37,7 @@ public class ComponentRedirectTests {
     @TestRail(id = 14197)
     @Description("Verify receipt of 301 response when getting component details of a file which already exists")
     public void receive301AfterUploadOfExistingComponent() {
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
         component = new ComponentRequestUtil().getComponent();
         component2 = SerializationUtils.clone(component);
         component2.setScenarioName(scenarioName2);
@@ -66,7 +66,7 @@ public class ComponentRedirectTests {
     @TestRail(id = 14440)
     @Description("Verify receipt of 301 response when getting component and scenario details of a file which already exists using new scenario")
     public void receive301AfterUploadOfExistingComponentWithNewScenario() {
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
         component = new ComponentRequestUtil().getComponent();
         component2 = SerializationUtils.clone(component);
         component2.setScenarioName(scenarioName2);

@@ -36,7 +36,7 @@ public class BidPackageProjectUserTest extends QdsApiTestUtils {
     public void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
-        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
         bidPackageProjectResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), currentUser);
     }

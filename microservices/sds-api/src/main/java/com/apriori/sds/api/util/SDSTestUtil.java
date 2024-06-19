@@ -162,7 +162,7 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return responsewrapper
      */
     protected static ScenarioItem postPart(String componentName, String extension, ProcessGroupEnum processGroup) {
-        final String uniqueScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String uniqueScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         final File fileToUpload = FileResourceUtil.getS3FileAndSaveWithUniqueName(componentName,
             processGroup
         );

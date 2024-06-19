@@ -35,11 +35,11 @@ public class CdsGetCustomerTests {
 
     @BeforeEach
     public void setDetails() {
-        customerName = generateStringUtil.generateCustomerName();
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);
-        updatedEmailPattern = "\\S+@".concat(generateStringUtil.generateCustomerName());
+        updatedEmailPattern = "\\S+@".concat(generateStringUtil.generateAlphabeticString("Customer", 6));
         String customerType = Constants.CLOUD_CUSTOMER;
 
         customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);

@@ -68,7 +68,7 @@ public class GroupCostingTests {
     public void testGroupCostElevenParts() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         currentUser = UserUtil.getUser();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
@@ -109,7 +109,7 @@ public class GroupCostingTests {
         final String componentExtension = ".CATPart";
 
         currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -143,7 +143,7 @@ public class GroupCostingTests {
 
         final ProcessGroupEnum asmProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
         final ProcessGroupEnum prtProcessGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         currentUser = UserUtil.getUser();
 
@@ -178,7 +178,7 @@ public class GroupCostingTests {
 
         final ProcessGroupEnum asmProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
         final ProcessGroupEnum prtProcessGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         currentUser = UserUtil.getUser();
 
@@ -213,7 +213,7 @@ public class GroupCostingTests {
 
         final ProcessGroupEnum asmProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
         final ProcessGroupEnum prtProcessGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         currentUser = UserUtil.getUser();
 

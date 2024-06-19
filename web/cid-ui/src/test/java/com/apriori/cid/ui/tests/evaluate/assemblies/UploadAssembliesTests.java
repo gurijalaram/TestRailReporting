@@ -458,10 +458,10 @@ public class UploadAssembliesTests extends TestBaseUI {
     @TestRail(id = {10748, 10761})
     @Description("Changing unit user preferences when viewing assembly")
     public void testCopyScenarioRetainsAsmAssociation() {
-        final String newScenarioNamePrivateEvaluate = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioNamePrivateExplore = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioNamePublicEvaluate = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioNamePublicExplore = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioNamePrivateEvaluate = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioNamePrivateExplore = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioNamePublicEvaluate = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioNamePublicExplore = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
         ComponentInfoBuilder bigRing = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase("big_ring")).findFirst().get();

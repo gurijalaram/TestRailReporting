@@ -101,8 +101,8 @@ public class PreviewPanelTests extends TestBaseUI {
     @Description("Validate user can select multiple items with the checkboxes or all items on a page by checkbox on a top")
     @TestRail(id = {6202, 6203, 6204})
     public void previewPanelMultiSelect() {
-        String filterName = new GenerateStringUtil().generateFilterName();
-        String notes = new GenerateStringUtil().generateNotes();
+        String filterName = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
+        String notes = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
 
         component = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponent();

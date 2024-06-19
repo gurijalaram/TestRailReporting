@@ -47,7 +47,7 @@ public class WorkflowScheduleTests extends TestBaseUI {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         workFlowData.getQueryDefinitionsData().get(0).setFieldName(PlmTypeAttributes.PLM_PART_NUMBER.getCicGuiField());
         workFlowData.getQueryDefinitionsData().get(0).setFieldOperator(RuleOperatorEnum.EQUAL.getRuleOperator());
         workFlowData.getQueryDefinitionsData().get(0).setFieldValue(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber());

@@ -69,11 +69,11 @@ public class CdsInstallationsTests {
     @TestRail(id = {5316})
     @Description("Add a installation to a customer")
     public void addCustomerInstallation() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
-        String siteName = generateStringUtil.generateSiteName();
+        String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
         String realmKey = generateStringUtil.generateRealmKey();
         String customerType = Constants.CLOUD_CUSTOMER;
@@ -116,11 +116,11 @@ public class CdsInstallationsTests {
     @TestRail(id = {5318})
     @Description("get Installations by Identity")
     public void getInstallationByIdentity() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
-        String siteName = generateStringUtil.generateSiteName();
+        String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
         String realmKey = generateStringUtil.generateRealmKey();
         String customerType = Constants.CLOUD_CUSTOMER;
@@ -169,11 +169,11 @@ public class CdsInstallationsTests {
     @TestRail(id = {5317})
     @Description("Update an installation")
     public void patchInstallationByIdentity() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesForceId = generateStringUtil.generateSalesForceId();
         String emailPattern = "\\S+@".concat(customerName);
-        String siteName = generateStringUtil.generateSiteName();
+        String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
         String realmKey = generateStringUtil.generateRealmKey();
         String customerType = Constants.CLOUD_CUSTOMER;
