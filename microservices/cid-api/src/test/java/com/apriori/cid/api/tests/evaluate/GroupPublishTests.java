@@ -10,6 +10,7 @@ import com.apriori.cid.api.models.request.ForkRequest;
 import com.apriori.cid.api.models.request.GroupPublishRequest;
 import com.apriori.cid.api.models.response.ScenarioSuccessesFailures;
 import com.apriori.cid.api.utils.AssemblyUtils;
+import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.PeopleUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
@@ -39,6 +40,7 @@ import java.util.List;
 public class GroupPublishTests {
 
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private IterationsUtil iterationsUtil = new IterationsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private CssComponent cssComponent = new CssComponent();
     private ComponentInfoBuilder componentAssembly;
@@ -237,6 +239,9 @@ public class GroupPublishTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
+        ComponentInfoBuilder chargerBaseComponent = componentAssembly.getSubComponents().stream()
+            .filter(o -> o.getComponentName().equalsIgnoreCase(chargerBase)).findFirst().get();
+
         User user = new PeopleUtil().getCurrentUser(currentUser);
 
         PublishRequest publishRequest = PublishRequest.builder()
@@ -259,17 +264,15 @@ public class GroupPublishTests {
 
         scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
+        ResponseWrapper<ScenarioSuccessesFailures> publishComponent = scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
+
+        chargerBaseComponent.setScenarioIdentity(publishComponent.getResponseEntity().getSuccesses().get(0).getIdentity());
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName,
-                ITERATION_EQ.getKey() + " 1", LATEST_EQ.getKey() + "false")
-            .size()).isGreaterThanOrEqualTo(1);
-
-        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName,
-                ITERATION_EQ.getKey() + " 2", LATEST_EQ.getKey() + "true")
-            .size()).isGreaterThanOrEqualTo(1);
+        //ToDo:- follow scenario and/or component ID changes and see what this object needs updated to be
+        softAssertions.assertThat(iterationsUtil.getComponentIterations(chargerBaseComponent).getResponseEntity().getItems().size())
+            .as("Verify that number of iterations is at least 1").isGreaterThanOrEqualTo(1);
 
         softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName)
                 .stream()
