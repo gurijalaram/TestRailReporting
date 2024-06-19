@@ -126,7 +126,7 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
      * @return string
      */
     public String getManualCostBreakdown() {
-        By manual = By.cssSelector("[id='qa-scenario-preview-cost-breakdown-section.collapse show']");
+        By manual = By.cssSelector("div[id='qa-scenario-preview-cost-breakdown-section'] div.show");
         return pageUtils.waitForElementToAppear(manual).getAttribute("content");
     }
 

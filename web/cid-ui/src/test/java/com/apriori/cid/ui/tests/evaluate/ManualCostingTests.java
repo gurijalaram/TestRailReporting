@@ -331,10 +331,11 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(previewPage.getManualCostBreakdown()).isEqualTo("Cost Breakdown is not available for manually costed parts.");
         softAssertions.assertThat(previewPage.getMaterialResult("Piece Part Cost")).as("Piece Part Cost").isCloseTo(Double.valueOf(16.75), Offset.offset(16.75));
         softAssertions.assertThat(previewPage.getMaterialResult("Fully Burdened Cost")).as("Fully Burdened Cost").isCloseTo(Double.valueOf(16.75), Offset.offset(16.75));
-        softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()))
+        softAssertions.assertThat(previewPage.getListOfScenarios(component.getComponentName(), component.getScenarioName()))
             .as("Verify Public and Private copies exist").isEqualTo(2);
 
-        explorePage.selectFilter("Private");
+        explorePage = previewPage.closePreviewPanel()
+            .selectFilter("Private");
 
         ComponentBasicPage componentBasicPage = explorePage.multiSelectScenarios(
                     component.getComponentName() + "," + component.getScenarioName(),
