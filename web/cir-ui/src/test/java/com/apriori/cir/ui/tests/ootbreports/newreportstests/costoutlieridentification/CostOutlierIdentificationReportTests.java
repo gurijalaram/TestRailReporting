@@ -10,10 +10,10 @@ import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
 import com.apriori.cir.api.utils.UpdatedInputControlsRootItemCostOutlierIdentification;
-import com.apriori.cir.api.utils.UpdatedInputControlsRootItemUpgradePartComparison;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.RollupEnum;
+import com.apriori.cir.ui.tests.ootbreports.newreportstests.general.assemblycost.GenericAssemblyCostTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.Constants;
@@ -24,6 +24,7 @@ import com.apriori.shared.util.enums.ReportNamesEnum;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.testrail.TestRail;
 
+import com.google.common.base.Stopwatch;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
@@ -37,6 +38,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class CostOutlierIdentificationReportTests extends JasperApiAuthenticationUtil {
     private String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
@@ -436,6 +438,49 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
         ).isEqualTo(RollupEnum.QA_TEST_ONE.getRollupName());
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("13926")
+    @TestRail(id = 13926)
+    @Description("Input controls - Currency Code")
+    public void testCurrencyCode() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(jasperApiUtils.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+
+        JasperReportSummaryIncRawDataAsString jasperReportSummaryGBP = jasperReportUtil
+            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+        JasperReportSummaryIncRawDataAsString jasperReportSummaryUSD = jasperReportUtil.generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
+
+        String currencyValueGBP = getCurrencyFromHTML(jasperReportSummaryGBP);
+        String currencyValueUSD = getCurrencyFromHTML(jasperReportSummaryUSD);
+
+        String gbpChartDataRaw = jasperReportSummaryGBP.getChartDataRawAsString();
+        softAssertions.assertThat(gbpChartDataRaw.contains("10467.3")).isEqualTo(true);
+        softAssertions.assertThat(gbpChartDataRaw.contains("0.36")).isEqualTo(true);
+        softAssertions.assertThat(gbpChartDataRaw.contains("205857.23")).isEqualTo(false);
+        softAssertions.assertThat(gbpChartDataRaw.contains("0.48")).isEqualTo(false);
+
+        String usdChartDataRaw = jasperReportSummaryUSD.getChartDataRawAsString();
+        softAssertions.assertThat(usdChartDataRaw.contains("205857.23")).isEqualTo(true);
+        softAssertions.assertThat(usdChartDataRaw.contains("0.48")).isEqualTo(true);
+        softAssertions.assertThat(usdChartDataRaw.contains("0.36")).isEqualTo(false);
+        softAssertions.assertThat(usdChartDataRaw.contains("0.36")).isEqualTo(false);
+
+        softAssertions.assertThat(currencyValueGBP).isNotEqualTo(currencyValueUSD);
+        softAssertions.assertAll();
+    }
+
+    private String getCurrencyFromHTML(JasperReportSummaryIncRawDataAsString jasperReportSummary) {
+        return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(9).text();
     }
 
     private String getCostMinOrMaxValue(JasperReportSummary jasperReportSummary, String valueToGet) {
