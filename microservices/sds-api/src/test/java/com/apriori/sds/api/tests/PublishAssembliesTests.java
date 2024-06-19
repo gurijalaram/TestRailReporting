@@ -1,6 +1,7 @@
 package com.apriori.sds.api.tests;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
+import com.apriori.sds.api.models.response.Scenario;
 import com.apriori.sds.api.util.SDSTestUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -56,7 +57,7 @@ public class PublishAssembliesTests extends SDSTestUtil {
             .costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
 
-        assemblyUtils.publishAssembly(componentAssembly);
+        publishAssembly(componentAssembly, Scenario.class, HttpStatus.SC_OK);
     }
 
     //@Test
