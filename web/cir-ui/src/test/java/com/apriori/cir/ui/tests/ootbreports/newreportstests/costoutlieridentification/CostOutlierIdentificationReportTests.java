@@ -3,12 +3,14 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.costoutlieridentifi
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
+import com.apriori.cir.api.JasperReportSummaryIncRawData;
 import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
+import com.apriori.cir.api.utils.ReportComponentsResponse;
 import com.apriori.cir.api.utils.UpdatedInputControlsRootItemCostOutlierIdentification;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
@@ -38,6 +40,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CostOutlierIdentificationReportTests extends JasperApiAuthenticationUtil {
@@ -476,6 +481,34 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
         softAssertions.assertThat(usdChartDataRaw.contains("0.36")).isEqualTo(false);
 
         softAssertions.assertThat(currencyValueGBP).isNotEqualTo(currencyValueUSD);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("14030")
+    @TestRail(id = 14030)
+    @Description("Input controls - Sort Order")
+    public void testSortOrderInputControl() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(jasperApiUtils.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.SORT_ORDER.getInputControlId(), "Percent Difference");
+
+        JasperReportSummaryIncRawDataAsString jasperReportSummary = jasperReportUtil
+            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
+
+        softAssertions.assertThat(jasperReportSummary.getChartDataRawAsString().contains("Percent Difference")).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummary.getChartDataRawAsString()
+                .replace("\"", "")
+                .contains("xCategories:[-12,-18_1,-_4[1],SM_CLEVIS_2207240161,-_4[3],TAPE_HUB,DASHBOARD_PART2,DASHBOARD_PART3,".concat(
+                    "AIR_FILTER_COVER,DASHBOARD_PART1]")))
+            .isEqualTo(true);
+
         softAssertions.assertAll();
     }
 
