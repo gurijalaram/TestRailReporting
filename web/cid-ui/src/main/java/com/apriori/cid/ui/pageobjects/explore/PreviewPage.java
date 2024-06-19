@@ -32,9 +32,6 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
     @FindBy(css = ".scenario-preview")
     private WebElement previewData;
 
-    @FindBy(css = ".preview-cost-breakdown-section.collapse show")
-    private WebElement costBreakdown;
-
     @FindBy(css = "[id='qa-scenario-explorer-preview-button'] button")
     private WebElement previewButton;
 
