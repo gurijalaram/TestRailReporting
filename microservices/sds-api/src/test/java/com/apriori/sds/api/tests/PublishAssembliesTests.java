@@ -60,7 +60,7 @@ public class PublishAssembliesTests extends SDSTestUtil {
         publishAssembly(componentAssembly, Scenario.class, HttpStatus.SC_OK);
     }
 
-    //@Test
+    @Test
     @TestRail(id = 12309)
     @Description("Verify that an error is returned if Shallow Publish is requested when associated sub-component scenarios still exist in private workspace, through SDS api")
     public void testShallowPublishAssemblyWithPrivateSubcomponents() {
