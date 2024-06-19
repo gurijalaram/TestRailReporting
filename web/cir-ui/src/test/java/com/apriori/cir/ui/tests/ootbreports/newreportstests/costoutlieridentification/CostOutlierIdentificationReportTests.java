@@ -512,6 +512,102 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
         softAssertions.assertAll();
     }
 
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("28472")
+    @TestRail(id = 28472)
+    @Description("Input controls - Minimum and Maximum aPriori Cost")
+    public void testMinMaxAprioriCostInputControls() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(jasperApiUtils.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.COMPONENT_COST_MIN.getInputControlId(), "0.3");
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.COMPONENT_COST_MAX.getInputControlId(), "11.4");
+
+        JasperReportSummaryIncRawDataAsString jasperReportSummary = jasperReportUtil.generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
+        String chartDataRawNoQuotes = jasperReportSummary.getChartDataRawAsString()
+            .replace("\"", "");
+
+        softAssertions.assertThat(
+            chartDataRawNoQuotes.contains("xCategories:[SM_CLEVIS_2207240161,AIR_FILTER_COVER,TAPE_HUB,DASHBOARD_PART1]")
+        ).isEqualTo(true);
+
+        softAssertions.assertThat(
+            chartDataRawNoQuotes.contains("componentCostMin:0.3,componentCostMax:11.4")
+        ).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("28474")
+    @TestRail(id = 28474)
+    @Description("Input controls - Annualised potential savings threshold")
+    public void testAnnualisedPotentialSavingsThresholdInputControl() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(jasperApiUtils.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.ANNUALIZED_POTENTIAL_THRESHOLD.getInputControlId(), "205000");
+
+        JasperReportSummaryIncRawDataAsString jasperReportSummary = jasperReportUtil
+            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
+        String chartDataRawNoQuotes = jasperReportSummary.getChartDataRawAsString()
+            .replace("\"", "");
+
+        softAssertions.assertThat(
+            chartDataRawNoQuotes.contains("xCategories:[SM_CLEVIS_2207240161]")
+        ).isEqualTo(true);
+
+        softAssertions.assertThat(
+            chartDataRawNoQuotes.contains("annualizedPotentialThreshold:205000")
+        ).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("28475")
+    @TestRail(id = 28475)
+    @Description("Input controls - Percent difference threshold filter")
+    public void testPercentDifferenceThresholdInputControl() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(jasperApiUtils.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.PERCENT_DIFFERENCE_THRESHOLD.getInputControlId(), "99");
+
+        JasperReportSummaryIncRawDataAsString jasperReportSummary = jasperReportUtil
+            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
+        String chartDataRawNoQuotes = jasperReportSummary.getChartDataRawAsString()
+            .replace("\"", "");
+
+        softAssertions.assertThat(
+            chartDataRawNoQuotes.contains("xCategories:[-12]")
+        ).isEqualTo(true);
+
+        softAssertions.assertThat(
+            chartDataRawNoQuotes.contains("percentDifferenceThreshold:99")
+        ).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
     private String getCurrencyFromHTML(JasperReportSummaryIncRawDataAsString jasperReportSummary) {
         return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(9).text();
     }
