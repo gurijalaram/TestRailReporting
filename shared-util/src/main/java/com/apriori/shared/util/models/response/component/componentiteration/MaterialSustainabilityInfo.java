@@ -26,8 +26,12 @@ public class MaterialSustainabilityInfo {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime deletedAt;
     private String createdBy;
     private String updatedBy;
+    private String deletedBy;
     private Double hexBarCarbonEmissionsFactor;
     private Double rectangularBarCarbonEmissionsFactor;
     private Double roundBarCarbonEmissionsFactor;
