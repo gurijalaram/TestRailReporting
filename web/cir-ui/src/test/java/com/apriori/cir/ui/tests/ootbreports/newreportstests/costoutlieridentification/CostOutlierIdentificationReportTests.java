@@ -3,19 +3,16 @@ package com.apriori.cir.ui.tests.ootbreports.newreportstests.costoutlieridentifi
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.JASPER_API;
 
 import com.apriori.cir.api.JasperReportSummary;
-import com.apriori.cir.api.JasperReportSummaryIncRawData;
 import com.apriori.cir.api.JasperReportSummaryIncRawDataAsString;
 import com.apriori.cir.api.enums.JasperApiInputControlsPathEnum;
 import com.apriori.cir.api.models.enums.InputControlsEnum;
 import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
-import com.apriori.cir.api.utils.ReportComponentsResponse;
 import com.apriori.cir.api.utils.UpdatedInputControlsRootItemCostOutlierIdentification;
 import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.RollupEnum;
-import com.apriori.cir.ui.tests.ootbreports.newreportstests.general.assemblycost.GenericAssemblyCostTests;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiEnum;
 import com.apriori.cir.ui.tests.ootbreports.newreportstests.utils.JasperApiUtils;
 import com.apriori.cir.ui.utils.Constants;
@@ -26,7 +23,6 @@ import com.apriori.shared.util.enums.ReportNamesEnum;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.testrail.TestRail;
 
-import com.google.common.base.Stopwatch;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
@@ -40,10 +36,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class CostOutlierIdentificationReportTests extends JasperApiAuthenticationUtil {
     private String exportSetName = ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName();
