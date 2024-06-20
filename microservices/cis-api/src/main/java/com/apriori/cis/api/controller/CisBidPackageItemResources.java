@@ -173,7 +173,7 @@ public class CisBidPackageItemResources {
      */
     public static ScenarioItem createAndQueryComponent(ProcessGroupEnum processGroupEnum, String componentName, UserCredentials currentUser) {
         final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         ComponentInfoBuilder componentInfoBuilder = ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)

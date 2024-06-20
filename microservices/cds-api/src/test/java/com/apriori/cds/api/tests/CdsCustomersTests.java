@@ -50,9 +50,9 @@ public class CdsCustomersTests {
     @TestRail(id = {3298})
     @Description("Add API customers")
     public void addCustomerTest() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
+        String salesForceId = generateStringUtil.generateNumericString("SFID", 10);
         String emailPattern = "\\S+@".concat(customerName);
         String customerType = Constants.CLOUD_CUSTOMER;
 

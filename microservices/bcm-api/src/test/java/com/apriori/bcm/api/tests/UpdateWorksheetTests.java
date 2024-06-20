@@ -80,7 +80,7 @@ public class UpdateWorksheetTests extends BcmUtil {
     @Description("Verify updating worksheet with a description")
     public void updateWorksheetWithDescription() {
         String name = GenerateStringUtil.saltString("name");
-        String description = new GenerateStringUtil().getRandomString();
+        String description = new GenerateStringUtil().getRandomStringSpecLength(12);
         worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
 
 

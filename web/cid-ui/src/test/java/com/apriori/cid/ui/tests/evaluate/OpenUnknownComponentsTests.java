@@ -43,7 +43,7 @@ public class OpenUnknownComponentsTests extends TestBaseUI {
         final String componentName = "Case_17";
         final String extension = ".stp";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -76,7 +76,7 @@ public class OpenUnknownComponentsTests extends TestBaseUI {
         final String componentName = "top-level";
         final String extension = ".asm.1";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
@@ -109,7 +109,7 @@ public class OpenUnknownComponentsTests extends TestBaseUI {
         final String componentName = "Case_17";
         final String extension = ".stp";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -137,7 +137,7 @@ public class OpenUnknownComponentsTests extends TestBaseUI {
         final String componentName = "top-level";
         final String extension = ".asm.1";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
@@ -163,7 +163,7 @@ public class OpenUnknownComponentsTests extends TestBaseUI {
         final String targetComponentName = "Case_17";
         final String extension = ".stp";
 
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "nut.CATPart"), scenarioName));

@@ -33,7 +33,7 @@ public class TwoDImageByScenarioIterationKeyTests extends TestUtil {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
         AcsResources acsResources = new AcsResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);

@@ -48,7 +48,7 @@ public class ProjectsDetailsTest extends TestBaseUI {
     @BeforeEach
     public void setUp() {
         softAssertions = new SoftAssertions();
-        userComment = new GenerateStringUtil().getRandomString();
+        userComment = new GenerateStringUtil().getRandomStringSpecLength(12);
         dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
         componentInfoBuilder = new ComponentRequestUtil().getComponentWithProcessGroup(componentName, ProcessGroupEnum.SHEET_METAL);
         currentUser = componentInfoBuilder.getUser();

@@ -209,9 +209,9 @@ public class BidPackageResources extends QdsApiTestUtils {
      * @return the bid package project request builder
      */
     public static BidPackageProjectRequest getBidPackageProjectRequestBuilder(HashMap<String, String> projectAttributesMap, UserCredentials currentUser) {
-        String projectName = projectAttributesMap.getOrDefault("projectName", new GenerateStringUtil().getRandomString());
+        String projectName = projectAttributesMap.getOrDefault("projectName", new GenerateStringUtil().getRandomStringSpecLength(12));
         String projectDisplayName = projectAttributesMap.getOrDefault("projectDisplayName", "N/A");
-        String projectDescription = projectAttributesMap.getOrDefault("projectDescription", new GenerateStringUtil().getRandomString());
+        String projectDescription = projectAttributesMap.getOrDefault("projectDescription", new GenerateStringUtil().getRandomStringSpecLength(12));
         String projectStatus = projectAttributesMap.getOrDefault("projectStatus", "COMPLETED");
         String projectOwner = projectAttributesMap.getOrDefault("projectOwner", "N/A");
         String projectOwnerUserIdentity = projectAttributesMap.getOrDefault("projectOwnerUserIdentity", new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));

@@ -118,6 +118,16 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
     }
 
     /**
+     * Get manual costing Cost Breakdown message
+     *
+     * @return string
+     */
+    public String getManualCostBreakdown() {
+        By manual = By.cssSelector("div[id='qa-scenario-preview-cost-breakdown-section'] div.show");
+        return pageUtils.waitForElementToAppear(manual).getText();
+    }
+
+    /**
      * Gets material details - result is returned as a String with special characters parsed
      *
      * @param label - the label

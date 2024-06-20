@@ -49,7 +49,7 @@ public class ArtifactPropertiesTests extends TestUtil {
         );
 
         FileResponse fileResponse = fileUploadResources.initializePartUpload("bracket_basic.prt", processGroup);
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, generateStringUtil.generateScenarioName());
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, generateStringUtil.generateStringForAutomation("Scenario"));
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
             productionInfoInputs,
