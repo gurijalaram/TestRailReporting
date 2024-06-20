@@ -66,7 +66,7 @@ public class CustomerUtil {
 
         final String customerIdentity = getCustomerData().getIdentity();
         final String installationName = PropertiesContext.get("${customer}.multi_tenant_installation_name");
-        Deployment deploymentItem = getDeploymentByName(userCredentials, PropertiesContext.get("deployment"));
+        Deployment deploymentItem = getDeploymentByName(PropertiesContext.get("deployment"));
 
         Installation installationItem = deploymentItem.getInstallations()
             .stream()
@@ -115,10 +115,9 @@ public class CustomerUtil {
     /**
      * Gets deployments response object to allow for usage of response
      *
-     * @param userCredentials UserCredentials instance containing user details to use in api call
      * @return GetDeploymentsResponse instance
      */
-    private static Deployment getDeploymentByName(UserCredentials userCredentials, String deploymentName) {
+    private static Deployment getDeploymentByName(String deploymentName) {
         QueryParams filterMap = new QueryParams();
         filterMap.put("name[EQ]", deploymentName);
         List<Deployment> deploymentItems = getDeployments(filterMap);
