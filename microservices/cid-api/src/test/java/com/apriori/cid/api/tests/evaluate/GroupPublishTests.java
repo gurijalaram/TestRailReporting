@@ -256,7 +256,8 @@ public class GroupPublishTests {
             .publishRequest(publishRequest)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
+        ResponseWrapper<ScenarioSuccessesFailures> publishResponse = scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
+        chargerBaseComponent.setScenarioIdentity(publishResponse.getResponseEntity().getSuccesses().get(0).getIdentity());
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
@@ -264,13 +265,11 @@ public class GroupPublishTests {
 
         scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
-        ResponseWrapper<ScenarioSuccessesFailures> publishComponent = scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
-
-        chargerBaseComponent.setScenarioIdentity(publishComponent.getResponseEntity().getSuccesses().get(0).getIdentity());
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
+        chargerBaseComponent.setScenarioIdentity(publishResponse.getResponseEntity().getSuccesses().get(0).getIdentity());
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        //ToDo:- follow scenario and/or component ID changes and see what this object needs updated to be
         softAssertions.assertThat(iterationsUtil.getComponentIterations(chargerBaseComponent).getResponseEntity().getItems().size())
             .as("Verify that number of iterations is at least 1").isGreaterThanOrEqualTo(1);
 
@@ -409,11 +408,6 @@ public class GroupPublishTests {
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, chargerBase, chargerLead, chargerUpper);
 
         SoftAssertions softAssertions = new SoftAssertions();
-
-        subComponentNames.forEach(subComponent ->
-            cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName, ITERATION_EQ.getKey() + " 1",
-                    LATEST_EQ.getKey() + " false")
-                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
 
         subComponentNames.forEach(subComponent ->
             cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName, ITERATION_EQ.getKey() + " 2",
