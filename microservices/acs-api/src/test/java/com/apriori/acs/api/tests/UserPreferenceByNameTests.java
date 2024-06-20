@@ -7,6 +7,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.StringContains.containsString;
 
+import com.apriori.acs.api.models.response.acs.displayunits.DisplayUnitsInputs;
+import com.apriori.acs.api.models.response.acs.displayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.api.utils.acs.AcsResources;
@@ -28,7 +30,23 @@ public class UserPreferenceByNameTests extends TestUtil {
 
     @AfterEach
     public void cleanup() {
-        new AcsResources(userCredentials).resetSettings();
+        AcsResources acsResources = new AcsResources(userCredentials);
+        acsResources.resetSettings();
+        acsResources.setDisplayUnits(DisplayUnitsInputs.builder()
+            .currencyCode("USD")
+            .currencyLabel("abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq")
+            .unitVariantSettingsInfo(UnitVariantSettingsInfoInputs.builder()
+                .name("MMKS")
+                .type("simple")
+                .metric("true")
+                .length("mm")
+                .mass("kg")
+                .time("s")
+                .decimalPlaces(2)
+                .system(true)
+                .custom(false)
+                .build())
+            .build());
     }
 
     @Test
