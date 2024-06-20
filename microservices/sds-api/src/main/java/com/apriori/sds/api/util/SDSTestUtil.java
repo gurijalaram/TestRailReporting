@@ -490,7 +490,10 @@ public abstract class SDSTestUtil extends TestUtil {
     protected <T> ResponseWrapper<Scenario> publishAssembly(ComponentInfoBuilder componentInfoBuilder, Class<T> klass, Integer expectedResponseCode) {
         PublishRequest shallowPublishRequest = PublishRequest.builder()
             .assignedTo(new PeopleUtil().getCurrentUser(componentInfoBuilder.getUser()).getIdentity())
+            .locked(false)
             .override(false)
+            .scenarioName(componentInfoBuilder.getScenarioName())
+            .publishSubComponents(false)
             .build();
 
         final RequestEntity requestEntity =
