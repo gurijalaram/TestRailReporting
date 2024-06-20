@@ -68,7 +68,7 @@ public class CasCustomerServiceAccountsTests {
     @Description("Gets service accounts for On Prem customer")
     @TestRail(id = {16544})
     public void getServiceAccountsOnPremCustomer() {
-        String customerName = new GenerateStringUtil().generateCustomerName();
+        String customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         String email = customerName.toLowerCase();
         onPremCustomer = casTestUtil.findOnPremCustomer();
 

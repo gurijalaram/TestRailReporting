@@ -73,7 +73,7 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6213})
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponent();
 
@@ -95,8 +95,8 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6214, 6215})
     @Description("Test private criteria attribute")
     public void testPrivateCriteriaAttribute() {
-        String filterName = generateStringUtil.generateFilterName();
-        String filterName2 = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName2 = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(CASTING_DIE);
 
@@ -132,7 +132,7 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6216})
     @Description("Test private criteria assembly")
     public void testPrivateCriteriaAssembly() {
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         assembly = new AssemblyRequestUtil().getAssembly();
 
@@ -154,7 +154,7 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6217})
     @Description("Test public criteria assembly status")
     public void testPublicCriteriaAssemblyStatus() {
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         assembly = new AssemblyRequestUtil().getAssembly();
 
@@ -188,7 +188,7 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6218})
     @Description("Test public criteria part")
     public void testPublicCriteriaPart() {
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponent();
 
@@ -213,8 +213,8 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6221, 6532})
     @Description("Test multiple attributes")
     public void testFilterAttributes() {
-        String filterName = generateStringUtil.generateFilterName();
-        String filterName2 = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName2 = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponent();
 
@@ -255,10 +255,10 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {6169, 6170, 6100, 9108, 9109})
     @Description("Validate that user can cancel action New, Rename, Save As before saving")
     public void testCancelNewSaveRename() {
-        String filterName = generateStringUtil.generateFilterName();
-        String filterName2 = generateStringUtil.generateFilterName();
-        String filterName3 = generateStringUtil.generateFilterName();
-        String filterName4 = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName2 = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName3 = generateStringUtil.generateAlphabeticString("Filter", 6);
+        String filterName4 = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         filterPage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
@@ -349,9 +349,9 @@ public class FilterCriteriaTests extends TestBaseUI {
     @TestRail(id = {30920, 30921, 30922, 30923, 30924})
     @Description("Validate user can filter by Cost Mode used")
     public void testCodeModeFiltering() {
-        String manualFilter = new GenerateStringUtil().generateFilterName();
-        String simulateFilter = new GenerateStringUtil().generateFilterName();
-        String mixedFilter = new GenerateStringUtil().generateFilterName();
+        String manualFilter = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
+        String simulateFilter = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
+        String mixedFilter = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
 
         ComponentInfoBuilder simulateComponent = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder manualComponent = new ComponentRequestUtil().getComponent();

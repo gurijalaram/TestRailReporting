@@ -51,7 +51,7 @@ public class IncludeAndExcludeTests {
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
 
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -98,7 +98,7 @@ public class IncludeAndExcludeTests {
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
 
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -150,7 +150,7 @@ public class IncludeAndExcludeTests {
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
 
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -209,7 +209,7 @@ public class IncludeAndExcludeTests {
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
 
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -254,7 +254,7 @@ public class IncludeAndExcludeTests {
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
 
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,

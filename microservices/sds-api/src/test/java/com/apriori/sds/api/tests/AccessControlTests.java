@@ -96,7 +96,7 @@ public class AccessControlTests extends SDSTestUtil {
     @TestRail(id = {13641})
     @Description("Access check: Publish a scenario for the correct and incorrect user.")
     public void publish() {
-        final String publishScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String publishScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         final ScenarioItem testingComponent = postTestingComponentAndAddToRemoveList();
         final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
 

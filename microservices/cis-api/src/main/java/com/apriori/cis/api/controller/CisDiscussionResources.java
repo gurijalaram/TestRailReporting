@@ -37,7 +37,7 @@ public class CisDiscussionResources extends CISTestUtil {
                     .build())
                 .comments(Collections.singletonList(InternalDiscussionComments.builder()
                     .status("ACTIVE")
-                    .content(new GenerateStringUtil().getRandomString())
+                    .content(new GenerateStringUtil().getRandomStringSpecLength(12))
                     .mentionedUserEmails(new ArrayList<>())
                     .build()))
                 .build())

@@ -99,7 +99,7 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(id = 6926)
     @Description("Returns the manifest for a scenario if the component type is a container.")
     public void getManifest() {
-        final ScenarioItem testingRollUp = postRollUp(new GenerateStringUtil().generateScenarioName(), "AutomationRollup");
+        final ScenarioItem testingRollUp = postRollUp(new GenerateStringUtil().generateStringForAutomation("Scenario"), "AutomationRollup");
 
         final RequestEntity requestEntity =
             requestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_MANIFEST_BY_COMPONENT_SCENARIO_IDS, ScenarioManifest.class)
@@ -115,7 +115,7 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(id = 8430)
     @Description("Copy a scenario.")
     public void testCopyScenario() {
-        final String copiedScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String copiedScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
             .scenarioName(copiedScenarioName)
@@ -186,7 +186,7 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(id = 8432)
     @Description("Fork a scenario.")
     public void testForkScenario() {
-        final String forkScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String forkScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
             .scenarioName(forkScenarioName)
@@ -300,7 +300,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     private ScenarioItem publishAndGetReadyToWorkScenario() {
-        final String publishScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String publishScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         final ScenarioItem testingComponent = postTestingComponentAndAddToRemoveList();
 
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()

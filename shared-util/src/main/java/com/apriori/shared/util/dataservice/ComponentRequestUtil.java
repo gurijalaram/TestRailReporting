@@ -33,7 +33,7 @@ public class ComponentRequestUtil {
 
         component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
         component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
-        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         component.setUser(UserUtil.getUser());
 
         return component;
@@ -56,7 +56,7 @@ public class ComponentRequestUtil {
 
         component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
         component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
-        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         component.setUser(UserUtil.getUser());
 
         return component;
@@ -82,7 +82,7 @@ public class ComponentRequestUtil {
 
         component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
         component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
-        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         component.setUser(UserUtil.getUser());
 
         return component;
@@ -104,7 +104,7 @@ public class ComponentRequestUtil {
             .orElseThrow(() -> new NoSuchElementException(String.format("The part '%s' was not defined in the '%s' file", componentName, COMPONENT_STORE)));
 
         component.setResourceFile(FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension()));
-        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         component.setUser(UserUtil.getUser());
 
         return component;
@@ -130,7 +130,7 @@ public class ComponentRequestUtil {
 
         component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
         component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
-        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         component.setUser(UserUtil.getUser());
 
         return component;
@@ -155,7 +155,7 @@ public class ComponentRequestUtil {
 
         component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
         component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
-        component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        component.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         component.setUser(UserUtil.getUser());
 
         return component;
@@ -179,7 +179,7 @@ public class ComponentRequestUtil {
         components.forEach(component -> {
             component.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(component.getFileNameExtension(), component.getProcessGroup()));
             component.setComponentName(component.getResourceFile().getName().split("\\.", 2)[0]);
-            component.setScenarioName(new GenerateStringUtil().generateScenarioName());
+            component.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
             component.setUser(currentUser);
         });
 
@@ -205,7 +205,7 @@ public class ComponentRequestUtil {
 
         componentInfoExtension.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(componentInfoExtension.getFileNameExtension(), componentInfoExtension.getProcessGroup()));
         componentInfoExtension.setComponentName(componentInfoExtension.getResourceFile().getName().split("\\.", 2)[0]);
-        componentInfoExtension.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentInfoExtension.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         componentInfoExtension.setUser(UserUtil.getUser());
 
         return componentInfoExtension;
@@ -229,7 +229,7 @@ public class ComponentRequestUtil {
 
         componentInfoPG.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(componentInfoPG.getFileNameExtension(), componentInfoPG.getProcessGroup()));
         componentInfoPG.setComponentName(componentInfoPG.getResourceFile().getName().split("\\.", 2)[0]);
-        componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentInfoPG.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         componentInfoPG.setUser(UserUtil.getUser());
 
         return componentInfoPG;
@@ -254,7 +254,7 @@ public class ComponentRequestUtil {
 
         componentInfoPG.setResourceFile(FileResourceUtil.getS3FileAndSaveWithUniqueName(componentInfoPG.getFileNameExtension(), componentInfoPG.getProcessGroup()));
         componentInfoPG.setComponentName(componentInfoPG.getResourceFile().getName().split("\\.", 2)[0]);
-        componentInfoPG.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentInfoPG.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         componentInfoPG.setUser(currentUser);
 
         return componentInfoPG;

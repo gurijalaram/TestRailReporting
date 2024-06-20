@@ -37,7 +37,7 @@ public class GroupEditTests extends TestBaseUI {
     @TestRail(id = {14723})
     @Description("Verify user can edit multiple scenarios")
     public void testGroupEdit() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();

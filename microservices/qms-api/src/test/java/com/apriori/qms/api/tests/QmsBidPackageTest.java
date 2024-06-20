@@ -48,7 +48,7 @@ public class QmsBidPackageTest extends TestUtil {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
@@ -58,7 +58,7 @@ public class QmsBidPackageTest extends TestUtil {
     @TestRail(id = {13361, 14127})
     @Description("Create, Delete and verify Bid Package is deleted")
     public void createDeleteAndVerifyBidPackage() {
-        String bpName = bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bpName = bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         BidPackageResponse createBidPackageResponse = QmsBidPackageResources.createBidPackage(bpName, currentUser);
         softAssertions.assertThat(createBidPackageResponse.getName()).isEqualTo(bpName);
         QmsBidPackageResources.deleteBidPackage(createBidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
@@ -374,7 +374,7 @@ public class QmsBidPackageTest extends TestUtil {
         "4. Create Bid Package Project" +
         "5. Get Bid Package by Identity and verify bid project and package item")
     public void getBidPackageWithAddedPackageItem() {
-        String projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        String projectName = "PROJ" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         HashMap<String, String> projectAttributesMap = new HashMap<>();
         projectAttributesMap.put("projectName", projectName);
         BidPackageResources.createBidPackageItem(

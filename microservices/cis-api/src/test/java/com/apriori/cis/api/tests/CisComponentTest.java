@@ -59,7 +59,7 @@ public class CisComponentTest extends CISTestUtil {
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser, SCENARIO_CREATED_AT_GT.getKey() + DateUtil.getDateDaysBefore(90, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ), CssSearch.COMPONENT_TYPE_EQ.getKey() + "PART").get(0);
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         itemsList.add(BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .componentIdentity(scenarioItem.getComponentIdentity())

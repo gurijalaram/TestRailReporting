@@ -41,6 +41,9 @@
     "prod.info.default.use.vpe.for.all.processes": {
       "type": "string"
     },
+    "prod.info.default.vpe": {
+      "type": "string"
+    },
     "prod.info.vpe": {
       "type": "string"
     },

@@ -69,7 +69,7 @@ public class CisProjectsTest extends CISTestUtil {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         itemsList.add(BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .componentIdentity(scenarioItem.getComponentIdentity())

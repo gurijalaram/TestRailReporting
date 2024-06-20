@@ -58,8 +58,8 @@ public class CmpSaveComparisonTests {
     @Description("Create a Comparison via CMP-API")
     public void testCreateThenUpdateComparison() {
 
-        comparisonName = new GenerateStringUtil().generateComparisonName();
-        String updatedComparisonName = new GenerateStringUtil().generateComparisonName();
+        comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
+        String updatedComparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         ComparisonObjectBuilder baseScenario = ComparisonObjectBuilder.builder()
             .externalIdentity(component1.getScenarioIdentity())
@@ -133,7 +133,7 @@ public class CmpSaveComparisonTests {
     @Description("Test Request Validation for Create Comparison Endpoint")
     public void testCreateComparisonValidation() {
 
-        comparisonName = new GenerateStringUtil().generateComparisonName();
+        comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         ComparisonObjectBuilder baseScenario = ComparisonObjectBuilder.builder()
             .externalIdentity(component1.getScenarioIdentity())
@@ -248,7 +248,7 @@ public class CmpSaveComparisonTests {
     @TestRail(id = {25943, 25945, 25946, 25947, 25948, 25949, 25950})
     @Description("Test Request Validation for Create Comparison Endpoint")
     public void testUpdateComparisonValidation() {
-        comparisonName = new GenerateStringUtil().generateComparisonName();
+        comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         ComparisonObjectBuilder baseScenario = ComparisonObjectBuilder.builder()
             .externalIdentity(component1.getScenarioIdentity())

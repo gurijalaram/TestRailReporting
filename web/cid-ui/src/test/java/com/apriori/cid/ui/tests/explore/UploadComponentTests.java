@@ -92,7 +92,7 @@ public class UploadComponentTests extends TestBaseUI {
         importCadFilePage = new CidAppLoginPage(driver)
             .login(UserUtil.getUser())
             .importCadFile()
-            .inputDefaultScenarioName(new GenerateStringUtil().generateScenarioName())
+            .inputDefaultScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"))
             .inputMultiComponentBuilderDetails(components);
 
         cadFileStatusPage = importCadFilePage.submit();
@@ -106,7 +106,7 @@ public class UploadComponentTests extends TestBaseUI {
     public void testUniqueScenarioNamesMultiUpload() {
 
         List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(3);
-        components.forEach(component -> component.setScenarioName(new GenerateStringUtil().generateScenarioName()));
+        components.forEach(component -> component.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario")));
 
         importCadFilePage = new CidAppLoginPage(driver)
             .login(components.get(0).getUser())
@@ -151,7 +151,7 @@ public class UploadComponentTests extends TestBaseUI {
 
         UserCredentials currentUser = UserUtil.getUser();
         resourceFile = FileResourceUtil.getResourceAsFile("auto_api_upload.csv");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         String message = "The file type of the selected file is not supported." +
             " Supported file types are: .asat, .asm, .asm.#, .catpart, .catproduct, .iam, .ipt," +
             " .jt, .model, .par, .prt, .prt.#, .psm, .sab, .sat, .sldasm, .sldprt, .step, .stp, .x_b, .x_t, .xas, .xpr";
@@ -308,7 +308,7 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate updated workflow of importing/uploading an assembly into CID")
     public void testUploadViaExploreAndEvaluatePage() {
 
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = new AssemblyRequestUtil().getAssembly();
 
@@ -411,8 +411,8 @@ public class UploadComponentTests extends TestBaseUI {
     @Description("Validate race conditions - upload a full assembly with override")
     public void uploadMultiLevelAssemblyWithOverrideAndRename() {
 
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         List<ComponentInfoBuilder> components = new ComponentRequestUtil().getComponents(9);
 

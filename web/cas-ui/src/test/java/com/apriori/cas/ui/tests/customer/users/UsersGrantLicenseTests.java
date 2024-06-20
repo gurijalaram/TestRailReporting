@@ -53,7 +53,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
-        customerName = generateStringUtil.generateCustomerName();
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         userName = generateStringUtil.generateUserName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
@@ -62,7 +62,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
         customerIdentity = targetCustomer.getIdentity();
         user = cdsTestUtil.addUser(customerIdentity, userName, email).getResponseEntity();
         userIdentity = user.getIdentity();
-        siteName = generateStringUtil.generateSiteName();
+        siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         siteID = generateStringUtil.generateSiteID();
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();

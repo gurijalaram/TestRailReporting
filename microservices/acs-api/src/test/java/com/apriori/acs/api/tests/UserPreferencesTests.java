@@ -22,12 +22,18 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.restassured.http.Header;
 import org.apache.http.HttpStatus;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class UserPreferencesTests extends TestUtil {
     private final UserCredentials userCredentials = UserUtil.getUser(APRIORI_DESIGNER);
+
+    @AfterEach
+    public void cleanup() {
+        new AcsResources(userCredentials).resetSettings();
+    }
 
     @Test
     @TestRail(id = 10759)
