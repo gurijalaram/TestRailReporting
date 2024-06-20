@@ -10,7 +10,6 @@ import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.Arrays;
 import java.util.List;
 
-@Slf4j
 @ExtendWith(TestRulesAPI.class)
 public class PublishAssembliesTests extends SDSTestUtil {
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
