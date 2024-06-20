@@ -38,7 +38,7 @@ public class BidPackageItemTest extends TestUtil {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, userContext);

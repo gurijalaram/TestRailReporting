@@ -428,7 +428,7 @@ public class SecondaryProcessTests extends TestBaseUI {
     @TestRail(id = {5116, 5119})
     @Description("Multiple Secondary Processes before Costing")
     public void multiSecondaryProcessBeforeCost() {
-        String filterName = new GenerateStringUtil().generateFilterName();
+        String filterName = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE);
 
         loginPage = new CidAppLoginPage(driver);

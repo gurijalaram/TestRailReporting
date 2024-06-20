@@ -145,7 +145,7 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBaseUI {
         EvaluatePage evaluatePage = new ExplorePage(driver)
             .filter()
             .saveAs()
-            .inputName(new GenerateStringUtil().generateFilterName())
+            .inputName(new GenerateStringUtil().generateAlphabeticString("Filter", 6))
             .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, reportsPartNumber)
             .addCriteria(PropertyEnum.DIGITAL_FACTORY, OperationEnum.IN, DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .submit(ExplorePage.class)

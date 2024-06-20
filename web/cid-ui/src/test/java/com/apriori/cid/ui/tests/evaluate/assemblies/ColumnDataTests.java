@@ -47,7 +47,7 @@ public class ColumnDataTests extends TestBaseUI {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         SoftAssertions softAssertions = new SoftAssertions();
 

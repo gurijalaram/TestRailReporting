@@ -41,8 +41,8 @@ public class CisBidPackageProjectUsersTest extends CISTestUtil {
     public void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
-        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
+        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageProjectResponse = CisBidPackageProjectResources.createBidPackageProject(projectName,
             bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);

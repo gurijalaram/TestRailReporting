@@ -29,7 +29,7 @@ public class AssemblyRequestUtil {
         ComponentInfoBuilder assembly = ASSEMBLY_REQUEST.getAssembly();
 
         final UserCredentials user = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         assembly.setUser(user);
         assembly.setScenarioName(scenarioName);
         assembly.setResourceFile(FileResourceUtil.getCloudFile(assembly.getProcessGroup(), assembly.getComponentName() + assembly.getExtension()));
@@ -47,7 +47,7 @@ public class AssemblyRequestUtil {
         ComponentInfoBuilder assembly = ASSEMBLY_REQUEST.getAssembly(assemblyName);
 
         final UserCredentials user = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         assembly.setUser(user);
         assembly.setScenarioName(scenarioName);
         assembly.setResourceFile(FileResourceUtil.getCloudFile(assembly.getProcessGroup(), assembly.getComponentName() + assembly.getExtension()));
@@ -73,7 +73,7 @@ public class AssemblyRequestUtil {
             .collect(Collectors.toList()));
 
         final UserCredentials user = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         assembly.setUser(user);
         assembly.setScenarioName(scenarioName);
         assembly.setResourceFile(FileResourceUtil.getCloudFile(assembly.getProcessGroup(), assembly.getComponentName() + assembly.getExtension()));
@@ -90,7 +90,7 @@ public class AssemblyRequestUtil {
         ComponentInfoBuilder assembly = ASSEMBLY_REQUEST.getMediumAssembly();
 
         final UserCredentials user = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         assembly.setUser(user);
         assembly.setScenarioName(scenarioName);
         assembly.setResourceFile(FileResourceUtil.getCloudFile(assembly.getProcessGroup(), assembly.getComponentName() + assembly.getExtension()));
@@ -107,7 +107,7 @@ public class AssemblyRequestUtil {
         ComponentInfoBuilder assembly = ASSEMBLY_REQUEST.getLargeAssembly();
 
         final UserCredentials user = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         assembly.setUser(user);
         assembly.setScenarioName(scenarioName);
         assembly.setResourceFile(FileResourceUtil.getCloudFile(assembly.getProcessGroup(), assembly.getComponentName() + assembly.getExtension()));

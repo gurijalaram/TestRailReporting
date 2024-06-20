@@ -132,7 +132,7 @@ public class GroupPublishTests extends TestBaseUI {
         final String subComponentExtension1 = ".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup1 = ProcessGroupEnum.FORGING;
 
-        final String assemblyScenarioName1 = new GenerateStringUtil().generateScenarioName();
+        final String assemblyScenarioName1 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly1 = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName1,
@@ -162,7 +162,7 @@ public class GroupPublishTests extends TestBaseUI {
         final String subComponentExtension2 = ".CATPart";
         final ProcessGroupEnum subComponentProcessGroup2 = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        final String assemblyScenarioName2 = new GenerateStringUtil().generateScenarioName();
+        final String assemblyScenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly2 = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName2,
@@ -218,7 +218,7 @@ public class GroupPublishTests extends TestBaseUI {
         final String subComponentExtension1 = ".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup1 = ProcessGroupEnum.FORGING;
 
-        final String assemblyScenarioName1 = new GenerateStringUtil().generateScenarioName();
+        final String assemblyScenarioName1 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder componentAssembly1 = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName1,
@@ -316,7 +316,7 @@ public class GroupPublishTests extends TestBaseUI {
     @Description("Attempt to publish more than 10 components/assemblies")
     public void testGroupPublishMoreThanTenScenarios() {
         currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger lead.SLDPRT"), scenarioName));

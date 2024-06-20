@@ -53,7 +53,7 @@ public class CasCustomerBatchTests {
     @TestRail(id = {5668, 5669, 5675})
     @Description("Upload a new user batch file, Returns a list of batches for the customer, Delete the Batch by its identity.")
     public void getCustomerBatches() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
@@ -84,7 +84,7 @@ public class CasCustomerBatchTests {
     @TestRail(id = {5668, 5670, 5675})
     @Description("Upload a new user batch file, Get the Batch identified by its identity, Delete the Batch by its identity.")
     public void getBatchById() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";

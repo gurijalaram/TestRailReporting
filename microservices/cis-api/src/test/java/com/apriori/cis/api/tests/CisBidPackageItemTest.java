@@ -49,7 +49,7 @@ public class CisBidPackageItemTest extends CISTestUtil {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        bidPackageResponse = CisBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbers(), currentUser);
+        bidPackageResponse = CisBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8), currentUser);
         bidPackageItemResponse = CisBidPackageItemResources.createBidPackageItem(
             CisBidPackageItemResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),
@@ -62,7 +62,7 @@ public class CisBidPackageItemTest extends CISTestUtil {
     @TestRail(id = {14599, 14604})
     @Description("Create and delete Bid Package Item and verify bid package item is removed")
     public void testCreateBidPackageItemWithValidData() {
-        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         BidPackageResponse bidPackage = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
         BidPackageItemResponse bidPackageItem = CisBidPackageItemResources.createBidPackageItem(
             CisBidPackageItemResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(),

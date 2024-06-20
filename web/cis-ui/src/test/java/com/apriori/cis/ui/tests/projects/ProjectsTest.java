@@ -60,7 +60,7 @@ public class ProjectsTest extends TestBaseUI {
     @BeforeEach
     public void setUp() {
         softAssertions = new SoftAssertions();
-        userComment = new GenerateStringUtil().getRandomString();
+        userComment = new GenerateStringUtil().getRandomStringSpecLength(12);
         componentInfoBuilder = new ComponentRequestUtil().getComponentWithProcessGroup(componentName, ProcessGroupEnum.SHEET_METAL);
         currentUser = componentInfoBuilder.getUser();
         leftHandNavigationBar = new CisLoginPage(driver).cisLogin(currentUser);
@@ -243,7 +243,7 @@ public class ProjectsTest extends TestBaseUI {
     @Description("Verify user can filter a project by name")
     public void testFilterByProjectName() {
 
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         String componentName = "ChampferOut";
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
 
@@ -287,7 +287,7 @@ public class ProjectsTest extends TestBaseUI {
     @Description("Verify user can filter a project by status")
     public void testFilterByStatus() {
 
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         String componentName = "ChampferOut";
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
 
@@ -321,7 +321,7 @@ public class ProjectsTest extends TestBaseUI {
     @Description("Verify user can filter a project by due date")
     public void testFilterByDueDate() {
 
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         String componentName = "ChampferOut";
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
 
@@ -383,7 +383,7 @@ public class ProjectsTest extends TestBaseUI {
     @TestRail(id = {23611})
     @Description("Verify existing project components are disabled for parts selection")
     public void testPartsAddingValidationForANewProject() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         String dateTime = DateUtil.getCurrentDate(DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
         projectParticipant = currentUser.getEmail();
         partsAndAssembliesDetailsPage = leftHandNavigationBar.uploadAndCostScenario(componentInfoBuilder)

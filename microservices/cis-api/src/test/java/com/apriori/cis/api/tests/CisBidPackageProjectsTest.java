@@ -37,8 +37,8 @@ public class CisBidPackageProjectsTest extends CISTestUtil {
     public void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
-        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
+        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
     }
 
@@ -46,7 +46,7 @@ public class CisBidPackageProjectsTest extends CISTestUtil {
     @TestRail(id = {14378, 14098})
     @Description("Create and Delete Bid Package Project")
     public void testCreateAndDeleteProject() {
-        BidPackageProjectResponse bppResponse = CisBidPackageProjectResources.createBidPackageProject(new GenerateStringUtil().getRandomNumbers(),
+        BidPackageProjectResponse bppResponse = CisBidPackageProjectResources.createBidPackageProject(new GenerateStringUtil().getRandomNumbersSpecLength(8),
             bidPackageResponse.getIdentity(),
             BidPackageProjectResponse.class,
             HttpStatus.SC_CREATED,
@@ -125,7 +125,7 @@ public class CisBidPackageProjectsTest extends CISTestUtil {
     @TestRail(id = 14379)
     @Description("Create Project with Existing Name")
     public void testCreateProjectWithExistingName() {
-        String newProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        String newProjectName = "PROJ" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
 
         BidPackageProjectResponse bppResponse = CisBidPackageProjectResources.createBidPackageProject(newProjectName,
             bidPackageResponse.getIdentity(),

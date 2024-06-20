@@ -65,7 +65,7 @@ public class MaterialSelectionTests {
     public void defaultMaterialTest(ProcessGroupEnum pg, String defaultMaterial, String componentName, String componentExt) {
 
         resourceFile = FileResourceUtil.getCloudFile(pg, componentName + componentExt);
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         currentUser = UserUtil.getUser();
 
         ComponentInfoBuilder componentResponse = componentsUtil.postComponent(

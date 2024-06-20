@@ -269,7 +269,7 @@ public class ManualCostingTests  extends TestBaseUI {
     @TestRail(id = {31009, 31010, 31017, 31018, 31020, 31021, 31022})
     @Description("Verify all actions can be performed on Manually Costed Scenario")
     public void testActionsForManuallyCostedScenarios() {
-        String copiedScenarioName = new GenerateStringUtil().generateScenarioName();
+        String copiedScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
         componentsUtil.postComponent(component);
