@@ -245,6 +245,7 @@ public class GroupCostingTests {
     @Description("Verify Error Response for Empty Group Item List")
     public void testEmptyGroupItemList() {
         componentAssembly = new AssemblyRequestUtil().getAssembly();
+        componentAssembly.getSubComponents().clear();
 
         assemblyUtils.uploadAssembly(componentAssembly);
 

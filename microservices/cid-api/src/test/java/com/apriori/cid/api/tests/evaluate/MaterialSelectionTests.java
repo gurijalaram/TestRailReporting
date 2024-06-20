@@ -42,7 +42,7 @@ public class MaterialSelectionTests {
             Arguments.of(ProcessGroupEnum.BAR_TUBE_FAB, MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName(), "AP-000-006", ".step"),
             Arguments.of(ProcessGroupEnum.CASTING, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "CastedPart", ".CATPart"),
             Arguments.of(ProcessGroupEnum.CASTING_DIE, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "CurvedWall", ".CATPart"),
-            Arguments.of(ProcessGroupEnum.CASTING_INVESTMENT, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "AP-000-506", ".prt.1"),
+            Arguments.of(ProcessGroupEnum.CASTING_INVESTMENT, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "piston pin_model1", ".prt"),
             Arguments.of(ProcessGroupEnum.CASTING_SAND, MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName(), "casting_q5_thinvalve", ".prt"),
             Arguments.of(ProcessGroupEnum.FORGING, MaterialNameEnum.STEEL_COLD_WORKED_AISI1010.getMaterialName(), "big ring", ".SLDPRT"),
             Arguments.of(ProcessGroupEnum.PLASTIC_MOLDING, MaterialNameEnum.ABS.getMaterialName(), "bolt", ".CATPart"),
