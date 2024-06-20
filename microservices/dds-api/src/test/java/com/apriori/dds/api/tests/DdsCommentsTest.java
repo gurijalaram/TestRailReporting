@@ -60,7 +60,7 @@ public class DdsCommentsTest extends TestUtil {
         CommentsRequest commentsRequestBuilder = CommentsRequest.builder()
             .comment(CommentsRequestParameters.builder()
                 .status("ACTIVE")
-                .content(new GenerateStringUtil().getRandomString())
+                .content(new GenerateStringUtil().getRandomStringSpecLength(12))
                 .mentionedUserEmails(Collections.singletonList(currentUser.getEmail()))
                 .build())
             .build();
@@ -75,7 +75,7 @@ public class DdsCommentsTest extends TestUtil {
     @TestRail(id = {12360, 12378})
     @Description("Create and Delete a valid comment")
     public void createAndDeleteComment() {
-        String content = new GenerateStringUtil().getRandomString();
+        String content = new GenerateStringUtil().getRandomStringSpecLength(12);
         CommentsRequest commentsRequestBuilder = CommentsRequest.builder()
             .comment(CommentsRequestParameters.builder()
                 .status("ACTIVE")
@@ -132,7 +132,7 @@ public class DdsCommentsTest extends TestUtil {
         CommentsRequest commentsRequestBuilder = CommentsRequest.builder()
             .comment(CommentsRequestParameters.builder()
                 .status("ACTIVE")
-                .content(new GenerateStringUtil().getRandomString())
+                .content(new GenerateStringUtil().getRandomStringSpecLength(12))
                 .mentionedUserEmails(Collections.singletonList(currentUser.getEmail()))
                 .build())
             .build();
@@ -170,7 +170,7 @@ public class DdsCommentsTest extends TestUtil {
         CommentsRequest commentsRequestBuilder = CommentsRequest.builder()
             .comment(CommentsRequestParameters.builder()
                 .status("INVALID")
-                .content(new GenerateStringUtil().getRandomString())
+                .content(new GenerateStringUtil().getRandomStringSpecLength(12))
                 .mentionedUserEmails(Collections.singletonList(currentUser.getEmail()))
                 .build())
             .build();
@@ -190,7 +190,7 @@ public class DdsCommentsTest extends TestUtil {
         CommentsRequest commentsRequestBuilder = CommentsRequest.builder()
             .comment(CommentsRequestParameters.builder()
                 .status("ACTIVE")
-                .content(new GenerateStringUtil().getRandomString())
+                .content(new GenerateStringUtil().getRandomStringSpecLength(12))
                 .mentionedUserEmails(Collections.singletonList(currentUser.getEmail()))
                 .build())
             .build();
@@ -259,7 +259,7 @@ public class DdsCommentsTest extends TestUtil {
     @TestRail(id = {14329})
     @Description("Create a comment with empty mentioned users")
     public void createCommentWithEmptyMentionedUsers() {
-        String content = new GenerateStringUtil().getRandomString();
+        String content = new GenerateStringUtil().getRandomStringSpecLength(12);
         CommentsRequest commentsRequestBuilder = CommentsRequest.builder()
             .comment(CommentsRequestParameters.builder()
                 .status(commentResponse.getResponseEntity().getStatus())

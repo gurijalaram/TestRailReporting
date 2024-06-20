@@ -347,7 +347,7 @@ public class CustomerStaffTests extends TestBaseUI {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        customerName = new GenerateStringUtil().generateCustomerName();
+        customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         String email = customerName.toLowerCase();
         Customer targetCustomer = cdsTestUtil.addCASCustomer(customerName, rcd.getCloudRef(), email, currentUser).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();

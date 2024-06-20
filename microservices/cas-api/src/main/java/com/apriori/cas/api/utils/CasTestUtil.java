@@ -64,7 +64,7 @@ public class CasTestUtil extends TestUtil {
                 Customer.builder().name(name)
                     .cloudReference(cloudReference)
                     .description(description)
-                    .salesforceId(new GenerateStringUtil().generateSalesForceId())
+                    .salesforceId(new GenerateStringUtil().generateNumericString("SFID", 10))
                     .customerType("CLOUD_ONLY")
                     .active(true)
                     .mfaRequired(true)
@@ -283,9 +283,9 @@ public class CasTestUtil extends TestUtil {
     public ResponseWrapper<Customer> createCustomer() {
         GenerateStringUtil generator = new GenerateStringUtil();
         return createCustomer(
-            generator.generateCustomerName(),
-            generator.getRandomStringSpecLength(16).toLowerCase(),
-            generator.getRandomString(),
+            generator.generateAlphabeticString("Customer", 6),
+            generator.generateCloudReference(),
+            generator.getRandomStringSpecLength(12),
             "apriori.com",
             "apriori.co.uk",
             "test.com",
@@ -305,7 +305,7 @@ public class CasTestUtil extends TestUtil {
         Customer customer = Customer.builder().name(name)
             .cloudReference(cloudReference)
             .description(description)
-            .salesforceId(new GenerateStringUtil().generateSalesForceId())
+            .salesforceId(new GenerateStringUtil().generateNumericString("SFID", 10))
             .customerType("CLOUD_ONLY")
             .active(true)
             .mfaRequired(true)
@@ -445,8 +445,8 @@ public class CasTestUtil extends TestUtil {
                 Customer.builder()
                     .name(name)
                     .cloudReference(null)
-                    .description(generator.getRandomString())
-                    .salesforceId(generator.generateSalesForceId())
+                    .description(generator.getRandomStringSpecLength(12))
+                    .salesforceId(generator.generateNumericString("SFID", 10))
                     .customerType("ON_PREMISE_ONLY")
                     .active(true)
                     .mfaRequired(false)

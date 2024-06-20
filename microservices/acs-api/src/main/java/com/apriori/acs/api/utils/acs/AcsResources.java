@@ -96,7 +96,7 @@ public class AcsResources {
                 .baseName(Constants.PART_FILE_NAME)
                 .configurationName(Constants.PART_CONFIG_NAME)
                 .modelName(Constants.PART_MODEL_NAME)
-                .scenarioName(new GenerateStringUtil().generateScenarioName())
+                .scenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"))
                 .scenarioType(Constants.PART_COMPONENT_TYPE)
                 .missing(true)
                 .publicItem(true)
@@ -1048,7 +1048,7 @@ public class AcsResources {
     public CostOrderStatusOutputs uploadAndCost(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         fileUploadResources.checkValidProcessGroup(processGroup);
 

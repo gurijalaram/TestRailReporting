@@ -718,7 +718,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     @Description("Verify error message when system is unable to find either bidPackage or project while deleting bulk project items")
     public void deleteBulkBidPackageProjectItemsWithDeletedBidPackageAndProject() {
         //Create & Delete Bidpackage/Project
-        BidPackageResponse deleteBidPackageResponse = QmsBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbers(), currentUser);
+        BidPackageResponse deleteBidPackageResponse = QmsBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8), currentUser);
         BidPackageProjectResponse deleteBidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), deleteBidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
         QmsBidPackageResources.deleteBidPackage(deleteBidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 

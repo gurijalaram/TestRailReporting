@@ -104,11 +104,11 @@ public class CasSitesTests {
     @TestRail(id = {5648})
     @Description("Create a new Site for the Customer")
     public void createCustomerSite() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
-        String siteName = generateStringUtil.generateSiteName();
+        String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
 
         ResponseWrapper<Customer> response = CasTestUtil.addCustomer(customerName, cloudRef, description, email);

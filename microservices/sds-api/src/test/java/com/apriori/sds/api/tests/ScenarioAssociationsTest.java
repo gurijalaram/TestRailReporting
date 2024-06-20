@@ -150,7 +150,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
             return testingRollUp;
         }
 
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         String componentName = "AutomationRollup";
         return testingRollUp = postRollUp(componentName, scenarioName);
     }

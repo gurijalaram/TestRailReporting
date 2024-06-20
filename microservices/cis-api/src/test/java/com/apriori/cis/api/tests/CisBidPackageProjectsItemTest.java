@@ -45,8 +45,8 @@ public class CisBidPackageProjectsItemTest extends CISTestUtil {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
-        String projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
+        String projectName = "PROJ" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         currentUser = UserUtil.getUser();
         componentInfoBuilder = new ScenariosUtil().uploadAndPublishComponent(new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING, currentUser));
         scenarioItem = new CssComponent().getWaitBaseCssComponents(componentInfoBuilder.getUser(), COMPONENT_NAME_EQ.getKey() + componentInfoBuilder.getComponentName(),

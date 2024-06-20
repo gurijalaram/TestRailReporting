@@ -60,7 +60,7 @@ public class QuickComparisonTests extends TestBaseUI {
     public void validateQuickCompareDisabledForMultiSelect() {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
         componentB = SerializationUtils.clone(component);
-        componentB.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentB.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
 
         loginPage = new CidAppLoginPage(driver);
         createComparePage = loginPage.login(component.getUser())
@@ -166,11 +166,11 @@ public class QuickComparisonTests extends TestBaseUI {
     public void testQuickCompareScenarioOrdering() {
         component = new ComponentRequestUtil().getComponent();
         componentB = SerializationUtils.clone(component);
-        componentB.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentB.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         componentC = SerializationUtils.clone(component);
-        componentC.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentC.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         componentD = SerializationUtils.clone(component);
-        componentD.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentD.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(component.getUser())
@@ -236,7 +236,7 @@ public class QuickComparisonTests extends TestBaseUI {
     @Issue("BA-3462")
     @Description("Validate scenarios can be deleted from quick comparison via modify comparison")
     public void testDeleteQuickComparison() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         component = new ComponentRequestUtil().getComponent();
         componentB = SerializationUtils.clone(component);

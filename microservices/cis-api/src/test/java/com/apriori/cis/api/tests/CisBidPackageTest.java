@@ -37,7 +37,7 @@ public class CisBidPackageTest extends CISTestUtil {
     public  void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
-        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         bidPackageResponse = CisBidPackageResources.createBidPackage(bidPackageName, currentUser);
     }
 
@@ -45,7 +45,7 @@ public class CisBidPackageTest extends CISTestUtil {
     @TestRail(id = {14126, 14130})
     @Description("Create, Delete and verify Bid Package is deleted")
     public void testCreateDeleteAndVerifyBidPackage() {
-        String bpName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bpName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         BidPackageResponse createBidPackageResponse = CisBidPackageResources.createBidPackage(bpName, currentUser);
         softAssertions.assertThat(createBidPackageResponse.getName()).isEqualTo(bpName);
 
@@ -135,7 +135,7 @@ public class CisBidPackageTest extends CISTestUtil {
     @TestRail(id = {14371})
     @Description("Create Bid Package empty name")
     public void testCreateBidPackageWithExistingName() {
-        String packageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String packageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         BidPackageResponse createBidPackageResponse = CisBidPackageResources.createBidPackage(packageName, currentUser);
 
         softAssertions.assertThat(createBidPackageResponse.getName()).isEqualTo(packageName);
