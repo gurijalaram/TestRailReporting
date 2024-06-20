@@ -67,7 +67,7 @@ public class CasIdentityProvidersTests extends TestUtil {
     @TestRail(id = {5646, 5647})
     @Description("Get IDPs for customer and get IDP by identity")
     public void getIdpCustomer() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         setCustomerData();
 
         ResponseWrapper<IdentityProviderResponse> postResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);

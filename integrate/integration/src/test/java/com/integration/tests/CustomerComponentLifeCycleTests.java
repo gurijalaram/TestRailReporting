@@ -41,14 +41,14 @@ public class CustomerComponentLifeCycleTests extends TestBaseUI {
 
         GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
-        final String exportSetName = generateStringUtil.generateStringForAutomationMark("SetName");
+        final String exportSetName = generateStringUtil.generateStringForAutomation("SetName");
 
         new AdminLoginPage(driver)
             .loginWithSpecificUser(component.getUser())
             .navigateToManageScenarioExport()
             .clickNewScenarioExport()
             .insertSetNameValue(exportSetName)
-            .insertDescriptionValue(generateStringUtil.generateStringForAutomationMark("Description"))
+            .insertDescriptionValue(generateStringUtil.generateStringForAutomation("Description"))
             .insertNamePartValue(component.getComponentName())
             .selectComponentType("Part")
             .insertScenarioName(publishedScenarioResponse.getScenarioName())

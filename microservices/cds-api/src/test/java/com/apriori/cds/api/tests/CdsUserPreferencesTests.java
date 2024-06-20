@@ -85,7 +85,7 @@ public class CdsUserPreferencesTests {
     @Description("Updates an existing user preference by identity")
     public void updateUserPreference() {
         setCustomerData();
-        String updatedPreference = generateStringUtil.getRandomString();
+        String updatedPreference = generateStringUtil.getRandomStringSpecLength(8);
 
         ResponseWrapper<UserPreference> newPreference = cdsTestUtil.addUserPreference(customerIdentity, userIdentity);
         String preferenceIdentity = newPreference.getResponseEntity().getIdentity();
@@ -107,7 +107,7 @@ public class CdsUserPreferencesTests {
     @Description("Adds or Replaces a UserPreference for a user")
     public void putUserPreference() {
         setCustomerData();
-        String preferenceName = generateStringUtil.getRandomString();
+        String preferenceName = generateStringUtil.getRandomStringSpecLength(8);
 
         ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.putUserPreference(customerIdentity, userIdentity, preferenceName);
 

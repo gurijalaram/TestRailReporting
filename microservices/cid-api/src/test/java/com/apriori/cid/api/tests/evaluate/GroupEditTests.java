@@ -78,7 +78,7 @@ public class GroupEditTests {
     @TestRail(id = {10947, 10948})
     @Description("Edit public sub-component with no Private counterparts")
     public void testEditPublicSubcomponentWithNoPrivateCounterpart() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
@@ -109,7 +109,7 @@ public class GroupEditTests {
     @TestRail(id = {10949})
     @Description("Edit multiple public sub-components with no Private counterparts (Overwrite)")
     public void testGroupEditPublicSubcomponentsOverride() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -143,8 +143,8 @@ public class GroupEditTests {
     @TestRail(id = {10950})
     @Description("Edit multiple public sub-components with no Private counterparts (Create)")
     public void testGroupEditPublicSubcomponentsRename() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -182,7 +182,7 @@ public class GroupEditTests {
     @TestRail(id = {10951})
     @Description("Edit public sub-component with Private counterpart (Overwrite)")
     public void testEditPublicSubcomponentOverride() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Arrays.asList(chargerBase);
 
@@ -222,8 +222,8 @@ public class GroupEditTests {
     @TestRail(id = {10952})
     @Description("Edit public sub-component with Private counterpart (Create)")
     public void testEditPublicSubcomponentRename() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Arrays.asList(chargerBase);
 
@@ -263,7 +263,7 @@ public class GroupEditTests {
     @TestRail(id = {10953})
     @Description("Edit multiple public sub-components with Private counterparts (Overwrite)")
     public void testGroupEditPublicSubcomponentsWithPrivateCounterpartOverride() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -301,8 +301,8 @@ public class GroupEditTests {
     @TestRail(id = {10954})
     @Description("Edit multiple public sub-components with Private counterparts (Create)")
     public void testGroupEditPublicSubcomponentsWithPrivateCounterpartRename() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -340,7 +340,7 @@ public class GroupEditTests {
     @TestRail(id = {10955})
     @Description("Attempt to edit a sub-component that does not exist")
     public void testEditSubcomponentThatDoesNotExist() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         final List<String> subComponentNames = Arrays.asList(chargerBase, chargerLead);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 

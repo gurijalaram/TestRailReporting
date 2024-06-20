@@ -39,7 +39,7 @@ public class ActiveDimensionsByScenarioIterationKeyTests extends TestUtil {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile(
                 "CreatePartData.json"

@@ -8,7 +8,7 @@ import org.assertj.core.api.SoftAssertions;
 
 public abstract class SiteVariableUtil extends ProcessGroupUtil {
 
-    protected static final String updatedName = new GenerateStringUtil().generateSiteName();
+    protected static final String updatedName = new GenerateStringUtil().generateAlphabeticString("Site", 5);
     protected static final String updatedType = "STRING";
     protected static final String updatedValue = "UpdatedValue";
     protected static final String updatedNotes = "UpdatedNotes";

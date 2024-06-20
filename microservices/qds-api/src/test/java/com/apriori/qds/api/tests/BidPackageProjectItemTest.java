@@ -48,7 +48,7 @@ public class BidPackageProjectItemTest extends QdsApiTestUtils {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         userContext = new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail());
         scenarioItem = new CssComponent().getBaseCssComponents(currentUser).get(0);
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, userContext);
@@ -154,7 +154,7 @@ public class BidPackageProjectItemTest extends QdsApiTestUtils {
     @TestRail(id = {13416})
     @Description("Create  Bid Package Project Item with out bid Package")
     public void createProjectItemWithoutBidPackage() {
-        String bpName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bpName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         BidPackageResponse bpResponse = BidPackageResources.createBidPackage(bpName, userContext);
         BidPackageProjectResponse bppResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), bpResponse.getIdentity(), currentUser);
         BidPackageItemResponse bpiResponse = BidPackageResources.createBidPackageItem(
@@ -252,7 +252,7 @@ public class BidPackageProjectItemTest extends QdsApiTestUtils {
     @TestRail(id = {13736, 13739})
     @Description("Create and Delete Project Item by Admin")
     public void createProjectItemByAdmin() {
-        String packageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String packageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         BidPackageResponse packageResponse = BidPackageResources.createBidPackage(packageName, userContext);
         BidPackageProjectResponse packageProjectResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), packageResponse.getIdentity(), currentUser);
         BidPackageItemResponse packageItemResponse = BidPackageResources.createBidPackageItem(

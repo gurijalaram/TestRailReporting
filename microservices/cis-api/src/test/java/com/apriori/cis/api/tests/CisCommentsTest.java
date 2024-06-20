@@ -49,7 +49,7 @@ public class CisCommentsTest extends CISTestUtil {
         softAssertions = new SoftAssertions();
         emailAddressList = new ArrayList<>();
         emailAddressList.add(componentInfoBuilder.getUser().getEmail());
-        commentContent = new GenerateStringUtil().getRandomString();
+        commentContent = new GenerateStringUtil().getRandomStringSpecLength(12);
         scenarioDiscussionResponse = CisDiscussionResources.createInternalDiscussion(CisDiscussionResources.getDiscussionRequestBuilder(),
             componentInfoBuilder.getComponentIdentity(),
             componentInfoBuilder.getScenarioIdentity(),
@@ -97,7 +97,7 @@ public class CisCommentsTest extends CISTestUtil {
     @Description("Create Internal comment, Update comment, Get All comments and Delete discussion")
     public void createUpdateAndDeleteInternalComment() {
         InternalCommentRequest internalCommentRequest = CisCommentResources.getCommentRequestBuilder(commentContent, emailAddressList);
-        String updateContent = new GenerateStringUtil().getRandomString();
+        String updateContent = new GenerateStringUtil().getRandomStringSpecLength(12);
 
         DiscussionCommentResponse discussionCommentResponse = CisCommentResources.createInternalComment(internalCommentRequest,
             scenarioDiscussionResponse.getComponentIdentity(),

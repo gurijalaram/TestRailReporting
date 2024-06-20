@@ -46,7 +46,7 @@ public class AdditionalMappingsTest {
         final String assemblyName = "79d-083-110000";
         final File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, partName + ".SLDPRT");
         final File assemblyFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         QueryParams partQueryParams = new QueryParams()
             .use(PartFieldsEnum.ANNUAL_VOLUME.getPartFieldName(), "1000")
@@ -97,7 +97,7 @@ public class AdditionalMappingsTest {
         final String assemblyName = "79d-083-110000";
         final File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, partName + ".SLDPRT");
         final File assemblyFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         QueryParams partQueryParams = new QueryParams()
             .use(PartFieldsEnum.ANNUAL_VOLUME.getPartFieldName(), "1000")
@@ -150,7 +150,7 @@ public class AdditionalMappingsTest {
     public void createBatchWithTargetCostAndMassString() {
         final String partName = "79d-083-111000";
         final File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, partName + ".SLDPRT");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         QueryParams partQueryParams = new QueryParams()
             .use(PartFieldsEnum.ANNUAL_VOLUME.getPartFieldName(), "1000")
@@ -174,7 +174,7 @@ public class AdditionalMappingsTest {
     public void createBatchWithSupportedMachiningMode() {
         final String partName = "hinge_1";
         final File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ADDITIVE_MANUFACTURING, partName + ".prt.1");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         QueryParams partQueryParams = new QueryParams()
             .use(PartFieldsEnum.ANNUAL_VOLUME.getPartFieldName(), "1000")
@@ -203,7 +203,7 @@ public class AdditionalMappingsTest {
     public void createBatchWithSupportedNotMachined() {
         final String partName = "hinge_1";
         final File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ADDITIVE_MANUFACTURING, partName + ".prt.1");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         QueryParams partQueryParams = new QueryParams()
             .use(PartFieldsEnum.ANNUAL_VOLUME.getPartFieldName(), "1000")
@@ -232,7 +232,7 @@ public class AdditionalMappingsTest {
     public void createBatchWithNotSupportedMachiningMode() {
         final String partName = "79d-083-111000";
         final File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, partName + ".SLDPRT");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         QueryParams partQueryParams = new QueryParams()
             .use(PartFieldsEnum.ANNUAL_VOLUME.getPartFieldName(), "1000")
@@ -264,7 +264,7 @@ public class AdditionalMappingsTest {
     public void createBatchWithInvalidMachiningMode() {
         final String partName = "hinge_1";
         final File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ADDITIVE_MANUFACTURING, partName + ".prt.1");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         QueryParams partQueryParams = new QueryParams()
             .use(PartFieldsEnum.ANNUAL_VOLUME.getPartFieldName(), "1000")
@@ -293,7 +293,7 @@ public class AdditionalMappingsTest {
     public void createBatchWithNullMachiningMode() {
         final String partName = "hinge_1";
         final File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.ADDITIVE_MANUFACTURING, partName + ".prt.1");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         QueryParams partQueryParams = new QueryParams()
             .use(PartFieldsEnum.ANNUAL_VOLUME.getPartFieldName(), "1000")

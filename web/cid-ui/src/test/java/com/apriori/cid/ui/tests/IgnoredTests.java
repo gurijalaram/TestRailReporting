@@ -33,8 +33,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-
 public class IgnoredTests extends TestBaseUI {
 
     private CidAppLoginPage loginPage;
@@ -55,7 +53,7 @@ public class IgnoredTests extends TestBaseUI {
     @TestRail(id = {5950, 5951, 5952})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
-        String testNewScenarioName = generateStringUtil.generateScenarioName();
+        String testNewScenarioName = generateStringUtil.generateStringForAutomation("Scenario");
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
 
@@ -91,7 +89,7 @@ public class IgnoredTests extends TestBaseUI {
     @TestRail(id = {6210, 5435, 6735})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
-        String scenarioNameB = new GenerateStringUtil().generateScenarioName();
+        String scenarioNameB = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
 
@@ -124,7 +122,7 @@ public class IgnoredTests extends TestBaseUI {
     @TestRail(id = {6212})
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.POWDER_METAL);
 
