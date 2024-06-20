@@ -487,7 +487,7 @@ public abstract class SDSTestUtil extends TestUtil {
      * @param componentInfoBuilder - the component info builder object
      * @return - scenario object
      */
-    public  <T> ResponseWrapper<Scenario> publishAssembly(ComponentInfoBuilder componentInfoBuilder, Class<T> klass, Integer expectedResponseCode) {
+    protected <T> ResponseWrapper<Scenario> publishAssembly(ComponentInfoBuilder componentInfoBuilder, Class<T> klass, Integer expectedResponseCode) {
         PublishRequest shallowPublishRequest = PublishRequest.builder()
             .assignedTo(new PeopleUtil().getCurrentUser(componentInfoBuilder.getUser()).getIdentity())
             .override(false)
