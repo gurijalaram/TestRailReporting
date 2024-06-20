@@ -30,8 +30,6 @@ public class PublishAssembliesTests extends SDSTestUtil {
     public void testShallowPublishAssembly() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        log.info("test name - testShallowPublishAssembly, scenario name {} and user {}", scenarioName, testingUser.getEmail());
-
         final String FLANGE = "flange";
         final String NUT = "nut";
         final String BOLT = "bolt";
@@ -66,8 +64,6 @@ public class PublishAssembliesTests extends SDSTestUtil {
     @Description("Verify that an error is returned if Shallow Publish is requested when associated sub-component scenarios still exist in private workspace, through SDS api")
     public void testShallowPublishAssemblyWithPrivateSubcomponents() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        log.info("test name - testShallowPublishAssemblyWithPrivateSubcomponents, scenario name {} and user {}", scenarioName, testingUser.getEmail());
 
         final String FLANGE = "flange";
         final String NUT = "nut";

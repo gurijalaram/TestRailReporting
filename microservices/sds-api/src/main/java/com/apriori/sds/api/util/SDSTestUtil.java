@@ -55,7 +55,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class SDSTestUtil extends TestUtil {
+public abstract class SDSTestUtil extends TestUtil {
 
     protected static UserCredentials testingUser;
 
