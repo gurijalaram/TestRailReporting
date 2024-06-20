@@ -71,11 +71,11 @@ public class CdsInstallationsTests {
     public void addCustomerInstallation() {
         String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
+        String salesForceId = generateStringUtil.generateNumericString("SFID", 10);
         String emailPattern = "\\S+@".concat(customerName);
         String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
-        String realmKey = generateStringUtil.generateRealmKey();
+        String realmKey = generateStringUtil.generateNumericString("RealmKey", 26);
         String customerType = Constants.CLOUD_CUSTOMER;
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
@@ -118,11 +118,11 @@ public class CdsInstallationsTests {
     public void getInstallationByIdentity() {
         String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
+        String salesForceId = generateStringUtil.generateNumericString("SFID", 10);
         String emailPattern = "\\S+@".concat(customerName);
         String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
-        String realmKey = generateStringUtil.generateRealmKey();
+        String realmKey = generateStringUtil.generateNumericString("RealmKey", 26);
         String customerType = Constants.CLOUD_CUSTOMER;
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
@@ -171,11 +171,11 @@ public class CdsInstallationsTests {
     public void patchInstallationByIdentity() {
         String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
-        String salesForceId = generateStringUtil.generateSalesForceId();
+        String salesForceId = generateStringUtil.generateNumericString("SFID", 10);
         String emailPattern = "\\S+@".concat(customerName);
         String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
-        String realmKey = generateStringUtil.generateRealmKey();
+        String realmKey = generateStringUtil.generateNumericString("RealmKey", 26);
         String customerType = Constants.CLOUD_CUSTOMER;
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);

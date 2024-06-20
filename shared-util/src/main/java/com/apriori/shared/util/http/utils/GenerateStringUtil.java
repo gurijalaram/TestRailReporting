@@ -109,13 +109,15 @@ public class GenerateStringUtil {
     }
 
     /**
-     * Generates a salesforceID for API
+     * Generates a numeric string for API
      *
+     * @param marker - data marker
+     * @param length - length of string
      * @return string
      */
     @Attachment
-    public String generateSalesForceId() {
-        return "AutoSFID" + RandomStringUtils.randomNumeric(10);
+    public String generateNumericString(String marker, int length) {
+        return String.format("Auto%s%s", marker, RandomStringUtils.randomNumeric(length));
     }
 
     /**
@@ -125,7 +127,9 @@ public class GenerateStringUtil {
      */
     @Attachment
     public String generateCloudReference() {
-        return "autocloudref" + RandomStringUtils.randomAlphabetic(4).toLowerCase();
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+        String strDate = dateFormat.format(Calendar.getInstance().getTime());
+        return "cr" + strDate;
     }
 
     /**
@@ -146,16 +150,6 @@ public class GenerateStringUtil {
     @Attachment
     public String generateSiteID() {
         return "Auto" + UUID.randomUUID().toString().replace("-", "");
-    }
-
-    /**
-     * Generates a realmkey for API
-     *
-     * @return string
-     */
-    @Attachment
-    public String generateRealmKey() {
-        return "AutoRealmKey" + RandomStringUtils.randomNumeric(26);
     }
 
     /**

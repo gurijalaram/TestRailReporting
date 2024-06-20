@@ -37,7 +37,7 @@ public class CdsGetCustomerTests {
     public void setDetails() {
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
-        salesForceId = generateStringUtil.generateSalesForceId();
+        salesForceId = generateStringUtil.generateNumericString("SFID", 10);
         emailPattern = "\\S+@".concat(customerName);
         updatedEmailPattern = "\\S+@".concat(generateStringUtil.generateAlphabeticString("Customer", 6));
         String customerType = Constants.CLOUD_CUSTOMER;

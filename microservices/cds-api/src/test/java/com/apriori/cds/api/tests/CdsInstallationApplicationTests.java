@@ -47,7 +47,7 @@ public class CdsInstallationApplicationTests {
     public void setDetails() {
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
-        salesForceId = generateStringUtil.generateSalesForceId();
+        salesForceId = generateStringUtil.generateNumericString("SFID", 10);
         emailPattern = "\\S+@".concat(customerName);
         String customerType = Constants.CLOUD_CUSTOMER;
 
@@ -89,7 +89,7 @@ public class CdsInstallationApplicationTests {
     @TestRail(id = {13183, 13184})
     @Description("Adds an application to an installation and deletes it")
     public void addApplicationToInstallation() {
-        String realmKey = generateStringUtil.generateRealmKey();
+        String realmKey = generateStringUtil.generateNumericString("RealmKey", 26);
         String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
 
         ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);

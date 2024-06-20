@@ -64,7 +64,7 @@ public class CasTestUtil extends TestUtil {
                 Customer.builder().name(name)
                     .cloudReference(cloudReference)
                     .description(description)
-                    .salesforceId(new GenerateStringUtil().generateSalesForceId())
+                    .salesforceId(new GenerateStringUtil().generateNumericString("SFID", 10))
                     .customerType("CLOUD_ONLY")
                     .active(true)
                     .mfaRequired(true)
@@ -284,7 +284,7 @@ public class CasTestUtil extends TestUtil {
         GenerateStringUtil generator = new GenerateStringUtil();
         return createCustomer(
             generator.generateAlphabeticString("Customer", 6),
-            generator.getRandomStringSpecLength(16).toLowerCase(),
+            generator.generateCloudReference(),
             generator.getRandomStringSpecLength(12),
             "apriori.com",
             "apriori.co.uk",
@@ -305,7 +305,7 @@ public class CasTestUtil extends TestUtil {
         Customer customer = Customer.builder().name(name)
             .cloudReference(cloudReference)
             .description(description)
-            .salesforceId(new GenerateStringUtil().generateSalesForceId())
+            .salesforceId(new GenerateStringUtil().generateNumericString("SFID", 10))
             .customerType("CLOUD_ONLY")
             .active(true)
             .mfaRequired(true)
@@ -446,7 +446,7 @@ public class CasTestUtil extends TestUtil {
                     .name(name)
                     .cloudReference(null)
                     .description(generator.getRandomStringSpecLength(12))
-                    .salesforceId(generator.generateSalesForceId())
+                    .salesforceId(generator.generateNumericString("SFID", 10))
                     .customerType("ON_PREMISE_ONLY")
                     .active(true)
                     .mfaRequired(false)
