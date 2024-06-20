@@ -5,13 +5,12 @@ import com.apriori.sds.api.models.response.Scenario;
 import com.apriori.sds.api.util.SDSTestUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @ExtendWith(TestRulesAPI.class)
 public class PublishAssembliesTests extends SDSTestUtil {
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
@@ -29,7 +29,8 @@ public class PublishAssembliesTests extends SDSTestUtil {
     @Description("Verify Shallow Publish through SDS api")
     public void testShallowPublishAssembly() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        UserCredentials testingUser = UserUtil.getUser();
+
+        log.info("test name - testShallowPublishAssembly, scenario name {} and user {}", scenarioName, testingUser.getEmail());
 
         final String FLANGE = "flange";
         final String NUT = "nut";
@@ -65,7 +66,8 @@ public class PublishAssembliesTests extends SDSTestUtil {
     @Description("Verify that an error is returned if Shallow Publish is requested when associated sub-component scenarios still exist in private workspace, through SDS api")
     public void testShallowPublishAssemblyWithPrivateSubcomponents() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        UserCredentials testingUser = UserUtil.getUser();
+
+        log.info("test name - testShallowPublishAssemblyWithPrivateSubcomponents, scenario name {} and user {}", scenarioName, testingUser.getEmail());
 
         final String FLANGE = "flange";
         final String NUT = "nut";

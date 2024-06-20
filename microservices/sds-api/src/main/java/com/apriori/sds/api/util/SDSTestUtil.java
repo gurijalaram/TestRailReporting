@@ -26,13 +26,11 @@ import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
-import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.Application;
@@ -57,7 +55,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public abstract class SDSTestUtil extends TestUtil {
+public class SDSTestUtil extends TestUtil {
 
     protected static UserCredentials testingUser;
 
@@ -489,15 +487,14 @@ public abstract class SDSTestUtil extends TestUtil {
      * @param componentInfoBuilder - the component info builder object
      * @return - scenario object
      */
-    protected <T> ResponseWrapper<Scenario> publishAssembly(ComponentInfoBuilder componentInfoBuilder, Class<T> klass, Integer expectedResponseCode) {
+    public  <T> ResponseWrapper<Scenario> publishAssembly(ComponentInfoBuilder componentInfoBuilder, Class<T> klass, Integer expectedResponseCode) {
         PublishRequest shallowPublishRequest = PublishRequest.builder()
             .assignedTo(new PeopleUtil().getCurrentUser(componentInfoBuilder.getUser()).getIdentity())
             .override(false)
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil_Old.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
-                .apUserContext(new AuthUserContextUtil().getAuthUserContext(componentInfoBuilder.getUser().getEmail()))
+            requestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", shallowPublishRequest)
                 .expectedResponseCode(expectedResponseCode);
