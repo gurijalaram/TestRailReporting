@@ -325,7 +325,7 @@ public class ScenariosUtil {
      * @param componentName - component name
      * @return response object
      */
-    public ScenarioSuccessesFailures postEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentName) {
+    public List<ComponentInfoBuilder> postEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentName) {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
         //iterate the assembly, filter by subcomponent and set the component/scenario Id
@@ -338,6 +338,8 @@ public class ScenariosUtil {
                 .get();
 
             subComponentInfo.add(ComponentInfoBuilder.builder()
+                .componentName(component)
+                .scenarioName(componentInfo.getScenarioName())
                 .componentIdentity(componentIdentifier.getComponentIdentity())
                 .scenarioIdentity(componentIdentifier.getScenarioIdentity())
                 .build());
@@ -361,16 +363,28 @@ public class ScenariosUtil {
         ResponseWrapper<ScenarioSuccessesFailures> response = HTTPRequest.build(requestEntity).post();
 
         //query css and set the new scenario Id
-        Arrays.stream(componentName).forEach(component -> {
+//        Arrays.stream(componentName).forEach(component -> {
+//            ScenarioItem scenarioItem = cssComponent.getComponentParts(componentInfo.getUser(),
+//                    COMPONENT_NAME_EQ.getKey() + component, SCENARIO_NAME_EQ.getKey() + componentInfo.getScenarioName(),
+//                    CssSearch.SCENARIO_PUBLISHED_EQ.getKey() + false).stream()
+//                .findFirst().get();
+//
+//            componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(component))
+//                .forEach(x -> x.setScenarioIdentity(scenarioItem.getScenarioIdentity()));
+//        });
+
+        //ToDo:- replace above with creation of a list of fresh ComponentInfoBuilders for edited scenarios
+        // subComponentInfo already created so just update scenario IDs for each component and then return that list
+        subComponentInfo.forEach(component -> {
             ScenarioItem scenarioItem = cssComponent.getComponentParts(componentInfo.getUser(),
-                    COMPONENT_NAME_EQ.getKey() + component, SCENARIO_NAME_EQ.getKey() + componentInfo.getScenarioName(),
+                    COMPONENT_NAME_EQ.getKey() + component.getComponentName(), SCENARIO_NAME_EQ.getKey() + componentInfo.getScenarioName(),
                     CssSearch.SCENARIO_PUBLISHED_EQ.getKey() + false).stream()
                 .findFirst().get();
 
-            componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(component))
-                .forEach(x -> x.setScenarioIdentity(scenarioItem.getScenarioIdentity()));
+            component.setScenarioIdentity(scenarioItem.getScenarioIdentity());
         });
-        return response.getResponseEntity();
+
+        return subComponentInfo;
     }
 
     /**
