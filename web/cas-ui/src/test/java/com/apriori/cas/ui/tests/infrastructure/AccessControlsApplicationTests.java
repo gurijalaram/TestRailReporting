@@ -65,7 +65,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
 
-        customerName = generateStringUtil.generateCustomerName();
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
