@@ -65,8 +65,8 @@ public class GroupPublishTests {
     @TestRail(id = {11851, 11852})
     @Description("Publish a single private sub-component with no public counterpart")
     public void testGroupPublishPrivateSubcomponent() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Arrays.asList(chargerBase, chargerLead);
 
@@ -100,8 +100,8 @@ public class GroupPublishTests {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName, LAST_ACTION_EQ.getKey() + " publish")
-            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(publicWorkspace));
+        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName, LAST_ACTION_EQ.getKey() + " PUBLISH")
+            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(publicWorkspace));
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -119,7 +119,7 @@ public class GroupPublishTests {
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, componentAssembly, chargerLead);
 
         cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerLead, SCENARIO_NAME_EQ.getKey() + newScenarioName, LAST_ACTION_EQ.getKey() + "PUBLISH")
-            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(publicWorkspace));
+            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(publicWorkspace));
 
         softAssertions.assertAll();
     }
@@ -128,7 +128,7 @@ public class GroupPublishTests {
     @TestRail(id = {11853})
     @Description("Publish a multiple private sub-components with no public counterpart")
     public void testGroupPublishPrivateSubcomponents() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -161,8 +161,8 @@ public class GroupPublishTests {
         SoftAssertions softAssertions = new SoftAssertions();
 
         subComponentNames.forEach(componentName ->
-            cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, LAST_ACTION_EQ.getKey() + " publish")
-                .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
+            cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, LAST_ACTION_EQ.getKey() + " PUBLISH")
+                .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
 
         softAssertions.assertAll();
     }
@@ -171,8 +171,8 @@ public class GroupPublishTests {
     @TestRail(id = {11854})
     @Description("Publish multiple private sub-components with no public counterparts Setting Override to false and supplying a scenario name")
     public void testGroupPublishPrivateSubcomponentsFalseOverride() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -207,12 +207,12 @@ public class GroupPublishTests {
 
         subComponentNames.forEach(componentName ->
             cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() +
-                    newScenarioName, LAST_ACTION_EQ.getKey() + " publish")
-                .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
+                    newScenarioName, LAST_ACTION_EQ.getKey() + " PUBLISH")
+                .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
 
         subComponentNames.forEach(componentName -> cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName,
                 SCENARIO_NAME_EQ.getKey() + newScenarioName)
-            .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isNotEqualTo(user.getCustomAttributes().getWorkspaceId())));
+            .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isNotEqualTo(user.getCustomAttributes().getWorkspaceId())));
 
         softAssertions.assertAll();
     }
@@ -221,7 +221,7 @@ public class GroupPublishTests {
     @TestRail(id = {11855})
     @Description("Publish private sub-component with public counterpart Setting Override to true")
     public void testGroupPublishPrivateSubcomponentTrueOverride() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
@@ -273,7 +273,7 @@ public class GroupPublishTests {
 
         softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName)
                 .stream()
-                .noneMatch(o -> o.getScenarioIterationKey().getWorkspaceId().equals(user.getCustomAttributes().getWorkspaceId())))
+                .noneMatch(o -> o.getScenarioIterationKey().getScenarioKey().getWorkspaceId().equals(user.getCustomAttributes().getWorkspaceId())))
             .isTrue();
 
         softAssertions.assertAll();
@@ -283,8 +283,8 @@ public class GroupPublishTests {
     @TestRail(id = {11856})
     @Description("Publish private sub-component with public counterpart Setting Override to false")
     public void testGroupPublishPrivateSubcomponentFalseOverride() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Arrays.asList(chargerBase);
 
@@ -342,11 +342,11 @@ public class GroupPublishTests {
 
         cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + scenarioName,
                 ITERATION_EQ.getKey() + " 1", LATEST_EQ.getKey() + "true")
-            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(publicWorkspace));
+            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(publicWorkspace));
 
         cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + chargerBase, SCENARIO_NAME_EQ.getKey() + newScenarioName,
                 ITERATION_EQ.getKey() + " 1", LATEST_EQ.getKey() + "true")
-            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(publicWorkspace));
+            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(publicWorkspace));
 
         softAssertions.assertAll();
     }
@@ -355,7 +355,7 @@ public class GroupPublishTests {
     @TestRail(id = {11857})
     @Description("Publish multiple private sub-components with public counterparts Setting Override to true")
     public void testGroupPublishPrivateSubcomponentsTrueOverride() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -410,12 +410,12 @@ public class GroupPublishTests {
         subComponentNames.forEach(subComponent ->
             cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName, ITERATION_EQ.getKey() + " 1",
                     LATEST_EQ.getKey() + " false")
-                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
+                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
 
         subComponentNames.forEach(subComponent ->
             cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName, ITERATION_EQ.getKey() + " 2",
                     LATEST_EQ.getKey() + " true")
-                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
+                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
 
         softAssertions.assertAll();
     }
@@ -424,8 +424,8 @@ public class GroupPublishTests {
     @TestRail(id = {11858})
     @Description("Publish multiple private sub-components with public counterparts Setting Override to false and supplying a scenario name")
     public void testGroupPublishPrivateSubcomponentsFalseOverrideNewScenario() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -481,12 +481,12 @@ public class GroupPublishTests {
         subComponentNames.forEach(subComponent ->
             cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName2, ITERATION_EQ.getKey() + " 1",
                     LATEST_EQ.getKey() + " true")
-                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
+                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
 
         subComponentNames.forEach(subComponent ->
             cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName2, ITERATION_EQ.getKey() + " 1",
                     LATEST_EQ.getKey() + " true")
-                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
+                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getScenarioKey().getWorkspaceId()).isEqualTo(publicWorkspace)));
 
         softAssertions.assertAll();
     }
@@ -495,8 +495,8 @@ public class GroupPublishTests {
     @TestRail(id = {11859})
     @Description("Attempt to use pre-existing scenario name for public component when publishing with create new option")
     public void testGroupPublishPrivateSubAttemptExistingScenarioName() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
@@ -577,7 +577,7 @@ public class GroupPublishTests {
     @TestRail(id = {11935})
     @Description("Attempt to use publish a public scenario")
     public void testAttemptPublishPublic() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
@@ -641,7 +641,7 @@ public class GroupPublishTests {
     @TestRail(id = {11936})
     @Description("Attempt to publish a scenario that does not exist (incorrect scenario name or component name)")
     public void testAttemptPublicScenarioNotExist() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Collections.singletonList(chargerBase);
 

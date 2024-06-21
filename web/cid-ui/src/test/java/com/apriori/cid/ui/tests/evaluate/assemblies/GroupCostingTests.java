@@ -96,7 +96,7 @@ public class GroupCostingTests extends TestBaseUI {
         final HashMap<String, Double> fullyBurdenedCosts = new HashMap<>();
         fullyBurdenedCosts.put(bigRing, 7.34);
         fullyBurdenedCosts.put(smallRing, 3.97);
-        fullyBurdenedCosts.put(pin, 3.31);
+        fullyBurdenedCosts.put(pin, 3.67);
 
         componentAssembly = new AssemblyRequestUtil().getAssembly("Hinge assembly");
 

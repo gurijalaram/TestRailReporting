@@ -61,7 +61,7 @@ public class CmpComparisonTests {
     @TestRail(id = {26152, 26183, 26184, 26185, 26186, 26187})
     @Description("Verify comparison for a given user")
     public void verifyComparisonForGivenUser() {
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         ComponentInfoBuilder componentA = new ComponentRequestUtil().getComponent();
         ComponentInfoBuilder componentB = new ComponentRequestUtil().getComponent();

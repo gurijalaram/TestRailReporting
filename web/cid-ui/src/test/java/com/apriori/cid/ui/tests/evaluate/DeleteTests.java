@@ -36,7 +36,7 @@ public class DeleteTests extends TestBaseUI {
     @TestRail(id = {6736, 5431})
     @Description("Test a private scenario can be deleted from the component table")
     public void testDeletePrivateScenario() {
-        String filterName = new GenerateStringUtil().generateFilterName();
+        String filterName = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.WITHOUT_PG);
 
@@ -62,7 +62,7 @@ public class DeleteTests extends TestBaseUI {
     @TestRail(id = {7709})
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
-        String filterName = new GenerateStringUtil().generateFilterName();
+        String filterName = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.WITHOUT_PG);
 
@@ -96,7 +96,7 @@ public class DeleteTests extends TestBaseUI {
     @TestRail(id = {5432, 6730})
     @Description("Test a private scenario can be deleted from the evaluate view")
     public void testDeletePrivateScenarioEvaluate() {
-        String filterName = new GenerateStringUtil().generateFilterName();
+        String filterName = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.WITHOUT_PG);
 
@@ -119,7 +119,7 @@ public class DeleteTests extends TestBaseUI {
     @TestRail(id = {13306})
     @Description("Test a public scenario can be deleted from the evaluate view")
     public void testDeletePublicScenarioEvaluate() {
-        String filterName = new GenerateStringUtil().generateFilterName();
+        String filterName = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.WITHOUT_PG);
 
@@ -150,7 +150,7 @@ public class DeleteTests extends TestBaseUI {
     @TestRail(id = {6737, 6738})
     @Description("Test an edited private scenario and the original public scenario, which is locked, can be deleted from the evaluate view")
     public void testDeletePublicAndPrivateScenarios() {
-        String filterName = new GenerateStringUtil().generateFilterName();
+        String filterName = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.WITHOUT_PG);
 

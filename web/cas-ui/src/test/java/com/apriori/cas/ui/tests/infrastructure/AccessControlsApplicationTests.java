@@ -72,14 +72,14 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         customerIdentity = targetCustomer.getIdentity();
         userCreation = new UserCreation();
         sourceUsers = userCreation.populateStaffTestUsers(2, customerIdentity, customerName);
-        String siteName = generateStringUtil.generateSiteName();
+        String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
-        String deploymentName = generateStringUtil.generateDeploymentName();
+        String deploymentName = generateStringUtil.generateAlphabeticString("Deployment", 3);
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
-        String realmKey = generateStringUtil.generateRealmKey();
+        String realmKey = generateStringUtil.generateNumericString("RealmKey", 26);
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> newApplication = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();

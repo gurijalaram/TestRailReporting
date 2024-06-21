@@ -50,7 +50,7 @@ public class CdsIdentityProvidersTests {
     @Description("Create an Identity provider for a customer")
     public void postCustomerIdentityProviders() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
         ResponseWrapper<IdentityProviderResponse> samlResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         soft.assertThat(samlResponse.getResponseEntity().getIdentity()).isNotNull();
@@ -64,7 +64,7 @@ public class CdsIdentityProvidersTests {
     @Description("Update Identity provider for a customer")
     public void patchCustomerIdentityProviders() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = response.getResponseEntity().getIdentity();
@@ -79,7 +79,7 @@ public class CdsIdentityProvidersTests {
     @Description("getIDP details by Identity")
     public void getIDPbyIdentity() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = response.getResponseEntity().getIdentity();
@@ -100,7 +100,7 @@ public class CdsIdentityProvidersTests {
     @Description("getIDP list for customer")
     public void getListOfIDPsForCustomer() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = response.getResponseEntity().getIdentity();

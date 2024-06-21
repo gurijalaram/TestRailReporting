@@ -54,7 +54,7 @@ public class CasBatchItemTests {
     @TestRail(id = {5671})
     @Description("Returns a list of batch items for the customer batch.")
     public void getBatchItems() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
@@ -82,7 +82,7 @@ public class CasBatchItemTests {
     @TestRail(id = {5672})
     @Description("Creates users from Batch by provided identities.")
     public void createBatchItems() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
@@ -103,7 +103,7 @@ public class CasBatchItemTests {
     @TestRail(id = {5674})
     @Description("Get the Batch Item identified by its identity.")
     public void getItemById() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
@@ -145,7 +145,7 @@ public class CasBatchItemTests {
     @TestRail(id = {5673})
     @Description("Update an existing Batch Item identified by its identity.")
     public void updateBatchItem() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";

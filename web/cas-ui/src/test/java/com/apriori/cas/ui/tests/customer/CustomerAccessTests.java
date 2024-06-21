@@ -42,7 +42,7 @@ public class CustomerAccessTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
-        customerName = new GenerateStringUtil().generateCustomerName();
+        customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         cloudRef = new GenerateStringUtil().generateCloudReference();
         String email = customerName.toLowerCase();
         UserCredentials currentUser = UserUtil.getUser();

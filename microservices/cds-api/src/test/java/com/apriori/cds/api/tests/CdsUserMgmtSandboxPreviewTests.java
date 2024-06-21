@@ -208,7 +208,7 @@ public class CdsUserMgmtSandboxPreviewTests {
         String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
         String deploymentSandboxIdentity = response.getResponseEntity().getIdentity();
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentSandboxIdentity, "Sandbox Installation", generateStringUtil.generateRealmKey(), generateStringUtil.generateCloudReference(), siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentSandboxIdentity, "Sandbox Installation", generateStringUtil.generateNumericString("RealmKey", 26), generateStringUtil.generateCloudReference(), siteIdentity, false);
         sandboxInstallationIdentity = installation.getResponseEntity().getIdentity();
 
         applicationUtil.addApplicationInstallation(customerIdentity, deploymentSandboxIdentity, sandboxInstallationIdentity, appIdentity, siteIdentity);
@@ -223,7 +223,7 @@ public class CdsUserMgmtSandboxPreviewTests {
         String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         String deploymentPreviewIdentity = response.getResponseEntity().getIdentity();
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentPreviewIdentity, "Preview Installation", generateStringUtil.generateRealmKey(), generateStringUtil.generateCloudReference(), siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentPreviewIdentity, "Preview Installation", generateStringUtil.generateNumericString("RealmKey", 26), generateStringUtil.generateCloudReference(), siteIdentity, false);
         previewInstallationIdentity = installation.getResponseEntity().getIdentity();
 
         applicationUtil.addApplicationInstallation(customerIdentity, deploymentPreviewIdentity, previewInstallationIdentity, appIdentity, siteIdentity);

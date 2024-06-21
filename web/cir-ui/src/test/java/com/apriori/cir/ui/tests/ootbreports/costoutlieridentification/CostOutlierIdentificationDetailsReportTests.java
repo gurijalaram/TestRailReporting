@@ -129,7 +129,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBaseUI {
         EvaluatePage evaluatePage = new ExplorePage(driver)
             .filter()
             .saveAs()
-            .inputName(new GenerateStringUtil().generateFilterName())
+            .inputName(new GenerateStringUtil().generateAlphabeticString("Filter", 6))
             .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, partName)
             .submit(ExplorePage.class)
             .openFirstScenario();

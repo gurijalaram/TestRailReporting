@@ -66,8 +66,8 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         applicationUtil = new ApplicationUtil(requestEntityUtil);
 
         String cloudRef = generateStringUtil.generateCloudReference();
-        String salesforce = generateStringUtil.generateSalesForceId();
-        customerName = generateStringUtil.generateCustomerName();
+        String salesforce = generateStringUtil.generateNumericString("SFID", 10);
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         userName = generateStringUtil.generateUserName();
         String email = "\\S+@".concat(customerName);
         String customerType = Constants.ON_PREM_CUSTOMER;
@@ -76,14 +76,14 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         customerIdentity = targetCustomer.getIdentity();
         user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
-        siteName = generateStringUtil.generateSiteName();
+        siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
-        deploymentName = generateStringUtil.generateDeploymentName();
+        deploymentName = generateStringUtil.generateAlphabeticString("Deployment", 3);
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
-        String realmKey = generateStringUtil.generateRealmKey();
+        String realmKey = generateStringUtil.generateNumericString("RealmKey", 26);
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> newApplication = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();

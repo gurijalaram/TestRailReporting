@@ -205,7 +205,7 @@ public class PlasticDtcReportTests extends TestBaseUI {
         EvaluatePage evaluatePage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
-                .inputName(new GenerateStringUtil().generateFilterName())
+                .inputName(new GenerateStringUtil().generateAlphabeticString("Filter", 6))
                 .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, partName)
                 .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
                 .submit(ExplorePage.class)

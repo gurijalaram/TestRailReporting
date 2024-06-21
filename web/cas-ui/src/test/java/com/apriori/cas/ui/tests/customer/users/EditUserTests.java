@@ -192,7 +192,7 @@ public class EditUserTests extends TestBaseUI {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        String customerName = new GenerateStringUtil().generateCustomerName();
+        String customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         email = customerName.toLowerCase();
         targetCustomer = cdsTestUtil.addCASCustomer(customerName, rcd.getCloudRef(), email, currentUser).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();

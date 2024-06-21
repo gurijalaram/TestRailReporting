@@ -101,7 +101,7 @@ public class ScenariosInfoTests extends TestUtil {
      * @return List of FileUploadOutputs - data to assert on
      */
     private List<FileUploadOutputs> fileUpload(List<String> fileNames) {
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 

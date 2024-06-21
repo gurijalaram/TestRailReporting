@@ -63,7 +63,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBaseUI {
         final String assemblyExtension = ".asm.1";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
-        scenarioName = new GenerateStringUtil().generateScenarioName();
+        scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         currentUser = UserUtil.getUser();
 
         componentAssembly1 = assemblyUtils.uploadsAndOpenAssembly(SUB_SUB_ASSEMBLY, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subSubComponentNames,
