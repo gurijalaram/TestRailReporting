@@ -680,6 +680,56 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
         softAssertions.assertAll();
     }
 
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("13920")
+    @TestRail(id = 13920)
+    @Description("Report generation - Large Rollup")
+    public void testReportGenerationLargeRollup() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(ExportSetEnum.SHEET_METAL_DTC.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.EUR.getCurrency());
+
+        JasperReportSummaryIncRawDataAsString jasperReportSummary = jasperReportUtil
+            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
+        String chartDataRawNoQuotes = jasperReportSummary.getChartDataRawAsString()
+            .replace("\"", "");
+
+        JasperReportSummary jasperReportSummaryNormal = jasperReportUtil
+            .generateJasperReportSummary(jasperApiUtils.getReportRequest());
+
+        softAssertions.assertThat(jasperReportSummaryNormal.getReportHtmlPart().toString().contains(RollupEnum.SHEET_METAL_DTC.getRollupName().replace(" (Initial)", ""))).isEqualTo(true);
+        ArrayList<String> partsToCheckFor = new ArrayList<>(
+            Arrays.asList(
+                "SM_CLEVIS_2207240161 (Bulkload)", "2980123_CLAMP (Bulkload)", "1684402TOP_BRACKET (Bulkload)", "2980123_LINK (Bulkload)",
+                "1684402BOT_BRACKET (Bulkload)", "1684402WEARPAD (Bulkload)", "2551580 (Bulkload)", "0903238 (Bulkload)", "0903237 (Bulkload)",
+                "2980123_MT_BRACKET (Bulkload)", "3575362 (Bulkload)", "1684443_OUTRIGGER_CAM (Bulkload)", "1100149 (Bulkload)",
+                "3575085 (Bulkload)", "3574854 (Bulkload)", "2840020_JACK_WHEEL_ATTACH_TR50 (Bulkload)", "3574855 (Bulkload)",
+                "3574908 (Bulkload)", "3574721 (Bulkload)", "3574719 (Bulkload)", "3574707 (Bulkload)", "3574688 (Bulkload)",
+                "3574716 (Bulkload)", "3574715 (Bulkload)", "3575137 (Bulkload)", "3575136 (Bulkload)", "1271576 (Bulkload)"));
+        for (String partName : partsToCheckFor) {
+            softAssertions.assertThat(chartDataRawNoQuotes.contains(partName)).isEqualTo(true);
+        }
+
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint(), JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.EUR.getCurrency());
+
+        JasperReportSummary jasperReportSummaryDetailsReport = jasperReportUtil
+            .generateJasperReportSummary(jasperApiUtils.getReportRequest());
+
+        softAssertions.assertThat(jasperReportSummaryDetailsReport.getReportHtmlPart().toString().contains(RollupEnum.SHEET_METAL_DTC.getRollupName().replace(" (Initial)", ""))).isEqualTo(true);
+        softAssertions.assertThat(jasperReportSummaryDetailsReport.getReportHtmlPart().getElementsByAttributeValue("style", "height:20px").size()).isGreaterThanOrEqualTo(43);
+
+        softAssertions.assertAll();
+    }
+
     private String getCurrencyFromHTML(JasperReportSummaryIncRawDataAsString jasperReportSummary) {
         return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(9).text();
     }
