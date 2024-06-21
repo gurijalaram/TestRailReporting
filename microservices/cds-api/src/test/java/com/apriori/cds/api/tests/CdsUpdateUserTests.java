@@ -5,7 +5,9 @@ import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -27,11 +29,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
-public class CdsUpdateUserTests extends CdsTestUtil {
-
+public class CdsUpdateUserTests {
     private final GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private final SoftAssertions soft = new SoftAssertions();
     private final List<User> createdUsers = new ArrayList<>();
+    private CdsTestUtil cdsTestUtil;
+
+    @BeforeEach
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+    }
 
     User generateTargetUser() {
 
@@ -41,7 +49,7 @@ public class CdsUpdateUserTests extends CdsTestUtil {
         String pattern = aprioriInternal.getEmailRegexPatterns().stream().findFirst().orElseThrow();
         String domain = pattern.replace("\\S+@", "").replace(".com", "");
 
-        ResponseWrapper<User> added = addUser(
+        ResponseWrapper<User> added = cdsTestUtil.addUser(
             aprioriInternal.getIdentity(),
             userName,
             domain
@@ -96,7 +104,7 @@ public class CdsUpdateUserTests extends CdsTestUtil {
     @AfterEach()
     public void cleanup() {
 
-        createdUsers.forEach(u -> delete(
+        createdUsers.forEach(u -> cdsTestUtil.delete(
             CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,
             u.getCustomerIdentity(),
             u.getIdentity()
@@ -112,7 +120,7 @@ public class CdsUpdateUserTests extends CdsTestUtil {
         ObjectNode user = createUserNode(null, enablements);
         User current = generateTargetUser();
 
-        User actual = patchUser(
+        User actual = cdsTestUtil.patchUser(
             User.class,
             current.getCustomerIdentity(),
             current.getIdentity(),
@@ -138,7 +146,7 @@ public class CdsUpdateUserTests extends CdsTestUtil {
         ObjectNode user = createUserNode(profile, null);
         User current = generateTargetUser();
 
-        User actual = patchUser(
+        User actual = cdsTestUtil.patchUser(
             User.class,
             current.getCustomerIdentity(),
             current.getIdentity(),
@@ -161,7 +169,7 @@ public class CdsUpdateUserTests extends CdsTestUtil {
         ObjectNode user = createUserNode(profile, enablements);
         User current = generateTargetUser();
 
-        User actual = patchUser(
+        User actual = cdsTestUtil.patchUser(
             User.class,
             current.getCustomerIdentity(),
             current.getIdentity(),
@@ -184,11 +192,11 @@ public class CdsUpdateUserTests extends CdsTestUtil {
     @TestRail(id = 29303)
     @Description("PATCH User request doesn't update enablements for CI Generate User")
     public void doNotUpdateCiGenerateEnablements() {
-        User ciGenerateUser = getUserByEmail("aPrioriCIGenerateUser@apriori.com").getResponseEntity().getItems().get(0);
+        User ciGenerateUser = cdsTestUtil.getUserByEmail("aPrioriCIGenerateUser@apriori.com").getResponseEntity().getItems().get(0);
         ObjectNode enablements = createEnablementsNode();
         ObjectNode user = createUserNode(null, enablements);
 
-        ErrorResponse updateEnablements = patchUser(
+        ErrorResponse updateEnablements = cdsTestUtil.patchUser(
             ErrorResponse.class,
             ciGenerateUser.getCustomerIdentity(),
             ciGenerateUser.getIdentity(),
@@ -205,11 +213,11 @@ public class CdsUpdateUserTests extends CdsTestUtil {
     @TestRail(id = 29302)
     @Description("PATCH User request doesn't update enablements for Service Accounts")
     public void doNotUpdateServiceAccountEnablements() {
-        User serviceAccountWidgets = getUserByEmail("widgets.service-account.1@apriori-cloud.net").getResponseEntity().getItems().get(0);
+        User serviceAccountWidgets = cdsTestUtil.getUserByEmail("widgets.service-account.1@apriori-cloud.net").getResponseEntity().getItems().get(0);
         ObjectNode enablements = createEnablementsNode();
         ObjectNode user = createUserNode(null, enablements);
 
-        ErrorResponse updateEnablements = patchUser(
+        ErrorResponse updateEnablements = cdsTestUtil.patchUser(
             ErrorResponse.class,
             serviceAccountWidgets.getCustomerIdentity(),
             serviceAccountWidgets.getIdentity(),

@@ -13,6 +13,8 @@ import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -29,20 +31,24 @@ import java.util.Arrays;
 import java.util.List;
 
 public class EditUserTests extends TestBaseUI {
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private static final String USER_NAME = new GenerateStringUtil().generateUserName();
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-
+    private CdsTestUtil cdsTestUtil;
+    private CustomerInfrastructure customerInfrastructure;
     private Customer targetCustomer;
     private CustomerWorkspacePage customerViewPage;
     private String customerIdentity;
     private String email;
     private String userIdentity;
     private UserProfilePage userProfilePage;
+    // TODO: 21/06/2024 cn - remove this var when refactoring
     private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+
         setCustomerData();
         userProfilePage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
