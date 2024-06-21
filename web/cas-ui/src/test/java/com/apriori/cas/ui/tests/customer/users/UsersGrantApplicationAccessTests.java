@@ -14,6 +14,7 @@ import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
@@ -44,6 +45,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
     private IdentityHolder licensedAppIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ApplicationUtil applicationUtil;
+    private CustomerUtil customerUtil;
     private CdsTestUtil cdsTestUtil;
     private Customer targetCustomer;
     private String customerIdentity;
@@ -64,6 +66,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
 
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesforce = generateStringUtil.generateNumericString("SFID", 10);
@@ -72,7 +75,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         String email = "\\S+@".concat(customerName);
         String customerType = Constants.ON_PREM_CUSTOMER;
 
-        targetCustomer = cdsTestUtil.addCustomer(customerName, customerType, null, salesforce, email).getResponseEntity();
+        targetCustomer = customerUtil.addCustomer(customerName, customerType, null, salesforce, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();

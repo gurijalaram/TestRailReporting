@@ -16,8 +16,8 @@ import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
@@ -47,13 +47,13 @@ import java.util.stream.Collectors;
 public class CustomerStaffTests extends TestBaseUI {
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private UsersListPage usersListPage;
     private String customerName;
     private List<User> sourceUsers;
     private String customerIdentity;
     private IdentityHolder deleteIdentityHolder;
     private SoftAssertions soft = new SoftAssertions();
-    private UserCredentials currentUser = UserUtil.getUser();
     private String siteIdentity;
     private String siteId;
     private String siteName;
@@ -63,6 +63,7 @@ public class CustomerStaffTests extends TestBaseUI {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
 
         setCustomerData();
         usersListPage = new CasLoginPage(driver)
@@ -355,7 +356,7 @@ public class CustomerStaffTests extends TestBaseUI {
         RandomCustomerData rcd = new RandomCustomerData();
         customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         String email = customerName.toLowerCase();
-        Customer targetCustomer = cdsTestUtil.addCASCustomer(customerName, rcd.getCloudRef(), email, currentUser).getResponseEntity();
+        Customer targetCustomer = customerUtil.addCASCustomer(customerName, rcd.getCloudRef(), email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
 
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);

@@ -12,7 +12,7 @@ import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -50,6 +50,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
     private Customer targetCustomer;
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private String customerIdentity;
     private String customerName;
     private UserCreation userCreation;
@@ -57,18 +58,18 @@ public class AccessControlsApplicationTests extends TestBaseUI {
     private String deploymentIdentity;
     private String installationIdentity;
     private String appIdentity;
-    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
 
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
+        targetCustomer = customerUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         userCreation = new UserCreation();
         sourceUsers = userCreation.populateStaffTestUsers(2, customerIdentity, customerName);

@@ -16,6 +16,8 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Customers;
 import com.apriori.shared.util.models.response.User;
@@ -46,6 +48,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
     private String customerIdentity;
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
+    private com.apriori.cds.api.utils.CustomerUtil customerUtil;
     private StaffPage staffPage;
     private SoftAssertions soft = new SoftAssertions();
     private UserCredentials currentUser = UserUtil.getUser();
@@ -57,7 +60,10 @@ public class UsersStaffAssociationTests extends TestBaseUI {
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         String email = STAFF_TEST_CUSTOMER.toLowerCase();
 
-        cdsTestUtil = new CdsTestUtil();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerUtil = new com.apriori.cds.api.utils.CustomerUtil(requestEntityUtil);
+
         customerIdentity = CustomerUtil.getCustomerData().getIdentity();
         sourceUsers = new ArrayList<>(cdsTestUtil.findAll(
             CDSAPIEnum.CUSTOMER_USERS,
@@ -69,7 +75,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-            ? cdsTestUtil.addCASCustomer(STAFF_TEST_CUSTOMER, cloudRef, email, currentUser).getResponseEntity()
+            ? customerUtil.addCASCustomer(STAFF_TEST_CUSTOMER, cloudRef, email).getResponseEntity()
             : targetCustomer;
 
         staffPage = new CasLoginPage(driver)

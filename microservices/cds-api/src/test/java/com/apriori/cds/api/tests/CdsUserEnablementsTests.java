@@ -9,6 +9,7 @@ import com.apriori.cds.api.models.ApplicationsList;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -39,6 +40,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
+    private CustomerUtil customerUtil;
     private String customerIdentity;
     private String userIdentity;
 
@@ -48,6 +50,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -363,7 +366,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);

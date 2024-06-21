@@ -9,6 +9,7 @@ import com.apriori.cds.api.models.response.FeatureResponse;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -34,6 +35,7 @@ public class CdsFeatureTests {
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil;
+    private CustomerUtil customerUtil;
     private ApplicationUtil applicationUtil;
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
@@ -45,6 +47,7 @@ public class CdsFeatureTests {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        customerUtil = new CustomerUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -197,7 +200,7 @@ public class CdsFeatureTests {
     private void setAllCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
@@ -228,7 +231,7 @@ public class CdsFeatureTests {
 
     private String allCustomerDataForInstallationFeature(RandomCustomerData rcd) {
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
+        ResponseWrapper<Customer> customer = customerUtil.addCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
