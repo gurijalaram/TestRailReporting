@@ -44,7 +44,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.io.File;
 import java.util.HashMap;
@@ -64,8 +64,8 @@ public abstract class SDSTestUtil extends TestUtil {
     protected static RequestEntityUtil requestEntityUtil;
     private static ScenarioItem testingComponent;
 
-    @BeforeAll
-    public static void init() {
+    @BeforeEach
+    public void init() {
         requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(APRIORI_DEVELOPER)
             .useApUserContextInRequests()
             .useTokenInRequests();
