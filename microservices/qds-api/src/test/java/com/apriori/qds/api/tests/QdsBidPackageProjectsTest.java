@@ -41,7 +41,7 @@ public class QdsBidPackageProjectsTest extends TestUtil {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbers();
+        String bidPackageName = "BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         bidPackageResponse = BidPackageResources.createBidPackage(bidPackageName, new AuthUserContextUtil().getAuthUserContext(currentUser.getEmail()));
         bidPackageProjectResponse = BidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), currentUser);
     }
@@ -90,8 +90,8 @@ public class QdsBidPackageProjectsTest extends TestUtil {
     @TestRail(id = {13340, 24420})
     @Description("Update Bid Package Project By Identity")
     public void updateBidPackageProject() {
-        String projectNameNew = new GenerateStringUtil().getRandomString();
-        String projectDescriptionNew = new GenerateStringUtil().getRandomString();
+        String projectNameNew = new GenerateStringUtil().getRandomStringSpecLength(12);
+        String projectDescriptionNew = new GenerateStringUtil().getRandomStringSpecLength(12);
         String statusNew = "COMPLETED";
         String dueAtNew = DateUtil.getDateDaysAfter(15, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ);
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()

@@ -39,7 +39,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -83,7 +83,7 @@ public class AvailableRoutingsTests {
         FileUploadResources fileUploadResources = new FileUploadResources(user);
         AcsResources acsResources = new AcsResources(user);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -123,7 +123,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -169,7 +169,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -215,7 +215,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -261,7 +261,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.CASTING_INVESTMENT.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -307,7 +307,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.CASTING_SAND.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -353,7 +353,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.FORGING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -399,7 +399,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.PLASTIC_MOLDING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -445,7 +445,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.POWDER_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -490,7 +490,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.RAPID_PROTOTYPING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -536,7 +536,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -582,7 +582,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -628,7 +628,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -674,7 +674,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -719,7 +719,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -765,7 +765,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -810,7 +810,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -856,7 +856,7 @@ public class AvailableRoutingsTests {
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(user);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.STOCK_MACHINING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);

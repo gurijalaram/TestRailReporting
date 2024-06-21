@@ -36,9 +36,6 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     @FindBy(css = "[id='qa-production-defaults-digital-factory-select'] .apriori-select")
     private WebElement digitalFactoryDropdown;
 
-    @FindBy(css = "[id='qa-production-defaults-material-catalog-select'] .apriori-select")
-    private WebElement materialCatalogDropdown;
-
     @FindBy(css = "[id='qa-material-modal-select-field'] .modal-select-content")
     private WebElement materialInput;
 
@@ -145,17 +142,6 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     }
 
     /**
-     * Select material catalog
-     *
-     * @param materialCatalog - the material catalog
-     * @return current page object
-     */
-    public ProductionDefaultsPage selectMaterialCatalog(DigitalFactoryEnum materialCatalog) {
-        pageUtils.modalTypeAheadSelect(materialCatalogDropdown, "Material Catalog", materialCatalog.getDigitalFactory());
-        return this;
-    }
-
-    /**
      * Opens the material selector table
      *
      * @return new page object
@@ -226,15 +212,6 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      */
     public String getDigitalFactory() {
         return pageUtils.waitForElementToAppear(digitalFactoryDropdown).getAttribute("textContent");
-    }
-
-    /**
-     * Get material catalog
-     *
-     * @return string
-     */
-    public String getMaterialCatalog() {
-        return pageUtils.waitForElementToAppear(materialCatalogDropdown).getAttribute("textContent");
     }
 
     /**

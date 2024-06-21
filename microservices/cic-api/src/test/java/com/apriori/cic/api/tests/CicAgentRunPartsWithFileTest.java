@@ -66,7 +66,7 @@ public class CicAgentRunPartsWithFileTest extends WorkflowTestUtil {
     @TestRail(id = {28440})
     @Description("RunPartList - No costing inputs set in request body")
     public void testWorkflowRunPartsNoCostingInput() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
             .isNotificationsIncluded(false, false, "")
             .isPublishResultsAttachReportInclude(false, "")
@@ -90,7 +90,7 @@ public class CicAgentRunPartsWithFileTest extends WorkflowTestUtil {
     @TestRail(id = {16948})
     @Description("RunPartList - Valid File Path")
     public void testRunPartsWithValidRelativeFile() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
             .isNotificationsIncluded(false, false, "")
             .isPublishResultsAttachReportInclude(false, "")
@@ -148,7 +148,7 @@ public class CicAgentRunPartsWithFileTest extends WorkflowTestUtil {
     @TestRail(id = {26888})
     @Description("RunPartList - valid file path PLM write successful")
     public void testRunPartsWithValidFilePLMWrite() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL);
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
             .isNotificationsIncluded(false, false, "")
@@ -192,7 +192,7 @@ public class CicAgentRunPartsWithFileTest extends WorkflowTestUtil {
     @TestRail(id = {26815})
     @Description("RunPartList - valid file path and request containing at least 1 valid PLM Part ID and 1 invalid PLM Part ID")
     public void testRunPartsWithValidAndInvalidFile() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         List<WorkflowPart> workflowParts = new ArrayList<>();
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL);
         PlmSearchPart plmSearchPart = plmApiTestUtil.getPlmPartByPartNumber(plmPartData.getPlmPartNumber());
@@ -263,7 +263,7 @@ public class CicAgentRunPartsWithFileTest extends WorkflowTestUtil {
     @TestRail(id = {26896})
     @Description("RunPartList - nonexistent file, valid format, no PLM CAD data")
     public void testRunPartsWithInvalidPart() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
             .isNotificationsIncluded(false, false, "")
             .isPublishResultsAttachReportInclude(false, "")
@@ -293,7 +293,7 @@ public class CicAgentRunPartsWithFileTest extends WorkflowTestUtil {
     @TestRail(id = {26895})
     @Description("RunPartList - valid file path no PLM CAD data")
     public void testRunPartsFileWithNoCadData() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         this.workflowRequestDataBuilder = new WorkflowDataUtil(CICPartSelectionType.REST)
             .isNotificationsIncluded(false, false, "")
             .isPublishResultsAttachReportInclude(false, "")
@@ -324,7 +324,7 @@ public class CicAgentRunPartsWithFileTest extends WorkflowTestUtil {
     @TestRail(id = {26898})
     @Description("RunPartList - valid file path and request containing at least 1 valid PLM Part ID and 1 invalid PLM Part ID - PLM read functions correctly ")
     public void testRunPartsWithValidAndInvalidFilePlmRead() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         List<WorkflowPart> workflowParts = new ArrayList<>();
         plmPartData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PARTIAL);
         PlmSearchPart plmSearchPart = plmApiTestUtil.getPlmPartByPartNumber(plmPartData.getPlmPartNumber());

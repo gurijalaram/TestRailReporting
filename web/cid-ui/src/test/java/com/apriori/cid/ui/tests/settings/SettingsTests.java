@@ -208,13 +208,11 @@ public class SettingsTests extends TestBaseUI {
             .openSettings()
             .goToProductionTab()
             .selectDigitalFactory(APRIORI_USA)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_GERMANY)
             .submit(ExplorePage.class)
             .openSettings()
             .goToProductionTab();
 
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(APRIORI_USA.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory());
 
         softAssertions.assertAll();
     }
@@ -250,7 +248,6 @@ public class SettingsTests extends TestBaseUI {
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.HIPS_EXTRUSION.getMaterialName())
             .submit(ProductionDefaultsPage.class)
@@ -260,7 +257,6 @@ public class SettingsTests extends TestBaseUI {
 
         softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup());
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory());
         softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("HIPS Extrusion");
 
         softAssertions.assertAll();
@@ -278,7 +274,6 @@ public class SettingsTests extends TestBaseUI {
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_MEXICO)
             .openMaterialSelectorTable()
             .selectMaterial(MaterialNameEnum.STEEL_F0005_SPONGE.getMaterialName())
             .submit(ProductionDefaultsPage.class)
@@ -290,7 +285,6 @@ public class SettingsTests extends TestBaseUI {
 
         softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.POWDER_METAL.getProcessGroup());
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory());
         softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("F-0005 Sponge");
 
         softAssertions.assertAll();
@@ -413,7 +407,6 @@ public class SettingsTests extends TestBaseUI {
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
-            .selectMaterialCatalog(APRIORI_USA)
             .openMaterialSelectorTable();
 
         assertThat(materialSelectorPage.getListOfMaterials(), hasItems("F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));

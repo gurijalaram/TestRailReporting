@@ -52,7 +52,7 @@ public class   BatchImportListTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
-        String customerName = new GenerateStringUtil().generateCustomerName();
+        String customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         email = customerName.toLowerCase();
 

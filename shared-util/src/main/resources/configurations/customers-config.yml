@@ -28,7 +28,7 @@ apriori-internal:
       port: 8808
       connector: EN-consvwc02
 
-  multi_tenant_installation_name: core-na-1 - production
+  multi_tenant_installation_name: core-na-1 - ${deployment}
 
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name

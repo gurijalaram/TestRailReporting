@@ -891,7 +891,7 @@ public class InputControlsTests extends TestBaseUI {
         EvaluatePage evaluatePage = new ExplorePage(driver)
             .filter()
             .saveAs()
-            .inputName(new GenerateStringUtil().generateFilterName())
+            .inputName(new GenerateStringUtil().generateAlphabeticString("Filter", 6))
             .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
             .addCriteria(PropertyEnum.DIGITAL_FACTORY, OperationEnum.IN, DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
             .submit(ExplorePage.class)

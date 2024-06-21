@@ -308,8 +308,8 @@ public class FileUploadResources {
         for (LoadCadMetadataOutputs loadCadMetadataOutput : loadCadMetadataOutputs) {
             subComponentsList.add(
                 AssemblyImagesSubComponent.builder()
-                    .componentIdentity(generateStringUtil.getRandomString())
-                    .scenarioIdentity(generateStringUtil.getRandomString())
+                    .componentIdentity(generateStringUtil.getRandomStringSpecLength(12))
+                    .scenarioIdentity(generateStringUtil.getRandomStringSpecLength(12))
                     .cadMetadataIdentity(loadCadMetadataOutput.getCadMetadataIdentity())
                     .build()
             );
@@ -318,8 +318,8 @@ public class FileUploadResources {
         String generateAssemblyImagesWorkorderId = createWorkorder(
             WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
             AssemblyImagesInputs.builder()
-                .componentIdentity(generateStringUtil.getRandomString())
-                .scenarioIdentity(generateStringUtil.getRandomString())
+                .componentIdentity(generateStringUtil.getRandomStringSpecLength(12))
+                .scenarioIdentity(generateStringUtil.getRandomStringSpecLength(12))
                 .cadMetadataIdentity(assemblyMetadataOutput.getCadMetadataIdentity())
                 .subComponents(subComponentsList)
                 .requestedBy(fileResponse.getUserIdentity())

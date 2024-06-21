@@ -47,7 +47,7 @@ public class ReportAnIssueTests extends TestBaseUI {
         final String subComponentExtension = ".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         ComponentInfoBuilder titanChargeAsm = asmUtils.associateAssemblyAndSubComponents(
             asmName, asmExtension, ProcessGroupEnum.ASSEMBLY, subComponentNames, subComponentExtension, subComponentProcessGroup, scenarioName, currentUser);

@@ -88,11 +88,11 @@ public class PrivatePublicAssemblyAssociationsTests extends TestBaseUI {
 
         currentUser = UserUtil.getUser();
 
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-        newScenarioName = new GenerateStringUtil().generateScenarioName();
-        newScenarioName2 = new GenerateStringUtil().generateScenarioName();
-        newScenarioName3 = new GenerateStringUtil().generateScenarioName();
-        newScenarioName4 = new GenerateStringUtil().generateScenarioName();
+        scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName3 = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName4 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             hingeAssembly,

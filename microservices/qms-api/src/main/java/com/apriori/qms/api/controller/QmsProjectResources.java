@@ -41,9 +41,9 @@ public class QmsProjectResources {
      */
     public static BidPackageProjectRequest getProjectRequestBuilder(HashMap<String, String> projectAttributesMap, List<BidPackageItemRequest> projectItemsList,
                                                                     List<BidPackageProjectUserParameters> projectUsersList, UserCredentials currentUser) {
-        String projectName = projectAttributesMap.getOrDefault("projectName", new GenerateStringUtil().getRandomString());
-        String projectDisplayName = projectAttributesMap.getOrDefault("projectDisplayName", new GenerateStringUtil().getRandomString());
-        String projectDescription = projectAttributesMap.getOrDefault("projectDescription", new GenerateStringUtil().getRandomString());
+        String projectName = projectAttributesMap.getOrDefault("projectName", new GenerateStringUtil().getRandomStringSpecLength(12));
+        String projectDisplayName = projectAttributesMap.getOrDefault("projectDisplayName", new GenerateStringUtil().getRandomStringSpecLength(12));
+        String projectDescription = projectAttributesMap.getOrDefault("projectDescription", new GenerateStringUtil().getRandomStringSpecLength(12));
         String projectStatus = projectAttributesMap.getOrDefault("projectStatus", "COMPLETED");
         String projectOwner = projectAttributesMap.getOrDefault("projectOwner", new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));
         String projectOwnerUserIdentity = projectAttributesMap.getOrDefault("projectOwnerUserIdentity", "N/A");

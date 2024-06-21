@@ -69,7 +69,7 @@ public class ProcessGroupSiteVariablesTest extends SiteVariableUtil {
             requestEntityUtil.init(VDSAPIEnum.PUT_PROCESS_GROUP_SITE_VARIABLE_BY_PG_ID, SiteVariable.class)
                 .inlineVariables(ProcessGroupUtil.getProcessGroupIdentity())
                 .body(SiteVariableRequest.builder()
-                    .name(new GenerateStringUtil().generateSiteName())
+                    .name(new GenerateStringUtil().generateAlphabeticString("Site", 5))
                     .type("STRING")
                     .value("bar")
                     .notes("foo bar")

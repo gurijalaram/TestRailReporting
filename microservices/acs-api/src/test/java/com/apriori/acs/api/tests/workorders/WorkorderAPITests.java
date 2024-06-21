@@ -325,7 +325,7 @@ public class WorkorderAPITests extends TestUtil {
     @TestRail(id = {8693})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoExpose500ErrorVersion() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         WorkorderApiUtils workorderApiUtils = new WorkorderApiUtils(userCredentials);
         NewPartRequest productionInfoInputs = workorderApiUtils.setupProductionInfoInputs();
 
