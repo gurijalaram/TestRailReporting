@@ -263,7 +263,7 @@ public class GroupPublishTests {
             .override(true)
             .build();
 
-        List<ComponentInfoBuilder> editedScenarios = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
+        scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest, chargerBase);
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest, componentAssembly, chargerBase);
         chargerBaseComponent.setScenarioIdentity(publishResponse.getResponseEntity().getSuccesses().get(0).getIdentity());
