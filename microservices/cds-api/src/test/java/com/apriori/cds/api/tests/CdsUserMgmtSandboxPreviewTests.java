@@ -39,7 +39,7 @@ public class CdsUserMgmtSandboxPreviewTests {
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
-    private String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
+    private String appIdentity;
     private String customerIdentity;
     private String siteIdentity;
     private String previewInstallationIdentity;
@@ -52,6 +52,8 @@ public class CdsUserMgmtSandboxPreviewTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+
+        appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
     }
 
     @AfterEach
