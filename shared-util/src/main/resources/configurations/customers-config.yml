@@ -29,6 +29,7 @@ apriori-internal:
       connector: EN-consvwc02
 
   multi_tenant_installation_name: core-na-1 - ${deployment}
+  cloud_reference: ci-design
 
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name
@@ -46,6 +47,7 @@ widgets:
       agent_name: 59cf01bd-b45c-4252-a94c-e433fbc342fa_Agent
 
   multi_tenant_installation_name: n. virginia v23
+  cloud_reference: ap-pro
 
   ### Customer configurations for specific for environment ###
   # name should be the same with environment name
@@ -56,7 +58,9 @@ sprockets:
     token_subject: c8fc
 
   multi_tenant_installation_name: singapore v22
+  cloud_reference: ap-pro
 
 ###################################################### GADGETS #########################################################
 gadgets:
   multi_tenant_installation_name: ireland v23
+  cloud_reference: ap-pro

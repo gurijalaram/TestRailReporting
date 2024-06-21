@@ -19,6 +19,7 @@ import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.Token;
+import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
@@ -49,8 +50,8 @@ public class AtsAuthorizationTests extends TestUtil {
     @TestRail(id = {3913})
     @Description("Authorize a user to access a specified application")
     public void authorizeUserTest() {
-
-        ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(currentUser.generateCloudContext().getCloudContext(), currentUser.getToken());
+        ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(CustomerUtil.getAuthTargetCloudContext(PropertiesContext.get("${customer}.cloud_reference")),
+            currentUser.getToken());
 
         assertThat(response.getResponseEntity().getEmail(), is(equalTo(currentUser.getEmail())));
     }

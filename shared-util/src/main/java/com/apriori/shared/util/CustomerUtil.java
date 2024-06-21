@@ -2,7 +2,6 @@ package com.apriori.shared.util;
 
 import com.apriori.shared.util.enums.apis.CustomersApiEnum;
 import com.apriori.shared.util.enums.apis.DeploymentsAPIEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.QueryParams;
@@ -40,11 +39,19 @@ public class CustomerUtil {
     /**
      * Gets Authorisation Target Cloud Context
      *
-     * @param userCredentials - user credentials
      * @return String - cloud context
      */
-    public static synchronized String getAuthTargetCloudContext(UserCredentials userCredentials) {
-        return Objects.requireNonNullElseGet(authTargetCloudContext, () -> authTargetCloudContext = generateAuthTargetCloudContext(userCredentials));
+    public static synchronized String getAuthTargetCloudContext() {
+        return Objects.requireNonNullElseGet(authTargetCloudContext, () -> authTargetCloudContext = generateAuthTargetCloudContext());
+    }
+
+    /**
+     * Gets Authorisation Target Cloud Context
+     *
+     * @return String - cloud context
+     */
+    public static synchronized String getAuthTargetCloudContext(String applicationCloudReference) {
+        return Objects.requireNonNullElseGet(authTargetCloudContext, () -> authTargetCloudContext = generateAuthTargetCloudContext(applicationCloudReference));
     }
 
     /**
@@ -59,10 +66,9 @@ public class CustomerUtil {
     /**
      * Gets Authorisation Target Cloud Context
      *
-     * @param userCredentials - user credentials
      * @return String - cloud context
      */
-    private static String generateAuthTargetCloudContext(UserCredentials userCredentials) {
+    private static String generateAuthTargetCloudContext() {
 
         final String customerIdentity = getCustomerData().getIdentity();
         final String installationName = PropertiesContext.get("${customer}.multi_tenant_installation_name");
@@ -82,7 +88,35 @@ public class CustomerUtil {
         return customerIdentity +
             deploymentItem.getIdentity() +
             installationItem.getIdentity() +
-            getApplicationIdentity();
+            getApplicationIdentityByCloudRef("ci-design");
+    }
+
+    /**
+     * Gets Authorisation Target Cloud Context
+     *
+     * @return String - cloud context
+     */
+    private static String generateAuthTargetCloudContext(String applicationCloudReference) {
+
+        final String customerIdentity = getCustomerData().getIdentity();
+        final String installationName = PropertiesContext.get("${customer}.multi_tenant_installation_name");
+        Deployment deploymentItem = getDeploymentByName(PropertiesContext.get("deployment"));
+
+        Installation installationItem = deploymentItem.getInstallations()
+            .stream()
+
+            .filter(element -> element.getName().equalsIgnoreCase(installationName))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(
+                    String.format("Could not find installation with name %s\nfor deployment %s",
+                        installationName, deploymentItem.getName())
+                )
+            );
+
+        return customerIdentity +
+            deploymentItem.getIdentity() +
+            installationItem.getIdentity() +
+            getApplicationIdentityByCloudRef(applicationCloudReference);
     }
 
     /**
@@ -91,9 +125,9 @@ public class CustomerUtil {
      * @return string
      */
     // TODO: 10/06/2024 cn - this is a duplicate of a cds method which needs to be refactored when cdstestutil is being worked on
-    private static String getApplicationIdentity() {
+    private static String getApplicationIdentityByCloudRef(String cloudReference) {
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(CustomersApiEnum.APPLICATIONS, Applications.class)
-            .queryParams(new QueryParams().use("cloudReference[EQ]", "ci-design"))
+            .queryParams(new QueryParams().use("cloudReference[EQ]", cloudReference))
             .expectedResponseCode(org.apache.http.HttpStatus.SC_OK);
 
         ResponseWrapper<Applications> response = HTTPRequest.build(requestEntity).get();
