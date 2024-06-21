@@ -26,11 +26,13 @@ import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
+import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.Application;
@@ -44,7 +46,7 @@ import com.apriori.shared.util.properties.PropertiesContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.io.File;
 import java.util.HashMap;
@@ -64,8 +66,8 @@ public abstract class SDSTestUtil extends TestUtil {
     protected static RequestEntityUtil requestEntityUtil;
     private static ScenarioItem testingComponent;
 
-    @BeforeEach
-    public void init() {
+    @BeforeAll
+    public static void init() {
         requestEntityUtil = RequestEntityUtilBuilder.useRandomUser(APRIORI_DEVELOPER)
             .useApUserContextInRequests()
             .useTokenInRequests();
@@ -497,7 +499,8 @@ public abstract class SDSTestUtil extends TestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            requestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
+            RequestEntityUtil_Old.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(componentInfoBuilder.getUser().getEmail()))
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", shallowPublishRequest)
                 .expectedResponseCode(expectedResponseCode);
