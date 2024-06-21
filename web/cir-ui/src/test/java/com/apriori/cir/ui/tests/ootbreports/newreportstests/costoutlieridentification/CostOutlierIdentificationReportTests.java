@@ -600,6 +600,86 @@ public class CostOutlierIdentificationReportTests extends JasperApiAuthenticatio
         softAssertions.assertAll();
     }
 
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("7576")
+    @TestRail(id = 7576)
+    @Description("Validate the reports correct with multiple VPEs export set")
+    public void testReportWithMultiVpeData() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(jasperApiUtils.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+
+        JasperReportSummaryIncRawDataAsString jasperReportSummary = jasperReportUtil
+            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
+        String chartDataRawNoQuotes = jasperReportSummary.getChartDataRawAsString()
+            .replace("\"", "");
+
+        softAssertions.assertThat(chartDataRawNoQuotes.contains("2.12")).isEqualTo(true);
+        softAssertions.assertThat(chartDataRawNoQuotes.contains("3.2")).isEqualTo(true);
+
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint(), JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.USD.getCurrency());
+
+        JasperReportSummary jasperReportSummaryDetailsReport = jasperReportUtil
+            .generateJasperReportSummary(jasperApiUtils.getReportRequest());
+
+        ArrayList<Element> colSpanFourElements = jasperReportSummaryDetailsReport.getReportHtmlPart().getElementsByAttributeValue("colspan", "4");
+        softAssertions.assertThat(colSpanFourElements.get(5).text()).isEqualTo("3.20");
+        softAssertions.assertThat(colSpanFourElements.get(6).text()).isEqualTo("2.12");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("7580")
+    @TestRail(id = 7580)
+    @Description("Validate report correct with multiple currency export set")
+    public void testReportAccuracyWithMultipleCurrencyExportSet() {
+        JasperReportUtil jasperReportUtil = JasperReportUtil.init(jasperApiUtils.getJasperSessionID());
+        String currentExportSet = jasperReportUtil.getInputControls(reportsNameForInputControls)
+            .getExportSetName().getOption(jasperApiUtils.getExportSetName()).getValue();
+        String currentDateTime = DateTimeFormatter.ofPattern(Constants.DATE_FORMAT).format(LocalDateTime.now());
+
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.EUR.getCurrency());
+
+        JasperReportSummaryIncRawDataAsString jasperReportSummary = jasperReportUtil
+            .generateJasperReportSummaryIncRawDataAsString(jasperApiUtils.getReportRequest());
+        String chartDataRawNoQuotes = jasperReportSummary.getChartDataRawAsString()
+            .replace("\"", "");
+
+        softAssertions.assertThat(chartDataRawNoQuotes.contains("6.58")).isEqualTo(true);
+        softAssertions.assertThat(chartDataRawNoQuotes.contains("5.09")).isEqualTo(true);
+        softAssertions.assertThat(chartDataRawNoQuotes.contains("6105.21")).isEqualTo(true);
+
+        jasperApiUtils = new JasperApiUtils(jSessionId, exportSetName, JasperApiEnum.COST_OUTLIER_IDENTIFICATION_DETAILS.getEndpoint(), JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_DETAILS);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.EXPORT_SET_NAME.getInputControlId(), currentExportSet);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.LATEST_EXPORT_DATE.getInputControlId(), currentDateTime);
+        jasperApiUtils.setReportParameterByName(InputControlsEnum.CURRENCY.getInputControlId(), CurrencyEnum.EUR.getCurrency());
+
+        JasperReportSummary jasperReportSummaryDetailsReport = jasperReportUtil
+            .generateJasperReportSummary(jasperApiUtils.getReportRequest());
+
+        ArrayList<Element> colSpanFourElements = jasperReportSummaryDetailsReport.getReportHtmlPart().getElementsByAttributeValue("colspan", "4");
+        softAssertions.assertThat(colSpanFourElements.get(28).child(0).text()).isEqualTo("6.58");
+        softAssertions.assertThat(colSpanFourElements.get(27).child(0).text()).isEqualTo("5.09");
+        softAssertions.assertThat(jasperReportSummaryDetailsReport.getReportHtmlPart()
+            .getElementsByAttributeValue("colspan", "2").get(41).child(0).text()
+        ).isEqualTo("6,105.21");
+
+        softAssertions.assertAll();
+    }
+
     private String getCurrencyFromHTML(JasperReportSummaryIncRawDataAsString jasperReportSummary) {
         return jasperReportSummary.getReportHtmlPart().getElementsContainingText("Currency").get(6).parent().child(9).text();
     }
