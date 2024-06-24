@@ -118,8 +118,8 @@ public class CisProjectResources extends CISTestUtil {
         BidPackageProjectRequest projectRequest = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream("testdata/BidPackageProjectRequest.json"), BidPackageProjectRequest.class);
         BidPackageProjectParameters project = projectRequest.getProject();
         project.setName(projectName);
-        project.setDisplayName(new GenerateStringUtil().getRandomString());
-        project.setDescription(new GenerateStringUtil().getRandomString());
+        project.setDisplayName(new GenerateStringUtil().getRandomStringSpecLength(12));
+        project.setDescription(new GenerateStringUtil().getRandomStringSpecLength(12));
         project.setStatus(projectStatus.getProjectStatus());
         project.setType(projectType.getProjectType());
         project.setItems(projectItemsList);

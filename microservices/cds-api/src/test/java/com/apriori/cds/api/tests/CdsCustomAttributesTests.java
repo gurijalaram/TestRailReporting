@@ -54,7 +54,7 @@ public class CdsCustomAttributesTests {
     @Description("Adding a CustomAttribute for a user and getting it")
     public void addCustomAttribute() {
         setCustomerData();
-        String updatedDepartment = generateStringUtil.getRandomString();
+        String updatedDepartment = generateStringUtil.getRandomStringSpecLength(8);
         ResponseWrapper<CustomAttribute> customAttributeAdded = cdsTestUtil.addCustomAttribute(customerIdentity, userIdentity);
         soft.assertThat(customAttributeAdded.getResponseEntity().getIdentity()).isNotNull();
 
@@ -79,7 +79,7 @@ public class CdsCustomAttributesTests {
     @Description("Get a CustomAttribute by its identity and update")
     public void getCustomAttributeByIdAndUpdate() {
         setCustomerData();
-        String updatedDepartment = generateStringUtil.getRandomString();
+        String updatedDepartment = generateStringUtil.getRandomStringSpecLength(8);
         ResponseWrapper<CustomAttribute> customAttributeAdded = cdsTestUtil.addCustomAttribute(customerIdentity, userIdentity);
 
         String attributeIdentity = customAttributeAdded.getResponseEntity().getIdentity();

@@ -131,7 +131,7 @@ public class QmsApiTestUtils {
      * @return the bid package response
      */
     public static BidPackageResponse createTestDataBidPackage(UserCredentials currentUser, SoftAssertions softAssertions) {
-        BidPackageResponse bidPackageResponse = QmsBidPackageResources.createBidPackage(new GenerateStringUtil().getRandomNumbers(), currentUser);
+        BidPackageResponse bidPackageResponse = QmsBidPackageResources.createBidPackage(new GenerateStringUtil().getRandomNumbersSpecLength(8), currentUser);
         if (bidPackageResponse == null) {
             softAssertions.fail("Bid Package Creation FAILED.");
         }

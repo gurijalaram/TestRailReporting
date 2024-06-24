@@ -86,7 +86,7 @@ public class GroupCostTests extends TestBaseUI {
     @Description("Verify that Cost button is disabled when more than 10 private components are selected")
     public void testCostMoreThanTenScenarios() {
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger lead.SLDPRT"), scenarioName));
@@ -203,7 +203,7 @@ public class GroupCostTests extends TestBaseUI {
     @Description("Verify that Cost button is disabled when any in a multi-selection of parts has Component Type Unknown")
     public void testGroupCostUnknownScenarios() {
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger lead.SLDPRT"), scenarioName));

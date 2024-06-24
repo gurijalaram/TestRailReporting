@@ -53,7 +53,7 @@ public class QmsBidPackageProjectsTest extends TestUtil {
     public void testSetup() {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
-        bidPackageName = new GenerateStringUtil().getRandomString();
+        bidPackageName = new GenerateStringUtil().getRandomStringSpecLength(12);
         bidPackageResponse = QmsBidPackageResources.createBidPackage(bidPackageName, currentUser);
         bidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), bidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
     }
@@ -63,7 +63,7 @@ public class QmsBidPackageProjectsTest extends TestUtil {
     @Description("Create, Delete Bid Package Project and verify project is deleted")
     public void createAndDeleteProject() {
         UserCredentials projectUser = UserUtil.getUser();
-        BidPackageResponse packageResponse = QmsBidPackageResources.createBidPackage(new GenerateStringUtil().getRandomString(), projectUser);
+        BidPackageResponse packageResponse = QmsBidPackageResources.createBidPackage(new GenerateStringUtil().getRandomStringSpecLength(12), projectUser);
         BidPackageProjectResponse bppResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(),
             packageResponse.getIdentity(),
             BidPackageProjectResponse.class,
@@ -134,8 +134,8 @@ public class QmsBidPackageProjectsTest extends TestUtil {
     @Issue("COL-2020")
     @Description("Update Bid Package Project By Identity")
     public void updateBidPackageProject() {
-        String projectDescriptionNew = new GenerateStringUtil().getRandomString();
-        String displayNameNew = new GenerateStringUtil().getRandomString();
+        String projectDescriptionNew = new GenerateStringUtil().getRandomStringSpecLength(12);
+        String displayNameNew = new GenerateStringUtil().getRandomStringSpecLength(12);
         String ownerEmail = UserUtil.getUser().getEmail();
         String ownerUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(ownerEmail);
         String statusNew = "COMPLETED";
@@ -262,8 +262,8 @@ public class QmsBidPackageProjectsTest extends TestUtil {
     @TestRail(id = {14124, 14670})
     @Description("Verify that project is deleted after deleting bid-package")
     public void verifyProjectIsDeletedAfterBidPackageDeleted() {
-        String bidPackName = new GenerateStringUtil().getRandomNumbers();
-        String projectName = new GenerateStringUtil().getRandomNumbers();
+        String bidPackName = new GenerateStringUtil().getRandomNumbersSpecLength(8);
+        String projectName = new GenerateStringUtil().getRandomNumbersSpecLength(8);
         HashMap<String, String> prjAttributesMap = new HashMap<>();
         prjAttributesMap.put("projectName", projectName);
         BidPackageResponse bidPackResponse = QmsBidPackageResources.createBidPackage(bidPackName, currentUser);
@@ -424,7 +424,7 @@ public class QmsBidPackageProjectsTest extends TestUtil {
 
         //Update project with non-admin project user
         UserCredentials nonAdminProjectUser = UserUtil.getUser();
-        String projectDescriptionNew = new GenerateStringUtil().getRandomString();
+        String projectDescriptionNew = new GenerateStringUtil().getRandomStringSpecLength(12);
         BidPackageProjectRequest projectRequest = BidPackageProjectRequest.builder()
             .project(BidPackageProjectParameters.builder()
                 .description(projectDescriptionNew)
@@ -662,7 +662,7 @@ public class QmsBidPackageProjectsTest extends TestUtil {
         }
 
         //Update the project description with new owner
-        String projectDescriptionNew = new GenerateStringUtil().getRandomString();
+        String projectDescriptionNew = new GenerateStringUtil().getRandomStringSpecLength(12);
         projectRequest = BidPackageProjectRequest.builder()
             .project(BidPackageProjectParameters.builder()
                 .description(projectDescriptionNew)

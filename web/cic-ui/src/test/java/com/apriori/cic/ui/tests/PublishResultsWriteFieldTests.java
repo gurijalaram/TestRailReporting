@@ -51,9 +51,9 @@ public class PublishResultsWriteFieldTests extends TestBaseUI {
         softAssertions = new SoftAssertions();
         currentUser = UserUtil.getUser();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
-        scenarioName = new GenerateStringUtil().generateScenarioName();
+        scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         partData = new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PARTIAL);
-        workFlowData.setWorkflowName(workFlowData.getWorkflowName() + new GenerateStringUtil().getRandomNumbers());
+        workFlowData.setWorkflowName(workFlowData.getWorkflowName() + new GenerateStringUtil().getRandomNumbersSpecLength(8));
         workFlowData.getQueryDefinitionsData().get(0).setFieldName(PlmTypeAttributes.PLM_PART_NUMBER.getCicGuiField());
         workFlowData.getQueryDefinitionsData().get(0).setFieldOperator(RuleOperatorEnum.EQUAL.getRuleOperator());
         workFlowData.getQueryDefinitionsData().get(0).setFieldValue(partData.getPlmPartNumber());

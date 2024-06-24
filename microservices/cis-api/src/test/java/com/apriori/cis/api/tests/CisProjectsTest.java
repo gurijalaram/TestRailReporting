@@ -20,7 +20,7 @@ import com.apriori.cis.api.models.response.bidpackage.ProjectItemNotificationRes
 import com.apriori.cis.api.models.response.bidpackage.ProjectNotificationResponse;
 import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.css.api.utils.CssComponent;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -69,7 +69,7 @@ public class CisProjectsTest extends CISTestUtil {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbers();
+        projectName = "PROJ" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         itemsList.add(BidPackageItemRequest.builder()
             .bidPackageItem(BidPackageItemParameters.builder()
                 .componentIdentity(scenarioItem.getComponentIdentity())
@@ -80,7 +80,7 @@ public class CisProjectsTest extends CISTestUtil {
 
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
-            .customerIdentity(CustomerUtil.getCurrentCustomerIdentity())
+            .customerIdentity(SharedCustomerUtil.getCurrentCustomerIdentity())
             .build());
     }
 

@@ -67,8 +67,8 @@ public class GroupPublishTests {
     @TestRail(id = {11851, 11852})
     @Description("Publish a single private sub-component with no public counterpart")
     public void testGroupPublishPrivateSubcomponent() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Arrays.asList(chargerBase, chargerLead);
 
@@ -130,7 +130,7 @@ public class GroupPublishTests {
     @TestRail(id = {11853})
     @Description("Publish a multiple private sub-components with no public counterpart")
     public void testGroupPublishPrivateSubcomponents() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -173,8 +173,8 @@ public class GroupPublishTests {
     @TestRail(id = {11854})
     @Description("Publish multiple private sub-components with no public counterparts Setting Override to false and supplying a scenario name")
     public void testGroupPublishPrivateSubcomponentsFalseOverride() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -223,7 +223,7 @@ public class GroupPublishTests {
     @TestRail(id = {11855})
     @Description("Publish private sub-component with public counterpart Setting Override to true")
     public void testGroupPublishPrivateSubcomponentTrueOverride() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
@@ -285,8 +285,8 @@ public class GroupPublishTests {
     @TestRail(id = {11856})
     @Description("Publish private sub-component with public counterpart Setting Override to false")
     public void testGroupPublishPrivateSubcomponentFalseOverride() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Arrays.asList(chargerBase);
 
@@ -357,7 +357,7 @@ public class GroupPublishTests {
     @TestRail(id = {11857})
     @Description("Publish multiple private sub-components with public counterparts Setting Override to true")
     public void testGroupPublishPrivateSubcomponentsTrueOverride() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -421,8 +421,8 @@ public class GroupPublishTests {
     @TestRail(id = {11858})
     @Description("Publish multiple private sub-components with public counterparts Setting Override to false and supplying a scenario name")
     public void testGroupPublishPrivateSubcomponentsFalseOverrideNewScenario() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -492,8 +492,8 @@ public class GroupPublishTests {
     @TestRail(id = {11859})
     @Description("Attempt to use pre-existing scenario name for public component when publishing with create new option")
     public void testGroupPublishPrivateSubAttemptExistingScenarioName() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        final String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
@@ -574,7 +574,7 @@ public class GroupPublishTests {
     @TestRail(id = {11935})
     @Description("Attempt to use publish a public scenario")
     public void testAttemptPublishPublic() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Collections.singletonList(chargerBase);
 
@@ -638,7 +638,7 @@ public class GroupPublishTests {
     @TestRail(id = {11936})
     @Description("Attempt to publish a scenario that does not exist (incorrect scenario name or component name)")
     public void testAttemptPublicScenarioNotExist() {
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final List<String> subComponentNames = Collections.singletonList(chargerBase);
 

@@ -57,11 +57,11 @@ public class CasSiteLicenseSublicenseTests {
     @BeforeEach
     public void setUp() {
         RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
-        customerName = generateStringUtil.generateCustomerName();
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
         email = customerName.toLowerCase();
         description = customerName + " Description";
-        siteName = generateStringUtil.generateSiteName();
+        siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         siteID = generateStringUtil.generateSiteID();
         casLicense = new String(FileResourceUtil.getResourceFileStream("CasLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
 

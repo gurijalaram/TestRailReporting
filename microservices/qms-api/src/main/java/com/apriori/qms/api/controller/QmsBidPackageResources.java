@@ -309,9 +309,9 @@ public class QmsBidPackageResources {
      * @return the bid package project request builder
      */
     public static BidPackageProjectRequest getBidPackageProjectRequestBuilder(HashMap<String, String> projectAttributesMap, UserCredentials currentUser) {
-        String projectName = projectAttributesMap.getOrDefault("projectName", new GenerateStringUtil().getRandomString());
-        String projectDisplayName = projectAttributesMap.getOrDefault("projectDisplayName", new GenerateStringUtil().getRandomString());
-        String projectDescription = projectAttributesMap.getOrDefault("projectDescription", new GenerateStringUtil().getRandomString());
+        String projectName = projectAttributesMap.getOrDefault("projectName", new GenerateStringUtil().getRandomStringSpecLength(12));
+        String projectDisplayName = projectAttributesMap.getOrDefault("projectDisplayName", new GenerateStringUtil().getRandomStringSpecLength(12));
+        String projectDescription = projectAttributesMap.getOrDefault("projectDescription", new GenerateStringUtil().getRandomStringSpecLength(12));
         String projectStatus = projectAttributesMap.getOrDefault("projectStatus", "COMPLETED");
         String projectOwner = projectAttributesMap.getOrDefault("projectOwner", new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()));
         String projectDueAt = projectAttributesMap.getOrDefault("projectDueAt", DateUtil.getDateDaysAfter(10, DateFormattingUtils.dtf_yyyyMMddTHHmmssSSSZ));

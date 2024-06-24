@@ -37,7 +37,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     @TestRail(id = {13169, 14222})
     @Description("Verify user can add and delete comment")
     public void createAndDeleteCommentTest() {
-        String commentDescription = new GenerateStringUtil().getRandomString();
+        String commentDescription = new GenerateStringUtil().getRandomStringSpecLength(12);
         DmsCommentResponse dcResponse = DmsApiTestUtils.addCommentToDiscussion(currentUser, commentDescription, dmsScenarioDiscussionResponse.getItems()
             .get(0).getIdentity(), DmsCommentResponse.class, HttpStatus.SC_CREATED);
         softAssertions.assertThat(dcResponse.getContent()).isEqualTo(commentDescription);
@@ -49,7 +49,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     @TestRail(id = {15484})
     @Description("Verify user can add and update comment status to deleted")
     public void createAndUpdateCommentTest() {
-        String commentDescription = new GenerateStringUtil().getRandomString();
+        String commentDescription = new GenerateStringUtil().getRandomStringSpecLength(12);
         DmsCommentResponse dcResponse = DmsApiTestUtils.addCommentToDiscussion(currentUser, commentDescription, dmsScenarioDiscussionResponse.getItems()
             .get(0).getIdentity(), DmsCommentResponse.class, HttpStatus.SC_CREATED);
         softAssertions.assertThat(dcResponse.getContent()).isEqualTo(commentDescription);
@@ -93,7 +93,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     @Description("Verify user can add comment to discussion with another mentioned user")
     public void addCommentWithAnotherMentionedUserTest() {
         UserCredentials otherUser = UserUtil.getUser();
-        String commentDescription = new GenerateStringUtil().getRandomString();
+        String commentDescription = new GenerateStringUtil().getRandomStringSpecLength(12);
         DmsCommentsRequest dmsCommentsRequest = DmsCommentsRequest.builder()
             .comment(CommentsRequestParameters.builder()
                 .status("ACTIVE")
@@ -110,7 +110,7 @@ public class DmsCommentsTest extends DmsApiTestDataUtils {
     @Description("Verify that only discussion participants can add comment to current discussion")
     public void addCommentByOtherUserTest() {
         UserCredentials otherUser = UserUtil.getUser();
-        String commentsDescription = new GenerateStringUtil().getRandomString();
+        String commentsDescription = new GenerateStringUtil().getRandomStringSpecLength(12);
         DmsErrorMessageResponse dcResponse = DmsApiTestUtils.addCommentToDiscussion(otherUser, commentsDescription, dmsScenarioDiscussionResponse.getItems()
             .get(0).getIdentity(), DmsErrorMessageResponse.class, HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(dcResponse.getErrorMessage()).contains("Participant with user identity '"

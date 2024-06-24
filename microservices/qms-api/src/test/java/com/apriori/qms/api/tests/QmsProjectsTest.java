@@ -12,7 +12,7 @@ import com.apriori.qms.api.models.response.bidpackage.BidPackageProjectsResponse
 import com.apriori.qms.api.models.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.api.utils.QmsApiTestUtils;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -39,7 +39,7 @@ import java.util.List;
 @ExtendWith(TestRulesAPI.class)
 public class QmsProjectsTest extends TestUtil {
     private static final UserCredentials currentUser = UserUtil.getUser();
-    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+    private static final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
     private SoftAssertions softAssertions = new SoftAssertions();
     private ScenarioItem scenarioItem;
 
@@ -304,7 +304,7 @@ public class QmsProjectsTest extends TestUtil {
     @TestRail(id = {22956})
     @Description("Verify user is able to retrieve avatarColor inside of a specific QMS project's user model")
     public void getProjectByIdentity() {
-        BidPackageResponse bidPackageResponse = QmsBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbers(), currentUser);
+        BidPackageResponse bidPackageResponse = QmsBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8), currentUser);
         if (bidPackageResponse != null) {
             BidPackageItemResponse bidPackageItemResponse = QmsBidPackageResources.createBidPackageItem(
                 QmsBidPackageResources.bidPackageItemRequestBuilder(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity(), scenarioItem.getIterationIdentity()),

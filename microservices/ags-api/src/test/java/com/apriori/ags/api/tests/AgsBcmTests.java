@@ -67,7 +67,7 @@ public class AgsBcmTests extends AgsUtil {
     public void updateWorksheetTest() {
         String name = GenerateStringUtil.saltString("name");
         String updatedName = name + "updated";
-        String description = new GenerateStringUtil().getRandomString();
+        String description = new GenerateStringUtil().getRandomStringSpecLength(12);
         worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
 
         WorkSheetResponse getSingleWorksheet = getWorksheet(worksheetIdentity).getResponseEntity();
