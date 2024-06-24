@@ -13,7 +13,7 @@ import com.apriori.ats.api.utils.AtsTestUtil;
 import com.apriori.ats.api.utils.AuthorizeUserUtil;
 import com.apriori.ats.api.utils.enums.ATSAPIEnum;
 import com.apriori.shared.util.AuthorizationUtil;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -60,7 +60,7 @@ public class AtsAuthorizationTests extends TestUtil {
     @TestRail(id = {22088})
     @Description("Get a Cloud Context identified by a cloud context string")
     public void getCloudContextTest() {
-        String customerIdentity = CustomerUtil.getCustomerData().getIdentity();
+        String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
         String contextString = currentUser.generateCloudContext().getCloudContext();
         ResponseWrapper<CloudContextResponse> getCloudContext = atsTestUtil.getCommonRequest(ATSAPIEnum.CLOUD_CONTEXT, CloudContextResponse.class, HttpStatus.SC_OK, contextString);
 

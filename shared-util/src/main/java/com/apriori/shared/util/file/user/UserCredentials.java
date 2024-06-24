@@ -1,7 +1,7 @@
 package com.apriori.shared.util.file.user;
 
 import com.apriori.shared.util.AuthorizationUtil;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.RolesEnum;
 import com.apriori.shared.util.models.response.User;
 
@@ -96,7 +96,7 @@ public class UserCredentials implements Serializable {
 
     // TODO: 20/06/2024 cn - this should not be in this class as this is a customer (eg. apriori-internal) construct or make customer a sub-object of user
     public UserCredentials generateCloudContext() {
-        this.cloudContext = cloudContext != null ? cloudContext : CustomerUtil.getAuthTargetCloudContext();
+        this.cloudContext = cloudContext != null ? cloudContext : SharedCustomerUtil.getAuthTargetCloudContext();
         return this;
     }
 

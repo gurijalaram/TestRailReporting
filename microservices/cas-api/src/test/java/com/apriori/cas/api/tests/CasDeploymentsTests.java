@@ -6,7 +6,7 @@ import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.Deployment;
 import com.apriori.cas.api.models.response.Deployments;
 import com.apriori.cas.api.utils.CasTestUtil;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
@@ -33,7 +33,7 @@ public class CasDeploymentsTests {
     @BeforeEach
     public void setup() {
         RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
-        customerIdentity = CustomerUtil.getCustomerData().getIdentity();
+        customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
     }
 
     @Test
