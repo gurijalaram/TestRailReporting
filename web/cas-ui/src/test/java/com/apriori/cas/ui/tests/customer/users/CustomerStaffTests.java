@@ -311,6 +311,8 @@ public class CustomerStaffTests extends TestBaseUI {
         soft.assertThat(expected)
             .overridingErrorMessage("Expected users were not deleted")
             .isEqualTo(selected);
+
+        soft.assertAll();
     }
 
     @Test
@@ -352,6 +354,8 @@ public class CustomerStaffTests extends TestBaseUI {
         soft.assertThat(deletedUsers)
             .overridingErrorMessage("Expected soft deleted users are displayed")
             .isEqualTo(1L);
+
+        soft.assertAll();
     }
 
     private void setCustomerData() {
