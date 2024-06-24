@@ -19,7 +19,7 @@ import com.apriori.cis.api.util.CISTestUtil;
 import com.apriori.css.api.enums.CssSearch;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.serialization.util.DateFormattingUtils;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.AuthUserContextUtil;
@@ -70,7 +70,7 @@ public class CisComponentTest extends CISTestUtil {
 
         usersList.add(BidPackageProjectUserParameters.builder()
             .userIdentity(new AuthUserContextUtil().getAuthUserIdentity(currentUser.getEmail()))
-            .customerIdentity(CustomerUtil.getCurrentCustomerIdentity())
+            .customerIdentity(SharedCustomerUtil.getCurrentCustomerIdentity())
             .build());
     }
 

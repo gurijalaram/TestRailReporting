@@ -7,7 +7,7 @@ import com.apriori.nts.api.models.response.Email;
 import com.apriori.nts.api.models.response.EmailsItems;
 import com.apriori.nts.api.models.response.SendEmail;
 import com.apriori.nts.api.utils.EmailSetup;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.email.GraphEmailService;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -27,7 +27,7 @@ import java.util.Map;
 @Slf4j
 public class EmailService {
 
-    private final String cloudContext = CustomerUtil.getAuthTargetCloudContext(UserUtil.getUser(APRIORI_DEVELOPER));
+    private final String cloudContext = SharedCustomerUtil.getAuthTargetCloudContext(UserUtil.getUser(APRIORI_DEVELOPER));
     private Map<String, String> headers =
         new HashMap<>() {{
                 put("ap-cloud-context", cloudContext);

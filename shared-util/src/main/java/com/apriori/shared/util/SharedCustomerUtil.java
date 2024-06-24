@@ -25,7 +25,8 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-public class CustomerUtil {
+//todo 24/06/24 cn - temp refactor to class name
+public class SharedCustomerUtil {
 
     private static String currentCustomerTokenSubject;
     private static String authTargetCloudContext;
@@ -134,7 +135,7 @@ public class CustomerUtil {
      */
     private static List<Deployment> getDeployments(QueryParams queryParams) {
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(DeploymentsAPIEnum.DEPLOYMENTS, Deployments.class)
-            .inlineVariables(CustomerUtil.getCustomerData().getIdentity())
+            .inlineVariables(SharedCustomerUtil.getCustomerData().getIdentity())
             .queryParams(queryParams)
             .expectedResponseCode(HttpStatus.SC_OK);
 

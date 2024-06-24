@@ -12,7 +12,7 @@ import com.apriori.qms.api.models.response.bidpackage.BidPackageProjectsResponse
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.api.utils.QmsApiTestUtils;
 import com.apriori.serialization.util.DateFormattingUtils;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -43,7 +43,7 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class QmsProjectsFilteredTest extends TestUtil {
-    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+    private static final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
 
     private static UserCredentials currentUser;
     private static String projectName;
