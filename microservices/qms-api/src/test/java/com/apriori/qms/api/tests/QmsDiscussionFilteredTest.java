@@ -63,12 +63,12 @@ public class QmsDiscussionFilteredTest extends TestUtil {
     @Description("Create, get scenario discussion with assignee user and useridentity")
     public void getFilteredScenarioDiscussionsByUserIdentity() {
         UserCredentials assignedUser = UserUtil.getUser();
-        String description = new GenerateStringUtil().generateNotes();
+        String description = new GenerateStringUtil().generateAlphabeticString("Notes", 5);
         ScenarioDiscussionRequest scenarioDiscussionRequest = QmsApiTestUtils.getScenarioDiscussionRequest(assignedUser, scenarioItem, description);
         ScenarioDiscussionResponse scenarioDiscussionAssigneeResponse = QmsScenarioDiscussionResources.createScenarioDiscussion(scenarioDiscussionRequest, currentUser);
         softAssertions.assertThat(scenarioDiscussionAssigneeResponse.getDescription()).isEqualTo(description);
 
-        QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionAssigneeResponse.getIdentity(), new GenerateStringUtil().generateNotes(), "ACTIVE", currentUser);
+        QmsScenarioDiscussionResources.addCommentToDiscussion(scenarioDiscussionAssigneeResponse.getIdentity(), new GenerateStringUtil().generateAlphabeticString("Notes", 5), "ACTIVE", currentUser);
         String[] params = {"pageNumber,1", "status[NE],DELETED", "assignee.userIdentity[IN]," + scenarioDiscussionAssigneeResponse.getAssigneeUserIdentity(), "sortBy[DESC],createdAt"};
         ScenarioDiscussionsResponse responseWrapper = QmsScenarioDiscussionResources.getFilteredScenarioDiscussions(currentUser, params);
         softAssertions.assertThat(responseWrapper.getItems().size()).isGreaterThan(0);

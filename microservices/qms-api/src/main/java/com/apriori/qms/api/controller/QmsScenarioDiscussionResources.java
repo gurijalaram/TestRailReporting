@@ -40,7 +40,7 @@ public class QmsScenarioDiscussionResources {
             .scenarioDiscussion(ScenarioDiscussionParameters.builder()
                 .status("ACTIVE")
                 .type("SCENARIO")
-                .description(new GenerateStringUtil().generateScenarioName())
+                .description(new GenerateStringUtil().generateStringForAutomation("Scenario"))
                 .componentIdentity(componentIdentity)
                 .scenarioIdentity(scenarioIdentity)
                 .attributes(Attributes.builder()

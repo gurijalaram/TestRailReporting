@@ -38,9 +38,9 @@ public class LayoutConfigurationTest extends TestUtil {
     @BeforeEach
     public void testSetup() {
         softAssertions = new SoftAssertions();
-        layoutConfigName = "LCN" + new GenerateStringUtil().getRandomNumbers();
-        String layoutName = "LN" + new GenerateStringUtil().getRandomNumbers();
-        String viewElementName = "VEN" + new GenerateStringUtil().getRandomNumbers();
+        layoutConfigName = "LCN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
+        String layoutName = "LN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
+        String viewElementName = "VEN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         layoutResponse = LayoutResources.createLayout(layoutName, currentUser);
         viewElementsResponse = LayoutResources.createLayoutViewElement(layoutResponse.getIdentity(), viewElementName, currentUser);
         layoutConfigurationResponse = QmsLayoutResources.createLayoutConfiguration(
@@ -58,7 +58,7 @@ public class LayoutConfigurationTest extends TestUtil {
         "Update layout configuration that does not exist" +
         "delete layout configuration that does not exist")
     public void createAndDeleteLayoutConfiguration() {
-        String lcName = "LCN" + new GenerateStringUtil().getRandomNumbers();
+        String lcName = "LCN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         LayoutConfigurationResponse layoutConfigurationResponse = QmsLayoutResources.createLayoutConfiguration(
             QmsLayoutResources.getLayoutConfigurationRequestBuilder(lcName, layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), false),
             viewElementsResponse.getName(),
@@ -81,7 +81,7 @@ public class LayoutConfigurationTest extends TestUtil {
 
 
         ApwErrorMessage deletedLYCResponse = QmsLayoutResources.updateLayoutConfiguration(
-            QmsLayoutResources.getLayoutConfigurationRequestBuilder(new GenerateStringUtil().getRandomNumbers(),
+            QmsLayoutResources.getLayoutConfigurationRequestBuilder(new GenerateStringUtil().getRandomNumbersSpecLength(8),
                 layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), false),
             viewElementsResponse.getName(),
             layoutConfigurationResponse.getIdentity(),
@@ -138,7 +138,7 @@ public class LayoutConfigurationTest extends TestUtil {
     @TestRail(id = {12543})
     @Description("Verify that user can update layout configuration")
     public void updateLayoutConfiguration() {
-        String lycName = new GenerateStringUtil().getRandomString();
+        String lycName = new GenerateStringUtil().getRandomStringSpecLength(12);
         LayoutConfigurationResponse updateLycResponse = QmsLayoutResources.updateLayoutConfiguration(
             QmsLayoutResources.getLayoutConfigurationRequestBuilder(lycName, layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), false),
             viewElementsResponse.getName(),
@@ -219,8 +219,8 @@ public class LayoutConfigurationTest extends TestUtil {
             .layoutConfiguration(LayoutConfigurationParameters.builder()
                 .configuration("")
                 .name(layoutConfigName)
-                .deploymentIdentity(new GenerateStringUtil().getRandomString())
-                .installationIdentity(new GenerateStringUtil().getRandomString())
+                .deploymentIdentity(new GenerateStringUtil().getRandomStringSpecLength(12))
+                .installationIdentity(new GenerateStringUtil().getRandomStringSpecLength(12))
                 .shareable(false)
                 .build())
             .build();
@@ -238,7 +238,7 @@ public class LayoutConfigurationTest extends TestUtil {
     @TestRail(id = {13107, 13109})
     @Description("Create, Share  layout configuration and Verify layout configuration is shared")
     public void createShareAndVerifyLayoutConfiguration() {
-        String lcName = "LCN" + new GenerateStringUtil().getRandomNumbers();
+        String lcName = "LCN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         LayoutConfigurationResponse lycResponse = QmsLayoutResources.createLayoutConfiguration(
             QmsLayoutResources.getLayoutConfigurationRequestBuilder(lcName, layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), false),
             viewElementsResponse.getName(),
@@ -270,7 +270,7 @@ public class LayoutConfigurationTest extends TestUtil {
     @TestRail(id = {13108, 13110})
     @Description("Create, UnShare  layout configuration and Verify layout configuration is shared")
     public void createAndUnShareAndVerifyLayoutConfiguration() {
-        String lcName = "LCN" + new GenerateStringUtil().getRandomNumbers();
+        String lcName = "LCN" + new GenerateStringUtil().getRandomNumbersSpecLength(8);
         LayoutConfigurationResponse lycResponse = QmsLayoutResources.createLayoutConfiguration(
             QmsLayoutResources.getLayoutConfigurationRequestBuilder(lcName, layoutResponse.getDeploymentIdentity(), layoutResponse.getInstallationIdentity(), true),
             viewElementsResponse.getName(),

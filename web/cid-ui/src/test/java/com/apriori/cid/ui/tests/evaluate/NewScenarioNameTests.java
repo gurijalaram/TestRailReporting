@@ -16,7 +16,6 @@ import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.OperationEnum;
-import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -46,7 +45,7 @@ public class NewScenarioNameTests extends TestBaseUI {
     @TestRail(id = {5424})
     @Description("Test entering a new scenario name shows the correct name on the evaluate page")
     public void testEnterNewScenarioName() {
-        String testScenarioName2 = generateStringUtil.generateScenarioName();
+        String testScenarioName2 = generateStringUtil.generateStringForAutomation("Scenario");
         ComponentInfoBuilder component = new ComponentRequestUtil().getComponent();
 
         loginPage = new CidAppLoginPage(driver);
@@ -63,13 +62,13 @@ public class NewScenarioNameTests extends TestBaseUI {
     @TestRail(id = {5953})
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
     public void multipleUpload() {
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         ComponentInfoBuilder component = new ComponentRequestUtil().getComponent("MultiUpload");
         ComponentInfoBuilder componentB = SerializationUtils.clone(component);
-        componentB.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentB.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
         ComponentInfoBuilder componentC = SerializationUtils.clone(component);
-        componentC.setScenarioName(new GenerateStringUtil().generateScenarioName());
+        componentC.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(component.getUser())

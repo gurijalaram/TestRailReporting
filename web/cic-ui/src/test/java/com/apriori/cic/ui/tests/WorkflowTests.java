@@ -51,8 +51,8 @@ public class WorkflowTests extends TestBaseUI {
         currentUser = UserUtil.getUser();
         agentPort = CicApiTestUtil.getAgentPortData();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json", WorkFlowData.class);
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-        workFlowData.setWorkflowName(workFlowData.getWorkflowName() + new GenerateStringUtil().getRandomNumbers());
+        scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        workFlowData.setWorkflowName(workFlowData.getWorkflowName() + new GenerateStringUtil().getRandomNumbersSpecLength(8));
         workFlowData.getQueryDefinitionsData().get(0).setFieldName(PlmTypeAttributes.PLM_PART_NUMBER.getCicGuiField());
         workFlowData.getQueryDefinitionsData().get(0).setFieldOperator(RuleOperatorEnum.EQUAL.getRuleOperator());
         workFlowData.getQueryDefinitionsData().get(0).setFieldValue(new PlmPartsUtil().getPlmPartData(PlmPartDataType.PLM_PART_GENERAL).getPlmPartNumber());

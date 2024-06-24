@@ -29,7 +29,7 @@ public class MfaEnabledTests extends TestBaseUI {
     @BeforeEach
     public void setup() {
         String cloudRef = generateStringUtil.generateCloudReference();
-        customerName = generateStringUtil.generateCustomerName();
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String email = "\\S+@".concat(customerName);
 
         cdsTestUtil = new CdsTestUtil();

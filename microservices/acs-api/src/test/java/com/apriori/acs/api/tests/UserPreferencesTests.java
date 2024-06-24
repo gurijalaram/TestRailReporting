@@ -32,7 +32,9 @@ public class UserPreferencesTests extends TestUtil {
 
     @AfterEach
     public void cleanup() {
-        new AcsResources(userCredentials).resetSettings();
+        AcsResources acsResources = new AcsResources(userCredentials);
+        acsResources.resetSettings();
+        acsResources.resetDisplayUnits();
     }
 
     @Test

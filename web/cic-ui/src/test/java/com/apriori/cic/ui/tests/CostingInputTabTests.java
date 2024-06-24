@@ -78,7 +78,7 @@ public class CostingInputTabTests extends WorkflowTestUtil {
         softAssertions.assertThat(costingInputsPart.getNoCostingInputLabel().getText()).isEqualTo("No costing inputs defined.");
 
         log.info("###### Validate Scenario name with special characters ####");
-        costingInputsPart.addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, new GenerateStringUtil().getRandomString() + "@#$%");
+        costingInputsPart.addCostingInputRow(PlmTypeAttributes.PLM_SCENARIO_NAME, MappingRule.CONSTANT, new GenerateStringUtil().getRandomStringSpecLength(12) + "@#$%");
         softAssertions.assertThat(costingInputsPart.getCiNextButton().isEnabled()).isTrue();
     }
 

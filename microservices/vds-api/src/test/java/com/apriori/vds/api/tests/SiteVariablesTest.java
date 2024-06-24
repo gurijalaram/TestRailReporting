@@ -39,7 +39,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {8294})
     @Description("Deletes a site variable by name.")
     public void deleteSiteVariablesByName() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSiteVariables(name)).put();
 
@@ -50,7 +50,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {30942})
     @Description("Deletes a SystemVariableMap site variable by identity.")
     public void deleteSystemVariableMapByIdentity() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemVariableMapSiteVariable(name)).put();
 
@@ -61,7 +61,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {30943})
     @Description("Deletes a SystemConfigurationMap site variable by identity.")
     public void deleteSystemConfigurationMapByIdentity() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemConfigurationMapSiteVariable(name)).put();
 
@@ -72,7 +72,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {30944})
     @Description("Deletes a PrimitiveValueMap site variable by identity.")
     public void deletePrimitiveValueMapByIdentity() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postPrimitiveValueMapSiteVariable(name)).put();
 
@@ -83,7 +83,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {30945})
     @Description("Deletes a ProcessModelDefaults site variable by identity.")
     public void deleteProcessModelDefaultsByIdentity() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postProcessModelDefaultsSiteVariable(name)).put();
 
@@ -94,7 +94,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {30946})
     @Description("Deletes a ProcessModelOverrides site variable by identity.")
     public void deleteProcessModelOverridesByIdentity() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postProcessModelOverridesSiteVariable(name)).put();
 
@@ -105,7 +105,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {8292})
     @Description("Creates a site variable for a user with old ETL representation, then finds the created entry and updates data on it.")
     public void putSiteVariableForAUser() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSiteVariables(name)).put();
 
@@ -134,7 +134,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {30933, 30686, 30966})
     @Description("Creates a SystemVariableMap site variable for a user with updated ETL representation, then finds the created entry and updates data on it.")
     public void createSystemVariableMapForAUser() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
         String variableType = "SystemVariableMap";
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemVariableMapSiteVariable(name)).put();
@@ -164,7 +164,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {30934, 30687, 30967})
     @Description("Creates a SystemConfigurationMap site variable for a user with updated ETL representation, then finds the created entry and updates data on it.")
     public void createSystemConfigurationMapForAUser() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
         String variableType = "SystemConfigurationMap";
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemConfigurationMapSiteVariable(name)).put();
@@ -194,7 +194,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {30935, 30688, 30968})
     @Description("Creates a PrimitiveValueMap site variable for a user with updated ETL representation, then finds the created entry and updates data on it.")
     public void createPrimitiveValueMapForAUser() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
         String variableType = "PrimitiveValueMap";
         String processGroup = "Forging";
 
@@ -225,7 +225,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {30936, 30689, 30969})
     @Description("Creates a ProcessModelDefaults site variable for a user with updated ETL representation, then finds the created entry and updates data on it.")
     public void createProcessModelDefaultsForAUser() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
         String variableType = "ProcessModelDefaults";
         String processGroup = "Sheet Plastic";
 
@@ -256,7 +256,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {30937, 30690, 30970})
     @Description("Creates a ProcessModelOverrides site variable for a user with updated ETL representation, then finds the created entry and updates data on it.")
     public void createProcessModelOverridesForAUser() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
         String variableType = "ProcessModelOverrides";
         String processGroup = "Sheet Metal";
 
@@ -287,7 +287,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @TestRail(id = {30971})
     @Description("Attempt to update data on a site variable that is not changeable.")
     public void validateSiteVariableFieldsAreNotUpdated() {
-        String name = new GenerateStringUtil().generateSiteName();
+        String name = new GenerateStringUtil().generateAlphabeticString("Site", 5);
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(postSystemVariableMapSiteVariable(name)).put();
 
@@ -353,7 +353,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, ErrorMessage.class)
                 .body(SiteVariableRequest.builder()
-                    .name(new GenerateStringUtil().generateSiteName())
+                    .name(new GenerateStringUtil().generateAlphabeticString("Site", 5))
                     .type("BLUE")
                     .value("yes")
                     .variableType("ProcessModelDefaults")
@@ -375,7 +375,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         RequestEntity requestEntity =
             requestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, ErrorMessage.class)
                 .body(SiteVariableRequest.builder()
-                    .name(new GenerateStringUtil().generateSiteName())
+                    .name(new GenerateStringUtil().generateAlphabeticString("Site", 5))
                     .type("STRING")
                     .value("yes")
                     .variableType("ProcessModelOverrides")

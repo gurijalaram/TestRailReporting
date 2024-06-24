@@ -45,7 +45,7 @@ public class MessagesTest extends TestBaseUI {
     public void testSetup() {
         softAssertions = new SoftAssertions();
         scenarioUtil = new ScenariosUtil();
-        userComment = new GenerateStringUtil().getRandomString();
+        userComment = new GenerateStringUtil().getRandomStringSpecLength(12);
         componentInfoBuilder = new ComponentRequestUtil().getComponentWithProcessGroup(componentName, ProcessGroupEnum.SHEET_METAL);
         currentUser = componentInfoBuilder.getUser();
         leftHandNavigationBar = new CisLoginPage(driver).cisLogin(currentUser);

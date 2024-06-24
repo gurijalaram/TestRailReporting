@@ -5,8 +5,6 @@ import com.apriori.sds.api.models.response.Scenario;
 import com.apriori.sds.api.util.SDSTestUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -21,15 +19,14 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class PublishAssembliesTests extends SDSTestUtil {
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ComponentInfoBuilder componentAssembly;
 
     @Test
     @TestRail(id = 12308)
     @Description("Verify Shallow Publish through SDS api")
     public void testShallowPublishAssembly() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        UserCredentials testingUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final String FLANGE = "flange";
         final String NUT = "nut";
@@ -64,8 +61,7 @@ public class PublishAssembliesTests extends SDSTestUtil {
     @TestRail(id = 12309)
     @Description("Verify that an error is returned if Shallow Publish is requested when associated sub-component scenarios still exist in private workspace, through SDS api")
     public void testShallowPublishAssemblyWithPrivateSubcomponents() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        UserCredentials testingUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         final String FLANGE = "flange";
         final String NUT = "nut";

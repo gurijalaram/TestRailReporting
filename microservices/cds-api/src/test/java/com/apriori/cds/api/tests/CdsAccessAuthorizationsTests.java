@@ -55,7 +55,7 @@ public class CdsAccessAuthorizationsTests {
     @BeforeEach
     public void setDetails() {
         url = Constants.getServiceUrl();
-        customerName = generateStringUtil.generateCustomerName();
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
         emailPattern = "\\S+@".concat(customerName);
         apStaffIdentity = currentUser.getUserDetails().getIdentity();

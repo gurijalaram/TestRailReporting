@@ -11,6 +11,7 @@ import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.enums.CustomerEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.models.response.Deployment;
+import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.testrail.TestRail;
 
 import lombok.extern.slf4j.Slf4j;
@@ -61,7 +62,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
         List<ApplicationDTO> mappedCustomerApplications = achEnvironmentAPIUtil.mapCustomerDeploymentDataToDTO(
             customerDeployment
         );
-        mappedCustomerApplications.addAll(getMappedMultiTenantApplications(customerDeployment));
+        mappedCustomerApplications.addAll(getMappedMultiTenantApplications());
 
         List<ApplicationDTO> userApplicationsFromUI = cloudHomePage.getListOfApplications();
 
@@ -69,11 +70,11 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
         this.validateApplicationsAreLaunchedSuccessfully(userApplicationsFromUI);
     }
 
-    private List<ApplicationDTO> getMappedMultiTenantApplications(Deployment customerDeployment) {
+    private List<ApplicationDTO> getMappedMultiTenantApplications() {
         final String apInternalCustomerIdentity = CustomerUtil.getCustomerData(CustomerEnum.AP_INT.getCustomer()).getIdentity();
 
         return achEnvironmentAPIUtil.mapMultiTenantDeploymentDataToDTO(
-            achEnvironmentAPIUtil.getCustomerDeploymentInformation(apInternalCustomerIdentity), customerDeployment.getInstallations().get(0).getRegion()
+            achEnvironmentAPIUtil.getCustomerDeploymentInformation(apInternalCustomerIdentity)
         );
     }
 
@@ -84,8 +85,8 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
      */
     private void validateApplicationsUIText(List<ApplicationDTO> applications, List<ApplicationDTO> customerApplicationsData) {
         applications.removeAll(customerApplicationsData);
-        assertEquals(0, applications.size(), "Applications list should be empty, else application has an text representation not related to the customers environment.\n" +
-            "Applications that aro not appropriate to customers applications\n" +
+        assertEquals(0, applications.size(), "Applications list should be empty, else application has text representation not related to the customer's environment.\n" +
+            "Applications that are not appropriate to customers applications\n" +
             StringUtils.join(applications, '\n')
         );
     }

@@ -3,7 +3,6 @@ package com.apriori.cis.ui.tests.userpreference;
 import com.apriori.cis.ui.navtoolbars.LeftHandNavigationBar;
 import com.apriori.cis.ui.pageobjects.login.CisLoginPage;
 import com.apriori.cis.ui.pageobjects.myuser.MyUserPage;
-import com.apriori.cis.ui.pageobjects.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.cis.ui.pageobjects.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.cis.ui.pageobjects.settings.UserPreferencePage;
 import com.apriori.cis.ui.utils.CisDisplayPreferenceEnum;
@@ -61,7 +60,7 @@ public class UserPreferenceTest extends TestBaseUI {
     @TestRail(id = {16674, 16677, 16679, 16681, 16683, 16686, 16687, 16688})
     @Description("Verify user can change the display preferences")
     public void testDisplayPreferences() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         String componentName = "ChampferOut";
 
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
