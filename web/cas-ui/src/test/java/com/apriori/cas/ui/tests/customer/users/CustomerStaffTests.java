@@ -76,7 +76,7 @@ public class CustomerStaffTests extends TestBaseUI {
     }
 
     @AfterEach
-    public void teardown() {
+    public void tearDown() {
         if (deleteIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
                 deleteIdentityHolder.customerIdentity(),
