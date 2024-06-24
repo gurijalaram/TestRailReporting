@@ -9,7 +9,7 @@ import com.apriori.bcs.api.models.response.Part;
 import com.apriori.bcs.api.models.response.PartReport;
 import com.apriori.bcs.api.models.response.Parts;
 import com.apriori.bcs.api.models.response.Results;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.part.PartData;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -41,7 +41,7 @@ public class BatchPartResources {
 
     private static RequestEntity requestEntity = null;
     private static final long WAIT_TIME = 600;
-    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+    private static final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
     private static String batchID;
     static ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(10);
 

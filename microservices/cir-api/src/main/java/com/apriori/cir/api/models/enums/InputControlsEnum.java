@@ -1,6 +1,7 @@
 package com.apriori.cir.api.models.enums;
 
 public enum InputControlsEnum {
+    ANNUALIZED_POTENTIAL_THRESHOLD("annualizedPotentialThreshold"),
     APRIORI_COST_MAX("aPrioriCostMax"),
     APRIORI_COST_MIN("aPrioriCostMin"),
     APRIORI_MASS_MAX("aPrioriMassMax"),

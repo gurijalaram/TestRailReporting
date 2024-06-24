@@ -30,7 +30,7 @@ public class AuthorizationUtil {
             .body(TokenRequest.builder()
                 .token(TokenInformation.builder()
                     .issuer(PropertiesContext.get("ats.token_issuer"))
-                    .subject(CustomerUtil.getTokenSubjectForCustomer())
+                    .subject(SharedCustomerUtil.getTokenSubjectForCustomer())
                     .claims(Claims.builder()
                         .name(userCredentials.getUsername())
                         .email(userCredentials.getEmail())

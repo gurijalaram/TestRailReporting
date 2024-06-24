@@ -11,8 +11,7 @@ import com.apriori.cas.ui.pageobjects.customer.users.StaffPage;
 import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.CdsUserUtil;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -65,7 +64,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         cdsUserUtil = new CdsUserUtil(requestEntityUtil);
 
-        customerIdentity = CustomerUtil.getCustomerData().getIdentity();
+        customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
         sourceUsers = new ArrayList<>(cdsTestUtil.findAll(
             CDSAPIEnum.CUSTOMER_USERS,
             Users.class,

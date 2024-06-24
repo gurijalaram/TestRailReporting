@@ -40,6 +40,7 @@ public class JasperReportUtil {
     private static HashMap<String, Integer> inputControlsIndexMapAssemblyCostA4;
     private static HashMap<String, Integer> inputControlsIndexMapAssemblyDetails;
     private static HashMap<String, Integer> inputControlsIndexMapComponentCost;
+    private static HashMap<String, Integer> inputControlsIndexMapCostOutlierIdentification;
     private static HashMap<String, Integer> inputControlsIndexMapScenarioComparison;
     private static HashMap<String, Integer> inputControlsIndexMapUpgradeComparison;
     private static HashMap<String, Integer> inputControlsIndexMapUpgradePartComparison;
@@ -47,6 +48,7 @@ public class JasperReportUtil {
     private static LinkedHashMap<String, String> assemblyCostA4ICModifiedNamesValuesMap;
     private static LinkedHashMap<String, String> assemblyDetailsICModifiedNamesValuesMap;
     private static LinkedHashMap<String, String> componentCostICModifiedNamesValuesMap;
+    private static LinkedHashMap<String, String> costOutlierIdentificationICModifiedNamesValuesMap;
     private static LinkedHashMap<String, String> scenarioComparisonICModifiedNamesValuesMap;
     private static LinkedHashMap<String, String> upgradeComparisonICModifiedNamesValuesMap;
     private static LinkedHashMap<String, String> upgradePartComparisonICModifiedNamesValuesMap;
@@ -121,6 +123,10 @@ public class JasperReportUtil {
 
         if (!miscDataList.get(1).isEmpty() && !miscDataList.get(2).isEmpty()) {
             genericInputList.get(icMapToUse.get(miscDataList.get(1))).setValue(Collections.singletonList(miscDataList.get(2)));
+        }
+
+        if (miscDataList.size() > 6) {
+            genericInputList.get(icMapToUse.get(miscDataList.get(5))).setValue(Collections.singletonList(miscDataList.get(6)));
         }
 
         if (!miscDataList.get(miscDataList.size() - 1).isEmpty()) {
@@ -630,6 +636,7 @@ public class JasperReportUtil {
         initialiseInputControlsAssemblyCostA4HashMap();
         initialiseInputControlsAssemblyDetailsHashMap();
         initialiseInputControlsComponentCostHashMap();
+        initialiseInputControlsIndexMapCostOutlierIdentification();
         initialiseInputControlsScenarioComparisonHashMap();
         initialiseInputControlsUpgradeComparisonHashMap();
         initialiseInputControlsUpgradePartComparisonHashMap();
@@ -641,6 +648,7 @@ public class JasperReportUtil {
         initialiseAssemblyCostA4ICModifiedNamesValuesMap();
         initialiseAssemblyDetailsICModifiedNamesValuesMap();
         initialiseComponentCostICModifiedNamesValuesMap();
+        initialiseCostOutlierIdentificationICModifiedNamesValuesMap();
         initialiseScenarioComparisonICModifiedNamesValuesMap();
         initialiseUpgradeComparisonICModifiedNamesValuesMap();
         initialiseUpgradePartComparisonICModifiedNamesValuesMap();
@@ -683,6 +691,22 @@ public class JasperReportUtil {
         inputControlsIndexMapComponentCost.put("scenarioName", 6);
         inputControlsIndexMapComponentCost.put("componentSelect", 7);
         inputControlsIndexMapComponentCost.put("componentCostCurrencyCode", 8);
+    }
+
+    private static void initialiseInputControlsIndexMapCostOutlierIdentification() {
+        inputControlsIndexMapCostOutlierIdentification = new HashMap<>();
+        inputControlsIndexMapCostOutlierIdentification.put("useLatestExport", 0);
+        inputControlsIndexMapCostOutlierIdentification.put("earliestExportDate", 1);
+        inputControlsIndexMapCostOutlierIdentification.put("latestExportDate", 2);
+        inputControlsIndexMapCostOutlierIdentification.put("exportSetName", 3);
+        inputControlsIndexMapCostOutlierIdentification.put("rollup", 4);
+        inputControlsIndexMapCostOutlierIdentification.put("currencyCode", 5);
+        inputControlsIndexMapCostOutlierIdentification.put("costMetric", 6);
+        inputControlsIndexMapCostOutlierIdentification.put("sortOrder", 7);
+        inputControlsIndexMapCostOutlierIdentification.put("componentCostMin", 8);
+        inputControlsIndexMapCostOutlierIdentification.put("componentCostMax", 9);
+        inputControlsIndexMapCostOutlierIdentification.put("annualizedPotentialThreshold", 10);
+        inputControlsIndexMapCostOutlierIdentification.put("percentDifferenceThreshold", 11);
     }
 
     private static void initialiseInputControlsScenarioComparisonHashMap() {
@@ -745,6 +769,7 @@ public class JasperReportUtil {
         inputControlsModifiedUrlMap.put(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(), JasperApiInputControlsPathEnum.ASSEMBLY_COST_MODIFIED_IC);
         inputControlsModifiedUrlMap.put(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), JasperApiInputControlsPathEnum.ASSEMBLY_DETAILS_MODIFIED_IC);
         inputControlsModifiedUrlMap.put(ReportNamesEnum.COMPONENT_COST.getReportName(), JasperApiInputControlsPathEnum.COMPONENT_COST_MODIFIED_IC);
+        inputControlsModifiedUrlMap.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), JasperApiInputControlsPathEnum.COST_OUTLIER_IDENTIFICATION_MODIFIED_IC);
         inputControlsModifiedUrlMap.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), JasperApiInputControlsPathEnum.SCENARIO_COMPARISON_MODIFIED_IC);
         inputControlsModifiedUrlMap.put(ReportNamesEnum.UPGRADE_COMPARISON.getReportName(), JasperApiInputControlsPathEnum.UPGRADE_COMPARISON_MODIFIED_IC);
         inputControlsModifiedUrlMap.put(ReportNamesEnum.UPGRADE_PART_COMPARISON.getReportName(), JasperApiInputControlsPathEnum.UPGRADE_PART_COMPARISON_MODIFIED_IC);
@@ -784,6 +809,22 @@ public class JasperReportUtil {
         componentCostICModifiedNamesValuesMap.put("scenarioName", "~NOTHING~");
         componentCostICModifiedNamesValuesMap.put("componentSelect", "1");
         componentCostICModifiedNamesValuesMap.put("componentCostCurrencyCode", "USD");
+    }
+
+    private static void initialiseCostOutlierIdentificationICModifiedNamesValuesMap() {
+        costOutlierIdentificationICModifiedNamesValuesMap = new LinkedHashMap<>();
+        costOutlierIdentificationICModifiedNamesValuesMap.put("useLatestExport", "Scenario");
+        costOutlierIdentificationICModifiedNamesValuesMap.put("earliestExportDate", "2010-02-18 06:20:13");
+        costOutlierIdentificationICModifiedNamesValuesMap.put("latestExportDate", "2024-06-17T07:20:13");
+        costOutlierIdentificationICModifiedNamesValuesMap.put("exportSetName", "~NOTHING~");
+        costOutlierIdentificationICModifiedNamesValuesMap.put("rollup", "");
+        costOutlierIdentificationICModifiedNamesValuesMap.put("currencyCode", "USD");
+        costOutlierIdentificationICModifiedNamesValuesMap.put("costMetric", "Fully Burdened Cost");
+        costOutlierIdentificationICModifiedNamesValuesMap.put("sortOrder", "Annualized Potential Savings");
+        costOutlierIdentificationICModifiedNamesValuesMap.put("componentCostMin", "0");
+        costOutlierIdentificationICModifiedNamesValuesMap.put("componentCostMax", "");
+        costOutlierIdentificationICModifiedNamesValuesMap.put("annualizedPotentialThreshold", "");
+        costOutlierIdentificationICModifiedNamesValuesMap.put("percentDifferenceThreshold", "");
     }
 
     private static void initialiseScenarioComparisonICModifiedNamesValuesMap() {
@@ -846,6 +887,7 @@ public class JasperReportUtil {
         inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(), assemblyCostA4ICModifiedNamesValuesMap);
         inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), assemblyDetailsICModifiedNamesValuesMap);
         inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.COMPONENT_COST.getReportName(), componentCostICModifiedNamesValuesMap);
+        inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), costOutlierIdentificationICModifiedNamesValuesMap);
         inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), scenarioComparisonICModifiedNamesValuesMap);
         inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.UPGRADE_COMPARISON.getReportName(), upgradeComparisonICModifiedNamesValuesMap);
         inputControlsModifiedValueNameMasterList.put(ReportNamesEnum.UPGRADE_PART_COMPARISON.getReportName(), upgradePartComparisonICModifiedNamesValuesMap);
@@ -856,6 +898,7 @@ public class JasperReportUtil {
         inputControlsIndexMapMaster.put(ReportNamesEnum.ASSEMBLY_COST_A4.getReportName(), inputControlsIndexMapAssemblyCostA4);
         inputControlsIndexMapMaster.put(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), inputControlsIndexMapAssemblyDetails);
         inputControlsIndexMapMaster.put(ReportNamesEnum.COMPONENT_COST.getReportName(), inputControlsIndexMapComponentCost);
+        inputControlsIndexMapMaster.put(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(), inputControlsIndexMapCostOutlierIdentification);
         inputControlsIndexMapMaster.put(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), inputControlsIndexMapScenarioComparison);
         inputControlsIndexMapMaster.put(ReportNamesEnum.UPGRADE_COMPARISON.getReportName(), inputControlsIndexMapUpgradeComparison);
         inputControlsIndexMapMaster.put(ReportNamesEnum.UPGRADE_PART_COMPARISON.getReportName(), inputControlsIndexMapUpgradePartComparison);

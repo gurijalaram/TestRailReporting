@@ -3,8 +3,7 @@ package com.apriori.cds.api.tests;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.cds.api.utils.CdsUserUtil;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -50,7 +49,7 @@ public class CdsUpdateUserTests {
 
         String userName = generateStringUtil.generateUserName();
 
-        Customer aprioriInternal = CustomerUtil.getCustomerData();
+        Customer aprioriInternal = SharedCustomerUtil.getCustomerData();
         String pattern = aprioriInternal.getEmailRegexPatterns().stream().findFirst().orElseThrow();
         String domain = pattern.replace("\\S+@", "").replace(".com", "");
 

@@ -3,7 +3,7 @@ package com.apriori.bcs.api.controller;
 import com.apriori.bcs.api.enums.BCSAPIEnum;
 import com.apriori.bcs.api.models.request.PatchCostingPreferenceRequest;
 import com.apriori.bcs.api.models.response.UserPreferences;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -33,7 +33,7 @@ public class CustomerResources {
         request.setMinCadToleranceThreshold(new Random().nextDouble());
         RequestEntity requestEntity = RequestEntityUtil_Old
             .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, UserPreferences.class)
-            .inlineVariables(CustomerUtil.getCurrentCustomerIdentity())
+            .inlineVariables(SharedCustomerUtil.getCurrentCustomerIdentity())
             .body(request)
             .expectedResponseCode(HttpStatus.SC_OK);
         return HTTPRequest.build(requestEntity).patch();
@@ -48,7 +48,7 @@ public class CustomerResources {
     public static ResponseWrapper<UserPreferences> patchCostingPreferences(PatchCostingPreferenceRequest patchCostingPreferenceRequest) {
         RequestEntity requestEntity = RequestEntityUtil_Old
             .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, UserPreferences.class)
-            .inlineVariables(CustomerUtil.getCurrentCustomerIdentity())
+            .inlineVariables(SharedCustomerUtil.getCurrentCustomerIdentity())
             .body(patchCostingPreferenceRequest);
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -62,7 +62,7 @@ public class CustomerResources {
      */
     public static <T> RequestEntity getCustomerRequestEntity(BCSAPIEnum endPoint, Class<T> klass) {
         return RequestEntityUtil_Old.init(endPoint, klass)
-            .inlineVariables(CustomerUtil.getCurrentCustomerIdentity())
+            .inlineVariables(SharedCustomerUtil.getCurrentCustomerIdentity())
             .expectedResponseCode(HttpStatus.SC_OK);
     }
 }
