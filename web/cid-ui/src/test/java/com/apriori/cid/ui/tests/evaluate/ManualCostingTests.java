@@ -266,7 +266,7 @@ public class ManualCostingTests  extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {31009, 31010, 31017, 31018, 31020, 31021, 31022})
+    @TestRail(id = {31009, 31010, 31017, 31018, 31020, 31021, 31022, 30649})
     @Description("Verify all actions can be performed on Manually Costed Scenario")
     public void testActionsForManuallyCostedScenarios() {
         String copiedScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
