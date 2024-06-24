@@ -35,6 +35,8 @@ public enum JasperApiInputControlsPathEnum implements ExternalEndpointEnum {
         "componentSelect;componentCostCurrencyCode/values/pagination?freshData=false&includeTotalCount=true"))),
     COST_OUTLIER_IDENTIFICATION(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/costOutlierIdentification/inputControls/useLatestExport;earliestExportDate;latestExportDate;").concat(
         "exportSetName;rollup;currencyCode;costMetric;sortOrder;componentCostMin;componentCostMax;annualizedPotentialThreshold;percentDifferenceThreshold/values?freshData=false")),
+    COST_OUTLIER_IDENTIFICATION_MODIFIED_IC(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/costOutlierIdentification/inputControls/useLatestExport;earliestExportDate;".concat(
+        "latestExportDate;exportSetName;rollup;currencyCode;costMetric;sortOrder;componentCostMin;componentCostMax;annualizedPotentialThreshold;percentDifferenceThreshold/values/pagination?freshData=false&includeTotalCount=true"))),
     COST_OUTLIER_IDENTIFICATION_DETAILS(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/costOutlierIdentificationDetails/inputControls/useLatestExport;earliestExportDate;").concat(
         "latestExportDate;exportSetName;rollup;currencyCode;costMetric;sortOrder;componentCostMin;componentCostMax;annualizedPotentialThreshold;percentDifferenceThreshold/values?freshData=false")),
     CYCLE_TIME_VALUE_TRACKING(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("/cycleTime/cycleTimeValueTracking/inputControls/projectRollup;exportDate;currencyCode/values?freshData=false&includeTotalCount=true")),
