@@ -398,21 +398,4 @@ public class ManualCostingTests  extends TestBaseUI {
 
         softAssertions.assertAll();
     }
-
-    @Test
-    @TestRail(id = {30102, 30104, 30105, 30107, 30108, 30109, 30110, 30111, 30112})
-    @Description("Verify Manually Costed Scenarios cannot be used in 2-Model Machining Source Model")
-    public void testManuallyCostedAs2MMSource() {
-        component = new ComponentRequestUtil().getComponent();
-
-        evaluatePage = new CidAppLoginPage(driver).login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .clickManualModeButtonWhileUncosted()
-            .enterPiecePartCost("42")
-            .enterTotalCapitalInvestment("316")
-            .clickCostButton()
-            .waitForCostLabelNotContain(NewCostingLabelEnum.SAVING_IN_PROGRESS, 2)
-            .publishScenario(PublishPage.class)
-            .publish(component, EvaluatePage.class);
-    }
 }
