@@ -76,7 +76,6 @@ public class CustomerUtil {
 
         Installation installationItem = deploymentItem.getInstallations()
             .stream()
-
             .filter(element -> element.getName().equalsIgnoreCase(installationName))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(
