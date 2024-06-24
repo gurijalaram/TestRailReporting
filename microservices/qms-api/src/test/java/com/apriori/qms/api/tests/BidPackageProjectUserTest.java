@@ -23,7 +23,7 @@ import com.apriori.qms.api.models.response.scenariodiscussion.ParticipantsRespon
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionsResponse;
 import com.apriori.qms.api.utils.QmsApiTestUtils;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -436,7 +436,7 @@ public class BidPackageProjectUserTest extends TestUtil {
     @Description("Verify system is able to delete Project Users.\n" +
         "Verify Admin User is able delete PUs that are Assigned to discussions")
     public void deleteOneProjectUser() {
-        final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+        final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
         ScenarioItem scenarioItem = QmsApiTestUtils.createAndPublishScenarioViaCidApp(ProcessGroupEnum.CASTING_DIE, "Casting", currentUser);
         List<BidPackageItemRequest> itemsList = new ArrayList<>();
         itemsList.add(BidPackageItemRequest.builder()

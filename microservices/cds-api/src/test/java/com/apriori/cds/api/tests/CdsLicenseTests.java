@@ -15,7 +15,7 @@ import com.apriori.cds.api.models.response.UsersLicensing;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -396,7 +396,7 @@ public class CdsLicenseTests {
     public void getApiExpandCustomerLicenses() {
         String paramName = "_expand";
         String paramValue = "licensedModules,subLicenses.users.all";
-        Customer customer = CustomerUtil.getCustomerData();
+        Customer customer = SharedCustomerUtil.getCustomerData();
         String licenseIdentity = cdsTestUtil.getCommonRequest(CDSAPIEnum.LICENSES_BY_CUSTOMER_ID, Licenses.class, HttpStatus.SC_OK, customer.getIdentity()).getResponseEntity()
             .getItems().get(0).getIdentity();
 

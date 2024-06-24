@@ -11,7 +11,7 @@ import com.apriori.qms.api.models.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.api.models.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.api.utils.QmsApiTestUtils;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -739,7 +739,7 @@ public class BidPackageProjectItemTest extends TestUtil {
 
         softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage()).contains(
             String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'",
-                deleteBidPackageResponse.getIdentity(), CustomerUtil.getCurrentCustomerIdentity()));
+                deleteBidPackageResponse.getIdentity(), SharedCustomerUtil.getCurrentCustomerIdentity()));
 
         //Deleted Project
         prjItemIdentiesList = new ArrayList<>();

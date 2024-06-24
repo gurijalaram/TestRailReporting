@@ -5,7 +5,7 @@ import com.apriori.sds.api.models.request.ConnectionRequest;
 import com.apriori.sds.api.models.response.Connection;
 import com.apriori.sds.api.models.response.ConnectionsItemsResponse;
 import com.apriori.sds.api.util.SDSTestUtil;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -119,7 +119,7 @@ public class ConnectionsTest extends SDSTestUtil {
 
     private static ConnectionRequest initDefaultConnectionRequest() {
         return ConnectionRequest.builder()
-            .customerIdentity(CustomerUtil.getCurrentCustomerIdentity())
+            .customerIdentity(SharedCustomerUtil.getCurrentCustomerIdentity())
             .deploymentIdentity("H337GKD0LA0N")
             .installationIdentity("5DF1B4HI67C6")
             .build();
