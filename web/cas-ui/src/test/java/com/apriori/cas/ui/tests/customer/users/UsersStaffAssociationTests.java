@@ -11,11 +11,14 @@ import com.apriori.cas.ui.pageobjects.customer.users.StaffPage;
 import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.shared.util.CustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Customers;
 import com.apriori.shared.util.models.response.User;
@@ -46,6 +49,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
     private String customerIdentity;
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
+    private CdsUserUtil cdsUserUtil;
     private StaffPage staffPage;
     private SoftAssertions soft = new SoftAssertions();
     private UserCredentials currentUser = UserUtil.getUser();
@@ -57,7 +61,10 @@ public class UsersStaffAssociationTests extends TestBaseUI {
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         String email = STAFF_TEST_CUSTOMER.toLowerCase();
 
-        cdsTestUtil = new CdsTestUtil();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+
         customerIdentity = CustomerUtil.getCustomerData().getIdentity();
         sourceUsers = new ArrayList<>(cdsTestUtil.findAll(
             CDSAPIEnum.CUSTOMER_USERS,
@@ -90,7 +97,7 @@ public class UsersStaffAssociationTests extends TestBaseUI {
         for (int i = sourceUsers.size(); i < count; ++i) {
             String identity = customerIdentity;
             String username = String.format("%s-%s-%s", STAFF_TEST_USER, now, i);
-            User added = cdsTestUtil.addUser(identity, username, "apriori").getResponseEntity();
+            User added = cdsUserUtil.addUser(identity, username, "apriori").getResponseEntity();
             sourceUsers.add(added);
         }
     }

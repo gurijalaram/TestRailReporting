@@ -18,10 +18,10 @@ import com.apriori.shared.util.models.response.Users;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.apache.http.HttpStatus;
 
-public class UserUtil {
+public class CdsUserUtil {
     private RequestEntityUtil requestEntityUtil;
 
-    public UserUtil(RequestEntityUtil requestEntityUtil) {
+    public CdsUserUtil(RequestEntityUtil requestEntityUtil) {
         this.requestEntityUtil = requestEntityUtil;
     }
 

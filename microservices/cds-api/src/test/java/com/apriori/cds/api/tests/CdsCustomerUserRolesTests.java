@@ -5,6 +5,7 @@ import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.models.response.UserRole;
 import com.apriori.cds.api.models.response.UserRoles;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -34,12 +35,14 @@ public class CdsCustomerUserRolesTests {
     private final String role = "AP_USER_ADMIN";
     private final String invalidRole = "ADMIN";
     private SoftAssertions soft = new SoftAssertions();
+    private CdsUserUtil cdsUserUtil;
 
     @BeforeEach
     public void init() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -102,7 +105,7 @@ public class CdsCustomerUserRolesTests {
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
 
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }

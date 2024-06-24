@@ -47,6 +47,7 @@ import java.util.stream.Collectors;
 public class CustomerStaffTests extends TestBaseUI {
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
+    private UserCreation userCreation;
     private UsersListPage usersListPage;
     private String customerName;
     private List<User> sourceUsers;
@@ -63,6 +64,7 @@ public class CustomerStaffTests extends TestBaseUI {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        userCreation = new UserCreation(requestEntityUtil);
 
         setCustomerData();
         usersListPage = new CasLoginPage(driver)
@@ -73,7 +75,7 @@ public class CustomerStaffTests extends TestBaseUI {
     }
 
     @AfterEach
-    public void teardown() {
+    public void tearDown() {
         if (deleteIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
                 deleteIdentityHolder.customerIdentity(),
@@ -207,10 +209,10 @@ public class CustomerStaffTests extends TestBaseUI {
         String licenseIdentity = license.getResponseEntity().getIdentity();
         String subLicenseIdentity = license.getResponseEntity().getSubLicenses().stream()
             .filter(x -> !x.getName().contains("master"))
-            .collect(Collectors.toList()).get(0).getIdentity();
+            .toList().get(0).getIdentity();
         String sublicenseName = license.getResponseEntity().getSubLicenses().stream()
             .filter(x -> !x.getName().contains("master"))
-            .collect(Collectors.toList()).get(0).getName();
+            .toList().get(0).getName();
         String userName = sourceUsers.get(0).getUsername();
         String userIdentity = sourceUsers.get(0).getIdentity();
 
@@ -364,7 +366,6 @@ public class CustomerStaffTests extends TestBaseUI {
         siteId = customerSites.getResponseEntity().getItems().get(0).getSiteId();
         siteName = customerSites.getResponseEntity().getItems().get(0).getName();
 
-        UserCreation userCreation = new UserCreation();
         sourceUsers = userCreation.populateStaffTestUsers(11, customerIdentity, email);
     }
 }
