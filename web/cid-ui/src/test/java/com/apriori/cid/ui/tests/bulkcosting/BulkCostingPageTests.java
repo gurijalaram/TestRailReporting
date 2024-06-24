@@ -8,7 +8,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.css.api.utils.CssComponent;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -207,7 +207,7 @@ public class BulkCostingPageTests extends TestBaseUI {
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {
         CdsTestUtil cdsTestUtil = new CdsTestUtil();
-        String customerIdentity = CustomerUtil.getCustomerData().getIdentity();
+        String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
 
         ResponseWrapper<Deployments> deployments = cdsTestUtil.getCommonRequest(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID,
             Deployments.class,
