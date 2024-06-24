@@ -7,11 +7,10 @@ import com.apriori.ach.api.utils.AchEnvironmentAPIUtil;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomeLoginPage;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.qa.ach.ui.utils.AchEnvironmentUIUtil;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.CustomerEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.models.response.Deployment;
-import com.apriori.shared.util.properties.PropertiesContext;
 import com.apriori.shared.util.testrail.TestRail;
 
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +55,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
         final String currentUIDeployment = cloudHomePage.getDeployment();
         assertEquals(deploymentName, currentUIDeployment);
 
-        final String customerIdentity = CustomerUtil.getCustomerData().getIdentity();
+        final String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
         Deployment customerDeployment = achEnvironmentAPIUtil.getCustomerDeploymentInformation(customerIdentity);
 
         List<ApplicationDTO> mappedCustomerApplications = achEnvironmentAPIUtil.mapCustomerDeploymentDataToDTO(
@@ -71,7 +70,7 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
     }
 
     private List<ApplicationDTO> getMappedMultiTenantApplications() {
-        final String apInternalCustomerIdentity = CustomerUtil.getCustomerData(CustomerEnum.AP_INT.getCustomer()).getIdentity();
+        final String apInternalCustomerIdentity = SharedCustomerUtil.getCustomerData(CustomerEnum.AP_INT.getCustomer()).getIdentity();
 
         return achEnvironmentAPIUtil.mapMultiTenantDeploymentDataToDTO(
             achEnvironmentAPIUtil.getCustomerDeploymentInformation(apInternalCustomerIdentity)

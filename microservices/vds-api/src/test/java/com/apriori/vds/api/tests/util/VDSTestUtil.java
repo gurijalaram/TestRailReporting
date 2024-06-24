@@ -1,6 +1,6 @@
 package com.apriori.vds.api.tests.util;
 
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -22,7 +22,7 @@ import org.junit.jupiter.api.BeforeAll;
 import java.util.List;
 
 public abstract class VDSTestUtil extends TestUtil {
-    protected static final String customerId = CustomerUtil.getCurrentCustomerIdentity();
+    protected static final String customerId = SharedCustomerUtil.getCurrentCustomerIdentity();
     protected static UserCredentials testingUser = UserUtil.getUser();
 
     protected static RequestEntityUtil requestEntityUtil;

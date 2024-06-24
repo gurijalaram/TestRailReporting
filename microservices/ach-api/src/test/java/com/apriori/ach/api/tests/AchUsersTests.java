@@ -8,7 +8,7 @@ import com.apriori.ach.api.models.response.AchErrorResponse;
 import com.apriori.ach.api.utils.AchTestUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.TokenEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -59,7 +59,7 @@ public class AchUsersTests extends AchTestUtil {
     @BeforeEach
     public void setup() {
         serviceCustomer = PropertiesContext.get("customer").equalsIgnoreCase(AP_INT.getCustomer())
-            ? CustomerUtil.getCustomerData(WIDGETS.getCustomer()) : CustomerUtil.getCustomerData();
+            ? SharedCustomerUtil.getCustomerData(WIDGETS.getCustomer()) : SharedCustomerUtil.getCustomerData();
         customerIdentity = serviceCustomer.getIdentity();
 
         requestEntityUtil = RequestEntityUtilBuilder
@@ -283,7 +283,7 @@ public class AchUsersTests extends AchTestUtil {
     }
 
     private static String generateTokenSubject() {
-        final String customerSiteId = CustomerUtil.getCustomerSiteIdByCustomer(serviceCustomer);
+        final String customerSiteId = SharedCustomerUtil.getCustomerSiteIdByCustomer(serviceCustomer);
 
         if (StringUtils.isBlank(customerSiteId)) {
             log.error("Customer site id is empty. Customer: {}", serviceCustomer.getCloudReference());

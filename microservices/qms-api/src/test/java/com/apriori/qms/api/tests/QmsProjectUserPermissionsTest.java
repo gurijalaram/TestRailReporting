@@ -21,7 +21,7 @@ import com.apriori.qms.api.models.response.bidpackage.BidPackageProjectUsersResp
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioProjectUserResponse;
 import com.apriori.qms.api.utils.QmsApiTestUtils;
 import com.apriori.serialization.util.DateFormattingUtils;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -54,7 +54,7 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class QmsProjectUserPermissionsTest extends TestUtil {
-    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+    private static final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
     private static final UserCredentials nonProjectUser = UserUtil.getUser();
     private static final UserCredentials currentOwnerUser = UserUtil.getUser();
     private static final String currentOwnerUserIdentity = new AuthUserContextUtil().getAuthUserIdentity(currentOwnerUser.getEmail());
