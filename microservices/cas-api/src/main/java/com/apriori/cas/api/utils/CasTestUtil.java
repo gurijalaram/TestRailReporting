@@ -21,7 +21,7 @@ import com.apriori.cas.api.models.response.Site;
 import com.apriori.cas.api.models.response.ValidateSite;
 import com.apriori.cds.api.models.request.License;
 import com.apriori.cds.api.models.request.LicenseRequest;
-import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
