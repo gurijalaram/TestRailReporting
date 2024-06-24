@@ -646,30 +646,30 @@ public class PublishAssembliesTests extends TestBaseUI {
     @TestRail(id = {11824, 11825})
     @Description("Validate when I select any sub components in a processing state the publish button is disabled")
     public void testPublishButtonDisabledEnabled() {
-        final String BASE = "titan charger base";
-        final String LEAD = "titan charger lead";
+        final String PISTON = "piston";
+        final String PIN = "piston_pin";
+
+        componentAssembly = new AssemblyRequestUtil().getAssembly("piston_assembly");
+        ComponentInfoBuilder pistonComponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(PISTON)).findFirst().get();
+        ComponentInfoBuilder pinComponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(PIN)).findFirst().get();
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
-
-        componentAssembly = new AssemblyRequestUtil().getAssembly("titan charger ass");
-        ComponentInfoBuilder baseComponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(BASE)).findFirst().get();
-        ComponentInfoBuilder leadComponent = componentAssembly.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(LEAD)).findFirst().get();
 
         loginPage = new CidAppLoginPage(driver);
         componentsTablePage = loginPage.login(componentAssembly.getUser())
             .navigateToScenario(componentAssembly)
             .openComponents()
             .selectTableView()
-            .multiSelectSubcomponents(baseComponent.getComponentName() + "," + baseComponent.getComponentName())
+            .multiSelectSubcomponents(pistonComponent.getComponentName() + "," + pistonComponent.getScenarioName())
             .publishSubcomponent()
             .publish(ComponentsTablePage.class)
-            .multiSelectSubcomponents(baseComponent.getComponentName() + "," + baseComponent.getComponentName(), leadComponent.getComponentName() + "," + leadComponent.getScenarioName());
+            .multiSelectSubcomponents(pistonComponent.getComponentName() + "," + pistonComponent.getScenarioName(), pinComponent.getComponentName() + "," + pinComponent.getScenarioName());
 
-        softAssertions.assertThat(componentsTablePage.getRowDetails(baseComponent.getComponentName(), baseComponent.getScenarioName())).contains("gear");
+        softAssertions.assertThat(componentsTablePage.getRowDetails(pistonComponent.getComponentName(), pistonComponent.getScenarioName())).contains("gear");
         softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
 
-        componentsTablePage.multiSelectSubcomponents(baseComponent.getComponentName() + "," + baseComponent.getComponentName());
+        componentsTablePage.multiSelectSubcomponents(pistonComponent.getComponentName() + "," + pistonComponent.getComponentName());
 
         softAssertions.assertThat(componentsTablePage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
 
