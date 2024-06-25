@@ -9,6 +9,7 @@ import com.apriori.cds.api.models.response.InstallationResponse;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -37,12 +38,14 @@ public class CdsInstallationsTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
+    private InstallationUtil installationUtil;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        installationUtil = new InstallationUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -110,7 +113,7 @@ public class CdsInstallationsTests {
             .licenseIdentity(licensedApplicationIdentity)
             .build();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
         String installationIdentity = installation.getResponseEntity().getIdentity();
 
         installationIdentityHolder = IdentityHolder.builder()
@@ -156,7 +159,7 @@ public class CdsInstallationsTests {
             .licenseIdentity(licensedApplicationIdentity)
             .build();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
         String installationIdentity = installation.getResponseEntity().getIdentity();
 
         installationIdentityHolder = IdentityHolder.builder()
@@ -209,7 +212,7 @@ public class CdsInstallationsTests {
             .licenseIdentity(licensedApplicationIdentity)
             .build();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
         String installationIdentity = installation.getResponseEntity().getIdentity();
 
         installationIdentityHolder = IdentityHolder.builder()
@@ -218,7 +221,7 @@ public class CdsInstallationsTests {
             .installationIdentity(installationIdentity)
             .build();
 
-        ResponseWrapper<InstallationItems> installationItemsResponse = cdsTestUtil.patchInstallation(customerIdentity, deploymentIdentity, installationIdentity);
+        ResponseWrapper<InstallationItems> installationItemsResponse = installationUtil.patchInstallation(customerIdentity, deploymentIdentity, installationIdentity);
         soft.assertThat(installationItemsResponse.getResponseEntity().getCloudReference()).isEqualTo("eu-1");
         soft.assertAll();
     }

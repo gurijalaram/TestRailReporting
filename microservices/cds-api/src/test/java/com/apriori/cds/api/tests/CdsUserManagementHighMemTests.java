@@ -11,6 +11,7 @@ import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -42,6 +43,7 @@ public class CdsUserManagementHighMemTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
+    private InstallationUtil installationUtil;
     private String appIdentity;
     private String customerIdentity;
     private String siteIdentity;
@@ -59,6 +61,7 @@ public class CdsUserManagementHighMemTests {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        installationUtil = new InstallationUtil(requestEntityUtil);
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
     }
 
@@ -178,7 +181,7 @@ public class CdsUserManagementHighMemTests {
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
         deploymentIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentityReg = installation.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
@@ -198,7 +201,7 @@ public class CdsUserManagementHighMemTests {
         String realmKey2 = generateStringUtil.generateNumericString("RealmKey", 26);
         String cloudRefHighMem = generateStringUtil.generateCloudReference();
 
-        ResponseWrapper<InstallationItems> installationHighMem = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "High Mem Test Installation", realmKey2, cloudRefHighMem, siteIdentity, true);
+        ResponseWrapper<InstallationItems> installationHighMem = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "High Mem Test Installation", realmKey2, cloudRefHighMem, siteIdentity, true);
         installationIdentityHighMem = installationHighMem.getResponseEntity().getIdentity();
         applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentityHighMem, appIdentity, siteIdentity);
 
