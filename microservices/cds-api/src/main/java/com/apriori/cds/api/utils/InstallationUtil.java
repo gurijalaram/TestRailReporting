@@ -115,7 +115,6 @@ public class InstallationUtil {
      * @return new object
      */
     public ResponseWrapper<InstallationItems> patchInstallation(String... inlineVariables) {
-
         RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS, InstallationItems.class)
             .inlineVariables(inlineVariables)
@@ -136,7 +135,6 @@ public class InstallationUtil {
      * @return new object
      */
     public ResponseWrapper<FeatureResponse> addFeature(Boolean bulkCostingEnabled, String... inlineVariables) {
-
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_CREATED)
@@ -155,7 +153,6 @@ public class InstallationUtil {
      * @return ErrorResponse
      */
     public ErrorResponse addFeatureWrongResponse(Boolean bulkCostingEnabled, String... inlineVariables) {
-
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
