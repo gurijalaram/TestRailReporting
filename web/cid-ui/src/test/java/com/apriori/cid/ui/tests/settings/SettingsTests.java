@@ -522,7 +522,7 @@ public class SettingsTests extends TestBaseUI {
 
         softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.MATERIAL_FINISH_MASS)).isEqualTo("0.20809g");
         softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("0.60952min");
-        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$5,944.90939");
+        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$11,198.76487");
 
         softAssertions.assertAll();
     }
