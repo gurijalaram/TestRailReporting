@@ -11,8 +11,10 @@ import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
+import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
+import com.apriori.shared.util.enums.RoutingsEnum;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.request.component.RoutingNodeOptions;
 import com.apriori.shared.util.models.response.component.CostingTemplate;
@@ -53,7 +55,7 @@ public class RoutingsTests {
     @TestRail(id = {14981})
     @Description("Verify Get latest iteration API contains scenarioRoutings upon costing to COST_INCOMPLETE")
     public void testLatestIterationReturnsScenarioRoutingsForCostIncompleteState() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_SAND);
+        component = new ComponentRequestUtil().getComponent("DTCCastingIssues");
 
         softAssertions.assertThat(getIterationLatest(component, NewCostingLabelEnum.COST_INCOMPLETE).getResponseEntity().getScenarioRoutings().size()).isGreaterThan(0);
 
@@ -363,7 +365,7 @@ public class RoutingsTests {
     @TestRail(id = {15821})
     @Description("Verify save routing with costing template through API")
     public void testSaveRouting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
+        component = new ComponentRequestUtil().getComponent("Bracket_Basic");
 
         CostingTemplate costingTemplate = CostingTemplate.builder().processGroupName(component.getProcessGroup().getProcessGroup()).build();
 
@@ -377,9 +379,11 @@ public class RoutingsTests {
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
-        softAssertions.assertThat(analysisOfScenario.getProcessRoutingName()).isEqualTo("Material Stock / Turret Press / Bend Brake");
+        softAssertions.assertThat(analysisOfScenario.getProcessRoutingName()).isEqualTo(RoutingsEnum.MATERIALSTOCK_TURRETPRESS_BENDBRAKE.getRouting());
 
-        RoutingNodeOptions option = new RoutingNodeOptions(componentResponse.getScenarioIdentity(), "aPriori USA", "[CTL]/Laser Punch/[Bend]", "Sheet Metal");
+        RoutingNodeOptions option = new RoutingNodeOptions(
+            componentResponse.getScenarioIdentity(), DigitalFactoryEnum.APRIORI_USA.getDigitalFactory(),
+            RoutingsEnum.CTL_LASERPUNCH_BEND.getRouting(), "Sheet Metal");
         List<RoutingNodeOptions> routingNodeOptions = new ArrayList<>();
         routingNodeOptions.add(option);
 
@@ -392,7 +396,7 @@ public class RoutingsTests {
 
         AnalysisOfScenario analysisOfScenarioWithRouting = componentIterationResponseWithRouting.getResponseEntity().getAnalysisOfScenario();
 
-        softAssertions.assertThat(analysisOfScenarioWithRouting.getProcessRoutingName()).isEqualTo("Material Stock / Laser Punch / Bend Brake");
+        softAssertions.assertThat(analysisOfScenarioWithRouting.getProcessRoutingName()).isEqualTo(RoutingsEnum.MATERIALSTOCK_LASERPUNCH_BENDBRAKE.getRouting());
 
         softAssertions.assertAll();
     }
