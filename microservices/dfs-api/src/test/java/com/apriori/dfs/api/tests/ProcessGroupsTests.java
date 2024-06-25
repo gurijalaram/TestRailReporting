@@ -43,14 +43,18 @@ public class ProcessGroupsTests {
     private static final String NOT_ACCEPTABLE_MSG = "Could not find acceptable representation";
     private static final String BOTH_PAGE_NUMBER_AND_PAGE_SIZE_MUST_BE_GREATER_THAN_0 =
         "Both pageNumber and pageSize must be greater than 0";
+    private static final String SUPPORTS_MATERIALS_TRUE = "\"supportsMaterials\":true";
+    private static final String SUPPORTS_MATERIALS_FALSE = "\"supportsMaterials\":false";
+    private static final String SUPPORTS_MATERIAL_STOCKS_TRUE = "\"supportsMaterialStocks\":true";
+    private static final String SUPPORTS_MATERIAL_STOCKS_FALSE = "\"supportsMaterialStocks\":false";
 
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final ProcessGroupsUtil processGroupsUtil = new ProcessGroupsUtil();
     protected static RequestEntityUtil requestEntityUtil;
 
     @Test
-    @TestRail(id = {29414})
-    @Description("Gets a process group by identity when shared secret/identity are valid")
+    @TestRail(id = {29414, 31126})
+    @Description("Gets a process group by identity when shared secret/identity are valid, with PG that supports Materials and Material Stocks")
     public void getProcessGroupByIdentityTest() {
 
         ResponseWrapper<ProcessGroup> responseWrapper = processGroupsUtil.getProcessGroup(
@@ -58,6 +62,8 @@ public class ProcessGroupsTests {
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isNotNull();
         softAssertions.assertThat(responseWrapper.getResponseEntity().getName()).isEqualTo(PG_NAME);
+        softAssertions.assertThat(responseWrapper.getBody().contains(SUPPORTS_MATERIALS_TRUE)).isEqualTo(true);
+        softAssertions.assertThat(responseWrapper.getBody().contains(SUPPORTS_MATERIAL_STOCKS_TRUE)).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -78,6 +84,7 @@ public class ProcessGroupsTests {
     @TestRail(id = {29417})
     @Description("Get Unauthorized Error when shared secret parameter is not provided")
     public void getProcessGroupWithoutSharedSecretTest() {
+
         ResponseWrapper<ErrorMessage> responseWrapper = processGroupsUtil.getProcessGroupWithoutKeyParameter(
             HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, VALID_PROCESS_GROUP_ID);
 
@@ -113,7 +120,7 @@ public class ProcessGroupsTests {
     }
 
     @Test
-    @TestRail(id = {29552})
+    @TestRail(id = {29552, 31127})
     @Description("Find a list of Process Groups")
     public void findProcessGroupswithValidSharedSecret() {
 
@@ -121,6 +128,10 @@ public class ProcessGroupsTests {
             HttpStatusCode.OK, ProcessGroups.class);
 
         softAssertions.assertThat(responseWrapper.getResponseEntity().getItems()).isNotNull();
+        softAssertions.assertThat(responseWrapper.getBody().contains(SUPPORTS_MATERIALS_TRUE)).isEqualTo(true);
+        softAssertions.assertThat(responseWrapper.getBody().contains(SUPPORTS_MATERIALS_FALSE)).isEqualTo(true);
+        softAssertions.assertThat(responseWrapper.getBody().contains(SUPPORTS_MATERIAL_STOCKS_TRUE)).isEqualTo(true);
+        softAssertions.assertThat(responseWrapper.getBody().contains(SUPPORTS_MATERIAL_STOCKS_FALSE)).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -141,6 +152,7 @@ public class ProcessGroupsTests {
     @TestRail(id = {29555})
     @Description("Get Unauthorized Error when shared secret parameter is not provided")
     public void findProcessGroupWithoutSharedSecretTest() {
+
         ResponseWrapper<ErrorMessage> responseWrapper = processGroupsUtil.findProcessGroupsWithoutKeyParameter(
             HttpStatusCode.UNAUTHORIZED, ErrorMessage.class, NO_SHARED_SECRET);
 
@@ -153,6 +165,7 @@ public class ProcessGroupsTests {
     @TestRail(id = {29556})
     @Description("Get Not Acceptable error when incorrect Accept Header is provided")
     public void findProcessGroupWithIncorrectAcceptHeader() {
+
         RequestEntity requestEntity = RequestEntityUtil_Old.init(DFSApiEnum.PROCESS_GROUPS, ErrorMessage.class)
             .headers(new HashMap<>() {
                 {
@@ -194,7 +207,6 @@ public class ProcessGroupsTests {
         "0, 3"
     })
     public void findProcessGroupsPageWithInvalidPageNumber(String pageSize, String pageNumber) {
-
 
         ResponseWrapper<ErrorMessage> responseWrapper = processGroupsUtil.findProcessGroupsPage(
             DFSApiEnum.PROCESS_GROUPS_WITH_PAGE_SIZE_AND_PAGE_NUMBER,
