@@ -45,7 +45,7 @@ public class SheetMetalDtcReportTests extends JasperApiAuthenticationUtil {
     }
 
     @Test
-    @Issue("PFE-6704")
+    @Issue("PFE-6457")
     @Tags({
         @Tag(JASPER_API),
         @Tag(API_SANITY)

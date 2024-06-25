@@ -26,6 +26,7 @@ import com.apriori.shared.util.enums.ScenarioStateEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
+import com.apriori.shared.util.http.utils.AuthUserContextUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
@@ -498,6 +499,8 @@ public abstract class SDSTestUtil extends TestUtil {
 
         final RequestEntity requestEntity =
             requestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
+                // TODO: 21/06/2024 cn - workaround for now so will be reworked with changes to requestentity
+                .apUserContext(new AuthUserContextUtil().getAuthUserContext(componentInfoBuilder.getUser().getEmail()))
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", shallowPublishRequest)
                 .expectedResponseCode(expectedResponseCode);
