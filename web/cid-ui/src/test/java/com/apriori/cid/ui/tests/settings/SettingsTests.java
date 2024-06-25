@@ -1,6 +1,7 @@
 package com.apriori.cid.ui.tests.settings;
 
 import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_USA;
+import static com.apriori.shared.util.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -257,7 +258,7 @@ public class SettingsTests extends TestBaseUI {
 
         softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup());
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("HIPS Extrusion");
+        softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("Polystyrene HIPS Extrusion");
 
         softAssertions.assertAll();
     }
@@ -407,6 +408,7 @@ public class SettingsTests extends TestBaseUI {
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
             .openMaterialSelectorTable();
 
         assertThat(materialSelectorPage.getListOfMaterials(), hasItems("F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
@@ -485,8 +487,9 @@ public class SettingsTests extends TestBaseUI {
     @TestRail(id = {6368})
     @Description("Validate when a user changes their unit settings comparison values update")
     public void customUnitsDisplayedInComparison() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
-        ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING);
+        component = new ComponentRequestUtil().getComponentWithProcessGroup("M3CapScrew", PLASTIC_MOLDING);
+        ComponentInfoBuilder component2 = new ComponentRequestUtil().getComponentWithProcessGroup("Push Pin", PLASTIC_MOLDING);
+        component2.setUser(component.getUser());
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(component.getUser())
@@ -519,7 +522,7 @@ public class SettingsTests extends TestBaseUI {
 
         softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.MATERIAL_FINISH_MASS)).isEqualTo("0.20809g");
         softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("0.60952min");
-        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$10,918.70913");
+        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$5,944.90939");
 
         softAssertions.assertAll();
     }
