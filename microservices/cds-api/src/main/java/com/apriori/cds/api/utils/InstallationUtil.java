@@ -1,6 +1,9 @@
 package com.apriori.cds.api.utils;
 
 import com.apriori.cds.api.enums.CDSAPIEnum;
+import com.apriori.cds.api.models.request.FeatureRequest;
+import com.apriori.cds.api.models.response.ErrorResponse;
+import com.apriori.cds.api.models.response.FeatureResponse;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -131,5 +134,94 @@ public class InstallationUtil {
             );
 
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * POST call to add a feature to Installation
+     *
+     * @return new object
+     */
+    public ResponseWrapper<FeatureResponse> addFeature(
+        String customerIdentity,
+        String deploymentIdentity,
+        String installationIdentity,
+        Boolean bulkCostingEnabled) {
+
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
+            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(FeatureRequest.builder()
+                .features(Features.builder()
+                    .bulkCostingEnabled(bulkCostingEnabled)
+                    .build())
+                .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * POST call trying to add invalid feature to Installation
+     *
+     * @return ErrorResponse
+     */
+    public ErrorResponse addFeatureWrongResponse(
+        String customerIdentity,
+        String deploymentIdentity,
+        String installationIdentity,
+        Boolean bulkCostingEnabled) {
+
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
+            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+            .body(FeatureRequest.builder()
+                .features(Features.builder()
+                    .bulkCostingEnabled(bulkCostingEnabled)
+                    .build())
+                .build());
+
+        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).post();
+
+        return errorResponse.getResponseEntity();
+    }
+
+    /**
+     * PUT call to update a feature to Installation
+     *
+     * @return new object
+     */
+    public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean bulkCosting) {
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
+            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(FeatureRequest.builder()
+                .features(Features.builder()
+                    .bulkCostingEnabled(bulkCosting)
+                    .build())
+                .build());
+
+        return HTTPRequest.build(requestEntity).put();
+    }
+
+    /**
+     * PUT call to update a feature to Installation - wrong response
+     *
+     * @return new ErrorResponse
+     */
+    public ErrorResponse updateFeatureWrongResponse(
+        String customerIdentity,
+        String deploymentIdentity,
+        String installationIdentity) {
+
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
+            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
+            .body(FeatureRequest.builder()
+                .features(Features.builder()
+                    .build())
+                .build());
+
+        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).put();
+
+        return errorResponse.getResponseEntity();
     }
 }

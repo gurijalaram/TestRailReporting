@@ -77,7 +77,7 @@ public class CdsFeatureTests {
     public void verifyCreateInstallationFlag() {
         setAllCustomerData();
 
-        ResponseWrapper<FeatureResponse> addFeature = cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
+        ResponseWrapper<FeatureResponse> addFeature = installationUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
             FeatureResponse.class,
@@ -102,7 +102,7 @@ public class CdsFeatureTests {
     public void verifyInvalidInstallationFlag() {
         setAllCustomerData();
 
-        ErrorResponse errorResponse = cdsTestUtil.addFeatureWrongResponse(customerIdentity, "wrongDeployment", installationIdentity, false);
+        ErrorResponse errorResponse = installationUtil.addFeatureWrongResponse(customerIdentity, "wrongDeployment", installationIdentity, false);
 
         soft.assertThat(errorResponse.getError())
             .isEqualTo("Bad Request");
@@ -160,8 +160,8 @@ public class CdsFeatureTests {
     public void verifyUpdateInstallationFeature() {
         setAllCustomerData();
 
-        cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
-        ResponseWrapper<FeatureResponse> updateFeature = cdsTestUtil.updateFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
+        installationUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
+        ResponseWrapper<FeatureResponse> updateFeature = installationUtil.updateFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
             FeatureResponse.class,
@@ -186,8 +186,8 @@ public class CdsFeatureTests {
     public void verifyUpdateInstallationFeatureWrong() {
         setAllCustomerData();
 
-        cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
-        ErrorResponse errorResponse = cdsTestUtil.updateFeatureWrongResponse(customerIdentity, deploymentIdentity, "wrongInstallation");
+        installationUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
+        ErrorResponse errorResponse = installationUtil.updateFeatureWrongResponse(customerIdentity, deploymentIdentity, "wrongInstallation");
 
         soft.assertThat(errorResponse.getError())
             .isEqualTo("Bad Request");

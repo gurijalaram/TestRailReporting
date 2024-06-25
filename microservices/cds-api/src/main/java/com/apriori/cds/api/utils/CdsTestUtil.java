@@ -12,7 +12,6 @@ import com.apriori.cds.api.models.request.ActivateLicenseRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
 import com.apriori.cds.api.models.request.CASCustomerRequest;
 import com.apriori.cds.api.models.request.CustomAttributeRequest;
-import com.apriori.cds.api.models.request.FeatureRequest;
 import com.apriori.cds.api.models.request.License;
 import com.apriori.cds.api.models.request.LicenseRequest;
 import com.apriori.cds.api.models.request.PostBatch;
@@ -23,7 +22,6 @@ import com.apriori.cds.api.models.response.AttributeMappings;
 import com.apriori.cds.api.models.response.CredentialsItems;
 import com.apriori.cds.api.models.response.CustomAttribute;
 import com.apriori.cds.api.models.response.ErrorResponse;
-import com.apriori.cds.api.models.response.FeatureResponse;
 import com.apriori.cds.api.models.response.IdentityProviderRequest;
 import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.models.response.LicenseResponse;
@@ -45,7 +43,6 @@ import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
-import com.apriori.shared.util.models.response.Features;
 import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
@@ -367,95 +364,6 @@ public class CdsTestUtil extends TestUtil {
             );
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * POST call to add a feature to Installation
-     *
-     * @return new object
-     */
-    public ResponseWrapper<FeatureResponse> addFeature(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity,
-        Boolean bulkCostingEnabled) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(FeatureRequest.builder()
-                .features(Features.builder()
-                    .bulkCostingEnabled(bulkCostingEnabled)
-                    .build())
-                .build());
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * POST call trying to add invalid feature to Installation
-     *
-     * @return ErrorResponse
-     */
-    public ErrorResponse addFeatureWrongResponse(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity,
-        Boolean bulkCostingEnabled) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
-            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
-            .body(FeatureRequest.builder()
-                .features(Features.builder()
-                    .bulkCostingEnabled(bulkCostingEnabled)
-                    .build())
-                .build());
-
-        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).post();
-
-        return errorResponse.getResponseEntity();
-    }
-
-    /**
-     * PUT call to update a feature to Installation
-     *
-     * @return new object
-     */
-    public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean bulkCosting) {
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(FeatureRequest.builder()
-                .features(Features.builder()
-                    .bulkCostingEnabled(bulkCosting)
-                    .build())
-                .build());
-
-        return HTTPRequest.build(requestEntity).put();
-    }
-
-    /**
-     * PUT call to update a feature to Installation - wrong response
-     *
-     * @return new ErrorResponse
-     */
-    public ErrorResponse updateFeatureWrongResponse(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
-            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
-            .body(FeatureRequest.builder()
-                .features(Features.builder()
-                    .build())
-                .build());
-
-        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).put();
-
-        return errorResponse.getResponseEntity();
     }
 
     /**
