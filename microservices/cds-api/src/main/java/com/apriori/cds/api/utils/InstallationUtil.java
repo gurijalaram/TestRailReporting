@@ -134,17 +134,11 @@ public class InstallationUtil {
      *
      * @return new object
      */
-    public ResponseWrapper<FeatureResponse> addFeature(Boolean bulkCostingEnabled, String... inlineVariables) {
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
-            .inlineVariables(inlineVariables)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(FeatureRequest.builder()
-                .features(Features.builder()
-                    .bulkCostingEnabled(bulkCostingEnabled)
-                    .build())
-                .build());
+    public FeatureResponse addFeature(Boolean bulkCostingEnabled, String... inlineVariables) {
+        RequestEntity requestEntity = getCommonFeature(bulkCostingEnabled, FeatureResponse.class, inlineVariables);
+        ResponseWrapper<FeatureResponse> response = HTTPRequest.build(requestEntity).post();
 
-        return HTTPRequest.build(requestEntity).post();
+        return response.getResponseEntity();
     }
 
     /**
@@ -153,15 +147,7 @@ public class InstallationUtil {
      * @return ErrorResponse
      */
     public ErrorResponse addFeatureWrongResponse(Boolean bulkCostingEnabled, String... inlineVariables) {
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
-            .inlineVariables(inlineVariables)
-            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
-            .body(FeatureRequest.builder()
-                .features(Features.builder()
-                    .bulkCostingEnabled(bulkCostingEnabled)
-                    .build())
-                .build());
-
+        RequestEntity requestEntity = getCommonFeature(bulkCostingEnabled, ErrorResponse.class, inlineVariables);
         ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).post();
 
         return errorResponse.getResponseEntity();
@@ -172,8 +158,15 @@ public class InstallationUtil {
      *
      * @return new object
      */
-    public ResponseWrapper<FeatureResponse> updateFeature(Boolean bulkCostingEnabled, String... inlineVariables) {
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
+    public FeatureResponse updateFeature(Boolean bulkCostingEnabled, String... inlineVariables) {
+        RequestEntity requestEntity = getCommonFeature(bulkCostingEnabled, FeatureResponse.class, inlineVariables);
+        ResponseWrapper<FeatureResponse> response = HTTPRequest.build(requestEntity).put();
+
+        return response.getResponseEntity();
+    }
+
+    private <T> RequestEntity getCommonFeature(Boolean bulkCostingEnabled, Class<T> klass, String... inlineVariables) {
+        return requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, klass)
             .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(FeatureRequest.builder()
@@ -181,8 +174,6 @@ public class InstallationUtil {
                     .bulkCostingEnabled(bulkCostingEnabled)
                     .build())
                 .build());
-
-        return HTTPRequest.build(requestEntity).put();
     }
 
     /**

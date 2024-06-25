@@ -31,7 +31,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsFeatureTests {
-
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil;
@@ -77,7 +76,7 @@ public class CdsFeatureTests {
     public void verifyCreateInstallationFlag() {
         setAllCustomerData();
 
-        ResponseWrapper<FeatureResponse> addFeature = installationUtil.addFeature(false, customerIdentity, deploymentIdentity, installationIdentity);
+        FeatureResponse addFeature = installationUtil.addFeature(false, customerIdentity, deploymentIdentity, installationIdentity);
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
             FeatureResponse.class,
@@ -88,11 +87,11 @@ public class CdsFeatureTests {
         );
 
         soft.assertThat(getFeature.getResponseEntity().getIdentity())
-            .isEqualTo(addFeature.getResponseEntity().getIdentity());
+            .isEqualTo(addFeature.getIdentity());
         soft.assertThat(getFeature.getResponseEntity().getCreatedAt())
-            .isEqualTo(addFeature.getResponseEntity().getCreatedAt());
+            .isEqualTo(addFeature.getCreatedAt());
         soft.assertThat(getFeature.getResponseEntity().getCreatedBy())
-            .isEqualTo(addFeature.getResponseEntity().getCreatedBy());
+            .isEqualTo(addFeature.getCreatedBy());
         soft.assertAll();
     }
 
@@ -161,7 +160,7 @@ public class CdsFeatureTests {
         setAllCustomerData();
 
         installationUtil.addFeature(false, customerIdentity, deploymentIdentity, installationIdentity);
-        ResponseWrapper<FeatureResponse> updateFeature = installationUtil.updateFeature(false, customerIdentity, deploymentIdentity, installationIdentity);
+        FeatureResponse updateFeature = installationUtil.updateFeature(false, customerIdentity, deploymentIdentity, installationIdentity);
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
             FeatureResponse.class,
@@ -172,11 +171,11 @@ public class CdsFeatureTests {
         );
 
         soft.assertThat(getFeature.getResponseEntity().getIdentity())
-            .isEqualTo(updateFeature.getResponseEntity().getIdentity());
+            .isEqualTo(updateFeature.getIdentity());
         soft.assertThat(getFeature.getResponseEntity().getCreatedAt())
-            .isEqualTo(updateFeature.getResponseEntity().getCreatedAt());
+            .isEqualTo(updateFeature.getCreatedAt());
         soft.assertThat(getFeature.getResponseEntity().getCreatedBy())
-            .isEqualTo(updateFeature.getResponseEntity().getCreatedBy());
+            .isEqualTo(updateFeature.getCreatedBy());
         soft.assertAll();
     }
 
