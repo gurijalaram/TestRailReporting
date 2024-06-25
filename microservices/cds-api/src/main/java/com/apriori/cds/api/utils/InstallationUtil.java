@@ -112,19 +112,13 @@ public class InstallationUtil {
     /**
      * Patch installation
      *
-     * @param customerIdentity     - the customer id
-     * @param deploymentIdentity   - the deployment id
-     * @param installationIdentity - the installation id
      * @return new object
      */
-    public ResponseWrapper<InstallationItems> patchInstallation(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity) {
+    public ResponseWrapper<InstallationItems> patchInstallation(String... inlineVariables) {
 
         RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS, InstallationItems.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(
                 "installation",
@@ -141,14 +135,10 @@ public class InstallationUtil {
      *
      * @return new object
      */
-    public ResponseWrapper<FeatureResponse> addFeature(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity,
-        Boolean bulkCostingEnabled) {
+    public ResponseWrapper<FeatureResponse> addFeature(Boolean bulkCostingEnabled, String... inlineVariables) {
 
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(FeatureRequest.builder()
                 .features(Features.builder()
@@ -164,14 +154,10 @@ public class InstallationUtil {
      *
      * @return ErrorResponse
      */
-    public ErrorResponse addFeatureWrongResponse(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity,
-        Boolean bulkCostingEnabled) {
+    public ErrorResponse addFeatureWrongResponse(Boolean bulkCostingEnabled, String... inlineVariables) {
 
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
             .body(FeatureRequest.builder()
                 .features(Features.builder()
@@ -189,13 +175,13 @@ public class InstallationUtil {
      *
      * @return new object
      */
-    public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean bulkCosting) {
+    public ResponseWrapper<FeatureResponse> updateFeature(Boolean bulkCostingEnabled, String... inlineVariables) {
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(FeatureRequest.builder()
                 .features(Features.builder()
-                    .bulkCostingEnabled(bulkCosting)
+                    .bulkCostingEnabled(bulkCostingEnabled)
                     .build())
                 .build());
 
@@ -207,13 +193,9 @@ public class InstallationUtil {
      *
      * @return new ErrorResponse
      */
-    public ErrorResponse updateFeatureWrongResponse(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity) {
-
+    public ErrorResponse updateFeatureWrongResponse(String... inlineVariables) {
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
             .body(FeatureRequest.builder()
                 .features(Features.builder()

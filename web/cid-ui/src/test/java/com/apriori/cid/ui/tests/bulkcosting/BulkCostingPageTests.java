@@ -229,7 +229,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             deployment.getInstallations().stream().filter(item -> !(item.getUrl().equals("NA")))
                 .findFirst().orElse(null).getIdentity();
 
-        installationUtil.updateFeature(customerIdentity, deploymentIdentity, installationIdentity, bulkCostingValue);
+        installationUtil.updateFeature(bulkCostingValue, customerIdentity, deploymentIdentity, installationIdentity);
     }
 }
 
