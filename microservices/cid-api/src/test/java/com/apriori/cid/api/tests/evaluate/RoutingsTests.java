@@ -131,7 +131,7 @@ public class RoutingsTests {
     @TestRail(id = {14976})
     @Description("Verify Get available routings API returns appropriate routings for Sheet Metal - Roll Forming")
     public void testAvailableRoutingForSheetMetalRollForming() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
+        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_ROLLFORMING);
 
         routings = getRoutings(component);
 
