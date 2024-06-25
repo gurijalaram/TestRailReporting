@@ -135,7 +135,7 @@ public class InstallationUtil {
      * @return new object
      */
     public FeatureResponse addFeature(Boolean bulkCostingEnabled, String... inlineVariables) {
-        RequestEntity requestEntity = getCommonFeature(bulkCostingEnabled, FeatureResponse.class, inlineVariables);
+        RequestEntity requestEntity = getCommonFeature(bulkCostingEnabled, FeatureResponse.class, HttpStatus.SC_CREATED, inlineVariables);
         ResponseWrapper<FeatureResponse> response = HTTPRequest.build(requestEntity).post();
 
         return response.getResponseEntity();
@@ -147,7 +147,7 @@ public class InstallationUtil {
      * @return ErrorResponse
      */
     public ErrorResponse addFeatureWrongResponse(Boolean bulkCostingEnabled, String... inlineVariables) {
-        RequestEntity requestEntity = getCommonFeature(bulkCostingEnabled, ErrorResponse.class, inlineVariables);
+        RequestEntity requestEntity = getCommonFeature(bulkCostingEnabled, ErrorResponse.class, HttpStatus.SC_BAD_REQUEST, inlineVariables);
         ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).post();
 
         return errorResponse.getResponseEntity();
@@ -159,16 +159,16 @@ public class InstallationUtil {
      * @return new object
      */
     public FeatureResponse updateFeature(Boolean bulkCostingEnabled, String... inlineVariables) {
-        RequestEntity requestEntity = getCommonFeature(bulkCostingEnabled, FeatureResponse.class, inlineVariables);
+        RequestEntity requestEntity = getCommonFeature(bulkCostingEnabled, FeatureResponse.class, HttpStatus.SC_CREATED, inlineVariables);
         ResponseWrapper<FeatureResponse> response = HTTPRequest.build(requestEntity).put();
 
         return response.getResponseEntity();
     }
 
-    private <T> RequestEntity getCommonFeature(Boolean bulkCostingEnabled, Class<T> klass, String... inlineVariables) {
+    private <T> RequestEntity getCommonFeature(Boolean bulkCostingEnabled, Class<T> klass, Integer expectedResponseCode, String... inlineVariables) {
         return requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, klass)
             .inlineVariables(inlineVariables)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .expectedResponseCode(expectedResponseCode)
             .body(FeatureRequest.builder()
                 .features(Features.builder()
                     .bulkCostingEnabled(bulkCostingEnabled)
