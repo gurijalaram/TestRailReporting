@@ -27,13 +27,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsCustomerUserRolesTests {
+    private final String role = "AP_USER_ADMIN";
+    private final String invalidRole = "ADMIN";
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
     private String userIdentity;
-    private final String role = "AP_USER_ADMIN";
-    private final String invalidRole = "ADMIN";
     private SoftAssertions soft = new SoftAssertions();
     private CdsUserUtil cdsUserUtil;
 
@@ -72,7 +72,7 @@ public class CdsCustomerUserRolesTests {
     @Description("Create a role for a user, gets it by identity and delete")
     public void postUserRoles() {
         setCustomerData();
-        UserRole newRole = cdsUserUtil.createRoleForUser(customerIdentity, userIdentity, role);
+        UserRole newRole = cdsUserUtil.createRoleForUser(role, customerIdentity, userIdentity);
         String roleId = newRole.getIdentity();
 
         ResponseWrapper<UserRole> userRole = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES_BY_ID, UserRole.class, HttpStatus.SC_OK, customerIdentity, userIdentity, roleId);
@@ -90,7 +90,7 @@ public class CdsCustomerUserRolesTests {
         setCustomerData();
         String expectedMessage = "Resource 'Role' with identity 'ADMIN' was not found";
         String expectedError = "Not Found";
-        ErrorResponse response = cdsUserUtil.createInvalidRoleForUser(customerIdentity, userIdentity,invalidRole);
+        ErrorResponse response = cdsUserUtil.createInvalidRoleForUser(invalidRole, customerIdentity, userIdentity);
 
         soft.assertThat(response.getMessage()).isEqualTo(expectedMessage);
         soft.assertThat(response.getError()).isEqualTo(expectedError);

@@ -746,59 +746,6 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * Adds new user preference
-     *
-     * @param customerIdentity - customer id
-     * @param userIdentity     - user id
-     * @return - new object
-     */
-    public ResponseWrapper<UserPreference> addUserPreference(String customerIdentity, String userIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_PREFERENCES, UserPreference.class)
-            .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "userPreference",
-                UserPreference.builder()
-                    .name("Test")
-                    .value("1234")
-                    .type("STRING")
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Updates existing user preference
-     *
-     * @param customerIdentity  - customer Id
-     * @param userIdentity      - user Id
-     * @param updatedPreference - value of updated preference
-     * @return -  new object
-     */
-    public ResponseWrapper<UserPreference> updatePreference(
-        String customerIdentity,
-        String userIdentity,
-        String preferenceIdentity,
-        String updatedPreference) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
-            .inlineVariables(customerIdentity, userIdentity, preferenceIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "userPreference",
-                UserPreference.builder()
-                    .value(updatedPreference)
-                    .updatedBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).patch();
-    }
-
-    /**
      * Adds or replaces user preferences
      *
      * @param customerIdentity - customer id

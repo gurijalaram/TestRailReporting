@@ -1,5 +1,7 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.CredentialsItems;
 import com.apriori.cds.api.models.response.UserProperties;
@@ -166,7 +168,7 @@ public class CdsCustomerUsersTests {
         setCustomerData();
         ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, generateStringUtil.generateUserName(), customerName);
         userIdentity = user.getResponseEntity().getIdentity();
-        cdsUserUtil.createRoleForUser(customerIdentity, userIdentity, "AP_DESIGNER");
+        cdsUserUtil.createRoleForUser(APRIORI_DESIGNER.getRole(), customerIdentity, userIdentity);
 
         ResponseWrapper<UserProperties> requiredUserProperties = cdsTestUtil.getCommonRequest(CDSAPIEnum.REQUIRED_USER_PROPERTIES, UserProperties.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
