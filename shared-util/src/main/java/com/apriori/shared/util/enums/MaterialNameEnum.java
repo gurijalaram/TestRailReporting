@@ -18,7 +18,7 @@ public enum MaterialNameEnum {
     COPPER_UNS_C11000("Copper, UNS C11000"),
     COPPER_UNS_C28000("Copper, UNS C28000"),
 
-    HIPS_EXTRUSION("HIPS Extrusion"),
+    HIPS_EXTRUSION("Polystyrene HIPS Extrusion"),
 
     INCONEL_625("Inconel 625"),
 
