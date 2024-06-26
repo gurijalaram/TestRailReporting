@@ -15,6 +15,7 @@ import com.apriori.acs.api.models.response.acs.availableroutings.AvailableRoutin
 import com.apriori.acs.api.models.response.acs.designGuidance.DesignGuidanceResponse;
 import com.apriori.acs.api.models.response.acs.displayunits.DisplayUnitsInputs;
 import com.apriori.acs.api.models.response.acs.displayunits.DisplayUnitsResponse;
+import com.apriori.acs.api.models.response.acs.displayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.api.models.response.acs.enabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.api.models.response.acs.gcdmapping.GcdMappingResponse;
 import com.apriori.acs.api.models.response.acs.genericclasses.GenericErrorResponse;
@@ -95,7 +96,7 @@ public class AcsResources {
                 .baseName(Constants.PART_FILE_NAME)
                 .configurationName(Constants.PART_CONFIG_NAME)
                 .modelName(Constants.PART_MODEL_NAME)
-                .scenarioName(new GenerateStringUtil().generateScenarioName())
+                .scenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"))
                 .scenarioType(Constants.PART_COMPONENT_TYPE)
                 .missing(true)
                 .publicItem(true)
@@ -1047,7 +1048,7 @@ public class AcsResources {
     public CostOrderStatusOutputs uploadAndCost(String processGroup, String fileName, NewPartRequest productionInfoInputs) {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         fileUploadResources.checkValidProcessGroup(processGroup);
 
@@ -1129,4 +1130,36 @@ public class AcsResources {
 
         return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
+
+    /**
+     * Reset All User Preferences
+     *
+     * @return GenericResourceCreatedResponse instance
+     */
+    public GenericResourceCreatedResponse resetDisplayUnits() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil_Old
+            .init(AcsApiEnum.DISPLAY_UNITS, GenericResourceCreatedResponse.class)
+            .headers(headers)
+            .body(DisplayUnitsInputs.builder()
+                .currencyCode("USD")
+                .currencyLabel("abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq")
+                .unitVariantSettingsInfo(UnitVariantSettingsInfoInputs.builder()
+                    .name("MMKS")
+                    .type("simple")
+                    .metric("true")
+                    .length("mm")
+                    .mass("kg")
+                    .time("s")
+                    .decimalPlaces(2)
+                    .system(true)
+                    .custom(false)
+                    .build())
+                .build())
+            .inlineVariables(validUsername);
+
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
 }

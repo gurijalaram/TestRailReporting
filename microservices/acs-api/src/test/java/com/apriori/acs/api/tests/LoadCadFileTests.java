@@ -27,7 +27,7 @@ public class LoadCadFileTests {
     public void testLoadCadFileKeepFreeBodiesFalse() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -56,7 +56,7 @@ public class LoadCadFileTests {
     public void testLoadCadFileKeepFreeBodiesTrue() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -85,7 +85,7 @@ public class LoadCadFileTests {
     public void testLoadCadFilefreeBodiesPreserveCadTrue() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -114,7 +114,7 @@ public class LoadCadFileTests {
     public void testLoadCadFilefreeBodiesPreserveCadFalse() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -143,7 +143,7 @@ public class LoadCadFileTests {
     public void testLoadCadFileFreeBodiesIgnoreMissingComponentsFalse() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -172,7 +172,7 @@ public class LoadCadFileTests {
     public void testLoadCadFilefreeBodiesIgnoreMissingComponentsTrue() {
         FileUploadResources fileUploadResources = new FileUploadResources(userCredentials);
 
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String testScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);

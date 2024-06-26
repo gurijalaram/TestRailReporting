@@ -11,7 +11,7 @@ import com.apriori.qms.api.models.response.bidpackage.BidPackageProjectResponse;
 import com.apriori.qms.api.models.response.bidpackage.BidPackageResponse;
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionResponse;
 import com.apriori.qms.api.utils.QmsApiTestUtils;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -718,7 +718,7 @@ public class BidPackageProjectItemTest extends TestUtil {
     @Description("Verify error message when system is unable to find either bidPackage or project while deleting bulk project items")
     public void deleteBulkBidPackageProjectItemsWithDeletedBidPackageAndProject() {
         //Create & Delete Bidpackage/Project
-        BidPackageResponse deleteBidPackageResponse = QmsBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbers(), currentUser);
+        BidPackageResponse deleteBidPackageResponse = QmsBidPackageResources.createBidPackage("BPN" + new GenerateStringUtil().getRandomNumbersSpecLength(8), currentUser);
         BidPackageProjectResponse deleteBidPackageProjectResponse = QmsBidPackageResources.createBidPackageProject(new HashMap<>(), deleteBidPackageResponse.getIdentity(), BidPackageProjectResponse.class, HttpStatus.SC_CREATED, currentUser);
         QmsBidPackageResources.deleteBidPackage(deleteBidPackageResponse.getIdentity(), null, HttpStatus.SC_NO_CONTENT, currentUser);
 
@@ -739,7 +739,7 @@ public class BidPackageProjectItemTest extends TestUtil {
 
         softAssertions.assertThat(deleteProjectItemsErrorResponse.getMessage()).contains(
             String.format("Can't find bidPackage with identity '%s' for customerIdentity '%s'",
-                deleteBidPackageResponse.getIdentity(), CustomerUtil.getCurrentCustomerIdentity()));
+                deleteBidPackageResponse.getIdentity(), SharedCustomerUtil.getCurrentCustomerIdentity()));
 
         //Deleted Project
         prjItemIdentiesList = new ArrayList<>();

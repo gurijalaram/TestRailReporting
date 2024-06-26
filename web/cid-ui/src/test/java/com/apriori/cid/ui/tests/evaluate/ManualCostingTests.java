@@ -9,6 +9,7 @@ import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.cid.ui.pageobjects.explore.EditScenarioStatusPage;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
+import com.apriori.cid.ui.pageobjects.explore.PreviewPage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.cid.ui.pageobjects.navtoolbars.PublishPage;
@@ -31,6 +32,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -38,6 +40,7 @@ public class ManualCostingTests  extends TestBaseUI {
 
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
+    private PreviewPage previewPage;
     private SwitchCostModePage switchCostModePage;
 
     private static ScenariosUtil scenariosUtil = new ScenariosUtil();
@@ -263,10 +266,10 @@ public class ManualCostingTests  extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {31009, 31010, 31017, 31018, 31020, 31021, 31022})
+    @TestRail(id = {31009, 31010, 31017, 31018, 31020, 31021, 31022, 30649})
     @Description("Verify all actions can be performed on Manually Costed Scenario")
     public void testActionsForManuallyCostedScenarios() {
-        String copiedScenarioName = new GenerateStringUtil().generateScenarioName();
+        String copiedScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
         componentsUtil.postComponent(component);
@@ -325,10 +328,18 @@ public class ManualCostingTests  extends TestBaseUI {
         softAssertions.assertThat(explorePage.getListOfScenarios(component.getComponentName(), component.getScenarioName()))
             .as("Verify Public and Private copies exist").isEqualTo(2);
 
-        explorePage.selectFilter("Private");
+        previewPage = explorePage.highlightScenario(component.getComponentName(), component.getScenarioName())
+            .openPreviewPanel();
+
+        softAssertions.assertThat(previewPage.isImageDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(previewPage.getManualCostBreakdown()).isEqualTo("Cost Breakdown is not available for manually costed parts.");
+        softAssertions.assertThat(previewPage.getMaterialResult("Piece Part Cost")).as("Piece Part Cost").isCloseTo(Double.valueOf(16.75), Offset.offset(16.75));
+        softAssertions.assertThat(previewPage.getMaterialResult("Fully Burdened Cost")).as("Fully Burdened Cost").isCloseTo(Double.valueOf(16.75), Offset.offset(16.75));
+
+        explorePage = previewPage.closePreviewPanel()
+            .selectFilter("Private");
 
         ComponentBasicPage componentBasicPage = explorePage.multiSelectScenarios(
-                    component.getComponentName() + "," + component.getScenarioName(),
                     component2.getComponentName() + "," + component2.getScenarioName())
                 .clickCostButton(ComponentBasicPage.class);
 
@@ -386,22 +397,5 @@ public class ManualCostingTests  extends TestBaseUI {
             .as("Verify scenario removed from explore page").isEqualTo(0);
 
         softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {30102, 30104, 30105, 30107, 30108, 30109, 30110, 30111, 30112})
-    @Description("Verify Manually Costed Scenarios cannot be used in 2-Model Machining Source Model")
-    public void testManuallyCostedAs2MMSource() {
-        component = new ComponentRequestUtil().getComponent();
-
-        evaluatePage = new CidAppLoginPage(driver).login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .clickManualModeButtonWhileUncosted()
-            .enterPiecePartCost("42")
-            .enterTotalCapitalInvestment("316")
-            .clickCostButton()
-            .waitForCostLabelNotContain(NewCostingLabelEnum.SAVING_IN_PROGRESS, 2)
-            .publishScenario(PublishPage.class)
-            .publish(component, EvaluatePage.class);
     }
 }

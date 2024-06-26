@@ -1,7 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate.assemblies;
 
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
-import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.EXTENDED_REGRESSION;
 
 import com.apriori.cid.api.utils.AssemblyUtils;
 import com.apriori.cid.api.utils.ScenariosUtil;
@@ -91,11 +90,11 @@ public class MaturityAssemblyAssociationsTests extends TestBaseUI {
 
         currentUser = UserUtil.getUser();
 
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-        newScenarioName = new GenerateStringUtil().generateScenarioName();
-        newScenarioName2 = new GenerateStringUtil().generateScenarioName();
-        newScenarioName3 = new GenerateStringUtil().generateScenarioName();
-        newScenarioName4 = new GenerateStringUtil().generateScenarioName();
+        scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName3 = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        newScenarioName4 = new GenerateStringUtil().generateStringForAutomation("Scenario");
 
         Map<PreferencesEnum, String> updateStrategy = new HashMap<>();
         updateStrategy.put(PreferencesEnum.ASSEMBLY_STRATEGY, asmStrategy);

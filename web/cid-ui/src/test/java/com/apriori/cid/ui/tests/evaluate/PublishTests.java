@@ -69,7 +69,7 @@ public class PublishTests extends TestBaseUI {
     @TestRail(id = {6743, 6744, 6745, 6747, 6041, 21550})
     @Description("Publish a part and add an assignee, cost maturity and status")
     public void testPublishWithStatus() {
-        String filterName = new GenerateStringUtil().generateFilterName();
+        String filterName = new GenerateStringUtil().generateAlphabeticString("Filter", 6);
 
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.STOCK_MACHINING);
 

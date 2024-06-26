@@ -16,6 +16,8 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -31,8 +33,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NewUserTests extends TestBaseUI {
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
+    private CdsTestUtil cdsTestUtil;
+    private CustomerInfrastructure customerInfrastructure;
     private String customerIdentity;
     private String userIdentity;
     private NewUserPage newUserPage;
@@ -41,6 +43,10 @@ public class NewUserTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+
         setCustomerData();
         newUserPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
@@ -128,7 +134,7 @@ public class NewUserTests extends TestBaseUI {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        String customerName = new GenerateStringUtil().generateCustomerName();
+        String customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         email = customerName.toLowerCase();
         Customer targetCustomer = cdsTestUtil.addCASCustomer(customerName, rcd.getCloudRef(), email, currentUser).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();

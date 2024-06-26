@@ -77,7 +77,7 @@ public class CisDiscussionTest extends CISTestUtil {
     @Description("Create Internal discussion, Update Discussion, Get All discussions and Delete discussion")
     public void createUpdateAndDeleteInternalDiscussion() {
         InternalDiscussionRequest internalDiscussionRequest = CisDiscussionResources.getDiscussionRequestBuilder();
-        String updatedDescription = new GenerateStringUtil().getRandomString();
+        String updatedDescription = new GenerateStringUtil().getRandomStringSpecLength(12);
         ScenarioDiscussionResponse scenarioDiscussionResponse = CisDiscussionResources.createInternalDiscussion(internalDiscussionRequest,
             componentInfoBuilder.getComponentIdentity(),
             componentInfoBuilder.getScenarioIdentity(),
@@ -228,7 +228,7 @@ public class CisDiscussionTest extends CISTestUtil {
     @Description("update internal discussion with invalid component identity, scenario identity and discussion identity")
     public void updateInternalDiscussionWithInvalid() {
         InternalDiscussionRequest internalDiscussionRequest = CisDiscussionResources.getDiscussionRequestBuilder();
-        String updatedDescription = new GenerateStringUtil().getRandomString();
+        String updatedDescription = new GenerateStringUtil().getRandomStringSpecLength(12);
         ScenarioDiscussionResponse scenarioDiscussionResponse = CisDiscussionResources.createInternalDiscussion(internalDiscussionRequest,
             componentInfoBuilder.getComponentIdentity(),
             componentInfoBuilder.getScenarioIdentity(),

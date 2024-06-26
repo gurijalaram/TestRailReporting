@@ -146,7 +146,7 @@ public class CdsTestUtil extends TestUtil {
                 CASCustomerRequest.builder().name(name)
                     .cloudReference(cloudReference)
                     .description("Add new customers api test")
-                    .salesforceId(new GenerateStringUtil().generateSalesForceId())
+                    .salesforceId(new GenerateStringUtil().generateNumericString("SFID", 10))
                     .customerType("CLOUD_ONLY")
                     .active(true)
                     .mfaRequired(true)
@@ -303,7 +303,7 @@ public class CdsTestUtil extends TestUtil {
                     .currentPasswordHash(passwordHashCurrent)
                     .newPasswordHash(new GenerateStringUtil().getHashPassword())
                     .newPasswordSalt(passwordSalt)
-                    .newEncryptedPassword(new GenerateStringUtil().getRandomString().toLowerCase())
+                    .newEncryptedPassword(new GenerateStringUtil().getRandomStringSpecLength(12).toLowerCase())
                     .build()
             );
 

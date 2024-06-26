@@ -56,7 +56,7 @@ public class CicAgentSustainMetricsTest extends WorkflowTestUtil {
                 .id(plmSearchPart.getId())
                 .costingInputs(CostingInputs.builder()
                     .processGroupName(ProcessGroupEnum.FORGING.getProcessGroup())
-                    .scenarioName(new GenerateStringUtil().generateScenarioName())
+                    .scenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"))
                     .machiningMode("NOT_MACHINED")
                     .build())
                 .build()))
@@ -105,7 +105,7 @@ public class CicAgentSustainMetricsTest extends WorkflowTestUtil {
                 .id(plmSearchPart.getId())
                 .costingInputs(CostingInputs.builder()
                     .processGroupName(ProcessGroupEnum.STOCK_MACHINING.getProcessGroup())
-                    .scenarioName(new GenerateStringUtil().generateScenarioName())
+                    .scenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"))
                     .build())
                 .build()))
             .build();
@@ -147,7 +147,7 @@ public class CicAgentSustainMetricsTest extends WorkflowTestUtil {
                 .id(plmSearchPart.getId())
                 .costingInputs(CostingInputs.builder()
                     .processGroupName(ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-                    .scenarioName(new GenerateStringUtil().generateScenarioName())
+                    .scenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"))
                     .build())
                 .build()))
             .build();

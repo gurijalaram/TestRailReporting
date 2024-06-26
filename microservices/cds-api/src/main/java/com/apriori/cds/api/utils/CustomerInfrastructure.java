@@ -30,10 +30,6 @@ public class CustomerInfrastructure {
         this.siteUtil = new SiteUtil(requestEntityUtil);
     }
 
-    // this empty constructor is needed just for now to avoid multiple errors.
-    public CustomerInfrastructure() {
-    }
-
     public void createCustomerInfrastructure(RandomCustomerData rcd, String customerIdentity) {
         String ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
         String cirIdentity = applicationUtil.getApplicationIdentity(CIR);

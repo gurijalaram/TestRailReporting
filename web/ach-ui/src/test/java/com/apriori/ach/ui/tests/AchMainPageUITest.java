@@ -7,7 +7,7 @@ import com.apriori.ach.api.utils.AchEnvironmentAPIUtil;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomeLoginPage;
 import com.apriori.qa.ach.ui.pageobjects.CloudHomePage;
 import com.apriori.qa.ach.ui.utils.AchEnvironmentUIUtil;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.CustomerEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.models.response.Deployment;
@@ -55,13 +55,13 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
         final String currentUIDeployment = cloudHomePage.getDeployment();
         assertEquals(deploymentName, currentUIDeployment);
 
-        final String customerIdentity = CustomerUtil.getCustomerData().getIdentity();
+        final String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
         Deployment customerDeployment = achEnvironmentAPIUtil.getCustomerDeploymentInformation(customerIdentity);
 
         List<ApplicationDTO> mappedCustomerApplications = achEnvironmentAPIUtil.mapCustomerDeploymentDataToDTO(
             customerDeployment
         );
-        mappedCustomerApplications.addAll(getMappedMultiTenantApplications(customerDeployment));
+        mappedCustomerApplications.addAll(getMappedMultiTenantApplications());
 
         List<ApplicationDTO> userApplicationsFromUI = cloudHomePage.getListOfApplications();
 
@@ -69,11 +69,11 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
         this.validateApplicationsAreLaunchedSuccessfully(userApplicationsFromUI);
     }
 
-    private List<ApplicationDTO> getMappedMultiTenantApplications(Deployment customerDeployment) {
-        final String apInternalCustomerIdentity = CustomerUtil.getCustomerData(CustomerEnum.AP_INT.getCustomer()).getIdentity();
+    private List<ApplicationDTO> getMappedMultiTenantApplications() {
+        final String apInternalCustomerIdentity = SharedCustomerUtil.getCustomerData(CustomerEnum.AP_INT.getCustomer()).getIdentity();
 
         return achEnvironmentAPIUtil.mapMultiTenantDeploymentDataToDTO(
-            achEnvironmentAPIUtil.getCustomerDeploymentInformation(apInternalCustomerIdentity), customerDeployment.getInstallations().get(0).getRegion()
+            achEnvironmentAPIUtil.getCustomerDeploymentInformation(apInternalCustomerIdentity)
         );
     }
 
@@ -84,8 +84,8 @@ public class AchMainPageUITest extends AchEnvironmentUIUtil {
      */
     private void validateApplicationsUIText(List<ApplicationDTO> applications, List<ApplicationDTO> customerApplicationsData) {
         applications.removeAll(customerApplicationsData);
-        assertEquals(0, applications.size(), "Applications list should be empty, else application has an text representation not related to the customers environment.\n" +
-            "Applications that aro not appropriate to customers applications\n" +
+        assertEquals(0, applications.size(), "Applications list should be empty, else application has text representation not related to the customer's environment.\n" +
+            "Applications that are not appropriate to customers applications\n" +
             StringUtils.join(applications, '\n')
         );
     }

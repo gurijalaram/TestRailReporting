@@ -7,7 +7,9 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -17,6 +19,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -26,10 +29,17 @@ public class CdsIdentityProvidersTests {
     private String userIdentity;
     private String idpIdentity;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CustomerInfrastructure customerInfrastructure;
+    private CdsTestUtil cdsTestUtil;
     private ResponseWrapper<User> user;
     private SoftAssertions soft = new SoftAssertions();
+
+    @BeforeEach
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {
@@ -50,7 +60,7 @@ public class CdsIdentityProvidersTests {
     @Description("Create an Identity provider for a customer")
     public void postCustomerIdentityProviders() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
         ResponseWrapper<IdentityProviderResponse> samlResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         soft.assertThat(samlResponse.getResponseEntity().getIdentity()).isNotNull();
@@ -64,7 +74,7 @@ public class CdsIdentityProvidersTests {
     @Description("Update Identity provider for a customer")
     public void patchCustomerIdentityProviders() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = response.getResponseEntity().getIdentity();
@@ -79,7 +89,7 @@ public class CdsIdentityProvidersTests {
     @Description("getIDP details by Identity")
     public void getIDPbyIdentity() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = response.getResponseEntity().getIdentity();
@@ -100,7 +110,7 @@ public class CdsIdentityProvidersTests {
     @Description("getIDP list for customer")
     public void getListOfIDPsForCustomer() {
         setCustomerData();
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
 
         ResponseWrapper<IdentityProviderResponse> response = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = response.getResponseEntity().getIdentity();

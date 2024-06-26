@@ -4,7 +4,7 @@ package com.apriori.ach.api.tests;
 import com.apriori.ach.api.dto.ApplicationDTO;
 import com.apriori.ach.api.utils.AchEnvironmentAPIUtil;
 import com.apriori.cds.api.models.response.AccessControlResponse;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.testrail.TestRail;
@@ -21,7 +21,7 @@ public class AchMainPageAPITestAPI extends AchEnvironmentAPIUtil {
     @TestRail(id = {27011})
     public void validateCustomerApplicationsByAPI() {
 
-        final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+        final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
         final User customerUser = AchEnvironmentAPIUtil.getCustomerUserDataByEmail(userCredentials.getEmail(), customerIdentity);
 
         Deployment deployment = getCustomerDeploymentInformation(customerIdentity);

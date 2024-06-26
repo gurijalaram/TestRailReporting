@@ -91,7 +91,7 @@ public class TwoModelMachiningTests extends TestBaseUI {
 
     @Test
     @Description("Validate Manually Costed parts cannot be set as Source")
-    @TestRail(id = {7861, 7862, 7863, 7864, 7870})
+    @TestRail(id = {31085})
     public void testManuallyCostedAsSource() {
         ComponentInfoBuilder sourcePart = new ComponentRequestUtil().getComponent("casting_BEFORE_machining");
         ComponentInfoBuilder twoModelPart = new ComponentRequestUtil().getUniqueComponent("casting_AFTER_machining");

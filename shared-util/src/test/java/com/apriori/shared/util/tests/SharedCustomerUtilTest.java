@@ -6,7 +6,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.models.response.Customer;
 
@@ -16,11 +16,11 @@ import org.junit.jupiter.api.Test;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public class CustomerUtilTest {
+public class SharedCustomerUtilTest {
 
     @Test
     public void getCustomerIdentityTest() {
-        final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+        final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
 
         assertThat(customerIdentity, is(not(emptyOrNullString())));
     }
@@ -33,7 +33,7 @@ public class CustomerUtilTest {
 
         for (int i = 0; i < threadsCount; i++) {
             new Thread(() -> {
-                final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+                final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
 
                 assertThat(customerIdentity, is(not(emptyOrNullString())));
 
@@ -47,7 +47,7 @@ public class CustomerUtilTest {
 
     @Test
     public void getApIntCustomerDataTest() {
-        final Customer apIntCustomerData = CustomerUtil.getCustomerData();
+        final Customer apIntCustomerData = SharedCustomerUtil.getCustomerData();
 
         assertThat(apIntCustomerData, is(not(nullValue())));
     }
@@ -55,7 +55,7 @@ public class CustomerUtilTest {
 
     @Test
     public void getAuthTargetCloudContextTest() {
-        final String authTargetCloudContext = CustomerUtil.getAuthTargetCloudContext(UserUtil.getUser());
+        final String authTargetCloudContext = SharedCustomerUtil.getAuthTargetCloudContext(UserUtil.getUser());
 
         assertThat(authTargetCloudContext, is(not(emptyOrNullString())));
     }
@@ -63,7 +63,7 @@ public class CustomerUtilTest {
 
     @Test
     public void getCustomerDataTest() {
-        final Customer customerData = CustomerUtil.getCustomerData();
+        final Customer customerData = SharedCustomerUtil.getCustomerData();
 
         assertThat(customerData, is(not(nullValue())));
     }

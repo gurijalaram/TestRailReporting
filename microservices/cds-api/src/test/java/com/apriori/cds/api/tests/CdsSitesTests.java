@@ -4,7 +4,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.cds.api.utils.SiteUtil;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -45,7 +45,7 @@ public class CdsSitesTests {
 
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
-        salesForceId = generateStringUtil.generateSalesForceId();
+        salesForceId = generateStringUtil.generateNumericString("SFID", 10);
         emailPattern = "\\S+@".concat(customerName);
         String customerType = Constants.CLOUD_CUSTOMER;
 
@@ -88,7 +88,7 @@ public class CdsSitesTests {
     @TestRail(id = {3299})
     @Description("Add a site to a customer")
     public void addCustomerSite() {
-        String siteName = generateStringUtil.generateSiteName();
+        String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
 
         ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
@@ -111,7 +111,7 @@ public class CdsSitesTests {
     @TestRail(id = {5310})
     @Description("Add a site to a customer")
     public void getCustomerSiteDetails() {
-        String siteName = generateStringUtil.generateSiteName();
+        String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
 
         ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
@@ -130,7 +130,7 @@ public class CdsSitesTests {
     public void getApiExpandForCustomerSites() {
         String paramName = "_expand";
         String paramValue = "deployments,deployments.installations.features";
-        Customer customer = CustomerUtil.getCustomerData();
+        Customer customer = SharedCustomerUtil.getCustomerData();
         String siteIdentity =
             cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, HttpStatus.SC_OK, customer.getIdentity())
                 .getResponseEntity().getItems().get(0).getIdentity();

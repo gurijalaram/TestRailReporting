@@ -379,7 +379,7 @@ public class ComparisonTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
         component2.setUser(component.getUser());
-        String filterName = generateStringUtil.generateFilterName();
+        String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
         loginPage = new CidAppLoginPage(driver);
         modifyComparisonPage = loginPage.login(component.getUser())
@@ -914,7 +914,7 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {25983, 25984, 25986})
     @Description("Verify that Save button is present and enabled for initial save and can only be clicked when changes made")
     public void testSaveComparison() {
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
@@ -955,8 +955,8 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = 25985)
     @Description("Verify that a Comparison cannot be saved using a name that already exists")
     public void testSaveComparisonWithExistingName() {
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
-        String comparisonName2 = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
+        String comparisonName2 = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
@@ -1035,7 +1035,7 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {26173, 26174})
     @Description("Verify that deleted Private scenarios are removed from saved comparison")
     public void testDeletePrivateScenarioInComparison() {
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
@@ -1079,9 +1079,9 @@ public class ComparisonTests extends TestBaseUI {
         String componentName = "Part0004";
         String componentName2 = "700-33770-01_A0";
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        String scenarioName2 = new GenerateStringUtil().generateStringForAutomation("Scenario");
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         scenariosUtil.uploadAndPublishComponent(ComponentInfoBuilder.builder()
             .componentName(componentName)
@@ -1130,7 +1130,7 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {26175})
     @Description("Verify that scenario in position 2 will replace basis, if it is deleted")
     public void testDeleteReplacesBasis() {
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = new ComponentRequestUtil().getComponent();
         component2 = new ComponentRequestUtil().getComponent();
@@ -1168,7 +1168,7 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {25983, 25984, 26956, 26957, 26958, 27005, 27995})
     @Description("Verify Comparison Explorer can be launched and saved comparisons can be opened from it")
     public void testComparisonExplorer() {
-        String comparisonName = new GenerateStringUtil().generateComparisonName();
+        String comparisonName = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
         component2 = new ComponentRequestUtil().getComponent();
@@ -1240,10 +1240,10 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {27967, 27968, 27969})
     @Description("Rename Comparison from Explorer and Comparison Views")
     public void testRenameComparison() {
-        String comparisonName1 = new GenerateStringUtil().generateComparisonName();
-        String comparisonName2 = new GenerateStringUtil().generateComparisonName();
-        String comparisonViewRename = new GenerateStringUtil().generateComparisonName();
-        String comparisonExplorerRename = new GenerateStringUtil().generateComparisonName();
+        String comparisonName1 = new GenerateStringUtil().generateStringForAutomation("Comparison");
+        String comparisonName2 = new GenerateStringUtil().generateStringForAutomation("Comparison");
+        String comparisonViewRename = new GenerateStringUtil().generateStringForAutomation("Comparison");
+        String comparisonExplorerRename = new GenerateStringUtil().generateStringForAutomation("Comparison");
         String invalidComparisonName = "Special+Characters~100%";
         String invalidCharacterErrorText = "Must only contain characters, numbers, spaces and the following special characters: . - _ ( )";
 
@@ -1316,8 +1316,8 @@ public class ComparisonTests extends TestBaseUI {
     @TestRail(id = {26150, 26151, 27965})
     @Description("Verify Deleting Comparisons from Explore and Viewer pages")
     public void testDeleteComparisons() {
-        String comparisonName1 = new GenerateStringUtil().generateComparisonName();
-        String comparisonName2 = new GenerateStringUtil().generateComparisonName();
+        String comparisonName1 = new GenerateStringUtil().generateStringForAutomation("Comparison");
+        String comparisonName2 = new GenerateStringUtil().generateStringForAutomation("Comparison");
 
         component = componentsUtil.postComponent(new ComponentRequestUtil().getComponent());
         component2 = new ComponentRequestUtil().getComponent();

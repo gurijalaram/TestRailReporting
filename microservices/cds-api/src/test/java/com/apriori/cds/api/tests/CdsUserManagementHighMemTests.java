@@ -198,7 +198,7 @@ public class CdsUserManagementHighMemTests {
         applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentityReg, cirIdentity, siteIdentity);
         applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentityReg, acsIdentity, siteIdentity);
 
-        String realmKey2 = generateStringUtil.generateRealmKey();
+        String realmKey2 = generateStringUtil.generateNumericString("RealmKey", 26);
         String cloudRefHighMem = generateStringUtil.generateCloudReference();
 
         ResponseWrapper<InstallationItems> installationHighMem = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "High Mem Test Installation", realmKey2, cloudRefHighMem, siteIdentity, true);

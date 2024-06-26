@@ -46,7 +46,7 @@ public class ReCostScenarioTests {
 
         final String componentName = "Case_011_-_Team_350385";
         final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         final UserCredentials currentUser = UserUtil.getUser();
 
         ComponentInfoBuilder componentResponse = componentsUtil.postComponent(
@@ -94,7 +94,7 @@ public class ReCostScenarioTests {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
         final String componentName = "14100640";
         final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         final UserCredentials currentUser = UserUtil.getUser();
 
         ComponentInfoBuilder componentResponse = componentsUtil.postComponent(
@@ -158,7 +158,7 @@ public class ReCostScenarioTests {
     private void uploadCostScenarioAndAssert(final ProcessGroupEnum processGroupEnum, final String componentName, final String extension, final String processRoutingName, final DigitalFactoryEnum digitalFactoryEnum) {
 
         UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
 
         ComponentInfoBuilder componentResponse = componentsUtil.postComponent(

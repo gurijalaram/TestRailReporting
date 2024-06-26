@@ -8,7 +8,9 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -18,6 +20,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -26,10 +29,17 @@ public class CdsUserPreferencesTests {
     private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder userPreferenceIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CustomerInfrastructure customerInfrastructure;
+    private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
     private String userIdentity;
+
+    @BeforeEach
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+    }
 
     @AfterEach
     public void deletePreferences() {
@@ -85,7 +95,7 @@ public class CdsUserPreferencesTests {
     @Description("Updates an existing user preference by identity")
     public void updateUserPreference() {
         setCustomerData();
-        String updatedPreference = generateStringUtil.getRandomString();
+        String updatedPreference = generateStringUtil.getRandomStringSpecLength(8);
 
         ResponseWrapper<UserPreference> newPreference = cdsTestUtil.addUserPreference(customerIdentity, userIdentity);
         String preferenceIdentity = newPreference.getResponseEntity().getIdentity();
@@ -107,7 +117,7 @@ public class CdsUserPreferencesTests {
     @Description("Adds or Replaces a UserPreference for a user")
     public void putUserPreference() {
         setCustomerData();
-        String preferenceName = generateStringUtil.getRandomString();
+        String preferenceName = generateStringUtil.getRandomStringSpecLength(8);
 
         ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.putUserPreference(customerIdentity, userIdentity, preferenceName);
 

@@ -21,7 +21,9 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Sites;
 import com.apriori.shared.util.models.response.User;
@@ -43,8 +45,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class CustomerStaffTests extends TestBaseUI {
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CustomerInfrastructure customerInfrastructure;
+    private CdsTestUtil cdsTestUtil;
     private UsersListPage usersListPage;
     private String customerName;
     private List<User> sourceUsers;
@@ -58,6 +60,10 @@ public class CustomerStaffTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+
         setCustomerData();
         usersListPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
@@ -347,7 +353,7 @@ public class CustomerStaffTests extends TestBaseUI {
 
     private void setCustomerData() {
         RandomCustomerData rcd = new RandomCustomerData();
-        customerName = new GenerateStringUtil().generateCustomerName();
+        customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         String email = customerName.toLowerCase();
         Customer targetCustomer = cdsTestUtil.addCASCustomer(customerName, rcd.getCloudRef(), email, currentUser).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();

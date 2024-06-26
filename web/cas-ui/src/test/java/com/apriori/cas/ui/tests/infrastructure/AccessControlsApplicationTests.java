@@ -65,21 +65,21 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         applicationUtil = new ApplicationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
 
-        customerName = generateStringUtil.generateCustomerName();
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, requestEntityUtil.getEmbeddedUser()).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         userCreation = new UserCreation();
         sourceUsers = userCreation.populateStaffTestUsers(2, customerIdentity, customerName);
-        String siteName = generateStringUtil.generateSiteName();
+        String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();
         ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
-        String deploymentName = generateStringUtil.generateDeploymentName();
+        String deploymentName = generateStringUtil.generateAlphabeticString("Deployment", 3);
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
-        String realmKey = generateStringUtil.generateRealmKey();
+        String realmKey = generateStringUtil.generateNumericString("RealmKey", 26);
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         ResponseWrapper<LicensedApplications> newApplication = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();

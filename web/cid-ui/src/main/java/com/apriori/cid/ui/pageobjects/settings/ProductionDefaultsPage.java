@@ -233,6 +233,15 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     }
 
     /**
+     * Get production life
+     *
+     * @return string
+     */
+    public String getProductionLife() {
+        return pageUtils.waitForElementToAppear(yearsInput).getAttribute("value");
+    }
+
+    /**
      * Get years
      *
      * @return string

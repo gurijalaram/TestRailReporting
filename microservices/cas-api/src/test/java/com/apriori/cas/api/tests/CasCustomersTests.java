@@ -113,7 +113,7 @@ public class CasCustomersTests {
     @TestRail(id = {5643})
     @Description("Get the Customer by not existing name")
     public void getCustomerNotExistingName() {
-        ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, Customers.class, HttpStatus.SC_OK, "?name[CN]=" + generateStringUtil.generateCustomerName());
+        ResponseWrapper<Customers> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, Customers.class, HttpStatus.SC_OK, "?name[CN]=" + generateStringUtil.generateAlphabeticString("Customer", 6));
 
         soft.assertThat(response.getResponseEntity().getTotalItemCount())
             .isEqualTo(0);
@@ -123,7 +123,7 @@ public class CasCustomersTests {
     @TestRail(id = {5642, 5644})
     @Description("Add a new customer, get it by name, update the customer and get it by identity")
     public void createUpdateCustomer() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
@@ -159,7 +159,7 @@ public class CasCustomersTests {
     @TestRail(id = {5826})
     @Description("Resetting the MFA enrollment status of every user for the customer")
     public void resettingMFA() {
-        String customerName = generateStringUtil.generateCustomerName();
+        String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";

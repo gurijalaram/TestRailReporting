@@ -67,8 +67,8 @@ public class MountTypePinCountTests extends TestBaseUI {
     @TestRail(id = {3223, 3217})
     @Description("Verify Mount Type Accepted Values >=5 Characters ,Verify Pin Count and Mount Type are required fields")
     public void mountTypePinCountAreRequiredTest() {
-        String testMountTypeData = generateStringUtil.getRandomString();
-        String testPinCountData = generateStringUtil.getRandomNumbers();
+        String testMountTypeData = generateStringUtil.getRandomStringSpecLength(12);
+        String testPinCountData = generateStringUtil.getRandomNumbersSpecLength(8);
 
         currentUser = UserUtil.getUser();
         String fileName = "Test BOM 5.csv";
@@ -97,8 +97,8 @@ public class MountTypePinCountTests extends TestBaseUI {
     @TestRail(id = 3222)
     @Description("Verify Pin Count only accepts integer values")
     public void pinCountNeedsToBeIntTest() {
-        String testMountTypeData = generateStringUtil.getRandomString();
-        String testPinCountData = generateStringUtil.getRandomNumbers();
+        String testMountTypeData = generateStringUtil.getRandomStringSpecLength(12);
+        String testPinCountData = generateStringUtil.getRandomNumbersSpecLength(8);
 
         currentUser = UserUtil.getUser();
         String fileName = "Test BOM 5.csv";
