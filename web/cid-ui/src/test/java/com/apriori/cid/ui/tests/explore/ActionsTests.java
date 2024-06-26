@@ -44,6 +44,7 @@ import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.apache.commons.lang3.SerializationUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -737,13 +738,13 @@ public class ActionsTests extends TestBaseUI {
     public void shiftControlHighlightScenarios() {
         component = new ComponentRequestUtil().getComponent();
 
-        ComponentInfoBuilder component2 = component;
+        ComponentInfoBuilder component2 = SerializationUtils.clone(component);
         component2.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
 
-        ComponentInfoBuilder component3 = component;
+        ComponentInfoBuilder component3 = SerializationUtils.clone(component);
         component3.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
 
-        ComponentInfoBuilder component4 = component;
+        ComponentInfoBuilder component4 = SerializationUtils.clone(component);
         component4.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
 
         explorePage = new CidAppLoginPage(driver).login(component.getUser())
