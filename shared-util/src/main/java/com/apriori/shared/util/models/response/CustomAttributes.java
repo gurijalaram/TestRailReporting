@@ -43,4 +43,5 @@ public class CustomAttributes {
     private String requiredList;
     private List<Object> roles;
     private String manager;
+    private String provenance;
 }
