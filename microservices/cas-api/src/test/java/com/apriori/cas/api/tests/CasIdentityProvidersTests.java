@@ -10,6 +10,7 @@ import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.cds.api.utils.SamlUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -38,6 +39,7 @@ public class CasIdentityProvidersTests extends TestUtil {
     private String userIdentity;
     private String idpIdentity;
     private CdsTestUtil cdsTestUtil;
+    private SamlUtil samlUtil;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     @BeforeEach
@@ -45,6 +47,7 @@ public class CasIdentityProvidersTests extends TestUtil {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        samlUtil = new SamlUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -68,7 +71,7 @@ public class CasIdentityProvidersTests extends TestUtil {
         String customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         setCustomerData();
 
-        ResponseWrapper<IdentityProviderResponse> postResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
+        ResponseWrapper<IdentityProviderResponse> postResponse = samlUtil.addSaml(customerIdentity, userIdentity, customerName);
         idpIdentity = postResponse.getResponseEntity().getIdentity();
 
         ResponseWrapper<IdentityProviders> response = casTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER, IdentityProviders.class, HttpStatus.SC_OK, customerIdentity + "/identity-providers");
