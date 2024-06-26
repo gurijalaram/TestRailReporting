@@ -72,8 +72,8 @@ public class CdsCustomerUserRolesTests {
     @Description("Create a role for a user, gets it by identity and delete")
     public void postUserRoles() {
         setCustomerData();
-        ResponseWrapper<UserRole> newRole = cdsTestUtil.createRoleForUser(customerIdentity, userIdentity, role);
-        String roleId = newRole.getResponseEntity().getIdentity();
+        UserRole newRole = cdsUserUtil.createRoleForUser(customerIdentity, userIdentity, role);
+        String roleId = newRole.getIdentity();
 
         ResponseWrapper<UserRole> userRole = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_ROLES_BY_ID, UserRole.class, HttpStatus.SC_OK, customerIdentity, userIdentity, roleId);
 
@@ -90,7 +90,7 @@ public class CdsCustomerUserRolesTests {
         setCustomerData();
         String expectedMessage = "Resource 'Role' with identity 'ADMIN' was not found";
         String expectedError = "Not Found";
-        ErrorResponse response = cdsTestUtil.createInvalidRoleForUser(customerIdentity, userIdentity,invalidRole);
+        ErrorResponse response = cdsUserUtil.createInvalidRoleForUser(customerIdentity, userIdentity,invalidRole);
 
         soft.assertThat(response.getMessage()).isEqualTo(expectedMessage);
         soft.assertThat(response.getError()).isEqualTo(expectedError);

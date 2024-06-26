@@ -166,7 +166,7 @@ public class CdsCustomerUsersTests {
         setCustomerData();
         ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, generateStringUtil.generateUserName(), customerName);
         userIdentity = user.getResponseEntity().getIdentity();
-        cdsTestUtil.createRoleForUser(customerIdentity, userIdentity, "AP_DESIGNER");
+        cdsUserUtil.createRoleForUser(customerIdentity, userIdentity, "AP_DESIGNER");
 
         ResponseWrapper<UserProperties> requiredUserProperties = cdsTestUtil.getCommonRequest(CDSAPIEnum.REQUIRED_USER_PROPERTIES, UserProperties.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 

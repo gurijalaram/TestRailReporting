@@ -2,7 +2,6 @@ package com.apriori.cds.api.utils;
 
 
 import static org.apache.http.HttpStatus.SC_CREATED;
-import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
@@ -29,7 +28,6 @@ import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.models.response.Roles;
 import com.apriori.cds.api.models.response.SubLicenseAssociationUser;
 import com.apriori.cds.api.models.response.UserPreference;
-import com.apriori.cds.api.models.response.UserRole;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -909,53 +907,6 @@ public class CdsTestUtil extends TestUtil {
             .inlineVariables(customerIdentity);
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Creates role for a user
-     *
-     * @param customerIdentity - customer identity
-     * @param userIdentity     - user identity
-     * @return new object
-     */
-    public ResponseWrapper<UserRole> createRoleForUser(String customerIdentity, String userIdentity, String role) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_ROLES, UserRole.class)
-            .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "role",
-                UserRole.builder()
-                    .role(role)
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Creates invalid role for a user and get error response
-     *
-     * @param customerIdentity - customer identity
-     * @param userIdentity     - user identity
-     * @return new object
-     */
-    public ErrorResponse createInvalidRoleForUser(String customerIdentity, String userIdentity, String role) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_ROLES, ErrorResponse.class)
-            .inlineVariables(customerIdentity, userIdentity)
-            .body(
-                "role",
-                UserRole.builder()
-                    .role(role)
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            )
-            .expectedResponseCode(SC_NOT_FOUND);
-        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).post();
-
-        return errorResponse.getResponseEntity();
     }
 
     /**

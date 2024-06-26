@@ -1,8 +1,13 @@
 package com.apriori.cds.api.utils;
 
+import static org.apache.http.HttpStatus.SC_CREATED;
+import static org.apache.http.HttpStatus.SC_NOT_FOUND;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.CredentialsItems;
+import com.apriori.cds.api.models.response.ErrorResponse;
+import com.apriori.cds.api.models.response.UserRole;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -169,5 +174,46 @@ public class CdsUserUtil {
             .body("user", user);
 
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * Creates role for a user
+     *
+     * @param role            - the role
+     * @param inlineVariables - inline variables
+     * @return new object
+     */
+    public UserRole createRoleForUser(String role, String... inlineVariables) {
+        RequestEntity requestEntity = createRole(role, SC_CREATED, UserRole.class, inlineVariables);
+        ResponseWrapper<UserRole> response = HTTPRequest.build(requestEntity).post();
+
+        return response.getResponseEntity();
+    }
+
+    /**
+     * Creates invalid role for a user and get error response
+     *
+     * @param role            - the role
+     * @param inlineVariables - inline variables
+     * @return new object
+     */
+    public ErrorResponse createInvalidRoleForUser(String role, String... inlineVariables) {
+        RequestEntity requestEntity = createRole(role, SC_NOT_FOUND, ErrorResponse.class, inlineVariables);
+        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).post();
+
+        return errorResponse.getResponseEntity();
+    }
+
+    private <T> RequestEntity createRole(String role, Integer expectedStatusCode, Class<T> klass, String... inlineVariables) {
+        return requestEntityUtil.init(CDSAPIEnum.USER_ROLES, klass)
+            .inlineVariables(inlineVariables)
+            .expectedResponseCode(expectedStatusCode)
+            .body(
+                "role",
+                UserRole.builder()
+                    .role(role)
+                    .createdBy("#SYSTEM00000")
+                    .build()
+            );
     }
 }
