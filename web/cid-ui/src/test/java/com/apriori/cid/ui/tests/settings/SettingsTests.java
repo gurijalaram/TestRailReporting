@@ -163,9 +163,9 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6289})
-    @Description("Manual Batch Quantity cannot be zero")
-    public void batchSize0() {
+    @TestRail(id = {6289, 3605, 6305, 6306, 6307})
+    @Description("Manual Batch Quantity cannot be zero, Junk or Decimal")
+    public void batchSizeNegativeTest() {
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -176,37 +176,13 @@ public class SettingsTests extends TestBaseUI {
             .inputBatchSize("0")
             .submit();
 
-        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be greater than 0.")));
-    }
+        softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be greater than 0.");
 
-    @Test
-    @TestRail(id = {3605})
-    @Description("Manual Batch Quantity cannot be junk")
-    public void batchSizeJunk() {
+        productionDefaultPage.inputBatchSize("JUNK");
 
-        loginPage = new CidAppLoginPage(driver);
-        currentUser = UserUtil.getUser();
+        softAssertions.assertThat(productionDefaultPage.getBatchSize()).isEmpty();
 
-        productionDefaultPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToProductionTab()
-            .inputBatchSize("JUNK");
-
-        assertThat(productionDefaultPage.getBatchSize(), is(emptyString()));
-    }
-
-    @Test
-    @TestRail(id = {6305, 6306, 6307})
-    @Description("Manual Batch Quantity cannot be a decimal")
-    public void batchSizeDecimal() {
-
-        loginPage = new CidAppLoginPage(driver);
-        currentUser = UserUtil.getUser();
-
-        productionDefaultPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToProductionTab()
-            .inputBatchSize("0.12.00");
+        productionDefaultPage.inputBatchSize("0.12.00");
 
         softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be an integer.");
 
