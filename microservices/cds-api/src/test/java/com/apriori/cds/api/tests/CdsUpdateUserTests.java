@@ -47,7 +47,6 @@ public class CdsUpdateUserTests {
     }
 
     User generateTargetUser() {
-
         String userName = generateStringUtil.generateUserName();
 
         Customer aprioriInternal = SharedCustomerUtil.getCustomerData();
@@ -67,7 +66,6 @@ public class CdsUpdateUserTests {
     }
 
     ObjectNode createEnablementsNode() {
-
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode enablements = mapper.createObjectNode();
         enablements.set("customerAssignedRole", new TextNode("APRIORI_EXPERT"));
@@ -76,7 +74,6 @@ public class CdsUpdateUserTests {
     }
 
     ObjectNode createProfileNode() {
-
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode userProfile = mapper.createObjectNode();
         userProfile.set("familyName", new TextNode("Allen"));
@@ -85,7 +82,6 @@ public class CdsUpdateUserTests {
     }
 
     ObjectNode createUserNode(ObjectNode profile, ObjectNode enablements) {
-
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode user = mapper.createObjectNode();
 
@@ -119,13 +115,7 @@ public class CdsUpdateUserTests {
         ObjectNode user = createUserNode(null, enablements);
         User current = generateTargetUser();
 
-        User actual = cdsUserUtil.patchUser(
-            User.class,
-            current.getCustomerIdentity(),
-            current.getIdentity(),
-            HttpStatus.SC_OK,
-            user
-        ).getResponseEntity();
+        User actual = cdsUserUtil.patchUser(User.class, HttpStatus.SC_OK, user, current.getCustomerIdentity(), current.getIdentity()).getResponseEntity();
 
         soft
             .assertThat(actual.getEnablements().getCustomerAssignedRole())
@@ -145,13 +135,7 @@ public class CdsUpdateUserTests {
         ObjectNode user = createUserNode(profile, null);
         User current = generateTargetUser();
 
-        User actual = cdsUserUtil.patchUser(
-            User.class,
-            current.getCustomerIdentity(),
-            current.getIdentity(),
-            HttpStatus.SC_OK,
-            user
-        ).getResponseEntity();
+        User actual = cdsUserUtil.patchUser(User.class, HttpStatus.SC_OK, user, current.getCustomerIdentity(), current.getIdentity()).getResponseEntity();
 
         soft.assertThat(actual.getUserProfile().getFamilyName()).isEqualTo(profile.get("familyName").asText());
         soft.assertThat(actual.getUserProfile().getGivenName()).isEqualTo(profile.get("givenName").asText());
@@ -168,13 +152,7 @@ public class CdsUpdateUserTests {
         ObjectNode user = createUserNode(profile, enablements);
         User current = generateTargetUser();
 
-        User actual = cdsUserUtil.patchUser(
-            User.class,
-            current.getCustomerIdentity(),
-            current.getIdentity(),
-            HttpStatus.SC_OK,
-            user
-        ).getResponseEntity();
+        User actual = cdsUserUtil.patchUser(User.class, HttpStatus.SC_OK, user, current.getCustomerIdentity(), current.getIdentity()).getResponseEntity();
 
         soft
             .assertThat(actual.getEnablements().getCustomerAssignedRole())
@@ -195,13 +173,8 @@ public class CdsUpdateUserTests {
         ObjectNode enablements = createEnablementsNode();
         ObjectNode user = createUserNode(null, enablements);
 
-        ErrorResponse updateEnablements = cdsUserUtil.patchUser(
-            ErrorResponse.class,
-            ciGenerateUser.getCustomerIdentity(),
-            ciGenerateUser.getIdentity(),
-            HttpStatus.SC_CONFLICT,
-            user
-        ).getResponseEntity();
+        ErrorResponse updateEnablements = cdsUserUtil.patchUser(ErrorResponse.class, HttpStatus.SC_CONFLICT, user, ciGenerateUser.getCustomerIdentity(), ciGenerateUser.getIdentity())
+            .getResponseEntity();
 
         soft.assertThat(updateEnablements.getMessage())
             .isEqualTo("Enablements can not be updated for the user.");
@@ -216,13 +189,8 @@ public class CdsUpdateUserTests {
         ObjectNode enablements = createEnablementsNode();
         ObjectNode user = createUserNode(null, enablements);
 
-        ErrorResponse updateEnablements = cdsUserUtil.patchUser(
-            ErrorResponse.class,
-            serviceAccountWidgets.getCustomerIdentity(),
-            serviceAccountWidgets.getIdentity(),
-            HttpStatus.SC_CONFLICT,
-            user
-        ).getResponseEntity();
+        ErrorResponse updateEnablements = cdsUserUtil.patchUser(ErrorResponse.class, HttpStatus.SC_CONFLICT, user, serviceAccountWidgets.getCustomerIdentity(), serviceAccountWidgets.getIdentity())
+            .getResponseEntity();
 
         soft.assertThat(updateEnablements.getMessage())
             .isEqualTo("Enablements can not be updated for the user.");

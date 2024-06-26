@@ -38,7 +38,6 @@ public class CdsUserUtil {
      * @return response object
      */
     public ResponseWrapper<Users> getUserByEmail(String email) {
-
         final RequestEntity requestEntity =
             requestEntityUtil.init(CDSAPIEnum.USERS, Users.class)
                 .queryParams(new QueryParams().use("email[EQ]", email))
@@ -49,21 +48,14 @@ public class CdsUserUtil {
     /**
      * PATCH call to update the user credentials
      *
-     * @param customerIdentity    - the customer id
-     * @param userIdentity        - the user id
      * @param passwordHashCurrent - current hash password
      * @param passwordSalt        - the salt password
      * @return new object
      */
-    public ResponseWrapper<CredentialsItems> updateUserCredentials(
-        String customerIdentity,
-        String userIdentity,
-        String passwordHashCurrent,
-        String passwordSalt) {
-
+    public ResponseWrapper<CredentialsItems> updateUserCredentials(String passwordHashCurrent, String passwordSalt, String... inlineVariables) {
         RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.USER_CREDENTIALS_BY_CUSTOMER_USER_IDS, CredentialsItems.class)
-            .inlineVariables(customerIdentity, userIdentity)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_OK)
             .body(
                 "userCredential",
@@ -87,7 +79,6 @@ public class CdsUserUtil {
      * @return new object
      */
     public ResponseWrapper<User> addUser(String customerIdentity, String userName, String domain) {
-
         User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserData.json").getPath(), User.class);
         requestBody.setUsername(userName);
         requestBody.setEmail(userName + "@" + domain + ".com");
@@ -110,7 +101,6 @@ public class CdsUserUtil {
      * @return new object
      */
     public ResponseWrapper<User> addUserWithEnablements(String customerIdentity, String userName, String domain, String customerAssignedRole) {
-
         User requestBody = JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateUserWithEnablementsData.json").getPath(), User.class);
         requestBody.setUsername(userName);
         requestBody.setEmail(userName + "@" + domain + ".com");
@@ -131,7 +121,6 @@ public class CdsUserUtil {
      * @return new object
      */
     public ResponseWrapper<User> patchUser(User user) {
-
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class)
             .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
             .expectedResponseCode(HttpStatus.SC_OK)
@@ -156,21 +145,14 @@ public class CdsUserUtil {
      * PATCH call to update a user
      *
      * @param <T>                  - the class
-     * @param customerIdentity     - the customer id
-     * @param userIdentity         - the user id
+     * @param inlineVariables      - inline variables
      * @param expectedResponseCode - the expected response code
      * @param user                 - the user
      * @return new object
      */
-    public <T> ResponseWrapper<T> patchUser(
-        Class<T> klass,
-        String customerIdentity,
-        String userIdentity,
-        Integer expectedResponseCode,
-        JsonNode user) {
-
+    public <T> ResponseWrapper<T> patchUser(Class<T> klass, Integer expectedResponseCode, JsonNode user, String... inlineVariables) {
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, klass)
-            .inlineVariables(customerIdentity, userIdentity)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(expectedResponseCode)
             .body("user", user);
 
@@ -208,14 +190,12 @@ public class CdsUserUtil {
     /**
      * Adds new user preference
      *
-     * @param customerIdentity - customer id
-     * @param userIdentity     - user id
+     * @param inlineVariables - inline variables
      * @return - new object
      */
-    public ResponseWrapper<UserPreference> addUserPreference(String customerIdentity, String userIdentity) {
-
+    public ResponseWrapper<UserPreference> addUserPreference(String... inlineVariables) {
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_PREFERENCES, UserPreference.class)
-            .inlineVariables(customerIdentity, userIdentity)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
                 "userPreference",
@@ -233,19 +213,13 @@ public class CdsUserUtil {
     /**
      * Updates existing user preference
      *
-     * @param customerIdentity  - customer Id
-     * @param userIdentity      - user Id
+     * @param inlineVariables   - inline variables
      * @param updatedPreference - value of updated preference
      * @return -  new object
      */
-    public ResponseWrapper<UserPreference> updatePreference(
-        String customerIdentity,
-        String userIdentity,
-        String preferenceIdentity,
-        String updatedPreference) {
-
+    public ResponseWrapper<UserPreference> updatePreference(String updatedPreference, String... inlineVariables) {
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
-            .inlineVariables(customerIdentity, userIdentity, preferenceIdentity)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
                 "userPreference",

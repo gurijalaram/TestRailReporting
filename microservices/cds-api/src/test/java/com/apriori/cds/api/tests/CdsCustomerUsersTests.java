@@ -155,7 +155,7 @@ public class CdsCustomerUsersTests {
         String currentHashPassword = credentials.getResponseEntity().getPasswordHash();
         String currentPasswordSalt = credentials.getResponseEntity().getPasswordSalt();
 
-        ResponseWrapper<CredentialsItems> updatedCredentials = cdsUserUtil.updateUserCredentials(customerIdentity, userIdentity, currentHashPassword, currentPasswordSalt);
+        ResponseWrapper<CredentialsItems> updatedCredentials = cdsUserUtil.updateUserCredentials(currentHashPassword, currentPasswordSalt, customerIdentity, userIdentity);
 
         soft.assertThat(updatedCredentials.getResponseEntity().getPasswordHashHistory().get(0)).isEqualTo(currentHashPassword);
         soft.assertAll();

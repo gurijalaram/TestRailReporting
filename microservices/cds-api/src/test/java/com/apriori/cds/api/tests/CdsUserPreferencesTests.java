@@ -103,7 +103,7 @@ public class CdsUserPreferencesTests {
         ResponseWrapper<UserPreference> newPreference = cdsUserUtil.addUserPreference(customerIdentity, userIdentity);
         String preferenceIdentity = newPreference.getResponseEntity().getIdentity();
 
-        ResponseWrapper<UserPreference> updatedPreferenceResponse = cdsUserUtil.updatePreference(customerIdentity, userIdentity, preferenceIdentity, updatedPreference);
+        ResponseWrapper<UserPreference> updatedPreferenceResponse = cdsUserUtil.updatePreference(updatedPreference, customerIdentity, userIdentity, preferenceIdentity);
 
         soft.assertThat(updatedPreferenceResponse.getResponseEntity().getValue()).isEqualTo(updatedPreference);
         soft.assertAll();
