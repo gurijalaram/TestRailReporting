@@ -39,7 +39,7 @@ public class CdsSitesTests {
 
     @BeforeEach
     public void setDetails() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser().useTokenInRequests();
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
 
