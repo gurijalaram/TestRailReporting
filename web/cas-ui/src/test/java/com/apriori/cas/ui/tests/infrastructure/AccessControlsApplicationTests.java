@@ -10,11 +10,14 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.models.response.InstallationItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.LicensedApplications;
@@ -42,6 +45,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private ApplicationUtil applicationUtil;
     private InfrastructurePage infrastructurePage;
     private Customer targetCustomer;
     private List<User> sourceUsers;
@@ -57,10 +61,13 @@ public class AccessControlsApplicationTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        applicationUtil = new ApplicationUtil(requestEntityUtil);
+
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
-        cdsTestUtil = new CdsTestUtil();
         targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         userCreation = new UserCreation();
@@ -73,8 +80,8 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
         String realmKey = generateStringUtil.generateNumericString("RealmKey", 26);
-        appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
-        ResponseWrapper<LicensedApplications> newApplication = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
+        ResponseWrapper<LicensedApplications> newApplication = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();
 
         licensedAppIdentityHolder = IdentityHolder.builder()
@@ -92,7 +99,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
                 .installationIdentity(installationIdentity)
                 .build();
 
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         infrastructurePage = new CasLoginPage(driver)
                 .login(UserUtil.getUser())

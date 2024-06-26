@@ -11,12 +11,15 @@ import com.apriori.cas.ui.pageobjects.login.CasLoginPage;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.InstallationItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.LicensedApplications;
@@ -40,6 +43,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
     private IdentityHolder installationIdentityHolder;
     private IdentityHolder licensedAppIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private ApplicationUtil applicationUtil;
     private CdsTestUtil cdsTestUtil;
     private Customer targetCustomer;
     private String customerIdentity;
@@ -57,6 +61,10 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        applicationUtil = new ApplicationUtil(requestEntityUtil);
+
         String cloudRef = generateStringUtil.generateCloudReference();
         String salesforce = generateStringUtil.generateNumericString("SFID", 10);
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
@@ -64,7 +72,6 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         String email = "\\S+@".concat(customerName);
         String customerType = Constants.ON_PREM_CUSTOMER;
 
-        cdsTestUtil = new CdsTestUtil();
         targetCustomer = cdsTestUtil.addCustomer(customerName, customerType, null, salesforce, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
@@ -77,8 +84,8 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
         deploymentIdentity = deployment.getResponseEntity().getIdentity();
         String realmKey = generateStringUtil.generateNumericString("RealmKey", 26);
-        appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
-        ResponseWrapper<LicensedApplications> newApplication = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
+        ResponseWrapper<LicensedApplications> newApplication = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();
 
         licensedAppIdentityHolder = IdentityHolder.builder()
@@ -95,7 +102,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
             .installationIdentity(installationIdentity)
             .build();
 
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         userProfilePage = new CasLoginPage(driver)
             .login(UserUtil.getUser())

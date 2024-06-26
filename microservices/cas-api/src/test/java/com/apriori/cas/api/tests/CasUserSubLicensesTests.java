@@ -20,8 +20,9 @@ import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -43,8 +44,8 @@ import java.util.UUID;
 @ExtendWith(TestRulesAPI.class)
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasUserSubLicensesTests {
+    private CustomerInfrastructure customerInfrastructure;
     private SoftAssertions soft = new SoftAssertions();
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
     private IdentityHolder deleteIdentityHolder;
     private String customerIdentity;
     private String customerName;
@@ -52,7 +53,7 @@ public class CasUserSubLicensesTests {
     private String siteIdentity;
     private String siteId;
     private CasTestUtil casTestUtil = new CasTestUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CdsTestUtil cdsTestUtil;
     private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
     private String casLicense;
     private String casExpiredLicense;
@@ -61,8 +62,11 @@ public class CasUserSubLicensesTests {
 
     @SneakyThrows
     @BeforeEach
-    public void getToken() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+
         casLicense = new String(FileResourceUtil.getResourceFileStream("CasLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
         casExpiredLicense = new String(FileResourceUtil.getResourceFileStream("CasExpiredLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
         casApInternalLicense = new String(FileResourceUtil.getResourceFileStream("CasApInternalLicense.xml").readAllBytes(), StandardCharsets.UTF_8);

@@ -16,6 +16,8 @@ import java.util.List;
 public class ProcessGroup {
     private Boolean supportedByCloudApplications;
     private Boolean supportsAssemblies;
+    private Boolean supportsMaterials;
+    private Boolean supportsMaterialStocks;
     private Boolean supportsParts;
     private String identity;
     private Integer annualVolume;

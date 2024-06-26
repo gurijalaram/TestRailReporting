@@ -4,11 +4,14 @@ import com.apriori.cds.api.models.response.Role;
 import com.apriori.cds.api.models.response.Roles;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.shared.util.http.utils.QueryParams;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -16,8 +19,14 @@ import java.util.stream.Collectors;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsRolesTests {
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CdsTestUtil cdsTestUtil;
     private SoftAssertions soft = new SoftAssertions();
+
+    @BeforeEach
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+    }
 
     @Test
     @TestRail(id = {3243, 17159})

@@ -19,6 +19,8 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.Users;
@@ -38,8 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class   BatchImportListTests extends TestBaseUI {
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
+public class BatchImportListTests extends TestBaseUI {
+    private CustomerInfrastructure customerInfrastructure;
     private final String fileName = "testUsersBatch.csv";
     private ImportPage importPage;
     private String email;
@@ -48,15 +50,18 @@ public class   BatchImportListTests extends TestBaseUI {
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
     private String invalidDataFile = "invalidUsersData.csv";
+    // TODO: 21/06/2024 cn - note to remove this variable when refactoring
     private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+
         String customerName = new GenerateStringUtil().generateAlphabeticString("Customer", 6);
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         email = customerName.toLowerCase();
-
-        cdsTestUtil = new CdsTestUtil();
 
         targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();

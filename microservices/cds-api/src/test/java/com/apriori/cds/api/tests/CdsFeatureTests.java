@@ -7,9 +7,12 @@ import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.models.response.FeatureResponse;
 import com.apriori.cds.api.models.response.InstallationItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.LicensedApplications;
@@ -21,6 +24,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -29,11 +33,19 @@ public class CdsFeatureTests {
 
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CdsTestUtil cdsTestUtil;
+    private ApplicationUtil applicationUtil;
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
     private String installationIdentity;
     private String deploymentIdentity;
+
+    @BeforeEach
+    public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        applicationUtil = new ApplicationUtil(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {
@@ -94,7 +106,6 @@ public class CdsFeatureTests {
         soft.assertThat(errorResponse.getMessage())
             .isEqualTo("'deploymentIdentity' is not a valid identity.");
         soft.assertAll();
-
     }
 
     @Test
@@ -115,8 +126,8 @@ public class CdsFeatureTests {
             installationIdentity
         );
 
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
+        ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 
         installationIdentityHolder = IdentityHolder.builder()
@@ -198,8 +209,8 @@ public class CdsFeatureTests {
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentity = installation.getResponseEntity().getIdentity();
 
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
+        ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
 
         installationIdentityHolder = IdentityHolder.builder()
