@@ -78,7 +78,7 @@ public class CdsUserPreferencesTests {
     @Description("Creates a user preference for a user and gets it by identity")
     public void addUserPreference() {
         setCustomerData();
-        ResponseWrapper<UserPreference> newPreference = cdsTestUtil.addUserPreference(customerIdentity, userIdentity);
+        ResponseWrapper<UserPreference> newPreference = cdsUserUtil.addUserPreference(customerIdentity, userIdentity);
         String preferenceIdentity = newPreference.getResponseEntity().getIdentity();
 
         ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class, HttpStatus.SC_OK, customerIdentity, userIdentity, preferenceIdentity);
@@ -100,10 +100,10 @@ public class CdsUserPreferencesTests {
         setCustomerData();
         String updatedPreference = generateStringUtil.getRandomStringSpecLength(8);
 
-        ResponseWrapper<UserPreference> newPreference = cdsTestUtil.addUserPreference(customerIdentity, userIdentity);
+        ResponseWrapper<UserPreference> newPreference = cdsUserUtil.addUserPreference(customerIdentity, userIdentity);
         String preferenceIdentity = newPreference.getResponseEntity().getIdentity();
 
-        ResponseWrapper<UserPreference> updatedPreferenceResponse = cdsTestUtil.updatePreference(customerIdentity, userIdentity, preferenceIdentity, updatedPreference);
+        ResponseWrapper<UserPreference> updatedPreferenceResponse = cdsUserUtil.updatePreference(customerIdentity, userIdentity, preferenceIdentity, updatedPreference);
 
         soft.assertThat(updatedPreferenceResponse.getResponseEntity().getValue()).isEqualTo(updatedPreference);
         soft.assertAll();
