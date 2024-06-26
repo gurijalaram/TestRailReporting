@@ -3,7 +3,7 @@ package com.apriori.fms.api.controller;
 import com.apriori.fms.api.enums.FMSAPIEnum;
 import com.apriori.fms.api.models.response.FileResponse;
 import com.apriori.fms.api.models.response.FilesResponse;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -108,7 +108,7 @@ public class FileManagementController {
      */
     private static Map<String, String> initHeaders(UserCredentials userCredentials, boolean addMultiPartFile) {
         Map<String, String> headers = new HashMap<>() {{
-                put("ap-cloud-context", CustomerUtil.getAuthTargetCloudContext(userCredentials));
+                put("ap-cloud-context", SharedCustomerUtil.getAuthTargetCloudContext(userCredentials));
                 put("ap-user-context", new AuthUserContextUtil().getAuthUserContext(userCredentials.getEmail()));
             }};
 

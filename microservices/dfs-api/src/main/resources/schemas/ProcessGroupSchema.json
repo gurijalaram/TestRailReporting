@@ -16,6 +16,12 @@
     "supportsAssemblies": {
       "type": "boolean"
     },
+    "supportsMaterials": {
+      "type": "boolean"
+    },
+    "supportsMaterialStocks": {
+      "type": "boolean"
+    },
     "supportsParts": {
       "type": "boolean"
     },

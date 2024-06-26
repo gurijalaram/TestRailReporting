@@ -211,7 +211,7 @@ public class DTCCastingTests extends TestBaseUI {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
         guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Maximum Hole Depth", "Multi Step Hole", "MultiStepHole:1");

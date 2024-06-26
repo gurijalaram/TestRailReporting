@@ -9,7 +9,7 @@ import com.apriori.dds.api.models.response.CommentResponse;
 import com.apriori.dds.api.models.response.CommentsResponse;
 import com.apriori.dds.api.models.response.DiscussionResponse;
 import com.apriori.dds.api.utils.DdsApiTestUtils;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -40,7 +40,7 @@ import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
 public class DdsCommentsTest extends TestUtil {
-    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+    private static final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
 
     private String userContext;
     private SoftAssertions softAssertions;

@@ -4,6 +4,7 @@ import static com.apriori.shared.util.testconfig.TestBaseUI.homeDownloadPath;
 
 import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
+import com.apriori.cid.ui.pageobjects.compare.ComparePage;
 import com.apriori.cid.ui.pageobjects.compare.CreateComparePage;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.evaluate.UpdateCadFilePage;
@@ -247,6 +248,17 @@ public class ExploreToolbar extends MainNavBar {
     public EvaluatePage navigateToScenario(String scenarioUrl) {
         driver.navigate().to(scenarioUrl);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Navigates to the comparison via url
+     *
+     *@param scenarioUrl - url for the comparison
+     * @return new page object
+     */
+    public ComparePage navigateToComparison(String scenarioUrl) {
+        driver.navigate().to(scenarioUrl);
+        return new ComparePage(driver);
     }
 
     /**

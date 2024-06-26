@@ -17,7 +17,7 @@ import com.apriori.dms.api.models.response.DmsDiscussionParticipantResponse;
 import com.apriori.dms.api.models.response.DmsDiscussionParticipantsResponse;
 import com.apriori.dms.api.models.response.DmsDiscussionResponse;
 import com.apriori.qms.api.models.response.scenariodiscussion.ScenarioDiscussionResponse;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
@@ -39,7 +39,7 @@ import java.util.Map;
  */
 public class DmsApiTestUtils {
 
-    public static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+    public static final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
 
     /**
      * setup header information for DDS API Authorization
