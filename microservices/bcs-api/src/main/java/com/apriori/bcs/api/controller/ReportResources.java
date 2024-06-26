@@ -10,7 +10,7 @@ import com.apriori.bcs.api.models.response.ReportError;
 import com.apriori.bcs.api.models.response.ReportExport;
 import com.apriori.bcs.api.models.response.ReportTemplates;
 import com.apriori.bcs.api.models.response.Reports;
-import com.apriori.shared.util.CustomerUtil;
+import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 public class ReportResources {
     private static final Logger logger = LoggerFactory.getLogger(ReportResources.class);
     private static final long WAIT_TIME = 300;
-    private static final String customerIdentity = CustomerUtil.getCurrentCustomerIdentity();
+    private static final String customerIdentity = SharedCustomerUtil.getCurrentCustomerIdentity();
 
     /**
      * Create report with default parameters
