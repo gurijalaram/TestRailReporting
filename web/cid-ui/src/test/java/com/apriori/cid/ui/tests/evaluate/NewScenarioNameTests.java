@@ -14,8 +14,8 @@ import com.apriori.cid.ui.utils.ColumnsEnum;
 import com.apriori.cid.ui.utils.SortOrderEnum;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
-import com.apriori.shared.util.enums.MaterialNameEnum;
 import com.apriori.shared.util.enums.OperationEnum;
+import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.PropertyEnum;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.testconfig.TestBaseUI;
@@ -64,36 +64,37 @@ public class NewScenarioNameTests extends TestBaseUI {
     public void multipleUpload() {
         String filterName = generateStringUtil.generateAlphabeticString("Filter", 6);
 
-        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent("MultiUpload");
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponentWithProcessGroup("MultiUpload", ProcessGroupEnum.CASTING_DIE);
         ComponentInfoBuilder componentB = SerializationUtils.clone(component);
         componentB.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
-        ComponentInfoBuilder componentC = SerializationUtils.clone(component);
+        ComponentInfoBuilder componentC = SerializationUtils.clone(componentB);
         componentC.setScenarioName(new GenerateStringUtil().generateStringForAutomation("Scenario"));
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .openMaterialSelectorTable()
-            .search("ANSI AL380")
-            .selectMaterial(MaterialNameEnum.ALUMINIUM_ANSI_AL380.getMaterialName())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("High Pressure Die Cast")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
             .publish(component, EvaluatePage.class)
             .uploadComponentAndOpen(componentB)
             .selectProcessGroup(componentB.getProcessGroup())
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial(MaterialNameEnum.STEEL_HOT_WORKED_AISI1010.getMaterialName())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("High Pressure Die Cast")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
             .publish(componentB, EvaluatePage.class)
             .uploadComponentAndOpen(componentC)
             .selectProcessGroup(PLASTIC_MOLDING)
-            .openMaterialSelectorTable()
-            .selectMaterial(MaterialNameEnum.ABS.getMaterialName())
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
