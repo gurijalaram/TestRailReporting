@@ -9,7 +9,9 @@ import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.User;
@@ -19,13 +21,14 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class AtsAuthenticationTests extends TestUtil {
     private AtsTestUtil atsTestUtil = new AtsTestUtil();
-    private CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
+    private CustomerInfrastructure customerInfrastructure;
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
@@ -35,6 +38,13 @@ public class AtsAuthenticationTests extends TestUtil {
     private String customerName;
     private String userIdentity;
     private String idpIdentity;
+
+    @BeforeEach
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {

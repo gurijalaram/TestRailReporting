@@ -1,7 +1,5 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
-
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.AccessControl;
 import com.apriori.cas.api.models.response.AccessControls;
@@ -13,10 +11,9 @@ import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -37,16 +34,17 @@ import java.util.stream.Collectors;
 public class CasCustomerUserAccessControlsTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
     private final SoftAssertions soft = new SoftAssertions();
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
+    private CdsTestUtil cdsTestUtil;
+    private CustomerInfrastructure customerInfrastructure;
     private IdentityHolder accessControlIdentityHolder;
     private String customerIdentity;
     private String userIdentity;
-    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
 
     @BeforeEach
-    public void setDetails() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
     }
 
     @AfterEach

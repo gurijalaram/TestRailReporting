@@ -6,10 +6,13 @@ import static com.apriori.cds.api.enums.ApplicationEnum.CIA;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.SiteItems;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.LicensedApplications;
 import com.apriori.shared.util.models.response.Site;
@@ -29,7 +32,8 @@ public class CdsSitesApplicationsTests {
     private SoftAssertions soft = new SoftAssertions();
     private IdentityHolder licensedAppIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CdsTestUtil cdsTestUtil;
+    private ApplicationUtil applicationUtil;
     private String customerIdentity;
     private String customerName;
     private String cloudRef;
@@ -43,6 +47,10 @@ public class CdsSitesApplicationsTests {
 
     @BeforeEach
     public void setDetails() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        applicationUtil = new ApplicationUtil(requestEntityUtil);
+
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateNumericString("SFID", 10);
@@ -77,9 +85,9 @@ public class CdsSitesApplicationsTests {
     @TestRail(id = {6058})
     @Description("Add an application to a site")
     public void addApplicationSite() {
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
 
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
 
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityHolder = IdentityHolder.builder()
@@ -95,18 +103,18 @@ public class CdsSitesApplicationsTests {
     @TestRail(id = {6060})
     @Description("Returns a specific LicensedApplication for a specific customer site")
     public void getApplicationSite() {
-        String appIdentity = cdsTestUtil.getApplicationIdentity(CIA);
+        String appIdentity = applicationUtil.getApplicationIdentity(CIA);
 
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
         licensedAppIdentityHolder = IdentityHolder.builder()
-             .customerIdentity(customerIdentity)
-             .siteIdentity(siteIdentity)
-             .licenseIdentity(licensedApplicationIdentity)
-             .build();
+            .customerIdentity(customerIdentity)
+            .siteIdentity(siteIdentity)
+            .licenseIdentity(licensedApplicationIdentity)
+            .build();
 
         ResponseWrapper<SiteItems> licensedApplications = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS,
-                SiteItems.class,
+            SiteItems.class,
             HttpStatus.SC_OK,
             customerIdentity,
             siteIdentity

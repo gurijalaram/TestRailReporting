@@ -5,7 +5,9 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Site;
 import com.apriori.shared.util.models.response.SiteExpand;
@@ -25,7 +27,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class CdsSitesTests {
     private SoftAssertions soft = new SoftAssertions();
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CdsTestUtil cdsTestUtil;
     private ResponseWrapper<Customer> customer;
     private String customerName;
     private String cloudRef;
@@ -35,6 +37,9 @@ public class CdsSitesTests {
 
     @BeforeEach
     public void setDetails() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateNumericString("SFID", 10);

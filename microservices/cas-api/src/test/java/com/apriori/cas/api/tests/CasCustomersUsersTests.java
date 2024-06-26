@@ -1,7 +1,5 @@
 package com.apriori.cas.api.tests;
 
-import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DEVELOPER;
-
 import com.apriori.cas.api.enums.CASAPIEnum;
 import com.apriori.cas.api.models.response.Customer;
 import com.apriori.cas.api.models.response.UsersData;
@@ -11,11 +9,10 @@ import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.InitFileData;
-import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
-import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.Users;
 import com.apriori.shared.util.rules.TestRulesAPI;
@@ -48,17 +45,18 @@ import java.util.stream.Collectors;
 @EnabledIf(value = "com.apriori.shared.util.properties.PropertiesContext#isAPCustomer")
 public class CasCustomersUsersTests {
     private final CasTestUtil casTestUtil = new CasTestUtil();
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
+    private CustomerInfrastructure customerInfrastructure;
     private SoftAssertions soft = new SoftAssertions();
     private Customer newCustomer;
     private String customerIdentity;
     private String userIdentity;
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private UserCredentials currentUser = UserUtil.getUser(APRIORI_DEVELOPER);
+    private CdsTestUtil cdsTestUtil;
 
     @BeforeEach
-    public void getToken() {
-        RequestEntityUtil_Old.useTokenForRequests(currentUser.getToken());
+    public void init() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
     }
 
     @AfterEach
