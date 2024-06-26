@@ -266,7 +266,7 @@ public class ManualCostingTests  extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {31009, 31010, 31017, 31018, 31020, 31021, 31022})
+    @TestRail(id = {31009, 31010, 31017, 31018, 31020, 31021, 31022, 30649})
     @Description("Verify all actions can be performed on Manually Costed Scenario")
     public void testActionsForManuallyCostedScenarios() {
         String copiedScenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
@@ -397,22 +397,5 @@ public class ManualCostingTests  extends TestBaseUI {
             .as("Verify scenario removed from explore page").isEqualTo(0);
 
         softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {30102, 30104, 30105, 30107, 30108, 30109, 30110, 30111, 30112})
-    @Description("Verify Manually Costed Scenarios cannot be used in 2-Model Machining Source Model")
-    public void testManuallyCostedAs2MMSource() {
-        component = new ComponentRequestUtil().getComponent();
-
-        evaluatePage = new CidAppLoginPage(driver).login(component.getUser())
-            .uploadComponentAndOpen(component)
-            .clickManualModeButtonWhileUncosted()
-            .enterPiecePartCost("42")
-            .enterTotalCapitalInvestment("316")
-            .clickCostButton()
-            .waitForCostLabelNotContain(NewCostingLabelEnum.SAVING_IN_PROGRESS, 2)
-            .publishScenario(PublishPage.class)
-            .publish(component, EvaluatePage.class);
     }
 }

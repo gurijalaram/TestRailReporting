@@ -53,6 +53,6 @@ public enum ComparisonCardEnum {
         private static final String MATERIAL_AND_UTILIZATION = "Material & Utilization";
         private static final String DESIGN_GUIDANCE = "Design Guidance";
         private static final String PROCESS = "Process";
-        private static final String COST_RESULT = "Cost Result";
+        private static final String COST_RESULT = "Cost Results";
     }
 }
