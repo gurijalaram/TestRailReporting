@@ -43,7 +43,7 @@ public class CdsSitesTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
 
-        customerName = generateStringUtil.generateCustomerName();
+        customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateNumericString("SFID", 10);
         emailPattern = "\\S+@".concat(customerName);
