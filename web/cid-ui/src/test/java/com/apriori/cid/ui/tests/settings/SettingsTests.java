@@ -38,7 +38,6 @@ import com.apriori.shared.util.dataservice.AssemblyRequestUtil;
 import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.MaterialNameEnum;
-import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
 import com.apriori.shared.util.enums.UnitsEnum;
 import com.apriori.shared.util.file.user.UserCredentials;
