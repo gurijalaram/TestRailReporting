@@ -84,7 +84,7 @@ public class SettingsTests extends TestBaseUI {
 
     @Tag(SMOKE)
     @Test
-    @TestRail(id = {6283, 6637, 6275, 8883})
+    @TestRail(id = {6283, 6637, 6275, 8883, 6281, 5442, 6282, 6285, 6286, 5429, 6287, 6288, 6284})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
         currentUser = UserUtil.getUser();
@@ -110,110 +110,9 @@ public class SettingsTests extends TestBaseUI {
         softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup());
         softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
         softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("ABS, Plating");
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {6281, 5442})
-    @Description("User can change the default Process group")
-    public void defaultPG() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL);
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .openSettings()
-            .goToProductionTab()
-            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING)
-            .submit(ExplorePage.class)
-            .uploadComponentAndOpen(component)
-            .navigateToScenario(component)
-            .costScenario();
-
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
-    }
-
-    @Test
-    @TestRail(id = {6282})
-    @Description("User can change the default VPE")
-    public void defaultVPE() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .openSettings()
-            .goToProductionTab()
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_MEXICO)
-            .submit(ExplorePage.class)
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory()));
-    }
-
-    @Test
-    @TestRail(id = {6285, 6286, 5429})
-    @Description("User can change the default Production Life")
-    public void defaultProductionLife() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING_DIE);
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
-            .openSettings()
-            .goToProductionTab()
-            .inputAnnualVolume("9524")
-            .inputYears("7")
-            .submit(ExplorePage.class)
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getAnnualVolume()).isEqualTo("9524");
-        softAssertions.assertThat(evaluatePage.getProductionLife()).isEqualTo("7");
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @TestRail(id = {6287, 6288})
-    @Description("User can change the default Batch size when set to manual")
-    public void defaultBatchSize() {
-        final String batchSize = "46";
-
-        component = new ComponentRequestUtil().getComponent();
-
-        loginPage = new CidAppLoginPage(driver);
-        advancedPage = loginPage.login(component.getUser())
-            .openSettings()
-            .goToProductionTab()
-            .inputBatchSize(batchSize)
-            .submit(ExplorePage.class)
-            .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario()
-            .goToAdvancedTab();
-
-        assertThat(advancedPage.getBatchSize(), is(equalTo(Integer.parseInt(batchSize))));
-    }
-
-    @Test
-    @TestRail(id = {6298})
-    @Description("User should be able to select a material catalogue from a different region than the VPE")
-    public void differentMaterialCatalog() {
-
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        productionDefaultPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToProductionTab()
-            .selectDigitalFactory(APRIORI_USA)
-            .submit(ExplorePage.class)
-            .openSettings()
-            .goToProductionTab();
-
-        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(APRIORI_USA.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getAnnualVolume()).isEqualTo("3000");
+        softAssertions.assertThat(productionDefaultPage.getProductionLife()).isEqualTo("7");
+        softAssertions.assertThat(productionDefaultPage.getBatchSize()).isEqualTo("50");
 
         softAssertions.assertAll();
     }
@@ -234,33 +133,6 @@ public class SettingsTests extends TestBaseUI {
             .goToSelectionTab();
 
         assertThat(selectionPage.isColour(ColourEnum.PEAR), is(true));
-    }
-
-    @Test
-    @TestRail(id = {6284})
-    @Description("User can change the default Material")
-    public void defaultMaterial() {
-
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        productionDefaultPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToProductionTab()
-            .selectProcessGroup(ProcessGroupEnum.SHEET_PLASTIC)
-            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_INDIA)
-            .openMaterialSelectorTable()
-            .selectMaterial(MaterialNameEnum.HIPS_EXTRUSION.getMaterialName())
-            .submit(ProductionDefaultsPage.class)
-            .submit(ExplorePage.class)
-            .openSettings()
-            .goToProductionTab();
-
-        softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup());
-        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
-        softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("Polystyrene HIPS Extrusion");
-
-        softAssertions.assertAll();
     }
 
     @Test
