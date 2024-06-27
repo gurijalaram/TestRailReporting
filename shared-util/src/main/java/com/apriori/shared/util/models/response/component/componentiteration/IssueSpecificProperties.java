@@ -27,12 +27,14 @@ public class IssueSpecificProperties  {
     private Integer suggestedMin;
     private String suggestedStock;
     private String edgeList;
-    private String opName;
+    private OpName opName;
     private ProcName processName;
     private ProcName procName;
     private String cavityTexture;
     private String gcdType;
     private String guidanceTopic;
+    private String bendCount;
+    private String bendRadius;
     private String bendHoleList;
     private List<GcdsToHighlight> gcdsToHighlight;
     private String holeSize;
