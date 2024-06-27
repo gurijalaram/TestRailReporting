@@ -20,6 +20,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     CAD_FILES("/cad-files"),
 
     //ITERATIONS
+    COMPONENT_ITERATIONS_BY_COMPONENT_SCENARIO_IDS("/components/%s/scenarios/%s/iterations"),
     COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS("/components/%s/scenarios/%s/iterations/latest"),
 
     //ROUTINGS
