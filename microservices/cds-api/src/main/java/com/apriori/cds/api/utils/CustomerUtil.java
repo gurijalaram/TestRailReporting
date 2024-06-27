@@ -3,6 +3,7 @@ package com.apriori.cds.api.utils;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.CASCustomerRequest;
+import com.apriori.cds.api.models.response.AssociationUserItems;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -129,5 +130,33 @@ public class CustomerUtil {
             );
 
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * POST call to add an apriori staff user association to a customer
+     *
+     * @param apCustomerIdentity  - the ap customer id
+     * @param associationIdentity - the association id
+     * @param userIdentity        - the aPriori Staff users identity
+     * @return new object
+     */
+    public ResponseWrapper<AssociationUserItems> addCustomerAssociationUser(
+        String apCustomerIdentity,
+        String associationIdentity,
+        String userIdentity) {
+
+        RequestEntity requestEntity = requestEntityUtil
+            .init(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS, AssociationUserItems.class)
+            .inlineVariables(apCustomerIdentity, associationIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(
+                "userAssociation",
+                AssociationUserItems.builder()
+                    .userIdentity(userIdentity)
+                    .createdBy("#SYSTEM00000")
+                    .build()
+            );
+
+        return HTTPRequest.build(requestEntity).post();
     }
 }

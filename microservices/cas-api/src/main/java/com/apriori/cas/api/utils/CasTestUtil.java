@@ -645,7 +645,7 @@ public class CasTestUtil extends TestUtil {
      * @return generic response object
      */
     public <T> ResponseWrapper<T> addAccessAuthorization(Class<T> klas, String customerIdentity, String userIdentity, String serviceAccount, Integer expectedResponseCode) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CASAPIEnum.ACCESS_AUTHORIZATIONS, klas)
+        RequestEntity requestEntity = requestEntityUtil.init(CASAPIEnum.ACCESS_AUTHORIZATIONS, klas)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(expectedResponseCode)
             .body("accessAuthorization",

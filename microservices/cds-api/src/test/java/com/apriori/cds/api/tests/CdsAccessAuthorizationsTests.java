@@ -73,7 +73,7 @@ public class CdsAccessAuthorizationsTests {
         apCustomerIdentity = currentUser.getUserDetails().getCustomerIdentity();
         customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, HttpStatus.SC_OK, apCustomerIdentity);
         associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).toList().get(0).getIdentity();
-        associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
+        associationUser = customerUtil.addCustomerAssociationUser(apCustomerIdentity, associationIdentity, apStaffIdentity);
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
         customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s", apCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
     }
