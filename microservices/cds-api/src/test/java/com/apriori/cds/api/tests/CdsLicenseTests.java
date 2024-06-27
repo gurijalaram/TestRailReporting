@@ -260,8 +260,8 @@ public class CdsLicenseTests {
             .filter(x -> !x.getName().contains("master"))
             .toList().get(0).getIdentity();
 
-        ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = licenseUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity,
-            licenseIdentity, subLicenseIdentity, userIdentity);
+        ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = licenseUtil.addSubLicenseAssociationUser(userIdentity, customerIdentity, siteIdentity,
+            licenseIdentity, subLicenseIdentity);
 
         soft.assertThat(associationUserItemsResponse.getResponseEntity().getCreatedBy()).isEqualTo("#SYSTEM00000");
         soft.assertAll();
@@ -296,7 +296,7 @@ public class CdsLicenseTests {
             .filter(x -> !x.getName().contains("master"))
             .toList().get(0).getIdentity();
 
-        licenseUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        licenseUtil.addSubLicenseAssociationUser(userIdentity, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity);
 
         ResponseWrapper<SubLicenseAssociation> associationUserResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USERS,
             SubLicenseAssociation.class,
@@ -340,7 +340,7 @@ public class CdsLicenseTests {
             .filter(x -> !x.getName().contains("master"))
             .toList().get(0).getIdentity();
 
-        licenseUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        licenseUtil.addSubLicenseAssociationUser(userIdentity, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity);
 
         ResponseWrapper<UsersLicensing> licensing = cdsTestUtil.getCommonRequest(CDSAPIEnum.USERS_LICENSES,
             UsersLicensing.class,
@@ -382,7 +382,7 @@ public class CdsLicenseTests {
             .filter(x -> !x.getName().contains("master"))
             .toList().get(0).getIdentity();
 
-        licenseUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        licenseUtil.addSubLicenseAssociationUser(userIdentity, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity);
 
         cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
             customerIdentity,

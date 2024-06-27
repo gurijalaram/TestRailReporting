@@ -29,23 +29,15 @@ public class LicenseUtil {
     /**
      * POST call to add a sub-license association user
      *
-     * @param customerIdentity   - the customer id
-     * @param siteIdentity       - the site id
-     * @param licenseIdentity    - the license id
-     * @param subLicenseIdentity - the sub-license id
-     * @param userIdentity       - the user id
+     * @param inlineVariables - the inline variables
+     * @param userIdentity    - the user id
      * @return new object
      */
-    public ResponseWrapper<SubLicenseAssociationUser> addSubLicenseAssociationUser(
-        String customerIdentity,
-        String siteIdentity,
-        String licenseIdentity,
-        String subLicenseIdentity,
-        String userIdentity) {
+    public ResponseWrapper<SubLicenseAssociationUser> addSubLicenseAssociationUser(String userIdentity, String... inlineVariables) {
 
         RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USERS, SubLicenseAssociationUser.class)
-            .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
+            .inlineVariables(inlineVariables)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
                 "userAssociation",
@@ -70,13 +62,7 @@ public class LicenseUtil {
      * @return new object
      */
     @SneakyThrows
-    public ResponseWrapper<LicenseResponse> addLicense(
-        String customerIdentity,
-        String siteIdentity,
-        String customerName,
-        String siteId,
-        String licenseId,
-        String subLicenseId) {
+    public ResponseWrapper<LicenseResponse> addLicense(String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
 
         String licenseXml = new String(FileResourceUtil.getResourceFileStream("CdsLicense.xml").readAllBytes(), StandardCharsets.UTF_8);
         String licenseTemplate = new String(FileResourceUtil.getResourceFileStream("CdsLicenseTemplate.xml").readAllBytes(), StandardCharsets.UTF_8);
@@ -108,11 +94,7 @@ public class LicenseUtil {
      * @param licenseIdentity  - the license identity
      * @param userIdentity     - the user identity
      */
-    public void activateLicense(
-        String customerIdentity,
-        String siteIdentity,
-        String licenseIdentity,
-        String userIdentity) {
+    public void activateLicense(String customerIdentity, String siteIdentity, String licenseIdentity, String userIdentity) {
 
         RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.LICENSE_ACTIVATE, LicenseResponse.class)
             .inlineVariables(customerIdentity, siteIdentity, licenseIdentity)

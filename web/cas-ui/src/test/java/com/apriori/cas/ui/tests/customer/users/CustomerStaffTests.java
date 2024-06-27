@@ -217,7 +217,7 @@ public class CustomerStaffTests extends TestBaseUI {
         String userName = sourceUsers.get(0).getUsername();
         String userIdentity = sourceUsers.get(0).getIdentity();
 
-        licenseUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        licenseUtil.addSubLicenseAssociationUser(userIdentity, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity);
 
         UsersListPage openLicenseDetails = usersListPage.clickLicenceDetailsButton("left");
 
