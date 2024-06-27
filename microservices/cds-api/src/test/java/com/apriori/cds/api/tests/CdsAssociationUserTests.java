@@ -86,7 +86,7 @@ public class CdsAssociationUserTests {
     @TestRail(id = {5959})
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
-        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, user.getIdentity());
+        ResponseWrapper<AssociationUserItems> associationUser = customerUtil.addCustomerAssociationUser(apCustomerIdentity, associationIdentity, user.getIdentity());
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
         customerAssociationUserIdentityEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users/%s",
             apCustomerIdentity, associationIdentity, customerAssociationUserIdentity));
@@ -96,7 +96,7 @@ public class CdsAssociationUserTests {
     @TestRail(id = {5965})
     @Description("Get users associated for customer")
     public void getAssociationUsers() {
-        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, user.getIdentity());
+        ResponseWrapper<AssociationUserItems> associationUser = customerUtil.addCustomerAssociationUser(apCustomerIdentity, associationIdentity, user.getIdentity());
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
 
         ResponseWrapper<AssociationUserResponse> associationUsers = cdsTestUtil.getCommonRequest(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS,
@@ -123,7 +123,7 @@ public class CdsAssociationUserTests {
     @TestRail(id = {5964})
     @Description("Get user details for association")
     public void getAssociationByUserIdentity() {
-        ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(apCustomerIdentity, associationIdentity, user.getIdentity());
+        ResponseWrapper<AssociationUserItems> associationUser = customerUtil.addCustomerAssociationUser(apCustomerIdentity, associationIdentity, user.getIdentity());
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
 
         ResponseWrapper<AssociationUserItems> associationUserIdentity = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
