@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
+import com.apriori.cid.ui.pageobjects.bulkanalysis.NewBulkAnalysisPage;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +37,9 @@ public class BulkAnalysisToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public DeletePage clickNew() {
+    public NewBulkAnalysisPage clickNew() {
         pageUtils.waitForElementAndClick(newButton);
-        return new DeletePage(driver);
+        return new NewBulkAnalysisPage(driver);
     }
 
     /**
