@@ -83,10 +83,8 @@ public class CdsUserUtil {
         requestBody.setUsername(userName);
         requestBody.setEmail(userName + "@" + domain + ".com");
         requestBody.getUserProfile().setGivenName(userName);
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
-            .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body("user", requestBody);
+
+        RequestEntity requestEntity = getUser(customerIdentity, requestBody);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -106,12 +104,17 @@ public class CdsUserUtil {
         requestBody.setEmail(userName + "@" + domain + ".com");
         requestBody.getUserProfile().setGivenName(userName);
         requestBody.getEnablements().setCustomerAssignedRole(customerAssignedRole);
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
+
+        RequestEntity requestEntity = getUser(customerIdentity, requestBody);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    private RequestEntity getUser(String customerIdentity, User requestBody) {
+        return requestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
             .inlineVariables(customerIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body("user", requestBody);
-
-        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
