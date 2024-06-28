@@ -9,6 +9,8 @@ import com.apriori.cds.api.models.response.InstallationResponse;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.InstallationUtil;
+import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -37,12 +39,16 @@ public class CdsInstallationsTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
+    private InstallationUtil installationUtil;
+    private SiteUtil siteUtil;
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        installationUtil = new InstallationUtil(requestEntityUtil);
+        siteUtil = new SiteUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -93,7 +99,7 @@ public class CdsInstallationsTests {
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
@@ -110,7 +116,7 @@ public class CdsInstallationsTests {
             .licenseIdentity(licensedApplicationIdentity)
             .build();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
         String installationIdentity = installation.getResponseEntity().getIdentity();
 
         installationIdentityHolder = IdentityHolder.builder()
@@ -140,7 +146,7 @@ public class CdsInstallationsTests {
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
@@ -156,7 +162,7 @@ public class CdsInstallationsTests {
             .licenseIdentity(licensedApplicationIdentity)
             .build();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
         String installationIdentity = installation.getResponseEntity().getIdentity();
 
         installationIdentityHolder = IdentityHolder.builder()
@@ -193,7 +199,7 @@ public class CdsInstallationsTests {
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
@@ -209,7 +215,7 @@ public class CdsInstallationsTests {
             .licenseIdentity(licensedApplicationIdentity)
             .build();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
         String installationIdentity = installation.getResponseEntity().getIdentity();
 
         installationIdentityHolder = IdentityHolder.builder()
@@ -218,7 +224,7 @@ public class CdsInstallationsTests {
             .installationIdentity(installationIdentity)
             .build();
 
-        ResponseWrapper<InstallationItems> installationItemsResponse = cdsTestUtil.patchInstallation(customerIdentity, deploymentIdentity, installationIdentity);
+        ResponseWrapper<InstallationItems> installationItemsResponse = installationUtil.patchInstallation(customerIdentity, deploymentIdentity, installationIdentity);
         soft.assertThat(installationItemsResponse.getResponseEntity().getCloudReference()).isEqualTo("eu-1");
         soft.assertAll();
     }
