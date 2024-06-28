@@ -16,6 +16,7 @@ import com.apriori.shared.util.models.response.Site;
 public class CustomerInfrastructure {
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
+    private InstallationUtil installationUtil;
     private SiteUtil siteUtil;
     private String siteIdentity;
     private String licensedApProIdentity;
@@ -27,6 +28,7 @@ public class CustomerInfrastructure {
     public CustomerInfrastructure(RequestEntityUtil requestEntityUtil) {
         this.applicationUtil = new ApplicationUtil(requestEntityUtil);
         this.cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        this.installationUtil = new InstallationUtil(requestEntityUtil);
         this.siteUtil = new SiteUtil(requestEntityUtil);
     }
 
@@ -41,7 +43,7 @@ public class CustomerInfrastructure {
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentity = installation.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
