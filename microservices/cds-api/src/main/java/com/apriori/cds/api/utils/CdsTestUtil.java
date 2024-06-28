@@ -9,8 +9,6 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
 import com.apriori.cds.api.models.request.CASCustomerRequest;
-import com.apriori.cds.api.models.request.FeatureRequest;
-import com.apriori.cds.api.models.request.CustomAttributeRequest;
 import com.apriori.cds.api.models.request.PostBatch;
 import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.AccessAuthorization;
