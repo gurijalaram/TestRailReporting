@@ -20,13 +20,12 @@ import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.web.app.util.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,9 +35,8 @@ import java.util.stream.Collectors;
  * @author cfrith
  */
 
+@Slf4j
 public class ExplorePage extends ExploreToolbar {
-
-    private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
@@ -81,7 +79,7 @@ public class ExplorePage extends ExploreToolbar {
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(scenarioCount);
     }
