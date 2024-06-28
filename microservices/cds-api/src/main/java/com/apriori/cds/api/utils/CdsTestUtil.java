@@ -7,21 +7,24 @@ import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
+import com.apriori.cds.api.models.request.ActivateLicense;
+import com.apriori.cds.api.models.request.ActivateLicenseRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
 import com.apriori.cds.api.models.request.CASCustomerRequest;
 import com.apriori.cds.api.models.request.CustomAttributeRequest;
+import com.apriori.cds.api.models.request.License;
+import com.apriori.cds.api.models.request.LicenseRequest;
 import com.apriori.cds.api.models.request.PostBatch;
 import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.AccessAuthorization;
 import com.apriori.cds.api.models.response.AssociationUserItems;
+import com.apriori.cds.api.models.response.AttributeMappings;
 import com.apriori.cds.api.models.response.CredentialsItems;
 import com.apriori.cds.api.models.response.CustomAttribute;
 import com.apriori.cds.api.models.response.ErrorResponse;
-import com.apriori.cds.api.models.response.FeatureResponse;
-import com.apriori.cds.api.models.response.InstallationItems;
-import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.models.response.IdentityProviderRequest;
 import com.apriori.cds.api.models.response.IdentityProviderResponse;
+import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.models.response.Roles;
 import com.apriori.cds.api.models.response.UserPreference;
 import com.apriori.cds.api.models.response.UserRole;
@@ -51,6 +54,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 
@@ -350,38 +354,6 @@ public class CdsTestUtil extends TestUtil {
         RequestEntity requestEntity = requestEntityUtil
             .init(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS, AssociationUserItems.class)
             .inlineVariables(apCustomerIdentity, associationIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "userAssociation",
-                AssociationUserItems.builder()
-                    .userIdentity(userIdentity)
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * POST call to add a sub-license association user
-     *
-     * @param customerIdentity   - the customer id
-     * @param siteIdentity       - the site id
-     * @param licenseIdentity    - the license id
-     * @param subLicenseIdentity - the sub-license id
-     * @param userIdentity       - the user id
-     * @return new object
-     */
-    public ResponseWrapper<SubLicenseAssociationUser> addSubLicenseAssociationUser(
-        String customerIdentity,
-        String siteIdentity,
-        String licenseIdentity,
-        String subLicenseIdentity,
-        String userIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil
-            .init(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USERS, SubLicenseAssociationUser.class)
-            .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
             .expectedResponseCode(HttpStatus.SC_CREATED)
             .body(
                 "userAssociation",
