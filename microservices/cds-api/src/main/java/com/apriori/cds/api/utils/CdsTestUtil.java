@@ -43,8 +43,6 @@ import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
-import com.apriori.shared.util.models.response.Site;
-import com.apriori.shared.util.models.response.Features;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
 import com.apriori.shared.util.models.response.Users;
