@@ -94,8 +94,9 @@ public class UserCredentials implements Serializable {
         return this;
     }
 
+    // TODO: 20/06/2024 cn - this should not be in this class as this is a customer (eg. apriori-internal) construct or make customer a sub-object of user
     public UserCredentials generateCloudContext() {
-        this.cloudContext = cloudContext != null ? cloudContext : SharedCustomerUtil.getAuthTargetCloudContext(this);
+        this.cloudContext = cloudContext != null ? cloudContext : SharedCustomerUtil.getAuthTargetCloudContext();
         return this;
     }
 
