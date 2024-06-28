@@ -10,6 +10,7 @@ import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestHelper;
@@ -34,6 +35,7 @@ public class CdsFeatureTests {
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil;
+    private SiteUtil siteUtil;
     private ApplicationUtil applicationUtil;
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
@@ -45,6 +47,7 @@ public class CdsFeatureTests {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        siteUtil = new SiteUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -200,7 +203,7 @@ public class CdsFeatureTests {
         ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
@@ -231,7 +234,7 @@ public class CdsFeatureTests {
         ResponseWrapper<Customer> customer = cdsTestUtil.createCustomer(rcd);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
