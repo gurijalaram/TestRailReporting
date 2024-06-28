@@ -27,7 +27,7 @@ public class IssueSpecificProperties  {
     private Integer suggestedMin;
     private String suggestedStock;
     private String edgeList;
-    private OpName opName;
+    private String opName;
     private ProcName processName;
     private ProcName procName;
     private String cavityTexture;
