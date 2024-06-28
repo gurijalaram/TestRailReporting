@@ -47,21 +47,21 @@ public class SharedCustomerUtil {
     }
 
     /**
-     * Gets Authorisation Target Cloud Context
-     *
-     * @return String - cloud context
-     */
-    public static synchronized String getAuthTargetCloudContext(String applicationCloudReference) {
-        return Objects.requireNonNullElseGet(authTargetCloudContext, () -> authTargetCloudContext = generateAuthTargetCloudContext(applicationCloudReference));
-    }
-
-    /**
      * Return token subject for specific customer
      *
-     * @return
+     * @return string
      */
     public static synchronized String getTokenSubjectForCustomer() {
         return currentCustomerTokenSubject = generateTokenSubject();
+    }
+
+    /**
+     * Gets default Authorisation Target Cloud Context
+     *
+     * @return String - cloud context
+     */
+    private static String generateDefaultAuthTargetCloudContext() {
+        return getAuthTarget() + getApplicationIdentityByAppCloudRef("ci-design");
     }
 
     /**
@@ -70,25 +70,7 @@ public class SharedCustomerUtil {
      * @return String - cloud context
      */
     private static String generateAuthTargetCloudContext() {
-
-        final String customerIdentity = getCustomerData().getIdentity();
-        final String installationName = PropertiesContext.get("${customer}.multi_tenant_installation_name");
-        Deployment deploymentItem = getDeploymentByName(PropertiesContext.get("deployment"));
-
-        Installation installationItem = deploymentItem.getInstallations()
-            .stream()
-            .filter(element -> element.getName().equalsIgnoreCase(installationName))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(
-                    String.format("Could not find installation with name %s\nfor deployment %s",
-                        installationName, deploymentItem.getName())
-                )
-            );
-
-        return customerIdentity +
-            deploymentItem.getIdentity() +
-            installationItem.getIdentity() +
-            getApplicationIdentityByCloudRef("ci-design");
+        return getAuthTarget() + getApplicationIdentity();
     }
 
     /**
@@ -96,27 +78,25 @@ public class SharedCustomerUtil {
      *
      * @return String - cloud context
      */
-    private static String generateAuthTargetCloudContext(String applicationCloudReference) {
-
+    private static String getAuthTarget() {
         final String customerIdentity = getCustomerData().getIdentity();
-        final String installationName = PropertiesContext.get("${customer}.multi_tenant_installation_name");
+        final String appCloudReference = PropertiesContext.get("${customer}.application_cloud_reference");
         Deployment deploymentItem = getDeploymentByName(PropertiesContext.get("deployment"));
 
         Installation installationItem = deploymentItem.getInstallations()
             .stream()
 
-            .filter(element -> element.getName().equalsIgnoreCase(installationName))
+            .filter(element -> element.getCloudReference().equalsIgnoreCase(appCloudReference))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(
                     String.format("Could not find installation with name %s\nfor deployment %s",
-                        installationName, deploymentItem.getName())
+                        appCloudReference, deploymentItem.getName())
                 )
             );
 
         return customerIdentity +
             deploymentItem.getIdentity() +
-            installationItem.getIdentity() +
-            getApplicationIdentityByCloudRef(applicationCloudReference);
+            installationItem.getIdentity();
     }
 
     /**
@@ -125,14 +105,28 @@ public class SharedCustomerUtil {
      * @return string
      */
     // TODO: 10/06/2024 cn - this is a duplicate of a cds method which needs to be refactored when cdstestutil is being worked on
-    private static String getApplicationIdentityByCloudRef(String cloudReference) {
+    private static String getApplicationIdentityByAppCloudRef(String appCloudReference) {
         final RequestEntity requestEntity = RequestEntityUtil_Old.init(CustomersApiEnum.APPLICATIONS, Applications.class)
-            .queryParams(new QueryParams().use("cloudReference[EQ]", cloudReference))
+            .queryParams(new QueryParams().use("cloudReference[EQ]", appCloudReference))
             .expectedResponseCode(org.apache.http.HttpStatus.SC_OK);
 
         ResponseWrapper<Applications> response = HTTPRequest.build(requestEntity).get();
 
         return response.getResponseEntity().getItems().stream().findFirst().get().getIdentity();
+    }
+
+    /**
+     * Calls an API with GET verb
+     *
+     * @return string
+     */
+    private static String getApplicationIdentity() {
+        final RequestEntity requestEntity = RequestEntityUtil_Old.init(CustomersApiEnum.APPLICATIONS, Applications.class)
+            .expectedResponseCode(org.apache.http.HttpStatus.SC_OK);
+
+        ResponseWrapper<Applications> response = HTTPRequest.build(requestEntity).get();
+
+        return response.getResponseEntity().getItems().stream().findAny().get().getIdentity();
     }
 
     private static String generateTokenSubject() {
