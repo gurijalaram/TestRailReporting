@@ -43,8 +43,12 @@ public enum JasperApiInputControlsPathEnum implements ExternalEndpointEnum {
     CYCLE_TIME_VALUE_TRACKING_DETAILS(APRIORI_SOLUTIONS_DESIGN_TO_COST_REPORTS.getEndpointString().concat("/cycleTime/cycleTimeValueTrackingDetails/inputControls/projectRollup;projectName;exportDate;currencyCode/values?freshData=false")),
     DESIGN_OUTLIER_IDENTIFICATION(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/designOutlierIdentification/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;massMetric;aPrioriCostMin;").concat(
         "aPrioriCostMax;aPrioriMassMin;aPrioriMassMax;outlierLines;currencyCode/values?freshData=false")),
+    DESIGN_OUTLIER_IDENTIFICATION_MODIFIED_IC(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/designOutlierIdentification/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;massMetric;").concat(
+        "aPrioriCostMin;aPrioriCostMax;aPrioriMassMin;aPrioriMassMax;outlierLines;currencyCode/values/pagination?freshData=false&includeTotalCount=true")),
     DESIGN_OUTLIER_IDENTIFICATION_DETAILS(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/designOutlierIdentificationDetails/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;").concat(
         "massMetric;aPrioriCostMin;aPrioriCostMax;aPrioriMassMin;aPrioriMassMax;currencyCode/values")),
+    DESIGN_OUTLIER_IDENTIFICATION_DETAILS_MODIFIED_IC(APRIORI_SOLUTIONS_SOURCING_REPORTS.getEndpointString().concat("/designOutlierIdentificationDetails/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;massMetric;").concat(
+        "aPrioriCostMin;aPrioriCostMax;aPrioriMassMin;aPrioriMassMax;outlierLines;currencyCode/values/pagination?freshData=false&includeTotalCount=true")),
     DIGITAL_FACTORY_PERFORMANCE(APRIORI_SOLUTIONS_QUOTING_REPORTS.getEndpointString().concat("/vpePerformance/inputControls/earliestExportDate;latestExportDate;exportSetName;rollup;exportDate;costMetric;performanceMetric;annualVolumeMin;").concat(
         "annualVolumeMax;processGroup;processName;materialName;vpeName;currencyCode/values?freshData=false")),
     DIGITAL_FACTORY_PERFORMANCE_DETAILS(APRIORI_SOLUTIONS_QUOTING_REPORTS.getEndpointString().concat("/vpePerformanceDetailsInternal/inputControls/currencyCode;annualVolumeMax;annualVolumeMin;performanceMetric;costMetric;").concat(
