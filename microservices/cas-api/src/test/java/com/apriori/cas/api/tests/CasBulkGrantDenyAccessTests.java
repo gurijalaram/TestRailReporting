@@ -17,6 +17,7 @@ import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestHelper;
@@ -47,6 +48,7 @@ public class CasBulkGrantDenyAccessTests {
     private CasTestUtil casTestUtil;
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
+    private SiteUtil siteUtil;
     private String acsIdentity;
     private String ciaIdentity;
     private String appIdentity;
@@ -74,6 +76,7 @@ public class CasBulkGrantDenyAccessTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         casTestUtil = new CasTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        siteUtil = new SiteUtil(requestEntityUtil);
 
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
@@ -194,7 +197,7 @@ public class CasBulkGrantDenyAccessTests {
         Customer sourceCustomer = casTestUtil.createCustomer().getResponseEntity();
         customerIdentity = sourceCustomer.getIdentity();
 
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
