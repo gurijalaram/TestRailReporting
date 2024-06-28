@@ -7,14 +7,9 @@ import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
-import com.apriori.cds.api.models.request.ActivateLicense;
-import com.apriori.cds.api.models.request.ActivateLicenseRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
 import com.apriori.cds.api.models.request.CASCustomerRequest;
 import com.apriori.cds.api.models.request.CustomAttributeRequest;
-import com.apriori.cds.api.models.request.FeatureRequest;
-import com.apriori.cds.api.models.request.License;
-import com.apriori.cds.api.models.request.LicenseRequest;
 import com.apriori.cds.api.models.request.PostBatch;
 import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.AccessAuthorization;
@@ -25,8 +20,9 @@ import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.models.response.FeatureResponse;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.models.response.LicenseResponse;
+import com.apriori.cds.api.models.response.IdentityProviderRequest;
+import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.models.response.Roles;
-import com.apriori.cds.api.models.response.SubLicenseAssociationUser;
 import com.apriori.cds.api.models.response.UserPreference;
 import com.apriori.cds.api.models.response.UserRole;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -43,7 +39,6 @@ import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
-import com.apriori.shared.util.models.response.Features;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
 import com.apriori.shared.util.models.response.Users;
@@ -340,210 +335,6 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * POST call to add an installation to a customer
-     *
-     * @param customerIdentity   - the customer id
-     * @param deploymentIdentity - the deployment id
-     * @param siteIdentity       - the site Identity
-     * @param realmKey           - the realm key
-     * @param cloudReference     - the cloud reference
-     * @return new object
-     */
-    public ResponseWrapper<InstallationItems> addInstallation(
-        String customerIdentity,
-        String deploymentIdentity,
-        String name,
-        String realmKey,
-        String cloudReference,
-        String siteIdentity,
-        Boolean highMem) {
-
-        RequestEntity requestEntity = requestEntityUtil
-            .init(CDSAPIEnum.INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)
-            .inlineVariables(customerIdentity, deploymentIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "installation",
-                InstallationItems.builder()
-                    .name(name)
-                    .description("Installation added by API automation")
-                    .active(true)
-                    .region("na-1")
-                    .realm(realmKey)
-                    .url("https://na-1.qa.apriori.net")
-                    .s3Bucket("apriori-qa-blue-fms")
-                    .tenant("default")
-                    .tenantGroup("default")
-                    .clientId("apriori-web-cost")
-                    .clientSecret("donotusethiskey")
-                    .createdBy("#SYSTEM00000")
-                    .cidGlobalKey("donotusethiskey")
-                    .siteIdentity(siteIdentity)
-                    .cloudReference(cloudReference)
-                    .apVersion("2023 R1")
-                    .highMem(highMem)
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * POST call to add an installation with feature to a customer
-     *
-     * @param customerIdentity   - the customer id
-     * @param deploymentIdentity - the deployment id
-     * @param siteIdentity       - the site Identity
-     * @param realmKey           - the realm key
-     * @param cloudReference     - the cloud reference
-     * @return new object
-     */
-    public ResponseWrapper<InstallationItems> addInstallationWithFeature(
-        String customerIdentity,
-        String deploymentIdentity,
-        String realmKey,
-        String cloudReference,
-        String siteIdentity,
-        Boolean bulkCostingEnabled) {
-
-        InstallationItems installationItems = JsonManager.deserializeJsonFromInputStream(
-            FileResourceUtil.getResourceFileStream("InstallationItems" + ".json"), InstallationItems.class);
-        installationItems.setRealm(realmKey);
-        installationItems.setSiteIdentity(siteIdentity);
-        installationItems.setCloudReference(cloudReference);
-        installationItems.setHighMem(false);
-        installationItems.setFeatures(Features
-            .builder()
-            .bulkCostingEnabled(bulkCostingEnabled)
-            .build());
-
-        RequestEntity requestEntity = requestEntityUtil
-            .init(CDSAPIEnum.INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)
-            .inlineVariables(customerIdentity, deploymentIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body("installation", installationItems);
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * POST call to add a feature to Installation
-     *
-     * @return new object
-     */
-    public ResponseWrapper<FeatureResponse> addFeature(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity,
-        Boolean bulkCostingEnabled) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(FeatureRequest.builder()
-                .features(Features.builder()
-                    .bulkCostingEnabled(bulkCostingEnabled)
-                    .build())
-                .build());
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * POST call trying to add invalid feature to Installation
-     *
-     * @return ErrorResponse
-     */
-    public ErrorResponse addFeatureWrongResponse(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity,
-        Boolean bulkCostingEnabled) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
-            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
-            .body(FeatureRequest.builder()
-                .features(Features.builder()
-                    .bulkCostingEnabled(bulkCostingEnabled)
-                    .build())
-                .build());
-
-        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).post();
-
-        return errorResponse.getResponseEntity();
-    }
-
-    /**
-     * PUT call to update a feature to Installation
-     *
-     * @return new object
-     */
-    public ResponseWrapper<FeatureResponse> updateFeature(String customerIdentity, String deploymentIdentity, String installationIdentity, boolean bulkCosting) {
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, FeatureResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(FeatureRequest.builder()
-                .features(Features.builder()
-                    .bulkCostingEnabled(bulkCosting)
-                    .build())
-                .build());
-
-        return HTTPRequest.build(requestEntity).put();
-    }
-
-    /**
-     * PUT call to update a feature to Installation - wrong response
-     *
-     * @return new ErrorResponse
-     */
-    public ErrorResponse updateFeatureWrongResponse(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.INSTALLATION_FEATURES, ErrorResponse.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
-            .expectedResponseCode(HttpStatus.SC_BAD_REQUEST)
-            .body(FeatureRequest.builder()
-                .features(Features.builder()
-                    .build())
-                .build());
-
-        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).put();
-
-        return errorResponse.getResponseEntity();
-    }
-
-    /**
-     * Patch installation
-     *
-     * @param customerIdentity     - the customer id
-     * @param deploymentIdentity   - the deployment id
-     * @param installationIdentity - the installation id
-     * @return new object
-     */
-    public ResponseWrapper<InstallationItems> patchInstallation(
-        String customerIdentity,
-        String deploymentIdentity,
-        String installationIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil
-            .init(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS, InstallationItems.class)
-            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
-            .expectedResponseCode(HttpStatus.SC_OK)
-            .body(
-                "installation",
-                InstallationItems.builder()
-                    .cloudReference("eu-1")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).patch();
-
-    }
-
-    /**
      * POST call to add an apriori staff user association to a customer
      *
      * @param apCustomerIdentity  - the ap customer id
@@ -671,6 +462,92 @@ public class CdsTestUtil extends TestUtil {
                 .build());
 
         HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post to add SAML
+     *
+     * @param customerIdentity - the customer id
+     * @param userIdentity     - the aPriori Staff users identity
+     * @param customerName     - the customer name
+     * @return new object
+     */
+    @SneakyThrows
+    public ResponseWrapper<IdentityProviderResponse> addSaml(
+        String customerIdentity,
+        String userIdentity,
+        String customerName) {
+
+        String signingCertificate = new String(FileResourceUtil.getResourceFileStream("SigningCert.txt").readAllBytes(), StandardCharsets.UTF_8);
+
+        RequestEntity requestEntity = requestEntityUtil
+            .init(CDSAPIEnum.SAML_BY_CUSTOMER_ID, IdentityProviderResponse.class)
+            .inlineVariables(customerIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(
+                "identityProvider",
+                IdentityProviderRequest.builder().contact(userIdentity)
+                    .name(customerName + "-idp")
+                    .displayName(customerName + "SAML")
+                    .idpDomains(Collections.singletonList(customerName + ".com"))
+                    .identityProviderPlatform("Azure AD")
+                    .description("Create IDP using CDS automation")
+                    .active(true)
+                    .createdBy("#SYSTEM00000")
+                    .signInUrl(Constants.SIGNIN_URL)
+                    .signingCertificate(signingCertificate)
+                    .signingCertificateExpiresAt("2030-07-22T22:45:45.245Z")
+                    .signRequest(true)
+                    .signRequestAlgorithm("RSA_SHA256")
+                    .signRequestAlgorithmDigest("SHA256")
+                    .protocolBinding("HTTP_POST")
+                    .authenticationType("IDENTITY_PROVIDER_INITIATED_SSO")
+                    .attributeMappings(AttributeMappings.builder()
+                        .userId(Constants.SAML_ATTRIBUTE_NAME_IDENTIFIER)
+                        .email(Constants.SAML_ATTRIBUTE_NAME_EMAIL)
+                        .name(Constants.SAML_ATTRIBUTE_NAME)
+                        .givenName(Constants.SAML_ATTRIBUTE_NAME_GIVEN_NAME)
+                        .familyName(Constants.SAML_ATTRIBUTE_NAME_FAMILY_NAME).build())
+                    .build()
+            );
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Patches and idp user
+     *
+     * @param customerIdentity - the customer id
+     * @param idpIdentity      - the idp id
+     * @param userIdentity     - the user id
+     * @return new object
+     */
+    public ResponseWrapper<IdentityProviderResponse> patchIdp(
+        String customerIdentity,
+        String idpIdentity,
+        String userIdentity) {
+
+        RequestEntity requestEntity = requestEntityUtil
+            .init(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS, IdentityProviderResponse.class)
+            .inlineVariables(customerIdentity, idpIdentity)
+            .expectedResponseCode(HttpStatus.SC_OK)
+            .headers(new HashMap<>() {
+
+                {
+                    put("Content-Type", "application/json");
+                }
+            })
+            .body(
+                "identityProvider",
+                IdentityProviderRequest.builder()
+                    .description("patch IDP using Automation")
+                    .contact(userIdentity)
+                    .identityProviderPlatform("Azure AD")
+                    .updatedBy("#SYSTEM00000")
+                    .build()
+            );
+
+        return HTTPRequest.build(requestEntity).patch();
     }
 
     /**
