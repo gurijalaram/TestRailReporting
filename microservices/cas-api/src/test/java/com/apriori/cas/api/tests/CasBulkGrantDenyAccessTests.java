@@ -16,6 +16,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -48,6 +49,7 @@ public class CasBulkGrantDenyAccessTests {
     private CasTestUtil casTestUtil;
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
+    private InstallationUtil installationUtil;
     private SiteUtil siteUtil;
     private String acsIdentity;
     private String ciaIdentity;
@@ -76,6 +78,7 @@ public class CasBulkGrantDenyAccessTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         casTestUtil = new CasTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
 
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
@@ -203,7 +206,8 @@ public class CasBulkGrantDenyAccessTests {
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
         deploymentIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity,
+            "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentity = installation.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
