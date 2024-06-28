@@ -7,13 +7,9 @@ import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
-import com.apriori.cds.api.models.request.ActivateLicense;
-import com.apriori.cds.api.models.request.ActivateLicenseRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
 import com.apriori.cds.api.models.request.CASCustomerRequest;
 import com.apriori.cds.api.models.request.FeatureRequest;
-import com.apriori.cds.api.models.request.License;
-import com.apriori.cds.api.models.request.LicenseRequest;
 import com.apriori.cds.api.models.request.PostBatch;
 import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.AccessAuthorization;
@@ -25,9 +21,7 @@ import com.apriori.cds.api.models.response.FeatureResponse;
 import com.apriori.cds.api.models.response.IdentityProviderRequest;
 import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.models.response.InstallationItems;
-import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.models.response.Roles;
-import com.apriori.cds.api.models.response.SubLicenseAssociationUser;
 import com.apriori.cds.api.models.response.UserPreference;
 import com.apriori.cds.api.models.response.UserRole;
 import com.apriori.shared.util.file.user.UserCredentials;
@@ -574,38 +568,6 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * POST call to add a sub-license association user
-     *
-     * @param customerIdentity   - the customer id
-     * @param siteIdentity       - the site id
-     * @param licenseIdentity    - the license id
-     * @param subLicenseIdentity - the sub-license id
-     * @param userIdentity       - the user id
-     * @return new object
-     */
-    public ResponseWrapper<SubLicenseAssociationUser> addSubLicenseAssociationUser(
-        String customerIdentity,
-        String siteIdentity,
-        String licenseIdentity,
-        String subLicenseIdentity,
-        String userIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil
-            .init(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USERS, SubLicenseAssociationUser.class)
-            .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "userAssociation",
-                AssociationUserItems.builder()
-                    .userIdentity(userIdentity)
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
      * Post to add SAML
      *
      * @param customerIdentity - the customer id
@@ -759,6 +721,89 @@ public class CdsTestUtil extends TestUtil {
                 .build());
 
         HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Posts custom attribute
+     *
+     * @param customerIdentity - the customer id
+     * @param userIdentity     - the user id
+     * @return - new object
+     */
+    public ResponseWrapper<CustomAttribute> addCustomAttribute(String customerIdentity, String userIdentity) {
+
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(
+                "customAttribute",
+                CustomAttributeRequest.builder()
+                    .key("department")
+                    .name("department")
+                    .value("TestDepartment")
+                    .type("STRING")
+                    .createdBy("#SYSTEM00000")
+                    .build()
+            );
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Updates or adds custom attributes
+     *
+     * @param customerIdentity  - the customer id
+     * @param userIdentity      - user id
+     * @param updatedDepartment - updated department string
+     * @return - new object
+     */
+    public ResponseWrapper<CustomAttribute> putCustomAttribute(
+        String customerIdentity,
+        String userIdentity,
+        String updatedDepartment) {
+
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(
+                "customAttribute",
+                CustomAttributeRequest.builder()
+                    .name("department")
+                    .value(updatedDepartment)
+                    .updatedBy("#SYSTEM00000")
+                    .build()
+            );
+
+        return HTTPRequest.build(requestEntity).put();
+    }
+
+    /**
+     * Updates custom attribute
+     *
+     * @param customerIdentity  - the customer id
+     * @param userIdentity      - user id
+     * @param attributeIdentity - attribute id
+     * @param updatedDepartment -  updated department string
+     * @return - new object
+     */
+    public ResponseWrapper<CustomAttribute> updateAttribute(
+        String customerIdentity,
+        String userIdentity,
+        String attributeIdentity,
+        String updatedDepartment) {
+
+        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class)
+            .inlineVariables(customerIdentity, userIdentity, attributeIdentity)
+            .expectedResponseCode(HttpStatus.SC_CREATED)
+            .body(
+                "customAttribute",
+                CustomAttributeRequest.builder()
+                    .value(updatedDepartment)
+                    .updatedBy("#SYSTEM00000")
+                    .build()
+            );
+
+        return HTTPRequest.build(requestEntity).patch();
     }
 
     /**
