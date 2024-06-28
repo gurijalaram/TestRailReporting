@@ -1,5 +1,6 @@
 package com.apriori.cid.ui.tests.evaluate;
 
+import static com.apriori.shared.util.enums.ProcessGroupEnum.CASTING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.SHEET_METAL;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.STOCK_MACHINING;
@@ -37,7 +38,6 @@ import com.apriori.shared.util.testconfig.TestBaseUI;
 import com.apriori.shared.util.testrail.TestRail;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.jupiter.api.AfterEach;
@@ -489,27 +489,24 @@ public class ProcessRoutingTests extends TestBaseUI {
     }
 
     @Test
-    @Issue("BA-2757")
     @TestRail(id = {14987, 15801})
     @Description("Validate routings Casting")
     public void routingsCasting() {
-        component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.CASTING);
+        component = new ComponentRequestUtil().getComponent("SandCast");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
-            .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+            .selectProcessGroup(CASTING)
+            .goToAdvancedTab()
+            .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("SandCasting", "DieCasting", "Permanent Mold");
 
-        routingSelectionPage.selectRoutingPreferenceByName("Permanent Mold")
+        materialProcessPage = routingSelectionPage.selectRoutingPreferenceByName("Permanent Mold")
             .submit(EvaluatePage.class)
-            .costScenario();
-
-        materialProcessPage = evaluatePage.openMaterialProcess()
+            .costScenario()
+            .openMaterialProcess()
             .selectProcessTab()
             .selectBarChart("PM Molding");
 
