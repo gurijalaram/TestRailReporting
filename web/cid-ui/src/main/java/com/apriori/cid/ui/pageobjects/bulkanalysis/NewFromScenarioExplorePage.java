@@ -67,7 +67,7 @@ public class NewFromScenarioExplorePage extends LoadableComponent<NewFromScenari
 
     @Override
     protected void load() {
-
+        //don't need to do anything here
     }
 
     @Override
