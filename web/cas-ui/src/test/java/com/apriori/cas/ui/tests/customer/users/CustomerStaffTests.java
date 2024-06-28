@@ -17,6 +17,7 @@ import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.LicenseUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -48,6 +49,7 @@ public class CustomerStaffTests extends TestBaseUI {
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
     private CustomerUtil customerUtil;
+    private LicenseUtil licenseUtil;
     private UsersListPage usersListPage;
     private String customerName;
     private List<User> sourceUsers;
@@ -64,6 +66,7 @@ public class CustomerStaffTests extends TestBaseUI {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
+        licenseUtil = new LicenseUtil(requestEntityUtil);
 
         setCustomerData();
         usersListPage = new CasLoginPage(driver)
@@ -74,7 +77,7 @@ public class CustomerStaffTests extends TestBaseUI {
     }
 
     @AfterEach
-    public void teardown() {
+    public void tearDown() {
         if (deleteIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
                 deleteIdentityHolder.customerIdentity(),
@@ -204,18 +207,18 @@ public class CustomerStaffTests extends TestBaseUI {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> license = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> license = licenseUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         String licenseIdentity = license.getResponseEntity().getIdentity();
         String subLicenseIdentity = license.getResponseEntity().getSubLicenses().stream()
             .filter(x -> !x.getName().contains("master"))
-            .collect(Collectors.toList()).get(0).getIdentity();
+            .toList().get(0).getIdentity();
         String sublicenseName = license.getResponseEntity().getSubLicenses().stream()
             .filter(x -> !x.getName().contains("master"))
-            .collect(Collectors.toList()).get(0).getName();
+            .toList().get(0).getName();
         String userName = sourceUsers.get(0).getUsername();
         String userIdentity = sourceUsers.get(0).getIdentity();
 
-        cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        licenseUtil.addSubLicenseAssociationUser(userIdentity, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity);
 
         UsersListPage openLicenseDetails = usersListPage.clickLicenceDetailsButton("left");
 
@@ -309,6 +312,8 @@ public class CustomerStaffTests extends TestBaseUI {
         soft.assertThat(expected)
             .overridingErrorMessage("Expected users were not deleted")
             .isEqualTo(selected);
+
+        soft.assertAll();
     }
 
     @Test
@@ -350,6 +355,8 @@ public class CustomerStaffTests extends TestBaseUI {
         soft.assertThat(deletedUsers)
             .overridingErrorMessage("Expected soft deleted users are displayed")
             .isEqualTo(1L);
+
+        soft.assertAll();
     }
 
     private void setCustomerData() {

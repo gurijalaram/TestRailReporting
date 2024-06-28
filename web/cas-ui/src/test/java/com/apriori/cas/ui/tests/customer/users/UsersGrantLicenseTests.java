@@ -9,6 +9,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.LicenseUtil;
 import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -37,6 +38,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
     private CustomerUtil customerUtil;
+    private LicenseUtil licenseUtil;
     private SiteUtil siteUtil;
     private Customer targetCustomer;
     private String customerIdentity;
@@ -60,6 +62,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
+        licenseUtil = new LicenseUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
 
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
@@ -101,7 +104,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
     @Description("Grant sublicense to a customer user")
     @TestRail(id = {16825, 16815, 16816, 16817, 16818, 16819, 16821, 16823, 16824, 16827})
     public void grantLicenseToAUser() {
-        license = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteID, licenseId, subLicenseId);
+        license = licenseUtil.addLicense(customerIdentity, siteIdentity, customerName, siteID, licenseId, subLicenseId);
         licenseName = license.getResponseEntity().getDescription();
         subLicenseName = license.getResponseEntity().getSubLicenses().get(0).getName();
 

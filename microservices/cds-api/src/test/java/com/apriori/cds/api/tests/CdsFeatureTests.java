@@ -10,6 +10,7 @@ import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerUtil;
+import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -32,13 +33,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
 public class CdsFeatureTests {
-
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
     private CdsTestUtil cdsTestUtil;
     private CustomerUtil customerUtil;
     private SiteUtil siteUtil;
     private ApplicationUtil applicationUtil;
+    private InstallationUtil installationUtil;
     private IdentityHolder licensedAppIdentityHolder;
     private IdentityHolder installationIdentityHolder;
     private String installationIdentity;
@@ -50,6 +51,7 @@ public class CdsFeatureTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
+        installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
     }
 
@@ -80,7 +82,7 @@ public class CdsFeatureTests {
     public void verifyCreateInstallationFlag() {
         setAllCustomerData();
 
-        ResponseWrapper<FeatureResponse> addFeature = cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
+        FeatureResponse addFeature = installationUtil.addFeature(false, customerIdentity, deploymentIdentity, installationIdentity);
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
             FeatureResponse.class,
@@ -91,11 +93,11 @@ public class CdsFeatureTests {
         );
 
         soft.assertThat(getFeature.getResponseEntity().getIdentity())
-            .isEqualTo(addFeature.getResponseEntity().getIdentity());
+            .isEqualTo(addFeature.getIdentity());
         soft.assertThat(getFeature.getResponseEntity().getCreatedAt())
-            .isEqualTo(addFeature.getResponseEntity().getCreatedAt());
+            .isEqualTo(addFeature.getCreatedAt());
         soft.assertThat(getFeature.getResponseEntity().getCreatedBy())
-            .isEqualTo(addFeature.getResponseEntity().getCreatedBy());
+            .isEqualTo(addFeature.getCreatedBy());
         soft.assertAll();
     }
 
@@ -105,7 +107,7 @@ public class CdsFeatureTests {
     public void verifyInvalidInstallationFlag() {
         setAllCustomerData();
 
-        ErrorResponse errorResponse = cdsTestUtil.addFeatureWrongResponse(customerIdentity, "wrongDeployment", installationIdentity, false);
+        ErrorResponse errorResponse = installationUtil.addFeatureWrongResponse(false, customerIdentity, "wrongDeployment", installationIdentity);
 
         soft.assertThat(errorResponse.getError())
             .isEqualTo("Bad Request");
@@ -121,7 +123,7 @@ public class CdsFeatureTests {
         RandomCustomerData rcd = new RandomCustomerData();
         String siteIdentity = allCustomerDataForInstallationFeature(rcd);
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallationWithFeature(customerIdentity, deploymentIdentity, rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallationWithFeature(customerIdentity, deploymentIdentity, rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentity = installation.getResponseEntity().getIdentity();
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
@@ -163,8 +165,8 @@ public class CdsFeatureTests {
     public void verifyUpdateInstallationFeature() {
         setAllCustomerData();
 
-        cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
-        ResponseWrapper<FeatureResponse> updateFeature = cdsTestUtil.updateFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
+        installationUtil.addFeature(false, customerIdentity, deploymentIdentity, installationIdentity);
+        FeatureResponse updateFeature = installationUtil.updateFeature(false, customerIdentity, deploymentIdentity, installationIdentity);
 
         ResponseWrapper<FeatureResponse> getFeature = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_FEATURES,
             FeatureResponse.class,
@@ -175,11 +177,11 @@ public class CdsFeatureTests {
         );
 
         soft.assertThat(getFeature.getResponseEntity().getIdentity())
-            .isEqualTo(updateFeature.getResponseEntity().getIdentity());
+            .isEqualTo(updateFeature.getIdentity());
         soft.assertThat(getFeature.getResponseEntity().getCreatedAt())
-            .isEqualTo(updateFeature.getResponseEntity().getCreatedAt());
+            .isEqualTo(updateFeature.getCreatedAt());
         soft.assertThat(getFeature.getResponseEntity().getCreatedBy())
-            .isEqualTo(updateFeature.getResponseEntity().getCreatedBy());
+            .isEqualTo(updateFeature.getCreatedBy());
         soft.assertAll();
     }
 
@@ -189,8 +191,8 @@ public class CdsFeatureTests {
     public void verifyUpdateInstallationFeatureWrong() {
         setAllCustomerData();
 
-        cdsTestUtil.addFeature(customerIdentity, deploymentIdentity, installationIdentity, false);
-        ErrorResponse errorResponse = cdsTestUtil.updateFeatureWrongResponse(customerIdentity, deploymentIdentity, "wrongInstallation");
+        installationUtil.addFeature(false, customerIdentity, deploymentIdentity, installationIdentity);
+        ErrorResponse errorResponse = installationUtil.updateFeatureWrongResponse(customerIdentity, deploymentIdentity, "wrongInstallation");
 
         soft.assertThat(errorResponse.getError())
             .isEqualTo("Bad Request");
@@ -212,7 +214,7 @@ public class CdsFeatureTests {
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         deploymentIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentity = installation.getResponseEntity().getIdentity();
 
         String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
