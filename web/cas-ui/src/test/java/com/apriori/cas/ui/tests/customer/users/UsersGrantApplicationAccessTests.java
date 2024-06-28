@@ -14,6 +14,7 @@ import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -45,6 +46,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
     private IdentityHolder licensedAppIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ApplicationUtil applicationUtil;
+    private InstallationUtil installationUtil;
     private SiteUtil siteUtil;
     private CdsTestUtil cdsTestUtil;
     private Customer targetCustomer;
@@ -66,6 +68,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
 
         String cloudRef = generateStringUtil.generateCloudReference();
@@ -96,7 +99,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
             .siteIdentity(siteIdentity)
             .licenseIdentity(licensedApplicationIdentity)
             .build();
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", realmKey, cloudRef, siteIdentity, false);
 
         installationIdentity = installation.getResponseEntity().getIdentity();
         installationIdentityHolder = IdentityHolder.builder()

@@ -49,8 +49,7 @@ public class AtsAuthorizationTests extends TestUtil {
     @TestRail(id = {3913})
     @Description("Authorize a user to access a specified application")
     public void authorizeUserTest() {
-
-        ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(currentUser.generateCloudContext().getCloudContext(), currentUser.getToken());
+        ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(SharedCustomerUtil.getAuthTargetCloudContext(), currentUser.getToken());
 
         assertThat(response.getResponseEntity().getEmail(), is(equalTo(currentUser.getEmail())));
     }

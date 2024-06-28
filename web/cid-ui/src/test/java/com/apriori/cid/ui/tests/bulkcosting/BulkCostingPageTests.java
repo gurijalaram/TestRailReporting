@@ -4,6 +4,7 @@ import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
@@ -209,7 +210,8 @@ public class BulkCostingPageTests extends TestBaseUI {
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {
         RequestEntityUtil requestEntityUtil = TestHelper.initCustomUser(userCredentials);
-        CdsTestUtil cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        InstallationUtil installationUtil = new InstallationUtil(requestEntityUtil);
+        CdsTestUtil cdsTestUtil = new CdsTestUtil();
         String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
 
         ResponseWrapper<Deployments> deployments = cdsTestUtil.getCommonRequest(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID,
@@ -227,7 +229,7 @@ public class BulkCostingPageTests extends TestBaseUI {
             deployment.getInstallations().stream().filter(item -> !(item.getUrl().equals("NA")))
                 .findFirst().orElse(null).getIdentity();
 
-        cdsTestUtil.updateFeature(customerIdentity, deploymentIdentity, installationIdentity, bulkCostingValue);
+        installationUtil.updateFeature(bulkCostingValue, customerIdentity, deploymentIdentity, installationIdentity);
     }
 }
 
