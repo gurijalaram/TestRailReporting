@@ -12,7 +12,9 @@ import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Deployments;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
@@ -206,7 +208,8 @@ public class BulkCostingPageTests extends TestBaseUI {
     }
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {
-        CdsTestUtil cdsTestUtil = new CdsTestUtil();
+        RequestEntityUtil requestEntityUtil = TestHelper.initCustomUser(userCredentials);
+        CdsTestUtil cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
 
         ResponseWrapper<Deployments> deployments = cdsTestUtil.getCommonRequest(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID,
