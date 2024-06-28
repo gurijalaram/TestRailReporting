@@ -25,6 +25,7 @@ public class AnalysisOfScenario {
     private Double cadSerLength;
     private Double cadSerWidth;
     private Double capitalInvestment;
+    private String costMode;
     private Double cycleTime;
     private String dfmRisk;
     private Double directOverheadCost;
