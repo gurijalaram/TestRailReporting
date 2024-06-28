@@ -13,6 +13,7 @@ import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
+import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -44,6 +45,7 @@ public class CdsUserManagementHighMemTests {
     private CdsTestUtil cdsTestUtil;
     private CustomerUtil customerUtil;
     private ApplicationUtil applicationUtil;
+    private SiteUtil siteUtil;
     private String appIdentity;
     private String customerIdentity;
     private String siteIdentity;
@@ -62,6 +64,7 @@ public class CdsUserManagementHighMemTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
+        siteUtil = new SiteUtil(requestEntityUtil);
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
     }
 
@@ -175,7 +178,7 @@ public class CdsUserManagementHighMemTests {
         String cirIdentity = applicationUtil.getApplicationIdentity(CIR);
         String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
 
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
