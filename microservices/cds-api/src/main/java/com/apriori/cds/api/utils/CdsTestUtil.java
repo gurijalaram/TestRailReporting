@@ -44,6 +44,7 @@ import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.Site;
+import com.apriori.shared.util.models.response.Features;
 import com.apriori.shared.util.models.response.User;
 import com.apriori.shared.util.models.response.UserProfile;
 import com.apriori.shared.util.models.response.Users;
@@ -305,32 +306,6 @@ public class CdsTestUtil extends TestUtil {
             );
 
         return HTTPRequest.build(requestEntity).patch();
-    }
-
-    /**
-     * POST call to add a site to a customer
-     *
-     * @param customerIdentity - the customer id
-     * @param siteName         - the site name
-     * @param siteID           - the siteID
-     * @return new object
-     */
-    public ResponseWrapper<Site> addSite(String customerIdentity, String siteName, String siteID) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Site.class)
-            .inlineVariables(customerIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "site",
-                Site.builder().name(siteName)
-                    .description("Site created by automation test")
-                    .siteId(siteID)
-                    .createdBy("#SYSTEM00000")
-                    .active(true)
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
     }
 
     /**

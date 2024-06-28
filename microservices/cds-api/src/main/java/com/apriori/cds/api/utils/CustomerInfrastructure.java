@@ -17,6 +17,7 @@ public class CustomerInfrastructure {
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
     private InstallationUtil installationUtil;
+    private SiteUtil siteUtil;
     private String siteIdentity;
     private String licensedApProIdentity;
     private String licensedCiaIdentity;
@@ -28,6 +29,7 @@ public class CustomerInfrastructure {
         this.applicationUtil = new ApplicationUtil(requestEntityUtil);
         this.cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         this.installationUtil = new InstallationUtil(requestEntityUtil);
+        this.siteUtil = new SiteUtil(requestEntityUtil);
     }
 
     public void createCustomerInfrastructure(RandomCustomerData rcd, String customerIdentity) {
@@ -35,7 +37,7 @@ public class CustomerInfrastructure {
         String cirIdentity = applicationUtil.getApplicationIdentity(CIR);
         String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
         String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
