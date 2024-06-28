@@ -9,6 +9,7 @@ import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
 import com.apriori.cir.api.utils.UpdatedInputControlsRootItemDesignOutlierIdentification;
+import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
 import com.apriori.cir.ui.enums.RollupEnum;
@@ -55,18 +56,18 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("7387")
-    @TestRail(id = 7387)
-    @Description("Verify mass metric - finish mass - Design Outlier Identification Details Report")
+    @TmsLink("31200")
+    @TestRail(id = 31200)
+    @Description("Input controls - Mass Metric - Details Report - Finish Mass")
     public void testMassMetricFinishMass() {
         genericMassMetricTest(MassMetricEnum.FINISH_MASS.getMassMetricName());
     }
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("7386")
-    @TestRail(id = 7386)
-    @Description("Verify mass metric - rough mass - Design Outlier Identification Details Report")
+    @TmsLink("31201")
+    @TestRail(id = 31201)
+    @Description("Input controls - Mass Metric - Details Report - Rough Mass")
     public void testMassMetricRoughMass() {
         genericMassMetricTest(MassMetricEnum.ROUGH_MASS.getMassMetricName());
     }
@@ -356,6 +357,37 @@ public class DesignOutlierIdentificationDetailsReportTests extends JasperApiAuth
             softAssertions.assertThat(partNumberElements.get(j).child(0).child(0).text()).isEqualTo(mostCommonPartNames.get(i));
             j++;
         }
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31189")
+    @TestRail(id = 31189)
+    @Description("Input controls - Export Date - Main Report - Fully Burdened Cost")
+    public void testInputControlCostMetricMainReportFullyBurdenedCost() {
+        genericCostMetricDesignOutlierDetailsTest(CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName());
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31192")
+    @TestRail(id = 31192)
+    @Description("Input controls - Export Date - Main Report - Piece Part Cost")
+    public void testInputControlCostMetricMainReportPiecePartCost() {
+        genericCostMetricDesignOutlierDetailsTest(CostMetricEnum.PIECE_PART_COST.getCostMetricName());
+    }
+
+    private void genericCostMetricDesignOutlierDetailsTest(String costMetricToUse) {
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(InputControlsEnum.COST_METRIC.getInputControlId(),
+            costMetricToUse);
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart()
+            .getElementsContainingText("Cost Metric:").get(6).siblingElements().get(8).text()
+        ).isEqualTo(costMetricToUse);
+
+        // TODO - assert on changing values - I don't see anything changing in UI
 
         softAssertions.assertAll();
     }

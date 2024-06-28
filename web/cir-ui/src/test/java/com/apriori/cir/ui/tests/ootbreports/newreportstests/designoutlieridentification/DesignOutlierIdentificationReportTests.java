@@ -10,6 +10,7 @@ import com.apriori.cir.api.models.response.InputControl;
 import com.apriori.cir.api.models.response.InputControlState;
 import com.apriori.cir.api.utils.JasperReportUtil;
 import com.apriori.cir.api.utils.UpdatedInputControlsRootItemDesignOutlierIdentification;
+import com.apriori.cir.ui.enums.CostMetricEnum;
 import com.apriori.cir.ui.enums.JasperCirApiPartsEnum;
 import com.apriori.cir.ui.enums.MassMetricEnum;
 import com.apriori.cir.ui.enums.RollupEnum;
@@ -26,6 +27,7 @@ import com.apriori.shared.util.testrail.TestRail;
 import io.qameta.allure.Description;
 import io.qameta.allure.TmsLink;
 import org.assertj.core.api.SoftAssertions;
+import org.jsoup.nodes.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -54,9 +56,9 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("1997")
-    @TestRail(id = 1997)
-    @Description("Verify mass metric - finish mass - Design Outlier Identification Report")
+    @TmsLink("28468")
+    @TestRail(id = 28468)
+    @Description("Input controls - Mass Metric - Main Report - Finish Mass")
     public void testMassMetricFinishMass() {
         jasperApiUtils.genericDtcTest(
             mostCommonPartNames,
@@ -66,9 +68,9 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
 
     @Test
     @Tag(JASPER_API)
-    @TmsLink("7385")
-    @TestRail(id = 7385)
-    @Description("Verify mass metric - rough mass - Design Outlier Identification Report")
+    @TmsLink("31199")
+    @TestRail(id = 31199)
+    @Description("Input controls - Mass Metric - Main Report - Rough Mass")
     public void testMassMetricRoughMass() {
         jasperApiUtils.genericDtcTest(
             mostCommonPartNames,
@@ -241,6 +243,54 @@ public class DesignOutlierIdentificationReportTests extends JasperApiAuthenticat
         softAssertions.assertThat(jasperReportSummary.getReportHtmlPart()
             .getElementsContainingText("Export Date:").get(6).siblingElements().get(2).text()
         ).isEqualTo("2024-06-17 08:19:07 PDT");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("13933")
+    @TestRail(id = 13933)
+    @Description("Input controls - Export Date - Main Report - Fully Burdened Cost")
+    public void testInputControlCostMetricMainReportFullyBurdenedCost() {
+        String costMetricToSet = CostMetricEnum.FULLY_BURDENED_COST.getCostMetricName();
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(InputControlsEnum.COST_METRIC.getInputControlId(),
+            costMetricToSet);
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart()
+            .getElementsContainingText("Cost Metric:").get(6).siblingElements().get(9).text()
+        ).isEqualTo(costMetricToSet);
+
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(0).getFullyBurdenedCost())
+            .isEqualTo("75.99");
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(5).getFullyBurdenedCost())
+            .isEqualTo("23.99");
+
+        // TODO - assert on changing values - I don't see anything changing in UI
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Tag(JASPER_API)
+    @TmsLink("31191")
+    @TestRail(id = 31191)
+    @Description("Input controls - Export Date - Main Report - Piece Part Cost")
+    public void testInputControlCostMetricMainReportPiecePartCost() {
+        String costMetricToSet = CostMetricEnum.PIECE_PART_COST.getCostMetricName();
+        JasperReportSummary jasperReportSummary = jasperApiUtils.genericTestCore(InputControlsEnum.COST_METRIC.getInputControlId(),
+            costMetricToSet);
+
+        softAssertions.assertThat(jasperReportSummary.getReportHtmlPart()
+            .getElementsContainingText("Cost Metric:").get(6).siblingElements().get(9).text()
+        ).isEqualTo(costMetricToSet);
+
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(0).getFullyBurdenedCost())
+            .isEqualTo("75.29");
+        softAssertions.assertThat(jasperReportSummary.getFirstChartData().getChartDataPoints().get(5).getFullyBurdenedCost())
+            .isEqualTo("23.16");
+
+        // TODO - assert on changing values - I don't see anything changing in UI
 
         softAssertions.assertAll();
     }
