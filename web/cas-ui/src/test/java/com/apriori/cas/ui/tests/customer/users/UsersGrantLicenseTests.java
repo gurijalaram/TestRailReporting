@@ -9,7 +9,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.LicenseUtil;
-import com.apriori.shared.util.file.user.UserCredentials;
+import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
@@ -37,6 +37,7 @@ public class UsersGrantLicenseTests extends TestBaseUI {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
     private LicenseUtil licenseUtil;
+    private SiteUtil siteUtil;
     private Customer targetCustomer;
     private String customerIdentity;
     private String customerName;
@@ -53,25 +54,25 @@ public class UsersGrantLicenseTests extends TestBaseUI {
     private String subLicenseName;
     private UserProfilePage userProfilePage;
     private UsersListPage usersListPage;
-    private UserCredentials currentUser = UserUtil.getUser();
 
     @BeforeEach
     public void setup() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         licenseUtil = new LicenseUtil(requestEntityUtil);
+        siteUtil = new SiteUtil(requestEntityUtil);
 
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         userName = generateStringUtil.generateUserName();
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
-        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, currentUser).getResponseEntity();
+        targetCustomer = cdsTestUtil.addCASCustomer(customerName, cloudRef, email, requestEntityUtil.getEmbeddedUser()).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         user = cdsTestUtil.addUser(customerIdentity, userName, email).getResponseEntity();
         userIdentity = user.getIdentity();
         siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         siteID = generateStringUtil.generateSiteID();
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
         licenseId = UUID.randomUUID().toString();
         subLicenseId = UUID.randomUUID().toString();
