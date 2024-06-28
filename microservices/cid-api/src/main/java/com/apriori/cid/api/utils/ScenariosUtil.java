@@ -370,6 +370,7 @@ public class ScenariosUtil {
             componentInfo.getSubComponents().stream().filter(o -> o.getComponentName().equalsIgnoreCase(component))
                 .forEach(x -> x.setScenarioIdentity(scenarioItem.getScenarioIdentity()));
         });
+
         return response.getResponseEntity();
     }
 
