@@ -9,6 +9,7 @@ import com.apriori.cds.api.models.response.SiteItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.Constants;
+import com.apriori.cds.api.utils.SiteUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -34,6 +35,7 @@ public class CdsSitesApplicationsTests {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
+    private SiteUtil siteUtil;
     private String customerIdentity;
     private String customerName;
     private String cloudRef;
@@ -50,6 +52,7 @@ public class CdsSitesApplicationsTests {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        siteUtil = new SiteUtil(requestEntityUtil);
 
         customerName = generateStringUtil.generateAlphabeticString("Customer", 6);
         cloudRef = generateStringUtil.generateCloudReference();
@@ -63,7 +66,7 @@ public class CdsSitesApplicationsTests {
         siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         siteID = generateStringUtil.generateSiteID();
 
-        site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
+        site = siteUtil.addSite(customerIdentity, siteName, siteID);
         siteIdentity = site.getResponseEntity().getIdentity();
     }
 
