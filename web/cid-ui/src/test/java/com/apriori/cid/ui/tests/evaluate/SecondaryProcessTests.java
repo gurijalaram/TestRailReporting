@@ -78,7 +78,7 @@ public class SecondaryProcessTests extends TestBaseUI {
             .submit(AdvancedPage.class)
             .openSecondaryDF()
             .usePrimaryDF("No")
-            .selectDropdown("Other Secondary Processes", DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
+            .selectDropdown("Other Secondary Processes", DigitalFactoryEnum.APRIORI_CANADA)
             .submit(EvaluatePage.class)
             .costScenario();
 
