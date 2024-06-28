@@ -52,9 +52,9 @@ public class NewBulkAnalysisPage extends LoadableComponent<NewBulkAnalysisPage> 
         return new ImportCadFilePage(driver);
     }
 
-    public NewFromScenarioExplorePage existingScenario() {
+    public BulkAnalysisExplorePage existingScenario() {
         pageUtils.waitForElementAndClick(existingScenarioButton);
-        return new NewFromScenarioExplorePage(driver);
+        return new BulkAnalysisExplorePage(driver);
     }
 
     /**

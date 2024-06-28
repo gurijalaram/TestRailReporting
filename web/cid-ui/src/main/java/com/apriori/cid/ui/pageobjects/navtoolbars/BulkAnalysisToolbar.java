@@ -1,9 +1,14 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
+import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisExplorePage;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.NewBulkAnalysisPage;
+import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
+import com.apriori.cid.ui.pageobjects.explore.ImportCadFilePage;
+import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.web.app.util.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,14 +17,37 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class BulkAnalysisToolbar extends MainNavBar {
 
-    @FindBy(id = "qa-worksheet-create-new")
+    @FindBy(css = "[id='qa-worksheet-create-new'] button")
     private WebElement newButton;
 
-    @FindBy(id = "qa-bcm-sub-header-info-button")
+    @FindBy(css = "[id='qa-bcm-sub-header-info-button'] button")
     private WebElement infoButton;
 
-    @FindBy(id = "qa-bcm-sub-header-delete-button")
+    @FindBy(css = "[id='qa-bcm-sub-header-delete-button'] button")
     private WebElement deleteButton;
+
+    @FindBy(css = "[id='qa-sub-header-import-button'] button")
+    private WebElement importButton;
+
+    @FindBy(css = "[id='qa-bcm-sub-header-add-button'] button")
+    private WebElement addScenariosButton;
+
+    @FindBy(css = "[id='qa-input-row-set-inputs'] button")
+    private WebElement setInputsButton;
+
+    @FindBy(css = "[id='qa-input-row-delete-new'] button")
+    private WebElement removeButton;
+
+    @FindBy(css = "[id='qa-bcm-evaluate-page-btn-cost'] button")
+    private WebElement costButton;
+
+    @FindBy(css = "[id='qa-bcm-evaluate-page-btn-refresh'] button")
+    private WebElement refreshButton;
+
+    @FindBy(css = ".secondary-nav-bar-back-text")
+    private WebElement allBulkAnalysesButton;
+
+    private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -60,5 +88,67 @@ public class BulkAnalysisToolbar extends MainNavBar {
     public DeletePage clickDelete() {
         pageUtils.waitForElementAndClick(deleteButton);
         return new DeletePage(driver);
+    }
+
+    /**
+     * Click Delete button
+     *
+     * @return new page object
+     */
+    public void clickRemove() {
+        pageUtils.waitForElementAndClick(removeButton);
+        // FIXME: 28/06/2024 should return some new page object
+    }
+
+    /**
+     * Clicks the import button
+     *
+     * @return new page object
+     */
+    public ImportCadFilePage importCadFile() {
+        pageUtils.waitForElementAndClick(importButton);
+        return new ImportCadFilePage(driver);
+    }
+
+    /**
+     * Click Add scenarios button
+     *
+     * @return new page object
+     */
+    public BulkAnalysisExplorePage clickAddScenario() {
+        pageUtils.waitForElementAndClick(deleteButton);
+        return new BulkAnalysisExplorePage(driver);
+    }
+
+    /**
+     * Click set input button
+     *
+     * @return new page object
+     */
+    public void setInputs() {
+        pageUtils.waitForElementAndClick(setInputsButton);
+        // FIXME: 28/06/2024 should return some new page object
+    }
+
+    /**
+     * Clicks on the Refresh button
+     *
+     * @return new page object
+     */
+    public ExplorePage refresh() {
+        pageUtils.waitForElementAndClick(refreshButton);
+        pageUtils.waitForElementToAppear(refreshLabel);
+        pageUtils.waitForElementsToNotAppear(refreshLabel);
+        return new ExplorePage(driver);
+    }
+
+    /**
+     * Click Add scenarios button
+     *
+     * @return new page object
+     */
+    public BulkCostingPage clickAllBulkAnalyses() {
+        pageUtils.waitForElementAndClick(allBulkAnalysesButton);
+        return new BulkCostingPage(driver);
     }
 }

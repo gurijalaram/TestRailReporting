@@ -20,7 +20,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class NewFromScenarioExplorePage extends LoadableComponent<NewFromScenarioExplorePage> {
+public class BulkAnalysisExplorePage extends LoadableComponent<BulkAnalysisExplorePage> {
 
     @FindBy(css = "div h5")
     private WebElement componentHeader;
@@ -55,7 +55,7 @@ public class NewFromScenarioExplorePage extends LoadableComponent<NewFromScenari
     private ComponentTableActions componentTableActions;
     private ModalDialogController modalDialogController;
 
-    public NewFromScenarioExplorePage(WebDriver driver) {
+    public BulkAnalysisExplorePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
@@ -81,7 +81,7 @@ public class NewFromScenarioExplorePage extends LoadableComponent<NewFromScenari
      * @param name - the name of the bulk analysis
      * @return page object
      */
-    public NewFromScenarioExplorePage enterBulkAnalysisName(String name) {
+    public BulkAnalysisExplorePage enterBulkAnalysisName(String name) {
         pageUtils.clearValueOfElement(inputBulkAnalysisName);
         inputBulkAnalysisName.sendKeys(name);
         return this;
@@ -92,7 +92,7 @@ public class NewFromScenarioExplorePage extends LoadableComponent<NewFromScenari
      *
      * @return current page object
      */
-    public NewFromScenarioExplorePage setPagination() {
+    public BulkAnalysisExplorePage setPagination() {
         componentTableActions.setPagination();
         return this;
     }
@@ -103,7 +103,7 @@ public class NewFromScenarioExplorePage extends LoadableComponent<NewFromScenari
      * @param filter - the filter
      * @return current page object
      */
-    public NewFromScenarioExplorePage selectFilter(String filter) {
+    public BulkAnalysisExplorePage selectFilter(String filter) {
         pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-selector-table-filter-selector", filter);
         setPagination();
         return this;
@@ -116,7 +116,7 @@ public class NewFromScenarioExplorePage extends LoadableComponent<NewFromScenari
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public NewFromScenarioExplorePage highlightScenario(String componentName, String scenarioName) {
+    public BulkAnalysisExplorePage highlightScenario(String componentName, String scenarioName) {
         scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
@@ -167,7 +167,7 @@ public class NewFromScenarioExplorePage extends LoadableComponent<NewFromScenari
      * @param componentName - the component name
      * @return new page object
      */
-    public NewFromScenarioExplorePage enterKeySearch(String componentName) {
+    public BulkAnalysisExplorePage enterKeySearch(String componentName) {
         componentTableActions.enterKeySearch(componentName);
         return this;
     }
@@ -178,7 +178,7 @@ public class NewFromScenarioExplorePage extends LoadableComponent<NewFromScenari
      * @param componentName - the component name
      * @return new page object
      */
-    public NewFromScenarioExplorePage clickSearch(String componentName) {
+    public BulkAnalysisExplorePage clickSearch(String componentName) {
         componentTableActions.clickSearch(componentName);
         return this;
     }
@@ -190,7 +190,7 @@ public class NewFromScenarioExplorePage extends LoadableComponent<NewFromScenari
      * @param order  - the order
      * @return current page object
      */
-    public NewFromScenarioExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
+    public BulkAnalysisExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
         scenarioTableController.sortColumn(column, order);
         return this;
     }
