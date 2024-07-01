@@ -9,11 +9,12 @@ import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
 import com.apriori.cds.api.models.request.CustomAttributeRequest;
 import com.apriori.cds.api.models.request.PostBatch;
+import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.AccessAuthorization;
 import com.apriori.cds.api.models.response.AssociationUserItems;
 import com.apriori.cds.api.models.response.AttributeMappings;
+import com.apriori.cds.api.models.response.CredentialsItems;
 import com.apriori.cds.api.models.response.CustomAttribute;
-import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.models.response.IdentityProviderRequest;
 import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.models.response.Roles;
@@ -32,7 +33,9 @@ import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.User;
+import com.apriori.shared.util.models.response.UserProfile;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 
