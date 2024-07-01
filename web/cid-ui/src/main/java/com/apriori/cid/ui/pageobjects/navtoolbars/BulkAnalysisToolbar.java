@@ -1,7 +1,7 @@
 package com.apriori.cid.ui.pageobjects.navtoolbars;
 
 import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisExplorePage;
-import com.apriori.cid.ui.pageobjects.bulkanalysis.NewBulkAnalysisPage;
+import com.apriori.cid.ui.pageobjects.bulkanalysis.NewBulkAnalysisModal;
 import com.apriori.cid.ui.pageobjects.explore.ExplorePage;
 import com.apriori.cid.ui.pageobjects.explore.ImportCadFilePage;
 import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
@@ -68,9 +68,9 @@ public class BulkAnalysisToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public NewBulkAnalysisPage clickNew() {
+    public NewBulkAnalysisModal clickNew() {
         pageUtils.waitForElementAndClick(newButton);
-        return new NewBulkAnalysisPage(driver);
+        return new NewBulkAnalysisModal(driver);
     }
 
     /**

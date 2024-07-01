@@ -14,7 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class NewBulkAnalysisPage extends LoadableComponent<NewBulkAnalysisPage> {
+public class NewBulkAnalysisModal extends LoadableComponent<NewBulkAnalysisModal> {
 
     @FindBy(css = ".MuiPaper-root h2")
     private WebElement componentLabel;
@@ -29,7 +29,7 @@ public class NewBulkAnalysisPage extends LoadableComponent<NewBulkAnalysisPage> 
     private WebDriver driver;
     private ModalDialogController modalDialogController;
 
-    public NewBulkAnalysisPage(WebDriver driver) {
+    public NewBulkAnalysisModal(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
