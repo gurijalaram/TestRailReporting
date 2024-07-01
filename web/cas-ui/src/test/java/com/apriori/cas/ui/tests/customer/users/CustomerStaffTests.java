@@ -48,6 +48,7 @@ import java.util.stream.Collectors;
 public class CustomerStaffTests extends TestBaseUI {
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
+    private UserCreation userCreation;
     private LicenseUtil licenseUtil;
     private UsersListPage usersListPage;
     private String customerName;
@@ -66,6 +67,7 @@ public class CustomerStaffTests extends TestBaseUI {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         licenseUtil = new LicenseUtil(requestEntityUtil);
+        userCreation = new UserCreation(requestEntityUtil);
 
         setCustomerData();
         usersListPage = new CasLoginPage(driver)
@@ -371,7 +373,6 @@ public class CustomerStaffTests extends TestBaseUI {
         siteId = customerSites.getResponseEntity().getItems().get(0).getSiteId();
         siteName = customerSites.getResponseEntity().getItems().get(0).getName();
 
-        UserCreation userCreation = new UserCreation();
         sourceUsers = userCreation.populateStaffTestUsers(11, customerIdentity, email);
     }
 }

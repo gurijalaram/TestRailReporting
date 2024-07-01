@@ -8,6 +8,7 @@ import com.apriori.cds.api.models.Applications;
 import com.apriori.cds.api.models.ApplicationsList;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
@@ -39,6 +40,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
     private ApplicationUtil applicationUtil;
+    private CdsUserUtil cdsUserUtil;
     private String customerIdentity;
     private String userIdentity;
 
@@ -48,6 +50,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -100,7 +103,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29550})
     @Description("verify Contributor role")
     public void verifyContributorRole() {
-        User user = cdsTestUtil.getUserByEmail("user-role_1@apriori.com")
+        User user = cdsUserUtil.getUserByEmail("user-role_1@apriori.com")
             .getResponseEntity().getItems().get(0);
 
         ApplicationsList applicationsList = ApplicationsList.builder()
@@ -127,7 +130,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29558})
     @Description("verify Analyst role")
     public void verifyAnalystRole() {
-        User user = cdsTestUtil.getUserByEmail("user-role_2@apriori.com")
+        User user = cdsUserUtil.getUserByEmail("user-role_2@apriori.com")
             .getResponseEntity().getItems().get(0);
 
         ApplicationsList applicationsList = ApplicationsList.builder()
@@ -154,7 +157,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29562})
     @Description("verify Designer role")
     public void verifyDesignerRole() {
-        User user = cdsTestUtil.getUserByEmail("user-role_3@apriori.com")
+        User user = cdsUserUtil.getUserByEmail("user-role_3@apriori.com")
             .getResponseEntity().getItems().get(0);
 
         ApplicationsList applicationsList = ApplicationsList.builder()
@@ -181,7 +184,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29561})
     @Description("verify Expert role")
     public void verifyExpertRole() {
-        User user = cdsTestUtil.getUserByEmail("user-role_4@apriori.com")
+        User user = cdsUserUtil.getUserByEmail("user-role_4@apriori.com")
             .getResponseEntity().getItems().get(0);
 
         ApplicationsList applicationsList = ApplicationsList.builder()
@@ -208,7 +211,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29560})
     @Description("verify Developer role")
     public void verifyDeveloperRole() {
-        User user = cdsTestUtil.getUserByEmail("user-role_5@apriori.com")
+        User user = cdsUserUtil.getUserByEmail("user-role_5@apriori.com")
             .getResponseEntity().getItems().get(0);
 
         ApplicationsList applicationsList = ApplicationsList.builder()
@@ -235,7 +238,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29559})
     @Description("verify Analyst with added enablement role")
     public void verifyAnalystWithEnablementRole() {
-        User user = cdsTestUtil.getUserByEmail("user-role_6@apriori.com")
+        User user = cdsUserUtil.getUserByEmail("user-role_6@apriori.com")
             .getResponseEntity().getItems().get(0);
 
         ApplicationsList applicationsList = ApplicationsList.builder()
@@ -264,7 +267,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29564})
     @Description("verify Designer with added enablements role")
     public void verifyDesignerWithEnablementRole() {
-        User user = cdsTestUtil.getUserByEmail("user-role_7@apriori.com")
+        User user = cdsUserUtil.getUserByEmail("user-role_7@apriori.com")
             .getResponseEntity().getItems().get(0);
 
         ApplicationsList applicationsList = ApplicationsList.builder()
@@ -293,7 +296,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @TestRail(id = {29563})
     @Description("verify Expert with added enablements role")
     public void verifyExpertWithEnablementRole() {
-        User user = cdsTestUtil.getUserByEmail("user-role_8@apriori.com")
+        User user = cdsUserUtil.getUserByEmail("user-role_8@apriori.com")
             .getResponseEntity().getItems().get(0);
 
         ApplicationsList applicationsList = ApplicationsList.builder()
@@ -323,7 +326,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
     @Description("verify Expert with added enablements role and sandbox deployment")
     public void verifyExpertWithEnablementRoleAndSandbox() {
 
-        User user = cdsTestUtil.getUserByEmail("user-role_9@apriori.com")
+        User user = cdsUserUtil.getUserByEmail("user-role_9@apriori.com")
             .getResponseEntity().getItems().get(0);
 
         ApplicationsList applicationsList = ApplicationsList.builder()
@@ -369,7 +372,7 @@ public class CdsUserEnablementsTests extends CdsTestUtil {
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
 
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }
