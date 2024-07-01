@@ -21,13 +21,14 @@ import com.apriori.cas.api.models.response.Site;
 import com.apriori.cas.api.models.response.ValidateSite;
 import com.apriori.cds.api.models.request.License;
 import com.apriori.cds.api.models.request.LicenseRequest;
-import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
 import com.apriori.shared.util.http.utils.FileResourceUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.MultiPartFiles;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil_Old;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.http.utils.TestUtil;
@@ -47,6 +48,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CasTestUtil extends TestUtil {
+    private RequestEntityUtil requestEntityUtil;
+
+    public CasTestUtil(RequestEntityUtil requestEntityUtil) {
+        super.requestEntityUtil = requestEntityUtil;
+        this.requestEntityUtil = requestEntityUtil;
+    }
+
+    // TODO: 14/06/2024 cn - remove in next iteration
+    public CasTestUtil() {
+    }
 
     /**
      * POST call to add a customer
@@ -576,7 +587,7 @@ public class CasTestUtil extends TestUtil {
             .body("accessControl",
                 AccessControl.builder()
                     .customerIdentity(SharedCustomerUtil.getCurrentCustomerIdentity())
-                    .applicationIdentity(new CdsTestUtil().getApplicationIdentity(CIS))
+                    .applicationIdentity(new ApplicationUtil(requestEntityUtil).getApplicationIdentity(CIS))
                     .deploymentIdentity(PropertiesContext.get("cds.apriori_production_deployment_identity"))
                     .installationIdentity(PropertiesContext.get("cds.apriori_core_services_installation_identity"))
                     .build());
@@ -587,7 +598,7 @@ public class CasTestUtil extends TestUtil {
     /**
      * Grants bulk access to customer application
      *
-     * @param aPInternalIdentity   - identity of aP Internal customer
+     * @param apInternalIdentity   - identity of aP Internal customer
      * @param siteIdentity         - site identity
      * @param deploymentIdentity   - deployment identity
      * @param installationIdentity - installation identity
@@ -595,9 +606,9 @@ public class CasTestUtil extends TestUtil {
      * @param sourceCustomerId     - source customer identity
      * @return response object
      */
-    public ResponseWrapper<String> grantDenyAll(String aPInternalIdentity, String siteIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String grantOrDeny, String sourceCustomerId) {
-        RequestEntity requestEntity = RequestEntityUtil_Old.init(CASAPIEnum.GRANT_DENY_ALL, null)
-            .inlineVariables(aPInternalIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, grantOrDeny)
+    public ResponseWrapper<String> grantDenyAll(String apInternalIdentity, String siteIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String grantOrDeny, String sourceCustomerId) {
+        RequestEntity requestEntity = requestEntityUtil.init(CASAPIEnum.GRANT_DENY_ALL, null)
+            .inlineVariables(apInternalIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, grantOrDeny)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT)
             .body(BulkAccessControlRequest.builder()
                 .sourceCustomerIdentity(sourceCustomerId)

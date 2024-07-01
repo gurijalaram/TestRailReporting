@@ -7,6 +7,7 @@ import com.apriori.cid.api.utils.ComponentsUtil;
 import com.apriori.cid.api.utils.IterationsUtil;
 import com.apriori.cid.api.utils.ScenariosUtil;
 import com.apriori.shared.util.builder.ComponentInfoBuilder;
+import com.apriori.shared.util.dataservice.ComponentRequestUtil;
 import com.apriori.shared.util.enums.DigitalFactoryEnum;
 import com.apriori.shared.util.enums.NewCostingLabelEnum;
 import com.apriori.shared.util.enums.ProcessGroupEnum;
@@ -37,27 +38,20 @@ public class ReCostScenarioTests {
     private final IterationsUtil iterationsUtil = new IterationsUtil();
     private SoftAssertions softAssertions;
 
+    private ComponentInfoBuilder component;
+
     @Test
     @Tag(SMOKE)
     @TestRail(id = 6101)
     @Description("Test recosting a cad file - Gear Making")
     public void testRecostGearMaking() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        ComponentInfoBuilder component = new ComponentRequestUtil().getComponent("Case_011_-_Team_350385");
 
-        final String componentName = "Case_011_-_Team_350385";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
-        final UserCredentials currentUser = UserUtil.getUser();
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(component);
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build());
-
-        postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
+        postCostScenario(
+            component.getProcessGroup(), component.getComponentName(), component.getScenarioName(),
+            component.getUser(), componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(componentResponse);
 
@@ -67,7 +61,9 @@ public class ReCostScenarioTests {
 
         softAssertions.assertThat(analysisOfScenario.getProcessRoutingName()).contains("Material Stock");
 
-        postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
+        postCostScenario(
+            component.getProcessGroup(), component.getComponentName(), component.getScenarioName(),
+            component.getUser(), componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
 
         ScenarioResponse scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 
@@ -80,32 +76,21 @@ public class ReCostScenarioTests {
     @TestRail(id = 6102)
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "case_002_00400016-003M10_A";
-        final String componentExtension = ".STP";
+        component = new ComponentRequestUtil().getComponent("case_002_00400016-003M10_A");
 
-        uploadCostScenarioAndAssert(processGroupEnum, componentName, componentExtension, "4 Axis Mill", DigitalFactoryEnum.APRIORI_CHINA);
+        uploadCostScenarioAndAssert(component, "4 Axis Mill", DigitalFactoryEnum.APRIORI_CHINA);
     }
 
     @Test
     @TestRail(id = {6103})
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "14100640";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        final String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
-        final UserCredentials currentUser = UserUtil.getUser();
+        component = new ComponentRequestUtil().getComponent("14100640");
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build());
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(component);
 
-        postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
+        postCostScenario(
+            component.getProcessGroup(), component.getComponentName(), component.getScenarioName(), component.getUser(), componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(componentResponse);
 
@@ -115,7 +100,8 @@ public class ReCostScenarioTests {
 
         softAssertions.assertThat(analysisOfScenario.getProcessRoutingName()).contains("3 Axis Mill");
 
-        postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
+        postCostScenario(
+            component.getProcessGroup(), component.getComponentName(), component.getScenarioName(), component.getUser(), componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
 
         ScenarioResponse scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 
@@ -126,60 +112,44 @@ public class ReCostScenarioTests {
     @TestRail(id = {6104})
     @Description("Test recosting a cad file - Pocket Recognition")
     public void testRecostPocketRecognition() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "case_010_lam_15-435508-00";
-        final String componentExtension = ".prt.1";
+        component = new ComponentRequestUtil().getComponent("case_010_lam_15-435508-00");
 
-        uploadCostScenarioAndAssert(processGroupEnum, componentName, componentExtension, "Band Saw", DigitalFactoryEnum.APRIORI_BRAZIL);
+        uploadCostScenarioAndAssert(component, "Band Saw", DigitalFactoryEnum.APRIORI_BRAZIL);
     }
 
     @Test
     @TestRail(id = {6105})
     @Description("Test recosting a cad file - Shared Walls")
     public void testRecostSharedWalls() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "case_066_SpaceX_00128711-001_A";
-        final String componentExtension = ".stp";
+        component = new ComponentRequestUtil().getComponent("case_066_SpaceX_00128711-001_A");
 
-        uploadCostScenarioAndAssert(processGroupEnum, componentName, componentExtension, "Band Saw", DigitalFactoryEnum.APRIORI_BRAZIL);
+        uploadCostScenarioAndAssert(component, "Band Saw", DigitalFactoryEnum.APRIORI_BRAZIL);
     }
 
     @Test
     @TestRail(id = {6106})
     @Description("Test recosting a cad file - Slot Examples")
     public void testRecostSlotExamples() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        final String componentName = "case_007_SpaceX_00088481-001_C";
-        final String componentExtension = ".stp";
+        component = new ComponentRequestUtil().getComponent("case_007_SpaceX_00088481-001_C");
 
-        uploadCostScenarioAndAssert(processGroupEnum, componentName, componentExtension, "Material Stock", DigitalFactoryEnum.APRIORI_BRAZIL);
+        uploadCostScenarioAndAssert(component, "Material Stock", DigitalFactoryEnum.APRIORI_BRAZIL);
     }
 
-    private void uploadCostScenarioAndAssert(final ProcessGroupEnum processGroupEnum, final String componentName, final String extension, final String processRoutingName, final DigitalFactoryEnum digitalFactoryEnum) {
+    private void uploadCostScenarioAndAssert(ComponentInfoBuilder component, final String processRoutingName, final DigitalFactoryEnum digitalFactoryEnum) {
 
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateStringForAutomation("Scenario");
-        File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
-
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build());
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponent(component);
 
         scenariosUtil.postGroupCostScenarios(
             ComponentInfoBuilder.builder()
                 .costingTemplate(CostingTemplate.builder()
-                    .processGroupName(processGroupEnum.getProcessGroup())
+                    .processGroupName(component.getProcessGroup().getProcessGroup())
                     .build())
-                .componentName(componentName)
-                .scenarioName(scenarioName)
+                .componentName(component.getComponentName())
+                .scenarioName(component.getScenarioName())
                 .componentIdentity(componentResponse.getComponentIdentity())
                 .scenarioIdentity(componentResponse.getScenarioIdentity())
-                .processGroup(processGroupEnum)
-                .user(currentUser)
+                .processGroup(component.getProcessGroup())
+                .user(component.getUser())
                 .build());
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(componentResponse);
@@ -190,7 +160,8 @@ public class ReCostScenarioTests {
 
         softAssertions.assertThat(analysisOfScenario.getProcessRoutingName()).contains(processRoutingName);
 
-        postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, digitalFactoryEnum);
+        postCostScenario(
+            component.getProcessGroup(), component.getComponentName(), component.getScenarioName(), component.getUser(), componentResponse, digitalFactoryEnum);
 
         ScenarioResponse scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 

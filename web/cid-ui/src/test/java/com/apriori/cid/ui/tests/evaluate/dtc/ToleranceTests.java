@@ -486,6 +486,10 @@ public class ToleranceTests extends TestBaseUI {
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab();
@@ -502,8 +506,8 @@ public class ToleranceTests extends TestBaseUI {
         softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.RUNOUT)).isEqualTo(30);
         softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.STRAIGHTNESS)).isEqualTo(26);
         softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.SYMMETRY)).isEqualTo(30);
-        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.TOTALRUNOUT)).isEqualTo(12);
-        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.TRUEPOSITION)).isEqualTo(30);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.TOTALRUNOUT)).isEqualTo(30);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.TRUEPOSITION)).isEqualTo(34);
 
         softAssertions.assertAll();
     }

@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
 import com.apriori.shared.util.SharedCustomerUtil;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.models.response.Customer;
 
 import lombok.SneakyThrows;
@@ -55,7 +54,7 @@ public class SharedCustomerUtilTest {
 
     @Test
     public void getAuthTargetCloudContextTest() {
-        final String authTargetCloudContext = SharedCustomerUtil.getAuthTargetCloudContext(UserUtil.getUser());
+        final String authTargetCloudContext = SharedCustomerUtil.getAuthTargetCloudContext();
 
         assertThat(authTargetCloudContext, is(not(emptyOrNullString())));
     }

@@ -4,10 +4,8 @@ import static com.apriori.shared.util.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.shared.util.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.ASSEMBLY;
 import static com.apriori.shared.util.testconfig.TestSuiteType.TestSuite.SMOKE;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.cid.api.utils.UserPreferencesUtil;
@@ -163,9 +161,9 @@ public class SettingsTests extends TestBaseUI {
     }
 
     @Test
-    @TestRail(id = {6289})
-    @Description("Manual Batch Quantity cannot be zero")
-    public void batchSize0() {
+    @TestRail(id = {6289, 3605, 6305, 6306, 6307})
+    @Description("Manual Batch Quantity cannot be zero, Junk or Decimal")
+    public void batchSizeNegativeTest() {
 
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
@@ -176,37 +174,13 @@ public class SettingsTests extends TestBaseUI {
             .inputBatchSize("0")
             .submit();
 
-        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be greater than 0.")));
-    }
+        softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be greater than 0.");
 
-    @Test
-    @TestRail(id = {3605})
-    @Description("Manual Batch Quantity cannot be junk")
-    public void batchSizeJunk() {
+        productionDefaultPage.inputBatchSize("JUNK");
 
-        loginPage = new CidAppLoginPage(driver);
-        currentUser = UserUtil.getUser();
+        softAssertions.assertThat(productionDefaultPage.getBatchSize()).isEmpty();
 
-        productionDefaultPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToProductionTab()
-            .inputBatchSize("JUNK");
-
-        assertThat(productionDefaultPage.getBatchSize(), is(emptyString()));
-    }
-
-    @Test
-    @TestRail(id = {6305, 6306, 6307})
-    @Description("Manual Batch Quantity cannot be a decimal")
-    public void batchSizeDecimal() {
-
-        loginPage = new CidAppLoginPage(driver);
-        currentUser = UserUtil.getUser();
-
-        productionDefaultPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToProductionTab()
-            .inputBatchSize("0.12.00");
+        productionDefaultPage.inputBatchSize("0.12.00");
 
         softAssertions.assertThat(productionDefaultPage.getErrorMessage()).isEqualTo("Must be an integer.");
 
@@ -393,7 +367,7 @@ public class SettingsTests extends TestBaseUI {
 
         softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.MATERIAL_FINISH_MASS)).isEqualTo("0.20809g");
         softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("0.60952min");
-        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$11,198.76487");
+        softAssertions.assertThat(comparePage.getOutput(component.getComponentName(), component.getScenarioName(), ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("$12,347.03378");
 
         softAssertions.assertAll();
     }

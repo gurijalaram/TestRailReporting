@@ -33,6 +33,8 @@ public class IssueSpecificProperties  {
     private String cavityTexture;
     private String gcdType;
     private String guidanceTopic;
+    private String bendCount;
+    private String bendRadius;
     private String bendHoleList;
     private List<GcdsToHighlight> gcdsToHighlight;
     private String holeSize;

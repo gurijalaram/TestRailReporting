@@ -16,12 +16,15 @@ import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.LicenseResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
+import com.apriori.cds.api.utils.LicenseUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.Obligation;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.Customer;
 import com.apriori.shared.util.models.response.Sites;
 import com.apriori.shared.util.models.response.User;
@@ -43,8 +46,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class CustomerStaffTests extends TestBaseUI {
-    private final CustomerInfrastructure customerInfrastructure = new CustomerInfrastructure();
-    private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private CustomerInfrastructure customerInfrastructure;
+    private CdsTestUtil cdsTestUtil;
+    private UserCreation userCreation;
+    private LicenseUtil licenseUtil;
     private UsersListPage usersListPage;
     private String customerName;
     private List<User> sourceUsers;
@@ -58,6 +63,12 @@ public class CustomerStaffTests extends TestBaseUI {
 
     @BeforeEach
     public void setup() {
+        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        licenseUtil = new LicenseUtil(requestEntityUtil);
+        userCreation = new UserCreation(requestEntityUtil);
+
         setCustomerData();
         usersListPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
@@ -67,7 +78,7 @@ public class CustomerStaffTests extends TestBaseUI {
     }
 
     @AfterEach
-    public void teardown() {
+    public void tearDown() {
         if (deleteIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
                 deleteIdentityHolder.customerIdentity(),
@@ -197,18 +208,18 @@ public class CustomerStaffTests extends TestBaseUI {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
-        ResponseWrapper<LicenseResponse> license = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> license = licenseUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         String licenseIdentity = license.getResponseEntity().getIdentity();
         String subLicenseIdentity = license.getResponseEntity().getSubLicenses().stream()
             .filter(x -> !x.getName().contains("master"))
-            .collect(Collectors.toList()).get(0).getIdentity();
+            .toList().get(0).getIdentity();
         String sublicenseName = license.getResponseEntity().getSubLicenses().stream()
             .filter(x -> !x.getName().contains("master"))
-            .collect(Collectors.toList()).get(0).getName();
+            .toList().get(0).getName();
         String userName = sourceUsers.get(0).getUsername();
         String userIdentity = sourceUsers.get(0).getIdentity();
 
-        cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        licenseUtil.addSubLicenseAssociationUser(userIdentity, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity);
 
         UsersListPage openLicenseDetails = usersListPage.clickLicenceDetailsButton("left");
 
@@ -302,6 +313,8 @@ public class CustomerStaffTests extends TestBaseUI {
         soft.assertThat(expected)
             .overridingErrorMessage("Expected users were not deleted")
             .isEqualTo(selected);
+
+        soft.assertAll();
     }
 
     @Test
@@ -343,6 +356,8 @@ public class CustomerStaffTests extends TestBaseUI {
         soft.assertThat(deletedUsers)
             .overridingErrorMessage("Expected soft deleted users are displayed")
             .isEqualTo(1L);
+
+        soft.assertAll();
     }
 
     private void setCustomerData() {
@@ -358,7 +373,6 @@ public class CustomerStaffTests extends TestBaseUI {
         siteId = customerSites.getResponseEntity().getItems().get(0).getSiteId();
         siteName = customerSites.getResponseEntity().getItems().get(0).getName();
 
-        UserCreation userCreation = new UserCreation();
         sourceUsers = userCreation.populateStaffTestUsers(11, customerIdentity, email);
     }
 }

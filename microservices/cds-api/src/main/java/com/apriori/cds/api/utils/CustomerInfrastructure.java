@@ -7,13 +7,17 @@ import static com.apriori.cds.api.enums.ApplicationEnum.CIR;
 
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.LicensedApplications;
 import com.apriori.shared.util.models.response.Site;
 
-public class CustomerInfrastructure extends CdsTestUtil {
-    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+public class CustomerInfrastructure {
+    private CdsTestUtil cdsTestUtil;
+    private ApplicationUtil applicationUtil;
+    private InstallationUtil installationUtil;
+    private SiteUtil siteUtil;
     private String siteIdentity;
     private String licensedApProIdentity;
     private String licensedCiaIdentity;
@@ -21,33 +25,40 @@ public class CustomerInfrastructure extends CdsTestUtil {
     private String licensedAcsIdentity;
     private String installationIdentity;
 
+    public CustomerInfrastructure(RequestEntityUtil requestEntityUtil) {
+        this.applicationUtil = new ApplicationUtil(requestEntityUtil);
+        this.cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        this.installationUtil = new InstallationUtil(requestEntityUtil);
+        this.siteUtil = new SiteUtil(requestEntityUtil);
+    }
+
     public void createCustomerInfrastructure(RandomCustomerData rcd, String customerIdentity) {
-        String ciaIdentity = cdsTestUtil.getApplicationIdentity(CIA);
-        String cirIdentity = cdsTestUtil.getApplicationIdentity(CIR);
-        String appIdentity = cdsTestUtil.getApplicationIdentity(AP_PRO);
-        String acsIdentity = cdsTestUtil.getApplicationIdentity(ACS);
-        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
+        String ciaIdentity = applicationUtil.getApplicationIdentity(CIA);
+        String cirIdentity = applicationUtil.getApplicationIdentity(CIR);
+        String appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
+        String acsIdentity = applicationUtil.getApplicationIdentity(ACS);
+        ResponseWrapper<Site> site = siteUtil.addSite(customerIdentity, rcd.getSiteName(), rcd.getSiteID());
         siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
         String deploymentIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
+        ResponseWrapper<InstallationItems> installation = installationUtil.addInstallation(customerIdentity, deploymentIdentity, "Automation Installation", rcd.getRealmKey(), rcd.getCloudRef(), siteIdentity, false);
         installationIdentity = installation.getResponseEntity().getIdentity();
 
-        ResponseWrapper<LicensedApplications> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
+        ResponseWrapper<LicensedApplications> licensedApp = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         licensedApProIdentity = licensedApp.getResponseEntity().getIdentity();
-        ResponseWrapper<LicensedApplications> ciaLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, ciaIdentity);
+        ResponseWrapper<LicensedApplications> ciaLicensed = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, ciaIdentity);
         licensedCiaIdentity = ciaLicensed.getResponseEntity().getIdentity();
-        ResponseWrapper<LicensedApplications> cirLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, cirIdentity);
+        ResponseWrapper<LicensedApplications> cirLicensed = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, cirIdentity);
         licensedCirIdentity = cirLicensed.getResponseEntity().getIdentity();
-        ResponseWrapper<LicensedApplications> acsLicensed = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, acsIdentity);
+        ResponseWrapper<LicensedApplications> acsLicensed = applicationUtil.addApplicationToSite(customerIdentity, siteIdentity, acsIdentity);
         licensedAcsIdentity = acsLicensed.getResponseEntity().getIdentity();
 
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, ciaIdentity, siteIdentity);
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, cirIdentity, siteIdentity);
-        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, acsIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, ciaIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, cirIdentity, siteIdentity);
+        applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, acsIdentity, siteIdentity);
     }
 
     public void cleanUpCustomerInfrastructure(String customerIdentity) {
