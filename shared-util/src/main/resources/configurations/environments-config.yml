@@ -6,7 +6,7 @@
 qa-test:
   name: qa-test
   aws_parameter_store_name: qa-test
-  base_url: https://na-1-install.sandbox.${customer}.qa-test.apriori.net/
+  base_url: https://na-1-install.${${deployment}.url_part}.apriori.net/
 
   admin:
     ui_url: ${base_url}apriori/login

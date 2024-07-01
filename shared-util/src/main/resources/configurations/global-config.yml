@@ -6,7 +6,7 @@
 ############################################# Global properties ########################################################
 # Define main configurations
 env: qa-test
-deployment: production
+deployment: sandbox
 customer: apriori-internal
 
 # Deployment
@@ -16,7 +16,8 @@ production:
 
 sandbox:
   name: Sandbox
-  url_part: sandbox.${env}
+  url_part: sandbox.${customer}.${env}
+  api_url_part: sandbox.${env}
 #==========================================================
 
 # Define the global properties not related to environment
@@ -95,7 +96,7 @@ default:
 
 ###########################
 #  Deployment URL
-  deployment_url_template: ${default.aws_region}.${${deployment}.url_part}.apriori.net
+  deployment_url_template: ${default.aws_region}.${${deployment}.api_url_part}.apriori.net
 
   admin:
     ui_url: https://${deployment_url_template}apriori/login
