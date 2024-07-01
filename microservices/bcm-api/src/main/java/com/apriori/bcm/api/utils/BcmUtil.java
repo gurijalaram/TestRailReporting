@@ -53,15 +53,6 @@ public class BcmUtil extends TestUtil {
 
     }
 
-//    @BeforeAll
-//    public static void init() {
-//        requestEntityUtil = RequestEntityUtilBuilder
-//            .useRandomUser(APRIORI_DEVELOPER)
-//            .useApUserContextInRequests();
-//
-//        testingUser = requestEntityUtil.getEmbeddedUser();
-//    }
-
     /**
      * request to create worksheet
      *
