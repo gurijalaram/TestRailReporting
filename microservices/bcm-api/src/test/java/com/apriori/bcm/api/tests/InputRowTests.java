@@ -10,7 +10,9 @@ import com.apriori.bcm.api.models.response.WorkSheetInputRowGetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -19,6 +21,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -27,16 +30,24 @@ import java.util.Arrays;
 import java.util.List;
 
 @ExtendWith(TestRulesAPI.class)
-public class InputRowTests extends BcmUtil {
+public class InputRowTests {
     private static SoftAssertions softAssertions = new SoftAssertions();
     private final String componentType = "PART";
     private CssComponent cssComponent = new CssComponent();
     private String worksheetIdentity;
+    private BcmUtil bcmUtil;
+    private RequestEntityUtil requestEntityUtil;
+
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser();
+        bcmUtil = new BcmUtil(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {
         if (worksheetIdentity != null) {
-            deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
+            bcmUtil.deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
         }
     }
 
@@ -46,13 +57,13 @@ public class InputRowTests extends BcmUtil {
     public void verifyCreateInputRowInWorksheet() {
 
         ScenarioItem scenarioItem =
-            cssComponent.postSearchRequest(testingUser, componentType)
+            cssComponent.postSearchRequest(requestEntityUtil.getEmbeddedUser(), componentType)
                 .getResponseEntity().getItems().get(5);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
+        worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow =
-            createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+            bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity);
 
@@ -69,19 +80,19 @@ public class InputRowTests extends BcmUtil {
     @Description("Verify getting worksheet rows")
     public void verifyGetWorksheetRows() {
         ScenarioItem scenarioItem =
-            cssComponent.postSearchRequest(testingUser, componentType)
+            cssComponent.postSearchRequest(requestEntityUtil.getEmbeddedUser(), componentType)
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
+        worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow =
-            createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+            bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
                 scenarioItem.getScenarioIdentity(),
                 worksheetIdentity);
 
         ResponseWrapper<WorkSheetInputRowGetResponse> worksheetRow =
-            getWorkSheetInputRow(worksheetIdentity);
+            bcmUtil.getWorkSheetInputRow(worksheetIdentity);
 
         softAssertions.assertThat(worksheetRow.getResponseEntity().getItems())
             .isNotEmpty();
@@ -92,10 +103,10 @@ public class InputRowTests extends BcmUtil {
     @TestRail(id = 29740)
     @Description("Verify getting worksheet rows for empty worksheet with no rows")
     public void verifyGetWorksheetRowsWithoutRows() {
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
+        worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         ResponseWrapper<WorkSheetInputRowGetResponse> worksheetRow =
-            getWorkSheetInputRow(worksheetIdentity);
+            bcmUtil.getWorkSheetInputRow(worksheetIdentity);
 
         softAssertions.assertThat(worksheetRow.getResponseEntity().getItems())
             .isEmpty();
@@ -108,27 +119,27 @@ public class InputRowTests extends BcmUtil {
     public void editPublicInputRow() {
         String notExistingRowIdentity = "000000000000";
         ScenarioItem scenarioItem =
-            cssComponent.postSearchRequest(testingUser, componentType)
+            cssComponent.postSearchRequest(requestEntityUtil.getEmbeddedUser(), componentType)
                 .getResponseEntity().getItems().stream().filter(item -> item.getScenarioPublished().equals(true))
                 .findFirst().orElse(null);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
+        worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
-        String inputRowIdentity = createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+        String inputRowIdentity = bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
             scenarioItem.getScenarioIdentity(),
             worksheetIdentity).getResponseEntity().getIdentity();
 
         ErrorResponse editInvalidInputRow =
-            editPublicInputRow(ErrorResponse.class, worksheetIdentity, "0000000", HttpStatus.SC_BAD_REQUEST).getResponseEntity();
+            bcmUtil.editPublicInputRow(ErrorResponse.class, worksheetIdentity, "0000000", HttpStatus.SC_BAD_REQUEST).getResponseEntity();
         softAssertions.assertThat(editInvalidInputRow.getMessage()).isEqualTo("'inputRowIdentity' is not a valid identity.");
 
         InputRowsGroupsResponse editNotExistingInputRow =
-            editPublicInputRow(InputRowsGroupsResponse.class, worksheetIdentity, notExistingRowIdentity, HttpStatus.SC_OK).getResponseEntity();
+            bcmUtil.editPublicInputRow(InputRowsGroupsResponse.class, worksheetIdentity, notExistingRowIdentity, HttpStatus.SC_OK).getResponseEntity();
         softAssertions.assertThat(editNotExistingInputRow.getFailures().get(0).getError())
             .isEqualTo(String.format("Input Row with Identity: '%s'  does not exist in Worksheet with Identity: '%s'", notExistingRowIdentity, worksheetIdentity));
 
         InputRowsGroupsResponse editedRows =
-            editPublicInputRow(InputRowsGroupsResponse.class, worksheetIdentity, inputRowIdentity, HttpStatus.SC_OK).getResponseEntity();
+            bcmUtil.editPublicInputRow(InputRowsGroupsResponse.class, worksheetIdentity, inputRowIdentity, HttpStatus.SC_OK).getResponseEntity();
         softAssertions.assertThat(editedRows.getSuccesses().get(0).getInputRowIdentity())
             .isEqualTo(inputRowIdentity);
         softAssertions.assertAll();
@@ -138,16 +149,16 @@ public class InputRowTests extends BcmUtil {
     @TestRail(id = 30016)
     @Description("Private input row cannot be edited")
     public void notEditPrivateRow() {
-        ScenarioItem cssComponentResponses = cssComponent.getBaseCssComponents(testingUser, SCENARIO_PUBLISHED_EQ.getKey() + false).get(0);
+        ScenarioItem cssComponentResponses = cssComponent.getBaseCssComponents(requestEntityUtil.getEmbeddedUser(), SCENARIO_PUBLISHED_EQ.getKey() + false).get(0);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
+        worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
-        String inputRowIdentity = createWorkSheetInputRow(cssComponentResponses.getComponentIdentity(),
+        String inputRowIdentity = bcmUtil.createWorkSheetInputRow(cssComponentResponses.getComponentIdentity(),
             cssComponentResponses.getScenarioIdentity(),
             worksheetIdentity).getResponseEntity().getIdentity();
 
         InputRowsGroupsResponse editedRows =
-            editPublicInputRow(InputRowsGroupsResponse.class, worksheetIdentity, inputRowIdentity, HttpStatus.SC_OK).getResponseEntity();
+            bcmUtil.editPublicInputRow(InputRowsGroupsResponse.class, worksheetIdentity, inputRowIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(editedRows.getFailures().get(0).getError())
             .isEqualTo(String.format("Input Row with Identity: '%s' refers to private scenario in Worksheet with Identity: '%s'", inputRowIdentity, worksheetIdentity));
@@ -159,22 +170,22 @@ public class InputRowTests extends BcmUtil {
     @Description("Verify adding multiple input rows for a worksheet")
     public void addMultipleRows() {
         List<ScenarioItem> scenarioItem =
-            new ArrayList<>(cssComponent.postSearchRequest(testingUser, componentType)
+            new ArrayList<>(cssComponent.postSearchRequest(requestEntityUtil.getEmbeddedUser(), componentType)
                 .getResponseEntity().getItems());
         ScenarioItem scenario1 = scenarioItem.get(0);
         ScenarioItem scenario2 = scenarioItem.get(1);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
+        worksheetIdentity = bcmUtil.createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         List<String> componentIdentityScenarioIdentity = Arrays.asList(scenario1.getComponentIdentity() + "," + scenario1.getScenarioIdentity(),
             scenario2.getComponentIdentity() + "," + scenario2.getScenarioIdentity());
         MultipleInputRowsResponse addRows =
-            addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, componentIdentityScenarioIdentity, HttpStatus.SC_OK).getResponseEntity();
+            bcmUtil.addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, componentIdentityScenarioIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(addRows.getSuccesses().get(0).getScenarioIdentity()).isEqualTo(scenario1.getScenarioIdentity());
 
         MultipleInputRowsResponse addExistingRows =
-            addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, componentIdentityScenarioIdentity, HttpStatus.SC_OK).getResponseEntity();
+            bcmUtil.addMultipleInputRows(MultipleInputRowsResponse.class, worksheetIdentity, componentIdentityScenarioIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(addExistingRows.getFailures().get(0).getError()).contains("already exists");
 
@@ -184,7 +195,7 @@ public class InputRowTests extends BcmUtil {
         }
 
         ErrorResponse addEmptyList =
-            addMultipleInputRows(ErrorResponse.class, worksheetIdentity, emptyList, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
+            bcmUtil.addMultipleInputRows(ErrorResponse.class, worksheetIdentity, emptyList, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
         softAssertions.assertThat(addEmptyList.getMessage()).contains("should not be null");
         softAssertions.assertAll();
     }

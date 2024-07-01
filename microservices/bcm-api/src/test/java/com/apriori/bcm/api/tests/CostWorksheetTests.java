@@ -10,6 +10,8 @@ import com.apriori.bcm.api.models.response.WorkSheetResponse;
 import com.apriori.bcm.api.utils.BcmUtil;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
+import com.apriori.shared.util.http.utils.RequestEntityUtil;
+import com.apriori.shared.util.http.utils.TestHelper;
 import com.apriori.shared.util.models.response.component.ScenarioItem;
 import com.apriori.shared.util.rules.TestRulesAPI;
 import com.apriori.shared.util.testrail.TestRail;
@@ -18,20 +20,29 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(TestRulesAPI.class)
-public class CostWorksheetTests extends BcmUtil {
+public class CostWorksheetTests {
     private static SoftAssertions softAssertions = new SoftAssertions();
     private CssComponent cssComponent = new CssComponent();
     private String worksheetIdentity;
+    private BcmUtil bcmUtil;
+    private RequestEntityUtil requestEntityUtil;
+
+    @BeforeEach
+    public void setup() {
+        requestEntityUtil = TestHelper.initUser();
+        bcmUtil = new BcmUtil(requestEntityUtil);
+    }
 
     @AfterEach
     public void cleanUp() {
         if (worksheetIdentity != null
-            & getWorksheet(WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity().getStatus().equals("COMPLETE")) {
-            deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
+            & bcmUtil.getWorksheet(WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity().getStatus().equals("COMPLETE")) {
+            bcmUtil.deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
         }
     }
 
@@ -40,32 +51,32 @@ public class CostWorksheetTests extends BcmUtil {
     @Description("Verify costing worksheet")
     public void costWorksheet() {
         String name = GenerateStringUtil.saltString("name");
-        WorkSheetResponse newWorksheet = createWorksheet(name);
+        WorkSheetResponse newWorksheet = bcmUtil.createWorksheet(name);
         worksheetIdentity = newWorksheet.getIdentity();
-        WorkSheetResponse returnNewWorksheet = getWorksheet(WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
+        WorkSheetResponse returnNewWorksheet = bcmUtil.getWorksheet(WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(returnNewWorksheet.getStatus()).isEqualTo("NOT_STARTED");
 
         ScenarioItem cssComponentResponses = cssComponent
-            .getBaseCssComponents(testingUser, SCENARIO_PUBLISHED_EQ.getKey() + false, SCENARIO_STATE_EQ.getKey() + "NOT_COSTED").get(0);
+            .getBaseCssComponents(requestEntityUtil.getEmbeddedUser(), SCENARIO_PUBLISHED_EQ.getKey() + false, SCENARIO_STATE_EQ.getKey() + "NOT_COSTED").get(0);
 
         InputRowPostResponse responseWorksheetInputRow =
-            createWorkSheetInputRow(cssComponentResponses.getComponentIdentity(),
+            bcmUtil.createWorkSheetInputRow(cssComponentResponses.getComponentIdentity(),
                 cssComponentResponses.getScenarioIdentity(),
                 worksheetIdentity).getResponseEntity();
         String inputRowIdentity = responseWorksheetInputRow.getIdentity();
 
-        InputRowsGroupsResponse costWorksheet = costWorksheet(InputRowsGroupsResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
+        InputRowsGroupsResponse costWorksheet = bcmUtil.costWorksheet(InputRowsGroupsResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(costWorksheet.getSuccesses().get(0).getInputRowIdentity()).isEqualTo(inputRowIdentity);
 
-        WorkSheetResponse returnWorksheet = getWorksheet(WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
+        WorkSheetResponse returnWorksheet = bcmUtil.getWorksheet(WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(returnWorksheet.getStatus()).containsAnyOf("IN_PROGRESS", "COMPLETE");
         softAssertions.assertThat(returnWorksheet.getAnalysisEvents()).isNotEmpty();
 
         String notExistingIdentity = "000000000000";
-        ErrorResponse notExistingWorksheet = costWorksheet(ErrorResponse.class, notExistingIdentity, HttpStatus.SC_NOT_FOUND).getResponseEntity();
+        ErrorResponse notExistingWorksheet = bcmUtil.costWorksheet(ErrorResponse.class, notExistingIdentity, HttpStatus.SC_NOT_FOUND).getResponseEntity();
         softAssertions.assertThat(notExistingWorksheet.getMessage())
             .isEqualTo(String.format("Worksheet: '%s' doesn't exists for a user.", notExistingIdentity));
         softAssertions.assertAll();
@@ -76,31 +87,31 @@ public class CostWorksheetTests extends BcmUtil {
     @Description("Verify costing worksheet when one of the scenario is not in costable state or all input rows are not in costable state")
     public void costNotCostableState() {
         String name = GenerateStringUtil.saltString("name");
-        WorkSheetResponse newWorksheet = createWorksheet(name);
+        WorkSheetResponse newWorksheet = bcmUtil.createWorksheet(name);
         worksheetIdentity = newWorksheet.getIdentity();
 
         ScenarioItem scenarioItem =
-            cssComponent.postSearchRequest(testingUser, "PART")
+            cssComponent.postSearchRequest(requestEntityUtil.getEmbeddedUser(), "PART")
                 .getResponseEntity().getItems().stream().filter(item -> item.getScenarioPublished().equals(true))
                 .findFirst().orElse(null);
 
-        String inputRowPublicIdentity = createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
+        String inputRowPublicIdentity = bcmUtil.createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
             scenarioItem.getScenarioIdentity(),
             worksheetIdentity).getResponseEntity().getIdentity();
 
-        ErrorResponse publicWorksheetNotCosted = costWorksheet(ErrorResponse.class, worksheetIdentity, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
+        ErrorResponse publicWorksheetNotCosted = bcmUtil.costWorksheet(ErrorResponse.class, worksheetIdentity, HttpStatus.SC_BAD_REQUEST).getResponseEntity();
 
         softAssertions.assertThat(publicWorksheetNotCosted.getMessage())
             .isEqualTo("Unable to initiate costing for the worksheet, no scenarios in a costable state.");
 
         ScenarioItem cssComponentResponses = cssComponent
-            .getBaseCssComponents(testingUser, SCENARIO_PUBLISHED_EQ.getKey() + false, SCENARIO_STATE_EQ.getKey() + "NOT_COSTED").get(0);
+            .getBaseCssComponents(requestEntityUtil.getEmbeddedUser(), SCENARIO_PUBLISHED_EQ.getKey() + false, SCENARIO_STATE_EQ.getKey() + "NOT_COSTED").get(0);
 
-        String inputRowPrivateIdentity = createWorkSheetInputRow(cssComponentResponses.getComponentIdentity(),
+        String inputRowPrivateIdentity = bcmUtil.createWorkSheetInputRow(cssComponentResponses.getComponentIdentity(),
             cssComponentResponses.getScenarioIdentity(),
             worksheetIdentity).getResponseEntity().getIdentity();
 
-        InputRowsGroupsResponse costPublicAndPrivateWorksheet = costWorksheet(InputRowsGroupsResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
+        InputRowsGroupsResponse costPublicAndPrivateWorksheet = bcmUtil.costWorksheet(InputRowsGroupsResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
 
         softAssertions.assertThat(costPublicAndPrivateWorksheet.getSuccesses().get(0).getInputRowIdentity()).isEqualTo(inputRowPrivateIdentity);
         softAssertions.assertThat(costPublicAndPrivateWorksheet.getFailures().get(0).getInputRowIdentity()).isEqualTo(inputRowPublicIdentity);
