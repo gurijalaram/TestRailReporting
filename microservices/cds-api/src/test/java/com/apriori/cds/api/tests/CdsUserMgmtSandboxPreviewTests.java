@@ -9,6 +9,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
@@ -40,6 +41,7 @@ public class CdsUserMgmtSandboxPreviewTests {
     private CustomerInfrastructure customerInfrastructure;
     private InstallationUtil installationUtil;
     private CdsTestUtil cdsTestUtil;
+    private CdsUserUtil cdsUserUtil;
     private ApplicationUtil applicationUtil;
     private String appIdentity;
     private String customerIdentity;
@@ -55,6 +57,7 @@ public class CdsUserMgmtSandboxPreviewTests {
         applicationUtil = new ApplicationUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         installationUtil = new InstallationUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
 
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
     }
@@ -203,7 +206,7 @@ public class CdsUserMgmtSandboxPreviewTests {
         siteIdentity = customerSites.getResponseEntity().getItems().get(0).getIdentity();
 
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 

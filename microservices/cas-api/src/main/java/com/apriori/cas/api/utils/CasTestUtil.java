@@ -598,7 +598,7 @@ public class CasTestUtil extends TestUtil {
     /**
      * Grants bulk access to customer application
      *
-     * @param aPInternalIdentity   - identity of aP Internal customer
+     * @param apInternalIdentity   - identity of aP Internal customer
      * @param siteIdentity         - site identity
      * @param deploymentIdentity   - deployment identity
      * @param installationIdentity - installation identity
@@ -606,9 +606,9 @@ public class CasTestUtil extends TestUtil {
      * @param sourceCustomerId     - source customer identity
      * @return response object
      */
-    public ResponseWrapper<String> grantDenyAll(String aPInternalIdentity, String siteIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String grantOrDeny, String sourceCustomerId) {
+    public ResponseWrapper<String> grantDenyAll(String apInternalIdentity, String siteIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String grantOrDeny, String sourceCustomerId) {
         RequestEntity requestEntity = requestEntityUtil.init(CASAPIEnum.GRANT_DENY_ALL, null)
-            .inlineVariables(aPInternalIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, grantOrDeny)
+            .inlineVariables(apInternalIdentity, siteIdentity, deploymentIdentity, installationIdentity, appIdentity, grantOrDeny)
             .expectedResponseCode(HttpStatus.SC_NO_CONTENT)
             .body(BulkAccessControlRequest.builder()
                 .sourceCustomerIdentity(sourceCustomerId)
