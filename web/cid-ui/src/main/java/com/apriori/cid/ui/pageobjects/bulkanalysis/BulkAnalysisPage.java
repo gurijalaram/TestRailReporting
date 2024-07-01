@@ -29,6 +29,9 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
 
+    @FindBy(xpath = "//div[@data-testid = 'table-body']/div")
+    private List<WebElement> listOfWorksheets;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -43,6 +46,15 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(scenarioCount);
+    }
+
+    /**
+     * Checks worksheets are present in the bulk analysis page
+     *
+     * @return boolean
+     */
+    public int getListOfWorksheets() {
+        return pageUtils.waitForElementsToAppear(listOfWorksheets).size();
     }
 
     /**
@@ -100,7 +112,7 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
      * @param scenarioName  - scenario name
      * @return a new page object
      */
-    public EvaluatePage openScenario(String componentName, String scenarioName) {
+    public EvaluatePage openWorksheet(String componentName, String scenarioName) {
         scenarioTableController.openScenario(componentName, scenarioName);
         return new EvaluatePage(driver);
     }
@@ -115,15 +127,26 @@ public class BulkAnalysisPage extends BulkAnalysisToolbar {
     }
 
     /**
-     * Highlights the scenario in the table
+     * Highlights the worksheet in the table
      *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
+     * @param worksheetName - name of the part
      * @return current page object
      */
-    public BulkAnalysisPage highlightScenario(String componentName, String scenarioName) {
-        scenarioTableController.highlightScenario(componentName, scenarioName);
+    public BulkAnalysisPage highlightWorksheet(String worksheetName) {
+        By byWorksheet = By.cssSelector(String.format("div[aria-label='%s']", worksheetName));
+        pageUtils.waitForElementAndClick(byWorksheet);
         return this;
+    }
+
+    /**
+     * Check if worksheet is present on UI
+     *
+     * @param worksheetName - name of the worksheet
+     * @return true/false
+     */
+    public boolean isWorksheetPresent(String worksheetName) {
+        By byWorksheet = By.cssSelector(String.format("div[aria-label='%s']", worksheetName));
+        return pageUtils.isElementDisplayed(byWorksheet);
     }
 
     /**

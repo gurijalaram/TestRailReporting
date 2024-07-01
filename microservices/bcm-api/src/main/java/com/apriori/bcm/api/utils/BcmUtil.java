@@ -25,7 +25,6 @@ import com.apriori.shared.util.http.utils.QueryParams;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtilBuilder;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
-import com.apriori.shared.util.http.utils.TestUtil;
 import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.component.ComponentResponse;
 
@@ -39,7 +38,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class BcmUtil extends TestUtil {
+public class BcmUtil {
 
     protected static UserCredentials testingUser = UserUtil.getUser(APRIORI_DEVELOPER);
     protected static RequestEntityUtil requestEntityUtil;
@@ -316,17 +315,17 @@ public class BcmUtil extends TestUtil {
      *
      * @param klass                - class
      * @param worksheetIdentity    - worksheet identity
-     * @param expectedResponseCode - expected response code
      * @return response object
      */
-    public <T> ResponseWrapper<T> deleteWorksheetWithEmail(Class<T> klass, String worksheetIdentity, Integer expectedResponseCode, UserCredentials userCred) {
+    public <T> ResponseWrapper<T> deleteWorksheetWithEmail(Class<T> klass, String worksheetIdentity, UserCredentials userCred) {
         requestEntityUtil = RequestEntityUtilBuilder
             .useCustomUser(userCred)
             .useApUserContextInRequests();
 
         RequestEntity requestEntity = requestEntityUtil.init(BcmAppAPIEnum.WORKSHEET_BY_ID, klass)
             .inlineVariables(worksheetIdentity)
-            .expectedResponseCode(expectedResponseCode);
+            .expectedResponseCode(HttpStatus.SC_NO_CONTENT);
+
         return HTTPRequest.build(requestEntity).delete();
     }
 
