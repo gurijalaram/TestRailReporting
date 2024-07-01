@@ -177,7 +177,7 @@ public class CdsUpdateUserTests {
             .getResponseEntity();
 
         soft.assertThat(updateEnablements.getMessage())
-            .isEqualTo("Enablements can not be updated for the user.");
+            .isEqualTo(String.format("Unable to set enablements for user with identity '%s' as they can not be updated for 'Generate' users.", ciGenerateUser.getIdentity()));
         soft.assertAll();
     }
 
@@ -193,7 +193,7 @@ public class CdsUpdateUserTests {
             .getResponseEntity();
 
         soft.assertThat(updateEnablements.getMessage())
-            .isEqualTo("Enablements can not be updated for the user.");
+            .isEqualTo(String.format("Unable to set enablements for user with identity '%s' as they can not be updated for 'Service Account' users.", serviceAccountWidgets.getIdentity()));
         soft.assertAll();
     }
 }
