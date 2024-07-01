@@ -44,7 +44,10 @@ public class BulkAnalysisToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-bcm-evaluate-page-btn-refresh'] button")
     private WebElement refreshButton;
 
-    @FindBy(css = ".secondary-nav-bar-back-text")
+    @FindBy(css = "[data-testid='bulk-analysis-evaluate'] h3")
+    private WebElement bulkAnalysisName;
+
+    @FindBy(css = "[data-testid='bulk-analysis-evaluate'] .secondary-nav-bar-back-text")
     private WebElement allBulkAnalysesButton;
 
     private final By refreshLabel = By.xpath("//div[@data-testid='alert-messaging']//div[.='Updating...']");
@@ -150,5 +153,14 @@ public class BulkAnalysisToolbar extends MainNavBar {
     public BulkCostingPage clickAllBulkAnalyses() {
         pageUtils.waitForElementAndClick(allBulkAnalysesButton);
         return new BulkCostingPage(driver);
+    }
+
+    /**
+     * Gets bulk analysis name
+     *
+     * @return string
+     */
+    public String getBulkAnalysisName() {
+        return pageUtils.waitForElementAppear(bulkAnalysisName).getAttribute("textContent");
     }
 }
