@@ -179,7 +179,7 @@ public class ProcessRoutingTests extends TestBaseUI {
 
         evaluatePage.goToAdvancedTab();
 
-        softAssertions.assertThat(advancedPage.isRoutingSelectionButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(advancedPage.isRoutingSelectionButtonEnabled()).isEqualTo(true);
         softAssertions.assertAll();
     }
 
@@ -691,21 +691,20 @@ public class ProcessRoutingTests extends TestBaseUI {
         component = new ComponentRequestUtil().getComponentByProcessGroup(ProcessGroupEnum.SHEET_METAL_HYDROFORMING);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(component.getUser())
+        routingSelectionPage = loginPage.login(component.getUser())
             .uploadComponentAndOpen(component)
             .selectProcessGroup(component.getProcessGroup())
-            .costScenario();
-
-        routingSelectionPage = evaluatePage.goToAdvancedTab().openRoutingSelection();
+            .costScenario()
+            .goToAdvancedTab()
+            .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).contains("Laser Cut - Fluid Cell Routing", "Router Cut - Fluid Cell Routing",
             "Offline Blank - Fluid Cell Routing", "Laser Cut - Deep Draw Routing", "Router Cut - Deep Draw Routing", "Offline Blank - Deep Draw Routing");
 
-        routingSelectionPage.selectRoutingPreferenceByName("Laser Cut - Fluid Cell Routing")
+        materialProcessPage = routingSelectionPage.selectRoutingPreferenceByName("Laser Cut - Fluid Cell Routing")
             .submit(EvaluatePage.class)
-            .costScenario();
-
-        materialProcessPage = evaluatePage.openMaterialProcess()
+            .costScenario()
+            .openMaterialProcess()
             .selectProcessTab()
             .selectBarChart("Laser Cut");
 
