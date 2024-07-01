@@ -13,6 +13,7 @@ import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.Constants;
 import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
@@ -51,6 +52,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
     private CustomerUtil customerUtil;
     private SiteUtil siteUtil;
     private CdsTestUtil cdsTestUtil;
+    private CdsUserUtil cdsUserUtil;
     private Customer targetCustomer;
     private String customerIdentity;
     private String customerName;
@@ -71,6 +73,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
         installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
 
@@ -83,7 +86,7 @@ public class UsersGrantApplicationAccessTests extends TestBaseUI {
 
         targetCustomer = customerUtil.addCustomer(customerName, customerType, null, salesforce, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
-        user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
         siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();

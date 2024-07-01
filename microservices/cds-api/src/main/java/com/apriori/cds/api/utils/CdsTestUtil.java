@@ -2,7 +2,6 @@ package com.apriori.cds.api.utils;
 
 
 import static org.apache.http.HttpStatus.SC_CREATED;
-import static org.apache.http.HttpStatus.SC_NOT_FOUND;
 
 import com.apriori.cds.api.enums.CASCustomerEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
@@ -10,18 +9,15 @@ import com.apriori.cds.api.models.request.AccessAuthorizationRequest;
 import com.apriori.cds.api.models.request.AddDeployment;
 import com.apriori.cds.api.models.request.CustomAttributeRequest;
 import com.apriori.cds.api.models.request.PostBatch;
-import com.apriori.cds.api.models.request.UpdateCredentials;
 import com.apriori.cds.api.models.response.AccessAuthorization;
 import com.apriori.cds.api.models.response.AssociationUserItems;
 import com.apriori.cds.api.models.response.AttributeMappings;
-import com.apriori.cds.api.models.response.CredentialsItems;
 import com.apriori.cds.api.models.response.CustomAttribute;
 import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.models.response.IdentityProviderRequest;
 import com.apriori.cds.api.models.response.IdentityProviderResponse;
 import com.apriori.cds.api.models.response.Roles;
 import com.apriori.cds.api.models.response.UserPreference;
-import com.apriori.cds.api.models.response.UserRole;
 import com.apriori.shared.util.file.user.UserCredentials;
 import com.apriori.shared.util.http.models.entity.RequestEntity;
 import com.apriori.shared.util.http.models.request.HTTPRequest;
@@ -36,10 +32,7 @@ import com.apriori.shared.util.json.JsonManager;
 import com.apriori.shared.util.models.response.Deployment;
 import com.apriori.shared.util.models.response.Enablements;
 import com.apriori.shared.util.models.response.User;
-import com.apriori.shared.util.models.response.UserProfile;
-import com.apriori.shared.util.models.response.Users;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.SneakyThrows;
 import org.apache.http.HttpStatus;
 
@@ -416,59 +409,6 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * Adds new user preference
-     *
-     * @param customerIdentity - customer id
-     * @param userIdentity     - user id
-     * @return - new object
-     */
-    public ResponseWrapper<UserPreference> addUserPreference(String customerIdentity, String userIdentity) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_PREFERENCES, UserPreference.class)
-            .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "userPreference",
-                UserPreference.builder()
-                    .name("Test")
-                    .value("1234")
-                    .type("STRING")
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Updates existing user preference
-     *
-     * @param customerIdentity  - customer Id
-     * @param userIdentity      - user Id
-     * @param updatedPreference - value of updated preference
-     * @return -  new object
-     */
-    public ResponseWrapper<UserPreference> updatePreference(
-        String customerIdentity,
-        String userIdentity,
-        String preferenceIdentity,
-        String updatedPreference) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
-            .inlineVariables(customerIdentity, userIdentity, preferenceIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "userPreference",
-                UserPreference.builder()
-                    .value(updatedPreference)
-                    .updatedBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).patch();
-    }
-
-    /**
      * Adds or replaces user preferences
      *
      * @param customerIdentity - customer id
@@ -580,53 +520,6 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * Creates role for a user
-     *
-     * @param customerIdentity - customer identity
-     * @param userIdentity     - user identity
-     * @return new object
-     */
-    public ResponseWrapper<UserRole> createRoleForUser(String customerIdentity, String userIdentity, String role) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_ROLES, UserRole.class)
-            .inlineVariables(customerIdentity, userIdentity)
-            .expectedResponseCode(HttpStatus.SC_CREATED)
-            .body(
-                "role",
-                UserRole.builder()
-                    .role(role)
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * Creates invalid role for a user and get error response
-     *
-     * @param customerIdentity - customer identity
-     * @param userIdentity     - user identity
-     * @return new object
-     */
-    public ErrorResponse createInvalidRoleForUser(String customerIdentity, String userIdentity, String role) {
-
-        RequestEntity requestEntity = requestEntityUtil.init(CDSAPIEnum.USER_ROLES, ErrorResponse.class)
-            .inlineVariables(customerIdentity, userIdentity)
-            .body(
-                "role",
-                UserRole.builder()
-                    .role(role)
-                    .createdBy("#SYSTEM00000")
-                    .build()
-            )
-            .expectedResponseCode(SC_NOT_FOUND);
-        ResponseWrapper<ErrorResponse> errorResponse = HTTPRequest.build(requestEntity).post();
-
-        return errorResponse.getResponseEntity();
-    }
-
-    /**
      * call the endpoint /roles with param pageSize=20 - to get all roles
      *
      * @param inlineVariables
@@ -640,21 +533,6 @@ public class CdsTestUtil extends TestUtil {
             .queryParams(queryParams)
             .expectedResponseCode(HttpStatus.SC_OK);
         return (Roles) HTTPRequest.build(requestEntity).get().getResponseEntity();
-    }
-
-    /**
-     * GET user by email
-     *
-     * @param email email of the user
-     * @return response object
-     */
-    public ResponseWrapper<Users> getUserByEmail(String email) {
-
-        final RequestEntity requestEntity =
-            requestEntityUtil.init(CDSAPIEnum.USERS, Users.class)
-                .queryParams(new QueryParams().use("email[EQ]", email))
-                .expectedResponseCode(HttpStatus.SC_OK);
-        return HTTPRequest.build(requestEntity).get();
     }
 
     /**

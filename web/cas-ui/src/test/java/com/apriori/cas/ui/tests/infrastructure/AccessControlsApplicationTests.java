@@ -54,9 +54,9 @@ public class AccessControlsApplicationTests extends TestBaseUI {
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
     private CustomerUtil customerUtil;
+    private UserCreation userCreation;
     private String customerIdentity;
     private String customerName;
-    private UserCreation userCreation;
     private String siteIdentity;
     private String deploymentIdentity;
     private String installationIdentity;
@@ -68,6 +68,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
+        userCreation = new UserCreation(requestEntityUtil);
         installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
 
@@ -76,7 +77,7 @@ public class AccessControlsApplicationTests extends TestBaseUI {
         String email = customerName.toLowerCase();
         targetCustomer = customerUtil.addCASCustomer(customerName, cloudRef, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
-        userCreation = new UserCreation();
+
         sourceUsers = userCreation.populateStaffTestUsers(2, customerIdentity, customerName);
         String siteName = generateStringUtil.generateAlphabeticString("Site", 5);
         String siteID = generateStringUtil.generateSiteID();

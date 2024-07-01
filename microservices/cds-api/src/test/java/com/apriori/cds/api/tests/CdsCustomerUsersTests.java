@@ -1,9 +1,12 @@
 package com.apriori.cds.api.tests;
 
+import static com.apriori.shared.util.enums.RolesEnum.APRIORI_DESIGNER;
+
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.CredentialsItems;
 import com.apriori.cds.api.models.response.UserProperties;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
@@ -35,6 +38,7 @@ public class CdsCustomerUsersTests {
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
     private CustomerUtil customerUtil;
+    private CdsUserUtil cdsUserUtil;
     private SoftAssertions soft = new SoftAssertions();
     private String customerIdentity;
     private String customerName;
@@ -45,6 +49,7 @@ public class CdsCustomerUsersTests {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
     }
 
@@ -66,7 +71,7 @@ public class CdsCustomerUsersTests {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         soft.assertThat(user.getResponseEntity().getUsername()).isEqualTo(userName);
@@ -81,7 +86,7 @@ public class CdsCustomerUsersTests {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, HttpStatus.SC_OK, customerIdentity);
@@ -97,7 +102,7 @@ public class CdsCustomerUsersTests {
     public void getCustomerUserByIdentity() {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
@@ -113,10 +118,10 @@ public class CdsCustomerUsersTests {
     public void patchUserByIdentity() {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         User userResponse = user.getResponseEntity();
 
-        ResponseWrapper<User> patchResponse = cdsTestUtil.patchUser(userResponse);
+        ResponseWrapper<User> patchResponse = cdsUserUtil.patchUser(userResponse);
 
         soft.assertThat(patchResponse.getResponseEntity().getUserProfile().getDepartment()).isEqualTo("Design Dept");
         soft.assertAll();
@@ -128,7 +133,7 @@ public class CdsCustomerUsersTests {
     public void deleteWrongUserIdentity() {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         RequestEntity requestEntity = RequestEntityUtil_Old.init(CDSAPIEnum.DELETE_USER_WRONG_ID, ErrorMessage.class)
@@ -146,14 +151,14 @@ public class CdsCustomerUsersTests {
     public void updateUserCredentials() {
         setCustomerData();
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<CredentialsItems> credentials = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_CREDENTIALS_BY_ID, CredentialsItems.class, HttpStatus.SC_OK, userIdentity);
         String currentHashPassword = credentials.getResponseEntity().getPasswordHash();
         String currentPasswordSalt = credentials.getResponseEntity().getPasswordSalt();
 
-        ResponseWrapper<CredentialsItems> updatedCredentials = cdsTestUtil.updateUserCredentials(customerIdentity, userIdentity, currentHashPassword, currentPasswordSalt);
+        ResponseWrapper<CredentialsItems> updatedCredentials = cdsUserUtil.updateUserCredentials(currentHashPassword, currentPasswordSalt, customerIdentity, userIdentity);
 
         soft.assertThat(updatedCredentials.getResponseEntity().getPasswordHashHistory().get(0)).isEqualTo(currentHashPassword);
         soft.assertAll();
@@ -164,9 +169,9 @@ public class CdsCustomerUsersTests {
     @Description("GET Required User Properties")
     public void getUserProperties() {
         setCustomerData();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, generateStringUtil.generateUserName(), customerName);
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, generateStringUtil.generateUserName(), customerName);
         userIdentity = user.getResponseEntity().getIdentity();
-        cdsTestUtil.createRoleForUser(customerIdentity, userIdentity, "AP_DESIGNER");
+        cdsUserUtil.createRoleForUser(APRIORI_DESIGNER.getRole(), customerIdentity, userIdentity);
 
         ResponseWrapper<UserProperties> requiredUserProperties = cdsTestUtil.getCommonRequest(CDSAPIEnum.REQUIRED_USER_PROPERTIES, UserProperties.class, HttpStatus.SC_OK, customerIdentity, userIdentity);
 
@@ -182,7 +187,7 @@ public class CdsCustomerUsersTests {
     public void createUserWithEnablements() {
         setCustomerData();
         String customerAssignedRole = "APRIORI_DEVELOPER";
-        ResponseWrapper<User> user = cdsTestUtil.addUserWithEnablements(customerIdentity, generateStringUtil.generateUserName(), customerName, customerAssignedRole);
+        ResponseWrapper<User> user = cdsUserUtil.addUserWithEnablements(customerIdentity, generateStringUtil.generateUserName(), customerName, customerAssignedRole);
         userIdentity = user.getResponseEntity().getIdentity();
 
         soft.assertThat(user.getResponseEntity().getEnablements().getCustomerAssignedRole()).isEqualTo(customerAssignedRole);

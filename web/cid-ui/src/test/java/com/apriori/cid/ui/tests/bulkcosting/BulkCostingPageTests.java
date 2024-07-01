@@ -211,7 +211,7 @@ public class BulkCostingPageTests extends TestBaseUI {
     private void setBulkCostingFlag(boolean bulkCostingValue) {
         RequestEntityUtil requestEntityUtil = TestHelper.initCustomUser(userCredentials);
         InstallationUtil installationUtil = new InstallationUtil(requestEntityUtil);
-        CdsTestUtil cdsTestUtil = new CdsTestUtil();
+        CdsTestUtil cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
 
         ResponseWrapper<Deployments> deployments = cdsTestUtil.getCommonRequest(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID,

@@ -49,6 +49,7 @@ public class CustomerStaffTests extends TestBaseUI {
     private CustomerInfrastructure customerInfrastructure;
     private CdsTestUtil cdsTestUtil;
     private CustomerUtil customerUtil;
+    private UserCreation userCreation;
     private LicenseUtil licenseUtil;
     private UsersListPage usersListPage;
     private String customerName;
@@ -67,6 +68,7 @@ public class CustomerStaffTests extends TestBaseUI {
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
         licenseUtil = new LicenseUtil(requestEntityUtil);
+        userCreation = new UserCreation(requestEntityUtil);
 
         setCustomerData();
         usersListPage = new CasLoginPage(driver)
@@ -372,7 +374,6 @@ public class CustomerStaffTests extends TestBaseUI {
         siteId = customerSites.getResponseEntity().getItems().get(0).getSiteId();
         siteName = customerSites.getResponseEntity().getItems().get(0).getName();
 
-        UserCreation userCreation = new UserCreation();
         sourceUsers = userCreation.populateStaffTestUsers(11, customerIdentity, email);
     }
 }

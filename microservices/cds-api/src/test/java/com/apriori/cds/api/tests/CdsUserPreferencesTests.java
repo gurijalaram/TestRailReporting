@@ -5,6 +5,7 @@ import com.apriori.cds.api.models.IdentityHolder;
 import com.apriori.cds.api.models.response.UserPreference;
 import com.apriori.cds.api.models.response.UserPreferences;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.CustomerUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
@@ -33,6 +34,7 @@ public class CdsUserPreferencesTests {
     private CustomerInfrastructure customerInfrastructure;
     private CustomerUtil customerUtil;
     private CdsTestUtil cdsTestUtil;
+    private CdsUserUtil cdsUserUtil;
     private String customerIdentity;
     private String userIdentity;
 
@@ -42,6 +44,7 @@ public class CdsUserPreferencesTests {
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
         customerUtil = new CustomerUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -78,7 +81,7 @@ public class CdsUserPreferencesTests {
     @Description("Creates a user preference for a user and gets it by identity")
     public void addUserPreference() {
         setCustomerData();
-        ResponseWrapper<UserPreference> newPreference = cdsTestUtil.addUserPreference(customerIdentity, userIdentity);
+        ResponseWrapper<UserPreference> newPreference = cdsUserUtil.addUserPreference(customerIdentity, userIdentity);
         String preferenceIdentity = newPreference.getResponseEntity().getIdentity();
 
         ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class, HttpStatus.SC_OK, customerIdentity, userIdentity, preferenceIdentity);
@@ -100,10 +103,10 @@ public class CdsUserPreferencesTests {
         setCustomerData();
         String updatedPreference = generateStringUtil.getRandomStringSpecLength(8);
 
-        ResponseWrapper<UserPreference> newPreference = cdsTestUtil.addUserPreference(customerIdentity, userIdentity);
+        ResponseWrapper<UserPreference> newPreference = cdsUserUtil.addUserPreference(customerIdentity, userIdentity);
         String preferenceIdentity = newPreference.getResponseEntity().getIdentity();
 
-        ResponseWrapper<UserPreference> updatedPreferenceResponse = cdsTestUtil.updatePreference(customerIdentity, userIdentity, preferenceIdentity, updatedPreference);
+        ResponseWrapper<UserPreference> updatedPreferenceResponse = cdsUserUtil.updatePreference(updatedPreference, customerIdentity, userIdentity, preferenceIdentity);
 
         soft.assertThat(updatedPreferenceResponse.getResponseEntity().getValue()).isEqualTo(updatedPreference);
         soft.assertAll();
@@ -140,7 +143,7 @@ public class CdsUserPreferencesTests {
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
 
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }
