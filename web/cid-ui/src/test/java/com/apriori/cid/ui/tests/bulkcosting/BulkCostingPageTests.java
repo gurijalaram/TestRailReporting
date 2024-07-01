@@ -11,7 +11,6 @@ import com.apriori.cid.ui.pageobjects.projects.BulkCostingPage;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.file.user.UserCredentials;
-import com.apriori.shared.util.file.user.UserUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
 import com.apriori.shared.util.http.utils.ResponseWrapper;
@@ -39,19 +38,18 @@ public class BulkCostingPageTests extends TestBaseUI {
     private BulkCostingPage bulkCostingPage;
     private String worksheetIdentity;
     private BcmUtil bcmUtil;
-    private UserCredentials userCredentials = UserUtil.getUser();
+    private RequestEntityUtil requestEntityUtil;
 
     @BeforeEach
     public void setup() {
-        RequestEntityUtil requestEntityUtil = TestHelper.initUser();
+        requestEntityUtil = TestHelper.initUser();
         bcmUtil = new BcmUtil(requestEntityUtil);
     }
 
     @AfterEach
     public void cleanUp() {
         if (worksheetIdentity != null) {
-            BcmUtil bcmUtil = new BcmUtil();
-            bcmUtil.deleteWorksheetWithEmail(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT, UserCredentials.init(userCredentials.getEmail(), null));
+            bcmUtil.deleteWorksheetWithEmail(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
             worksheetIdentity = null;
         }
     }
@@ -62,9 +60,10 @@ public class BulkCostingPageTests extends TestBaseUI {
     public void bulkCostingAddAndDeleteWorksheet() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
+
         loginPage = new CidAppLoginPage(driver);
         bulkCostingPage = loginPage
-            .login(userCredentials)
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
         soft.assertThat(bulkCostingPage.isListOfWorksheetsPresent()).isTrue();
@@ -83,15 +82,16 @@ public class BulkCostingPageTests extends TestBaseUI {
     public void testCreateInputAndGoToEvaluatePageRow() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
+
         loginPage = new CidAppLoginPage(driver);
         bulkCostingPage = loginPage
-            .login(userCredentials)
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
         WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
 
-        String inputRowName1 = createInputRow(userCredentials, worksheetResponse, 5);
-        String inputRowName2 = createInputRow(userCredentials, worksheetResponse, 6);
+        String inputRowName1 = createInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
+        String inputRowName2 = createInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 6);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getName());
 
         soft.assertThat(bulkCostingPage.isInputRowDisplayed(inputRowName1)).isTrue();
@@ -108,14 +108,15 @@ public class BulkCostingPageTests extends TestBaseUI {
     public void testDeleteInputRow() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
+
         loginPage = new CidAppLoginPage(driver);
         bulkCostingPage = loginPage
-            .login(userCredentials)
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
         WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
 
-        String inputRowName = createInputRow(userCredentials, worksheetResponse, 5);
+        String inputRowName = createInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getName());
 
         soft.assertThat(bulkCostingPage.getRemoveButtonState("Cannot perform a remove action"))
@@ -138,13 +139,14 @@ public class BulkCostingPageTests extends TestBaseUI {
     public void testUpdateInputs() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
+
         loginPage = new CidAppLoginPage(driver);
         bulkCostingPage = loginPage
-            .login(userCredentials)
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
         WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
-        createInputRow(userCredentials, worksheetResponse, 5);
+        createInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
         bulkCostingPage.enterSpecificBulkAnalysis(worksheetResponse.getName());
 
         soft.assertThat(bulkCostingPage.getSetInputButtonState("Cannot set inputs with no scenarios selected."))
@@ -175,13 +177,14 @@ public class BulkCostingPageTests extends TestBaseUI {
     public void editBulkAnalysisNameAndSearchOnIt() {
         SoftAssertions soft = new SoftAssertions();
         setBulkCostingFlag(true);
+
         loginPage = new CidAppLoginPage(driver);
         bulkCostingPage = loginPage
-            .login(userCredentials)
+            .login(requestEntityUtil.getEmbeddedUser())
             .clickBulkAnalysis();
 
         WorkSheetResponse worksheetResponse = bcmUtil.createWorksheet(saltName);
-        createInputRow(userCredentials, worksheetResponse, 5);
+        createInputRow(requestEntityUtil.getEmbeddedUser(), worksheetResponse, 5);
         soft.assertThat(bulkCostingPage.getInfoButtonState("Cannot show worksheet info with no worksheet selected."))
             .isEqualTo("Cannot show worksheet info with no worksheet selected.");
 
@@ -205,19 +208,17 @@ public class BulkCostingPageTests extends TestBaseUI {
 
     private String createInputRow(UserCredentials userCredentials, WorkSheetResponse worksheetResponse, int itemNumber) {
         CssComponent cssComponent = new CssComponent();
-        BcmUtil bcmUtil = new BcmUtil();
         ScenarioItem scenarioItem =
             cssComponent.postSearchRequest(userCredentials, "PART")
                 .getResponseEntity().getItems().get(itemNumber);
 
         bcmUtil.createWorkSheetInputRowWithEmail(scenarioItem.getComponentIdentity(),
-            scenarioItem.getScenarioIdentity(), worksheetResponse.getIdentity(), userCredentials);
+            scenarioItem.getScenarioIdentity(), worksheetResponse.getIdentity());
 
         return scenarioItem.getComponentDisplayName();
     }
 
     private void setBulkCostingFlag(boolean bulkCostingValue) {
-        RequestEntityUtil requestEntityUtil = TestHelper.initCustomUser(userCredentials);
         InstallationUtil installationUtil = new InstallationUtil(requestEntityUtil);
         CdsTestUtil cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         String customerIdentity = SharedCustomerUtil.getCustomerData().getIdentity();
