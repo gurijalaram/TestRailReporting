@@ -33,7 +33,7 @@ public class BulkAnalysisToolbar extends MainNavBar {
     private WebElement addScenariosButton;
 
     @FindBy(css = "[id='qa-input-row-set-inputs'] button")
-    private WebElement setInputsButton;
+    protected WebElement setInputsButton;
 
     @FindBy(css = "[id='qa-input-row-delete-new'] button")
     private WebElement removeButton;
