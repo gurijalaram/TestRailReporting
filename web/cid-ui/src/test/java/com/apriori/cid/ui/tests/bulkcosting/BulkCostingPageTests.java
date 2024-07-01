@@ -6,6 +6,7 @@ import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cid.ui.pageobjects.bulkanalysis.BulkAnalysisPage;
+import com.apriori.cid.ui.pageobjects.evaluate.EvaluatePage;
 import com.apriori.cid.ui.pageobjects.login.CidAppLoginPage;
 import com.apriori.css.api.utils.CssComponent;
 import com.apriori.shared.util.SharedCustomerUtil;
@@ -46,7 +47,7 @@ public class BulkCostingPageTests extends TestBaseUI {
 
     @Test
     @TestRail(id = {29187, 29874, 29942})
-    @Description("bulk costing page visibility, adding and delete worksheet")
+    @Description("Test bulk costing page visibility, add and delete worksheet")
     public void bulkCostingAddAndDeleteWorksheet() {
         setBulkCostingFlag(true);
 
