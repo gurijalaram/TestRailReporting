@@ -3,6 +3,7 @@ package com.apriori.cds.api.tests;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.models.response.ErrorResponse;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.shared.util.SharedCustomerUtil;
 import com.apriori.shared.util.http.utils.GenerateStringUtil;
 import com.apriori.shared.util.http.utils.RequestEntityUtil;
@@ -34,22 +35,25 @@ public class CdsUpdateUserTests {
     private final SoftAssertions soft = new SoftAssertions();
     private final List<User> createdUsers = new ArrayList<>();
     private CdsTestUtil cdsTestUtil;
+    private CdsUserUtil cdsUserUtil;
 
     @BeforeEach
     public void init() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
+
+        createdUsers.clear();
     }
 
     User generateTargetUser() {
-
         String userName = generateStringUtil.generateUserName();
 
         Customer aprioriInternal = SharedCustomerUtil.getCustomerData();
         String pattern = aprioriInternal.getEmailRegexPatterns().stream().findFirst().orElseThrow();
         String domain = pattern.replace("\\S+@", "").replace(".com", "");
 
-        ResponseWrapper<User> added = cdsTestUtil.addUser(
+        ResponseWrapper<User> added = cdsUserUtil.addUser(
             aprioriInternal.getIdentity(),
             userName,
             domain
@@ -62,7 +66,6 @@ public class CdsUpdateUserTests {
     }
 
     ObjectNode createEnablementsNode() {
-
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode enablements = mapper.createObjectNode();
         enablements.set("customerAssignedRole", new TextNode("APRIORI_EXPERT"));
@@ -71,7 +74,6 @@ public class CdsUpdateUserTests {
     }
 
     ObjectNode createProfileNode() {
-
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode userProfile = mapper.createObjectNode();
         userProfile.set("familyName", new TextNode("Allen"));
@@ -80,7 +82,6 @@ public class CdsUpdateUserTests {
     }
 
     ObjectNode createUserNode(ObjectNode profile, ObjectNode enablements) {
-
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode user = mapper.createObjectNode();
 
@@ -93,12 +94,6 @@ public class CdsUpdateUserTests {
         }
 
         return user;
-    }
-
-    @BeforeEach()
-    public void setUp() {
-
-        createdUsers.clear();
     }
 
     @AfterEach()
@@ -120,13 +115,7 @@ public class CdsUpdateUserTests {
         ObjectNode user = createUserNode(null, enablements);
         User current = generateTargetUser();
 
-        User actual = cdsTestUtil.patchUser(
-            User.class,
-            current.getCustomerIdentity(),
-            current.getIdentity(),
-            HttpStatus.SC_OK,
-            user
-        ).getResponseEntity();
+        User actual = cdsUserUtil.patchUser(User.class, HttpStatus.SC_OK, user, current.getCustomerIdentity(), current.getIdentity()).getResponseEntity();
 
         soft
             .assertThat(actual.getEnablements().getCustomerAssignedRole())
@@ -146,13 +135,7 @@ public class CdsUpdateUserTests {
         ObjectNode user = createUserNode(profile, null);
         User current = generateTargetUser();
 
-        User actual = cdsTestUtil.patchUser(
-            User.class,
-            current.getCustomerIdentity(),
-            current.getIdentity(),
-            HttpStatus.SC_OK,
-            user
-        ).getResponseEntity();
+        User actual = cdsUserUtil.patchUser(User.class, HttpStatus.SC_OK, user, current.getCustomerIdentity(), current.getIdentity()).getResponseEntity();
 
         soft.assertThat(actual.getUserProfile().getFamilyName()).isEqualTo(profile.get("familyName").asText());
         soft.assertThat(actual.getUserProfile().getGivenName()).isEqualTo(profile.get("givenName").asText());
@@ -169,13 +152,7 @@ public class CdsUpdateUserTests {
         ObjectNode user = createUserNode(profile, enablements);
         User current = generateTargetUser();
 
-        User actual = cdsTestUtil.patchUser(
-            User.class,
-            current.getCustomerIdentity(),
-            current.getIdentity(),
-            HttpStatus.SC_OK,
-            user
-        ).getResponseEntity();
+        User actual = cdsUserUtil.patchUser(User.class, HttpStatus.SC_OK, user, current.getCustomerIdentity(), current.getIdentity()).getResponseEntity();
 
         soft
             .assertThat(actual.getEnablements().getCustomerAssignedRole())
@@ -192,17 +169,12 @@ public class CdsUpdateUserTests {
     @TestRail(id = 29303)
     @Description("PATCH User request doesn't update enablements for CI Generate User")
     public void doNotUpdateCiGenerateEnablements() {
-        User ciGenerateUser = cdsTestUtil.getUserByEmail("aPrioriCIGenerateUser@apriori.com").getResponseEntity().getItems().get(0);
+        User ciGenerateUser = cdsUserUtil.getUserByEmail("aPrioriCIGenerateUser@apriori.com").getResponseEntity().getItems().get(0);
         ObjectNode enablements = createEnablementsNode();
         ObjectNode user = createUserNode(null, enablements);
 
-        ErrorResponse updateEnablements = cdsTestUtil.patchUser(
-            ErrorResponse.class,
-            ciGenerateUser.getCustomerIdentity(),
-            ciGenerateUser.getIdentity(),
-            HttpStatus.SC_CONFLICT,
-            user
-        ).getResponseEntity();
+        ErrorResponse updateEnablements = cdsUserUtil.patchUser(ErrorResponse.class, HttpStatus.SC_CONFLICT, user, ciGenerateUser.getCustomerIdentity(), ciGenerateUser.getIdentity())
+            .getResponseEntity();
 
         soft.assertThat(updateEnablements.getMessage())
             .isEqualTo("Enablements can not be updated for the user.");
@@ -213,17 +185,12 @@ public class CdsUpdateUserTests {
     @TestRail(id = 29302)
     @Description("PATCH User request doesn't update enablements for Service Accounts")
     public void doNotUpdateServiceAccountEnablements() {
-        User serviceAccountWidgets = cdsTestUtil.getUserByEmail("widgets.service-account.1@apriori-cloud.net").getResponseEntity().getItems().get(0);
+        User serviceAccountWidgets = cdsUserUtil.getUserByEmail("widgets.service-account.1@apriori-cloud.net").getResponseEntity().getItems().get(0);
         ObjectNode enablements = createEnablementsNode();
         ObjectNode user = createUserNode(null, enablements);
 
-        ErrorResponse updateEnablements = cdsTestUtil.patchUser(
-            ErrorResponse.class,
-            serviceAccountWidgets.getCustomerIdentity(),
-            serviceAccountWidgets.getIdentity(),
-            HttpStatus.SC_CONFLICT,
-            user
-        ).getResponseEntity();
+        ErrorResponse updateEnablements = cdsUserUtil.patchUser(ErrorResponse.class, HttpStatus.SC_CONFLICT, user, serviceAccountWidgets.getCustomerIdentity(), serviceAccountWidgets.getIdentity())
+            .getResponseEntity();
 
         soft.assertThat(updateEnablements.getMessage())
             .isEqualTo("Enablements can not be updated for the user.");

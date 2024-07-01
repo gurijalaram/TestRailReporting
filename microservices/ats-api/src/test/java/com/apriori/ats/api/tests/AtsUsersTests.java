@@ -5,6 +5,7 @@ import com.apriori.ats.api.utils.AtsTestUtil;
 import com.apriori.ats.api.utils.enums.ATSAPIEnum;
 import com.apriori.cds.api.enums.CDSAPIEnum;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.CustomerInfrastructure;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.shared.util.file.user.UserUtil;
@@ -31,6 +32,7 @@ public class AtsUsersTests {
     private AtsTestUtil atsTestUtil = new AtsTestUtil();
     private SoftAssertions soft = new SoftAssertions();
     private CdsTestUtil cdsTestUtil;
+    private CdsUserUtil cdsUserUtil;
     private CustomerInfrastructure customerInfrastructure;
     private ResponseWrapper<User> user;
     private String customerIdentity;
@@ -41,6 +43,7 @@ public class AtsUsersTests {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         customerInfrastructure = new CustomerInfrastructure(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
     }
 
     @AfterEach
@@ -107,7 +110,7 @@ public class AtsUsersTests {
         customerInfrastructure.createCustomerInfrastructure(rcd, customerIdentity);
         String userName = generateStringUtil.generateUserName();
 
-        user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }

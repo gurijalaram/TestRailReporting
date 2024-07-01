@@ -11,6 +11,7 @@ import com.apriori.cds.api.models.response.AccessControls;
 import com.apriori.cds.api.models.response.InstallationItems;
 import com.apriori.cds.api.utils.ApplicationUtil;
 import com.apriori.cds.api.utils.CdsTestUtil;
+import com.apriori.cds.api.utils.CdsUserUtil;
 import com.apriori.cds.api.utils.InstallationUtil;
 import com.apriori.cds.api.utils.RandomCustomerData;
 import com.apriori.cds.api.utils.SiteUtil;
@@ -57,12 +58,14 @@ public class CdsUserManagementHighMemTests {
     private String installationIdentityReg;
     private String installationIdentityHighMem;
     private String userIdentity;
+    private CdsUserUtil cdsUserUtil;
 
     @BeforeEach
     public void setDetails() {
         RequestEntityUtil requestEntityUtil = TestHelper.initUser();
         cdsTestUtil = new CdsTestUtil(requestEntityUtil);
         applicationUtil = new ApplicationUtil(requestEntityUtil);
+        cdsUserUtil = new CdsUserUtil(requestEntityUtil);
         installationUtil = new InstallationUtil(requestEntityUtil);
         siteUtil = new SiteUtil(requestEntityUtil);
         appIdentity = applicationUtil.getApplicationIdentity(AP_PRO);
@@ -209,7 +212,7 @@ public class CdsUserManagementHighMemTests {
         applicationUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentityHighMem, appIdentity, siteIdentity);
 
         String userName = generateStringUtil.generateUserName();
-        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
+        ResponseWrapper<User> user = cdsUserUtil.addUser(customerIdentity, userName, customer.getResponseEntity().getName());
         userIdentity = user.getResponseEntity().getIdentity();
     }
 }
