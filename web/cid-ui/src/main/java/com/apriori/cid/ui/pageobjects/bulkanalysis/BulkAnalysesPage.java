@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
+public class BulkAnalysesPage extends BulkAnalysisToolbar {
 
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
@@ -34,7 +34,7 @@ public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
     private ScenarioTableController scenarioTableController;
     private ComponentTableActions componentTableActions;
 
-    public AllBulkAnalysisPage(WebDriver driver) {
+    public BulkAnalysesPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -79,7 +79,7 @@ public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
      *
      * @return current page object
      */
-    public AllBulkAnalysisPage selectAllScenarios() {
+    public BulkAnalysesPage selectAllScenarios() {
         scenarioTableController.selectAllScenarios();
         return this;
     }
@@ -121,7 +121,7 @@ public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public AllBulkAnalysisPage highlightScenario(String componentName, String scenarioName) {
+    public BulkAnalysesPage highlightScenario(String componentName, String scenarioName) {
         scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
@@ -154,7 +154,7 @@ public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
-    public AllBulkAnalysisPage multiHighlightScenarios(String... componentScenarioName) {
+    public BulkAnalysesPage multiHighlightScenarios(String... componentScenarioName) {
         scenarioTableController.multiHighlightScenario(componentScenarioName);
         return this;
     }
@@ -165,7 +165,7 @@ public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
-    public AllBulkAnalysisPage multiSelectScenarios(String... componentScenarioName) {
+    public BulkAnalysesPage multiSelectScenarios(String... componentScenarioName) {
         scenarioTableController.multiSelectScenario(componentScenarioName);
         return this;
     }
@@ -177,7 +177,7 @@ public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public AllBulkAnalysisPage controlHighlightScenario(String componentName, String scenarioName) {
+    public BulkAnalysesPage controlHighlightScenario(String componentName, String scenarioName) {
         scenarioTableController.controlHighlightScenario(componentName, scenarioName);
         return this;
     }
@@ -189,7 +189,7 @@ public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public AllBulkAnalysisPage shiftHighlightScenario(String componentName, String scenarioName) {
+    public BulkAnalysesPage shiftHighlightScenario(String componentName, String scenarioName) {
         scenarioTableController.shiftHighlightScenario(componentName, scenarioName);
         return this;
     }
@@ -239,7 +239,7 @@ public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
      *
      * @return current page object
      */
-    public AllBulkAnalysisPage setPagination() {
+    public BulkAnalysesPage setPagination() {
         componentTableActions.setPagination();
         return this;
     }
@@ -250,7 +250,7 @@ public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
      * @param componentName - the component name
      * @return new page object
      */
-    public AllBulkAnalysisPage enterKeySearch(String componentName) {
+    public BulkAnalysesPage enterKeySearch(String componentName) {
         componentTableActions.enterKeySearch(componentName.toUpperCase());
         return this;
     }
@@ -261,7 +261,7 @@ public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
      * @param componentName - the component name
      * @return new page object
      */
-    public AllBulkAnalysisPage clickSearch(String componentName) {
+    public BulkAnalysesPage clickSearch(String componentName) {
         componentTableActions.clickSearch(componentName);
         return this;
     }
@@ -273,7 +273,7 @@ public class AllBulkAnalysisPage extends BulkAnalysisToolbar {
      * @param order  - the order
      * @return current page object
      */
-    public AllBulkAnalysisPage sortColumn(ColumnsEnum column, SortOrderEnum order) {
+    public BulkAnalysesPage sortColumn(ColumnsEnum column, SortOrderEnum order) {
         scenarioTableController.sortColumn(column, order);
         pageUtils.waitForElementToAppear(scenarioCount);
         return this;
