@@ -39,8 +39,9 @@ public class AnalysisInputsTests extends BcmUtil {
     @Description("Verify setting inputs for an input row")
     public void settingInputs() {
         String name = GenerateStringUtil.saltString("name");
-        WorkSheetResponse newWorksheet = createWorksheet(name).getResponseEntity();
+        WorkSheetResponse newWorksheet = createWorksheet(name);
         worksheetIdentity = newWorksheet.getIdentity();
+
         ScenarioItem scenarioItem = cssComponent.postSearchRequest(testingUser, componentType).getResponseEntity().getItems().stream()
             .findFirst().orElse(null);
 

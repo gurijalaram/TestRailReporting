@@ -45,7 +45,7 @@ public class UpdateWorksheetTests extends BcmUtil {
     public void updateWorksheet() {
         String name = GenerateStringUtil.saltString("name");
         String updatedName = name + "updated";
-        worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
+        worksheetIdentity = createWorksheet(name).getIdentity();
 
         WorkSheetResponse updatedWorksheet = updateWorksheet(updatedName, null, WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
 
@@ -61,7 +61,7 @@ public class UpdateWorksheetTests extends BcmUtil {
         String updatedName = name + "updated";
         WorkSheetResponse existingWorksheet = getWorksheets().getResponseEntity().getItems().get(0);
         String existingNameWorksheet = existingWorksheet.getName();
-        worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
+        worksheetIdentity = createWorksheet(name).getIdentity();
 
         ErrorResponse sameName = updateWorksheet(existingNameWorksheet, null, ErrorResponse.class, worksheetIdentity, HttpStatus.SC_CONFLICT).getResponseEntity();
 
@@ -81,7 +81,7 @@ public class UpdateWorksheetTests extends BcmUtil {
     public void updateWorksheetWithDescription() {
         String name = GenerateStringUtil.saltString("name");
         String description = new GenerateStringUtil().getRandomStringSpecLength(12);
-        worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
+        worksheetIdentity = createWorksheet(name).getIdentity();
 
 
         WorkSheetResponse updatedWorksheet = updateWorksheet(null, description, WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
@@ -99,9 +99,7 @@ public class UpdateWorksheetTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
-            .getResponseEntity()
-            .getIdentity();
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")) .getIdentity();
 
         ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow =
             createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
@@ -132,9 +130,7 @@ public class UpdateWorksheetTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
-            .getResponseEntity()
-            .getIdentity();
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow =
             createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
@@ -160,9 +156,7 @@ public class UpdateWorksheetTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
-            .getResponseEntity()
-            .getIdentity();
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")) .getIdentity();
 
         ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow1 =
             createWorkSheetInputRow(scenarioItem1.getComponentIdentity(),
@@ -174,9 +168,7 @@ public class UpdateWorksheetTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        worksheetIdentity2 = createWorksheet(GenerateStringUtil.saltString("name"))
-            .getResponseEntity()
-            .getIdentity();
+        worksheetIdentity2 = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow2 =
             createWorkSheetInputRow(scenarioItem2.getComponentIdentity(),
@@ -199,7 +191,7 @@ public class UpdateWorksheetTests extends BcmUtil {
     @Description("Verify delete a single worksheet")
     public void deleteWorksheet() {
         String name = GenerateStringUtil.saltString("name");
-        String worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
+        String worksheetIdentity = createWorksheet(name).getIdentity();
 
         deleteWorksheet(null, worksheetIdentity, HttpStatus.SC_NO_CONTENT);
         ErrorResponse deletedWorksheet = getWorksheet(ErrorResponse.class, worksheetIdentity, HttpStatus.SC_NOT_FOUND).getResponseEntity();
@@ -236,8 +228,8 @@ public class UpdateWorksheetTests extends BcmUtil {
     public void deleteMultipleWorksheets() {
         String name1 = GenerateStringUtil.saltString("name1");
         String name2 = GenerateStringUtil.saltString("name2");
-        String worksheetIdentity1 = createWorksheet(name1).getResponseEntity().getIdentity();
-        String worksheetIdentity2 = createWorksheet(name2).getResponseEntity().getIdentity();
+        String worksheetIdentity1 = createWorksheet(name1).getIdentity();
+        String worksheetIdentity2 = createWorksheet(name2).getIdentity();
 
         WorksheetGroupsResponse multipleDelete = deleteMultipleWorksheets(
             WorksheetGroupsResponse.class, HttpStatus.SC_OK, worksheetIdentity1, worksheetIdentity2).getResponseEntity();

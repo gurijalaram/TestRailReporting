@@ -37,9 +37,9 @@ public class WorksheetTests extends BcmUtil {
     public void verifyWorksheetCreation() {
         String name = new GenerateStringUtil().saltString("name");
 
-        ResponseWrapper<WorkSheetResponse> response = createWorksheet(name);
-        worksheetIdentity = response.getResponseEntity().getIdentity();
-        softAssertions.assertThat(response.getResponseEntity().getName()).isEqualTo(name);
+        WorkSheetResponse response = createWorksheet(name);
+        worksheetIdentity = response.getIdentity();
+        softAssertions.assertThat(response.getName()).isEqualTo(name);
         softAssertions.assertAll();
     }
 
@@ -49,9 +49,9 @@ public class WorksheetTests extends BcmUtil {
     public void verifyWorksheetCreationAlreadyExistError() {
         String name = new GenerateStringUtil().saltString("name");
 
-        ResponseWrapper<WorkSheetResponse> response = createWorksheet(name);
-        worksheetIdentity = response.getResponseEntity().getIdentity();
-        softAssertions.assertThat(response.getResponseEntity().getName()).isEqualTo(name);
+        WorkSheetResponse response = createWorksheet(name);
+        worksheetIdentity = response.getIdentity();
+        softAssertions.assertThat(response.getName()).isEqualTo(name);
 
         ResponseWrapper<ErrorResponse> responseError = createWorksheetAlreadyExists(name);
         softAssertions.assertThat(responseError.getResponseEntity().getMessage()).contains("already exists");
@@ -64,7 +64,7 @@ public class WorksheetTests extends BcmUtil {
     public void verifyWorksheetList() {
         String name = new GenerateStringUtil().saltString("name");
 
-        worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
+        worksheetIdentity = createWorksheet(name).getIdentity();
 
         WorkSheets worksheetsList = getWorksheets().getResponseEntity();
         softAssertions.assertThat(worksheetsList.getTotalItemCount()).isGreaterThanOrEqualTo(1);
@@ -76,15 +76,15 @@ public class WorksheetTests extends BcmUtil {
     @TestRail(id = 29733)
     @Description("Verify getting specific worksheet")
     public void verifyGetSpecificWorkSheet() {
-        ResponseWrapper<WorkSheetResponse> worksheetCreated =
+        WorkSheetResponse worksheetCreated =
             createWorksheet(GenerateStringUtil.saltString("name"));
-        worksheetIdentity = worksheetCreated.getResponseEntity().getIdentity();
+        worksheetIdentity = worksheetCreated.getIdentity();
 
         ResponseWrapper<WorkSheetResponse> worksheetGet =
             getWorksheet(WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK);
 
         softAssertions.assertThat(worksheetGet.getResponseEntity())
-            .isEqualTo(worksheetCreated.getResponseEntity());
+            .isEqualTo(worksheetCreated);
         softAssertions.assertAll();
     }
 
@@ -120,7 +120,7 @@ public class WorksheetTests extends BcmUtil {
     public void getCandidates() {
         String name = new GenerateStringUtil().saltString("name");
 
-        worksheetIdentity = createWorksheet(name).getResponseEntity().getIdentity();
+        worksheetIdentity = createWorksheet(name).getIdentity();
 
         ComponentResponse getCandidates = getCandidates(worksheetIdentity).getResponseEntity();
         softAssertions.assertThat(getCandidates.getItems()).isNotEmpty();

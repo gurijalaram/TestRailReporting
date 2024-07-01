@@ -31,7 +31,6 @@ import com.apriori.shared.util.models.response.component.ComponentResponse;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.junit.jupiter.api.BeforeAll;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,16 +41,26 @@ import java.util.stream.Collectors;
 public class BcmUtil extends TestUtil {
 
     protected static UserCredentials testingUser = UserUtil.getUser(APRIORI_DEVELOPER);
-    protected static RequestEntityUtil requestEntityUtil;
+    private RequestEntityUtil requestEntityUtil;
 
-    @BeforeAll
-    public static void init() {
-        requestEntityUtil = RequestEntityUtilBuilder
-            .useRandomUser(APRIORI_DEVELOPER)
-            .useApUserContextInRequests();
-
-        testingUser = requestEntityUtil.getEmbeddedUser();
+    public BcmUtil(RequestEntityUtil requestEntityUtil) {
+        super.requestEntityUtil = requestEntityUtil;
+        this.requestEntityUtil = requestEntityUtil;
     }
+
+    // FIXME: 01/07/2024 cn - remove this constructor when refactoring
+    public BcmUtil() {
+
+    }
+
+//    @BeforeAll
+//    public static void init() {
+//        requestEntityUtil = RequestEntityUtilBuilder
+//            .useRandomUser(APRIORI_DEVELOPER)
+//            .useApUserContextInRequests();
+//
+//        testingUser = requestEntityUtil.getEmbeddedUser();
+//    }
 
     /**
      * request to create worksheet
@@ -60,7 +69,7 @@ public class BcmUtil extends TestUtil {
      * @return response object
      */
 
-    public ResponseWrapper<WorkSheetResponse> createWorksheet(String name) {
+    public WorkSheetResponse createWorksheet(String name) {
 
         WorksheetRequest body = WorksheetRequest
             .builder()
@@ -74,35 +83,9 @@ public class BcmUtil extends TestUtil {
             requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)
                 .body(body)
                 .expectedResponseCode(HttpStatus.SC_CREATED);
-        return HTTPRequest.build(requestEntity).post();
-    }
+        ResponseWrapper<WorkSheetResponse> response = HTTPRequest.build(requestEntity).post();
 
-    /**
-     * request to create worksheet with email (used for UI tests)
-     *
-     * @param name - name of worksheet
-     * @return response object
-     */
-
-    public ResponseWrapper<WorkSheetResponse> createWorksheetWithEmail(String name, UserCredentials userCred) {
-
-        WorksheetRequest body = WorksheetRequest
-            .builder()
-            .worksheet(Worksheet
-                .builder()
-                .name(name)
-                .build())
-            .build();
-
-        requestEntityUtil = RequestEntityUtilBuilder
-            .useCustomUser(userCred)
-            .useApUserContextInRequests();
-
-        final RequestEntity requestEntity =
-            requestEntityUtil.init(BcmAppAPIEnum.WORKSHEETS, WorkSheetResponse.class)
-                .body(body)
-                .expectedResponseCode(HttpStatus.SC_CREATED);
-        return HTTPRequest.build(requestEntity).post();
+        return response.getResponseEntity();
     }
 
     /**

@@ -40,7 +40,7 @@ public class CostWorksheetTests extends BcmUtil {
     @Description("Verify costing worksheet")
     public void costWorksheet() {
         String name = GenerateStringUtil.saltString("name");
-        WorkSheetResponse newWorksheet = createWorksheet(name).getResponseEntity();
+        WorkSheetResponse newWorksheet = createWorksheet(name);
         worksheetIdentity = newWorksheet.getIdentity();
         WorkSheetResponse returnNewWorksheet = getWorksheet(WorkSheetResponse.class, worksheetIdentity, HttpStatus.SC_OK).getResponseEntity();
 
@@ -76,7 +76,7 @@ public class CostWorksheetTests extends BcmUtil {
     @Description("Verify costing worksheet when one of the scenario is not in costable state or all input rows are not in costable state")
     public void costNotCostableState() {
         String name = GenerateStringUtil.saltString("name");
-        WorkSheetResponse newWorksheet = createWorksheet(name).getResponseEntity();
+        WorkSheetResponse newWorksheet = createWorksheet(name);
         worksheetIdentity = newWorksheet.getIdentity();
 
         ScenarioItem scenarioItem =

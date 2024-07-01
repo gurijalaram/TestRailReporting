@@ -49,9 +49,7 @@ public class InputRowTests extends BcmUtil {
             cssComponent.postSearchRequest(testingUser, componentType)
                 .getResponseEntity().getItems().get(5);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
-            .getResponseEntity()
-            .getIdentity();
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow =
             createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
@@ -75,9 +73,7 @@ public class InputRowTests extends BcmUtil {
                 .getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
-            .getResponseEntity()
-            .getIdentity();
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         ResponseWrapper<InputRowPostResponse> responseWorksheetInputRow =
             createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
@@ -96,9 +92,7 @@ public class InputRowTests extends BcmUtil {
     @TestRail(id = 29740)
     @Description("Verify getting worksheet rows for empty worksheet with no rows")
     public void verifyGetWorksheetRowsWithoutRows() {
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
-            .getResponseEntity()
-            .getIdentity();
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         ResponseWrapper<WorkSheetInputRowGetResponse> worksheetRow =
             getWorkSheetInputRow(worksheetIdentity);
@@ -118,9 +112,7 @@ public class InputRowTests extends BcmUtil {
                 .getResponseEntity().getItems().stream().filter(item -> item.getScenarioPublished().equals(true))
                 .findFirst().orElse(null);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
-            .getResponseEntity()
-            .getIdentity();
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         String inputRowIdentity = createWorkSheetInputRow(scenarioItem.getComponentIdentity(),
             scenarioItem.getScenarioIdentity(),
@@ -148,9 +140,7 @@ public class InputRowTests extends BcmUtil {
     public void notEditPrivateRow() {
         ScenarioItem cssComponentResponses = cssComponent.getBaseCssComponents(testingUser, SCENARIO_PUBLISHED_EQ.getKey() + false).get(0);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
-            .getResponseEntity()
-            .getIdentity();
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         String inputRowIdentity = createWorkSheetInputRow(cssComponentResponses.getComponentIdentity(),
             cssComponentResponses.getScenarioIdentity(),
@@ -174,9 +164,7 @@ public class InputRowTests extends BcmUtil {
         ScenarioItem scenario1 = scenarioItem.get(0);
         ScenarioItem scenario2 = scenarioItem.get(1);
 
-        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name"))
-            .getResponseEntity()
-            .getIdentity();
+        worksheetIdentity = createWorksheet(GenerateStringUtil.saltString("name")).getIdentity();
 
         List<String> componentIdentityScenarioIdentity = Arrays.asList(scenario1.getComponentIdentity() + "," + scenario1.getScenarioIdentity(),
             scenario2.getComponentIdentity() + "," + scenario2.getScenarioIdentity());
